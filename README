@@ -1,0 +1,48 @@
+===================================
+FriCAS0 -- a pure Common Lisp build
+===================================
+
+1. cd fricas0
+2. load fricas.lisp into your favourite Lisp interpreter
+3. First time (once): 
+     )lisp (load "compile-algebra")
+   Takes a few minutes.
+4. )quit
+
+Next time, when loading "fricas.lisp", it should work ;)
+
+-----
+Notes
+-----
+i)   ABCL doesn't work yet
+ii)  Everything still is considered experimental (e.g. init, compile, save)
+iii) Tested: SBCL, ECL, CLISP (Ubuntu/Cygwin64/MingW64/Windows 7&10)
+iv)  fricas0 is built with mkfricas0.sh from a source tarball after
+     a regular build (see below).
+
+----
+Make
+----
+The bash script 'mkfricas0.sh' shows how it goes.
+Running ./mkfircas0.sh creates the folder 'fricas0' and a package
+'fricas0.tar.gz' as well from an official source tarball (pre-generated).
+
+**IMPORTANT**
+Edit the script to adjust the following first lines:
+
+rename_cmd=rename.ul  # rename command (not the PERL one)
+FRICAS0=fricas0       # name of the folder created
+FRICAS_TREE=/home/xyz/devel/fricas-1.3.0  # Fricas tarball
+FRICAS0_TMP=/home/xyz/devel/mkfricas0/$FRICAS0 # where to create it
+
+
+ 
+
+
+
+
+  
+
+
+
+
