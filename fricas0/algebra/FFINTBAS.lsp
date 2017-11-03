@@ -1,7 +1,7 @@
 
 (SDEFUN |FFINTBAS;squaredFactors| ((|px| R) ($ R))
         (SPROG
-         ((#1=#:G712 NIL) (#2=#:G711 (R)) (#3=#:G713 (R)) (#4=#:G718 NIL)
+         ((#1=#:G712 NIL) (#2=#:G711 (R)) (#3=#:G713 (R)) (#4=#:G719 NIL)
           (|ffe| NIL))
          (SEQ
           (PROGN
@@ -34,7 +34,7 @@
          ($ |Record| (|:| |basis| (|Matrix| R)) (|:| |basisDen| R)
           (|:| |basisInv| (|Matrix| R))))
         (SPROG
-         ((#1=#:G723 NIL) (#2=#:G734 NIL) (|oldIndex| (R)) (|indexChange| (R))
+         ((#1=#:G726 NIL) (#2=#:G738 NIL) (|oldIndex| (R)) (|indexChange| (R))
           (|rbinv| #3=(|Matrix| R)) (|rbden| (R)) (|rb| #3#) (|g| (R))
           (|index| (R)) (|idinv| (|Matrix| R)) (|id| (|Matrix| R))
           (|disc0| (R)) (|tfm0| (|Matrix| R)) (|n| (|PositiveInteger|)))
@@ -121,7 +121,7 @@
                      (EXIT
                       (PROGN
                        (LETT #2# (VECTOR |rb| |rbden| |rbinv|) . #4#)
-                       (GO #6=#:G733)))))
+                       (GO #6=#:G737)))))
                    (EXIT
                     (LETT |tfm|
                           (PROG2
@@ -195,9 +195,9 @@
 
 (DECLAIM (NOTINLINE |FunctionFieldIntegralBasis;|)) 
 
-(DEFUN |FunctionFieldIntegralBasis| (&REST #1=#:G747)
+(DEFUN |FunctionFieldIntegralBasis| (&REST #1=#:G751)
   (SPROG NIL
-         (PROG (#2=#:G748)
+         (PROG (#2=#:G752)
            (RETURN
             (COND
              ((LETT #2#

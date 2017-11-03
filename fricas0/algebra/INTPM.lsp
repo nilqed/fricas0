@@ -7,13 +7,13 @@
 (SDEFUN |INTPM;splitConstant;FSR;2|
         ((|f| F) (|x| |Symbol|) ($ |Record| (|:| |const| F) (|:| |nconst| F)))
         (SPROG
-         ((#1=#:G789 NIL) (|rec| (|Record| (|:| |const| F) (|:| |nconst| F)))
+         ((#1=#:G794 NIL) (|rec| (|Record| (|:| |const| F) (|:| |nconst| F)))
           (|vv| (|Record| (|:| |val| F) (|:| |exponent| (|Integer|))))
           (|v|
            (|Union| (|Record| (|:| |val| F) (|:| |exponent| (|Integer|)))
                     #2="failed"))
-          (|cc| (F)) (#3=#:G791 NIL) (|g| NIL) (|nc| (F))
-          (|u| (|Union| (|List| F) #2#)) (#4=#:G790 NIL))
+          (|cc| (F)) (#3=#:G796 NIL) (|g| NIL) (|nc| (F))
+          (|u| (|Union| (|List| F) #2#)) (#4=#:G795 NIL))
          (SEQ
           (EXIT
            (COND
@@ -89,7 +89,7 @@
                                       (LETT #1#
                                             (CONS (|spadConstant| $ 44) |f|)
                                             . #6#)
-                                      (GO #7=#:G788))))))
+                                      (GO #7=#:G793))))))
                                  (LETT #3# (CDR #3#) . #6#) (GO G190) G191
                                  (EXIT NIL))
                             (EXIT (CONS |cc| |nc|))))
@@ -151,7 +151,7 @@
          ($ |Record| (|:| |which| (|Integer|)) (|:| |exponent| F)
           (|:| |coeff| F)))
         (SPROG
-         ((#1=#:G809 NIL) (|d| (F)) (|sa| (F))
+         ((#1=#:G814 NIL) (|d| (F)) (|sa| (F))
           (|u| (|Union| (|Integer|) "failed")) (|cc| (F)) (|da| (F)) (|a| (F))
           (|l| (|AssociationList| (|Symbol|) F))
           (|res| (|PatternMatchResult| (|Integer|) F)) (|pat| (F))
@@ -277,7 +277,7 @@
                                                        (|spadConstant| $
                                                                        36))))))
                                            . #2#)
-                                     (GO #4=#:G805))))))))))
+                                     (GO #4=#:G810))))))))))
                             (EXIT
                              (VECTOR 0 (|spadConstant| $ 36)
                                      (|spadConstant| $ 36)))))
@@ -344,7 +344,7 @@
 
 (SDEFUN |INTPM;matchdilog| ((|f| F) (|x| |Symbol|) ($ |List| F))
         (SPROG
-         ((#1=#:G819 NIL) (#2=#:G820 NIL) (|l| (|List| F)) (#3=#:G821 NIL)
+         ((#1=#:G824 NIL) (#2=#:G825 NIL) (|l| (|List| F)) (#3=#:G826 NIL)
           (|k| NIL) (|df| (F))
           (|d| (|SparseMultivariatePolynomial| R (|Kernel| F)))
           (|n| (|SparseMultivariatePolynomial| R (|Kernel| F))))
@@ -376,9 +376,9 @@
                          (LETT |l| (|INTPM;matchdilog0| |f| |k| |x| |n| |df| $)
                                . #4#)))
                        (PROGN
-                        (LETT #1# (PROGN (LETT #2# |l| . #4#) (GO #5=#:G818))
+                        (LETT #1# (PROGN (LETT #2# |l| . #4#) (GO #5=#:G823))
                               . #4#)
-                        (GO #6=#:G816))))))
+                        (GO #6=#:G821))))))
                    (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
              #6# (EXIT #1#))
             (EXIT NIL)))
@@ -440,7 +440,7 @@
 
 (SDEFUN |INTPM;matchli| ((|f| F) (|x| |Symbol|) ($ |List| F))
         (SPROG
-         ((#1=#:G831 NIL) (#2=#:G832 NIL) (|l| (|List| F)) (#3=#:G833 NIL)
+         ((#1=#:G836 NIL) (#2=#:G837 NIL) (|l| (|List| F)) (#3=#:G838 NIL)
           (|k| NIL) (|d| (|SparseMultivariatePolynomial| R (|Kernel| F))))
          (SEQ
           (EXIT
@@ -466,9 +466,9 @@
                                    . #4#)))
                            (PROGN
                             (LETT #1#
-                                  (PROGN (LETT #2# |l| . #4#) (GO #5=#:G830))
+                                  (PROGN (LETT #2# |l| . #4#) (GO #5=#:G835))
                                   . #4#)
-                            (GO #6=#:G828))))))
+                            (GO #6=#:G833))))))
                        (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
                  #6# (EXIT #1#))
                 (EXIT NIL)))
@@ -666,7 +666,7 @@
 (SDEFUN |INTPM;formula1|
         ((|f| F) (|x| |Symbol|) (|t| F) (|cc| F) ($ |Union| F "failed"))
         (SPROG
-         ((#1=#:G890 NIL) (|mmi| (|Integer|)) (|mm| (F)) (#2=#:G894 NIL)
+         ((#1=#:G895 NIL) (|mmi| (|Integer|)) (|mm| (F)) (#2=#:G899 NIL)
           (|sgz| #3=(|Union| (|Integer|) "failed")) (|z| (F)) (|sgs| #3#)
           (|ms| (F)) (|mw| (F)) (|l| (|List| F)))
          (SEQ
@@ -690,7 +690,7 @@
                             ((QEQCAR |sgs| 1)
                              (PROGN
                               (LETT #2# (CONS 1 #6#) . #4#)
-                              (GO #7=#:G891))))))))
+                              (GO #7=#:G896))))))))
                    (SEQ
                     (LETT |sgz|
                           (SPADCALL
@@ -892,17 +892,20 @@
         (SPROG NIL
                (SEQ
                 (COND
-                 ((SPADCALL |a| (QREFELT $ 153))
+                 ((EQL (SPADCALL |a| (QREFELT $ 154)) 0)
                   (COND
-                   ((EQL (SPADCALL |b| (QREFELT $ 155)) 1)
-                    (EXIT
-                     (|INTPM;formula1| |f| |x|
-                      (SPADCALL (SPADCALL |x| (QREFELT $ 18)) (QREFELT $ 156))
-                      (SPADCALL (QREFELT $ 21)
-                                (CONS #'|INTPM;pmintegrate;FS2OcU;16!0|
-                                      (VECTOR $ |x|))
-                                (QREFELT $ 28))
-                      $))))))
+                   ((SPADCALL (SPADCALL |a| (QREFELT $ 155)) (QREFELT $ 90))
+                    (COND
+                     ((EQL (SPADCALL |b| (QREFELT $ 154)) 1)
+                      (EXIT
+                       (|INTPM;formula1| |f| |x|
+                        (SPADCALL (SPADCALL |x| (QREFELT $ 18))
+                                  (QREFELT $ 156))
+                        (SPADCALL (QREFELT $ 21)
+                                  (CONS #'|INTPM;pmintegrate;FS2OcU;16!0|
+                                        (VECTOR $ |x|))
+                                  (QREFELT $ 28))
+                        $))))))))
                 (EXIT (CONS 1 "failed"))))) 
 
 (SDEFUN |INTPM;pmintegrate;FS2OcU;16!0| ((|x1| NIL) ($$ NIL))
@@ -913,9 +916,9 @@
 
 (DECLAIM (NOTINLINE |PatternMatchIntegration;|)) 
 
-(DEFUN |PatternMatchIntegration| (&REST #1=#:G919)
+(DEFUN |PatternMatchIntegration| (&REST #1=#:G925)
   (SPROG NIL
-         (PROG (#2=#:G920)
+         (PROG (#2=#:G926)
            (RETURN
             (COND
              ((LETT #2#
@@ -1117,8 +1120,8 @@
               (379 . |erf|) (384 . |pmComplexintegrate|) (390 . |retract|)
               (395 . |last|) (400 . *) (406 . |Gamma|) (411 . |differentiate|)
               (418 . |kernel|) (|List| 111) (|List| $) (423 . |eval|)
-              (|OrderedCompletion| 7) (430 . |zero?|) (|SingleInteger|)
-              (435 . |whatInfinity|) (440 . |constant|) (445 . |freeOf?|)
+              (|SingleInteger|) (|OrderedCompletion| 7) (430 . |whatInfinity|)
+              (435 . |retract|) (440 . |constant|) (445 . |freeOf?|)
               (|Union| 7 '"failed") (451 . |pmintegrate|))
            '#(|splitConstant| 459 |pmintegrate| 465 |pmComplexintegrate| 479)
            'NIL
@@ -1164,11 +1167,11 @@
                                                    1 7 37 0 143 1 105 7 0 144 2
                                                    7 0 37 0 145 1 7 0 0 146 3 7
                                                    0 0 8 77 147 1 75 0 8 148 3
-                                                   7 0 0 149 150 151 1 152 24 0
-                                                   153 1 152 154 0 155 1 19 7 7
+                                                   7 0 0 149 150 151 1 153 152
+                                                   0 154 1 153 7 0 155 1 19 7 7
                                                    156 2 7 24 0 8 157 4 0 158 7
-                                                   8 152 152 159 2 0 62 7 8 63
+                                                   8 153 153 159 2 0 62 7 8 63
                                                    2 2 134 7 8 135 4 1 158 7 8
-                                                   152 152 159 2 2 134 7 8
+                                                   153 153 159 2 2 134 7 8
                                                    142)))))
            '|lookupComplete|)) 

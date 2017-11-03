@@ -10,11 +10,6 @@
 (DEFUN |FloatError| (|formatstring| |arg|)
   (PROG () (RETURN (ERROR (FORMAT NIL |formatstring| |arg|)))))
  
-; nangenericcomplex () ==
-;         1.0/COMPLEX(0.0)
- 
-(DEFUN |nangenericcomplex| #1=() (PROG #1# (RETURN (/ 1.0 (COMPLEX 0.0)))))
- 
 ; float(x) == FLOAT(x, 0.0)
  
 (DEFUN |float| (|x|) (PROG () (RETURN (FLOAT |x| 0.0))))
@@ -175,7 +170,6 @@
 ;                         if ZEROP restx  -- case of negative non-integer value
 ;                         then
 ;                           FloatError ('"Gamma undefined for non-positive integers: ~D",x)
-;                           result := nangenericcomplex ()
 ;                         else
 ;                           result := Pi/(gammaRatapprox(1.0-x)*(-1.0)^(intpartx+1)*SIN(restx*Pi))
 ;         result
@@ -213,8 +207,7 @@
         (SETQ |intpartx| (+ (CAR |lx|) 1)) (SETQ |restx| (CADR |lx|))
         (COND
          ((ZEROP |restx|)
-          (|FloatError| "Gamma undefined for non-positive integers: ~D" |x|)
-          (SETQ |result| (|nangenericcomplex|)))
+          (|FloatError| "Gamma undefined for non-positive integers: ~D" |x|))
          (#1#
           (SETQ |result|
                   (/ |Pi|

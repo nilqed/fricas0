@@ -4,8 +4,8 @@
          ($ |Record| (|:| |exponent| (|NonNegativeInteger|))
           (|:| |coef| (|Integer|)) (|:| |radicand| (|Integer|))))
         (SPROG
-         ((#1=#:G714 NIL) (#2=#:G713 #3=(|Integer|)) (#4=#:G715 #3#)
-          (#5=#:G718 NIL) (#6=#:G690 NIL)
+         ((#1=#:G716 NIL) (#2=#:G715 #3=(|Integer|)) (#4=#:G717 #3#)
+          (#5=#:G720 NIL) (#6=#:G690 NIL)
           (|s|
            (|Record| (|:| |exponent| (|NonNegativeInteger|))
                      (|:| |coef| (|Integer|)) (|:| |radicand| (|List| #3#)))))
@@ -72,7 +72,7 @@
          ($ |Record| (|:| |exponent| (|NonNegativeInteger|)) (|:| |coef| F)
           (|:| |radicand| F)))
         (SPROG
-         ((|m| (|NonNegativeInteger|)) (#1=#:G729 NIL)
+         ((|m| (|NonNegativeInteger|)) (#1=#:G733 NIL)
           (|sd|
            #2=(|Record| (|:| |exponent| (|NonNegativeInteger|)) (|:| |coef| F)
                         (|:| |radicand| F)))
@@ -105,7 +105,7 @@
          ($ |Record| (|:| |exponent| (|NonNegativeInteger|)) (|:| |coef| F)
           (|:| |radicand| F)))
         (SPROG
-         ((|m| (|NonNegativeInteger|)) (#1=#:G735 NIL)
+         ((|m| (|NonNegativeInteger|)) (#1=#:G739 NIL)
           (|sd|
            #2=(|Record| (|:| |exponent| (|NonNegativeInteger|))
                         (|:| |coef| (|Integer|)) (|:| |radicand| (|Integer|))))
@@ -182,7 +182,7 @@
 (SDEFUN |POLYROOT;rsplit|
         ((|l| |List| P) ($ |Record| (|:| |coef| R) (|:| |poly| P)))
         (SPROG
-         ((|r| (R)) (|p| (P)) (|u| (|Union| R "failed")) (#1=#:G760 NIL)
+         ((|r| (R)) (|p| (P)) (|u| (|Union| R "failed")) (#1=#:G764 NIL)
           (|q| NIL))
          (SEQ (LETT |r| (|spadConstant| $ 11) . #2=(|POLYROOT;rsplit|))
               (LETT |p| (|spadConstant| $ 12) . #2#)
@@ -236,7 +236,7 @@
          ($ |Record| (|:| |exponent| (|NonNegativeInteger|)) (|:| |coef| F)
           (|:| |radicand| F)))
         (SPROG
-         ((|m| (|NonNegativeInteger|)) (#1=#:G775 NIL)
+         ((|m| (|NonNegativeInteger|)) (#1=#:G779 NIL)
           (|rd|
            #2=(|Record| (|:| |exponent| (|NonNegativeInteger|)) (|:| |coef| F)
                         (|:| |radicand| F)))
@@ -307,9 +307,9 @@
 
 (DECLAIM (NOTINLINE |PolynomialRoots;|)) 
 
-(DEFUN |PolynomialRoots| (&REST #1=#:G778)
+(DEFUN |PolynomialRoots| (&REST #1=#:G782)
   (SPROG NIL
-         (PROG (#2=#:G779)
+         (PROG (#2=#:G783)
            (RETURN
             (COND
              ((LETT #2#

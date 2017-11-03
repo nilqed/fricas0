@@ -14,7 +14,7 @@
 
 (DEFUN |PositiveInteger| ()
   (SPROG NIL
-         (PROG (#1=#:G2415)
+         (PROG (#1=#:G2417)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|PositiveInteger|)
@@ -49,30 +49,34 @@
               (|Integer|) |PI;qcoerce;I$;1| (|InputForm|) (|PositiveInteger|)
               (|Union| $ '"failed") (|HashState|) (|String|) (|OutputForm|)
               (|SingleInteger|))
-           '#(~= 6 |smaller?| 12 |sample| 18 |recip| 22 |qcoerce| 27 |one?| 32
-              |min| 37 |max| 43 |latex| 49 |hashUpdate!| 54 |hash| 60 |gcd| 65
-              |convert| 71 |coerce| 76 ^ 81 |One| 93 >= 97 > 103 = 109 <= 115 <
-              121 + 127 * 133)
+           '#(~= 6 |smaller?| 12 |sample| 18 |rightRecip| 22 |rightPower| 27
+              |recip| 39 |qcoerce| 44 |one?| 49 |min| 54 |max| 60 |leftRecip|
+              66 |leftPower| 71 |latex| 83 |hashUpdate!| 88 |hash| 94 |gcd| 99
+              |convert| 105 |coerce| 110 ^ 115 |One| 127 >= 131 > 137 = 143 <=
+              149 < 155 + 161 * 167)
            'NIL
-           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0 0 0))
+           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0))
                  (CONS
-                  '#(NIL |OrderedSet&| |Monoid&| NIL |SemiGroup&|
+                  '#(NIL NIL |OrderedSet&| |MagmaWithUnit&| NIL NIL |Magma&|
                      |AbelianSemiGroup&| |SetCategory&| NIL NIL |BasicType&|
                      |PartialOrder&| NIL)
                   (CONS
-                   '#((|OrderedAbelianSemiGroup|) (|OrderedSet|) (|Monoid|)
-                      (|Comparable|) (|SemiGroup|) (|AbelianSemiGroup|)
-                      (|SetCategory|) (|ConvertibleTo| 10) (|CommutativeStar|)
-                      (|BasicType|) (|PartialOrder|) (|CoercibleTo| 15))
+                   '#((|OrderedAbelianSemiGroup|) (|Monoid|) (|OrderedSet|)
+                      (|MagmaWithUnit|) (|SemiGroup|) (|Comparable|) (|Magma|)
+                      (|AbelianSemiGroup|) (|SetCategory|) (|ConvertibleTo| 10)
+                      (|CommutativeStar|) (|BasicType|) (|PartialOrder|)
+                      (|CoercibleTo| 15))
                    (|makeByteWordVec2| 16
                                        '(2 5 6 0 0 7 2 0 6 0 0 1 2 0 6 0 0 1 0
-                                         0 0 1 1 0 12 0 1 1 0 0 8 9 1 0 6 0 1 2
-                                         0 0 0 0 1 2 0 0 0 0 1 1 0 14 0 1 2 0
-                                         13 13 0 1 1 0 16 0 1 2 0 0 0 0 1 1 0
-                                         10 0 1 1 0 15 0 1 2 0 0 0 11 1 2 0 0 0
-                                         5 1 0 0 0 1 2 0 6 0 0 1 2 0 6 0 0 1 2
-                                         0 6 0 0 1 2 0 6 0 0 1 2 0 6 0 0 1 2 0
-                                         0 0 0 1 2 0 0 0 0 1 2 0 0 11 0 1)))))
+                                         0 0 1 1 0 12 0 1 2 0 0 0 11 1 2 0 0 0
+                                         5 1 1 0 12 0 1 1 0 0 8 9 1 0 6 0 1 2 0
+                                         0 0 0 1 2 0 0 0 0 1 1 0 12 0 1 2 0 0 0
+                                         11 1 2 0 0 0 5 1 1 0 14 0 1 2 0 13 13
+                                         0 1 1 0 16 0 1 2 0 0 0 0 1 1 0 10 0 1
+                                         1 0 15 0 1 2 0 0 0 11 1 2 0 0 0 5 1 0
+                                         0 0 1 2 0 6 0 0 1 2 0 6 0 0 1 2 0 6 0
+                                         0 1 2 0 6 0 0 1 2 0 6 0 0 1 2 0 0 0 0
+                                         1 2 0 0 0 0 1 2 0 0 11 0 1)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|PositiveInteger| 'NILADIC T) 

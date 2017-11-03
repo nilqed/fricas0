@@ -3,9 +3,9 @@
  
 (IN-PACKAGE "BOOT")
  
-; SPACE       := STR_ELT('"    ", 0)
+; SPACE_CHAR       := STR_ELT('"    ", 0)
  
-(EVAL-WHEN (EVAL LOAD) (SETQ SPACE (STR_ELT "    " 0)))
+(EVAL-WHEN (EVAL LOAD) (SETQ SPACE_CHAR (STR_ELT "    " 0)))
  
 ; PAGE_CTL    := 12
  
@@ -407,10 +407,10 @@
             (LIST 'LARROW '<-) (LIST 'BAR '|\||) (LIST 'SEG '|..|))
       NIL))))
  
-; is_white?(c) == c = SPACE or c = PAGE_CTL
+; is_white?(c) == c = SPACE_CHAR or c = PAGE_CTL
  
 (DEFUN |is_white?| (|c|)
-  (PROG () (RETURN (OR (EQUAL |c| SPACE) (EQUAL |c| PAGE_CTL)))))
+  (PROG () (RETURN (OR (EQUAL |c| SPACE_CHAR) (EQUAL |c| PAGE_CTL)))))
  
 ; skip_whitespace(ln, n) ==
 ;     l := #ln

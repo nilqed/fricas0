@@ -5,9 +5,9 @@
 
 (DECLAIM (NOTINLINE |FractionFunctions2;|)) 
 
-(DEFUN |FractionFunctions2| (&REST #1=#:G695)
+(DEFUN |FractionFunctions2| (&REST #1=#:G696)
   (SPROG NIL
-         (PROG (#2=#:G696)
+         (PROG (#2=#:G697)
            (RETURN
             (COND
              ((LETT #2#

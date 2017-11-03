@@ -34,7 +34,7 @@
         ((|nres| |List| F) (|lv| |List| (|Symbol|))
          ($ |List| (|Equation| (|Polynomial| F))))
         (SPROG
-         ((#1=#:G722 NIL) (|x| NIL) (#2=#:G723 NIL) (|r| NIL) (#3=#:G721 NIL))
+         ((#1=#:G725 NIL) (|x| NIL) (#2=#:G726 NIL) (|r| NIL) (#3=#:G724 NIL))
          (SEQ
           (PROGN
            (LETT #3# NIL . #4=(|INFSP;makeEq;LLL;2|))
@@ -89,12 +89,12 @@
 (SDEFUN |INFSP;innerSolve1;SupParL;6|
         ((|upol| |SparseUnivariatePolynomial| K) (|eps| |Par|) ($ |List| F))
         (SPROG
-         ((#1=#:G740 NIL) (|x| NIL) (#2=#:G739 NIL)
+         ((#1=#:G745 NIL) (|x| NIL) (#2=#:G744 NIL)
           (|z|
            (|List|
             (|Record| (|:| |left| (|Fraction| (|Integer|)))
                       (|:| |right| (|Fraction| (|Integer|))))))
-          (#3=#:G738 NIL) (#4=#:G737 NIL))
+          (#3=#:G743 NIL) (#4=#:G742 NIL))
          (SEQ
           (COND
            ((|domainEqual| (QREFELT $ 6) (|Complex| (|Integer|)))
@@ -302,12 +302,12 @@
         ((|lp| |List| (|Polynomial| K)) (|rlvar| |List| (|Symbol|))
          (|eps| |Par|) ($ |List| (|List| F)))
         (SPROG
-         ((|ebits| (|PositiveInteger|)) (|etol| (|Integer|)) (#1=#:G780 NIL)
-          (|sol| (|List| (|List| F))) (|sol1| (|List| F)) (#2=#:G779 NIL)
+         ((|ebits| (|PositiveInteger|)) (|etol| (|Integer|)) (#1=#:G785 NIL)
+          (|sol| (|List| (|List| F))) (|sol1| (|List| F)) (#2=#:G784 NIL)
           (|ok| (|Boolean|)) (|ppi| (|Complex| (|Interval| (|Float|))))
           (|pp| (|Union| (|Complex| (|Interval| (|Float|))) "failed"))
-          (#3=#:G782 NIL) (|pol| NIL) (#4=#:G783 NIL) (|xvar| NIL)
-          (#5=#:G781 NIL) (|z| NIL) (|lz| (|List| F)) (|nfeps| (|Float|))
+          (#3=#:G787 NIL) (|pol| NIL) (#4=#:G788 NIL) (|xvar| NIL)
+          (#5=#:G786 NIL) (|z| NIL) (|lz| (|List| F)) (|nfeps| (|Float|))
           (|neps| (|Par|)) (|obits| (|PositiveInteger|)) (|feps| (|Float|))
           (|rlp| (|List| (|Polynomial| K))) (|zvar| (|Symbol|))
           (|f| (|Polynomial| K)))
@@ -389,7 +389,7 @@
                                                  (EXIT
                                                   (PROGN
                                                    (LETT #2# |$NoValue| . #6#)
-                                                   (GO #7=#:G770)))))
+                                                   (GO #7=#:G775)))))
                                            ('T
                                             (SEQ (LETT |ppi| (QCDR |pp|) . #6#)
                                                  (COND
@@ -436,7 +436,7 @@
                                    (EXIT
                                     (PROGN
                                      (LETT #1# (REVERSE |sol|) . #6#)
-                                     (GO #8=#:G778)))))
+                                     (GO #8=#:G783)))))
                              ('T
                               (SEQ
                                (LETT |etol| (SPADCALL |etol| 2 (QREFELT $ 119))
@@ -448,8 +448,8 @@
 (SDEFUN |INFSP;oldCoord|
         ((|numres| |List| F) (|lval| |List| (|Integer|)) ($ |List| F))
         (SPROG
-         ((#1=#:G785 NIL) (#2=#:G784 (F)) (#3=#:G786 (F)) (#4=#:G789 NIL)
-          (|n| NIL) (#5=#:G790 NIL) (|nr| NIL) (|rnumres| (|List| F)))
+         ((#1=#:G790 NIL) (#2=#:G789 (F)) (#3=#:G791 (F)) (#4=#:G794 NIL)
+          (|n| NIL) (#5=#:G795 NIL) (|nr| NIL) (|rnumres| (|List| F)))
          (SEQ (LETT |rnumres| (REVERSE |numres|) . #6=(|INFSP;oldCoord|))
               (SPADCALL |rnumres| '|first|
                         (SPADCALL (|SPADfirst| |rnumres|)
@@ -545,29 +545,29 @@
         ((|lp| |List| (|Polynomial| K)) (|ld| |List| (|Polynomial| K))
          (|lv| |List| (|Symbol|)) (|eps| |Par|) ($ |List| (|List| F)))
         (SPROG
-         ((|result| (|List| (|List| F))) (#1=#:G950 NIL) (|r| NIL)
-          (#2=#:G949 NIL) (|lris| #3=(|List| (|List| F)))
-          (|lgen1| (|List| (|Polynomial| K))) (#4=#:G948 NIL) (|pf| NIL)
-          (#5=#:G947 NIL) (|neps| (|Par|)) (|lnorm| (|Integer|))
-          (|laval| (|List| (|Integer|))) (#6=#:G946 NIL) (|i| NIL)
-          (#7=#:G945 NIL) (|lval| #8=(|List| (|Integer|)))
+         ((|result| (|List| (|List| F))) (#1=#:G955 NIL) (|r| NIL)
+          (#2=#:G954 NIL) (|lris| #3=(|List| (|List| F)))
+          (|lgen1| (|List| (|Polynomial| K))) (#4=#:G953 NIL) (|pf| NIL)
+          (#5=#:G952 NIL) (|neps| (|Par|)) (|lnorm| (|Integer|))
+          (|laval| (|List| (|Integer|))) (#6=#:G951 NIL) (|i| NIL)
+          (#7=#:G950 NIL) (|lval| #8=(|List| (|Integer|)))
           (|lgen| #9=(|List| (|DistributedMultivariatePolynomial| |lv| K)))
           (|genRecord| (|Record| (|:| |dpolys| #9#) (|:| |coords| #8#)))
-          (#10=#:G944 NIL) (|gres| NIL)
+          (#10=#:G949 NIL) (|gres| NIL)
           (|partRes|
            (|List| (|List| (|DistributedMultivariatePolynomial| |lv| K))))
-          (#11=#:G943 NIL) (#12=#:G898 NIL) (#13=#:G897 #3#) (#14=#:G899 #3#)
-          (#15=#:G942 NIL) (|res| NIL)
-          (|listG| (|List| (|List| (|Polynomial| K)))) (#16=#:G941 NIL)
-          (#17=#:G940 NIL) (#18=#:G939 NIL) (|pr| NIL) (#19=#:G938 NIL)
-          (#20=#:G925 NIL) (|listGen| (|List| (|List| |dmp|))) (#21=#:G819 NIL)
-          (#22=#:G818 #23=(|Boolean|)) (#24=#:G820 #23#) (#25=#:G891 NIL)
-          (#26=#:G890 #27=(|NonNegativeInteger|)) (#28=#:G892 #27#)
-          (#29=#:G937 NIL) (#30=#:G690 NIL) (#31=#:G936 NIL) (|f| NIL)
+          (#11=#:G948 NIL) (#12=#:G903 NIL) (#13=#:G902 #3#) (#14=#:G904 #3#)
+          (#15=#:G947 NIL) (|res| NIL)
+          (|listG| (|List| (|List| (|Polynomial| K)))) (#16=#:G946 NIL)
+          (#17=#:G945 NIL) (#18=#:G944 NIL) (|pr| NIL) (#19=#:G943 NIL)
+          (#20=#:G930 NIL) (|listGen| (|List| (|List| |dmp|))) (#21=#:G824 NIL)
+          (#22=#:G823 #23=(|Boolean|)) (#24=#:G825 #23#) (#25=#:G896 NIL)
+          (#26=#:G895 #27=(|NonNegativeInteger|)) (#28=#:G897 #27#)
+          (#29=#:G942 NIL) (#30=#:G690 NIL) (#31=#:G941 NIL) (|f| NIL)
           (|res1| (|List| (|DistributedMultivariatePolynomial| |lv| K)))
-          (#32=#:G935 NIL) (|rrlvv| (|List| OV)) (|rlv| (|List| (|Symbol|)))
-          (#33=#:G813 NIL) (#34=#:G812 #35=(|Boolean|)) (#36=#:G814 #35#)
-          (#37=#:G934 NIL) (|fq| NIL) (#38=#:G933 NIL) (#39=#:G932 NIL)
+          (#32=#:G940 NIL) (|rrlvv| (|List| OV)) (|rlv| (|List| (|Symbol|)))
+          (#33=#:G818 NIL) (#34=#:G817 #35=(|Boolean|)) (#36=#:G819 #35#)
+          (#37=#:G939 NIL) (|fq| NIL) (#38=#:G938 NIL) (#39=#:G937 NIL)
           (|gb|
            (CATEGORY |package|
             (SIGNATURE |credPol| (|dmp| |dmp| (|List| |dmp|)))
@@ -676,7 +676,7 @@
                         (|:| |pol| |dmp|))
               |dmp| (|NonNegativeInteger|)))
             (SIGNATURE |virtualDegree| ((|NonNegativeInteger|) |dmp|))))
-          (|lq| (|List| |dmp|)) (#41=#:G931 NIL) (|q1| NIL) (#42=#:G930 NIL)
+          (|lq| (|List| |dmp|)) (#41=#:G936 NIL) (|q1| NIL) (#42=#:G935 NIL)
           (|dmp|
            (|Join|
             (|PolynomialCategory| K
@@ -688,8 +688,8 @@
           (DP
            (|DirectProductCategory| (|call| LENGTH |lv|)
                                     (|NonNegativeInteger|)))
-          (|lvv| (|List| OV)) (#43=#:G806 NIL) (#44=#:G929 NIL) (|vv| NIL)
-          (#45=#:G928 NIL)
+          (|lvv| (|List| OV)) (#43=#:G811 NIL) (#44=#:G934 NIL) (|vv| NIL)
+          (#45=#:G933 NIL)
           (OV
            (|Join| (|OrderedFinite|) (|ConvertibleTo| (|Symbol|))
                    (|ConvertibleTo| (|InputForm|))
@@ -698,7 +698,7 @@
                    (CATEGORY |domain|
                     (SIGNATURE |variable| ((|Union| $ "failed") (|Symbol|))))))
           (|lnp| (|List| (|DistributedMultivariatePolynomial| |lv| K)))
-          (#46=#:G927 NIL) (|p| NIL) (#47=#:G926 NIL))
+          (#46=#:G932 NIL) (|p| NIL) (#47=#:G931 NIL))
          (SEQ
           (LETT |lnp|
                 (PROGN
@@ -1040,7 +1040,7 @@
                                     (LETT |listGen| (CONS |res| |listGen|)
                                           . #48#)
                                     . #48#)
-                              (GO #51=#:G893)))))))
+                              (GO #51=#:G898)))))))
                     #51# (EXIT #20#))
                    (LETT #32# (CDR #32#) . #48#) (GO G190) G191 (EXIT NIL))
               (LETT |result| NIL . #48#)
@@ -1299,9 +1299,9 @@
 
 (DECLAIM (NOTINLINE |InnerNumericFloatSolvePackage;|)) 
 
-(DEFUN |InnerNumericFloatSolvePackage| (&REST #1=#:G951)
+(DEFUN |InnerNumericFloatSolvePackage| (&REST #1=#:G956)
   (SPROG NIL
-         (PROG (#2=#:G952)
+         (PROG (#2=#:G957)
            (RETURN
             (COND
              ((LETT #2#
@@ -1406,7 +1406,7 @@
                                                    0 49 1 34 50 0 51 2 55 54 50
                                                    8 56 2 60 58 59 12 61 0 7 0
                                                    62 2 12 0 9 9 63 2 12 0 0 0
-                                                   64 2 12 0 0 0 65 1 12 10 0
+                                                   64 2 12 0 0 12 65 1 12 10 0
                                                    66 2 7 0 0 0 67 2 7 0 0 0 68
                                                    1 69 0 12 70 0 69 0 71 2 72
                                                    0 69 69 73 1 69 0 10 74 1 14

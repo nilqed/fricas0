@@ -1,6 +1,6 @@
 
 (SDEFUN |FINITE-;random;S;1| (($ S))
-        (SPROG ((#1=#:G702 NIL))
+        (SPROG ((#1=#:G705 NIL))
                (SPADCALL
                 (PROG1
                     (LETT #1# (+ 1 (RANDOM (SPADCALL (QREFELT $ 9))))
@@ -10,7 +10,7 @@
                 (QREFELT $ 11)))) 
 
 (SDEFUN |FINITE-;enumerate;L;2| (($ |List| S))
-        (SPROG ((#1=#:G710 NIL) (#2=#:G714 NIL) (|i| NIL) (#3=#:G713 NIL))
+        (SPROG ((#1=#:G714 NIL) (#2=#:G718 NIL) (|i| NIL) (#3=#:G717 NIL))
                (SEQ
                 (PROGN
                  (LETT #3# NIL . #4=(|FINITE-;enumerate;L;2|))

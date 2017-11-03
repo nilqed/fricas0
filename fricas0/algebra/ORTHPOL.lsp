@@ -1,7 +1,7 @@
 
 (SDEFUN |ORTHPOL;laguerreL;Nni2R;1| ((|n| |NonNegativeInteger|) (|x| R) ($ R))
         (SPROG
-         ((|p0| (R)) (|p1| (R)) (|#G9| (R)) (|#G8| (R)) (#1=#:G696 NIL)
+         ((|p0| (R)) (|p1| (R)) (|#G9| (R)) (|#G8| (R)) (#1=#:G700 NIL)
           (|i| NIL) (|#G6| (R)) (|#G5| (R)))
          (SEQ
           (COND ((EQL |n| 0) (|spadConstant| $ 8))
@@ -44,8 +44,8 @@
 (SDEFUN |ORTHPOL;laguerreL;2Nni2R;2|
         ((|m| |NonNegativeInteger|) (|n| |NonNegativeInteger|) (|x| R) ($ R))
         (SPROG
-         ((|p1| (R)) (|p0| (R)) (|cx| (|Integer|)) (#1=#:G698 NIL)
-          (#2=#:G704 NIL) (|j| NIL) (|mi| (|Integer|)) (|ni| (|Integer|)))
+         ((|p1| (R)) (|p0| (R)) (|cx| (|Integer|)) (#1=#:G702 NIL)
+          (#2=#:G708 NIL) (|j| NIL) (|mi| (|Integer|)) (|ni| (|Integer|)))
          (SEQ (LETT |ni| |n| . #3=(|ORTHPOL;laguerreL;2Nni2R;2|))
               (LETT |mi| |m| . #3#)
               (LETT |cx|
@@ -74,7 +74,7 @@
                     (LETT |p0| (SPADCALL |p0| |x| (QREFELT $ 16)) . #3#)
                     (EXIT
                      (LETT |p1|
-                           (SPADCALL |p1| (SPADCALL |cx| |p0| (QREFELT $ 26))
+                           (SPADCALL |p1| (SPADCALL |cx| |p0| (QREFELT $ 19))
                                      (QREFELT $ 10))
                            . #3#)))
                    (LETT |j| (|inc_SI| |j|) . #3#) (GO G190) G191 (EXIT NIL))
@@ -82,7 +82,7 @@
 
 (SDEFUN |ORTHPOL;chebyshevT;Nni2R;3| ((|n| |NonNegativeInteger|) (|x| R) ($ R))
         (SPROG
-         ((|p0| (R)) (|p1| (R)) (|#G20| (R)) (|#G19| (R)) (#1=#:G708 NIL)
+         ((|p0| (R)) (|p1| (R)) (|#G20| (R)) (|#G19| (R)) (#1=#:G712 NIL)
           (|i| NIL) (|#G17| (R)) (|#G16| (R)))
          (SEQ
           (COND ((EQL |n| 0) (|spadConstant| $ 8))
@@ -113,7 +113,7 @@
 
 (SDEFUN |ORTHPOL;chebyshevU;Nni2R;4| ((|n| |NonNegativeInteger|) (|x| R) ($ R))
         (SPROG
-         ((|p0| (R)) (|p1| (R)) (|#G27| (R)) (|#G26| (R)) (#1=#:G712 NIL)
+         ((|p0| (R)) (|p1| (R)) (|#G27| (R)) (|#G26| (R)) (#1=#:G716 NIL)
           (|i| NIL) (|#G24| (R)) (|#G23| (R)))
          (SEQ
           (COND ((EQL |n| 0) (|spadConstant| $ 8))
@@ -145,7 +145,7 @@
 
 (SDEFUN |ORTHPOL;hermiteH;Nni2R;5| ((|n| |NonNegativeInteger|) (|x| R) ($ R))
         (SPROG
-         ((|p0| (R)) (|p1| (R)) (|#G34| (R)) (|#G33| (R)) (#1=#:G716 NIL)
+         ((|p0| (R)) (|p1| (R)) (|#G34| (R)) (|#G33| (R)) (#1=#:G720 NIL)
           (|i| NIL) (|#G31| (R)) (|#G30| (R)))
          (SEQ
           (COND ((EQL |n| 0) (|spadConstant| $ 8))
@@ -166,7 +166,7 @@
                                 (SPADCALL
                                  (SPADCALL (SPADCALL 2 |x| (QREFELT $ 14)) |p1|
                                            (QREFELT $ 16))
-                                 (SPADCALL (SPADCALL 2 |i| (QREFELT $ 30)) |p0|
+                                 (SPADCALL (SPADCALL 2 |i| (QREFELT $ 29)) |p0|
                                            (QREFELT $ 19))
                                  (QREFELT $ 15))
                                 . #2#)
@@ -180,7 +180,7 @@
 (SDEFUN |ORTHPOL;legendreP;Nni2R;6| ((|n| |NonNegativeInteger|) (|x| R) ($ R))
         (SPROG
          ((|p0| (R)) (|p1| (R)) (|#G39| (R)) (|#G38| (R))
-          (|c| (|Fraction| (|Integer|))) (#1=#:G724 NIL) (|i| NIL))
+          (|c| (|Fraction| (|Integer|))) (#1=#:G729 NIL) (|i| NIL))
          (SEQ
           (COND ((EQL |n| 0) (|spadConstant| $ 8))
                 ('T
@@ -191,7 +191,7 @@
                   (SEQ (LETT |i| 1 . #2#) (LETT #1# (- |n| 1) . #2#) G190
                        (COND ((|greater_SI| |i| #1#) (GO G191)))
                        (SEQ
-                        (LETT |c| (SPADCALL 1 (+ |i| 1) (QREFELT $ 33)) . #2#)
+                        (LETT |c| (SPADCALL 1 (+ |i| 1) (QREFELT $ 32)) . #2#)
                         (EXIT
                          (PROGN
                           (LETT |#G38|
@@ -199,11 +199,11 @@
                                           (SPADCALL
                                            (SPADCALL
                                             (SPADCALL
-                                             (+ (SPADCALL 2 |i| (QREFELT $ 30))
+                                             (+ (SPADCALL 2 |i| (QREFELT $ 29))
                                                 1)
                                              |x| (QREFELT $ 19))
                                             |p1| (QREFELT $ 16))
-                                           (SPADCALL |i| |p0| (QREFELT $ 19))
+                                           (SPADCALL |i| |p0| (QREFELT $ 33))
                                            (QREFELT $ 15))
                                           (QREFELT $ 34))
                                 . #2#)
@@ -216,9 +216,9 @@
 
 (DECLAIM (NOTINLINE |OrthogonalPolynomialFunctions;|)) 
 
-(DEFUN |OrthogonalPolynomialFunctions| (#1=#:G725)
+(DEFUN |OrthogonalPolynomialFunctions| (#1=#:G730)
   (SPROG NIL
-         (PROG (#2=#:G726)
+         (PROG (#2=#:G731)
            (RETURN
             (COND
              ((LETT #2#
@@ -271,10 +271,10 @@
               (8 . -) (13 . +) (|Integer|) (19 . |coerce|) (|PositiveInteger|)
               (24 . *) (30 . -) (36 . *) (|NonNegativeInteger|) (42 . ^)
               (48 . *) |ORTHPOL;laguerreL;Nni2R;1| (54 . ^) (60 . |binomial|)
-              (66 . |factorial|) (|Union| $ '"failed") (71 . |exquo|) (77 . *)
+              (66 . |factorial|) (|Union| $ '"failed") (71 . |exquo|)
               |ORTHPOL;laguerreL;2Nni2R;2| |ORTHPOL;chebyshevT;Nni2R;3|
-              |ORTHPOL;chebyshevU;Nni2R;4| (83 . *) |ORTHPOL;hermiteH;Nni2R;5|
-              (|Fraction| 11) (89 . /) (95 . *) (101 . |legendreP|))
+              |ORTHPOL;chebyshevU;Nni2R;4| (77 . *) |ORTHPOL;hermiteH;Nni2R;5|
+              (|Fraction| 11) (83 . /) (89 . *) (95 . *) (101 . |legendreP|))
            '#(|legendreP| 107 |laguerreL| 113 |hermiteH| 126 |chebyshevU| 132
               |chebyshevT| 138)
            'NIL
@@ -285,13 +285,13 @@
                                                  '(0 6 0 7 0 6 0 8 1 6 0 0 9 2
                                                    6 0 0 0 10 1 6 0 11 12 2 6 0
                                                    13 0 14 2 6 0 0 0 15 2 6 0 0
-                                                   0 16 2 17 0 0 13 18 2 6 0 17
+                                                   0 16 2 17 0 0 13 18 2 6 0 11
                                                    0 19 2 6 0 0 17 21 2 11 0 0
                                                    0 22 1 11 0 0 23 2 11 24 0 0
-                                                   25 2 6 0 11 0 26 2 17 0 13 0
-                                                   30 2 32 0 11 11 33 2 6 0 32
+                                                   25 2 17 0 13 0 29 2 31 0 11
+                                                   11 32 2 6 0 17 0 33 2 6 0 31
                                                    0 34 2 0 6 17 6 35 2 1 6 17
                                                    6 35 2 0 6 17 6 20 3 0 6 17
-                                                   17 6 27 2 0 6 17 6 31 2 0 6
-                                                   17 6 29 2 0 6 17 6 28)))))
+                                                   17 6 26 2 0 6 17 6 30 2 0 6
+                                                   17 6 28 2 0 6 17 6 27)))))
            '|lookupComplete|)) 

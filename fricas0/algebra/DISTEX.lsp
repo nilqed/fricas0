@@ -51,7 +51,7 @@
 
 (SDEFUN |DISTEX;arcsineDistribution;RD;6| ((|a| R) ($ |Distribution| R))
         (SPROG
-         ((|mgf| (|Stream| R)) (#1=#:G710 NIL)
+         ((|mgf| (|Stream| R)) (#1=#:G714 NIL)
           (|half| (|Fraction| (|Integer|))))
          (SEQ
           (LETT |mgf|
@@ -84,9 +84,9 @@
 
 (DECLAIM (NOTINLINE |DistributionPackage;|)) 
 
-(DEFUN |DistributionPackage| (#1=#:G714)
+(DEFUN |DistributionPackage| (#1=#:G718)
   (SPROG NIL
-         (PROG (#2=#:G715)
+         (PROG (#2=#:G719)
            (RETURN
             (COND
              ((LETT #2#

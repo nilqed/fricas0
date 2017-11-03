@@ -377,8 +377,8 @@
 
 (SDEFUN |COMBF;K2fact| ((|k| |Kernel| F) (|l| |List| (|Symbol|)) ($ F))
         (SPROG
-         ((|p| (F)) (|n| (F)) (|args| (|List| F)) (#1=#:G835 NIL) (|a| NIL)
-          (#2=#:G834 NIL) (#3=#:G833 NIL) (|kf| (F)) (|v| NIL) (#4=#:G832 NIL))
+         ((|p| (F)) (|n| (F)) (|args| (|List| F)) (#1=#:G839 NIL) (|a| NIL)
+          (#2=#:G838 NIL) (#3=#:G837 NIL) (|kf| (F)) (|v| NIL) (#4=#:G836 NIL))
          (SEQ
           (COND
            ((OR
@@ -498,7 +498,7 @@
          ('T (SPADCALL (QREFELT $ 13) |x| (QREFELT $ 104))))) 
 
 (SDEFUN |COMBF;ibinom| ((|l| |List| F) ($ F))
-        (SPROG ((#1=#:G861 NIL) (|p| (F)) (|n| (F)))
+        (SPROG ((#1=#:G865 NIL) (|p| (F)) (|n| (F)))
                (SEQ
                 (EXIT
                  (SEQ (LETT |n| (|SPADfirst| |l|) . #2=(|COMBF;ibinom|))
@@ -511,7 +511,7 @@
                                (SPADCALL |p| |n| (QREFELT $ 83)))
                               (PROGN
                                (LETT #1# (|spadConstant| $ 50) . #2#)
-                               (GO #3=#:G859))))))
+                               (GO #3=#:G863))))))
                       (COND
                        ((OR (SPADCALL |p| (|spadConstant| $ 50) (QREFELT $ 83))
                             (SPADCALL |p|
@@ -530,8 +530,8 @@
 
 (SDEFUN |COMBF;iidsum;LF;37| ((|l| |List| F) ($ F))
         (SPROG
-         ((#1=#:G874 NIL) (#2=#:G873 (F)) (#3=#:G875 (F)) (#4=#:G879 NIL)
-          (|i| NIL) (#5=#:G878 NIL) (|k| (|Union| (|Kernel| F) #6="failed"))
+         ((#1=#:G878 NIL) (#2=#:G877 (F)) (#3=#:G879 (F)) (#4=#:G883 NIL)
+          (|i| NIL) (#5=#:G882 NIL) (|k| (|Union| (|Kernel| F) #6="failed"))
           (|r2| #7=(|Union| (|Integer|) #6#)) (|r1| #7#))
          (SEQ
           (EXIT
@@ -542,7 +542,7 @@
              (EXIT
               (COND
                ((QEQCAR |r1| 1)
-                (PROGN (LETT #5# (|COMBF;idsum| |l| $) . #8#) (GO #9=#:G876)))
+                (PROGN (LETT #5# (|COMBF;idsum| |l| $) . #8#) (GO #9=#:G880)))
                (#10='T
                 (SEQ
                  (LETT |r2|
@@ -587,8 +587,8 @@
 
 (SDEFUN |COMBF;iidprod;LF;38| ((|l| |List| F) ($ F))
         (SPROG
-         ((#1=#:G890 NIL) (#2=#:G889 (F)) (#3=#:G891 (F)) (#4=#:G895 NIL)
-          (|i| NIL) (#5=#:G894 NIL) (|k| (|Union| (|Kernel| F) #6="failed"))
+         ((#1=#:G894 NIL) (#2=#:G893 (F)) (#3=#:G895 (F)) (#4=#:G899 NIL)
+          (|i| NIL) (#5=#:G898 NIL) (|k| (|Union| (|Kernel| F) #6="failed"))
           (|r2| #7=(|Union| (|Integer|) #6#)) (|r1| #7#))
          (SEQ
           (EXIT
@@ -599,7 +599,7 @@
              (EXIT
               (COND
                ((QEQCAR |r1| 1)
-                (PROGN (LETT #5# (|COMBF;idprod| |l| $) . #8#) (GO #9=#:G892)))
+                (PROGN (LETT #5# (|COMBF;idprod| |l| $) . #8#) (GO #9=#:G896)))
                (#10='T
                 (SEQ
                  (LETT |r2|
@@ -704,7 +704,7 @@
 
 (SDEFUN |COMBF;ipow;LF;42| ((|l| |List| F) ($ F))
         (SPROG
-         ((#1=#:G929 NIL) (|y| (F))
+         ((#1=#:G933 NIL) (|y| (F))
           (|rec|
            (|Record| (|:| |var| (|Kernel| F)) (|:| |exponent| (|Integer|))))
           (|u|
@@ -763,7 +763,7 @@
                                                |n| (QREFELT $ 41))
                                               (QREFELT $ 23))
                                              . #2#)
-                                       (GO #4=#:G924))))))
+                                       (GO #4=#:G928))))))
                                   (EXIT
                                    (SPADCALL (QREFELT $ 20) |l|
                                              (QREFELT $ 74)))))
@@ -780,7 +780,7 @@
                                   (QREFELT $ 92)))))))) 
 
 (SDEFUN |COMBF;iiperm;LF;44| ((|l| |List| F) ($ F))
-        (SPROG ((#1=#:G942 NIL) (|r2| #2=(|Union| R "failed")) (|r1| #2#))
+        (SPROG ((#1=#:G946 NIL) (|r2| #2=(|Union| R "failed")) (|r1| #2#))
                (SEQ
                 (EXIT
                  (SEQ
@@ -792,7 +792,7 @@
                      ((QEQCAR |r1| 1)
                       (PROGN
                        (LETT #1# (|COMBF;iperm| |l| $) . #3#)
-                       (GO #4=#:G940)))
+                       (GO #4=#:G944)))
                      ('T
                       (SEQ
                        (LETT |r2|
@@ -812,9 +812,9 @@
 
 (SDEFUN |COMBF;iibinom;LF;45| ((|l| |List| F) ($ F))
         (SPROG
-         ((#1=#:G961 NIL) (|r2| #2=(|Union| R #3="failed")) (|r1| #2#)
-          (|ans| (F)) (#4=#:G963 NIL) (|i| NIL) (|t| (|Union| (|Integer|) #3#))
-          (|s| #2#) (#5=#:G962 NIL))
+         ((#1=#:G965 NIL) (|r2| #2=(|Union| R #3="failed")) (|r1| #2#)
+          (|ans| (F)) (#4=#:G967 NIL) (|i| NIL) (|t| (|Union| (|Integer|) #3#))
+          (|s| #2#) (#5=#:G966 NIL))
          (SEQ
           (EXIT
            (SEQ
@@ -863,7 +863,7 @@
                                                   (QREFELT $ 131))
                                         |ans| (QREFELT $ 132))))
                                  . #6#)
-                           (GO #7=#:G959))))))))))))
+                           (GO #7=#:G963))))))))))))
             (SEQ
              (LETT |s|
                    (SPADCALL
@@ -938,7 +938,7 @@
           #7# (EXIT #1#)))) 
 
 (SDEFUN |COMBF;iibinom;LF;46| ((|l| |List| F) ($ F))
-        (SPROG ((#1=#:G971 NIL) (|r2| #2=(|Union| R "failed")) (|r1| #2#))
+        (SPROG ((#1=#:G975 NIL) (|r2| #2=(|Union| R "failed")) (|r1| #2#))
                (SEQ
                 (EXIT
                  (SEQ
@@ -950,7 +950,7 @@
                      ((QEQCAR |r1| 1)
                       (PROGN
                        (LETT #1# (|COMBF;ibinom| |l| $) . #3#)
-                       (GO #4=#:G969)))
+                       (GO #4=#:G973)))
                      ('T
                       (SEQ
                        (LETT |r2|
@@ -969,7 +969,7 @@
                 #4# (EXIT #1#)))) 
 
 (SDEFUN |COMBF;iibinom;LF;47| ((|l| |List| F) ($ F))
-        (SPROG ((#1=#:G979 NIL) (|r2| #2=(|Union| R "failed")) (|r1| #2#))
+        (SPROG ((#1=#:G983 NIL) (|r2| #2=(|Union| R "failed")) (|r1| #2#))
                (SEQ
                 (EXIT
                  (SEQ
@@ -981,7 +981,7 @@
                      ((QEQCAR |r1| 1)
                       (PROGN
                        (LETT #1# (|COMBF;ibinom| |l| $) . #3#)
-                       (GO #4=#:G977)))
+                       (GO #4=#:G981)))
                      ('T
                       (SEQ
                        (LETT |r2|
@@ -1006,7 +1006,7 @@
 (SDEFUN |COMBF;iiperm;LF;50| ((|l| |List| F) ($ F)) (|COMBF;iperm| |l| $)) 
 
 (SDEFUN |COMBF;iipow;LF;51| ((|l| |List| F) ($ F))
-        (SPROG ((#1=#:G990 NIL) (|r2| #2=(|Union| R "failed")) (|r1| #2#))
+        (SPROG ((#1=#:G994 NIL) (|r2| #2=(|Union| R "failed")) (|r1| #2#))
                (SEQ
                 (EXIT
                  (SEQ
@@ -1018,7 +1018,7 @@
                      ((QEQCAR |r1| 1)
                       (PROGN
                        (LETT #1# (SPADCALL |l| (QREFELT $ 118)) . #3#)
-                       (GO #4=#:G988)))
+                       (GO #4=#:G992)))
                      ('T
                       (SEQ
                        (LETT |r2|
@@ -1050,9 +1050,9 @@
 
 (DECLAIM (NOTINLINE |CombinatorialFunction;|)) 
 
-(DEFUN |CombinatorialFunction| (&REST #1=#:G1045)
+(DEFUN |CombinatorialFunction| (&REST #1=#:G1049)
   (SPROG NIL
-         (PROG (#2=#:G1046)
+         (PROG (#2=#:G1050)
            (RETURN
             (COND
              ((LETT #2#
@@ -1215,7 +1215,7 @@
               (170 . |kernel|) (176 . +) (|OutputForm|) (182 . |coerce|)
               (187 . |prod|) (193 . =) (199 . |prod|) (206 . |sum|)
               (212 . |sum|) (219 . =) (|SegmentBinding| 7) (225 . |variable|)
-              (|Segment| 7) (230 . |segment|) (235 . |lo|) (240 . |hi|)
+              (|Segment| 7) (230 . |segment|) (235 . |low|) (240 . |high|)
               |COMBF;product;FSbF;25| |COMBF;summation;FSbF;26|
               (245 . |coerce|) (|Mapping| 7 37) (|Mapping| 7 6)
               (|SparseMultivariatePolynomial| 6 37)

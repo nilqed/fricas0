@@ -4,7 +4,7 @@
           (|NewSparseMultivariatePolynomial| R (|OrderedVariableList| |ls|)))
          ($ |List| (|Symbol|)))
         (SPROG
-         ((|truels| (|List| (|Symbol|))) (#1=#:G713 NIL) (#2=#:G725 NIL)
+         ((|truels| (|List| (|Symbol|))) (#1=#:G713 NIL) (#2=#:G726 NIL)
           (|s| NIL) (|lv| (|List| (|OrderedVariableList| |ls|))))
          (SEQ
           (LETT |lv| (SPADCALL (SPADCALL |lp| (QREFELT $ 10)) (QREFELT $ 12))
@@ -36,8 +36,8 @@
           (|NewSparseMultivariatePolynomial| R (|OrderedVariableList| |ls|)))
          ($ |Boolean|))
         (SPROG
-         ((|lq1| (|List| (|Polynomial| R))) (#1=#:G733 NIL) (|p| NIL)
-          (#2=#:G732 NIL)
+         ((|lq1| (|List| (|Polynomial| R))) (#1=#:G734 NIL) (|p| NIL)
+          (#2=#:G733 NIL)
           (|fglmpack|
            (CATEGORY |package|
             (SIGNATURE |zeroDimensional?|
@@ -84,10 +84,10 @@
            (|NewSparseMultivariatePolynomial| R (|OrderedVariableList| |ls|)))
           "failed"))
         (SPROG
-         ((#1=#:G752 NIL) (|q1| NIL) (#2=#:G751 NIL) (#3=#:G748 NIL)
+         ((#1=#:G753 NIL) (|q1| NIL) (#2=#:G752 NIL) (#3=#:G749 NIL)
           (|foo| (|Union| (|List| (|Polynomial| R)) #4="failed"))
-          (|lq1| (|List| (|Polynomial| R))) (#5=#:G750 NIL) (|p| NIL)
-          (#6=#:G749 NIL)
+          (|lq1| (|List| (|Polynomial| R))) (#5=#:G751 NIL) (|p| NIL)
+          (#6=#:G750 NIL)
           (|fglmpack|
            (CATEGORY |package|
             (SIGNATURE |zeroDimensional?|
@@ -139,7 +139,7 @@
             (EXIT
              (COND
               ((QEQCAR |foo| 1)
-               (PROGN (LETT #3# (CONS 1 "failed") . #7#) (GO #8=#:G747)))
+               (PROGN (LETT #3# (CONS 1 "failed") . #7#) (GO #8=#:G748)))
               ('T
                (SEQ
                 (LETT |lp|
@@ -168,9 +168,9 @@
          ($ |List|
           (|NewSparseMultivariatePolynomial| R (|OrderedVariableList| |ls|))))
         (SPROG
-         ((#1=#:G760 NIL) (|q1| NIL) (#2=#:G759 NIL)
-          (|lq1| (|List| (|Polynomial| R))) (#3=#:G758 NIL) (|p| NIL)
-          (#4=#:G757 NIL)
+         ((#1=#:G761 NIL) (|q1| NIL) (#2=#:G760 NIL)
+          (|lq1| (|List| (|Polynomial| R))) (#3=#:G759 NIL) (|p| NIL)
+          (#4=#:G758 NIL)
           (|fglmpack|
            (CATEGORY |package|
             (SIGNATURE |zeroDimensional?|
@@ -244,7 +244,7 @@
                                                          (|OrderedVariableList|
                                                           |ls|))))
              (|:| |tower| (|RegularChain| R |ls|)))))
-          (#2=#:G788 NIL) (|us| (|RegularChain| R |ls|))
+          (#2=#:G789 NIL) (|us| (|RegularChain| R |ls|))
           (|newlp|
            (|List|
             (|NewSparseMultivariatePolynomial| R
@@ -509,7 +509,7 @@
                                                      R
                                                      (|OrderedVariableList|
                                                       |ls|)))))))
-          (#2=#:G820 NIL)
+          (#2=#:G821 NIL)
           (|us|
            (|SquareFreeRegularTriangularSet| R
                                              (|IndexedExponents|
@@ -806,9 +806,9 @@
 
 (DECLAIM (NOTINLINE |LexTriangularPackage;|)) 
 
-(DEFUN |LexTriangularPackage| (&REST #1=#:G826)
+(DEFUN |LexTriangularPackage| (&REST #1=#:G827)
   (SPROG NIL
-         (PROG (#2=#:G827)
+         (PROG (#2=#:G828)
            (RETURN
             (COND
              ((LETT #2#
@@ -848,15 +848,17 @@
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|) (|List| 20)
               (|GeneralPolynomialSet| 6 (|IndexedExponents| 15) 15 20)
               (0 . |construct|) (|List| 15) (5 . |variables|)
-              (|Union| $ '"failed") (|Symbol|) (|OrderedVariableList| 7)
-              (10 . |variable|) (|Boolean|) (15 . |member?|) (|Polynomial| 6)
+              (|Union| $ '"failed") (|Symbol|)
+              (|OrderedVariableList| (NRTEVAL (QREFELT $ 7))) (10 . |variable|)
+              (|Boolean|) (15 . |member?|) (|Polynomial| 6)
               (|NewSparseMultivariatePolynomial| 6 15) (21 . |coerce|)
               |LEXTRIPK;zeroDimensional?;LB;2| (26 . |retract|)
               (|Union| 8 '"failed") |LEXTRIPK;fglmIfCan;LU;3|
               |LEXTRIPK;groebner;2L;4| (31 . |infRittWu?|) (|Mapping| 17 20 20)
               (37 . |sort|) (43 . |zero?|) (|Mapping| 17 20) (48 . |remove|)
-              (54 . |ground?|) (59 . |any?|) (|RegularChain| 6 7)
-              (65 . |empty|) (69 . |mvar|) (74 . |algebraic?|) (80 . |init|)
+              (54 . |ground?|) (59 . |any?|)
+              (|RegularChain| 6 (NRTEVAL (QREFELT $ 7))) (65 . |empty|)
+              (69 . |mvar|) (74 . |algebraic?|) (80 . |init|)
               (|Record| (|:| |rnum| 6) (|:| |polnum| 20) (|:| |den| 6))
               (85 . |remainder|) (91 . |initiallyReduce|)
               (|Record| (|:| |val| 17) (|:| |tower| $)) (|List| 43)

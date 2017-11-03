@@ -5,8 +5,8 @@
 
 (DEFPARAMETER |UnivariatePolynomialCategory;AL| 'NIL) 
 
-(DEFUN |UnivariatePolynomialCategory| (#1=#:G737)
-  (LET (#2=#:G738)
+(DEFUN |UnivariatePolynomialCategory| (#1=#:G738)
+  (LET (#2=#:G739)
     (COND
      ((SETQ #2#
               (|assoc| #3=(|devaluate| #1#) |UnivariatePolynomialCategory;AL|))
@@ -19,12 +19,12 @@
       #2#)))) 
 
 (DEFUN |UnivariatePolynomialCategory;| (|t#1|)
-  (SPROG ((#1=#:G736 NIL))
+  (SPROG ((#1=#:G737 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
                               (|sublisV|
-                               (PAIR '(#2=#:G734 #3=#:G735)
+                               (PAIR '(#2=#:G735 #3=#:G736)
                                      (LIST '(|NonNegativeInteger|)
                                            '(|SingletonAsOrderedSet|)))
                                (COND (|UnivariatePolynomialCategory;CAT|)

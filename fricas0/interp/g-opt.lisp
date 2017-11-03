@@ -89,6 +89,10 @@
         (|optimizeFunctionDef,replaceThrowByReturn| (CAR |x|) |g|)
         (|optimizeFunctionDef,replaceThrowByReturn| (CDR |x|) |g|)))))))
  
+; lispize x == first optimize [x]
+ 
+(DEFUN |lispize| (|x|) (PROG () (RETURN (CAR (|optimize| (LIST |x|))))))
+ 
 ; optimize x ==
 ;   (opt x; x) where
 ;     opt x ==

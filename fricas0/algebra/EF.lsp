@@ -148,7 +148,7 @@
               ('T (|error| "Not an elementary operator")))) 
 
 (SDEFUN |EF;dropfun| ((|x| F) ($ F))
-        (SPROG ((#1=#:G924 NIL) (|k| (|Union| (|Kernel| F) "failed")))
+        (SPROG ((#1=#:G927 NIL) (|k| (|Union| (|Kernel| F) "failed")))
                (SEQ
                 (EXIT
                  (SEQ
@@ -160,7 +160,7 @@
                           (NULL (SPADCALL (QCDR |k|) (QREFELT $ 99))))
                       (PROGN
                        (LETT #1# (|spadConstant| $ 89) . #2#)
-                       (GO #3=#:G922))))))
+                       (GO #3=#:G925))))))
                   (EXIT (|SPADfirst| (SPADCALL (QCDR |k|) (QREFELT $ 99))))))
                 #3# (EXIT #1#)))) 
 
@@ -1358,7 +1358,7 @@
 (SDEFUN |EF;iexp| ((|x| F) ($ F))
         (SPROG
          ((|u| (|Union| F "failed")) (|s3| (F)) (|s2| (F)) (|h| (F)) (|y| (F))
-          (|xi| (F)) (|i| (F)) (#1=#:G1149 NIL) (|kx| (|Kernel| F))
+          (|xi| (F)) (|i| (F)) (#1=#:G1153 NIL) (|kx| (|Kernel| F))
           (|kxu| (|Union| (|Kernel| F) "failed")))
          (SEQ
           (COND ((SPADCALL |x| (QREFELT $ 116)) (|spadConstant| $ 48))
@@ -1383,7 +1383,7 @@
                                   (|SPADfirst| (SPADCALL |kx| (QREFELT $ 99)))
                                   |x| (QREFELT $ 100))
                                  . #3#)
-                           (GO #4=#:G1145))))))))
+                           (GO #4=#:G1149))))))))
                     (COND
                      ((SPADCALL |x| (|spadConstant| $ 89) (QREFELT $ 127))
                       (COND
@@ -1590,7 +1590,7 @@
 
 (SDEFUN |EF;ilog| ((|x| F) ($ F))
         (SPROG
-         ((#1=#:G1173 NIL)
+         ((#1=#:G1177 NIL)
           (|den| (|SparseMultivariatePolynomial| R (|Kernel| F)))
           (|num1| (|Boolean|))
           (|num| (|SparseMultivariatePolynomial| R (|Kernel| F))))
@@ -1628,7 +1628,7 @@
                                       (QREFELT $ 123))
                             (QREFELT $ 49))
                            . #2#)
-                     (GO #3=#:G1171))))))))))
+                     (GO #3=#:G1175))))))))))
             (EXIT (SPADCALL (QREFELT $ 14) |x| (QREFELT $ 123)))))
           #3# (EXIT #1#)))) 
 
@@ -1932,9 +1932,9 @@
 
 (DECLAIM (NOTINLINE |ElementaryFunction;|)) 
 
-(DEFUN |ElementaryFunction| (&REST #1=#:G1430)
+(DEFUN |ElementaryFunction| (&REST #1=#:G1434)
   (SPROG NIL
-         (PROG (#2=#:G1431)
+         (PROG (#2=#:G1435)
            (RETURN
             (COND
              ((LETT #2#

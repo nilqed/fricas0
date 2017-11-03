@@ -26,7 +26,7 @@
 
 (SDEFUN |OVAR;variable;SU;9| ((|exp| |Symbol|) ($ |Union| $ "failed"))
         (SPROG
-         ((#1=#:G736 NIL) (#2=#:G729 NIL) (|i| NIL) (#3=#:G737 NIL)
+         ((#1=#:G739 NIL) (#2=#:G732 NIL) (|i| NIL) (#3=#:G740 NIL)
           (|exp2| NIL))
          (SEQ
           (EXIT
@@ -49,7 +49,7 @@
                                                       '(|NonNegativeInteger|)
                                                       #2#)))
                             . #4#)
-                      (GO #5=#:G735))))))
+                      (GO #5=#:G738))))))
                  (LETT |i| (PROG1 (|inc_SI| |i|) (LETT #3# (CDR #3#) . #4#))
                        . #4#)
                  (GO G190) G191 (EXIT NIL))
@@ -73,9 +73,9 @@
 
 (DECLAIM (NOTINLINE |OrderedVariableList;|)) 
 
-(DEFUN |OrderedVariableList| (#1=#:G742)
+(DEFUN |OrderedVariableList| (#1=#:G745)
   (SPROG NIL
-         (PROG (#2=#:G743)
+         (PROG (#2=#:G746)
            (RETURN
             (COND
              ((LETT #2#

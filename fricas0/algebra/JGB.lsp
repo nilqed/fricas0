@@ -83,10 +83,10 @@
 
 (SDEFUN |JGB;groebner;2L;3| ((|lp| |List| P) ($ |List| P))
         (SPROG
-         ((#1=#:G733 NIL) (|dp| NIL) (#2=#:G732 NIL)
+         ((#1=#:G735 NIL) (|dp| NIL) (#2=#:G734 NIL)
           (|gb| (|List| (|DistributedJetBundlePolynomial| R JB LJV E)))
           (|nlp| (|List| (|DistributedJetBundlePolynomial| R JB LJV E)))
-          (#3=#:G731 NIL) (|p| NIL) (#4=#:G730 NIL))
+          (#3=#:G733 NIL) (|p| NIL) (#4=#:G732 NIL))
          (SEQ
           (LETT |nlp|
                 (PROGN
@@ -116,9 +116,9 @@
 
 (DECLAIM (NOTINLINE |JetGroebner;|)) 
 
-(DEFUN |JetGroebner| (&REST #1=#:G734)
+(DEFUN |JetGroebner| (&REST #1=#:G736)
   (SPROG NIL
-         (PROG (#2=#:G735)
+         (PROG (#2=#:G737)
            (RETURN
             (COND
              ((LETT #2#
@@ -165,8 +165,8 @@
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
               (|local| |#3|) (|local| |#4|) (|local| |#5|)
               (|Union| 7 '"failed") (0 . |mainVariable|) (5 . |retract|)
-              (|DistributedJetBundlePolynomial| 6 7 8 10) (10 . |coerce|)
-              (|Boolean|) (|List| 7) (15 . |member?|)
+              (|DistributedJetBundlePolynomial| 6 7 (NRTEVAL (QREFELT $ 8)) 10)
+              (10 . |coerce|) (|Boolean|) (|List| 7) (15 . |member?|)
               (|SparseUnivariatePolynomial| $) (21 . |univariate|)
               (27 . |Zero|) (|SparseUnivariatePolynomial| 9) (31 . |zero?|)
               (36 . |leadingCoefficient|) (|NonNegativeInteger|)

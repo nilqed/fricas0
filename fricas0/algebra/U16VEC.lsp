@@ -39,7 +39,7 @@
         (SETELT_U16 |x| |i| |s|)) 
 
 (SDEFUN |U16VEC;fill!;$I$;9| ((|x| $) (|s| |Integer|) ($ $))
-        (SPROG ((#1=#:G2959 NIL) (|i| NIL))
+        (SPROG ((#1=#:G2969 NIL) (|i| NIL))
                (SEQ
                 (SEQ (LETT |i| 0 . #2=(|U16VEC;fill!;$I$;9|))
                      (LETT #1# (|sub_SI| (QV_LEN_U16 |x|) 1) . #2#) G190
@@ -52,7 +52,7 @@
 
 (DEFUN |U16Vector| ()
   (SPROG NIL
-         (PROG (#1=#:G2971)
+         (PROG (#1=#:G2981)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|U16Vector|)
@@ -70,7 +70,7 @@
 
 (DEFUN |U16Vector;| ()
   (SPROG
-   ((|dv$| NIL) ($ NIL) (#1=#:G2969 NIL) (#2=#:G2968 NIL) (#3=#:G2967 NIL)
+   ((|dv$| NIL) ($ NIL) (#1=#:G2979 NIL) (#2=#:G2978 NIL) (#3=#:G2977 NIL)
     (|pv$| NIL))
    (PROGN
     (LETT |dv$| '(|U16Vector|) . #4=(|U16Vector|))
@@ -175,7 +175,7 @@
               (|Integer|) |U16VEC;minIndex;$I;2| |U16VEC;empty;$;3|
               |U16VEC;new;NniI$;4| |U16VEC;qelt;$2I;5| |U16VEC;elt;$2I;6|
               |U16VEC;qsetelt!;$3I;7| |U16VEC;setelt!;$3I;8|
-              |U16VEC;fill!;$I$;9| (|List| 8) (|Equation| 8) (|List| 18)
+              |U16VEC;fill!;$I$;9| (|List| 8) (|List| 19) (|Equation| 8)
               (|Mapping| 8 8 8) (|Boolean|) (|Mapping| 21 8 8) (|OutputForm|)
               (|HashState|) (|SingleInteger|) (|String|) (|InputForm|)
               (|Mapping| 21 8) (|UniversalSegment| 8) (|Void|) (|Mapping| 8 8)
@@ -188,11 +188,11 @@
               |merge| 202 |members| 215 |member?| 220 |maxIndex| 226 |max| 231
               |map!| 237 |map| 243 |less?| 256 |leftTrim| 262 |latex| 268
               |insert| 273 |indices| 287 |index?| 292 |hashUpdate!| 298 |hash|
-              304 |first| 309 |find| 314 |fill!| 320 |every?| 326 |eval| 332
-              |eq?| 358 |entry?| 364 |entries| 370 |empty?| 375 |empty| 380
-              |elt| 384 |delete| 403 |count| 415 |copyInto!| 427 |copy| 434
-              |convert| 439 |construct| 444 |concat| 449 |coerce| 472 |any?|
-              477 >= 483 > 489 = 495 <= 501 < 507 |#| 513)
+              304 |first| 309 |find| 320 |fill!| 326 |every?| 332 |eval| 338
+              |eq?| 364 |entry?| 370 |entries| 376 |empty?| 381 |empty| 386
+              |elt| 390 |delete| 409 |count| 421 |copyInto!| 433 |copy| 440
+              |convert| 445 |construct| 450 |concat| 455 |coerce| 478 |any?|
+              483 >= 489 > 495 = 501 <= 507 < 513 |#| 519)
            'NIL
            (CONS
             (|makeByteWordVec2| 11
@@ -220,8 +220,8 @@
                                     0 1 2 0 21 0 6 1 3 12 8 0 29 8 1 3 12 8 0 8
                                     8 15 2 13 0 28 0 1 0 0 0 1 2 14 0 0 8 1 1
                                     15 0 0 1 1 13 0 0 1 1 14 0 0 1 2 14 0 8 0 1
-                                    2 13 0 28 0 1 4 14 8 20 0 8 8 1 3 13 8 20 0
-                                    8 1 2 13 8 20 0 1 3 12 8 0 8 8 14 2 0 8 0 8
+                                    2 13 0 28 0 1 4 14 8 20 0 8 8 1 2 13 8 20 0
+                                    1 3 13 8 20 0 8 1 3 12 8 0 8 8 14 2 0 8 0 8
                                     12 3 14 8 8 0 8 1 2 14 8 8 0 1 2 13 8 28 0
                                     1 1 13 17 0 1 2 0 0 6 8 11 2 0 21 0 6 1 1 1
                                     8 0 9 2 17 0 0 0 1 2 17 0 0 0 1 3 13 0 22 0
@@ -230,17 +230,17 @@
                                     0 31 0 1 2 0 21 0 6 1 2 14 0 0 8 1 1 19 26
                                     0 1 3 0 0 8 0 8 1 3 0 0 0 0 8 1 1 0 17 0 1
                                     2 0 21 8 0 1 2 19 24 24 0 1 1 19 25 0 1 1 1
-                                    8 0 1 2 0 33 28 0 1 2 12 0 0 8 16 2 13 21
-                                    28 0 1 3 7 0 0 8 8 1 3 7 0 0 17 17 1 2 7 0
-                                    0 18 1 2 7 0 0 19 1 2 0 21 0 0 1 2 14 21 8
-                                    0 1 1 0 17 0 1 1 0 21 0 1 0 0 0 10 2 0 0 0
-                                    29 1 3 0 8 0 8 8 1 2 0 8 0 8 13 2 0 0 0 8 1
-                                    2 0 0 0 29 1 2 14 6 8 0 1 2 13 6 28 0 1 3
-                                    15 0 0 0 8 1 1 0 0 0 1 1 2 27 0 1 1 0 0 17
-                                    1 2 0 0 0 0 1 1 0 0 32 1 2 0 0 8 0 1 2 0 0
-                                    0 8 1 1 20 23 0 1 2 13 21 28 0 1 2 17 21 0
-                                    0 1 2 17 21 0 0 1 2 21 21 0 0 1 2 17 21 0 0
-                                    1 2 17 21 0 0 1 1 13 6 0 7)))))
+                                    8 0 1 2 0 0 0 6 1 2 0 33 28 0 1 2 12 0 0 8
+                                    16 2 13 21 28 0 1 3 7 0 0 17 17 1 3 7 0 0 8
+                                    8 1 2 7 0 0 18 1 2 7 0 0 19 1 2 0 21 0 0 1
+                                    2 14 21 8 0 1 1 0 17 0 1 1 0 21 0 1 0 0 0
+                                    10 2 0 0 0 29 1 2 0 8 0 8 13 3 0 8 0 8 8 1
+                                    2 0 0 0 29 1 2 0 0 0 8 1 2 14 6 8 0 1 2 13
+                                    6 28 0 1 3 15 0 0 0 8 1 1 0 0 0 1 1 2 27 0
+                                    1 1 0 0 17 1 1 0 0 32 1 2 0 0 0 0 1 2 0 0 0
+                                    8 1 2 0 0 8 0 1 1 20 23 0 1 2 13 21 28 0 1
+                                    2 17 21 0 0 1 2 17 21 0 0 1 2 21 21 0 0 1 2
+                                    17 21 0 0 1 2 17 21 0 0 1 1 13 6 0 7)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|U16Vector| 'NILADIC T) 

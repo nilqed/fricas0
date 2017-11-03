@@ -20,7 +20,7 @@
 
 (DEFUN |QueryEquation| ()
   (SPROG NIL
-         (PROG (#1=#:G714)
+         (PROG (#1=#:G715)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|QueryEquation|)

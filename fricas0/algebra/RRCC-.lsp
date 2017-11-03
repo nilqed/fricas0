@@ -30,7 +30,7 @@
          ((|d|
            (|Record| (|:| |coef| (|List| |ThePols|))
                      (|:| |generator| |ThePols|)))
-          (|defPol| (|ThePols|)) (#2=#:G735 NIL)
+          (|defPol| (|ThePols|)) (#2=#:G738 NIL)
           (|res| (|Union| |TheField| "failed")))
          (SEQ
           (COND

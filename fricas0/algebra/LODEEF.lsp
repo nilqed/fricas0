@@ -1,7 +1,7 @@
 
 (SDEFUN |LODEEF;simp_roots| ((|f| F) (|la| |List| F) ($ F))
         (SPROG
-         ((|k1| (F)) (#1=#:G725 NIL) (|k| NIL) (|ta| (|List| (|Kernel| F)))
+         ((|k1| (F)) (#1=#:G726 NIL) (|k| NIL) (|ta| (|List| (|Kernel| F)))
           (|tf| (|List| (|Kernel| F))))
          (SEQ
           (LETT |tf| (SPADCALL |f| (QREFELT $ 13)) . #2=(|LODEEF;simp_roots|))
@@ -58,7 +58,7 @@
          ($ |Union| (|Record| (|:| |particular| F) (|:| |basis| (|List| F)))
           #2="failed"))
         (SPROG
-         ((#3=#:G756 NIL) (|f| NIL) (#4=#:G755 NIL) (|kz| (|Kernel| F))
+         ((#3=#:G758 NIL) (|f| NIL) (#4=#:G757 NIL) (|kz| (|Kernel| F))
           (|rc| (|Record| (|:| |particular| F) (|:| |basis| (|List| F))))
           (|u|
            (|Union| (|Record| (|:| |particular| F) (|:| |basis| (|List| F)))
@@ -196,7 +196,7 @@
 (SDEFUN |LODEEF;xpart| ((|f| F) (|x| |Symbol|) ($ F))
         (SPROG
          ((|lp| (|List| (|SparseMultivariatePolynomial| R (|Kernel| F))))
-          (#1=#:G784 NIL) (|k| NIL) (#2=#:G783 NIL)
+          (#1=#:G787 NIL) (|k| NIL) (#2=#:G786 NIL)
           (|l| (|List| (|Kernel| F))))
          (SEQ
           (LETT |l|
@@ -269,7 +269,7 @@
                   (EXIT |ans|))))))) 
 
 (SDEFUN |LODEEF;multint| ((|a| F) (|l| |List| F) (|x| |Symbol|) ($ F))
-        (SPROG ((#1=#:G793 NIL) (|g| NIL))
+        (SPROG ((#1=#:G796 NIL) (|g| NIL))
                (SEQ
                 (SEQ (LETT |g| NIL . #2=(|LODEEF;multint|))
                      (LETT #1# |l| . #2#) G190
@@ -292,7 +292,7 @@
         ((|op| |LinearOrdinaryDifferentialOperator1|
           (|Fraction| (|SparseUnivariatePolynomial| F)))
          (|k| |Kernel| F) (|x| |Symbol|) ($ |List| F))
-        (SPROG ((#1=#:G811 NIL) (|h| NIL) (#2=#:G810 NIL))
+        (SPROG ((#1=#:G814 NIL) (|h| NIL) (#2=#:G813 NIL))
                (SEQ
                 (COND
                  ((EQL (SPADCALL |op| (QREFELT $ 89)) 1)
@@ -333,8 +333,8 @@
          (|sols| |List| (|Fraction| (|SparseUnivariatePolynomial| F)))
          (|k| |Kernel| F) (|x| |Symbol|) ($ |List| F))
         (SPROG
-         ((#1=#:G828 NIL) (|e| NIL) (#2=#:G827 NIL) (#3=#:G826 NIL) (|h| NIL)
-          (#4=#:G825 NIL) (|int| (|List| F)) (#5=#:G824 NIL) (#6=#:G823 NIL)
+         ((#1=#:G831 NIL) (|e| NIL) (#2=#:G830 NIL) (#3=#:G829 NIL) (|h| NIL)
+          (#4=#:G828 NIL) (|int| (|List| F)) (#5=#:G827 NIL) (#6=#:G826 NIL)
           (|le| (|List| F))
           (|rec|
            (|Record|
@@ -342,7 +342,7 @@
                  (|LinearOrdinaryDifferentialOperator1|
                   (|Fraction| (|SparseUnivariatePolynomial| F))))
             (|:| |op| (|List| (|Fraction| (|SparseUnivariatePolynomial| F))))))
-          (|bas| (|List| F)) (#7=#:G822 NIL) (#8=#:G821 NIL))
+          (|bas| (|List| F)) (#7=#:G825 NIL) (#8=#:G824 NIL))
          (SEQ
           (LETT |bas|
                 (PROGN
@@ -429,10 +429,10 @@
         ((|oper| L) (|sols| |List| F) (|k| |Kernel| F) (|x| |Symbol|)
          ($ |List| F))
         (SPROG
-         ((#1=#:G861 NIL) (|e| NIL) (#2=#:G860 NIL) (|int| (|List| F))
-          (#3=#:G859 NIL) (|h| NIL) (#4=#:G858 NIL)
+         ((#1=#:G864 NIL) (|e| NIL) (#2=#:G863 NIL) (|int| (|List| F))
+          (#3=#:G862 NIL) (|h| NIL) (#4=#:G861 NIL)
           (|rec| (|Record| (|:| |eq| L) (|:| |op| (|List| F))))
-          (|n| (|NonNegativeInteger|)) (#5=#:G851 NIL))
+          (|n| (|NonNegativeInteger|)) (#5=#:G854 NIL))
          (SEQ
           (COND
            ((ZEROP
@@ -537,9 +537,9 @@
           (|Fraction| (|SparseUnivariatePolynomial| F)))
          (|k| |Kernel| F) (|x| |Symbol|) ($ |List| F))
         (SPROG
-         ((|y2| (F)) (|y1| (F)) (#1=#:G888 NIL) (|e| NIL) (#2=#:G887 NIL)
-          (|zp| (|List| F)) (|lc| (|List| F)) (#3=#:G886 NIL) (|crf| NIL)
-          (#4=#:G885 NIL)
+         ((|y2| (F)) (|y1| (F)) (#1=#:G892 NIL) (|e| NIL) (#2=#:G891 NIL)
+          (|zp| (|List| F)) (|lc| (|List| F)) (#3=#:G890 NIL) (|crf| NIL)
+          (#4=#:G889 NIL)
           (|lcrf| (|List| #5=(|Fraction| (|SparseUnivariatePolynomial| F))))
           (|ba| (F)) (|p| (|SparseUnivariatePolynomial| F))
           (|u|
@@ -712,7 +712,7 @@
          ($ |Union| (|Record| (|:| |particular| F) (|:| |basis| (|List| F)))
           "failed"))
         (SPROG
-         ((#1=#:G910 NIL)
+         ((#1=#:G914 NIL)
           (|rc|
            (|Record|
             (|:| |particular|
@@ -773,9 +773,9 @@
         ((|op| L) (|g| F) (|x| |Symbol|) (|a| F) (|y0| |List| F)
          ($ |Union| F "failed"))
         (SPROG
-         ((|hp| (F)) (#1=#:G937 NIL) (|f| NIL) (|i| NIL) (|s| (|Vector| F))
-          (|sol| (|Union| (|Vector| F) "failed")) (|h| (F)) (#2=#:G935 NIL)
-          (#3=#:G936 NIL) (|yy| NIL) (|kx| (|Kernel| F)) (|v| (|Vector| F))
+         ((|hp| (F)) (#1=#:G942 NIL) (|f| NIL) (|i| NIL) (|s| (|Vector| F))
+          (|sol| (|Union| (|Vector| F) "failed")) (|h| (F)) (#2=#:G940 NIL)
+          (#3=#:G941 NIL) (|yy| NIL) (|kx| (|Kernel| F)) (|v| (|Vector| F))
           (|n| (|NonNegativeInteger|)) (|b| #4=(|List| F))
           (|u|
            (|Union| (|Record| (|:| |particular| F) (|:| |basis| #4#))
@@ -891,7 +891,7 @@
          ($ |Union| (|Record| (|:| |particular| F) (|:| |basis| (|List| F)))
           "failed"))
         (SPROG
-         ((#1=#:G948 NIL)
+         ((#1=#:G953 NIL)
           (|rec|
            (|Record| (|:| |particular| (|Union| F #2="failed"))
                      (|:| |basis| (|List| F)))))
@@ -914,9 +914,9 @@
 
 (DECLAIM (NOTINLINE |ElementaryFunctionLODESolver;|)) 
 
-(DEFUN |ElementaryFunctionLODESolver| (&REST #1=#:G952)
+(DEFUN |ElementaryFunctionLODESolver| (&REST #1=#:G957)
   (SPROG NIL
-         (PROG (#2=#:G953)
+         (PROG (#2=#:G958)
            (RETURN
             (COND
              ((LETT #2#

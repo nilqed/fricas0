@@ -183,7 +183,6 @@
      (CATCH 'DONE (|handle_input_file| |db_name| #'|cacheKeyedMsg1| NIL)))))
  
 ; getKeyedMsg(key) ==
-;     key := object2Identifier(key)
 ;     if not($msg_hash) then
 ;         $msg_hash := MAKE_-HASHTABLE('ID)
 ;         cacheKeyedMsg($defaultMsgDatabaseName)
@@ -193,7 +192,6 @@
   (PROG ()
     (RETURN
      (PROGN
-      (SETQ |key| (|object2Identifier| |key|))
       (COND
        ((NULL |$msg_hash|) (SETQ |$msg_hash| (MAKE-HASHTABLE 'ID))
         (|cacheKeyedMsg| |$defaultMsgDatabaseName|)))
@@ -749,20 +747,50 @@
       (|sayPatternMsg| |key| |args|)
       (|spadThrow|)))))
  
+; say_msg(msg, args) ==
+;     ioHook("say_msg", msg, args)
+;     say_msg_local(msg, args)
+;     ioHook("end_say_msg", msg)
+ 
+(DEFUN |say_msg| (|msg| |args|)
+  (PROG ()
+    (RETURN
+     (PROGN
+      (|ioHook| '|say_msg| |msg| |args|)
+      (|say_msg_local| |msg| |args|)
+      (|ioHook| '|end_say_msg| |msg|)))))
+ 
+; throw_msg(msg, args) ==
+;     sayMSG '" "
+;     if $testingSystem then sayMSG $testingErrorPrefix
+;     say_Msg(msg, args)
+;     spadThrow()
+ 
+(DEFUN |throw_msg| (|msg| |args|)
+  (PROG ()
+    (RETURN
+     (PROGN
+      (|sayMSG| " ")
+      (COND (|$testingSystem| (|sayMSG| |$testingErrorPrefix|)))
+      (|say_Msg| |msg| |args|)
+      (|spadThrow|)))))
+ 
 ; sayKeyedMsgAsTeX(key, args) ==
 ;   $texFormatting: fluid := true
-;   sayKeyedMsgLocal(key, args)
+;   say_msg_local(getKeyedMsg key, args)
  
 (DEFUN |sayKeyedMsgAsTeX| (|key| |args|)
   (PROG (|$texFormatting|)
     (DECLARE (SPECIAL |$texFormatting|))
     (RETURN
-     (PROGN (SETQ |$texFormatting| T) (|sayKeyedMsgLocal| |key| |args|)))))
+     (PROGN
+      (SETQ |$texFormatting| T)
+      (|say_msg_local| (|getKeyedMsg| |key|) |args|)))))
  
 ; sayKeyedMsg(key,args) ==
 ;   $texFormatting: fluid := false
 ;   ioHook("startKeyedMsg", key, args)
-;   sayKeyedMsgLocal(key, args)
+;   say_msg_local(getKeyedMsg key, args)
 ;   ioHook("endOfKeyedMsg", key)
  
 (DEFUN |sayKeyedMsg| (|key| |args|)
@@ -772,21 +800,21 @@
      (PROGN
       (SETQ |$texFormatting| NIL)
       (|ioHook| '|startKeyedMsg| |key| |args|)
-      (|sayKeyedMsgLocal| |key| |args|)
+      (|say_msg_local| (|getKeyedMsg| |key|) |args|)
       (|ioHook| '|endOfKeyedMsg| |key|)))))
  
-; sayKeyedMsgLocal(key, args) ==
-;   msg := segmentKeyedMsg getKeyedMsg key
+; say_msg_local(msg, args) ==
+;   msg := segmentKeyedMsg msg
 ;   msg := substituteSegmentedMsg(msg,args)
 ;   msg' := flowSegmentedMsg(msg,$LINELENGTH,$MARGIN)
 ;   if $printMsgsToFile then sayMSG2File msg'
 ;   sayMSG msg'
  
-(DEFUN |sayKeyedMsgLocal| (|key| |args|)
-  (PROG (|msg| |msg'|)
+(DEFUN |say_msg_local| (|msg| |args|)
+  (PROG (|msg'|)
     (RETURN
      (PROGN
-      (SETQ |msg| (|segmentKeyedMsg| (|getKeyedMsg| |key|)))
+      (SETQ |msg| (|segmentKeyedMsg| |msg|))
       (SETQ |msg| (|substituteSegmentedMsg| |msg| |args|))
       (SETQ |msg'| (|flowSegmentedMsg| |msg| $LINELENGTH $MARGIN))
       (COND (|$printMsgsToFile| (|sayMSG2File| |msg'|)))
@@ -855,12 +883,6 @@
       (|spadThrow|)))))
  
 ; throwKeyedMsg1(key,args) ==
-;   -- greg, following statement do nothing
-;   -- (see sayMsg in macros.lisp where the message is printed
-;   -- on the Algebra output stream)
-;   -- Furthermore we MUSTN'T "play" with these type of variables
-;   -- at this level
-;   -- _*STANDARD_-OUTPUT_* : fluid := $texOutputStream
 ;   sayMSG '" "
 ;   if $testingSystem then sayMSG $testingErrorPrefix
 ;   sayKeyedMsg(key,args)

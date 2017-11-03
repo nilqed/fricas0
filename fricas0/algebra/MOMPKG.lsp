@@ -118,9 +118,9 @@
         ((|mom| |List| R)
          ($ |Record| (|:| |an| (|List| R)) (|:| |bn| (|List| R))))
         (SPROG
-         ((N (|Integer|)) (G (|List| R)) (#1=#:G751 NIL) (|h| NIL)
-          (#2=#:G750 NIL) (H (|List| R)) (|Hk| (R)) (#3=#:G749 NIL) (|l| NIL)
-          (#4=#:G748 NIL) (|k| NIL) (|bb| #5=(|List| R)) (|aa| #5#) (|bk| (R))
+         ((N (|Integer|)) (G (|List| R)) (#1=#:G756 NIL) (|h| NIL)
+          (#2=#:G755 NIL) (H (|List| R)) (|Hk| (R)) (#3=#:G754 NIL) (|l| NIL)
+          (#4=#:G753 NIL) (|k| NIL) (|bb| #5=(|List| R)) (|aa| #5#) (|bk| (R))
           (|ak| (R)))
          (SEQ (LETT N (LENGTH |mom|) . #6=(|MOMPKG;moment2nthJacobi;LR;8|))
               (LETT G |mom| . #6#) (LETT |aa| NIL . #6#) (LETT |bb| NIL . #6#)
@@ -216,7 +216,7 @@
           (RETURN
            (PROGN
             (SPROG
-             ((|gseries| NIL) (#2=#:G753 NIL) (|a| NIL) (|gseries1| NIL)
+             ((|gseries| NIL) (#2=#:G758 NIL) (|a| NIL) (|gseries1| NIL)
               (|b| NIL) (|b1| NIL))
              (SEQ
               (LETT |gseries|
@@ -400,10 +400,10 @@
          ($ |Record| (|:| |momt| (|List| (|SparseUnivariatePolynomial| R)))
           (|:| |cum| (|List| R)) (|:| |mom| (|Stream| R))))
         (SPROG
-         ((#1=#:G792 NIL) (|mtnew| (|List| (|SparseUnivariatePolynomial| R)))
+         ((#1=#:G797 NIL) (|mtnew| (|List| (|SparseUnivariatePolynomial| R)))
           (|rrnew| (|List| R)) (|mnt| (|SparseUnivariatePolynomial| R))
-          (|rn| (R)) (|tmp| (|SparseUnivariatePolynomial| R)) (#2=#:G793 NIL)
-          (|k| NIL) (#3=#:G794 NIL) (|r| NIL) (#4=#:G795 NIL) (|m| NIL)
+          (|rn| (R)) (|tmp| (|SparseUnivariatePolynomial| R)) (#2=#:G798 NIL)
+          (|k| NIL) (#3=#:G799 NIL) (|r| NIL) (#4=#:G800 NIL) (|m| NIL)
           (|n| (|Integer|)) (|mm| (|Stream| R)) (|rr| (|List| R))
           (|mt| (|List| (|SparseUnivariatePolynomial| R))))
          (SEQ
@@ -454,7 +454,7 @@
              (PROGN
               (LETT #1# (VECTOR |mtnew| |rrnew| (SPADCALL |mm| (QREFELT $ 12)))
                     . #5#)
-              (GO #6=#:G791)))))
+              (GO #6=#:G796)))))
           #6# (EXIT #1#)))) 
 
 (SDEFUN |MOMPKG;moment2monotoneCumulant;2S;15|
@@ -500,10 +500,10 @@
          ($ |Record| (|:| |cum| (|Stream| R))
           (|:| |momt| (|List| (|SparseUnivariatePolynomial| R)))))
         (SPROG
-         ((#1=#:G807 NIL) (|mtnew| (|List| (|SparseUnivariatePolynomial| R)))
+         ((#1=#:G812 NIL) (|mtnew| (|List| (|SparseUnivariatePolynomial| R)))
           (|mnt| (|SparseUnivariatePolynomial| R)) (|rr| (|Stream| R))
-          (|tmp| (|SparseUnivariatePolynomial| R)) (#2=#:G808 NIL) (|k| NIL)
-          (#3=#:G809 NIL) (|m| NIL) (|n| (|Integer|))
+          (|tmp| (|SparseUnivariatePolynomial| R)) (#2=#:G813 NIL) (|k| NIL)
+          (#3=#:G814 NIL) (|m| NIL) (|n| (|Integer|))
           (|mt| (|List| (|SparseUnivariatePolynomial| R))))
          (SEQ
           (EXIT
@@ -542,7 +542,7 @@
             (EXIT
              (PROGN
               (LETT #1# (CONS (QCAR |srm|) |mtnew|) . #4#)
-              (GO #5=#:G806)))))
+              (GO #5=#:G811)))))
           #5# (EXIT #1#)))) 
 
 (SDEFUN |MOMPKG;monotoneCumulant2moment;2S;17|
@@ -613,9 +613,9 @@
 
 (DECLAIM (NOTINLINE |MomentPackage;|)) 
 
-(DEFUN |MomentPackage| (#1=#:G821)
+(DEFUN |MomentPackage| (#1=#:G826)
   (SPROG NIL
-         (PROG (#2=#:G822)
+         (PROG (#2=#:G827)
            (RETURN
             (COND
              ((LETT #2#

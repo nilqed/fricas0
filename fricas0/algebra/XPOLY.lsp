@@ -1,9 +1,9 @@
 
 (DECLAIM (NOTINLINE |XPolynomial;|)) 
 
-(DEFUN |XPolynomial| (#1=#:G709)
+(DEFUN |XPolynomial| (#1=#:G713)
   (SPROG NIL
-         (PROG (#2=#:G710)
+         (PROG (#2=#:G714)
            (RETURN
             (COND
              ((LETT #2#
@@ -44,30 +44,35 @@
 (MAKEPROP '|XPolynomial| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL (|XRecursivePolynomial| 15 6) (|local| |#1|)
-              (|NonNegativeInteger|) (|Record| (|:| |k| 15) (|:| |c| $))
-              (|List| 8) (|XDistributedPolynomial| 15 6) (|List| 15)
-              (|FreeMonoid| 15) (|Mapping| 6 6) (|Boolean|) (|Symbol|)
-              (|Record| (|:| |k| 12) (|:| |c| 6)) (|Union| 12 '"failed")
-              (|Integer|) (|Union| $ '"failed") (|PositiveInteger|)
-              (|HashState|) (|String|) (|OutputForm|) (|SingleInteger|))
+              (|NonNegativeInteger|) (|XDistributedPolynomial| 15 6)
+              (|Record| (|:| |k| 15) (|:| |c| $)) (|List| 9) (|FreeMonoid| 15)
+              (|Mapping| 6 6) (|List| 15) (|Boolean|) (|Symbol|)
+              (|Record| (|:| |k| 11) (|:| |c| 6)) (|Union| 11 '"failed")
+              (|Integer|) (|Union| $ '"failed") (|PositiveInteger|) (|String|)
+              (|SingleInteger|) (|HashState|) (|OutputForm|))
            '#() 'NIL
            (CONS
             (|makeByteWordVec2| 2
-                                '(0 0 0 2 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-                                  0 1))
+                                '(0 0 0 2 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                                  0 0 0 0 0 0 0 0 0 1))
             (CONS
-             '#(NIL NIL NIL |Algebra&| |Module&| NIL |Ring&| NIL NIL |Rng&| NIL
-                |AbelianGroup&| NIL NIL |AbelianMonoid&| |Monoid&| NIL
-                |SemiGroup&| |AbelianSemiGroup&| |SetCategory&|
-                |RetractableTo&| NIL |BasicType&| NIL NIL)
+             '#(NIL NIL NIL |Algebra&| NIL |Rng&| NIL NIL |Module&| NIL
+                |NonAssociativeRing&| NIL NIL NIL |NonAssociativeRng&| NIL NIL
+                |AbelianGroup&| NIL NIL NIL NIL |MagmaWithUnit&|
+                |NonAssociativeSemiRng&| |AbelianMonoid&| |Magma&|
+                |AbelianSemiGroup&| |SetCategory&| |RetractableTo&| NIL
+                |BasicType&| NIL NIL)
              (CONS
               '#((|XPolynomialsCat| 15 6) (|XFreeAlgebra| 15 6) (|XAlgebra| 6)
-                 (|Algebra| 6) (|Module| 6) (|BiModule| 6 6) (|Ring|)
-                 (|LeftModule| 6) (|RightModule| 6) (|Rng|) (|LeftModule| $$)
-                 (|AbelianGroup|) (|CancellationAbelianMonoid|) (|SemiRing|)
-                 (|AbelianMonoid|) (|Monoid|) (|SemiRng|) (|SemiGroup|)
-                 (|AbelianSemiGroup|) (|SetCategory|) (|RetractableTo| 12)
-                 (|unitsKnown|) (|BasicType|) (|CoercibleTo| 23)
+                 (|Algebra| 6) (|Ring|) (|Rng|) (|SemiRing|) (|SemiRng|)
+                 (|Module| 6) (|BiModule| 6 6) (|NonAssociativeRing|)
+                 (|BiModule| $$ $$) (|LeftModule| 6) (|RightModule| 6)
+                 (|NonAssociativeRng|) (|RightModule| $$) (|LeftModule| $$)
+                 (|AbelianGroup|) (|Monoid|) (|NonAssociativeSemiRing|)
+                 (|CancellationAbelianMonoid|) (|SemiGroup|) (|MagmaWithUnit|)
+                 (|NonAssociativeSemiRng|) (|AbelianMonoid|) (|Magma|)
+                 (|AbelianSemiGroup|) (|SetCategory|) (|RetractableTo| 11)
+                 (|unitsKnown|) (|BasicType|) (|CoercibleTo| 24)
                  (|noZeroDivisors|))
               (|makeByteWordVec2| -999999 'NIL))))
            '|lookupIncomplete|)) 

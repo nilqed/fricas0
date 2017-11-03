@@ -287,7 +287,6 @@
 (DEFUN |unabbrevAndLoad| (|u|) (PROG () (RETURN (|unabbrev1| |u| T))))
  
 ; isNameOfType x ==
-;   $doNotAddEmptyModeIfTrue:local:= true
 ;   (val := get(x,'value,$InteractiveFrame)) and
 ;     (domain := objMode val) and
 ;       domain in '((Mode) (Type) (Category)) => true
@@ -295,18 +294,14 @@
 ;   constructor? y
  
 (DEFUN |isNameOfType| (|x|)
-  (PROG (|$doNotAddEmptyModeIfTrue| |y| |domain| |val|)
-    (DECLARE (SPECIAL |$doNotAddEmptyModeIfTrue|))
+  (PROG (|val| |domain| |y|)
     (RETURN
-     (PROGN
-      (SETQ |$doNotAddEmptyModeIfTrue| T)
-      (COND
-       ((AND (SETQ |val| (|get| |x| '|value| |$InteractiveFrame|))
-             (SETQ |domain| (|objMode| |val|))
-             (|member| |domain| '((|Mode|) (|Type|) (|Category|))))
-        T)
-       ('T
-        (PROGN (SETQ |y| (|opOf| (|unabbrev| |x|))) (|constructor?| |y|))))))))
+     (COND
+      ((AND (SETQ |val| (|get| |x| '|value| |$InteractiveFrame|))
+            (SETQ |domain| (|objMode| |val|))
+            (|member| |domain| '((|Mode|) (|Type|) (|Category|))))
+       T)
+      ('T (PROGN (SETQ |y| (|opOf| (|unabbrev| |x|))) (|constructor?| |y|)))))))
  
 ; unabbrev1(u,modeIfTrue) ==
 ;   atom u =>

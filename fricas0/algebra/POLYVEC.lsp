@@ -1,7 +1,7 @@
 
 (SDEFUN |POLYVEC;copy_first;2UvIV;1|
         ((|np| |U32Vector|) (|op| |U32Vector|) (|n| |Integer|) ($ |Void|))
-        (SPROG ((#1=#:G708 NIL) (|j| NIL) (|ns| (|SingleInteger|)))
+        (SPROG ((#1=#:G711 NIL) (|j| NIL) (|ns| (|SingleInteger|)))
                (SEQ (LETT |ns| |n| . #2=(|POLYVEC;copy_first;2UvIV;1|))
                     (EXIT
                      (SEQ (LETT |j| 0 . #2#) (LETT #1# (|sub_SI| |ns| 1) . #2#)
@@ -14,7 +14,7 @@
         ((|np| |U32Vector|) (|op| |U32Vector|) (|m| |Integer|) (|n| |Integer|)
          ($ |Void|))
         (SPROG
-         ((#1=#:G712 NIL) (|j| NIL) (|ns| #2=(|SingleInteger|)) (|ms| #2#))
+         ((#1=#:G715 NIL) (|j| NIL) (|ns| #2=(|SingleInteger|)) (|ms| #2#))
          (SEQ (LETT |ms| |m| . #3=(|POLYVEC;copy_slice;2Uv2IV;2|))
               (LETT |ns| |n| . #3#)
               (EXIT
@@ -71,7 +71,7 @@
 (SDEFUN |POLYVEC;pa_to_sup;UvSup;5|
         ((|v| |U32Vector|) ($ |SparseUnivariatePolynomial| (|Integer|)))
         (SPROG
-         ((|res| (|SparseUnivariatePolynomial| (|Integer|))) (#1=#:G727 NIL)
+         ((|res| (|SparseUnivariatePolynomial| (|Integer|))) (#1=#:G730 NIL)
           (|i| NIL) (|n| (|NonNegativeInteger|)))
          (SEQ (LETT |n| (QV_LEN_U32 |v|) . #2=(|POLYVEC;pa_to_sup;UvSup;5|))
               (LETT |res| (|spadConstant| $ 22) . #2#)
@@ -91,7 +91,7 @@
         ((|v1| |U32Vector|) (|v2| |U32Vector|) (|m| |Integer|) (|n| |Integer|)
          (|c| |Integer|) (|p| |Integer|) ($ |Void|))
         (SPROG
-         ((#1=#:G731 NIL) (|i| NIL) (|ns| #2=(|SingleInteger|)) (|ms| #2#))
+         ((#1=#:G734 NIL) (|i| NIL) (|ns| #2=(|SingleInteger|)) (|ms| #2#))
          (SEQ (LETT |ms| |m| . #3=(|POLYVEC;vector_add_mul;2Uv4IV;6|))
               (LETT |ns| |n| . #3#)
               (EXIT
@@ -109,7 +109,7 @@
         ((|v| |U32Vector|) (|n| |Integer|) (|pt| |Integer|) (|p| |Integer|)
          ($ |Void|))
         (SPROG
-         ((|prev_coeff| (|Integer|)) (|pp| (|Integer|)) (#1=#:G736 NIL)
+         ((|prev_coeff| (|Integer|)) (|pp| (|Integer|)) (#1=#:G739 NIL)
           (|i| NIL) (|ns| (|SingleInteger|)))
          (SEQ (LETT |prev_coeff| 0 . #2=(|POLYVEC;mul_by_binomial;Uv3IV;7|))
               (LETT |ns| |n| . #2#)
@@ -131,7 +131,7 @@
 (SDEFUN |POLYVEC;mul_by_scalar;Uv3IV;9|
         ((|v| |U32Vector|) (|n| |Integer|) (|c| |Integer|) (|p| |Integer|)
          ($ |Void|))
-        (SPROG ((#1=#:G741 NIL) (|i| NIL) (|ns| (|SingleInteger|)))
+        (SPROG ((#1=#:G744 NIL) (|i| NIL) (|ns| (|SingleInteger|)))
                (SEQ (LETT |ns| |n| . #2=(|POLYVEC;mul_by_scalar;Uv3IV;9|))
                     (EXIT
                      (SEQ (LETT |i| 0 . #2#) (LETT #1# |ns| . #2#) G190
@@ -146,7 +146,7 @@
 
 (SDEFUN |POLYVEC;degree;UvI;10| ((|v| |U32Vector|) ($ |Integer|))
         (SPROG
-         ((#1=#:G746 NIL) (#2=#:G747 NIL) (|i| NIL)
+         ((#1=#:G749 NIL) (#2=#:G750 NIL) (|i| NIL)
           (|n| (|NonNegativeInteger|)))
          (SEQ
           (EXIT
@@ -161,9 +161,9 @@
                           ((NULL (EQL (ELT_U32 |v| |i|) 0))
                            (PROGN
                             (LETT #1#
-                                  (PROGN (LETT #2# |i| . #3#) (GO #4=#:G745))
+                                  (PROGN (LETT #2# |i| . #3#) (GO #4=#:G748))
                                   . #3#)
-                            (GO #5=#:G743))))))
+                            (GO #5=#:G746))))))
                        (LETT |i| (+ |i| -1) . #3#) (GO G190) G191 (EXIT NIL)))
                  #5# (EXIT #1#))
                 (EXIT -1)))
@@ -174,8 +174,8 @@
          (|c2| |Integer|) (|n| |Integer|) (|delta| |Integer|) (|p| |Integer|)
          ($ |Void|))
         (SPROG
-         ((#1=#:G759 NIL) (|i| NIL) (#2=#:G758 NIL) (#3=#:G757 NIL)
-          (#4=#:G756 NIL) (|ds| #5=(|SingleInteger|)) (|ns| #5#))
+         ((#1=#:G762 NIL) (|i| NIL) (#2=#:G761 NIL) (#3=#:G760 NIL)
+          (#4=#:G759 NIL) (|ds| #5=(|SingleInteger|)) (|ns| #5#))
          (SEQ (LETT |ns| |n| . #6=(|POLYVEC;vector_combination;UvIUv4IV;11|))
               (LETT |ds| |delta| . #6#)
               (EXIT
@@ -232,7 +232,7 @@
         ((|r0| |U32Vector|) (|r1| |U32Vector|) (|res| |U32Vector|)
          (|p| |Integer|) ($ |Void|))
         (SPROG
-         ((#1=#:G766 NIL) (|dr0| #2=(|SingleInteger|)) (#3=#:G767 NIL)
+         ((#1=#:G769 NIL) (|dr0| #2=(|SingleInteger|)) (#3=#:G770 NIL)
           (|c1| (|Integer|)) (|delta| (|SingleInteger|)) (|c0| (|Integer|))
           (|dr1| #2#))
          (SEQ
@@ -253,7 +253,7 @@
                        (LETT |dr0| (|sub_SI| |dr0| 1) . #4#)
                        (COND
                         ((|less_SI| |dr0| 0)
-                         (PROGN (LETT #3# |$NoValue| . #4#) (GO #5=#:G763))))
+                         (PROGN (LETT #3# |$NoValue| . #4#) (GO #5=#:G766))))
                        (SPADCALL |r0| 1 |r1| |c1| |dr0| |delta| |p|
                                  (QREFELT $ 31))
                        (EXIT
@@ -269,7 +269,7 @@
                                       ((|less_SI| |dr0| 0)
                                        (PROGN
                                         (LETT #1# |$NoValue| . #4#)
-                                        (GO #6=#:G761))))))
+                                        (GO #6=#:G764))))))
                                NIL (GO G190) G191 (EXIT NIL)))
                          #6# (EXIT #1#))))
                   NIL (GO G190) G191 (EXIT NIL)))
@@ -278,7 +278,7 @@
 (SDEFUN |POLYVEC;remainder!;2UvIV;13|
         ((|r0| |U32Vector|) (|r1| |U32Vector|) (|p| |Integer|) ($ |Void|))
         (SPROG
-         ((#1=#:G774 NIL) (|dr0| #2=(|SingleInteger|)) (#3=#:G775 NIL)
+         ((#1=#:G777 NIL) (|dr0| #2=(|SingleInteger|)) (#3=#:G778 NIL)
           (|c1| (|Integer|)) (|delta| (|SingleInteger|)) (|c0| (|Integer|))
           (|dr1| #2#))
          (SEQ
@@ -298,7 +298,7 @@
                        (LETT |dr0| (|sub_SI| |dr0| 1) . #4#)
                        (COND
                         ((|less_SI| |dr0| 0)
-                         (PROGN (LETT #3# |$NoValue| . #4#) (GO #5=#:G771))))
+                         (PROGN (LETT #3# |$NoValue| . #4#) (GO #5=#:G774))))
                        (SPADCALL |r0| 1 |r1| |c1| |dr0| |delta| |p|
                                  (QREFELT $ 31))
                        (EXIT
@@ -314,7 +314,7 @@
                                       ((|less_SI| |dr0| 0)
                                        (PROGN
                                         (LETT #1# |$NoValue| . #4#)
-                                        (GO #6=#:G769))))))
+                                        (GO #6=#:G772))))))
                                NIL (GO G190) G191 (EXIT NIL)))
                          #6# (EXIT #1#))))
                   NIL (GO G190) G191 (EXIT NIL)))
@@ -323,9 +323,9 @@
 (SDEFUN |POLYVEC;gcd;2UvIUv;14|
         ((|x| |U32Vector|) (|y| |U32Vector|) (|p| |Integer|) ($ |U32Vector|))
         (SPROG
-         ((#1=#:G793 NIL) (|c| #2=(|Integer|)) (|dr1| #3=(|SingleInteger|))
+         ((#1=#:G797 NIL) (|c| #2=(|Integer|)) (|dr1| #3=(|SingleInteger|))
           (|r1| #4=(|U32Vector|)) (|dr0| #3#) (|r0| #4#)
-          (|tmp| #5=(|SingleInteger|)) (|tmpp| (|U32Vector|)) (#6=#:G792 NIL)
+          (|tmp| #5=(|SingleInteger|)) (|tmpp| (|U32Vector|)) (#6=#:G796 NIL)
           (|c0| #2#) (|c1| (|Integer|)) (|delta| #5#))
          (SEQ
           (EXIT
@@ -341,7 +341,7 @@
             (EXIT
              (COND
               ((|less_SI| |dr0| 0)
-               (PROGN (LETT #1# (GETREFV_U32 1 0) . #7#) (GO #9=#:G791)))
+               (PROGN (LETT #1# (GETREFV_U32 1 0) . #7#) (GO #9=#:G795)))
               (#8#
                (SEQ (LETT |r0| (GETREFV_U32 (|add_SI| |dr0| 1) 0) . #7#)
                     (SPADCALL |r0| |y| (|add_SI| |dr0| 1) (QREFELT $ 9))
@@ -400,7 +400,7 @@
                                                ((|less_SI| |dr0| 0)
                                                 (PROGN
                                                  (LETT #6# |$NoValue| . #7#)
-                                                 (GO #10=#:G781))))))
+                                                 (GO #10=#:G785))))))
                                             NIL (GO G190) G191 (EXIT NIL)))
                                       #10# (EXIT #6#))))
                                    NIL (GO G190) G191 (EXIT NIL))
@@ -428,7 +428,7 @@
 (SDEFUN |POLYVEC;gcd;Pa3IUv;15|
         ((|a| |PrimitiveArray| (|U32Vector|)) (|lo| |Integer|) (|hi| |Integer|)
          (|p| |Integer|) ($ |U32Vector|))
-        (SPROG ((|res| (|U32Vector|)) (#1=#:G797 NIL) (|i| NIL))
+        (SPROG ((|res| (|U32Vector|)) (#1=#:G801 NIL) (|i| NIL))
                (SEQ
                 (LETT |res| (QAREF1 |a| |lo|) . #2=(|POLYVEC;gcd;Pa3IUv;15|))
                 (SEQ (LETT |i| (+ |lo| 1) . #2#) (LETT #1# |hi| . #2#) G190
@@ -466,7 +466,7 @@
 (SDEFUN |POLYVEC;lcm;Pa3IUv;17|
         ((|a| |PrimitiveArray| (|U32Vector|)) (|lo| |Integer|) (|hi| |Integer|)
          (|p| |Integer|) ($ |U32Vector|))
-        (SPROG ((|res| (|U32Vector|)) (#1=#:G804 NIL) (|i| NIL))
+        (SPROG ((|res| (|U32Vector|)) (#1=#:G808 NIL) (|i| NIL))
                (SEQ
                 (LETT |res| (QAREF1 |a| |lo|) . #2=(|POLYVEC;lcm;Pa3IUv;17|))
                 (SEQ (LETT |i| (+ |lo| 1) . #2#) (LETT #1# |hi| . #2#) G190
@@ -517,9 +517,9 @@
          (|xdeg| . #2=(|SingleInteger|)) (|ydeg| |SingleInteger|)
          (|zdeg| |SingleInteger|) (|p| |Integer|) ($ |Void|))
         (SPROG
-         ((|ss| (|Integer|)) (#3=#:G827 NIL) (|j| NIL) (#4=#:G826 NIL)
-          (|i| NIL) (#5=#:G825 NIL) (#6=#:G824 NIL) (#7=#:G823 NIL)
-          (#8=#:G822 NIL) (|tmp| #2#) (|tmpp| #1#))
+         ((|ss| (|Integer|)) (#3=#:G831 NIL) (|j| NIL) (#4=#:G830 NIL)
+          (|i| NIL) (#5=#:G829 NIL) (#6=#:G828 NIL) (#7=#:G827 NIL)
+          (#8=#:G826 NIL) (|tmp| #2#) (|tmpp| #1#))
          (SEQ
           (COND
            ((|less_SI| |ydeg| |xdeg|)
@@ -620,8 +620,8 @@
 (SDEFUN |POLYVEC;differentiate;UvIUv;23|
         ((|x| |U32Vector|) (|p| |Integer|) ($ |U32Vector|))
         (SPROG
-         ((|i1| (|NonNegativeInteger|)) (#1=#:G842 NIL) (|i| NIL)
-          (|r| (|U32Vector|)) (#2=#:G836 NIL) (|d| (|Integer|)))
+         ((|i1| (|NonNegativeInteger|)) (#1=#:G846 NIL) (|i| NIL)
+          (|r| (|U32Vector|)) (#2=#:G840 NIL) (|d| (|Integer|)))
          (SEQ
           (LETT |d| (- (QV_LEN_U32 |x|) 1)
                 . #3=(|POLYVEC;differentiate;UvIUv;23|))
@@ -652,8 +652,8 @@
         ((|x| |U32Vector|) (|n| |NonNegativeInteger|) (|p| |Integer|)
          ($ |U32Vector|))
         (SPROG
-         ((|f| (|Integer|)) (#1=#:G851 NIL) (|k| NIL) (|j| #2=(|Integer|))
-          (#3=#:G850 NIL) (|i| NIL) (|r| (|U32Vector|)) (|d| #2#))
+         ((|f| (|Integer|)) (#1=#:G855 NIL) (|k| NIL) (|j| #2=(|Integer|))
+          (#3=#:G854 NIL) (|i| NIL) (|r| (|U32Vector|)) (|d| #2#))
          (SEQ
           (COND ((ZEROP |n|) |x|)
                 (#4='T
@@ -691,11 +691,11 @@
         ((|x| |U32Vector|) (|y| |U32Vector|) (|p| |Integer|)
          ($ |List| (|U32Vector|)))
         (SPROG
-         ((|c| #1=(|Integer|)) (#2=#:G872 NIL) (|t1| #3=(|U32Vector|))
+         ((|c| #1=(|Integer|)) (#2=#:G876 NIL) (|t1| #3=(|U32Vector|))
           (|t0| #3#) (|#G128| #3#) (|#G127| #3#) (|s1| #3#) (|s0| #3#)
           (|#G126| #3#) (|#G125| #3#) (|dr1| #4=(|SingleInteger|)) (|dr0| #4#)
           (|#G124| #5=(|SingleInteger|)) (|#G123| #4#) (|r1| #3#) (|r0| #3#)
-          (|#G122| #3#) (|#G121| #3#) (#6=#:G871 NIL) (|c0| #1#)
+          (|#G122| #3#) (|#G121| #3#) (#6=#:G875 NIL) (|c0| #1#)
           (|c1| (|Integer|)) (|delta| #5#) (|ds| #7=(|SingleInteger|))
           (|dt| #7#) (|swapped| (|Boolean|)) (|#G119| (|U32Vector|))
           (|#G118| (|U32Vector|)))
@@ -727,7 +727,7 @@
                         (LIST (GETREFV_U32 1 0) (GETREFV_U32 1 0)
                               (GETREFV_U32 1 1))
                         . #8#)
-                  (GO #10=#:G870)))
+                  (GO #10=#:G874)))
                 (#9#
                  (SEQ (LETT |r0| (GETREFV_U32 (|add_SI| |dr0| 1) 0) . #8#)
                       (SPADCALL |r0| |x| (|add_SI| |dr0| 1) (QREFELT $ 9))
@@ -817,7 +817,7 @@
                                            ((|less_SI| |dr0| 0)
                                             (PROGN
                                              (LETT #6# |$NoValue| . #8#)
-                                             (GO #11=#:G861))))))
+                                             (GO #11=#:G865))))))
                                         NIL (GO G190) G191 (EXIT NIL)))
                                   #11# (EXIT #6#))))
                            NIL (GO G190) G191 (EXIT NIL))
@@ -867,7 +867,7 @@
 (SDEFUN |POLYVEC;resultant;2Uv2I;26|
         ((|x| |U32Vector|) (|y| |U32Vector|) (|p| |Integer|) ($ |Integer|))
         (SPROG
-         ((|res| (|SingleInteger|)) (#1=#:G887 NIL)
+         ((|res| (|SingleInteger|)) (#1=#:G891 NIL)
           (|dr0| #2=(|SingleInteger|)) (|c1| (|Integer|))
           (|delta| (|SingleInteger|)) (|c0| (|Integer|)) (|dr1| #2#)
           (|#G136| #2#) (|#G135| #2#) (|r1| #3=(|U32Vector|)) (|r0| #3#)
@@ -941,7 +941,7 @@
                                                  (EXIT
                                                   (PROGN
                                                    (LETT #1# |res| . #4#)
-                                                   (GO #6=#:G886)))))
+                                                   (GO #6=#:G890)))))
                                                ('T
                                                 (SEQ
                                                  (LETT |delta|
@@ -1008,7 +1008,7 @@
 
 (DEFUN |U32VectorPolynomialOperations| ()
   (SPROG NIL
-         (PROG (#1=#:G889)
+         (PROG (#1=#:G893)
            (RETURN
             (COND
              ((LETT #1#

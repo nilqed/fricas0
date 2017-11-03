@@ -1770,7 +1770,7 @@
 ;   --  The new form is an op-Alist which has entries (<op> . signature-Alist)
 ;   --    where signature-Alist has entries (<signature> . item)
 ;   --      where item has form (<slotNumber> <condition> <kind>)
-;   --        where <kind> =  ELT | CONST | Subsumed | (XLAM..) ..
+;   --        where <kind> =  ELT | CONST | (XLAM..) ..
 ;   pairlis:= [[fv,:arg] for fv in $FormalMapVariableList for arg in argl]
 ;   opAlist := getOperationAlistFromLisplib op
 ;   [:getOplistWithUniqueSignatures(op,pairlis,signatureAlist)
@@ -1820,15 +1820,27 @@
  
 ; getOplistWithUniqueSignatures(op,pairlis,signatureAlist) ==
 ;   alist:= nil
-;   for [sig,:[slotNumber,pred,kind]] in signatureAlist | kind ~= 'Subsumed repeat
-;     alist:= insertAlist(SUBLIS(pairlis,[op,sig]),
-;                 [pred,[kind,nil,slotNumber]],
-;                 alist)
+;   for [sig, :[slotNumber, pred, kind]] in signatureAlist repeat
+;       key := SUBLIS(pairlis, [op, sig])
+;       term := assoc(key, alist)
+;       if null term then
+;           alist := cons([key, pred, [kind, nil, slotNumber]], alist)
+;       else
+;           value := rest term
+;           oldpred := first value
+;           newpred :=
+;               oldpred = true or pred = true => true
+;               oldpred = pred => oldpred
+;               oldpred is ['OR, :predl] =>
+;                   member(pred, predl) => oldpred
+;                   ['OR, pred, :predl]
+;               ['OR, pred, oldpred]
+;           RPLACA(value, newpred)
 ;   alist
  
 (DEFUN |getOplistWithUniqueSignatures| (|op| |pairlis| |signatureAlist|)
-  (PROG (|alist| |sig| |ISTMP#1| |slotNumber| |ISTMP#2| |pred| |ISTMP#3|
-         |kind|)
+  (PROG (|alist| |sig| |ISTMP#1| |slotNumber| |ISTMP#2| |pred| |ISTMP#3| |kind|
+         |key| |term| |value| |oldpred| |predl| |newpred|)
     (RETURN
      (PROGN
       (SETQ |alist| NIL)
@@ -1855,11 +1867,30 @@
                                    (PROGN
                                     (SETQ |kind| (CAR |ISTMP#3|))
                                     #1#)))))))
-                 (NOT (EQ |kind| '|Subsumed|))
-                 (SETQ |alist|
-                         (|insertAlist| (SUBLIS |pairlis| (LIST |op| |sig|))
-                          (LIST |pred| (LIST |kind| NIL |slotNumber|))
-                          |alist|)))))
+                 (PROGN
+                  (SETQ |key| (SUBLIS |pairlis| (LIST |op| |sig|)))
+                  (SETQ |term| (|assoc| |key| |alist|))
+                  (COND
+                   ((NULL |term|)
+                    (SETQ |alist|
+                            (CONS
+                             (LIST |key| |pred| (LIST |kind| NIL |slotNumber|))
+                             |alist|)))
+                   (#1# (SETQ |value| (CDR |term|))
+                    (SETQ |oldpred| (CAR |value|))
+                    (SETQ |newpred|
+                            (COND ((OR (EQUAL |oldpred| T) (EQUAL |pred| T)) T)
+                                  ((EQUAL |oldpred| |pred|) |oldpred|)
+                                  ((AND (CONSP |oldpred|)
+                                        (EQ (CAR |oldpred|) 'OR)
+                                        (PROGN
+                                         (SETQ |predl| (CDR |oldpred|))
+                                         #1#))
+                                   (COND ((|member| |pred| |predl|) |oldpred|)
+                                         (#1#
+                                          (CONS 'OR (CONS |pred| |predl|)))))
+                                  (#1# (LIST 'OR |pred| |oldpred|))))
+                    (RPLACA |value| |newpred|)))))))
           (SETQ |bfVar#72| (CDR |bfVar#72|))))
        |signatureAlist| NIL)
       |alist|))))

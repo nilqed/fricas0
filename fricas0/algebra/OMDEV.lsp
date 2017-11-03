@@ -195,7 +195,7 @@
 
 (DEFUN |OpenMathDevice| ()
   (SPROG NIL
-         (PROG (#1=#:G740)
+         (PROG (#1=#:G742)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|OpenMathDevice|)

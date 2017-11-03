@@ -10,7 +10,6 @@
 ;   t1 = t2 => triple
 ;   val := objVal triple
 ; 
-; 
 ;   val is ['THROW,label,code] =>
 ;     if label is ['QUOTE, l] then label := l
 ;     null($compilingMap) or (label ~= mapCatchName($mapName)) =>
@@ -71,17 +70,6 @@
 ;   -- 2. Set up a failure point otherwise
 ; 
 ;   intCodeGenCoerce1(val,t1,t2)
-; 
-; intCodeGenCoerce1(val,t1,t2) ==
-;   -- Internal function to previous one
-;   -- designed to ensure that we don't use coerceOrCroak on mappings
-; --(t2 is ['Mapping,:.]) => THROW('coerceOrCroaker, 'croaked)
-;   objNew(['coerceOrCroak,mkObjCode(['wrap,val],t1),
-;         MKQ t2, MKQ $mapName],t2)
-; 
-; --% Map components
-; 
-; wrapMapBodyWithCatch body ==
  
 (DEFUN |intCodeGenCOERCE| (|triple| |t2|)
   (PROG (|t1| |val| |ISTMP#1| |label| |ISTMP#2| |code| |l| |lastCode| |conds|
@@ -238,71 +226,10 @@
 ;   -- note that we will someday have to fix up the catch identifier
 ;   -- to use the generated internal map name
 ;   $mapThrowCount = 0 => body
-;   if body is ['failCheck,['coerceOrFail,trip,targ,mapn]]
-;     then
-;       trip is ['LIST,v,m,e] =>
-;         ['failCheck,['coerceOrFail,
-;           ['LIST,['CATCH,MKQ mapCatchName $mapName, v],m,e],targ,mapn]]
-;       keyedSystemError("S2GE0016",['"wrapMapBodyWithCatch",
-;         '"bad CATCH for in function form"])
-;     else ['CATCH,MKQ mapCatchName $mapName,body]
+;   ['CATCH, MKQ mapCatchName $mapName, body]
  
 (DEFUN |wrapMapBodyWithCatch| (|body|)
-  (PROG (|ISTMP#1| |ISTMP#2| |ISTMP#3| |trip| |ISTMP#4| |targ| |ISTMP#5| |mapn|
-         |v| |m| |e|)
+  (PROG ()
     (RETURN
      (COND ((EQL |$mapThrowCount| 0) |body|)
-           (#1='T
-            (COND
-             ((AND (CONSP |body|) (EQ (CAR |body|) '|failCheck|)
-                   (PROGN
-                    (SETQ |ISTMP#1| (CDR |body|))
-                    (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
-                         (PROGN
-                          (SETQ |ISTMP#2| (CAR |ISTMP#1|))
-                          (AND (CONSP |ISTMP#2|)
-                               (EQ (CAR |ISTMP#2|) '|coerceOrFail|)
-                               (PROGN
-                                (SETQ |ISTMP#3| (CDR |ISTMP#2|))
-                                (AND (CONSP |ISTMP#3|)
-                                     (PROGN
-                                      (SETQ |trip| (CAR |ISTMP#3|))
-                                      (SETQ |ISTMP#4| (CDR |ISTMP#3|))
-                                      (AND (CONSP |ISTMP#4|)
-                                           (PROGN
-                                            (SETQ |targ| (CAR |ISTMP#4|))
-                                            (SETQ |ISTMP#5| (CDR |ISTMP#4|))
-                                            (AND (CONSP |ISTMP#5|)
-                                                 (EQ (CDR |ISTMP#5|) NIL)
-                                                 (PROGN
-                                                  (SETQ |mapn| (CAR |ISTMP#5|))
-                                                  #1#))))))))))))
-              (COND
-               ((AND (CONSP |trip|) (EQ (CAR |trip|) 'LIST)
-                     (PROGN
-                      (SETQ |ISTMP#1| (CDR |trip|))
-                      (AND (CONSP |ISTMP#1|)
-                           (PROGN
-                            (SETQ |v| (CAR |ISTMP#1|))
-                            (SETQ |ISTMP#2| (CDR |ISTMP#1|))
-                            (AND (CONSP |ISTMP#2|)
-                                 (PROGN
-                                  (SETQ |m| (CAR |ISTMP#2|))
-                                  (SETQ |ISTMP#3| (CDR |ISTMP#2|))
-                                  (AND (CONSP |ISTMP#3|)
-                                       (EQ (CDR |ISTMP#3|) NIL)
-                                       (PROGN
-                                        (SETQ |e| (CAR |ISTMP#3|))
-                                        #1#))))))))
-                (LIST '|failCheck|
-                      (LIST '|coerceOrFail|
-                            (LIST 'LIST
-                                  (LIST 'CATCH
-                                        (MKQ (|mapCatchName| |$mapName|)) |v|)
-                                  |m| |e|)
-                            |targ| |mapn|)))
-               (#1#
-                (|keyedSystemError| 'S2GE0016
-                 (LIST "wrapMapBodyWithCatch"
-                       "bad CATCH for in function form")))))
-             (#1# (LIST 'CATCH (MKQ (|mapCatchName| |$mapName|)) |body|))))))))
+           ('T (LIST 'CATCH (MKQ (|mapCatchName| |$mapName|)) |body|))))))

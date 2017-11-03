@@ -1,9 +1,9 @@
 
 (DECLAIM (NOTINLINE |BalancedPAdicInteger;|)) 
 
-(DEFUN |BalancedPAdicInteger| (#1=#:G714)
+(DEFUN |BalancedPAdicInteger| (#1=#:G718)
   (SPROG NIL
-         (PROG (#2=#:G715)
+         (PROG (#2=#:G719)
            (RETURN
             (COND
              ((LETT #2#
@@ -37,41 +37,45 @@
 
 (MAKEPROP '|BalancedPAdicInteger| '|infovec|
           (LIST
-           '#(NIL NIL NIL NIL NIL (|InnerPAdicInteger| 6 (NRTEVAL 'NIL))
-              (|local| |#1|) (|SparseUnivariatePolynomial| 8) (|Integer|)
-              (|Stream| 8) (|NonNegativeInteger|)
+           '#(NIL NIL NIL NIL NIL
+              (|InnerPAdicInteger| (NRTEVAL (QREFELT $ 6)) (NRTEVAL 'NIL))
+              (|local| |#1|) (|Integer|) (|SparseUnivariatePolynomial| 7)
+              (|Stream| 7) (|NonNegativeInteger|)
               (|Record| (|:| |coef1| $) (|:| |coef2| $))
               (|Union| 11 '#1="failed") (|Union| 14 '#1#) (|List| $)
               (|Record| (|:| |coef1| $) (|:| |coef2| $) (|:| |generator| $))
               (|Record| (|:| |quotient| $) (|:| |remainder| $)) (|Boolean|)
-              (|SparseUnivariatePolynomial| $)
               (|Record| (|:| |coef| 14) (|:| |generator| $))
-              (|Union| $ '"failed")
+              (|SparseUnivariatePolynomial| $)
               (|Record| (|:| |llcm_res| $) (|:| |coeff1| $) (|:| |coeff2| $))
               (|Record| (|:| |unit| $) (|:| |canonical| $) (|:| |associate| $))
-              (|PositiveInteger|) (|HashState|) (|String|) (|OutputForm|)
-              (|SingleInteger|))
+              (|Union| $ '"failed") (|PositiveInteger|) (|String|)
+              (|SingleInteger|) (|HashState|) (|OutputForm|))
            '#() 'NIL
            (CONS
             (|makeByteWordVec2| 1
                                 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-                                  0 0 0 0 0 0 0))
+                                  0 0 0 0 0 0 0 0 0 0 0 0 0))
             (CONS
-             '#(NIL |EuclideanDomain&| NIL |GcdDomain&| NIL NIL |Algebra&| NIL
-                NIL |EntireRing&| |Module&| NIL |Ring&| NIL |Rng&| NIL
-                |AbelianGroup&| NIL NIL |AbelianMonoid&| |Monoid&| NIL
-                |SemiGroup&| |AbelianSemiGroup&| |SetCategory&| NIL NIL NIL
-                |BasicType&| NIL)
+             '#(NIL |EuclideanDomain&| NIL |GcdDomain&| NIL NIL NIL NIL
+                |EntireRing&| |Algebra&| NIL |Rng&| NIL |Module&| NIL NIL
+                |NonAssociativeRing&| NIL |NonAssociativeRng&| NIL
+                |AbelianGroup&| NIL NIL NIL NIL |MagmaWithUnit&|
+                |NonAssociativeSemiRng&| |AbelianMonoid&| |Magma&|
+                |AbelianSemiGroup&| |SetCategory&| NIL NIL NIL |BasicType&|
+                NIL)
              (CONS
               '#((|PAdicIntegerCategory| 6) (|EuclideanDomain|)
                  (|PrincipalIdealDomain|) (|GcdDomain|) (|IntegralDomain|)
-                 (|LeftOreRing|) (|Algebra| $$) (|CommutativeRing|)
-                 (|CharacteristicZero|) (|EntireRing|) (|Module| $$)
-                 (|BiModule| $$ $$) (|Ring|) (|LeftModule| $$) (|Rng|)
-                 (|RightModule| $$) (|AbelianGroup|)
-                 (|CancellationAbelianMonoid|) (|SemiRing|) (|AbelianMonoid|)
-                 (|Monoid|) (|SemiRng|) (|SemiGroup|) (|AbelianSemiGroup|)
+                 (|CommutativeRing|) (|LeftOreRing|) (|CharacteristicZero|)
+                 (|EntireRing|) (|Algebra| $$) (|Ring|) (|Rng|) (|SemiRing|)
+                 (|Module| $$) (|SemiRng|) (|BiModule| $$ $$)
+                 (|NonAssociativeRing|) (|LeftModule| $$) (|NonAssociativeRng|)
+                 (|RightModule| $$) (|AbelianGroup|) (|Monoid|)
+                 (|NonAssociativeSemiRing|) (|CancellationAbelianMonoid|)
+                 (|SemiGroup|) (|MagmaWithUnit|) (|NonAssociativeSemiRng|)
+                 (|AbelianMonoid|) (|Magma|) (|AbelianSemiGroup|)
                  (|SetCategory|) (|noZeroDivisors|) (|CommutativeStar|)
-                 (|unitsKnown|) (|BasicType|) (|CoercibleTo| 26))
+                 (|unitsKnown|) (|BasicType|) (|CoercibleTo| 27))
               (|makeByteWordVec2| -999999 'NIL))))
            '|lookupIncomplete|)) 

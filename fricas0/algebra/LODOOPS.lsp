@@ -1,8 +1,8 @@
 
 (SDEFUN |LODOOPS;vec2LODO| ((|v| |Vector| A) ($ L))
         (SPROG
-         ((#1=#:G709 NIL) (#2=#:G708 (L)) (#3=#:G710 (L)) (#4=#:G711 NIL)
-          (#5=#:G713 NIL) (|i| NIL))
+         ((#1=#:G711 NIL) (#2=#:G710 (L)) (#3=#:G712 (L)) (#4=#:G713 NIL)
+          (#5=#:G715 NIL) (|i| NIL))
          (SEQ
           (PROGN
            (LETT #1# NIL . #6=(|LODOOPS;vec2LODO|))
@@ -28,7 +28,7 @@
 (SDEFUN |LODOOPS;symmetricPower;LNniML;2|
         ((|l| L) (|m| |NonNegativeInteger|) (|diff| |Mapping| A A) ($ L))
         (SPROG
-         ((#1=#:G715 NIL)
+         ((#1=#:G718 NIL)
           (|a|
            (|DifferentialSparseMultivariatePolynomial| A (|Symbol|)
                                                        (|OrderlyDifferentialVariable|
@@ -73,8 +73,8 @@
                                                        (|Symbol|))))
          (|diff| |Mapping| A A) ($ L))
         (SPROG
-         ((|lu| (|List| #1#)) (#2=#:G733 NIL) (|l| (|List| (|Vector| A)))
-          (|mat| (|Matrix| A)) (#3=#:G734 NIL) (|q| NIL))
+         ((|lu| (|List| #1#)) (#2=#:G736 NIL) (|l| (|List| (|Vector| A)))
+          (|mat| (|Matrix| A)) (#3=#:G737 NIL) (|q| NIL))
          (SEQ
           (EXIT
            (SEQ (LETT |lu| (LIST |u|) . #4=(|LODOOPS;killer|))
@@ -92,7 +92,7 @@
                          (PROGN
                           (LETT #2# (|LODOOPS;vec2LODO| (|SPADfirst| |l|) $)
                                 . #4#)
-                          (GO #5=#:G732)))))
+                          (GO #5=#:G735)))))
                       (LETT |u|
                             (SPADCALL (SPADCALL |u| |diff| (QREFELT $ 44))
                                       |lvar| |lval| (QREFELT $ 47))
@@ -222,9 +222,9 @@
 
 (DECLAIM (NOTINLINE |LinearOrdinaryDifferentialOperatorsOps;|)) 
 
-(DEFUN |LinearOrdinaryDifferentialOperatorsOps| (&REST #1=#:G745)
+(DEFUN |LinearOrdinaryDifferentialOperatorsOps| (&REST #1=#:G748)
   (SPROG NIL
-         (PROG (#2=#:G746)
+         (PROG (#2=#:G749)
            (RETURN
             (COND
              ((LETT #2#

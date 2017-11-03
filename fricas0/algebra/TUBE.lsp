@@ -30,9 +30,9 @@
 
 (DECLAIM (NOTINLINE |TubePlot;|)) 
 
-(DEFUN |TubePlot| (#1=#:G706)
+(DEFUN |TubePlot| (#1=#:G707)
   (SPROG NIL
-         (PROG (#2=#:G707)
+         (PROG (#2=#:G708)
            (RETURN
             (COND
              ((LETT #2#

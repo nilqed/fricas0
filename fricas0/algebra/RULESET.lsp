@@ -19,9 +19,9 @@
 
 (DECLAIM (NOTINLINE |Ruleset;|)) 
 
-(DEFUN |Ruleset| (&REST #1=#:G703)
+(DEFUN |Ruleset| (&REST #1=#:G707)
   (SPROG NIL
-         (PROG (#2=#:G704)
+         (PROG (#2=#:G708)
            (RETURN
             (COND
              ((LETT #2#

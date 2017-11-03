@@ -9,9 +9,9 @@
 
 (DECLAIM (NOTINLINE |UnivariatePuiseuxSeriesFunctions2;|)) 
 
-(DEFUN |UnivariatePuiseuxSeriesFunctions2| (&REST #1=#:G700)
+(DEFUN |UnivariatePuiseuxSeriesFunctions2| (&REST #1=#:G701)
   (SPROG NIL
-         (PROG (#2=#:G701)
+         (PROG (#2=#:G702)
            (RETURN
             (COND
              ((LETT #2#
@@ -66,13 +66,24 @@
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
               (|local| |#3|) (|local| |#4|) (|local| |#5|) (|local| |#6|)
-              (|Fraction| (|Integer|)) (|UnivariatePuiseuxSeries| 6 8 10)
-              (0 . |rationalPower|) (|UnivariateLaurentSeries| 6 8 10)
-              (5 . |laurentRep|) (|UnivariateLaurentSeries| 7 9 11)
+              (|Fraction| (|Integer|))
+              (|UnivariatePuiseuxSeries| 6 (NRTEVAL (QREFELT $ 8))
+                                         (NRTEVAL (QREFELT $ 10)))
+              (0 . |rationalPower|)
+              (|UnivariateLaurentSeries| 6 (NRTEVAL (QREFELT $ 8))
+                                         (NRTEVAL (QREFELT $ 10)))
+              (5 . |laurentRep|)
+              (|UnivariateLaurentSeries| 7 (NRTEVAL (QREFELT $ 9))
+                                         (NRTEVAL (QREFELT $ 11)))
               (|Mapping| 7 6)
-              (|UnivariateLaurentSeriesFunctions2| 6 7 8 9 10 11) (10 . |map|)
-              (|UnivariatePuiseuxSeries| 7 9 11) (16 . |puiseux|)
-              |UPXS2;map;MUpsUps;1|)
+              (|UnivariateLaurentSeriesFunctions2| 6 7 (NRTEVAL (QREFELT $ 8))
+                                                   (NRTEVAL (QREFELT $ 9))
+                                                   (NRTEVAL (QREFELT $ 10))
+                                                   (NRTEVAL (QREFELT $ 11)))
+              (10 . |map|)
+              (|UnivariatePuiseuxSeries| 7 (NRTEVAL (QREFELT $ 9))
+                                         (NRTEVAL (QREFELT $ 11)))
+              (16 . |puiseux|) |UPXS2;map;MUpsUps;1|)
            '#(|map| 22) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()

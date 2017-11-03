@@ -12,7 +12,7 @@
         (SPADCALL |n| (|spadConstant| $ 17) (QREFELT $ 18))) 
 
 (SDEFUN |VECTCAT-;zero?;SB;3| ((|y| S) ($ |Boolean|))
-        (SPROG ((#1=#:G718 NIL) (#2=#:G719 NIL) (|i| NIL))
+        (SPROG ((#1=#:G721 NIL) (#2=#:G722 NIL) (|i| NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -26,7 +26,7 @@
                      (COND
                       ((SPADCALL (SPADCALL |y| |i| (QREFELT $ 22))
                                  (|spadConstant| $ 17) (QREFELT $ 23))
-                       (PROGN (LETT #1# NIL . #3#) (GO #4=#:G717))))))
+                       (PROGN (LETT #1# NIL . #3#) (GO #4=#:G720))))))
                    (LETT |i| (+ |i| 1) . #3#) (GO G190) G191 (EXIT NIL))
                   (EXIT 'T)))
                 #4# (EXIT #1#)))) 
@@ -72,7 +72,7 @@
 
 (SDEFUN |VECTCAT-;dot;2SR;9| ((|u| S) (|v| S) ($ R))
         (SPROG
-         ((#1=#:G729 NIL) (#2=#:G728 (R)) (#3=#:G730 (R)) (#4=#:G733 NIL)
+         ((#1=#:G732 NIL) (#2=#:G731 (R)) (#3=#:G733 (R)) (#4=#:G736 NIL)
           (|i| NIL))
          (SEQ
           (COND
@@ -101,8 +101,8 @@
 
 (SDEFUN |VECTCAT-;outerProduct;2SM;10| ((|u| S) (|v| S) ($ |Matrix| R))
         (SPROG
-         ((#1=#:G745 NIL) (|i| NIL) (#2=#:G744 NIL) (#3=#:G743 NIL) (|j| NIL)
-          (#4=#:G742 NIL))
+         ((#1=#:G749 NIL) (|i| NIL) (#2=#:G748 NIL) (#3=#:G747 NIL) (|j| NIL)
+          (#4=#:G746 NIL))
          (SEQ
           (SPADCALL
            (PROGN

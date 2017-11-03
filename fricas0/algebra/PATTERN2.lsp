@@ -17,15 +17,15 @@
            (|Union|
             (|Record| (|:| |val| (|Pattern| R)) (|:| |exponent| (|Pattern| R)))
             "failed"))
-          (#1=#:G757 NIL) (#2=#:G756 NIL)
-          (|l| (|Union| (|List| (|Pattern| R)) "failed")) (#3=#:G755 NIL)
-          (#4=#:G754 NIL)
+          (#1=#:G759 NIL) (#2=#:G758 NIL)
+          (|l| (|Union| (|List| (|Pattern| R)) "failed")) (#3=#:G757 NIL)
+          (#4=#:G756 NIL)
           (|vr| (|Record| (|:| |num| (|Pattern| R)) (|:| |den| (|Pattern| R))))
           (|v|
            (|Union|
             (|Record| (|:| |num| (|Pattern| R)) (|:| |den| (|Pattern| R)))
             "failed"))
-          (#5=#:G753 NIL) (#6=#:G752 NIL)
+          (#5=#:G755 NIL) (#6=#:G754 NIL)
           (|ur|
            (|Record| (|:| |op| (|BasicOperator|))
                      (|:| |arg| (|List| (|Pattern| R)))))
@@ -194,9 +194,9 @@
 
 (DECLAIM (NOTINLINE |PatternFunctions2;|)) 
 
-(DEFUN |PatternFunctions2| (&REST #1=#:G758)
+(DEFUN |PatternFunctions2| (&REST #1=#:G760)
   (SPROG NIL
-         (PROG (#2=#:G759)
+         (PROG (#2=#:G761)
            (RETURN
             (COND
              ((LETT #2#

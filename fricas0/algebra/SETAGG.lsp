@@ -27,11 +27,7 @@
                                                    (|Collection| '|t#1|)
                                                    (|PartialOrder|)
                                                    (|mkCategory|
-                                                    '(((|brace| ($)) T)
-                                                      ((|brace|
-                                                        ($ (|List| |t#1|)))
-                                                       T)
-                                                      ((|set| ($)) T)
+                                                    '(((|set| ($)) T)
                                                       ((|set|
                                                         ($ (|List| |t#1|)))
                                                        T)

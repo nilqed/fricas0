@@ -24,7 +24,7 @@
              (EXIT (SPADCALL (QREFELT $ 14))))) 
 
 (SDEFUN |FDCPO;listToString| ((|a| |List| (|NonNegativeInteger|)) ($ |String|))
-        (SPROG ((|res| (|String|)) (#1=#:G710 NIL) (|x| NIL))
+        (SPROG ((|res| (|String|)) (#1=#:G713 NIL) (|x| NIL))
                (SEQ (LETT |res| "[" . #2=(|FDCPO;listToString|))
                     (SEQ (LETT |x| NIL . #2#) (LETT #1# |a| . #2#) G190
                          (COND
@@ -41,7 +41,7 @@
         ((|s| $) (|a| . #1=(|NonNegativeInteger|)) (|b| . #1#)
          ($ |NonNegativeInteger|))
         (SPROG
-         ((#2=#:G712 NIL) (|res| (|Union| (|NonNegativeInteger|) "failed")))
+         ((#2=#:G715 NIL) (|res| (|Union| (|NonNegativeInteger|) "failed")))
          (SEQ
           (LETT |res| (SPADCALL |s| |a| |b| (QREFELT $ 19))
                 . #3=(|FDCPO;join;$3Nni;7|))
@@ -56,9 +56,9 @@
 
 (DECLAIM (NOTINLINE |FiniteDcpo;|)) 
 
-(DEFUN |FiniteDcpo| (#1=#:G724)
+(DEFUN |FiniteDcpo| (#1=#:G728)
   (SPROG NIL
-         (PROG (#2=#:G725)
+         (PROG (#2=#:G729)
            (RETURN
             (COND
              ((LETT #2#
@@ -78,7 +78,7 @@
          (PROGN
           (LETT DV$1 (|devaluate| |#1|) . #1=(|FiniteDcpo|))
           (LETT |dv$| (LIST '|FiniteDcpo| DV$1) . #1#)
-          (LETT $ (GETREFV 42) . #1#)
+          (LETT $ (GETREFV 43) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|FiniteDcpo| (LIST DV$1) (CONS 1 $))
@@ -98,15 +98,15 @@
               |FDCPO;setVert;$LV;4| |FDCPO;setArr;$LV;5| (|Union| 18 '"failed")
               (|NonNegativeInteger|) (4 . |joinIfCan|) (|Boolean|) (11 . =)
               |FDCPO;join;$3Nni;7| (|IncidenceAlgebra| 26 6) (|List| 18)
-              (|Mapping| 20 6 6) (|Integer|) (|String|)
+              (|Mapping| 20 6 6) (|Integer|) (|String|) (|List| $)
               (|Scene| (|SCartesian| '2)) (|Matrix| 26) (|Matrix| 18)
-              (|List| (|Loop|)) (|Tree| 26) (|List| 32) (|DirectedGraph| $)
+              (|List| (|Loop|)) (|Tree| 26) (|List| 33)
               (|Record| (|:| |name| 27) (|:| |arrType| 18) (|:| |fromOb| 18)
                         (|:| |toOb| 18) (|:| |xOffset| 26) (|:| |yOffset| 26)
                         (|:| |map| 24))
-              (|List| 35)
+              (|List| 35) (|DirectedGraph| $)
               (|Record| (|:| |value| 6) (|:| |posX| 18) (|:| |posY| 18))
-              (|List| 37) (|OutputForm|) (|HashState|) (|SingleInteger|))
+              (|List| 38) (|OutputForm|) (|HashState|) (|SingleInteger|))
            '#(~= 17 |zetaMatrix| 23 |upperSet| 28 |unit| 33 |terminal| 39
               |subdiagramSvg| 44 |spanningTreeNode| 52 |spanningTreeArrow| 58
               |spanningForestNode| 64 |spanningForestArrow| 69 |setVert| 74
@@ -125,14 +125,14 @@
               |hashUpdate!| 363 |hash| 369 |glb| 374 |getVertices| 380
               |getVertexIndex| 385 |getVert| 391 |getArrows| 396
               |getArrowIndex| 401 |getArr| 408 |flatten| 413 |finitePoset| 418
-              |distanceMatrix| 430 |distance| 435 |diagramWidth| 442
-              |diagramSvg| 447 |diagramHeight| 454 |deepDiagramSvg| 459
-              |cycleOpen| 466 |cycleClosed| 472 |createY| 478 |createX| 484
-              |createWidth| 490 |coverMatrix| 495 |completeTransitivity| 500
-              |completeReflexivity| 505 |coerce| 510 |arrowsToNode| 520
-              |arrowsToArrow| 526 |arrowsFromNode| 532 |arrowsFromArrow| 538
-              |arrowName| 544 |adjacencyMatrix| 551 |addObject!| 556
-              |addObject| 568 |addArrow!| 574 |addArrow| 599 = 606 + 612)
+              |distanceMatrix| 430 |distance| 435 |diagramsSvg| 442
+              |diagramWidth| 449 |diagramSvg| 454 |diagramHeight| 461
+              |deepDiagramSvg| 466 |cycleOpen| 473 |cycleClosed| 479 |createY|
+              485 |createX| 491 |createWidth| 497 |coverMatrix| 502
+              |completeTransitivity| 507 |completeReflexivity| 512 |coerce| 517
+              |arrowsToNode| 522 |arrowsToArrow| 528 |arrowsFromNode| 534
+              |arrowsFromArrow| 540 |arrowName| 546 |adjacencyMatrix| 553
+              |addObject!| 558 |addArrow!| 570 = 608 + 614)
            'NIL
            (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0))
                  (CONS
@@ -140,43 +140,43 @@
                      |BasicType&|)
                   (CONS
                    '#((|Dcpo| 6) (|Poset| 6) (|Preorder| 6) (|FiniteGraph| 6)
-                      (|SetCategory|) (|CoercibleTo| 39) (|BasicType|))
-                   (|makeByteWordVec2| 41
+                      (|SetCategory|) (|CoercibleTo| 40) (|BasicType|))
+                   (|makeByteWordVec2| 42
                                        '(0 13 0 14 3 0 17 0 18 18 19 2 17 20 0
                                          0 21 2 0 20 0 0 1 1 0 23 0 1 1 0 0 0 1
-                                         2 0 0 8 27 1 1 0 0 6 1 4 0 13 28 0 20
-                                         20 1 2 0 32 0 18 1 2 0 32 0 18 1 1 0
-                                         33 0 1 1 0 33 0 1 2 0 13 0 8 15 2 0 13
+                                         2 0 0 8 27 1 1 0 0 6 1 4 0 13 29 0 20
+                                         20 1 2 0 33 0 18 1 2 0 33 0 18 1 1 0
+                                         34 0 1 1 0 34 0 1 2 0 13 0 8 15 2 0 13
                                          0 9 16 3 0 24 0 18 18 1 3 0 24 0 18 18
                                          1 1 0 0 6 1 2 0 18 0 18 1 1 0 0 0 1 2
                                          0 18 0 6 1 2 0 24 0 18 1 2 0 24 0 18 1
                                          2 0 24 0 18 1 2 0 24 0 18 1 1 0 23 0 1
-                                         1 0 18 0 1 2 0 18 0 24 1 2 0 0 0 0 1 2
+                                         2 0 18 0 24 1 1 0 18 0 1 2 0 0 0 0 1 2
                                          0 17 0 24 1 3 0 17 0 18 18 1 2 0 18 0
                                          24 1 1 0 18 0 1 5 0 0 0 24 8 26 26 1 5
                                          0 0 0 24 8 26 26 1 2 0 17 0 24 1 1 0 0
-                                         0 1 2 0 20 0 0 1 1 0 31 0 1 2 0 31 0
-                                         18 1 1 0 31 0 1 3 0 20 0 18 18 1 1 0
-                                         27 0 1 1 0 29 0 1 2 0 0 8 27 1 2 0 17
+                                         0 1 2 0 20 0 0 1 1 0 32 0 1 2 0 32 0
+                                         18 1 1 0 32 0 1 3 0 20 0 18 18 1 1 0
+                                         27 0 1 1 0 30 0 1 2 0 0 8 27 1 2 0 17
                                          0 24 1 3 0 17 0 18 18 19 3 0 18 0 18
                                          18 22 3 0 20 0 18 18 1 1 0 20 0 1 2 0
                                          20 0 18 1 0 0 20 1 3 0 20 0 18 18 1 1
                                          0 20 0 1 1 0 20 0 1 1 0 20 0 1 1 0 20
-                                         0 1 0 0 0 1 2 0 6 0 18 1 1 0 29 0 1 2
-                                         0 18 0 18 1 3 0 20 0 18 18 1 2 0 40 40
-                                         0 1 1 0 41 0 1 2 0 17 0 24 1 1 0 38 0
+                                         0 1 0 0 0 1 2 0 6 0 18 1 1 0 30 0 1 2
+                                         0 18 0 18 1 3 0 20 0 18 18 1 2 0 41 41
+                                         0 1 1 0 42 0 1 2 0 17 0 24 1 1 0 39 0
                                          1 2 0 18 0 6 1 1 0 8 0 11 1 0 36 0 1 3
-                                         0 18 0 18 18 1 1 0 9 0 12 1 0 0 34 1 2
-                                         0 0 8 25 1 2 0 0 8 9 10 1 0 29 0 1 3 0
-                                         26 0 18 18 1 1 0 18 0 1 3 0 13 27 0 20
-                                         1 1 0 18 0 1 3 0 13 27 0 20 1 2 0 0 8
-                                         27 1 2 0 0 8 27 1 2 0 18 18 18 1 2 0
-                                         18 18 18 1 1 0 18 18 1 1 0 23 0 1 1 0
-                                         0 0 1 1 0 0 0 1 1 0 39 0 1 1 0 39 0 1
-                                         2 0 24 0 18 1 2 0 24 0 18 1 2 0 24 0
-                                         18 1 2 0 24 0 18 1 3 0 27 0 18 18 1 1
-                                         0 30 0 1 2 0 0 0 6 1 2 0 0 0 37 1 2 0
-                                         0 0 6 1 5 0 0 0 27 18 18 24 1 4 0 0 0
-                                         27 6 6 1 4 0 0 0 27 18 18 1 3 0 0 0 18
-                                         18 1 2 0 20 0 0 1 2 0 0 0 0 1)))))
+                                         0 18 0 18 18 1 1 0 9 0 12 1 0 0 37 1 2
+                                         0 0 8 25 1 2 0 0 8 9 10 1 0 30 0 1 3 0
+                                         26 0 18 18 1 3 0 13 27 28 20 1 1 0 18
+                                         0 1 3 0 13 27 0 20 1 1 0 18 0 1 3 0 13
+                                         27 0 20 1 2 0 0 8 27 1 2 0 0 8 27 1 2
+                                         0 18 18 18 1 2 0 18 18 18 1 1 0 18 18
+                                         1 1 0 23 0 1 1 0 0 0 1 1 0 0 0 1 1 0
+                                         40 0 1 2 0 24 0 18 1 2 0 24 0 18 1 2 0
+                                         24 0 18 1 2 0 24 0 18 1 3 0 27 0 18 18
+                                         1 1 0 31 0 1 2 0 0 0 6 1 2 0 0 0 38 1
+                                         3 0 0 0 18 18 1 4 0 0 0 27 6 6 1 4 0 0
+                                         0 27 18 18 1 5 0 0 0 27 18 18 24 1 2 0
+                                         0 0 35 1 2 0 20 0 0 1 2 0 0 0 0 1)))))
            '|lookupComplete|)) 

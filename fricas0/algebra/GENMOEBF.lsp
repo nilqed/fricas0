@@ -13,9 +13,9 @@
 (SDEFUN |GENMOEBF;generalizedMoebiusFunction;LM$;4|
         ((|xx| |List| P) (|z| |Mapping| R P P) ($ $))
         (SPROG
-         ((#1=#:G719 NIL) (|mf| (|Union| (|Matrix| R) "failed"))
-          (|zf| (|Matrix| R)) (#2=#:G723 NIL) (|x| NIL) (#3=#:G722 NIL)
-          (#4=#:G721 NIL) (|y| NIL) (#5=#:G720 NIL) (|xxo| (|List| P)))
+         ((#1=#:G720 NIL) (|mf| (|Union| (|Matrix| R) "failed"))
+          (|zf| (|Matrix| R)) (#2=#:G724 NIL) (|x| NIL) (#3=#:G723 NIL)
+          (#4=#:G722 NIL) (|y| NIL) (#5=#:G721 NIL) (|xxo| (|List| P)))
          (SEQ
           (EXIT
            (SEQ
@@ -73,11 +73,11 @@
                      (LETT #1#
                            (|GENMOEBF;per| (VECTOR |zf| (QCDR |mf|) |xxo|) $)
                            . #6#)
-                     (GO #7=#:G718)))))))
+                     (GO #7=#:G719)))))))
           #7# (EXIT #1#)))) 
 
 (SDEFUN |GENMOEBF;canonicalZeta| ((|pi| P) (|si| P) ($ R))
-        (SPROG ((#1=#:G726 NIL))
+        (SPROG ((#1=#:G727 NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -85,13 +85,13 @@
                    ((SPADCALL |pi| |si| (QREFELT $ 12))
                     (PROGN
                      (LETT #1# (|spadConstant| $ 25) |GENMOEBF;canonicalZeta|)
-                     (GO #2=#:G725))))
+                     (GO #2=#:G726))))
                   (EXIT (|spadConstant| $ 17))))
                 #2# (EXIT #1#)))) 
 
 (SDEFUN |GENMOEBF;apply;$2PR;6| ((|mf| $) (|x| P) (|y| P) ($ R))
         (SPROG
-         ((#1=#:G732 NIL) (|ky| #2=(|Integer|)) (|kx| #2#)
+         ((#1=#:G733 NIL) (|ky| #2=(|Integer|)) (|kx| #2#)
           (|mfn| (|Matrix| R)))
          (SEQ
           (EXIT
@@ -109,7 +109,7 @@
             (EXIT
              (PROGN
               (LETT #1# (SPADCALL |mfn| |ky| |kx| (QREFELT $ 28)) . #3#)
-              (GO #4=#:G731)))))
+              (GO #4=#:G732)))))
           #4# (EXIT #1#)))) 
 
 (SDEFUN |GENMOEBF;moebiusMatrix;$M;7| ((|mf| $) ($ |Matrix| R))
@@ -118,15 +118,14 @@
 (SDEFUN |GENMOEBF;zetaMatrix| ((|mf| $) ($ |Matrix| R))
         (QVELT (|GENMOEBF;rep| |mf| $) 0)) 
 
-(PUT '|GENMOEBF;coerce| '|SPADreplace| '(XLAM (|mf|) "m")) 
-
-(SDEFUN |GENMOEBF;coerce| ((|mf| $) ($ |OutputForm|)) "m") 
+(SDEFUN |GENMOEBF;coerce| ((|mf| $) ($ |OutputForm|))
+        (SPADCALL "m" (QREFELT $ 33))) 
 
 (DECLAIM (NOTINLINE |GeneralizedFiniteMoebiusFunction;|)) 
 
-(DEFUN |GeneralizedFiniteMoebiusFunction| (&REST #1=#:G738)
+(DEFUN |GeneralizedFiniteMoebiusFunction| (&REST #1=#:G739)
   (SPROG NIL
-         (PROG (#2=#:G739)
+         (PROG (#2=#:G740)
            (RETURN
             (COND
              ((LETT #2#
@@ -155,7 +154,7 @@
           (LETT DV$2 (|devaluate| |#2|) . #1#)
           (LETT |dv$| (LIST '|GeneralizedFiniteMoebiusFunction| DV$1 DV$2)
                 . #1#)
-          (LETT $ (GETREFV 31) . #1#)
+          (LETT $ (GETREFV 34) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|GeneralizedFiniteMoebiusFunction|
@@ -180,19 +179,20 @@
               (26 . |inverse|) (|Mapping| 7 6 6)
               |GENMOEBF;generalizedMoebiusFunction;LM$;4| (31 . |One|)
               (|Integer|) (35 . |position|) (41 . |elt|)
-              |GENMOEBF;apply;$2PR;6| |GENMOEBF;moebiusMatrix;$M;7|)
-           '#(|moebiusMatrix| 48 |members| 53 |generalizedMoebiusFunction| 58
-              |canonicalMoebiusFunction| 64 |apply| 69)
+              |GENMOEBF;apply;$2PR;6| |GENMOEBF;moebiusMatrix;$M;7| (|String|)
+              (|OutputForm|) (48 . |message|))
+           '#(|moebiusMatrix| 53 |members| 58 |generalizedMoebiusFunction| 63
+              |canonicalMoebiusFunction| 69 |apply| 74)
            'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
-                             (|makeByteWordVec2| 30
+                             (|makeByteWordVec2| 33
                                                  '(2 6 11 0 0 12 2 14 9 13 9 15
                                                    1 9 0 0 16 0 7 0 17 1 19 0
                                                    18 20 1 19 21 0 22 0 7 0 25
                                                    2 9 26 6 0 27 3 19 7 0 26 26
-                                                   28 1 0 19 0 30 1 0 9 0 10 2
-                                                   0 0 9 23 24 1 0 0 9 1 3 0 7
-                                                   0 6 6 29)))))
+                                                   28 1 32 0 31 33 1 0 19 0 30
+                                                   1 0 9 0 10 2 0 0 9 23 24 1 0
+                                                   0 9 1 3 0 7 0 6 6 29)))))
            '|lookupComplete|)) 

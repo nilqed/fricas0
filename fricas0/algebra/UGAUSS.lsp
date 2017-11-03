@@ -3,9 +3,9 @@
         ((|m| |Matrix| (|Integer|)) (|pivotsj| |Vector| (|Integer|))
          (|pivotsk| |Vector| (|Integer|)) ($ |Void|))
         (SPROG
-         ((#1=#:G722 NIL) (|l| NIL) (|pp| (|Integer|)) (#2=#:G721 NIL)
-          (|n| NIL) (|ml| #3=(|Integer|)) (|l0| (|Integer|)) (#4=#:G718 NIL)
-          (|pv| #3#) (#5=#:G720 NIL) (#6=#:G719 NIL) (|i| NIL)
+         ((#1=#:G726 NIL) (|l| NIL) (|pp| (|Integer|)) (#2=#:G725 NIL)
+          (|n| NIL) (|ml| #3=(|Integer|)) (|l0| (|Integer|)) (#4=#:G722 NIL)
+          (|pv| #3#) (#5=#:G724 NIL) (#6=#:G723 NIL) (|i| NIL)
           (|k| (|NonNegativeInteger|)) (|j| (|NonNegativeInteger|)))
          (SEQ (LETT |j| (ANROWS |m|) . #7=(|UGAUSS;pre_gauss0|))
               (LETT |k| (ANCOLS |m|) . #7#)
@@ -38,7 +38,7 @@
                                      (EXIT
                                       (PROGN
                                        (LETT #4# |$NoValue| . #7#)
-                                       (GO #8=#:G707))))))))))))
+                                       (GO #8=#:G710))))))))))))
                             (LETT |l| (|inc_SI| |l|) . #7#) (GO G190) G191
                             (EXIT NIL)))
                       #8# (EXIT #4#))
@@ -94,9 +94,9 @@
         ((|m| |Matrix| (|Integer|)) (|pivotsj| |Vector| (|Integer|))
          (|pivotsk| |Vector| (|Integer|)) ($ |Matrix| (|Integer|)))
         (SPROG
-         ((#1=#:G746 NIL) (|l| NIL) (#2=#:G745 NIL) (|pp| (|Integer|))
-          (#3=#:G744 NIL) (|n| NIL) (|ml| #4=(|Integer|)) (|l0| (|Integer|))
-          (#5=#:G741 NIL) (|pv| #4#) (#6=#:G743 NIL) (#7=#:G742 NIL) (|i| NIL)
+         ((#1=#:G750 NIL) (|l| NIL) (#2=#:G749 NIL) (|pp| (|Integer|))
+          (#3=#:G748 NIL) (|n| NIL) (|ml| #4=(|Integer|)) (|l0| (|Integer|))
+          (#5=#:G745 NIL) (|pv| #4#) (#6=#:G747 NIL) (#7=#:G746 NIL) (|i| NIL)
           (|k| (|NonNegativeInteger|)) (|j| (|NonNegativeInteger|))
           (|m2| (|Matrix| (|Integer|))))
          (SEQ
@@ -132,7 +132,7 @@
                                       (EXIT
                                        (PROGN
                                         (LETT #5# |$NoValue| . #8#)
-                                        (GO #9=#:G728))))))))))))
+                                        (GO #9=#:G732))))))))))))
                              (LETT |l| (|inc_SI| |l|) . #8#) (GO G190) G191
                              (EXIT NIL)))
                        #9# (EXIT #5#))
@@ -218,9 +218,9 @@
 (SDEFUN |UGAUSS;pre_smith;2M;4|
         ((|m| |Matrix| (|Integer|)) ($ |Matrix| (|Integer|)))
         (SPROG
-         ((|l0| #1=(|NonNegativeInteger|)) (#2=#:G764 NIL) (|l| NIL) (|i0| #1#)
-          (#3=#:G763 NIL) (|i| NIL) (|ress| (|Matrix| (|Integer|)))
-          (#4=#:G752 NIL) (#5=#:G751 NIL) (|count| #1#) (#6=#:G762 NIL)
+         ((|l0| #1=(|NonNegativeInteger|)) (#2=#:G768 NIL) (|l| NIL) (|i0| #1#)
+          (#3=#:G767 NIL) (|i| NIL) (|ress| (|Matrix| (|Integer|)))
+          (#4=#:G756 NIL) (#5=#:G755 NIL) (|count| #1#) (#6=#:G766 NIL)
           (|pivotsk| #7=(|Vector| (|Integer|))) (|pivotsj| #7#)
           (|k| (|NonNegativeInteger|)) (|j| (|NonNegativeInteger|)))
          (SEQ (LETT |j| (ANROWS |m|) . #8=(|UGAUSS;pre_smith;2M;4|))
@@ -290,7 +290,7 @@
 
 (DEFUN |UnitGaussianElimination| ()
   (SPROG NIL
-         (PROG (#1=#:G766)
+         (PROG (#1=#:G770)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|UnitGaussianElimination|)

@@ -116,7 +116,7 @@
         ((|n| |Integer|) ($ |List| (|List| (|DoubleFloat|))))
         (SPROG
          ((|ans| (|List| (|List| (|DoubleFloat|)))) (|angle| (|DoubleFloat|))
-          (#1=#:G729 NIL) (|i| NIL) (|theta| (|DoubleFloat|)))
+          (#1=#:G736 NIL) (|i| NIL) (|theta| (|DoubleFloat|)))
          (SEQ (LETT |ans| NIL . #2=(|TUBETOOL;cosSinInfo;IL;10|))
               (LETT |theta|
                     (|div_DF_I|
@@ -146,7 +146,7 @@
           (|ans| (|List| (|Point| (|DoubleFloat|)))) (|sin| (|DoubleFloat|))
           (|cos| (|DoubleFloat|)) (|cossin| (|List| (|DoubleFloat|))))
          (SEQ (LETT |ans| NIL . #1=(|TUBETOOL;loopPoints;3PDfLL;11|))
-              (SEQ G190 (COND ((NULL |cosSin|) (GO G191)))
+              (SEQ G190 (COND ((NULL (NULL (NULL |cosSin|))) (GO G191)))
                    (SEQ (LETT |cossin| (|SPADfirst| |cosSin|) . #1#)
                         (LETT |cos| (|SPADfirst| |cossin|) . #1#)
                         (LETT |sin| (SPADCALL |cossin| (QREFELT $ 34)) . #1#)
@@ -176,7 +176,7 @@
 
 (DEFUN |TubePlotTools| ()
   (SPROG NIL
-         (PROG (#1=#:G745)
+         (PROG (#1=#:G753)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|TubePlotTools|)

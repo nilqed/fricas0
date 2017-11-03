@@ -4,12 +4,12 @@
 (SDEFUN |IARRAY1;#;$Nni;1| ((|x| $) ($ |NonNegativeInteger|)) (QVSIZE |x|)) 
 
 (SDEFUN |IARRAY1;fill!;$S$;2| ((|x| $) (|s| S) ($ $))
-        (SPROG ((#1=#:G1805 NIL) (|i| NIL))
+        (SPROG ((#1=#:G1789 NIL) (|i| NIL))
                (SEQ
                 (SEQ (LETT |i| 0 . #2=(|IARRAY1;fill!;$S$;2|))
                      (LETT #1# (QVMAXINDEX |x|) . #2#) G190
                      (COND ((|greater_SI| |i| #1#) (GO G191)))
-                     (SEQ (EXIT (SETELT |x| |i| |s|)))
+                     (SEQ (EXIT (QSETVELT |x| |i| |s|)))
                      (LETT |i| (|inc_SI| |i|) . #2#) (GO G190) G191 (EXIT NIL))
                 (EXIT |x|)))) 
 
@@ -25,7 +25,7 @@
         (MAKEARR1 |n| |s|)) 
 
 (SDEFUN |IARRAY1;map!;M2$;6| ((|f| |Mapping| S S) (|s1| $) ($ $))
-        (SPROG ((#1=#:G1814 NIL) (|i| NIL) (|n| (|Integer|)))
+        (SPROG ((#1=#:G1798 NIL) (|i| NIL) (|n| (|Integer|)))
                (SEQ (LETT |n| (QVMAXINDEX |s1|) . #2=(|IARRAY1;map!;M2$;6|))
                     (EXIT
                      (COND ((< |n| 0) |s1|)
@@ -35,14 +35,15 @@
                                   (COND ((|greater_SI| |i| #1#) (GO G191)))
                                   (SEQ
                                    (EXIT
-                                    (SETELT |s1| |i|
-                                            (SPADCALL (ELT |s1| |i|) |f|))))
+                                    (QSETVELT |s1| |i|
+                                              (SPADCALL (QAREF1 |s1| |i|)
+                                                        |f|))))
                                   (LETT |i| (|inc_SI| |i|) . #2#) (GO G190)
                                   G191 (EXIT NIL))
                              (EXIT |s1|)))))))) 
 
 (SDEFUN |IARRAY1;map;M2$;7| ((|f| |Mapping| S S) (|s1| $) ($ $))
-        (SPROG ((#1=#:G1819 NIL) (|i| NIL) (|ss2| ($)) (|n| (|Integer|)))
+        (SPROG ((#1=#:G1803 NIL) (|i| NIL) (|ss2| ($)) (|n| (|Integer|)))
                (SEQ (LETT |n| (QVMAXINDEX |s1|) . #2=(|IARRAY1;map;M2$;7|))
                     (EXIT
                      (COND ((< |n| 0) |s1|)
@@ -53,15 +54,15 @@
                                       (COND ((|greater_SI| |i| #1#) (GO G191)))
                                       (SEQ
                                        (EXIT
-                                        (SETELT |ss2| |i|
-                                                (SPADCALL (ELT |s1| |i|)
-                                                          |f|))))
+                                        (QSETVELT |ss2| |i|
+                                                  (SPADCALL (QAREF1 |s1| |i|)
+                                                            |f|))))
                                       (LETT |i| (|inc_SI| |i|) . #2#) (GO G190)
                                       G191 (EXIT NIL))
                                  (EXIT |ss2|)))))))) 
 
 (SDEFUN |IARRAY1;map;M3$;8| ((|f| |Mapping| S S S) (|a| $) (|b| $) ($ $))
-        (SPROG ((#1=#:G1825 NIL) (|i| NIL) (|c| ($)) (|maxind| (|Integer|)))
+        (SPROG ((#1=#:G1809 NIL) (|i| NIL) (|c| ($)) (|maxind| (|Integer|)))
                (SEQ
                 (LETT |maxind| (MIN (QVMAXINDEX |a|) (QVMAXINDEX |b|))
                       . #2=(|IARRAY1;map;M3$;8|))
@@ -74,35 +75,36 @@
                                   (COND ((|greater_SI| |i| #1#) (GO G191)))
                                   (SEQ
                                    (EXIT
-                                    (SETELT |c| |i|
-                                            (SPADCALL (ELT |a| |i|)
-                                                      (ELT |b| |i|) |f|))))
+                                    (QSETVELT |c| |i|
+                                              (SPADCALL (QAREF1 |a| |i|)
+                                                        (QAREF1 |b| |i|)
+                                                        |f|))))
                                   (LETT |i| (|inc_SI| |i|) . #2#) (GO G190)
                                   G191 (EXIT NIL))
                              (EXIT |c|)))))))) 
 
 (SDEFUN |IARRAY1;hashUpdate!;Hs$Hs;9|
         ((|s| |HashState|) (|x| $) ($ |HashState|))
-        (SPROG ((#1=#:G1829 NIL) (|i| NIL))
+        (SPROG ((#1=#:G1813 NIL) (|i| NIL))
                (SEQ
                 (SEQ (LETT |i| 0 . #2=(|IARRAY1;hashUpdate!;Hs$Hs;9|))
                      (LETT #1# (QVMAXINDEX |x|) . #2#) G190
                      (COND ((|greater_SI| |i| #1#) (GO G191)))
                      (SEQ
                       (EXIT
-                       (LETT |s| (SPADCALL |s| (ELT |x| |i|) (QREFELT $ 21))
+                       (LETT |s| (SPADCALL |s| (QAREF1 |x| |i|) (QREFELT $ 21))
                              . #2#)))
                      (LETT |i| (|inc_SI| |i|) . #2#) (GO G190) G191 (EXIT NIL))
                 (EXIT |s|)))) 
 
-(PUT '|IARRAY1;qelt;$IS;10| '|SPADreplace| 'ELT) 
+(PUT '|IARRAY1;qelt;$IS;10| '|SPADreplace| 'QAREF1) 
 
-(SDEFUN |IARRAY1;qelt;$IS;10| ((|x| $) (|i| |Integer|) ($ S)) (ELT |x| |i|)) 
+(SDEFUN |IARRAY1;qelt;$IS;10| ((|x| $) (|i| |Integer|) ($ S)) (QAREF1 |x| |i|)) 
 
-(PUT '|IARRAY1;qsetelt!;$I2S;11| '|SPADreplace| 'SETELT) 
+(PUT '|IARRAY1;qsetelt!;$I2S;11| '|SPADreplace| 'QSETVELT) 
 
 (SDEFUN |IARRAY1;qsetelt!;$I2S;11| ((|x| $) (|i| |Integer|) (|s| S) ($ S))
-        (SETELT |x| |i| |s|)) 
+        (QSETVELT |x| |i| |s|)) 
 
 (SDEFUN |IARRAY1;elt;$IS;12| ((|x| $) (|i| |Integer|) ($ S))
         (COND
@@ -123,28 +125,28 @@
 (SDEFUN |IARRAY1;maxIndex;$I;14| ((|x| $) ($ |Integer|)) (QVSIZE |x|)) 
 
 (SDEFUN |IARRAY1;qelt;$IS;15| ((|x| $) (|i| |Integer|) ($ S))
-        (ELT |x| (- |i| 1))) 
+        (QAREF1 |x| (- |i| 1))) 
 
 (SDEFUN |IARRAY1;qsetelt!;$I2S;16| ((|x| $) (|i| |Integer|) (|s| S) ($ S))
-        (SETELT |x| (- |i| 1) |s|)) 
+        (QSETVELT |x| (- |i| 1) |s|)) 
 
 (SDEFUN |IARRAY1;elt;$IS;17| ((|x| $) (|i| |Integer|) ($ S))
         (COND
          ((OR (|less_SI| |i| 1) (|less_SI| (QVSIZE |x|) |i|))
           (|error| "index out of range"))
-         ('T (ELT |x| (- |i| 1))))) 
+         ('T (QAREF1 |x| (- |i| 1))))) 
 
 (SDEFUN |IARRAY1;setelt!;$I2S;18| ((|x| $) (|i| |Integer|) (|s| S) ($ S))
         (COND
          ((OR (|less_SI| |i| 1) (|less_SI| (QVSIZE |x|) |i|))
           (|error| "index out of range"))
-         ('T (SETELT |x| (- |i| 1) |s|)))) 
+         ('T (QSETVELT |x| (- |i| 1) |s|)))) 
 
 (SDEFUN |IARRAY1;qelt;$IS;19| ((|x| $) (|i| |Integer|) ($ S))
-        (ELT |x| (- |i| (QREFELT $ 7)))) 
+        (QAREF1 |x| (- |i| (QREFELT $ 7)))) 
 
 (SDEFUN |IARRAY1;qsetelt!;$I2S;20| ((|x| $) (|i| |Integer|) (|s| S) ($ S))
-        (SETELT |x| (- |i| (QREFELT $ 7)) |s|)) 
+        (QSETVELT |x| (- |i| (QREFELT $ 7)) |s|)) 
 
 (SDEFUN |IARRAY1;elt;$IS;21| ((|x| $) (|i| |Integer|) ($ S))
         (COND
@@ -162,9 +164,9 @@
 
 (DECLAIM (NOTINLINE |IndexedOneDimensionalArray;|)) 
 
-(DEFUN |IndexedOneDimensionalArray| (&REST #1=#:G1867)
+(DEFUN |IndexedOneDimensionalArray| (&REST #1=#:G1851)
   (SPROG NIL
-         (PROG (#2=#:G1868)
+         (PROG (#2=#:G1852)
            (RETURN
             (COND
              ((LETT #2#
@@ -185,7 +187,7 @@
 
 (DEFUN |IndexedOneDimensionalArray;| (|#1| |#2|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G1864 NIL) (#2=#:G1865 NIL) (#3=#:G1866 NIL) ($ NIL)
+   ((|pv$| NIL) (#1=#:G1848 NIL) (#2=#:G1849 NIL) (#3=#:G1850 NIL) ($ NIL)
     (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #4=(|IndexedOneDimensionalArray|))
@@ -319,10 +321,10 @@
               (|Integer|) |IARRAY1;minIndex;$I;3| |IARRAY1;empty;$;4|
               |IARRAY1;new;NniS$;5| (|Mapping| 6 6) |IARRAY1;map!;M2$;6|
               |IARRAY1;map;M2$;7| (|Mapping| 6 6 6) |IARRAY1;map;M3$;8|
-              (|HashState|) (0 . |hashUpdate!|) (6 . |hashUpdate!|) '#:G1800
+              (|HashState|) (0 . |hashUpdate!|) (6 . |hashUpdate!|) '#:G1784
               (12 . |qelt|) (18 . |qsetelt!|) (25 . |maxIndex|) (|Boolean|)
               (30 . >) (36 . |elt|) (42 . |setelt!|) (|Mapping| 27 6 6)
-              (|List| 6) (|Equation| 6) (|List| 33) (|OutputForm|)
+              (|List| 6) (|List| 34) (|Equation| 6) (|OutputForm|)
               (|SingleInteger|) (|String|) (|Mapping| 27 6)
               (|UniversalSegment| 11) (|Void|) (|InputForm|) (|List| $)
               (|Union| 6 '"failed") (|List| 11))
@@ -334,12 +336,12 @@
               |minIndex| 240 |min| 245 |merge| 251 |members| 264 |member?| 269
               |maxIndex| 275 |max| 280 |map!| 286 |map| 292 |less?| 305
               |leftTrim| 311 |latex| 317 |insert| 322 |indices| 336 |index?|
-              341 |hashUpdate!| 347 |hash| 353 |first| 358 |find| 363 |fill!|
-              369 |every?| 375 |eval| 381 |eq?| 407 |entry?| 413 |entries| 419
-              |empty?| 424 |empty| 429 |elt| 433 |delete| 452 |count| 464
-              |copyInto!| 476 |copy| 483 |convert| 488 |construct| 493 |concat|
-              498 |coerce| 521 |any?| 526 >= 532 > 538 = 544 <= 550 < 556 |#|
-              562)
+              341 |hashUpdate!| 347 |hash| 353 |first| 358 |find| 369 |fill!|
+              375 |every?| 381 |eval| 387 |eq?| 413 |entry?| 419 |entries| 425
+              |empty?| 430 |empty| 435 |elt| 439 |delete| 458 |count| 470
+              |copyInto!| 482 |copy| 489 |convert| 494 |construct| 499 |concat|
+              504 |coerce| 527 |any?| 532 >= 538 > 544 = 550 <= 556 < 562 |#|
+              568)
            'NIL
            (CONS
             (|makeByteWordVec2| 12
@@ -370,8 +372,8 @@
                                     0 8 1 3 13 6 0 39 6 1 3 13 6 0 11 6 30 2 14
                                     0 38 0 1 0 0 0 1 2 15 0 0 6 1 1 16 0 0 1 1
                                     14 0 0 1 1 15 0 0 1 2 15 0 6 0 1 2 14 0 38
-                                    0 1 4 15 6 18 0 6 6 1 3 14 6 18 0 6 1 2 14
-                                    6 18 0 1 3 13 6 0 11 6 25 2 0 6 0 11 24 3
+                                    0 1 4 15 6 18 0 6 6 1 2 14 6 18 0 1 3 14 6
+                                    18 0 6 1 3 13 6 0 11 6 25 2 0 6 0 11 24 3
                                     15 11 6 0 11 1 2 15 11 6 0 1 2 14 11 38 0 1
                                     1 14 32 0 1 2 0 0 8 6 14 2 0 27 0 8 1 1 3
                                     11 0 12 2 18 0 0 0 1 2 18 0 0 0 1 3 14 0 31
@@ -380,16 +382,16 @@
                                     2 0 0 15 0 17 2 0 27 0 8 1 2 15 0 0 6 1 1
                                     20 37 0 1 3 0 0 6 0 11 1 3 0 0 0 0 11 1 1 0
                                     44 0 1 2 0 27 11 0 1 2 20 20 20 0 22 1 20
-                                    36 0 1 1 3 6 0 1 2 0 43 38 0 1 2 13 0 0 6
-                                    10 2 14 27 38 0 1 3 8 0 0 6 6 1 3 8 0 0 32
-                                    32 1 2 8 0 0 33 1 2 8 0 0 34 1 2 0 27 0 0 1
-                                    2 15 27 6 0 1 1 0 32 0 1 1 0 27 0 1 0 0 0
-                                    13 2 0 0 0 39 1 3 0 6 0 11 6 1 2 0 6 0 11
-                                    29 2 0 0 0 11 1 2 0 0 0 39 1 2 15 8 6 0 1 2
-                                    14 8 38 0 1 3 16 0 0 0 11 1 1 0 0 0 1 1 2
-                                    41 0 1 1 0 0 32 1 2 0 0 0 0 1 1 0 0 42 1 2
-                                    0 0 6 0 1 2 0 0 0 6 1 1 21 35 0 1 2 14 27
-                                    38 0 1 2 18 27 0 0 1 2 18 27 0 0 1 2 22 27
-                                    0 0 1 2 18 27 0 0 1 2 18 27 0 0 1 1 14 8 0
-                                    9)))))
+                                    36 0 1 1 3 6 0 1 2 0 0 0 8 1 2 0 43 38 0 1
+                                    2 13 0 0 6 10 2 14 27 38 0 1 3 8 0 0 32 32
+                                    1 3 8 0 0 6 6 1 2 8 0 0 33 1 2 8 0 0 34 1 2
+                                    0 27 0 0 1 2 15 27 6 0 1 1 0 32 0 1 1 0 27
+                                    0 1 0 0 0 13 2 0 0 0 39 1 2 0 6 0 11 29 3 0
+                                    6 0 11 6 1 2 0 0 0 39 1 2 0 0 0 11 1 2 15 8
+                                    6 0 1 2 14 8 38 0 1 3 16 0 0 0 11 1 1 0 0 0
+                                    1 1 2 41 0 1 1 0 0 32 1 1 0 0 42 1 2 0 0 0
+                                    0 1 2 0 0 0 6 1 2 0 0 6 0 1 1 21 35 0 1 2
+                                    14 27 38 0 1 2 18 27 0 0 1 2 18 27 0 0 1 2
+                                    22 27 0 0 1 2 18 27 0 0 1 2 18 27 0 0 1 1
+                                    14 8 0 9)))))
            '|lookupComplete|)) 

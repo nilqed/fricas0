@@ -3,13 +3,13 @@
         ((|xlist| |List| F) (|ylist| |List| F) (|m| |NonNegativeInteger|)
          (|k| |NonNegativeInteger|) ($ |Fraction| (|Polynomial| F)))
         (SPROG
-         ((|reslist| (|List| (|List| (|Polynomial| F)))) (#1=#:G751 NIL)
-          (|i| NIL) (#2=#:G750 NIL) (#3=#:G749 NIL) (#4=#:G748 NIL)
+         ((|reslist| (|List| (|List| (|Polynomial| F)))) (#1=#:G756 NIL)
+          (|i| NIL) (#2=#:G755 NIL) (#3=#:G754 NIL) (#4=#:G753 NIL)
           (|res| (|List| (|Vector| F))) (|collist| (|List| (|List| F)))
-          (#5=#:G747 NIL) (#6=#:G746 NIL) (#7=#:G745 NIL) (|j| NIL)
-          (#8=#:G744 NIL) (#9=#:G743 NIL) (#10=#:G742 NIL)
-          (|tempvec| (|List| F)) (#11=#:G741 NIL) (#12=#:G740 NIL)
-          (#13=#:G739 NIL) (#14=#:G738 NIL) (#15=#:G737 NIL) (#16=#:G736 NIL))
+          (#5=#:G752 NIL) (#6=#:G751 NIL) (#7=#:G750 NIL) (|j| NIL)
+          (#8=#:G749 NIL) (#9=#:G748 NIL) (#10=#:G747 NIL)
+          (|tempvec| (|List| F)) (#11=#:G746 NIL) (#12=#:G745 NIL)
+          (#13=#:G744 NIL) (#14=#:G743 NIL) (#15=#:G742 NIL) (#16=#:G741 NIL))
          (SEQ
           (COND
            ((SPADCALL (LENGTH |xlist|) (LENGTH |ylist|) (QREFELT $ 10))
@@ -191,9 +191,9 @@
 
 (DECLAIM (NOTINLINE |RationalInterpolation;|)) 
 
-(DEFUN |RationalInterpolation| (&REST #1=#:G752)
+(DEFUN |RationalInterpolation| (&REST #1=#:G757)
   (SPROG NIL
-         (PROG (#2=#:G753)
+         (PROG (#2=#:G758)
            (RETURN
             (COND
              ((LETT #2#
@@ -235,7 +235,7 @@
               (|List| 7) (10 . |elt|) (16 . *) (|Fraction| 35) (22 . |One|)
               (|List| 13) (26 . |elt|) (32 . -) (37 . |append|) (|Matrix| 7)
               (43 . |matrix|) (48 . |transpose|) (|List| 31) (53 . |nullSpace|)
-              (|Void|) (|OutputForm|) (|OutputPackage|) (58 . |output|)
+              (|Void|) (|String|) (|OutputPackage|) (58 . |output|)
               (|Vector| 7) (63 . |elt|) (69 . |elt|) (|Symbol|)
               (|Polynomial| 7) (75 . |coerce|) (80 . ^) (86 . *) (92 . +)
               (|List| 35) (|List| 40) (98 . |elt|) (|Mapping| 35 35 35)

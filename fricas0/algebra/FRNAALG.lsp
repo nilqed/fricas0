@@ -29,16 +29,9 @@
                                            (|Join|
                                             (|FiniteRankNonAssociativeAlgebra|
                                              '|t#1|)
+                                            (|FramedModule| '|t#1|)
                                             (|mkCategory|
-                                             '(((|basis| ((|Vector| $))) T)
-                                               ((|coordinates|
-                                                 ((|Vector| |t#1|) $))
-                                                T)
-                                               ((|coordinates|
-                                                 ((|Matrix| |t#1|)
-                                                  (|Vector| $)))
-                                                T)
-                                               ((|elt| (|t#1| $ (|Integer|)))
+                                             '(((|elt| (|t#1| $ (|Integer|)))
                                                 T)
                                                ((|structuralConstants|
                                                  ((|Vector| (|Matrix| |t#1|))))
@@ -46,15 +39,6 @@
                                                ((|conditionsForIdempotents|
                                                  ((|List|
                                                    (|Polynomial| |t#1|))))
-                                                T)
-                                               ((|represents|
-                                                 ($ (|Vector| |t#1|)))
-                                                T)
-                                               ((|convert|
-                                                 ((|Vector| |t#1|) $))
-                                                T)
-                                               ((|convert|
-                                                 ($ (|Vector| |t#1|)))
                                                 T)
                                                ((|leftDiscriminant| (|t#1|)) T)
                                                ((|rightDiscriminant| (|t#1|))
@@ -86,10 +70,9 @@
                                              '((|Matrix| |t#1|)
                                                (|SparseUnivariatePolynomial|
                                                 (|Polynomial| |t#1|))
-                                               (|Vector| |t#1|)
                                                (|List| (|Polynomial| |t#1|))
                                                (|Vector| (|Matrix| |t#1|))
-                                               (|Integer|) (|Vector| $))
+                                               (|Integer|))
                                              NIL))
                                            . #2=(|FramedNonAssociativeAlgebra|)))))
                    . #2#)

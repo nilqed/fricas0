@@ -141,9 +141,9 @@
 
 (DECLAIM (NOTINLINE |PathArrayPackage;|)) 
 
-(DEFUN |PathArrayPackage| (#1=#:G720)
+(DEFUN |PathArrayPackage| (#1=#:G723)
   (SPROG NIL
-         (PROG (#2=#:G721)
+         (PROG (#2=#:G724)
            (RETURN
             (COND
              ((LETT #2#

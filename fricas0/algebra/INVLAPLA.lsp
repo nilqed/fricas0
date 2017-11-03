@@ -88,11 +88,11 @@
 (SDEFUN |INVLAPLA;iltsqfr|
         ((|r| |Fraction| (|SparseUnivariatePolynomial| F)) (|t| F) ($ F))
         (SPROG
-         ((#1=#:G750 NIL) (#2=#:G749 (F)) (#3=#:G751 (F)) (#4=#:G757 NIL)
-          (|a| NIL) (#5=#:G758 NIL) (|b| NIL)
-          (|nl| (|List| (|SparseUnivariatePolynomial| F))) (#6=#:G747 NIL)
-          (|ql| (|List| (|SparseUnivariatePolynomial| F))) (#7=#:G756 NIL)
-          (|qq| NIL) (#8=#:G755 NIL) (|q| (|SparseUnivariatePolynomial| F))
+         ((#1=#:G753 NIL) (#2=#:G752 (F)) (#3=#:G754 (F)) (#4=#:G760 NIL)
+          (|a| NIL) (#5=#:G761 NIL) (|b| NIL)
+          (|nl| (|List| (|SparseUnivariatePolynomial| F))) (#6=#:G750 NIL)
+          (|ql| (|List| (|SparseUnivariatePolynomial| F))) (#7=#:G759 NIL)
+          (|qq| NIL) (#8=#:G758 NIL) (|q| (|SparseUnivariatePolynomial| F))
           (|p| (|SparseUnivariatePolynomial| F)))
          (SEQ
           (COND
@@ -175,7 +175,7 @@
         ((|p| |SparseUnivariatePolynomial| F)
          (|q| |SparseUnivariatePolynomial| F) (|t| F) ($ F))
         (SPROG
-         ((#1=#:G767 NIL) (#2=#:G766 (F)) (#3=#:G768 (F)) (#4=#:G773 NIL)
+         ((#1=#:G771 NIL) (#2=#:G770 (F)) (#3=#:G772 (F)) (#4=#:G777 NIL)
           (|root| NIL) (|q1| (|SparseUnivariatePolynomial| F))
           (|roots| (|List| F)) (|alpha| (F)) (|d| (F)) (|b| (F)) (|e| (F))
           (|c| (F)) (|a| (F)) (|cp| (F)))
@@ -302,9 +302,9 @@
 
 (DECLAIM (NOTINLINE |InverseLaplaceTransform;|)) 
 
-(DEFUN |InverseLaplaceTransform| (&REST #1=#:G774)
+(DEFUN |InverseLaplaceTransform| (&REST #1=#:G778)
   (SPROG NIL
-         (PROG (#2=#:G775)
+         (PROG (#2=#:G779)
            (RETURN
             (COND
              ((LETT #2#

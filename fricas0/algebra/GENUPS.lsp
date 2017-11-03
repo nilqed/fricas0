@@ -643,9 +643,9 @@
 
 (DECLAIM (NOTINLINE |GenerateUnivariatePowerSeries;|)) 
 
-(DEFUN |GenerateUnivariatePowerSeries| (&REST #1=#:G784)
+(DEFUN |GenerateUnivariatePowerSeries| (&REST #1=#:G787)
   (SPROG NIL
-         (PROG (#2=#:G785)
+         (PROG (#2=#:G788)
            (RETURN
             (COND
              ((LETT #2#
@@ -692,20 +692,20 @@
               (|Mapping| 7 10) |GENUPS;taylor;MEA;4| (|Symbol|) (60 . |coerce|)
               (65 . |coerce|) (70 . =) (76 . =) (|Equation| $) (82 . |eval|)
               |GENUPS;taylor;FESEA;5| (|UniversalSegment| 39) (88 . |hasHi|)
-              (|NonNegativeInteger|) (93 . |lo|) (98 . |hi|)
+              (|NonNegativeInteger|) (93 . |low|) (98 . |high|)
               |GENUPS;taylor;MEUsA;6| |GENUPS;taylor;FESEUsA;7|
-              (|UniversalSegment| 10) (103 . |hasHi|) (108 . |lo|) (113 . |hi|)
-              |GENUPS;laurent;MEUsA;8| |GENUPS;laurent;FESEUsA;9|
-              (|Fraction| 10) (118 . /) (124 . |Zero|) (128 . |positive?|)
-              (|UniversalSegment| 50) (133 . |hasHi|) (138 . |lo|) (143 . |hi|)
-              (148 . <) (154 . |numer|) (159 . |denom|) (164 . |lcm|)
-              (170 . |segment|) (176 . |segment|) (|Mapping| 7 50)
-              |GENUPS;puiseux;MEUsFA;11| (181 . |coerce|)
-              |GENUPS;puiseux;FESEUsFA;12| (186 . |Zero|) (190 . |Zero|)
-              (194 . |segment|) (199 . |One|) |GENUPS;series;MEA;13|
-              |GENUPS;series;FESEA;14| (203 . |coerce|) (|Mapping| 50 10)
-              (|UniversalSegmentFunctions2| 10 50) (208 . |map|)
-              |GENUPS;series;MEUsA;15| |GENUPS;series;FESEUsA;16|
+              (|UniversalSegment| 10) (103 . |hasHi|) (108 . |low|)
+              (113 . |high|) |GENUPS;laurent;MEUsA;8|
+              |GENUPS;laurent;FESEUsA;9| (|Fraction| 10) (118 . /)
+              (124 . |Zero|) (128 . |positive?|) (|UniversalSegment| 50)
+              (133 . |hasHi|) (138 . |low|) (143 . |high|) (148 . <)
+              (154 . |numer|) (159 . |denom|) (164 . |lcm|) (170 . |segment|)
+              (176 . |segment|) (|Mapping| 7 50) |GENUPS;puiseux;MEUsFA;11|
+              (181 . |coerce|) |GENUPS;puiseux;FESEUsFA;12| (186 . |Zero|)
+              (190 . |Zero|) (194 . |segment|) (199 . |One|)
+              |GENUPS;series;MEA;13| |GENUPS;series;FESEA;14| (203 . |coerce|)
+              (|Mapping| 50 10) (|UniversalSegmentFunctions2| 10 50)
+              (208 . |map|) |GENUPS;series;MEUsA;15| |GENUPS;series;FESEUsA;16|
               |GENUPS;series;MEUsFA;17| |GENUPS;series;FESEUsFA;18|)
            '#(|taylor| 214 |series| 242 |puiseux| 287 |laurent| 304) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)

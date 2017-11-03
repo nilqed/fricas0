@@ -1,7 +1,7 @@
 
 (SDEFUN |PTFUNC2;map;MPP;1|
         ((|mapping| |Mapping| R2 R1) (|p| |Point| R1) ($ |Point| R2))
-        (SPROG ((#1=#:G698 NIL) (#2=#:G703 NIL) (|i| NIL) (#3=#:G702 NIL))
+        (SPROG ((#1=#:G702 NIL) (#2=#:G707 NIL) (|i| NIL) (#3=#:G706 NIL))
                (SEQ
                 (SPADCALL
                  (PROGN
@@ -30,9 +30,9 @@
 
 (DECLAIM (NOTINLINE |PointFunctions2;|)) 
 
-(DEFUN |PointFunctions2| (&REST #1=#:G704)
+(DEFUN |PointFunctions2| (&REST #1=#:G708)
   (SPROG NIL
-         (PROG (#2=#:G705)
+         (PROG (#2=#:G709)
            (RETURN
             (COND
              ((LETT #2#

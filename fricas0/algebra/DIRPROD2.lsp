@@ -18,9 +18,9 @@
 
 (DECLAIM (NOTINLINE |DirectProductFunctions2;|)) 
 
-(DEFUN |DirectProductFunctions2| (&REST #1=#:G701)
+(DEFUN |DirectProductFunctions2| (&REST #1=#:G703)
   (SPROG NIL
-         (PROG (#2=#:G702)
+         (PROG (#2=#:G704)
            (RETURN
             (COND
              ((LETT #2#
@@ -60,12 +60,13 @@
 (MAKEPROP '|DirectProductFunctions2| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
-              (|local| |#3|) (|Vector| 7) (|DirectProduct| 6 7) (0 . |coerce|)
+              (|local| |#3|) (|Vector| 7)
+              (|DirectProduct| (NRTEVAL (QREFELT $ 6)) 7) (0 . |coerce|)
               (|Vector| 8) (|Mapping| 8 7)
               (|FiniteLinearAggregateFunctions2| 7 9 8 12) (5 . |map|)
-              (|DirectProduct| 6 8) (11 . |directProduct|)
-              |DIRPROD2;map;MDpDp;1| (|Mapping| 8 7 8) (16 . |scan|)
-              |DIRPROD2;scan;MDpBDp;2| (23 . |reduce|)
+              (|DirectProduct| (NRTEVAL (QREFELT $ 6)) 8)
+              (11 . |directProduct|) |DIRPROD2;map;MDpDp;1| (|Mapping| 8 7 8)
+              (16 . |scan|) |DIRPROD2;scan;MDpBDp;2| (23 . |reduce|)
               |DIRPROD2;reduce;MDp2B;3|)
            '#(|scan| 30 |reduce| 37 |map| 44) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)

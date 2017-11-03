@@ -7,28 +7,32 @@
            ((NULL (SPADCALL |fn| (QREFELT $ 10)))
             (|error|
              (LIST '|mathprint|
-                   (LIST 'CONCAT "File is not readable"
-                         (SPADCALL |fn| (QREFELT $ 12))))))
-           (#1='T (MAKE-INSTREAM (SPADCALL |fn| (QREFELT $ 14))))))
+                   (LIST 'CONCAT
+                         (SPADCALL "File is not readable" (QREFELT $ 13))
+                         (SPADCALL |fn| (QREFELT $ 14))))))
+           (#1='T (MAKE-INSTREAM (SPADCALL |fn| (QREFELT $ 15))))))
          ((EQUAL |mode| "output")
           (COND
-           ((NULL (SPADCALL |fn| (QREFELT $ 15)))
+           ((NULL (SPADCALL |fn| (QREFELT $ 16)))
             (|error|
              (LIST '|mathprint|
-                   (LIST 'CONCAT "File is not writable"
-                         (SPADCALL |fn| (QREFELT $ 12))))))
-           (#1# (MAKE-OUTSTREAM (SPADCALL |fn| (QREFELT $ 14))))))
+                   (LIST 'CONCAT
+                         (SPADCALL "File is not writable" (QREFELT $ 13))
+                         (SPADCALL |fn| (QREFELT $ 14))))))
+           (#1# (MAKE-OUTSTREAM (SPADCALL |fn| (QREFELT $ 15))))))
          ('T
           (|error|
            (LIST '|mathprint|
-                 (LIST 'CONCAT "IO mode must be input or output"
-                       (SPADCALL |mode| (QREFELT $ 16)))))))) 
+                 (LIST 'CONCAT
+                       (SPADCALL "IO mode must be input or output"
+                                 (QREFELT $ 13))
+                       (SPADCALL |mode| (QREFELT $ 13)))))))) 
 
 (SDEFUN |FILE;=;2$B;2| ((|f1| $) (|f2| $) ($ |Boolean|))
         (SPADCALL (QVELT |f1| 0) (QVELT |f2| 0) (QREFELT $ 17))) 
 
 (SDEFUN |FILE;coerce;$Of;3| ((|f| $) ($ |OutputForm|))
-        (SPADCALL (QVELT |f| 0) (QREFELT $ 12))) 
+        (SPADCALL (QVELT |f| 0) (QREFELT $ 14))) 
 
 (SDEFUN |FILE;open;Fn$;4| ((|fname| |FileName|) ($ $))
         (SPADCALL |fname| "input" (QREFELT $ 20))) 
@@ -103,9 +107,9 @@
 
 (DECLAIM (NOTINLINE |File;|)) 
 
-(DEFUN |File| (#1=#:G745)
+(DEFUN |File| (#1=#:G747)
   (SPROG NIL
-         (PROG (#2=#:G746)
+         (PROG (#2=#:G748)
            (RETURN
             (COND
              ((LETT #2#
@@ -140,8 +144,8 @@
 (MAKEPROP '|File| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) '|Rep| (|Boolean|)
-              (|FileName|) (0 . |readable?|) (|OutputForm|) (5 . |coerce|)
-              (|String|) (10 . |coerce|) (15 . |writable?|) (20 . |coerce|)
+              (|FileName|) (0 . |readable?|) (|OutputForm|) (|String|)
+              (5 . |coerce|) (10 . |coerce|) (15 . |coerce|) (20 . |writable?|)
               (25 . =) |FILE;=;2$B;2| |FILE;coerce;$Of;3| |FILE;open;FnS$;5|
               |FILE;open;Fn$;4| (|Void|) |FILE;flush;$V;13|
               |FILE;reopen!;$S$;6| |FILE;close!;2$;7| |FILE;name;$Fn;8|
@@ -158,13 +162,13 @@
                         '#((|FileCategory| 9 6) (|SetCategory|) (|BasicType|)
                            (|CoercibleTo| 11))
                         (|makeByteWordVec2| 34
-                                            '(1 9 8 0 10 1 9 11 0 12 1 9 13 0
-                                              14 1 9 8 0 15 1 13 11 0 16 2 9 8
-                                              0 0 17 2 13 8 0 0 28 2 0 8 0 0 1
-                                              2 0 6 0 6 32 2 0 0 0 13 24 1 0 30
-                                              0 31 1 0 6 0 29 1 0 0 9 21 2 0 0
-                                              9 13 20 1 0 9 0 26 1 0 13 0 1 1 0
-                                              13 0 27 2 0 33 33 0 1 1 0 34 0 1
+                                            '(1 9 8 0 10 1 12 11 0 13 1 9 11 0
+                                              14 1 9 12 0 15 1 9 8 0 16 2 9 8 0
+                                              0 17 2 12 8 0 0 28 2 0 8 0 0 1 2
+                                              0 6 0 6 32 2 0 0 0 12 24 1 0 30 0
+                                              31 1 0 6 0 29 1 0 0 9 21 2 0 0 9
+                                              12 20 1 0 9 0 26 1 0 12 0 1 1 0
+                                              12 0 27 2 0 33 33 0 1 1 0 34 0 1
                                               1 0 22 0 23 1 0 11 0 19 1 0 0 0
                                               25 2 0 8 0 0 18)))))
            '|lookupComplete|)) 

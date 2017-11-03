@@ -1,17 +1,20 @@
 
 (SDEFUN |JBUNDLE;setNotation;2S;1| ((|s| |Symbol|) ($ |Symbol|))
-        (SEQ (SPADCALL "only repeated index notation possible" (QREFELT $ 18))
-             (EXIT '|Repeated|))) 
+        (SEQ
+         (SPADCALL
+          (SPADCALL "only repeated index notation possible" (QREFELT $ 18))
+          (QREFELT $ 20))
+         (EXIT '|Repeated|))) 
 
 (PUT '|JBUNDLE;getNotation;S;2| '|SPADreplace| '(XLAM NIL '|Repeated|)) 
 
 (SDEFUN |JBUNDLE;getNotation;S;2| (($ |Symbol|)) '|Repeated|) 
 
 (SDEFUN |JBUNDLE;multiIndex;$L;3| ((|jv| $) ($ |List| (|NonNegativeInteger|)))
-        (SPADCALL (CDR (CDR |jv|)) (QREFELT $ 22))) 
+        (SPADCALL (CDR (CDR |jv|)) (QREFELT $ 24))) 
 
 (SDEFUN |JBUNDLE;index;$Pi;4| ((|jv| $) ($ |PositiveInteger|))
-        (SPROG ((#1=#:G717 NIL))
+        (SPROG ((#1=#:G720 NIL))
                (PROG1 (LETT #1# (|SPADfirst| (CDR |jv|)) |JBUNDLE;index;$Pi;4|)
                  (|check_subtype2| (> #1# 0) '(|PositiveInteger|)
                                    '(|NonNegativeInteger|) #1#)))) 
@@ -25,7 +28,7 @@
 
 (SDEFUN |JBUNDLE;CheckZeroIndex|
         ((|il| |List| (|NonNegativeInteger|)) ($ |Boolean|))
-        (SPROG ((#1=#:G726 NIL) (#2=#:G727 NIL) (|i| NIL))
+        (SPROG ((#1=#:G729 NIL) (#2=#:G730 NIL) (|i| NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -38,22 +41,22 @@
                         (EXIT
                          (COND
                           ((NULL (ZEROP |i|))
-                           (PROGN (LETT #1# NIL . #3#) (GO #4=#:G725))))))
+                           (PROGN (LETT #1# NIL . #3#) (GO #4=#:G728))))))
                        (LETT #2# (CDR #2#) . #3#) (GO G190) G191 (EXIT NIL))
                   (EXIT 'T)))
                 #4# (EXIT #1#)))) 
 
 (SDEFUN |JBUNDLE;X;Pi$;7| ((|up| |PositiveInteger|) ($ $))
         (COND
-         ((SPADCALL |up| (QREFELT $ 8) (QREFELT $ 30))
+         ((SPADCALL |up| (QREFELT $ 8) (QREFELT $ 32))
           (|error| "Improper upper index"))
          ('T (LIST 1 |up|)))) 
 
 (SDEFUN |JBUNDLE;U;Pi$;8| ((|up| |PositiveInteger|) ($ $))
-        (SPROG ((#1=#:G733 NIL) (|i| NIL) (#2=#:G732 NIL))
+        (SPROG ((#1=#:G737 NIL) (|i| NIL) (#2=#:G736 NIL))
                (SEQ
                 (COND
-                 ((SPADCALL |up| (QREFELT $ 9) (QREFELT $ 30))
+                 ((SPADCALL |up| (QREFELT $ 9) (QREFELT $ 32))
                   (|error| "Improper upper index"))
                  ('T
                   (CONS 2
@@ -70,53 +73,53 @@
 (SDEFUN |JBUNDLE;Pm;PiL$;9|
         ((|up| |PositiveInteger|) (|lo| |List| (|NonNegativeInteger|)) ($ $))
         (COND
-         ((SPADCALL |up| (QREFELT $ 9) (QREFELT $ 30))
+         ((SPADCALL |up| (QREFELT $ 9) (QREFELT $ 32))
           (|error| "Improper upper index"))
-         ((SPADCALL (SPADCALL |lo| (QREFELT $ 33)) (QREFELT $ 8)
-                    (QREFELT $ 34))
+         ((SPADCALL (SPADCALL |lo| (QREFELT $ 35)) (QREFELT $ 8)
+                    (QREFELT $ 36))
           (|error| "Improper multi-index"))
-         ((|JBUNDLE;CheckZeroIndex| |lo| $) (SPADCALL |up| (QREFELT $ 32)))
+         ((|JBUNDLE;CheckZeroIndex| |lo| $) (SPADCALL |up| (QREFELT $ 34)))
          ('T (CONS 3 (CONS |up| |lo|))))) 
 
 (SDEFUN |JBUNDLE;coerce;S$;10| ((|s| |Symbol|) ($ $))
-        (SPROG ((#1=#:G743 NIL) (#2=#:G740 NIL) (|pos| (|Integer|)))
+        (SPROG ((#1=#:G747 NIL) (#2=#:G744 NIL) (|pos| (|Integer|)))
                (SEQ
-                (LETT |pos| (SPADCALL |s| (QREFELT $ 6) (QREFELT $ 37))
+                (LETT |pos| (SPADCALL |s| (QREFELT $ 6) (QREFELT $ 39))
                       . #3=(|JBUNDLE;coerce;S$;10|))
                 (EXIT
                  (COND
-                  ((< |pos| (SPADCALL (QREFELT $ 6) (QREFELT $ 38)))
+                  ((< |pos| (SPADCALL (QREFELT $ 6) (QREFELT $ 40)))
                    (SEQ
-                    (LETT |pos| (SPADCALL |s| (QREFELT $ 7) (QREFELT $ 37))
+                    (LETT |pos| (SPADCALL |s| (QREFELT $ 7) (QREFELT $ 39))
                           . #3#)
                     (EXIT
                      (COND
-                      ((< |pos| (SPADCALL (QREFELT $ 7) (QREFELT $ 38)))
+                      ((< |pos| (SPADCALL (QREFELT $ 7) (QREFELT $ 40)))
                        (|error| "illegal symbol in JetBundle"))
                       (#4='T
                        (SPADCALL
                         (PROG1 (LETT #2# |pos| . #3#)
                           (|check_subtype2| (> #2# 0) '(|PositiveInteger|)
                                             '(|Integer|) #2#))
-                        (QREFELT $ 32)))))))
+                        (QREFELT $ 34)))))))
                   (#4#
                    (SPADCALL
                     (PROG1 (LETT #1# |pos| . #3#)
                       (|check_subtype2| (> #1# 0) '(|PositiveInteger|)
                                         '(|Integer|) #1#))
-                    (QREFELT $ 31)))))))) 
+                    (QREFELT $ 33)))))))) 
 
 (SDEFUN |JBUNDLE;D;SL$;11| ((|u| |Symbol|) (|der| |List| (|Symbol|)) ($ $))
         (SPROG
-         ((#1=#:G751 NIL) (|lower| (|List| (|PositiveInteger|)))
-          (#2=#:G747 NIL) (|pos| #3=(|Integer|)) (#4=#:G755 NIL) (|d| NIL)
+         ((#1=#:G755 NIL) (|lower| (|List| (|PositiveInteger|)))
+          (#2=#:G751 NIL) (|pos| #3=(|Integer|)) (#4=#:G759 NIL) (|d| NIL)
           (|up| #3#))
          (SEQ
-          (LETT |up| (SPADCALL |u| (QREFELT $ 7) (QREFELT $ 37))
+          (LETT |up| (SPADCALL |u| (QREFELT $ 7) (QREFELT $ 39))
                 . #5=(|JBUNDLE;D;SL$;11|))
           (EXIT
            (COND
-            ((< |up| (SPADCALL (QREFELT $ 7) (QREFELT $ 38)))
+            ((< |up| (SPADCALL (QREFELT $ 7) (QREFELT $ 40)))
              (|error| #6="illegal symbol in JetBundle"))
             ('T
              (SEQ (LETT |lower| NIL . #5#)
@@ -125,11 +128,11 @@
                         ((OR (ATOM #4#) (PROGN (LETT |d| (CAR #4#) . #5#) NIL))
                          (GO G191)))
                        (SEQ
-                        (LETT |pos| (SPADCALL |d| (QREFELT $ 6) (QREFELT $ 37))
+                        (LETT |pos| (SPADCALL |d| (QREFELT $ 6) (QREFELT $ 39))
                               . #5#)
                         (EXIT
                          (COND
-                          ((< |pos| (SPADCALL (QREFELT $ 6) (QREFELT $ 38)))
+                          ((< |pos| (SPADCALL (QREFELT $ 6) (QREFELT $ 40)))
                            (|error| #6#))
                           ('T
                            (LETT |lower|
@@ -147,43 +150,43 @@
                     (PROG1 (LETT #1# |up| . #5#)
                       (|check_subtype2| (> #1# 0) '(|PositiveInteger|)
                                         '(|Integer|) #1#))
-                    |lower| (QREFELT $ 41)))))))))) 
+                    |lower| (QREFELT $ 43)))))))))) 
 
 (PUT '|JBUNDLE;One;$;12| '|SPADreplace| '(XLAM NIL (LIST 0 1))) 
 
 (SDEFUN |JBUNDLE;One;$;12| (($ $)) (LIST 0 1)) 
 
 (SDEFUN |JBUNDLE;numIndVar;Pi;13| (($ |PositiveInteger|))
-        (SPROG ((#1=#:G757 NIL))
+        (SPROG ((#1=#:G761 NIL))
                (PROG1 (LETT #1# (QREFELT $ 8) |JBUNDLE;numIndVar;Pi;13|)
                  (|check_subtype2| (> #1# 0) '(|PositiveInteger|)
                                    '(|NonNegativeInteger|) #1#)))) 
 
 (SDEFUN |JBUNDLE;numDepVar;Pi;14| (($ |PositiveInteger|))
-        (SPROG ((#1=#:G759 NIL))
+        (SPROG ((#1=#:G763 NIL))
                (PROG1 (LETT #1# (QREFELT $ 9) |JBUNDLE;numDepVar;Pi;14|)
                  (|check_subtype2| (> #1# 0) '(|PositiveInteger|)
                                    '(|NonNegativeInteger|) #1#)))) 
 
 (SDEFUN |JBUNDLE;name;$S;15| ((|jv| $) ($ |Symbol|))
         (SPROG
-         ((|lower| (|List| (|OutputForm|))) (#1=#:G773 NIL) (|j| NIL)
+         ((|lower| (|List| (|OutputForm|))) (#1=#:G776 NIL) (|j| NIL)
           (|res| (|Symbol|)) (|mu| (|List| (|PositiveInteger|)))
           (|i| (|PositiveInteger|)) (|jt| (|Symbol|)))
          (SEQ
           (COND
            ((EQUAL
-             (LETT |jt| (SPADCALL |jv| (QREFELT $ 27))
+             (LETT |jt| (SPADCALL |jv| (QREFELT $ 29))
                    . #2=(|JBUNDLE;name;$S;15|))
              '|Const|)
             '|1|)
            (#3='T
-            (SEQ (LETT |i| (SPADCALL |jv| (QREFELT $ 26)) . #2#)
+            (SEQ (LETT |i| (SPADCALL |jv| (QREFELT $ 28)) . #2#)
                  (EXIT
                   (COND ((EQUAL |jt| '|Indep|) (QAREF1O (QREFELT $ 13) |i| 1))
                         ((EQUAL |jt| '|Dep|) (QAREF1O (QREFELT $ 14) |i| 1))
                         (#3#
-                         (SEQ (LETT |mu| (SPADCALL |jv| (QREFELT $ 46)) . #2#)
+                         (SEQ (LETT |mu| (SPADCALL |jv| (QREFELT $ 48)) . #2#)
                               (LETT |res| (QAREF1O (QREFELT $ 14) |i| 1) . #2#)
                               (LETT |lower| NIL . #2#)
                               (SEQ (LETT |j| NIL . #2#) (LETT #1# |mu| . #2#)
@@ -200,7 +203,7 @@
                                            (CONS
                                             (SPADCALL
                                              (QAREF1O (QREFELT $ 13) |j| 1)
-                                             (QREFELT $ 47))
+                                             (QREFELT $ 49))
                                             |lower|)
                                            . #2#)))
                                    (LETT #1# (CDR #1#) . #2#) (GO G190) G191
@@ -208,7 +211,7 @@
                               (LETT |lower| (NREVERSE |lower|) . #2#)
                               (EXIT
                                (SPADCALL |res| |lower|
-                                         (QREFELT $ 49))))))))))))) 
+                                         (QREFELT $ 51))))))))))))) 
 
 (PUT '|JBUNDLE;opdisp| '|SPADreplace| '|SPADfirst|) 
 
@@ -217,60 +220,60 @@
 
 (SDEFUN |JBUNDLE;coerce;$E;17| ((|jv| $) ($ |Expression| (|Integer|)))
         (SPROG
-         ((|arg| (|List| (|Expression| (|Integer|)))) (#1=#:G782 NIL) (|i| NIL)
-          (#2=#:G781 NIL) (|jop| (|BasicOperator|)) (|tmp| (|None|))
+         ((|arg| (|List| (|Expression| (|Integer|)))) (#1=#:G785 NIL) (|i| NIL)
+          (#2=#:G784 NIL) (|jop| (|BasicOperator|)) (|tmp| (|None|))
           (|opname| (|Symbol|)))
          (SEQ
           (COND
-           ((EQUAL (SPADCALL |jv| (QREFELT $ 27)) '|Const|)
-            (|spadConstant| $ 52))
+           ((EQUAL (SPADCALL |jv| (QREFELT $ 29)) '|Const|)
+            (|spadConstant| $ 54))
            ('T
             (SEQ
-             (LETT |opname| (SPADCALL |jv| (QREFELT $ 50))
+             (LETT |opname| (SPADCALL |jv| (QREFELT $ 52))
                    . #3=(|JBUNDLE;coerce;$E;17|))
-             (LETT |jop| (SPADCALL |opname| (QREFELT $ 54)) . #3#)
+             (LETT |jop| (SPADCALL |opname| (QREFELT $ 56)) . #3#)
              (SPADCALL |jop| (CONS (|function| |JBUNDLE;opdisp|) $)
-                       (QREFELT $ 56))
-             (LETT |tmp| (SPADCALL |jv| (QREFELT $ 59)) . #3#)
-             (LETT |jop| (SPADCALL |jop| '|%symbol| |tmp| (QREFELT $ 60))
+                       (QREFELT $ 58))
+             (LETT |tmp| (SPADCALL |jv| (QREFELT $ 61)) . #3#)
+             (LETT |jop| (SPADCALL |jop| '|%symbol| |tmp| (QREFELT $ 62))
                    . #3#)
              (LETT |tmp|
-                   (SPADCALL (SPADCALL |jv| (QREFELT $ 61)) (QREFELT $ 63))
+                   (SPADCALL (SPADCALL |jv| (QREFELT $ 63)) (QREFELT $ 65))
                    . #3#)
-             (LETT |jop| (SPADCALL |jop| '|%weight| |tmp| (QREFELT $ 60))
+             (LETT |jop| (SPADCALL |jop| '|%weight| |tmp| (QREFELT $ 62))
                    . #3#)
              (LETT |tmp|
-                   (SPADCALL (SPADCALL |jv| (QREFELT $ 27)) (QREFELT $ 65))
+                   (SPADCALL (SPADCALL |jv| (QREFELT $ 29)) (QREFELT $ 67))
                    . #3#)
-             (LETT |jop| (SPADCALL |jop| '|%jet| |tmp| (QREFELT $ 60)) . #3#)
+             (LETT |jop| (SPADCALL |jop| '|%jet| |tmp| (QREFELT $ 62)) . #3#)
              (LETT |arg|
                    (SPADCALL
-                    (LIST (SPADCALL |opname| (QREFELT $ 66))
-                          (SPADCALL (SPADCALL |jv| (QREFELT $ 26))
-                                    (QREFELT $ 67)))
+                    (LIST (SPADCALL |opname| (QREFELT $ 68))
+                          (SPADCALL (SPADCALL |jv| (QREFELT $ 28))
+                                    (QREFELT $ 69)))
                     (PROGN
                      (LETT #2# NIL . #3#)
                      (SEQ (LETT |i| NIL . #3#)
-                          (LETT #1# (SPADCALL |jv| (QREFELT $ 46)) . #3#) G190
+                          (LETT #1# (SPADCALL |jv| (QREFELT $ 48)) . #3#) G190
                           (COND
                            ((OR (ATOM #1#)
                                 (PROGN (LETT |i| (CAR #1#) . #3#) NIL))
                             (GO G191)))
                           (SEQ
                            (EXIT
-                            (LETT #2# (CONS (SPADCALL |i| (QREFELT $ 67)) #2#)
+                            (LETT #2# (CONS (SPADCALL |i| (QREFELT $ 69)) #2#)
                                   . #3#)))
                           (LETT #1# (CDR #1#) . #3#) (GO G190) G191
                           (EXIT (NREVERSE #2#))))
-                    (QREFELT $ 69))
+                    (QREFELT $ 71))
                    . #3#)
-             (EXIT (SPADCALL |jop| |arg| (QREFELT $ 71))))))))) 
+             (EXIT (SPADCALL |jop| |arg| (QREFELT $ 73))))))))) 
 
 (DECLAIM (NOTINLINE |JetBundle;|)) 
 
-(DEFUN |JetBundle| (&REST #1=#:G789)
+(DEFUN |JetBundle| (&REST #1=#:G792)
   (SPROG NIL
-         (PROG (#2=#:G790)
+         (PROG (#2=#:G793)
            (RETURN
             (COND
              ((LETT #2#
@@ -293,7 +296,7 @@
           (LETT DV$1 (|devaluate| |#1|) . #1=(|JetBundle|))
           (LETT DV$2 (|devaluate| |#2|) . #1#)
           (LETT |dv$| (LIST '|JetBundle| DV$1 DV$2) . #1#)
-          (LETT $ (GETREFV 79) . #1#)
+          (LETT $ (GETREFV 80) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|JetBundle| (LIST DV$1 DV$2)
@@ -312,37 +315,38 @@
 (MAKEPROP '|JetBundle| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|) '|nn| '|mm|
-              (|List| 19) (|Vector| 19) (0 . |construct|) '|nameX| '|nameU|
-              '|Rep| (|Void|) (|OutputForm|) (5 . |print|) (|Symbol|)
-              |JBUNDLE;setNotation;2S;1| |JBUNDLE;getNotation;S;2|
-              (10 . |copy|) (|List| 29) |JBUNDLE;multiIndex;$L;3|
-              (|PositiveInteger|) |JBUNDLE;index;$Pi;4| |JBUNDLE;type;$S;5|
-              (|Boolean|) (|NonNegativeInteger|) (15 . >) |JBUNDLE;X;Pi$;7|
-              |JBUNDLE;U;Pi$;8| (21 . |#|) (26 . ~=) |JBUNDLE;Pm;PiL$;9|
-              (|Integer|) (32 . |position|) (38 . |minIndex|)
-              |JBUNDLE;coerce;S$;10| (|List| 25) (43 . |Pr|) |JBUNDLE;D;SL$;11|
+              (|List| 21) (|Vector| 21) (0 . |construct|) '|nameX| '|nameU|
+              '|Rep| (|String|) (|OutputForm|) (5 . |message|) (|Void|)
+              (10 . |print|) (|Symbol|) |JBUNDLE;setNotation;2S;1|
+              |JBUNDLE;getNotation;S;2| (15 . |copy|) (|List| 31)
+              |JBUNDLE;multiIndex;$L;3| (|PositiveInteger|)
+              |JBUNDLE;index;$Pi;4| |JBUNDLE;type;$S;5| (|Boolean|)
+              (|NonNegativeInteger|) (20 . >) |JBUNDLE;X;Pi$;7|
+              |JBUNDLE;U;Pi$;8| (26 . |#|) (31 . ~=) |JBUNDLE;Pm;PiL$;9|
+              (|Integer|) (37 . |position|) (43 . |minIndex|)
+              |JBUNDLE;coerce;S$;10| (|List| 27) (48 . |Pr|) |JBUNDLE;D;SL$;11|
               (CONS IDENTITY
                     (FUNCALL (|dispatchFunction| |JBUNDLE;One;$;12|) $))
               |JBUNDLE;numIndVar;Pi;13| |JBUNDLE;numDepVar;Pi;14|
-              (49 . |repeatedIndex|) (54 . |coerce|) (|List| 17)
-              (59 . |subscript|) |JBUNDLE;name;$S;15| (|Expression| 36)
-              (65 . |One|) (|BasicOperator|) (69 . |operator|)
-              (|Mapping| 17 48) (74 . |display|) (|None|) (|NoneFunctions1| $$)
-              (80 . |coerce|) (85 . |setProperty|) (92 . |weight|)
-              (|NoneFunctions1| 29) (97 . |coerce|) (|NoneFunctions1| 19)
-              (102 . |coerce|) (107 . |coerce|) (112 . |coerce|) (|List| 51)
-              (117 . |concat!|) (|List| $) (123 . |kernel|)
+              (54 . |repeatedIndex|) (59 . |coerce|) (|List| 17)
+              (64 . |subscript|) |JBUNDLE;name;$S;15| (|Expression| 38)
+              (70 . |One|) (|BasicOperator|) (74 . |operator|)
+              (|Mapping| 17 50) (79 . |display|) (|None|) (|NoneFunctions1| $$)
+              (85 . |coerce|) (90 . |setProperty|) (97 . |weight|)
+              (|NoneFunctions1| 31) (102 . |coerce|) (|NoneFunctions1| 21)
+              (107 . |coerce|) (112 . |coerce|) (117 . |coerce|) (|List| 53)
+              (122 . |concat!|) (|List| $) (128 . |kernel|)
               |JBUNDLE;coerce;$E;17| (|Union| $ '"failed") (|Union| $ '"0")
-              (|List| 40) (|HashState|) (|String|) (|SingleInteger|))
-           '#(~= 129 |weight| 135 |variables| 140 |type| 151 |smaller?| 156
-              |setNotation| 162 |repeatedIndex| 167 |r2m| 172 |order| 177
-              |one?| 182 |numIndVar| 187 |numDepVar| 191 |name| 195
-              |multiIndex| 200 |min| 205 |max| 211 |m2r| 217 |latex| 222
-              |integrateIfCan| 227 |integrate| 233 |index| 239 |hashUpdate!|
-              244 |hash| 250 |getNotation| 255 |dimS| 259 |dimJ| 264
-              |differentiate| 269 |derivativeOf?| 275 |coerce| 281 |class| 296
-              |allRepeated| 306 X 311 U 320 |Pr| 329 |Pm| 335 P 341 |One| 363 D
-              367 >= 373 > 379 = 385 <= 391 < 397)
+              (|List| 42) (|HashState|) (|SingleInteger|))
+           '#(~= 134 |weight| 140 |variables| 145 |type| 156 |smaller?| 161
+              |setNotation| 167 |repeatedIndex| 172 |r2m| 177 |order| 182
+              |one?| 187 |numIndVar| 192 |numDepVar| 196 |name| 200
+              |multiIndex| 205 |min| 210 |max| 216 |m2r| 222 |latex| 227
+              |integrateIfCan| 232 |integrate| 238 |index| 244 |hashUpdate!|
+              249 |hash| 255 |getNotation| 260 |dimS| 264 |dimJ| 269
+              |differentiate| 274 |derivativeOf?| 280 |coerce| 286 |class| 301
+              |allRepeated| 311 X 316 U 325 |Pr| 334 |Pm| 340 P 346 |One| 368 D
+              372 >= 378 > 384 = 390 <= 396 < 402)
            'NIL
            (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0))
                  (CONS
@@ -350,33 +354,33 @@
                      |BasicType&| NIL |PartialOrder&| NIL)
                   (CONS
                    '#((|JetBundleCategory|) (|OrderedSet|) (|Comparable|)
-                      (|SetCategory|) (|BasicType|) (|CoercibleTo| 51)
+                      (|SetCategory|) (|BasicType|) (|CoercibleTo| 53)
                       (|PartialOrder|) (|CoercibleTo| 17))
-                   (|makeByteWordVec2| 78
-                                       '(1 11 0 10 12 1 17 16 0 18 1 15 0 0 22
-                                         2 29 28 0 0 30 1 15 29 0 33 2 29 28 0
-                                         0 34 2 10 36 19 0 37 1 10 36 0 38 2 0
-                                         0 25 40 41 1 0 40 0 46 1 19 17 0 47 2
-                                         19 0 0 48 49 0 51 0 52 1 53 0 19 54 2
-                                         53 0 0 55 56 1 58 57 2 59 3 53 0 0 19
-                                         57 60 1 0 29 0 61 1 62 57 29 63 1 64
-                                         57 19 65 1 51 0 19 66 1 51 0 36 67 2
-                                         68 0 0 0 69 2 51 0 53 70 71 2 0 28 0 0
-                                         1 1 0 29 0 61 2 0 70 29 25 1 1 0 70 29
-                                         1 1 0 19 0 27 2 0 28 0 0 1 1 0 19 19
-                                         20 1 0 40 0 46 1 0 23 40 1 1 0 29 0 1
-                                         1 0 28 0 1 0 0 25 44 0 0 25 45 1 0 19
-                                         0 50 1 0 23 0 24 2 0 0 0 0 1 2 0 0 0 0
-                                         1 1 0 40 23 1 1 0 77 0 1 2 0 73 0 25 1
-                                         2 0 0 0 25 1 1 0 25 0 26 2 0 76 76 0 1
-                                         1 0 78 0 1 0 0 19 21 1 0 29 29 1 1 0
-                                         29 29 1 2 0 74 0 25 1 2 0 23 0 0 1 1 0
-                                         0 19 39 1 0 51 0 72 1 0 17 0 1 1 0 29
-                                         0 1 1 0 29 23 1 1 0 75 23 1 0 0 0 1 1
-                                         0 0 25 31 0 0 0 1 1 0 0 25 32 2 0 0 25
-                                         40 41 2 0 0 25 23 35 1 0 0 29 1 1 0 0
-                                         23 1 2 0 0 25 29 1 2 0 0 25 23 1 0 0 0
-                                         43 2 0 0 19 10 42 2 0 28 0 0 1 2 0 28
-                                         0 0 1 2 0 28 0 0 1 2 0 28 0 0 1 2 0 28
-                                         0 0 1)))))
+                   (|makeByteWordVec2| 79
+                                       '(1 11 0 10 12 1 17 0 16 18 1 17 19 0 20
+                                         1 15 0 0 24 2 31 30 0 0 32 1 15 31 0
+                                         35 2 31 30 0 0 36 2 10 38 21 0 39 1 10
+                                         38 0 40 2 0 0 27 42 43 1 0 42 0 48 1
+                                         21 17 0 49 2 21 0 0 50 51 0 53 0 54 1
+                                         55 0 21 56 2 55 0 0 57 58 1 60 59 2 61
+                                         3 55 0 0 21 59 62 1 0 31 0 63 1 64 59
+                                         31 65 1 66 59 21 67 1 53 0 21 68 1 53
+                                         0 38 69 2 70 0 0 0 71 2 53 0 55 72 73
+                                         2 0 30 0 0 1 1 0 31 0 63 2 0 72 31 27
+                                         1 1 0 72 31 1 1 0 21 0 29 2 0 30 0 0 1
+                                         1 0 21 21 22 1 0 42 0 48 1 0 25 42 1 1
+                                         0 31 0 1 1 0 30 0 1 0 0 27 46 0 0 27
+                                         47 1 0 21 0 52 1 0 25 0 26 2 0 0 0 0 1
+                                         2 0 0 0 0 1 1 0 42 25 1 1 0 16 0 1 2 0
+                                         75 0 27 1 2 0 0 0 27 1 1 0 27 0 28 2 0
+                                         78 78 0 1 1 0 79 0 1 0 0 21 23 1 0 31
+                                         31 1 1 0 31 31 1 2 0 76 0 27 1 2 0 25
+                                         0 0 1 1 0 0 21 41 1 0 53 0 74 1 0 17 0
+                                         1 1 0 31 0 1 1 0 31 25 1 1 0 77 25 1 0
+                                         0 0 1 1 0 0 27 33 0 0 0 1 1 0 0 27 34
+                                         2 0 0 27 42 43 2 0 0 27 25 37 1 0 0 31
+                                         1 1 0 0 25 1 2 0 0 27 31 1 2 0 0 27 25
+                                         1 0 0 0 45 2 0 0 21 10 44 2 0 30 0 0 1
+                                         2 0 30 0 0 1 2 0 30 0 0 1 2 0 30 0 0 1
+                                         2 0 30 0 0 1)))))
            '|lookupComplete|)) 

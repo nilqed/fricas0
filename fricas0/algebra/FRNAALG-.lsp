@@ -4,7 +4,7 @@
          ($ |SparseUnivariatePolynomial| (|Polynomial| R)))
         (SPROG
          ((|res| (|SparseUnivariatePolynomial| (|Polynomial| R)))
-          (#1=#:G730 NIL) (|i| NIL)
+          (#1=#:G735 NIL) (|i| NIL)
           (|vectorOfCoef| (|Vector| (|Polynomial| R)))
           (|cond| (|Matrix| (|Polynomial| R))) (|k| (|PositiveInteger|)))
          (SEQ (LETT |k| 1 . #2=(|FRNAALG-;min_poly_from_matrix|))
@@ -40,12 +40,12 @@
 (SDEFUN |FRNAALG-;rank_polynomial|
         ((|left| |Boolean|) ($ |SparseUnivariatePolynomial| (|Polynomial| R)))
         (SPROG
-         ((|cijk| (R)) (|mxjk| (|Polynomial| R)) (#1=#:G753 NIL) (|k| NIL)
-          (#2=#:G752 NIL) (|j| NIL) (|mo| (|Polynomial| R)) (#3=#:G751 NIL)
+         ((|cijk| (R)) (|mxjk| (|Polynomial| R)) (#1=#:G757 NIL) (|k| NIL)
+          (#2=#:G756 NIL) (|j| NIL) (|mo| (|Polynomial| R)) (#3=#:G755 NIL)
           (|i| NIL) (|mx| #4=(|Matrix| (|Polynomial| R))) (|x| #4#)
-          (|symbolsForCoef| (|Vector| (|Symbol|))) (#5=#:G748 NIL)
-          (#6=#:G750 NIL) (#7=#:G749 NIL) (|listOfNumbers| (|List| (|String|)))
-          (#8=#:G747 NIL) (|q| NIL) (#9=#:G746 NIL)
+          (|symbolsForCoef| (|Vector| (|Symbol|))) (#5=#:G752 NIL)
+          (#6=#:G754 NIL) (#7=#:G753 NIL) (|listOfNumbers| (|List| (|String|)))
+          (#8=#:G751 NIL) (|q| NIL) (#9=#:G750 NIL)
           (|gamma| (|Vector| (|Matrix| R))) (|b| (|Vector| S))
           (|n| (|PositiveInteger|)))
          (SEQ
@@ -137,8 +137,8 @@
         (($ |Record| (|:| |particular| (|Union| (|Vector| R) "failed"))
           (|:| |basis| (|List| (|Vector| R)))))
         (SPROG
-         ((#1=#:G767 NIL) (|j| NIL) (|addOn| (R)) (|z| (|Integer|))
-          (#2=#:G766 NIL) (|i| NIL) (#3=#:G765 NIL) (|k| NIL)
+         ((#1=#:G771 NIL) (|j| NIL) (|addOn| (R)) (|z| (|Integer|))
+          (#2=#:G770 NIL) (|i| NIL) (#3=#:G769 NIL) (|k| NIL)
           (|rhs| (|Vector| R)) (|cond| (|Matrix| R))
           (|gamma| (|Vector| (|Matrix| R))) (|b| (|Vector| S))
           (|n| (|PositiveInteger|)))
@@ -188,7 +188,7 @@
 
 (SDEFUN |FRNAALG-;leftUnit;U;6| (($ |Union| S "failed"))
         (SPROG
-         ((#1=#:G773 NIL)
+         ((#1=#:G777 NIL)
           (|res|
            (|Record| (|:| |particular| (|Union| (|Vector| R) #2="failed"))
                      (|:| |basis| (|List| (|Vector| R))))))
@@ -214,7 +214,7 @@
         (($ |Union| (|Record| (|:| |particular| S) (|:| |basis| (|List| S)))
           "failed"))
         (SPROG
-         ((#1=#:G787 NIL)
+         ((#1=#:G791 NIL)
           (|res|
            (|Record| (|:| |particular| (|Union| (|Vector| R) #2="failed"))
                      (|:| |basis| (|List| (|Vector| R))))))
@@ -242,8 +242,8 @@
         (($ |Record| (|:| |particular| (|Union| (|Vector| R) "failed"))
           (|:| |basis| (|List| (|Vector| R)))))
         (SPROG
-         ((#1=#:G806 NIL) (|j| NIL) (|addOn| (R)) (|z| (|Integer|))
-          (#2=#:G805 NIL) (|i| NIL) (#3=#:G804 NIL) (|k| NIL)
+         ((#1=#:G810 NIL) (|j| NIL) (|addOn| (R)) (|z| (|Integer|))
+          (#2=#:G809 NIL) (|i| NIL) (#3=#:G808 NIL) (|k| NIL)
           (|rhs| (|Vector| R)) (|condo| (|Matrix| R))
           (|gamma| (|Vector| (|Matrix| R))) (|b| (|Vector| S))
           (|n| (|PositiveInteger|)))
@@ -293,7 +293,7 @@
 
 (SDEFUN |FRNAALG-;rightUnit;U;9| (($ |Union| S "failed"))
         (SPROG
-         ((#1=#:G812 NIL)
+         ((#1=#:G816 NIL)
           (|res|
            (|Record| (|:| |particular| (|Union| (|Vector| R) #2="failed"))
                      (|:| |basis| (|List| (|Vector| R))))))
@@ -319,7 +319,7 @@
         (($ |Union| (|Record| (|:| |particular| S) (|:| |basis| (|List| S)))
           "failed"))
         (SPROG
-         ((#1=#:G823 NIL)
+         ((#1=#:G827 NIL)
           (|res|
            (|Record| (|:| |particular| (|Union| (|Vector| R) #2="failed"))
                      (|:| |basis| (|List| (|Vector| R))))))
@@ -345,12 +345,12 @@
 
 (SDEFUN |FRNAALG-;unit;U;11| (($ |Union| S "failed"))
         (SPROG
-         ((#1=#:G839 NIL)
+         ((#1=#:G843 NIL)
           (|res|
            (|Record| (|:| |particular| (|Union| (|Vector| R) "failed"))
                      (|:| |basis| (|List| (|Vector| R)))))
-          (#2=#:G846 NIL) (|j| NIL) (|addOn| (R)) (|z| (|Integer|))
-          (#3=#:G845 NIL) (|i| NIL) (#4=#:G844 NIL) (|k| NIL) (|u| (|Integer|))
+          (#2=#:G850 NIL) (|j| NIL) (|addOn| (R)) (|z| (|Integer|))
+          (#3=#:G849 NIL) (|i| NIL) (#4=#:G848 NIL) (|k| NIL) (|u| (|Integer|))
           (|rhs| (|Vector| R)) (|cond| (|Matrix| R))
           (|gamma| (|Vector| (|Matrix| R))) (|b| (|Vector| S))
           (|n| (|PositiveInteger|)))
@@ -436,57 +436,29 @@
 (SDEFUN |FRNAALG-;conditionsForIdempotents;L;14| (($ |List| (|Polynomial| R)))
         (SPADCALL (SPADCALL (QREFELT $ 29)) (QREFELT $ 82))) 
 
-(SDEFUN |FRNAALG-;convert;SV;15| ((|x| S) ($ |Vector| R))
-        (SPADCALL |x| (SPADCALL (QREFELT $ 29)) (QREFELT $ 84))) 
+(SDEFUN |FRNAALG-;leftTraceMatrix;M;15| (($ |Matrix| R))
+        (SPADCALL (SPADCALL (QREFELT $ 29)) (QREFELT $ 84))) 
 
-(SDEFUN |FRNAALG-;convert;VS;16| ((|v| |Vector| R) ($ S))
-        (SPADCALL |v| (SPADCALL (QREFELT $ 29)) (QREFELT $ 86))) 
+(SDEFUN |FRNAALG-;rightTraceMatrix;M;16| (($ |Matrix| R))
+        (SPADCALL (SPADCALL (QREFELT $ 29)) (QREFELT $ 86))) 
 
-(SDEFUN |FRNAALG-;leftTraceMatrix;M;17| (($ |Matrix| R))
+(SDEFUN |FRNAALG-;leftDiscriminant;R;17| (($ R))
         (SPADCALL (SPADCALL (QREFELT $ 29)) (QREFELT $ 88))) 
 
-(SDEFUN |FRNAALG-;rightTraceMatrix;M;18| (($ |Matrix| R))
+(SDEFUN |FRNAALG-;rightDiscriminant;R;18| (($ R))
         (SPADCALL (SPADCALL (QREFELT $ 29)) (QREFELT $ 90))) 
 
-(SDEFUN |FRNAALG-;leftDiscriminant;R;19| (($ R))
-        (SPADCALL (SPADCALL (QREFELT $ 29)) (QREFELT $ 92))) 
+(SDEFUN |FRNAALG-;leftRegularRepresentation;SM;19| ((|x| S) ($ |Matrix| R))
+        (SPADCALL |x| (SPADCALL (QREFELT $ 29)) (QREFELT $ 92))) 
 
-(SDEFUN |FRNAALG-;rightDiscriminant;R;20| (($ R))
-        (SPADCALL (SPADCALL (QREFELT $ 29)) (QREFELT $ 94))) 
+(SDEFUN |FRNAALG-;rightRegularRepresentation;SM;20| ((|x| S) ($ |Matrix| R))
+        (SPADCALL |x| (SPADCALL (QREFELT $ 29)) (QREFELT $ 94))) 
 
-(SDEFUN |FRNAALG-;leftRegularRepresentation;SM;21| ((|x| S) ($ |Matrix| R))
+(SDEFUN |FRNAALG-;coordinates;SV;21| ((|x| S) ($ |Vector| R))
         (SPADCALL |x| (SPADCALL (QREFELT $ 29)) (QREFELT $ 96))) 
 
-(SDEFUN |FRNAALG-;rightRegularRepresentation;SM;22| ((|x| S) ($ |Matrix| R))
-        (SPADCALL |x| (SPADCALL (QREFELT $ 29)) (QREFELT $ 98))) 
-
-(SDEFUN |FRNAALG-;coordinates;VM;23| ((|x| |Vector| S) ($ |Matrix| R))
-        (SPADCALL |x| (SPADCALL (QREFELT $ 29)) (QREFELT $ 100))) 
-
-(SDEFUN |FRNAALG-;represents;VS;24| ((|v| |Vector| R) ($ S))
-        (SPADCALL |v| (SPADCALL (QREFELT $ 29)) (QREFELT $ 86))) 
-
-(SDEFUN |FRNAALG-;coordinates;VM;25| ((|v| |Vector| S) ($ |Matrix| R))
-        (SPROG ((#1=#:G864 NIL) (|i| NIL) (|j| NIL) (|m| (|Matrix| R)))
-               (SEQ
-                (LETT |m|
-                      (MAKE_MATRIX1 (QVSIZE |v|) (SPADCALL (QREFELT $ 11))
-                                    (|spadConstant| $ 37))
-                      . #2=(|FRNAALG-;coordinates;VM;25|))
-                (SEQ (LETT |j| 1 . #2#)
-                     (LETT |i| (SPADCALL |v| (QREFELT $ 104)) . #2#)
-                     (LETT #1# (QVSIZE |v|) . #2#) G190
-                     (COND ((> |i| #1#) (GO G191)))
-                     (SEQ
-                      (EXIT
-                       (SPADCALL |m| |j|
-                                 (SPADCALL (QAREF1O |v| |i| 1) (QREFELT $ 76))
-                                 (QREFELT $ 105))))
-                     (LETT |i|
-                           (PROG1 (+ |i| 1) (LETT |j| (|inc_SI| |j|) . #2#))
-                           . #2#)
-                     (GO G190) G191 (EXIT NIL))
-                (EXIT |m|)))) 
+(SDEFUN |FRNAALG-;represents;VS;22| ((|v| |Vector| R) ($ S))
+        (SPADCALL |v| (SPADCALL (QREFELT $ 29)) (QREFELT $ 98))) 
 
 (DECLAIM (NOTINLINE |FramedNonAssociativeAlgebra&;|)) 
 
@@ -496,7 +468,7 @@
           (LETT DV$1 (|devaluate| |#1|) . #1=(|FramedNonAssociativeAlgebra&|))
           (LETT DV$2 (|devaluate| |#2|) . #1#)
           (LETT |dv$| (LIST '|FramedNonAssociativeAlgebra&| DV$1 DV$2) . #1#)
-          (LETT $ (GETREFV 106) . #1#)
+          (LETT $ (GETREFV 100) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -564,31 +536,29 @@
               (205 . *) (211 . |convert|) |FRNAALG-;apply;M2S;12|
               |FRNAALG-;structuralConstants;V;13| (|List| 22)
               (216 . |conditionsForIdempotents|)
-              |FRNAALG-;conditionsForIdempotents;L;14| (221 . |coordinates|)
-              |FRNAALG-;convert;SV;15| (227 . |represents|)
-              |FRNAALG-;convert;VS;16| (233 . |leftTraceMatrix|)
-              |FRNAALG-;leftTraceMatrix;M;17| (238 . |rightTraceMatrix|)
-              |FRNAALG-;rightTraceMatrix;M;18| (243 . |leftDiscriminant|)
-              |FRNAALG-;leftDiscriminant;R;19| (248 . |rightDiscriminant|)
-              |FRNAALG-;rightDiscriminant;R;20|
-              (253 . |leftRegularRepresentation|)
-              |FRNAALG-;leftRegularRepresentation;SM;21|
-              (259 . |rightRegularRepresentation|)
-              |FRNAALG-;rightRegularRepresentation;SM;22| (265 . |coordinates|)
-              |FRNAALG-;coordinates;VM;25| |FRNAALG-;represents;VS;24|
-              (|Vector| 6) (271 . |minIndex|) (276 . |setRow!|))
-           '#(|unit| 283 |structuralConstants| 287 |rightUnits| 291 |rightUnit|
-              295 |rightTraceMatrix| 299 |rightRegularRepresentation| 303
-              |rightRankPolynomial| 308 |rightDiscriminant| 312 |represents|
-              316 |leftUnits| 321 |leftUnit| 325 |leftTraceMatrix| 329
-              |leftRegularRepresentation| 333 |leftRankPolynomial| 338
-              |leftDiscriminant| 342 |coordinates| 346 |convert| 351
-              |conditionsForIdempotents| 361 |apply| 365)
+              |FRNAALG-;conditionsForIdempotents;L;14|
+              (221 . |leftTraceMatrix|) |FRNAALG-;leftTraceMatrix;M;15|
+              (226 . |rightTraceMatrix|) |FRNAALG-;rightTraceMatrix;M;16|
+              (231 . |leftDiscriminant|) |FRNAALG-;leftDiscriminant;R;17|
+              (236 . |rightDiscriminant|) |FRNAALG-;rightDiscriminant;R;18|
+              (241 . |leftRegularRepresentation|)
+              |FRNAALG-;leftRegularRepresentation;SM;19|
+              (247 . |rightRegularRepresentation|)
+              |FRNAALG-;rightRegularRepresentation;SM;20| (253 . |coordinates|)
+              |FRNAALG-;coordinates;SV;21| (259 . |represents|)
+              |FRNAALG-;represents;VS;22|)
+           '#(|unit| 265 |structuralConstants| 269 |rightUnits| 273 |rightUnit|
+              277 |rightTraceMatrix| 281 |rightRegularRepresentation| 285
+              |rightRankPolynomial| 290 |rightDiscriminant| 294 |represents|
+              298 |leftUnits| 303 |leftUnit| 307 |leftTraceMatrix| 311
+              |leftRegularRepresentation| 315 |leftRankPolynomial| 320
+              |leftDiscriminant| 324 |coordinates| 328
+              |conditionsForIdempotents| 333 |apply| 337)
            'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
-                             (|makeByteWordVec2| 105
+                             (|makeByteWordVec2| 99
                                                  '(1 8 0 0 9 0 6 10 11 1 8 12 0
                                                    13 0 7 0 14 0 15 0 16 2 8 0
                                                    0 0 17 2 8 0 0 0 18 1 8 19 0
@@ -608,19 +578,16 @@
                                                    66 67 69 0 0 71 72 0 0 63 73
                                                    0 0 71 74 0 0 63 75 1 6 52 0
                                                    76 2 44 52 0 52 77 1 6 0 52
-                                                   78 1 6 81 28 82 2 6 52 0 28
-                                                   84 2 6 0 52 28 86 1 6 44 28
-                                                   88 1 6 44 28 90 1 6 7 28 92
-                                                   1 6 7 28 94 2 6 44 0 28 96 2
-                                                   6 44 0 28 98 2 6 44 28 28
-                                                   100 1 103 23 0 104 3 44 0 0
-                                                   23 52 105 0 0 63 75 0 0 30
-                                                   80 0 0 71 74 0 0 63 73 0 0
-                                                   44 91 1 0 44 0 99 0 0 15 50
-                                                   0 0 7 95 1 0 0 52 102 0 0 71
-                                                   72 0 0 63 64 0 0 44 89 1 0
-                                                   44 0 97 0 0 15 49 0 0 7 93 1
-                                                   0 44 28 101 1 0 0 52 87 1 0
-                                                   52 0 85 0 0 81 83 2 0 0 44 0
-                                                   79)))))
+                                                   78 1 6 81 28 82 1 6 44 28 84
+                                                   1 6 44 28 86 1 6 7 28 88 1 6
+                                                   7 28 90 2 6 44 0 28 92 2 6
+                                                   44 0 28 94 2 6 52 0 28 96 2
+                                                   6 0 52 28 98 0 0 63 75 0 0
+                                                   30 80 0 0 71 74 0 0 63 73 0
+                                                   0 44 87 1 0 44 0 95 0 0 15
+                                                   50 0 0 7 91 1 0 0 52 99 0 0
+                                                   71 72 0 0 63 64 0 0 44 85 1
+                                                   0 44 0 93 0 0 15 49 0 0 7 89
+                                                   1 0 52 0 97 0 0 81 83 2 0 0
+                                                   44 0 79)))))
            '|lookupComplete|)) 

@@ -8,9 +8,9 @@
 
 (DECLAIM (NOTINLINE |ParametricPlaneCurveFunctions2;|)) 
 
-(DEFUN |ParametricPlaneCurveFunctions2| (&REST #1=#:G694)
+(DEFUN |ParametricPlaneCurveFunctions2| (&REST #1=#:G697)
   (SPROG NIL
-         (PROG (#2=#:G695)
+         (PROG (#2=#:G698)
            (RETURN
             (COND
              ((LETT #2#

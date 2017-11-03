@@ -1,7 +1,7 @@
 
 (SDEFUN |COMPUTIL;Ski2Lambda| ((|s| |SKICombinators| UT) ($ |Lambda| UT))
         (SPROG
-         ((#1=#:G752 NIL) (|s112| #2=(|String|)) (|s12| #2#)
+         ((#1=#:G756 NIL) (|s112| #2=(|String|)) (|s12| #2#)
           (|s2| #3=(|String|)) (|c112| #4=(|SKICombinators| UT))
           (|c111| #5=(|SKICombinators| UT))
           (|subsubnodes2| #6=(|List| (|SKICombinators| UT))) (|c12| #4#)
@@ -19,43 +19,54 @@
                  (SEQ
                   (LETT |strVar| (STRCONC "v" (STRINGIMAGE (QREFELT $ 7)))
                         . #8=(|COMPUTIL;Ski2Lambda|))
-                  (|sayBrightly|
+                  (SPADCALL
                    (SPADCALL
-                    (LIST "util coerce rule SL1: Ski[I] = \\" |strVar| ".0")
-                    (QREFELT $ 14)))
+                    (SPADCALL
+                     (SPADCALL "util coerce rule SL1: Ski[I] = \\"
+                               (QREFELT $ 14))
+                     (SPADCALL |strVar| (QREFELT $ 14)) (QREFELT $ 15))
+                    (SPADCALL ".0" (QREFELT $ 14)) (QREFELT $ 15))
+                   (QREFELT $ 17))
                   (SETELT $ 7 (+ (QREFELT $ 7) 1))
                   (EXIT
                    (PROGN
                     (LETT #1#
                           (SPADCALL
-                           (SPADCALL (LIST "\\" |strVar| ".0") (QREFELT $ 14))
-                           (QREFELT $ 16))
+                           (SPADCALL (LIST "\\" |strVar| ".0") (QREFELT $ 19))
+                           (QREFELT $ 21))
                           . #8#)
-                    (GO #9=#:G751))))))
+                    (GO #9=#:G755))))))
                (COND
-                ((SPADCALL |s| (QREFELT $ 17))
+                ((SPADCALL |s| (QREFELT $ 22))
                  (SEQ
                   (LETT |strVar1| (STRCONC "v" (STRINGIMAGE (QREFELT $ 7)))
                         . #8#)
                   (LETT |strVar2|
                         (STRCONC "v" (STRINGIMAGE (+ (QREFELT $ 7) 1))) . #8#)
-                  (|sayBrightly|
+                  (SPADCALL
                    (SPADCALL
-                    (LIST "util coerce rule SL2: Ski[K] = \\" |strVar1| ".\\"
-                          |strVar2| ".1")
-                    (QREFELT $ 14)))
+                    (SPADCALL
+                     (SPADCALL
+                      (SPADCALL
+                       (SPADCALL "util coerce rule SL2: Ski[K] = \\"
+                                 (QREFELT $ 14))
+                       (SPADCALL |strVar1| (QREFELT $ 14)) (QREFELT $ 15))
+                      (SPADCALL ".\\" (QREFELT $ 14)) (QREFELT $ 15))
+                     (SPADCALL |strVar2| (QREFELT $ 14)) (QREFELT $ 15))
+                    (SPADCALL ".1" (QREFELT $ 14)) (QREFELT $ 15))
+                   (QREFELT $ 17))
                   (SETELT $ 7 (+ (QREFELT $ 7) 2))
                   (EXIT
                    (PROGN
                     (LETT #1#
                           (SPADCALL
                            (SPADCALL (LIST "\\" |strVar1| ".\\" |strVar2| ".1")
-                                     (QREFELT $ 14))
-                           (QREFELT $ 16))
+                                     (QREFELT $ 19))
+                           (QREFELT $ 21))
                           . #8#)
                     (GO #9#))))))
                (COND
-                ((SPADCALL |s| (QREFELT $ 18))
+                ((SPADCALL |s| (QREFELT $ 23))
                  (SEQ
                   (LETT |strVar1| (STRCONC "v" (STRINGIMAGE (QREFELT $ 7)))
                         . #8#)
@@ -63,11 +74,22 @@
                         (STRCONC "v" (STRINGIMAGE (+ (QREFELT $ 7) 1))) . #8#)
                   (LETT |strVar3|
                         (STRCONC "v" (STRINGIMAGE (+ (QREFELT $ 7) 2))) . #8#)
-                  (|sayBrightly|
+                  (SPADCALL
                    (SPADCALL
-                    (LIST "util coerce rule SL3: Ski[S] = \\" |strVar1| ".\\"
-                          |strVar2| ".\\" |strVar3| ".(2 0 (1 0))")
-                    (QREFELT $ 14)))
+                    (SPADCALL
+                     (SPADCALL
+                      (SPADCALL
+                       (SPADCALL
+                        (SPADCALL
+                         (SPADCALL "util coerce rule SL3: Ski[S] = \\"
+                                   (QREFELT $ 14))
+                         (SPADCALL |strVar1| (QREFELT $ 14)) (QREFELT $ 15))
+                        (SPADCALL ".\\" (QREFELT $ 14)) (QREFELT $ 15))
+                       (SPADCALL |strVar2| (QREFELT $ 14)) (QREFELT $ 15))
+                      (SPADCALL ".\\" (QREFELT $ 14)) (QREFELT $ 15))
+                     (SPADCALL |strVar3| (QREFELT $ 14)) (QREFELT $ 15))
+                    (SPADCALL ".(2 0 (1 0))" (QREFELT $ 14)) (QREFELT $ 15))
+                   (QREFELT $ 17))
                   (SETELT $ 7 (+ (QREFELT $ 7) 3))
                   (EXIT
                    (PROGN
@@ -76,35 +98,40 @@
                            (SPADCALL
                             (LIST "\\" |strVar1| ".\\" |strVar2| ".\\"
                                   |strVar3| ".(2 0 (1 0))")
-                            (QREFELT $ 14))
-                           (QREFELT $ 16))
+                            (QREFELT $ 19))
+                           (QREFELT $ 21))
                           . #8#)
                     (GO #9#))))))
-               (|sayBrightly|
+               (SPADCALL
                 (SPADCALL
-                 (LIST "util coerce pass unbound variable "
-                       (SPADCALL (SPADCALL |s| (QREFELT $ 19)) (QREFELT $ 20))
-                       " unchanged")
-                 (QREFELT $ 14)))
+                 (SPADCALL
+                  (SPADCALL "util coerce pass unbound variable "
+                            (QREFELT $ 14))
+                  (SPADCALL
+                   (SPADCALL (SPADCALL |s| (QREFELT $ 24)) (QREFELT $ 25))
+                   (QREFELT $ 14))
+                  (QREFELT $ 15))
+                 (SPADCALL " unchanged" (QREFELT $ 14)) (QREFELT $ 15))
+                (QREFELT $ 17))
                (EXIT
                 (PROGN
                  (LETT #1#
-                       (SPADCALL (SPADCALL |s| (QREFELT $ 19)) (QREFELT $ 21))
+                       (SPADCALL (SPADCALL |s| (QREFELT $ 24)) (QREFELT $ 26))
                        . #8#)
                  (GO #9#))))))
-            (LETT |subnodes| (SPADCALL |s| (QREFELT $ 22)) . #8#)
+            (LETT |subnodes| (SPADCALL |s| (QREFELT $ 27)) . #8#)
             (LETT |c1| (|SPADfirst| |subnodes|) . #8#)
-            (LETT |c2| (SPADCALL |subnodes| (QREFELT $ 24)) . #8#)
-            (LETT |s1| (SPADCALL |c1| (QREFELT $ 25)) . #8#)
-            (LETT |s2| (SPADCALL |c2| (QREFELT $ 25)) . #8#)
+            (LETT |c2| (SPADCALL |subnodes| (QREFELT $ 29)) . #8#)
+            (LETT |s1| (SPADCALL |c1| (QREFELT $ 30)) . #8#)
+            (LETT |s2| (SPADCALL |c2| (QREFELT $ 30)) . #8#)
             (COND
              ((SPADCALL |c1| (QREFELT $ 11))
               (SEQ
-               (|sayBrightly|
+               (SPADCALL
                 (SPADCALL
-                 (LIST "util coerce apply rule SL1 in:"
-                       (SPADCALL |s| (QREFELT $ 25)))
-                 (QREFELT $ 14)))
+                 (SPADCALL "util coerce apply rule SL1 in:" (QREFELT $ 14))
+                 (SPADCALL |s| (QREFELT $ 31)) (QREFELT $ 15))
+                (QREFELT $ 17))
                (EXIT
                 (PROGN
                  (LETT #1# (|COMPUTIL;Ski2Lambda| |c2| $) . #8#)
@@ -112,32 +139,46 @@
             (COND
              ((SPADCALL |c1| (QREFELT $ 10))
               (SEQ
-               (|sayBrightly|
+               (SPADCALL
                 (SPADCALL
-                 (LIST "util coerce rule SL4: Ski[(" |s1| " " |s2| ")] = (Ski["
-                       |s1| "] Ski[" |s2| "])")
-                 (QREFELT $ 14)))
+                 (SPADCALL
+                  (SPADCALL
+                   (SPADCALL
+                    (SPADCALL
+                     (SPADCALL
+                      (SPADCALL
+                       (SPADCALL
+                        (SPADCALL "util coerce rule SL4: Ski[(" (QREFELT $ 14))
+                        (SPADCALL |s1| (QREFELT $ 14)) (QREFELT $ 15))
+                       (SPADCALL " " (QREFELT $ 14)) (QREFELT $ 15))
+                      (SPADCALL |s2| (QREFELT $ 14)) (QREFELT $ 15))
+                     (SPADCALL ")] = (Ski[" (QREFELT $ 14)) (QREFELT $ 15))
+                    (SPADCALL |s1| (QREFELT $ 14)) (QREFELT $ 15))
+                   (SPADCALL "] Ski[" (QREFELT $ 14)) (QREFELT $ 15))
+                  (SPADCALL |s2| (QREFELT $ 14)) (QREFELT $ 15))
+                 (SPADCALL "])" (QREFELT $ 14)) (QREFELT $ 15))
+                (QREFELT $ 17))
                (EXIT
                 (PROGN
                  (LETT #1#
                        (SPADCALL (|COMPUTIL;Ski2Lambda| |c1| $)
-                                 (|COMPUTIL;Ski2Lambda| |c2| $) (QREFELT $ 26))
+                                 (|COMPUTIL;Ski2Lambda| |c2| $) (QREFELT $ 32))
                        . #8#)
                  (GO #9#))))))
-            (LETT |subsubnodes| (SPADCALL |c1| (QREFELT $ 22)) . #8#)
+            (LETT |subsubnodes| (SPADCALL |c1| (QREFELT $ 27)) . #8#)
             (LETT |c11| (|SPADfirst| |subsubnodes|) . #8#)
-            (LETT |c12| (SPADCALL |subsubnodes| (QREFELT $ 24)) . #8#)
+            (LETT |c12| (SPADCALL |subsubnodes| (QREFELT $ 29)) . #8#)
             (COND
-             ((SPADCALL |c11| (QREFELT $ 17))
+             ((SPADCALL |c11| (QREFELT $ 22))
               (SEQ
                (LETT |s12|
-                     (SPADCALL (SPADCALL |c12| (QREFELT $ 19)) (QREFELT $ 20))
+                     (SPADCALL (SPADCALL |c12| (QREFELT $ 24)) (QREFELT $ 25))
                      . #8#)
-               (|sayBrightly|
+               (SPADCALL
                 (SPADCALL
-                 (LIST "util coerce apply rule SL2 in:"
-                       (SPADCALL |s| (QREFELT $ 25)))
-                 (QREFELT $ 14)))
+                 (SPADCALL "util coerce apply rule SL2 in:" (QREFELT $ 14))
+                 (SPADCALL |s| (QREFELT $ 31)) (QREFELT $ 15))
+                (QREFELT $ 17))
                (EXIT
                 (PROGN
                  (LETT #1# (|COMPUTIL;Ski2Lambda| |c12| $) . #8#)
@@ -145,59 +186,87 @@
             (COND
              ((SPADCALL |c11| (QREFELT $ 10))
               (SEQ
-               (|sayBrightly|
+               (SPADCALL
                 (SPADCALL
-                 (LIST "util coerce rule SL4: Ski[(" |s1| " " |s2| ")] = (Ski["
-                       |s1| "] Ski[" |s2| "])")
-                 (QREFELT $ 14)))
+                 (SPADCALL
+                  (SPADCALL
+                   (SPADCALL
+                    (SPADCALL
+                     (SPADCALL
+                      (SPADCALL
+                       (SPADCALL
+                        (SPADCALL "util coerce rule SL4: Ski[(" (QREFELT $ 14))
+                        (SPADCALL |s1| (QREFELT $ 14)) (QREFELT $ 15))
+                       (SPADCALL " " (QREFELT $ 14)) (QREFELT $ 15))
+                      (SPADCALL |s2| (QREFELT $ 14)) (QREFELT $ 15))
+                     (SPADCALL ")] = (Ski[" (QREFELT $ 14)) (QREFELT $ 15))
+                    (SPADCALL |s1| (QREFELT $ 14)) (QREFELT $ 15))
+                   (SPADCALL "] Ski[" (QREFELT $ 14)) (QREFELT $ 15))
+                  (SPADCALL |s2| (QREFELT $ 14)) (QREFELT $ 15))
+                 (SPADCALL "])" (QREFELT $ 14)) (QREFELT $ 15))
+                (QREFELT $ 17))
                (EXIT
                 (PROGN
                  (LETT #1#
                        (SPADCALL (|COMPUTIL;Ski2Lambda| |c1| $)
-                                 (|COMPUTIL;Ski2Lambda| |c2| $) (QREFELT $ 26))
+                                 (|COMPUTIL;Ski2Lambda| |c2| $) (QREFELT $ 32))
                        . #8#)
                  (GO #9#))))))
-            (LETT |subsubnodes2| (SPADCALL |c11| (QREFELT $ 22)) . #8#)
+            (LETT |subsubnodes2| (SPADCALL |c11| (QREFELT $ 27)) . #8#)
             (LETT |c111| (|SPADfirst| |subsubnodes2|) . #8#)
-            (LETT |c112| (SPADCALL |subsubnodes2| (QREFELT $ 24)) . #8#)
+            (LETT |c112| (SPADCALL |subsubnodes2| (QREFELT $ 29)) . #8#)
             (COND
-             ((SPADCALL |c111| (QREFELT $ 18))
+             ((SPADCALL |c111| (QREFELT $ 23))
               (SEQ
                (LETT |s2|
-                     (SPADCALL (SPADCALL |c2| (QREFELT $ 19)) (QREFELT $ 20))
+                     (SPADCALL (SPADCALL |c2| (QREFELT $ 24)) (QREFELT $ 25))
                      . #8#)
                (LETT |s12|
-                     (SPADCALL (SPADCALL |c12| (QREFELT $ 19)) (QREFELT $ 20))
+                     (SPADCALL (SPADCALL |c12| (QREFELT $ 24)) (QREFELT $ 25))
                      . #8#)
                (LETT |s112|
-                     (SPADCALL (SPADCALL |c112| (QREFELT $ 19)) (QREFELT $ 20))
+                     (SPADCALL (SPADCALL |c112| (QREFELT $ 24)) (QREFELT $ 25))
                      . #8#)
-               (|sayBrightly|
+               (SPADCALL
                 (SPADCALL
-                 (LIST "util coerce apply rule SL3 in:"
-                       (SPADCALL |s| (QREFELT $ 25)))
-                 (QREFELT $ 14)))
+                 (SPADCALL "util coerce apply rule SL3 in:" (QREFELT $ 14))
+                 (SPADCALL |s| (QREFELT $ 31)) (QREFELT $ 15))
+                (QREFELT $ 17))
                (EXIT
                 (PROGN
                  (LETT #1#
                        (SPADCALL
                         (SPADCALL (|COMPUTIL;Ski2Lambda| |c112| $)
                                   (|COMPUTIL;Ski2Lambda| |c2| $)
-                                  (QREFELT $ 26))
+                                  (QREFELT $ 32))
                         (SPADCALL (|COMPUTIL;Ski2Lambda| |c12| $)
                                   (|COMPUTIL;Ski2Lambda| |c2| $)
-                                  (QREFELT $ 26))
-                        (QREFELT $ 26))
+                                  (QREFELT $ 32))
+                        (QREFELT $ 32))
                        . #8#)
                  (GO #9#))))))
-            (|sayBrightly|
+            (SPADCALL
              (SPADCALL
-              (LIST "util coerce rule SL4: Ski[(" |s1| " " |s2| ")] = (Ski["
-                    |s1| "] Ski[" |s2| "])")
-              (QREFELT $ 14)))
+              (SPADCALL
+               (SPADCALL
+                (SPADCALL
+                 (SPADCALL
+                  (SPADCALL
+                   (SPADCALL
+                    (SPADCALL
+                     (SPADCALL "util coerce rule SL4: Ski[(" (QREFELT $ 14))
+                     (SPADCALL |s1| (QREFELT $ 14)) (QREFELT $ 15))
+                    (SPADCALL " " (QREFELT $ 14)) (QREFELT $ 15))
+                   (SPADCALL |s2| (QREFELT $ 14)) (QREFELT $ 15))
+                  (SPADCALL ")] = (Ski[" (QREFELT $ 14)) (QREFELT $ 15))
+                 (SPADCALL |s1| (QREFELT $ 14)) (QREFELT $ 15))
+                (SPADCALL "] Ski[" (QREFELT $ 14)) (QREFELT $ 15))
+               (SPADCALL |s2| (QREFELT $ 14)) (QREFELT $ 15))
+              (SPADCALL "])" (QREFELT $ 14)) (QREFELT $ 15))
+             (QREFELT $ 17))
             (EXIT
              (SPADCALL (|COMPUTIL;Ski2Lambda| |c1| $)
-                       (|COMPUTIL;Ski2Lambda| |c2| $) (QREFELT $ 26)))))
+                       (|COMPUTIL;Ski2Lambda| |c2| $) (QREFELT $ 32)))))
           #9# (EXIT #1#)))) 
 
 (SDEFUN |COMPUTIL;coerce;SkicL;2| ((|s| |SKICombinators| UT) ($ |Lambda| UT))
@@ -210,7 +279,7 @@
 (SDEFUN |COMPUTIL;lambdaOverSki|
         ((|var| UT) (|sk| |SKICombinators| UT) ($ |SKICombinators| UT))
         (SPROG
-         ((#1=#:G763 NIL) (|right| (|SKICombinators| UT))
+         ((#1=#:G767 NIL) (|right| (|SKICombinators| UT))
           (|left| (|SKICombinators| UT)) (|ch| (|List| (|SKICombinators| UT))))
          (SEQ
           (EXIT
@@ -219,79 +288,125 @@
              ((SPADCALL |sk| (QREFELT $ 10))
               (SEQ
                (COND
-                ((SPADCALL |sk| |var| (QREFELT $ 28))
+                ((SPADCALL |sk| |var| (QREFELT $ 34))
                  (SEQ
-                  (|sayBrightly|
+                  (SPADCALL
                    (SPADCALL
-                    (LIST "util coerce rule LS3' applied to: \\"
-                          (SPADCALL |var| (QREFELT $ 29)) "."
-                          (SPADCALL |sk| (QREFELT $ 25)) " giving K "
-                          (SPADCALL |sk| (QREFELT $ 25)))
-                    (QREFELT $ 14)))
+                    (SPADCALL
+                     (SPADCALL
+                      (SPADCALL
+                       (SPADCALL
+                        (SPADCALL "util coerce rule LS3' applied to: \\"
+                                  (QREFELT $ 14))
+                        (SPADCALL |var| (QREFELT $ 35)) (QREFELT $ 15))
+                       (SPADCALL "." (QREFELT $ 14)) (QREFELT $ 15))
+                      (SPADCALL |sk| (QREFELT $ 31)) (QREFELT $ 15))
+                     (SPADCALL " giving K " (QREFELT $ 14)) (QREFELT $ 15))
+                    (SPADCALL |sk| (QREFELT $ 31)) (QREFELT $ 15))
+                   (QREFELT $ 17))
                   (EXIT
                    (PROGN
                     (LETT #1#
-                          (SPADCALL (SPADCALL (QREFELT $ 30)) |sk|
-                                    (QREFELT $ 31))
+                          (SPADCALL (SPADCALL (QREFELT $ 36)) |sk|
+                                    (QREFELT $ 37))
                           . #2=(|COMPUTIL;lambdaOverSki|))
-                    (GO #3=#:G762))))))
-               (|sayBrightly|
+                    (GO #3=#:G766))))))
+               (SPADCALL
                 (SPADCALL
-                 (LIST "util coerce rule LS4' applied to: \\"
-                       (SPADCALL |var| (QREFELT $ 29)) "."
-                       (SPADCALL |sk| (QREFELT $ 25)) " giving I")
-                 (QREFELT $ 14)))
+                 (SPADCALL
+                  (SPADCALL
+                   (SPADCALL
+                    (SPADCALL "util coerce rule LS4' applied to: \\"
+                              (QREFELT $ 14))
+                    (SPADCALL |var| (QREFELT $ 35)) (QREFELT $ 15))
+                   (SPADCALL "." (QREFELT $ 14)) (QREFELT $ 15))
+                  (SPADCALL |sk| (QREFELT $ 31)) (QREFELT $ 15))
+                 (SPADCALL " giving I" (QREFELT $ 14)) (QREFELT $ 15))
+                (QREFELT $ 17))
                (EXIT
-                (PROGN (LETT #1# (SPADCALL (QREFELT $ 32)) . #2#) (GO #3#))))))
-            (LETT |ch| (SPADCALL |sk| (QREFELT $ 22)) . #2#)
+                (PROGN (LETT #1# (SPADCALL (QREFELT $ 38)) . #2#) (GO #3#))))))
+            (LETT |ch| (SPADCALL |sk| (QREFELT $ 27)) . #2#)
             (LETT |left| (|SPADfirst| |ch|) . #2#)
-            (LETT |right| (SPADCALL |ch| (QREFELT $ 24)) . #2#)
+            (LETT |right| (SPADCALL |ch| (QREFELT $ 29)) . #2#)
             (COND
-             ((SPADCALL |sk| |var| (QREFELT $ 28))
+             ((SPADCALL |sk| |var| (QREFELT $ 34))
               (SEQ
-               (|sayBrightly|
+               (SPADCALL
                 (SPADCALL
-                 (LIST "util coerce rule LS3' applied to: \\"
-                       (SPADCALL |var| (QREFELT $ 29)) "."
-                       (SPADCALL |sk| (QREFELT $ 25)) " giving K \\"
-                       (SPADCALL |var| (QREFELT $ 29)) "."
-                       (SPADCALL |left| (QREFELT $ 25)) " \\"
-                       (SPADCALL |var| (QREFELT $ 29)) "."
-                       (SPADCALL |right| (QREFELT $ 25)))
-                 (QREFELT $ 14)))
+                 (SPADCALL
+                  (SPADCALL
+                   (SPADCALL
+                    (SPADCALL
+                     (SPADCALL
+                      (SPADCALL
+                       (SPADCALL
+                        (SPADCALL
+                         (SPADCALL
+                          (SPADCALL
+                           (SPADCALL "util coerce rule LS3' applied to: \\"
+                                     (QREFELT $ 14))
+                           (SPADCALL |var| (QREFELT $ 35)) (QREFELT $ 15))
+                          (SPADCALL "." (QREFELT $ 14)) (QREFELT $ 15))
+                         (SPADCALL |sk| (QREFELT $ 31)) (QREFELT $ 15))
+                        (SPADCALL " giving K \\" (QREFELT $ 14))
+                        (QREFELT $ 15))
+                       (SPADCALL |var| (QREFELT $ 35)) (QREFELT $ 15))
+                      (SPADCALL "." (QREFELT $ 14)) (QREFELT $ 15))
+                     (SPADCALL |left| (QREFELT $ 31)) (QREFELT $ 15))
+                    (SPADCALL " \\" (QREFELT $ 14)) (QREFELT $ 15))
+                   (SPADCALL |var| (QREFELT $ 35)) (QREFELT $ 15))
+                  (SPADCALL "." (QREFELT $ 14)) (QREFELT $ 15))
+                 (SPADCALL |right| (QREFELT $ 31)) (QREFELT $ 15))
+                (QREFELT $ 17))
                (EXIT
                 (PROGN
                  (LETT #1#
-                       (SPADCALL (SPADCALL (QREFELT $ 30))
-                                 (SPADCALL |left| |right| (QREFELT $ 31))
-                                 (QREFELT $ 31))
+                       (SPADCALL (SPADCALL (QREFELT $ 36))
+                                 (SPADCALL |left| |right| (QREFELT $ 37))
+                                 (QREFELT $ 37))
                        . #2#)
                  (GO #3#))))))
-            (|sayBrightly|
+            (SPADCALL
              (SPADCALL
-              (LIST "util coerce rule LS5' applied to: \\"
-                    (SPADCALL |var| (QREFELT $ 29)) "."
-                    (SPADCALL |sk| (QREFELT $ 25)) " giving S \\"
-                    (SPADCALL |var| (QREFELT $ 29)) "."
-                    (SPADCALL |left| (QREFELT $ 25)) " \\"
-                    (SPADCALL |var| (QREFELT $ 29)) "."
-                    (SPADCALL |right| (QREFELT $ 25)))
-              (QREFELT $ 14)))
+              (SPADCALL
+               (SPADCALL
+                (SPADCALL
+                 (SPADCALL
+                  (SPADCALL
+                   (SPADCALL
+                    (SPADCALL
+                     (SPADCALL
+                      (SPADCALL
+                       (SPADCALL
+                        (SPADCALL "util coerce rule LS5' applied to: \\"
+                                  (QREFELT $ 14))
+                        (SPADCALL |var| (QREFELT $ 35)) (QREFELT $ 15))
+                       (SPADCALL "." (QREFELT $ 14)) (QREFELT $ 15))
+                      (SPADCALL |sk| (QREFELT $ 31)) (QREFELT $ 15))
+                     (SPADCALL " giving S \\" (QREFELT $ 14)) (QREFELT $ 15))
+                    (SPADCALL |var| (QREFELT $ 35)) (QREFELT $ 15))
+                   (SPADCALL "." (QREFELT $ 14)) (QREFELT $ 15))
+                  (SPADCALL |left| (QREFELT $ 31)) (QREFELT $ 15))
+                 (SPADCALL " \\" (QREFELT $ 14)) (QREFELT $ 15))
+                (SPADCALL |var| (QREFELT $ 35)) (QREFELT $ 15))
+               (SPADCALL "." (QREFELT $ 14)) (QREFELT $ 15))
+              (SPADCALL |right| (QREFELT $ 31)) (QREFELT $ 15))
+             (QREFELT $ 17))
             (EXIT
              (PROGN
               (LETT #1#
                     (SPADCALL
-                     (SPADCALL (SPADCALL (QREFELT $ 33))
+                     (SPADCALL (SPADCALL (QREFELT $ 39))
                                (|COMPUTIL;lambdaOverSki| |var| |left| $)
-                               (QREFELT $ 31))
-                     (|COMPUTIL;lambdaOverSki| |var| |right| $) (QREFELT $ 31))
+                               (QREFELT $ 37))
+                     (|COMPUTIL;lambdaOverSki| |var| |right| $) (QREFELT $ 37))
                     . #2#)
               (GO #3#)))))
           #3# (EXIT #1#)))) 
 
 (SDEFUN |COMPUTIL;coerce;LSkic;4| ((|lam| |Lambda| UT) ($ |SKICombinators| UT))
         (SPROG
-         ((#1=#:G780 NIL) (|c32| #2=(|Lambda| UT)) (|c31| #3=(|Lambda| UT))
+         ((#1=#:G784 NIL) (|c32| #2=(|Lambda| UT)) (|c31| #3=(|Lambda| UT))
           (|ch3| #4=(|List| (|Lambda| UT))) (|cxx| (|Lambda| UT)) (|c33| #3#)
           (|s3| (UT)) (|c3| #3#) (|lamUn| (|Lambda| UT)) (|c2| #2#) (|c1| #3#)
           (|ch| #4#))
@@ -299,144 +414,189 @@
           (EXIT
            (SEQ
             (COND
-             ((SPADCALL |lam| (QREFELT $ 34))
+             ((SPADCALL |lam| (QREFELT $ 40))
               (SEQ
-               (|sayBrightly|
+               (SPADCALL
                 (SPADCALL
-                 (LIST "util coerce rule LS1 applied to:"
-                       (SPADCALL |lam| (QREFELT $ 35)) " giving "
-                       (SPADCALL |lam| (QREFELT $ 35)))
-                 (QREFELT $ 14)))
+                 (SPADCALL
+                  (SPADCALL
+                   (SPADCALL "util coerce rule LS1 applied to:" (QREFELT $ 14))
+                   (SPADCALL |lam| (QREFELT $ 41)) (QREFELT $ 15))
+                  (SPADCALL " giving " (QREFELT $ 14)) (QREFELT $ 15))
+                 (SPADCALL |lam| (QREFELT $ 41)) (QREFELT $ 15))
+                (QREFELT $ 17))
                (EXIT
                 (PROGN
                  (LETT #1#
                        (SPADCALL
-                        (SPADCALL (SPADCALL |lam| (QREFELT $ 35))
-                                  (QREFELT $ 36))
-                        (QREFELT $ 37))
+                        (SPADCALL (SPADCALL |lam| (QREFELT $ 42))
+                                  (QREFELT $ 43))
+                        (QREFELT $ 44))
                        . #5=(|COMPUTIL;coerce;LSkic;4|))
-                 (GO #6=#:G779))))))
+                 (GO #6=#:G783))))))
             (COND
-             ((SPADCALL |lam| (QREFELT $ 38))
-              (SEQ (LETT |ch| (SPADCALL |lam| (QREFELT $ 39)) . #5#)
+             ((SPADCALL |lam| (QREFELT $ 45))
+              (SEQ (LETT |ch| (SPADCALL |lam| (QREFELT $ 46)) . #5#)
                    (LETT |c1| (|SPADfirst| |ch|) . #5#)
-                   (LETT |c2| (SPADCALL |ch| (QREFELT $ 41)) . #5#)
-                   (|sayBrightly|
+                   (LETT |c2| (SPADCALL |ch| (QREFELT $ 48)) . #5#)
+                   (SPADCALL
                     (SPADCALL
-                     (LIST "util coerce rule LS2 applied to:"
-                           (SPADCALL |lam| (QREFELT $ 35)) " giving ("
-                           (SPADCALL |c1| (QREFELT $ 35)) " "
-                           (SPADCALL |c2| (QREFELT $ 35)) ")")
-                     (QREFELT $ 14)))
+                     (SPADCALL
+                      (SPADCALL
+                       (SPADCALL
+                        (SPADCALL
+                         (SPADCALL
+                          (SPADCALL "util coerce rule LS2 applied to:"
+                                    (QREFELT $ 14))
+                          (SPADCALL |lam| (QREFELT $ 41)) (QREFELT $ 15))
+                         (SPADCALL " giving (" (QREFELT $ 14)) (QREFELT $ 15))
+                        (SPADCALL |c1| (QREFELT $ 41)) (QREFELT $ 15))
+                       (SPADCALL " " (QREFELT $ 14)) (QREFELT $ 15))
+                      (SPADCALL |c2| (QREFELT $ 41)) (QREFELT $ 15))
+                     (SPADCALL ")" (QREFELT $ 14)) (QREFELT $ 15))
+                    (QREFELT $ 17))
                    (EXIT
                     (PROGN
                      (LETT #1#
-                           (SPADCALL (SPADCALL |c1| (QREFELT $ 42))
-                                     (SPADCALL |c2| (QREFELT $ 42))
-                                     (QREFELT $ 31))
+                           (SPADCALL (SPADCALL |c1| (QREFELT $ 49))
+                                     (SPADCALL |c2| (QREFELT $ 49))
+                                     (QREFELT $ 37))
                            . #5#)
                      (GO #6#))))))
             (COND
-             ((SPADCALL |lam| (QREFELT $ 43))
-              (SEQ (LETT |lamUn| (SPADCALL |lam| (QREFELT $ 44)) . #5#)
-                   (LETT |c3| (|SPADfirst| (SPADCALL |lamUn| (QREFELT $ 39)))
+             ((SPADCALL |lam| (QREFELT $ 50))
+              (SEQ (LETT |lamUn| (SPADCALL |lam| (QREFELT $ 51)) . #5#)
+                   (LETT |c3| (|SPADfirst| (SPADCALL |lamUn| (QREFELT $ 46)))
                          . #5#)
-                   (LETT |s3| (SPADCALL |lam| (QREFELT $ 45)) . #5#)
+                   (LETT |s3| (SPADCALL |lam| (QREFELT $ 52)) . #5#)
                    (COND
-                    ((SPADCALL |c3| (QREFELT $ 34))
+                    ((SPADCALL |c3| (QREFELT $ 40))
                      (COND
-                      ((EQUAL (SPADCALL |c3| (QREFELT $ 35)) "0")
+                      ((EQUAL (SPADCALL |c3| (QREFELT $ 42)) "0")
                        (SEQ
-                        (|sayBrightly|
+                        (SPADCALL
                          (SPADCALL
-                          (LIST "util coerce rule LS4 applied to:"
-                                (SPADCALL |lam| (QREFELT $ 35)) " giving I")
-                          (QREFELT $ 14)))
+                          (SPADCALL
+                           (SPADCALL "util coerce rule LS4 applied to:"
+                                     (QREFELT $ 14))
+                           (SPADCALL |lam| (QREFELT $ 41)) (QREFELT $ 15))
+                          (SPADCALL " giving I" (QREFELT $ 14)) (QREFELT $ 15))
+                         (QREFELT $ 17))
                         (EXIT
                          (PROGN
-                          (LETT #1# (SPADCALL (QREFELT $ 32)) . #5#)
+                          (LETT #1# (SPADCALL (QREFELT $ 38)) . #5#)
                           (GO #6#))))))))
                    (COND
-                    ((SPADCALL |lam| (QREFELT $ 46))
+                    ((SPADCALL |lam| (QREFELT $ 53))
                      (SEQ
-                      (|sayBrightly|
+                      (SPADCALL
                        (SPADCALL
-                        (LIST "util coerce rule LS3 applied to:"
-                              (SPADCALL |lam| (QREFELT $ 35)) " giving K "
-                              (SPADCALL |c3| (QREFELT $ 35)))
-                        (QREFELT $ 14)))
+                        (SPADCALL
+                         (SPADCALL
+                          (SPADCALL "util coerce rule LS3 applied to:"
+                                    (QREFELT $ 14))
+                          (SPADCALL |lam| (QREFELT $ 41)) (QREFELT $ 15))
+                         (SPADCALL " giving K " (QREFELT $ 14)) (QREFELT $ 15))
+                        (SPADCALL |c3| (QREFELT $ 41)) (QREFELT $ 15))
+                       (QREFELT $ 17))
                       (EXIT
                        (PROGN
                         (LETT #1#
-                              (SPADCALL (SPADCALL (QREFELT $ 30))
-                                        (SPADCALL |c3| (QREFELT $ 42))
-                                        (QREFELT $ 31))
+                              (SPADCALL (SPADCALL (QREFELT $ 36))
+                                        (SPADCALL |c3| (QREFELT $ 49))
+                                        (QREFELT $ 37))
                               . #5#)
                         (GO #6#))))))
                    (COND
-                    ((SPADCALL |c3| (QREFELT $ 43))
+                    ((SPADCALL |c3| (QREFELT $ 50))
                      (SEQ
-                      (LETT |c33| (|SPADfirst| (SPADCALL |c3| (QREFELT $ 39)))
+                      (LETT |c33| (|SPADfirst| (SPADCALL |c3| (QREFELT $ 46)))
                             . #5#)
                       (LETT |cxx|
-                            (SPADCALL |c33| (SPADCALL |c3| (QREFELT $ 45))
-                                      (QREFELT $ 47))
+                            (SPADCALL |c33| (SPADCALL |c3| (QREFELT $ 52))
+                                      (QREFELT $ 54))
                             . #5#)
-                      (|sayBrightly|
+                      (SPADCALL
                        (SPADCALL
-                        (LIST "util coerce rule LS5 applied to:"
-                              (SPADCALL |lam| (QREFELT $ 35)) " giving \\"
-                              (SPADCALL |s3| (QREFELT $ 29)) "."
-                              (SPADCALL |cxx| (QREFELT $ 35)))
-                        (QREFELT $ 14)))
+                        (SPADCALL
+                         (SPADCALL
+                          (SPADCALL
+                           (SPADCALL
+                            (SPADCALL "util coerce rule LS5 applied to:"
+                                      (QREFELT $ 14))
+                            (SPADCALL |lam| (QREFELT $ 41)) (QREFELT $ 15))
+                           (SPADCALL " giving \\" (QREFELT $ 14))
+                           (QREFELT $ 15))
+                          (SPADCALL |s3| (QREFELT $ 35)) (QREFELT $ 15))
+                         (SPADCALL "." (QREFELT $ 14)) (QREFELT $ 15))
+                        (SPADCALL |cxx| (QREFELT $ 41)) (QREFELT $ 15))
+                       (QREFELT $ 17))
                       (EXIT
                        (PROGN
                         (LETT #1#
                               (|COMPUTIL;lambdaOverSki| |s3|
-                               (SPADCALL |cxx| (QREFELT $ 42)) $)
+                               (SPADCALL |cxx| (QREFELT $ 49)) $)
                               . #5#)
                         (GO #6#))))))
                    (EXIT
                     (COND
-                     ((SPADCALL |c3| (QREFELT $ 38))
-                      (SEQ (LETT |ch3| (SPADCALL |c3| (QREFELT $ 39)) . #5#)
+                     ((SPADCALL |c3| (QREFELT $ 45))
+                      (SEQ (LETT |ch3| (SPADCALL |c3| (QREFELT $ 46)) . #5#)
                            (LETT |c31| (|SPADfirst| |ch3|) . #5#)
-                           (LETT |c32| (SPADCALL |ch3| (QREFELT $ 41)) . #5#)
-                           (|sayBrightly|
+                           (LETT |c32| (SPADCALL |ch3| (QREFELT $ 48)) . #5#)
+                           (SPADCALL
                             (SPADCALL
-                             (LIST "util coerce rule LS6 applied to:"
-                                   (SPADCALL |lam| (QREFELT $ 35))
-                                   " giving S \\"
-                                   (SPADCALL |s3| (QREFELT $ 29)) "."
-                                   (SPADCALL |c31| (QREFELT $ 35)) " \\"
-                                   (SPADCALL |s3| (QREFELT $ 29)) "."
-                                   (SPADCALL |c32| (QREFELT $ 35)))
-                             (QREFELT $ 14)))
+                             (SPADCALL
+                              (SPADCALL
+                               (SPADCALL
+                                (SPADCALL
+                                 (SPADCALL
+                                  (SPADCALL
+                                   (SPADCALL
+                                    (SPADCALL
+                                     (SPADCALL
+                                      "util coerce rule LS6 applied to:"
+                                      (QREFELT $ 14))
+                                     (SPADCALL |lam| (QREFELT $ 41))
+                                     (QREFELT $ 15))
+                                    (SPADCALL " giving S \\" (QREFELT $ 14))
+                                    (QREFELT $ 15))
+                                   (SPADCALL |s3| (QREFELT $ 35))
+                                   (QREFELT $ 15))
+                                  (SPADCALL "." (QREFELT $ 14)) (QREFELT $ 15))
+                                 (SPADCALL |c31| (QREFELT $ 41))
+                                 (QREFELT $ 15))
+                                (SPADCALL " \\" (QREFELT $ 14)) (QREFELT $ 15))
+                               (SPADCALL |s3| (QREFELT $ 35)) (QREFELT $ 15))
+                              (SPADCALL "." (QREFELT $ 14)) (QREFELT $ 15))
+                             (SPADCALL |c32| (QREFELT $ 41)) (QREFELT $ 15))
+                            (QREFELT $ 17))
                            (EXIT
                             (PROGN
                              (LETT #1#
                                    (SPADCALL
-                                    (SPADCALL (SPADCALL (QREFELT $ 33))
+                                    (SPADCALL (SPADCALL (QREFELT $ 39))
                                               (|COMPUTIL;lambdaOverSki| |s3|
-                                               (SPADCALL |c31| (QREFELT $ 42))
+                                               (SPADCALL |c31| (QREFELT $ 49))
                                                $)
-                                              (QREFELT $ 31))
+                                              (QREFELT $ 37))
                                     (|COMPUTIL;lambdaOverSki| |s3|
-                                     (SPADCALL |c32| (QREFELT $ 42)) $)
-                                    (QREFELT $ 31))
+                                     (SPADCALL |c32| (QREFELT $ 49)) $)
+                                    (QREFELT $ 37))
                                    . #5#)
                              (GO #6#))))))))))
-            (|sayBrightly|
+            (SPADCALL
              (SPADCALL
-              (LIST "util coerce warning could not match any rule to:"
-                    (SPADCALL |lam| (QREFELT $ 35)))
-              (QREFELT $ 14)))
-            (EXIT (SPADCALL (QREFELT $ 32)))))
+              (SPADCALL "util coerce warning could not match any rule to:"
+                        (QREFELT $ 14))
+              (SPADCALL |lam| (QREFELT $ 41)) (QREFELT $ 15))
+             (QREFELT $ 17))
+            (EXIT (SPADCALL (QREFELT $ 38)))))
           #6# (EXIT #1#)))) 
 
 (SDEFUN |COMPUTIL;coerce;SkicIl;5| ((|s| |SKICombinators| UT) ($ |ILogic|))
         (SPROG
-         ((#1=#:G799 NIL) (|bc| #2=(|ILogic|)) (|ac| #2#) (|ab| #2#)
+         ((#1=#:G803 NIL) (|bc| #2=(|ILogic|)) (|ac| #2#) (|ab| #2#)
           (|c| #3=(|ILogic|)) (|b| #3#) (|a| #3#)
           (|c112| #4=(|SKICombinators| UT)) (|c111| #5=(|SKICombinators| UT))
           (|subsubnodes2| #6=(|List| (|SKICombinators| UT))) (|c12| #4#)
@@ -451,145 +611,154 @@
                (COND
                 ((SPADCALL |s| (QREFELT $ 11))
                  (SEQ
-                  (|sayBrightly|
-                   "warning I does not have a parameter to act on")
-                  (|sayBrightly| "creating x")
-                  (LETT |a| (SPADCALL "x" (QREFELT $ 49))
+                  (SPADCALL
+                   (SPADCALL "warning I does not have a parameter to act on"
+                             (QREFELT $ 14))
+                   (QREFELT $ 17))
+                  (SPADCALL (SPADCALL "creating x" (QREFELT $ 14))
+                            (QREFELT $ 17))
+                  (LETT |a| (SPADCALL "x" (QREFELT $ 56))
                         . #7=(|COMPUTIL;coerce;SkicIl;5|))
                   (EXIT
                    (PROGN
-                    (LETT #1# (SPADCALL |a| |a| (QREFELT $ 50)) . #7#)
-                    (GO #8=#:G798))))))
+                    (LETT #1# (SPADCALL |a| |a| (QREFELT $ 57)) . #7#)
+                    (GO #8=#:G802))))))
                (COND
-                ((SPADCALL |s| (QREFELT $ 17))
+                ((SPADCALL |s| (QREFELT $ 22))
                  (SEQ
-                  (|sayBrightly|
-                   "warning K does not enough parameters to act on")
-                  (|sayBrightly| "creating x and y")
-                  (LETT |a| (SPADCALL "x" (QREFELT $ 49)) . #7#)
-                  (LETT |b| (SPADCALL "y" (QREFELT $ 49)) . #7#)
+                  (SPADCALL
+                   (SPADCALL "warning K does not enough parameters to act on"
+                             (QREFELT $ 14))
+                   (QREFELT $ 17))
+                  (SPADCALL (SPADCALL "creating x and y" (QREFELT $ 14))
+                            (QREFELT $ 17))
+                  (LETT |a| (SPADCALL "x" (QREFELT $ 56)) . #7#)
+                  (LETT |b| (SPADCALL "y" (QREFELT $ 56)) . #7#)
                   (EXIT
                    (PROGN
                     (LETT #1#
-                          (SPADCALL |a| (SPADCALL |b| |a| (QREFELT $ 50))
-                                    (QREFELT $ 50))
+                          (SPADCALL |a| (SPADCALL |b| |a| (QREFELT $ 57))
+                                    (QREFELT $ 57))
                           . #7#)
                     (GO #8#))))))
                (COND
-                ((SPADCALL |s| (QREFELT $ 18))
+                ((SPADCALL |s| (QREFELT $ 23))
                  (SEQ
-                  (|sayBrightly|
-                   "warning S does not enough parameters to act on")
-                  (|sayBrightly| "creating x,y an z")
-                  (LETT |a| (SPADCALL "x" (QREFELT $ 49)) . #7#)
-                  (LETT |b| (SPADCALL "y" (QREFELT $ 49)) . #7#)
-                  (LETT |c| (SPADCALL "z" (QREFELT $ 49)) . #7#)
-                  (LETT |ab| (SPADCALL |a| |b| (QREFELT $ 50)) . #7#)
-                  (LETT |ac| (SPADCALL |a| |c| (QREFELT $ 50)) . #7#)
-                  (LETT |bc| (SPADCALL |b| |c| (QREFELT $ 50)) . #7#)
+                  (SPADCALL
+                   (SPADCALL "warning S does not enough parameters to act on"
+                             (QREFELT $ 14))
+                   (QREFELT $ 17))
+                  (SPADCALL (SPADCALL "creating x,y and z" (QREFELT $ 14))
+                            (QREFELT $ 17))
+                  (LETT |a| (SPADCALL "x" (QREFELT $ 56)) . #7#)
+                  (LETT |b| (SPADCALL "y" (QREFELT $ 56)) . #7#)
+                  (LETT |c| (SPADCALL "z" (QREFELT $ 56)) . #7#)
+                  (LETT |ab| (SPADCALL |a| |b| (QREFELT $ 57)) . #7#)
+                  (LETT |ac| (SPADCALL |a| |c| (QREFELT $ 57)) . #7#)
+                  (LETT |bc| (SPADCALL |b| |c| (QREFELT $ 57)) . #7#)
                   (EXIT
                    (PROGN
                     (LETT #1#
-                          (SPADCALL (SPADCALL |a| |bc| (QREFELT $ 50))
-                                    (SPADCALL |ab| |ac| (QREFELT $ 50))
-                                    (QREFELT $ 50))
+                          (SPADCALL (SPADCALL |a| |bc| (QREFELT $ 57))
+                                    (SPADCALL |ab| |ac| (QREFELT $ 57))
+                                    (QREFELT $ 57))
                           . #7#)
                     (GO #8#))))))
                (EXIT
                 (PROGN
                  (LETT #1#
                        (SPADCALL
-                        (SPADCALL (SPADCALL |s| (QREFELT $ 19)) (QREFELT $ 20))
-                        (QREFELT $ 49))
+                        (SPADCALL (SPADCALL |s| (QREFELT $ 24)) (QREFELT $ 25))
+                        (QREFELT $ 56))
                        . #7#)
                  (GO #8#))))))
-            (LETT |subnodes| (SPADCALL |s| (QREFELT $ 22)) . #7#)
+            (LETT |subnodes| (SPADCALL |s| (QREFELT $ 27)) . #7#)
             (LETT |c1| (|SPADfirst| |subnodes|) . #7#)
-            (LETT |c2| (SPADCALL |subnodes| (QREFELT $ 24)) . #7#)
+            (LETT |c2| (SPADCALL |subnodes| (QREFELT $ 29)) . #7#)
             (COND
              ((SPADCALL |c1| (QREFELT $ 11))
               (SEQ
-               (|sayBrightly|
+               (SPADCALL
                 (SPADCALL
-                 (LIST "util coerce apply rule SI1 in:"
-                       (SPADCALL |s| (QREFELT $ 25)))
-                 (QREFELT $ 14)))
-               (LETT |a| (SPADCALL |c1| (QREFELT $ 51)) . #7#)
+                 (SPADCALL "util coerce apply rule SI1 in:" (QREFELT $ 14))
+                 (SPADCALL |s| (QREFELT $ 31)) (QREFELT $ 15))
+                (QREFELT $ 17))
+               (LETT |a| (SPADCALL |c1| (QREFELT $ 58)) . #7#)
                (EXIT
                 (PROGN
-                 (LETT #1# (SPADCALL |a| |a| (QREFELT $ 50)) . #7#)
+                 (LETT #1# (SPADCALL |a| |a| (QREFELT $ 57)) . #7#)
                  (GO #8#))))))
             (COND
              ((SPADCALL |c1| (QREFELT $ 10))
               (PROGN
                (LETT #1#
-                     (SPADCALL (SPADCALL |c1| (QREFELT $ 51))
-                               (SPADCALL |c2| (QREFELT $ 51)) (QREFELT $ 52))
+                     (SPADCALL (SPADCALL |c1| (QREFELT $ 58))
+                               (SPADCALL |c2| (QREFELT $ 58)) (QREFELT $ 59))
                      . #7#)
                (GO #8#))))
-            (LETT |subsubnodes| (SPADCALL |c1| (QREFELT $ 22)) . #7#)
+            (LETT |subsubnodes| (SPADCALL |c1| (QREFELT $ 27)) . #7#)
             (LETT |c11| (|SPADfirst| |subsubnodes|) . #7#)
-            (LETT |c12| (SPADCALL |subsubnodes| (QREFELT $ 24)) . #7#)
+            (LETT |c12| (SPADCALL |subsubnodes| (QREFELT $ 29)) . #7#)
             (COND
-             ((SPADCALL |c11| (QREFELT $ 17))
+             ((SPADCALL |c11| (QREFELT $ 22))
               (SEQ
-               (|sayBrightly|
+               (SPADCALL
                 (SPADCALL
-                 (LIST "util coerce apply rule SI2 in:"
-                       (SPADCALL |s| (QREFELT $ 25)))
-                 (QREFELT $ 14)))
-               (LETT |a| (SPADCALL |c2| (QREFELT $ 51)) . #7#)
-               (LETT |b| (SPADCALL |c12| (QREFELT $ 51)) . #7#)
+                 (SPADCALL "util coerce apply rule SI2 in:" (QREFELT $ 14))
+                 (SPADCALL |s| (QREFELT $ 31)) (QREFELT $ 15))
+                (QREFELT $ 17))
+               (LETT |a| (SPADCALL |c2| (QREFELT $ 58)) . #7#)
+               (LETT |b| (SPADCALL |c12| (QREFELT $ 58)) . #7#)
                (EXIT
                 (PROGN
                  (LETT #1#
-                       (SPADCALL |a| (SPADCALL |b| |a| (QREFELT $ 50))
-                                 (QREFELT $ 50))
+                       (SPADCALL |a| (SPADCALL |b| |a| (QREFELT $ 57))
+                                 (QREFELT $ 57))
                        . #7#)
                  (GO #8#))))))
             (COND
              ((SPADCALL |c11| (QREFELT $ 10))
               (PROGN
                (LETT #1#
-                     (SPADCALL (SPADCALL |c1| (QREFELT $ 51))
-                               (SPADCALL |c2| (QREFELT $ 51)) (QREFELT $ 52))
+                     (SPADCALL (SPADCALL |c1| (QREFELT $ 58))
+                               (SPADCALL |c2| (QREFELT $ 58)) (QREFELT $ 59))
                      . #7#)
                (GO #8#))))
-            (LETT |subsubnodes2| (SPADCALL |c11| (QREFELT $ 22)) . #7#)
+            (LETT |subsubnodes2| (SPADCALL |c11| (QREFELT $ 27)) . #7#)
             (LETT |c111| (|SPADfirst| |subsubnodes2|) . #7#)
-            (LETT |c112| (SPADCALL |subsubnodes2| (QREFELT $ 24)) . #7#)
+            (LETT |c112| (SPADCALL |subsubnodes2| (QREFELT $ 29)) . #7#)
             (COND
-             ((SPADCALL |c111| (QREFELT $ 18))
+             ((SPADCALL |c111| (QREFELT $ 23))
               (SEQ
-               (|sayBrightly|
+               (SPADCALL
                 (SPADCALL
-                 (LIST "util coerce apply rule SI3 in:"
-                       (SPADCALL |s| (QREFELT $ 25)))
-                 (QREFELT $ 14)))
-               (LETT |a| (SPADCALL |c2| (QREFELT $ 51)) . #7#)
-               (LETT |b| (SPADCALL |c12| (QREFELT $ 51)) . #7#)
-               (LETT |c| (SPADCALL |c112| (QREFELT $ 51)) . #7#)
-               (LETT |ab| (SPADCALL |a| |b| (QREFELT $ 50)) . #7#)
-               (LETT |ac| (SPADCALL |a| |c| (QREFELT $ 50)) . #7#)
-               (LETT |bc| (SPADCALL |b| |c| (QREFELT $ 50)) . #7#)
+                 (SPADCALL "util coerce apply rule SI3 in:" (QREFELT $ 14))
+                 (SPADCALL |s| (QREFELT $ 31)) (QREFELT $ 15))
+                (QREFELT $ 17))
+               (LETT |a| (SPADCALL |c2| (QREFELT $ 58)) . #7#)
+               (LETT |b| (SPADCALL |c12| (QREFELT $ 58)) . #7#)
+               (LETT |c| (SPADCALL |c112| (QREFELT $ 58)) . #7#)
+               (LETT |ab| (SPADCALL |a| |b| (QREFELT $ 57)) . #7#)
+               (LETT |ac| (SPADCALL |a| |c| (QREFELT $ 57)) . #7#)
+               (LETT |bc| (SPADCALL |b| |c| (QREFELT $ 57)) . #7#)
                (EXIT
                 (PROGN
                  (LETT #1#
-                       (SPADCALL (SPADCALL |a| |bc| (QREFELT $ 50))
-                                 (SPADCALL |ab| |ac| (QREFELT $ 50))
-                                 (QREFELT $ 50))
+                       (SPADCALL (SPADCALL |a| |bc| (QREFELT $ 57))
+                                 (SPADCALL |ab| |ac| (QREFELT $ 57))
+                                 (QREFELT $ 57))
                        . #7#)
                  (GO #8#))))))
             (EXIT
-             (SPADCALL (SPADCALL |c1| (QREFELT $ 51))
-                       (SPADCALL |c2| (QREFELT $ 51)) (QREFELT $ 52)))))
+             (SPADCALL (SPADCALL |c1| (QREFELT $ 58))
+                       (SPADCALL |c2| (QREFELT $ 58)) (QREFELT $ 59)))))
           #8# (EXIT #1#)))) 
 
 (DECLAIM (NOTINLINE |compUtil;|)) 
 
-(DEFUN |compUtil| (#1=#:G800)
+(DEFUN |compUtil| (#1=#:G804)
   (SPROG NIL
-         (PROG (#2=#:G801)
+         (PROG (#2=#:G805)
            (RETURN
             (COND
              ((LETT #2#
@@ -608,7 +777,7 @@
          (PROGN
           (LETT DV$1 (|devaluate| |#1|) . #1=(|compUtil|))
           (LETT |dv$| (LIST '|compUtil| DV$1) . #1#)
-          (LETT $ (GETREFV 53) . #1#)
+          (LETT $ (GETREFV 60) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|compUtil| (LIST DV$1) (CONS 1 $))
@@ -621,37 +790,42 @@
 (MAKEPROP '|compUtil| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) '|varNum| (|Boolean|)
-              (|SKICombinators| 6) (0 . |atom?|) (5 . |isI?|) (|List| $)
-              (|String|) (10 . |concat|) (|Lambda| 6) (15 . |parseLambda|)
-              (20 . |isK?|) (25 . |isS?|) (30 . |getVariable|) (35 . |getName|)
-              (40 . |lambda|) (45 . |getChildren|) (|List| 9) (50 . |second|)
-              (55 . |toString|) (60 . |lambda|) |COMPUTIL;coerce;SkicL;2|
-              (66 . |freeVariable?|) (72 . |toString|) (77 . K) (81 . |ski|)
-              (87 . I) (91 . S) (95 . |atom?|) (100 . |toString|) (105 . |var|)
-              (110 . |ski|) (115 . |isCompound?|) (120 . |getChildren|)
-              (|List| 15) (125 . |second|) |COMPUTIL;coerce;LSkic;4|
-              (130 . |isLambda?|) (135 . |unbind|) (140 . |getVariable|)
-              (145 . |free?|) (150 . |lambda|) (|ILogic|) (156 . |proposition|)
-              (161 . |implies|) |COMPUTIL;coerce;SkicIl;5| (167 . |\\/|))
-           '#(|coerce| 173) 'NIL
+              (|SKICombinators| 6) (0 . |atom?|) (5 . |isI?|) (|String|)
+              (|OutputForm|) (10 . |message|) (15 . |hconcat|) (|Void|)
+              (21 . |print|) (|List| $) (26 . |concat|) (|Lambda| 6)
+              (31 . |parseLambda|) (36 . |isK?|) (41 . |isS?|)
+              (46 . |getVariable|) (51 . |getName|) (56 . |lambda|)
+              (61 . |getChildren|) (|List| 9) (66 . |second|) (71 . |toString|)
+              (76 . |coerce|) (81 . |lambda|) |COMPUTIL;coerce;SkicL;2|
+              (87 . |freeVariable?|) (93 . |coerce|) (98 . K) (102 . |ski|)
+              (108 . I) (112 . S) (116 . |atom?|) (121 . |coerce|)
+              (126 . |toString|) (131 . |var|) (136 . |ski|)
+              (141 . |isCompound?|) (146 . |getChildren|) (|List| 20)
+              (151 . |second|) |COMPUTIL;coerce;LSkic;4| (156 . |isLambda?|)
+              (161 . |unbind|) (166 . |getVariable|) (171 . |free?|)
+              (176 . |lambda|) (|ILogic|) (182 . |proposition|)
+              (187 . |implies|) |COMPUTIL;coerce;SkicIl;5| (193 . |\\/|))
+           '#(|coerce| 199) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
-                             (|makeByteWordVec2| 52
+                             (|makeByteWordVec2| 59
                                                  '(1 9 8 0 10 1 9 8 0 11 1 13 0
-                                                   12 14 1 15 0 13 16 1 9 8 0
-                                                   17 1 9 8 0 18 1 9 6 0 19 1 6
-                                                   13 0 20 1 15 0 6 21 1 9 12 0
-                                                   22 1 23 9 0 24 1 9 13 0 25 2
-                                                   15 0 0 0 26 2 9 8 0 6 28 1 6
-                                                   13 0 29 0 9 0 30 2 9 0 0 0
-                                                   31 0 9 0 32 0 9 0 33 1 15 8
-                                                   0 34 1 15 13 0 35 1 6 0 13
-                                                   36 1 9 0 6 37 1 15 8 0 38 1
-                                                   15 12 0 39 1 40 15 0 41 1 15
-                                                   8 0 43 1 15 0 0 44 1 15 6 0
-                                                   45 1 15 8 0 46 2 15 0 0 6 47
-                                                   1 48 0 13 49 2 48 0 0 0 50 2
-                                                   48 0 0 0 52 1 0 15 9 27 1 0
-                                                   48 9 51 1 0 9 15 42)))))
+                                                   12 14 2 13 0 0 0 15 1 13 16
+                                                   0 17 1 12 0 18 19 1 20 0 12
+                                                   21 1 9 8 0 22 1 9 8 0 23 1 9
+                                                   6 0 24 1 6 12 0 25 1 20 0 6
+                                                   26 1 9 18 0 27 1 28 9 0 29 1
+                                                   9 12 0 30 1 9 13 0 31 2 20 0
+                                                   0 0 32 2 9 8 0 6 34 1 6 13 0
+                                                   35 0 9 0 36 2 9 0 0 0 37 0 9
+                                                   0 38 0 9 0 39 1 20 8 0 40 1
+                                                   20 13 0 41 1 20 12 0 42 1 6
+                                                   0 12 43 1 9 0 6 44 1 20 8 0
+                                                   45 1 20 18 0 46 1 47 20 0 48
+                                                   1 20 8 0 50 1 20 0 0 51 1 20
+                                                   6 0 52 1 20 8 0 53 2 20 0 0
+                                                   6 54 1 55 0 12 56 2 55 0 0 0
+                                                   57 2 55 0 0 0 59 1 0 20 9 33
+                                                   1 0 55 9 58 1 0 9 20 49)))))
            '|lookupComplete|)) 

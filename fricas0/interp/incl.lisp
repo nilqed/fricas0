@@ -3,9 +3,9 @@
  
 (IN-PACKAGE "BOOT")
  
-; %id a     == [IDENTITY, a]
+; %id a     == [FUNCTION IDENTITY, a]
  
-(DEFUN |%id| (|a|) (PROG () (RETURN (LIST IDENTITY |a|))))
+(DEFUN |%id| (|a|) (PROG () (RETURN (LIST #'IDENTITY |a|))))
  
 ; %origin x ==
 ;     [function porigin, x]

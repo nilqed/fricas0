@@ -3,6 +3,20 @@
  
 (IN-PACKAGE "BOOT")
  
+; getBrowseDatabase(kind) ==
+;     $includeUnexposed? : local := true
+;     not member(kind,'("o" "k" "c" "d" "p")) => nil
+;     grepConstruct('"*", INTERN kind)
+ 
+(DEFUN |getBrowseDatabase| (|kind|)
+  (PROG (|$includeUnexposed?|)
+    (DECLARE (SPECIAL |$includeUnexposed?|))
+    (RETURN
+     (PROGN
+      (SETQ |$includeUnexposed?| T)
+      (COND ((NULL (|member| |kind| '("o" "k" "c" "d" "p"))) NIL)
+            ('T (|grepConstruct| "*" (INTERN |kind|))))))))
+ 
 ; grepConstruct(s,key,:options) == --key = a o c d p x k (all) . (aok) w (doc)
 ; --Called from genSearch with key = "." and "w"
 ; --key = "." means a o c d p x

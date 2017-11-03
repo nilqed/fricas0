@@ -2,7 +2,7 @@
 (SDEFUN |PERMAN;permanent3| ((|x| |SquareMatrix| |n| R) ($ R))
         (SPROG
          ((|a| (R)) (|j| (|Integer|)) (|vv| (|Vector| (|Vector| (|Integer|))))
-          (|b| (R)) (#1=#:G709 NIL) (|i| NIL) (|k| (R)) (|sgn| (R))
+          (|b| (R)) (#1=#:G713 NIL) (|i| NIL) (|k| (R)) (|sgn| (R))
           (|w| (|Vector| R)))
          (SEQ (LETT |sgn| (|spadConstant| $ 8) . #2=(|PERMAN;permanent3|))
               (LETT |a| (|spadConstant| $ 9) . #2#)
@@ -62,10 +62,10 @@
 (SDEFUN |PERMAN;permanent;SmR;2| ((|x| |SquareMatrix| |n| R) ($ R))
         (SPROG
          ((|a| (R)) (|j| #1=(|Integer|))
-          (|vv| (|Vector| (|Vector| (|Integer|)))) (#2=#:G722 NIL) (|b| (R))
-          (#3=#:G732 NIL) (|i| NIL) (|k| #1#) (|sgn| (R)) (#4=#:G731 NIL)
-          (#5=#:G717 NIL) (#6=#:G730 NIL) (|rowi| #7=(|Vector| R))
-          (#8=#:G729 NIL) (|w| #7#) (#9=#:G728 NIL)
+          (|vv| (|Vector| (|Vector| (|Integer|)))) (#2=#:G726 NIL) (|b| (R))
+          (#3=#:G736 NIL) (|i| NIL) (|k| #1#) (|sgn| (R)) (#4=#:G735 NIL)
+          (#5=#:G721 NIL) (#6=#:G734 NIL) (|rowi| #7=(|Vector| R))
+          (#8=#:G733 NIL) (|w| #7#) (#9=#:G732 NIL)
           (|half| (|Union| R "failed")) (|two| (R)))
          (SEQ
           (EXIT
@@ -81,7 +81,7 @@
                       ((< (QREFELT $ 6) 7)
                        (PROGN
                         (LETT #9# (|PERMAN;permanent3| |x| $) . #11#)
-                        (GO #12=#:G727)))
+                        (GO #12=#:G731)))
                       (#10#
                        (PROGN
                         (LETT #9# (|PERMAN;permanent2| |x| $) . #11#)
@@ -205,12 +205,12 @@
 
 (SDEFUN |PERMAN;permanent2| ((|x| |SquareMatrix| |n| R) ($ R))
         (SPROG
-         ((#1=#:G749 NIL) (|b| (R)) (#2=#:G747 NIL) (|a| (R))
+         ((#1=#:G753 NIL) (|b| (R)) (#2=#:G751 NIL) (|a| (R))
           (|j| #3=(|Integer|)) (|vv| (|Vector| (|Vector| (|Integer|))))
-          (#4=#:G742 NIL) (#5=#:G758 NIL) (|i| NIL) (|c| (R)) (|k| #3#)
-          (|sgn| (R)) (#6=#:G757 NIL) (#7=#:G737 NIL) (#8=#:G756 NIL)
-          (|rowi| #9=(|Vector| R)) (#10=#:G755 NIL) (|w| #9#) (|two| (R))
-          (#11=#:G754 NIL))
+          (#4=#:G746 NIL) (#5=#:G762 NIL) (|i| NIL) (|c| (R)) (|k| #3#)
+          (|sgn| (R)) (#6=#:G761 NIL) (#7=#:G741 NIL) (#8=#:G760 NIL)
+          (|rowi| #9=(|Vector| R)) (#10=#:G759 NIL) (|w| #9#) (|two| (R))
+          (#11=#:G758 NIL))
          (SEQ
           (EXIT
            (SEQ (LETT |c| (|spadConstant| $ 9) . #12=(|PERMAN;permanent2|))
@@ -222,7 +222,7 @@
                               (QREFELT $ 38))
                     (PROGN
                      (LETT #11# (|PERMAN;permanent3| |x| $) . #12#)
-                     (GO #13=#:G753)))))
+                     (GO #13=#:G757)))))
                  (#14='T
                   (PROGN
                    (LETT #11# (|PERMAN;permanent3| |x| $) . #12#)
@@ -382,9 +382,9 @@
 
 (DECLAIM (NOTINLINE |Permanent;|)) 
 
-(DEFUN |Permanent| (&REST #1=#:G759)
+(DEFUN |Permanent| (&REST #1=#:G763)
   (SPROG NIL
-         (PROG (#2=#:G760)
+         (PROG (#2=#:G764)
            (RETURN
             (COND
              ((LETT #2#
@@ -424,9 +424,10 @@
               (4 . |Zero|) (|Vector| 18) (|PositiveInteger|) (|GrayCode|)
               (8 . |firstSubsetGray|) (|Boolean|) (|Integer|) (13 . ~=)
               (19 . -) (|Vector| 15) (24 . |elt|) (30 . |elt|) (|Vector| 7)
-              (36 . |elt|) (|SquareMatrix| 6 7) (42 . |elt|) (49 . *) (55 . +)
-              (61 . |setelt!|) (68 . |nextSubsetGray|) (74 . |coerce|)
-              (|Union| $ '"failed") (79 . |recip|) (|DirectProduct| 6 7)
+              (36 . |elt|) (|SquareMatrix| (NRTEVAL (QREFELT $ 6)) 7)
+              (42 . |elt|) (49 . *) (55 . +) (61 . |setelt!|)
+              (68 . |nextSubsetGray|) (74 . |coerce|) (|Union| $ '"failed")
+              (79 . |recip|) (|DirectProduct| (NRTEVAL (QREFELT $ 6)) 7)
               (84 . |row|) (90 . |coerce|) (95 . -) (101 . *)
               |PERMAN;permanent;SmR;2| (107 . =) (|NonNegativeInteger|)
               (113 . ^) (119 . |exquo|))

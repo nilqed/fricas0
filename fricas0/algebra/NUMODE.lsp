@@ -7,17 +7,17 @@
           (|Float|))
          ($ |Void|))
         (SPROG
-         ((#3=#:G755 NIL) (|i| NIL) (#4=#:G751 NIL) (|x| #2#) (#5=#:G754 NIL)
-          (#6=#:G753 NIL) (|iter| NIL) (#7=#:G752 NIL)
+         ((#3=#:G760 NIL) (|i| NIL) (#4=#:G756 NIL) (|x| #2#) (#5=#:G759 NIL)
+          (#6=#:G758 NIL) (|iter| NIL) (#7=#:G757 NIL)
           (|outlist| (|List| (|OutputForm|))) (|m| #1#) (|tiny| (|Float|))
           (|step|
            (|Record| (|:| |to_try| (|Float|)) (|:| |did| (|Float|))
                      (|:| |next| (|Float|))))
-          (|t6| #8=(|Vector| (|Float|))) (#9=#:G714 NIL) (|t5| #8#)
-          (#10=#:G712 NIL) (|t4| #8#) (#11=#:G710 NIL) (|t3| #8#)
-          (#12=#:G708 NIL) (|t2| #8#) (#13=#:G706 NIL) (|t1| #8#)
-          (#14=#:G704 NIL) (|dydx| #8#) (#15=#:G702 NIL) (|yscal| #8#)
-          (#16=#:G700 NIL) (|y| #8#) (#17=#:G698 NIL))
+          (|t6| #8=(|Vector| (|Float|))) (#9=#:G717 NIL) (|t5| #8#)
+          (#10=#:G715 NIL) (|t4| #8#) (#11=#:G713 NIL) (|t3| #8#)
+          (#12=#:G711 NIL) (|t2| #8#) (#13=#:G709 NIL) (|t1| #8#)
+          (#14=#:G707 NIL) (|dydx| #8#) (#15=#:G705 NIL) (|yscal| #8#)
+          (#16=#:G703 NIL) (|y| #8#) (#17=#:G700 NIL))
          (SEQ
           (LETT |y|
                 (MAKEARR1
@@ -150,7 +150,7 @@
                        ((SPADCALL (SPADCALL |x| |x2| (QREFELT $ 21))
                                   (SPADCALL 0 0 10 (QREFELT $ 10))
                                   (QREFELT $ 26))
-                        (PROGN (LETT #4# |$NoValue| . #18#) (GO #19=#:G732))))
+                        (PROGN (LETT #4# |$NoValue| . #18#) (GO #19=#:G737))))
                       (EXIT (QSETVELT |step| 0 (QVELT |step| 2))))
                  (LETT |iter| (|inc_SI| |iter|) . #18#) (GO G190) G191
                  (EXIT NIL)))
@@ -160,15 +160,17 @@
             (SEQ (SPADCALL "ode: ERROR " (QREFELT $ 30))
                  (SPADCALL |outlist| 1 (SPADCALL |nstep| (QREFELT $ 31))
                            (QREFELT $ 33))
-                 (SPADCALL |outlist| 2 " steps to small, last h = "
+                 (SPADCALL |outlist| 2
+                           (SPADCALL " steps to small, last h = "
+                                     (QREFELT $ 34))
                            (QREFELT $ 33))
                  (SPADCALL |outlist| 3
                            (SPADCALL (QVELT |step| 1) (QREFELT $ 15))
                            (QREFELT $ 33))
-                 (SPADCALL (SPADCALL |outlist| (QREFELT $ 35)) (QREFELT $ 36))
+                 (SPADCALL (SPADCALL |outlist| (QREFELT $ 36)) (QREFELT $ 37))
                  (EXIT
-                  (SPADCALL " y= " (SPADCALL |y| (QREFELT $ 37))
-                            (QREFELT $ 38))))))
+                  (SPADCALL " y= " (SPADCALL |y| (QREFELT $ 38))
+                            (QREFELT $ 39))))))
           (EXIT
            (SEQ (LETT |i| 1 . #18#) (LETT #3# |m| . #18#) G190
                 (COND ((|greater_SI| |i| #3#) (GO G191)))
@@ -187,10 +189,10 @@
           (|Float|))
          ($ |Void|))
         (SPROG
-         ((|t7| #1=(|Vector| (|Float|))) (#2=#:G770 NIL) (|t6| #1#)
-          (#3=#:G768 NIL) (|t5| #1#) (#4=#:G766 NIL) (|t4| #1#) (#5=#:G764 NIL)
-          (|t3| #1#) (#6=#:G762 NIL) (|t2| #1#) (#7=#:G760 NIL) (|t1| #1#)
-          (#8=#:G758 NIL))
+         ((|t7| #1=(|Vector| (|Float|))) (#2=#:G775 NIL) (|t6| #1#)
+          (#3=#:G773 NIL) (|t5| #1#) (#4=#:G771 NIL) (|t4| #1#) (#5=#:G769 NIL)
+          (|t3| #1#) (#6=#:G767 NIL) (|t2| #1#) (#7=#:G765 NIL) (|t1| #1#)
+          (#8=#:G763 NIL))
          (SEQ
           (LETT |t1|
                 (MAKEARR1
@@ -282,9 +284,9 @@
          (|t3| |Vector| (|Float|)) (|ysav| |Vector| (|Float|))
          (|dysav| |Vector| (|Float|)) (|ytemp| |Vector| (|Float|)) ($ |Void|))
         (SPROG
-         ((#4=#:G806 NIL) (|i| NIL) (#5=#:G803 NIL) (|h| #3#)
-          (|errmax| #6=(|Float|)) (#7=#:G805 NIL) (|hh| (|Float|))
-          (#8=#:G804 NIL) (|m| #1#) (|errcon| #6#) (|shrink| #9=(|Float|))
+         ((#4=#:G811 NIL) (|i| NIL) (#5=#:G808 NIL) (|h| #3#)
+          (|errmax| #6=(|Float|)) (#7=#:G810 NIL) (|hh| (|Float|))
+          (#8=#:G809 NIL) (|m| #1#) (|errcon| #6#) (|shrink| #9=(|Float|))
           (|grow| #9#) (|safety| #6#) (|fcor| (|Float|)) (|xsav| #2#))
          (SEQ (LETT |xsav| |x| . #10=(|NUMODE;rk4qclocal|))
               (LETT |h| (QVELT |step| 0) . #10#)
@@ -295,11 +297,11 @@
               (LETT |safety| (SPADCALL 9 -1 10 (QREFELT $ 10)) . #10#)
               (LETT |grow|
                     (SPADCALL (SPADCALL 20 -2 10 (QREFELT $ 10))
-                              (QREFELT $ 44))
+                              (QREFELT $ 45))
                     . #10#)
               (LETT |shrink|
                     (SPADCALL (SPADCALL 25 -2 10 (QREFELT $ 10))
-                              (QREFELT $ 44))
+                              (QREFELT $ 45))
                     . #10#)
               (LETT |errcon| (SPADCALL 6 -5 10 (QREFELT $ 10)) . #10#)
               (LETT |m| |n| . #10#)
@@ -350,7 +352,7 @@
                                                          (QREFELT $ 18))
                                                (QREFELT $ 16))
                                               (QREFELT $ 24))
-                                             (QREFELT $ 45))
+                                             (QREFELT $ 46))
                                    . #10#)))
                            (LETT |i| (|inc_SI| |i|) . #10#) (GO G190) G191
                            (EXIT NIL))
@@ -363,7 +365,7 @@
                          (LETT |h|
                                (SPADCALL (SPADCALL |safety| |h| (QREFELT $ 25))
                                          (SPADCALL |errmax| |shrink|
-                                                   (QREFELT $ 46))
+                                                   (QREFELT $ 47))
                                          (QREFELT $ 25))
                                . #10#))
                         ('T
@@ -375,15 +377,15 @@
                                            (SPADCALL |safety| |h|
                                                      (QREFELT $ 25))
                                            (SPADCALL |errmax| |grow|
-                                                     (QREFELT $ 46))
+                                                     (QREFELT $ 47))
                                            (QREFELT $ 25))))
                                ('T
                                 (QSETVELT |step| 2
-                                          (SPADCALL 4 |h| (QREFELT $ 47)))))
+                                          (SPADCALL 4 |h| (QREFELT $ 48)))))
                               (EXIT
                                (PROGN
                                 (LETT #5# |$NoValue| . #10#)
-                                (GO #11=#:G799))))))))
+                                (GO #11=#:G804))))))))
                      NIL (GO G190) G191 (EXIT NIL)))
                #11# (EXIT #5#))
               (EXIT
@@ -409,10 +411,10 @@
           (|Float|))
          ($ |Void|))
         (SPROG
-         ((|x| #1#) (#2=#:G824 NIL) (|i| NIL) (|h| (|Float|))
-          (|ynew| #3=(|Vector| (|Float|))) (#4=#:G816 NIL) (|dydx| #3#)
-          (#5=#:G814 NIL) (|dym| #3#) (#6=#:G812 NIL) (|dyt| #3#)
-          (#7=#:G810 NIL) (|yt| #3#) (#8=#:G808 NIL))
+         ((|x| #1#) (#2=#:G829 NIL) (|i| NIL) (|h| (|Float|))
+          (|ynew| #3=(|Vector| (|Float|))) (#4=#:G821 NIL) (|dydx| #3#)
+          (#5=#:G819 NIL) (|dym| #3#) (#6=#:G817 NIL) (|dyt| #3#)
+          (#7=#:G815 NIL) (|yt| #3#) (#8=#:G813 NIL))
          (SEQ
           (LETT |yt|
                 (MAKEARR1
@@ -451,7 +453,7 @@
                 . #9#)
           (LETT |h|
                 (SPADCALL (SPADCALL |x2| |x1| (QREFELT $ 21))
-                          (SPADCALL |nstep| (QREFELT $ 48)) (QREFELT $ 16))
+                          (SPADCALL |nstep| (QREFELT $ 49)) (QREFELT $ 16))
                 . #9#)
           (LETT |x| |x1| . #9#)
           (EXIT
@@ -469,9 +471,9 @@
           (|Float|))
          ($ |Void|))
         (SPROG
-         ((|t4| #1=(|Vector| (|Float|))) (#2=#:G832 NIL) (|t3| #1#)
-          (#3=#:G830 NIL) (|t2| #1#) (#4=#:G828 NIL) (|t1| #1#)
-          (#5=#:G826 NIL))
+         ((|t4| #1=(|Vector| (|Float|))) (#2=#:G837 NIL) (|t3| #1#)
+          (#3=#:G835 NIL) (|t2| #1#) (#4=#:G833 NIL) (|t1| #1#)
+          (#5=#:G831 NIL))
          (SEQ
           (LETT |t1|
                 (MAKEARR1
@@ -526,8 +528,8 @@
          (|yt| |Vector| (|Float|)) (|dyt| |Vector| (|Float|))
          (|dym| |Vector| (|Float|)) ($ |Void|))
         (SPROG
-         ((#2=#:G853 NIL) (|i| NIL) (#3=#:G852 NIL) (#4=#:G851 NIL)
-          (#5=#:G850 NIL) (|m| #1#) (|xh| (|Float|)) (|h6| (|Float|))
+         ((#2=#:G858 NIL) (|i| NIL) (#3=#:G857 NIL) (#4=#:G856 NIL)
+          (#5=#:G855 NIL) (|m| #1#) (|xh| (|Float|)) (|h6| (|Float|))
           (|hh| (|Float|)))
          (SEQ
           (LETT |hh|
@@ -616,7 +618,7 @@
 
 (DEFUN |NumericalOrdinaryDifferentialEquations| ()
   (SPROG NIL
-         (PROG (#1=#:G855)
+         (PROG (#1=#:G860)
            (RETURN
             (COND
              ((LETT #1#
@@ -645,7 +647,7 @@
          (PROGN
           (LETT |dv$| '(|NumericalOrdinaryDifferentialEquations|)
                 . #1=(|NumericalOrdinaryDifferentialEquations|))
-          (LETT $ (GETREFV 52) . #1#)
+          (LETT $ (GETREFV 53) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache|
@@ -662,19 +664,19 @@
               (36 . |elt|) (42 . |setelt!|) (49 . +) (55 . -) (|Boolean|)
               (61 . >) (67 . |abs|) (72 . *) (78 . >=) (|Void|) (|String|)
               (|OutputPackage|) (84 . |output|) (89 . |coerce|) (|List| 14)
-              (94 . |setelt!|) (|List| $) (101 . |blankSeparate|)
-              (106 . |output|) (111 . |coerce|) (116 . |output|)
-              (|Mapping| 27 17 17 6) |NUMODE;rk4a;VI4FIMV;1|
+              (94 . |setelt!|) (101 . |coerce|) (|List| $)
+              (106 . |blankSeparate|) (111 . |output|) (116 . |coerce|)
+              (121 . |output|) (|Mapping| 27 17 17 6) |NUMODE;rk4a;VI4FIMV;1|
               (|Record| (|:| |to_try| 6) (|:| |did| 6) (|:| |next| 6))
-              |NUMODE;rk4qc;VIFRFVMV;2| |NUMODE;rk4qc;VIFRFVM7VV;3| (122 . -)
-              (127 . |max|) (133 . ^) (139 . *) (145 . |coerce|)
+              |NUMODE;rk4qc;VIFRFVMV;2| |NUMODE;rk4qc;VIFRFVM7VV;3| (127 . -)
+              (132 . |max|) (138 . ^) (144 . *) (150 . |coerce|)
               |NUMODE;rk4f;VI2FIMV;5| |NUMODE;rk4;VI2FMV;6|
               |NUMODE;rk4;VI2FM4VV;7|)
-           '#(|rk4qc| 150 |rk4f| 179 |rk4a| 189 |rk4| 201) 'NIL
+           '#(|rk4qc| 155 |rk4f| 184 |rk4a| 194 |rk4| 206) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
-                             (|makeByteWordVec2| 51
+                             (|makeByteWordVec2| 52
                                                  '(0 6 0 7 3 6 0 8 8 9 10 0 6 0
                                                    11 0 6 9 12 2 6 0 0 8 13 1 6
                                                    14 0 15 2 6 0 0 0 16 2 17 6
@@ -683,18 +685,18 @@
                                                    0 23 1 6 0 0 24 2 6 0 0 0 25
                                                    2 6 22 0 0 26 1 29 27 28 30
                                                    1 8 14 0 31 3 32 14 0 8 14
-                                                   33 1 14 0 34 35 1 29 27 14
-                                                   36 1 17 14 0 37 2 29 27 28
-                                                   14 38 1 6 0 0 44 2 6 0 0 0
-                                                   45 2 6 0 0 0 46 2 6 0 9 0 47
-                                                   1 6 0 8 48 7 0 27 17 8 6 41
-                                                   6 17 39 42 14 0 27 17 8 6 41
-                                                   6 17 39 17 17 17 17 17 17 17
-                                                   43 6 0 27 17 8 6 6 8 39 49 8
-                                                   0 27 17 8 6 6 6 6 8 39 40 5
-                                                   0 27 17 8 6 6 39 50 9 0 27
-                                                   17 8 6 6 39 17 17 17 17
-                                                   51)))))
+                                                   33 1 28 14 0 34 1 14 0 35 36
+                                                   1 29 27 14 37 1 17 14 0 38 2
+                                                   29 27 28 14 39 1 6 0 0 45 2
+                                                   6 0 0 0 46 2 6 0 0 0 47 2 6
+                                                   0 9 0 48 1 6 0 8 49 7 0 27
+                                                   17 8 6 42 6 17 40 43 14 0 27
+                                                   17 8 6 42 6 17 40 17 17 17
+                                                   17 17 17 17 44 6 0 27 17 8 6
+                                                   6 8 40 50 8 0 27 17 8 6 6 6
+                                                   6 8 40 41 5 0 27 17 8 6 6 40
+                                                   51 9 0 27 17 8 6 6 40 17 17
+                                                   17 17 52)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|NumericalOrdinaryDifferentialEquations| 'NILADIC T) 

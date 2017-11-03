@@ -1,26 +1,27 @@
 
 (SDEFUN |FT;coerce;$Of;1| ((|a| $) ($ |OutputForm|))
-        (SPROG ((#1=#:G718 NIL) (|u| NIL) (#2=#:G717 NIL) (|t| (|OutputForm|)))
+        (SPROG ((#1=#:G719 NIL) (|u| NIL) (#2=#:G718 NIL) (|t| (|OutputForm|)))
                (SEQ
                 (COND
                  ((SPADCALL |a| (QREFELT $ 8))
                   (COND
                    ((QEQCAR (SPADCALL |a| (QREFELT $ 10)) 1)
-                    (LETT |t| "EXTERNAL" . #3=(|FT;coerce;$Of;1|)))
+                    (LETT |t| (SPADCALL "EXTERNAL" (QREFELT $ 13))
+                          . #3=(|FT;coerce;$Of;1|)))
                    (#4='T
                     (LETT |t|
                           (SPADCALL
-                           (LIST "EXTERNAL"
+                           (LIST (SPADCALL "EXTERNAL" (QREFELT $ 13))
                                  (SPADCALL (SPADCALL |a| (QREFELT $ 10))
-                                           (QREFELT $ 12)))
-                           (QREFELT $ 14))
+                                           (QREFELT $ 14)))
+                           (QREFELT $ 16))
                           . #3#))))
                  (#4#
                   (LETT |t|
-                        (SPADCALL (SPADCALL |a| (QREFELT $ 10)) (QREFELT $ 12))
+                        (SPADCALL (SPADCALL |a| (QREFELT $ 10)) (QREFELT $ 14))
                         . #3#)))
                 (EXIT
-                 (COND ((NULL (SPADCALL |a| (QREFELT $ 16))) |t|)
+                 (COND ((NULL (SPADCALL |a| (QREFELT $ 18))) |t|)
                        (#4#
                         (SPADCALL |t|
                                   (SPADCALL
@@ -28,7 +29,7 @@
                                     (LETT #2# NIL . #3#)
                                     (SEQ (LETT |u| NIL . #3#)
                                          (LETT #1#
-                                               (SPADCALL |a| (QREFELT $ 16))
+                                               (SPADCALL |a| (QREFELT $ 18))
                                                . #3#)
                                          G190
                                          (COND
@@ -41,13 +42,13 @@
                                           (EXIT
                                            (LETT #2#
                                                  (CONS
-                                                  (SPADCALL |u| (QREFELT $ 18))
+                                                  (SPADCALL |u| (QREFELT $ 20))
                                                   #2#)
                                                  . #3#)))
                                          (LETT #1# (CDR #1#) . #3#) (GO G190)
                                          G191 (EXIT (NREVERSE #2#))))
-                                   (QREFELT $ 19))
-                                  (QREFELT $ 20)))))))) 
+                                   (QREFELT $ 21))
+                                  (QREFELT $ 22)))))))) 
 
 (PUT '|FT;scalarTypeOf;$U;2| '|SPADreplace| '(XLAM (|u|) (QVELT |u| 0))) 
 
@@ -68,7 +69,7 @@
 (SDEFUN |FT;construct;ULB$;5|
         ((|t| |Union| (|:| |fst| (|FortranScalarType|)) (|:| |void| "void"))
          (|d| |List| (|Symbol|)) (|e| |Boolean|) ($ $))
-        (SPROG ((#1=#:G731 NIL) (|l| NIL) (#2=#:G730 NIL))
+        (SPROG ((#1=#:G732 NIL) (|l| NIL) (#2=#:G731 NIL))
                (SEQ
                 (COND
                  (|e|
@@ -93,7 +94,7 @@
                                (SEQ
                                 (EXIT
                                  (LETT #2#
-                                       (CONS (SPADCALL |l| (QREFELT $ 23)) #2#)
+                                       (CONS (SPADCALL |l| (QREFELT $ 25)) #2#)
                                        . #3#)))
                                (LETT #1# (CDR #1#) . #3#) (GO G190) G191
                                (EXIT (NREVERSE #2#))))
@@ -116,34 +117,34 @@
          (EXIT (VECTOR |t| |d| |e|)))) 
 
 (SDEFUN |FT;coerce;Fst$;7| ((|u| |FortranScalarType|) ($ $))
-        (SPADCALL (CONS 0 |u|) NIL NIL (QREFELT $ 26))) 
+        (SPADCALL (CONS 0 |u|) NIL NIL (QREFELT $ 28))) 
 
 (SDEFUN |FT;fortranReal;$;8| (($ $))
-        (SPADCALL (SPADCALL "real" (QREFELT $ 30)) (QREFELT $ 28))) 
+        (SPADCALL (SPADCALL "real" (QREFELT $ 31)) (QREFELT $ 30))) 
 
 (SDEFUN |FT;fortranDouble;$;9| (($ $))
-        (SPADCALL (SPADCALL "double precision" (QREFELT $ 30)) (QREFELT $ 28))) 
+        (SPADCALL (SPADCALL "double precision" (QREFELT $ 31)) (QREFELT $ 30))) 
 
 (SDEFUN |FT;fortranInteger;$;10| (($ $))
-        (SPADCALL (SPADCALL "integer" (QREFELT $ 30)) (QREFELT $ 28))) 
+        (SPADCALL (SPADCALL "integer" (QREFELT $ 31)) (QREFELT $ 30))) 
 
 (SDEFUN |FT;fortranComplex;$;11| (($ $))
-        (SPADCALL (SPADCALL "complex" (QREFELT $ 30)) (QREFELT $ 28))) 
+        (SPADCALL (SPADCALL "complex" (QREFELT $ 31)) (QREFELT $ 30))) 
 
 (SDEFUN |FT;fortranDoubleComplex;$;12| (($ $))
-        (SPADCALL (SPADCALL "double complex" (QREFELT $ 30)) (QREFELT $ 28))) 
+        (SPADCALL (SPADCALL "double complex" (QREFELT $ 31)) (QREFELT $ 30))) 
 
 (SDEFUN |FT;fortranCharacter;$;13| (($ $))
-        (SPADCALL (SPADCALL "character" (QREFELT $ 30)) (QREFELT $ 28))) 
+        (SPADCALL (SPADCALL "character" (QREFELT $ 31)) (QREFELT $ 30))) 
 
 (SDEFUN |FT;fortranLogical;$;14| (($ $))
-        (SPADCALL (SPADCALL "logical" (QREFELT $ 30)) (QREFELT $ 28))) 
+        (SPADCALL (SPADCALL "logical" (QREFELT $ 31)) (QREFELT $ 30))) 
 
 (DECLAIM (NOTINLINE |FortranType;|)) 
 
 (DEFUN |FortranType| ()
   (SPROG NIL
-         (PROG (#1=#:G756)
+         (PROG (#1=#:G758)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|FortranType|)
@@ -163,7 +164,7 @@
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
           (LETT |dv$| '(|FortranType|) . #1=(|FortranType|))
-          (LETT $ (GETREFV 40) . #1#)
+          (LETT $ (GETREFV 41) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|FortranType| NIL (CONS 1 $))
@@ -181,38 +182,38 @@
 (MAKEPROP '|FortranType| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL '|Rep| (|Boolean|) |FT;external?;$B;4|
-              (|Union| (|:| |fst| 27) (|:| |void| '"void"))
-              |FT;scalarTypeOf;$U;2| (|OutputForm|) (0 . |coerce|) (|List| $)
-              (5 . |blankSeparate|) (|List| 17) |FT;dimensionsOf;$L;3|
-              (|Polynomial| (|Integer|)) (10 . |coerce|) (15 . |paren|)
-              (20 . |sub|) |FT;coerce;$Of;1| (|Symbol|) (26 . |coerce|)
-              (|List| 22) |FT;construct;ULB$;5| |FT;construct;ULB$;6|
-              (|FortranScalarType|) |FT;coerce;Fst$;7| (|String|)
-              (31 . |coerce|) |FT;fortranReal;$;8| |FT;fortranDouble;$;9|
+              (|Union| (|:| |fst| 29) (|:| |void| '"void"))
+              |FT;scalarTypeOf;$U;2| (|String|) (|OutputForm|) (0 . |message|)
+              (5 . |coerce|) (|List| $) (10 . |blankSeparate|) (|List| 19)
+              |FT;dimensionsOf;$L;3| (|Polynomial| (|Integer|)) (15 . |coerce|)
+              (20 . |paren|) (25 . |sub|) |FT;coerce;$Of;1| (|Symbol|)
+              (31 . |coerce|) (|List| 24) |FT;construct;ULB$;5|
+              |FT;construct;ULB$;6| (|FortranScalarType|) |FT;coerce;Fst$;7|
+              (36 . |coerce|) |FT;fortranReal;$;8| |FT;fortranDouble;$;9|
               |FT;fortranInteger;$;10| |FT;fortranComplex;$;11|
               |FT;fortranDoubleComplex;$;12| |FT;fortranCharacter;$;13|
               |FT;fortranLogical;$;14| (|SingleInteger|) (|HashState|))
-           '#(~= 36 |scalarTypeOf| 42 |latex| 47 |hashUpdate!| 52 |hash| 58
-              |fortranReal| 63 |fortranLogical| 67 |fortranInteger| 71
-              |fortranDoubleComplex| 75 |fortranDouble| 79 |fortranComplex| 83
-              |fortranCharacter| 87 |external?| 91 |dimensionsOf| 96
-              |construct| 101 |coerce| 115 = 125)
+           '#(~= 41 |scalarTypeOf| 47 |latex| 52 |hashUpdate!| 57 |hash| 63
+              |fortranReal| 68 |fortranLogical| 72 |fortranInteger| 76
+              |fortranDoubleComplex| 80 |fortranDouble| 84 |fortranComplex| 88
+              |fortranCharacter| 92 |external?| 96 |dimensionsOf| 101
+              |construct| 106 |coerce| 120 = 130)
            'NIL
            (CONS (|makeByteWordVec2| 1 '(0 0 0))
                  (CONS '#(|SetCategory&| |BasicType&| NIL)
                        (CONS
-                        '#((|SetCategory|) (|BasicType|) (|CoercibleTo| 11))
-                        (|makeByteWordVec2| 39
-                                            '(1 9 11 0 12 1 11 0 13 14 1 17 11
-                                              0 18 1 11 0 13 19 2 11 0 0 0 20 1
-                                              17 0 22 23 1 27 0 29 30 2 0 7 0 0
-                                              1 1 0 9 0 10 1 0 29 0 1 2 0 39 39
-                                              0 1 1 0 38 0 1 0 0 0 31 0 0 0 37
-                                              0 0 0 33 0 0 0 35 0 0 0 32 0 0 0
-                                              34 0 0 0 36 1 0 7 0 8 1 0 15 0 16
-                                              3 0 0 9 24 7 25 3 0 0 9 15 7 26 1
-                                              0 0 27 28 1 0 11 0 21 2 0 7 0 0
-                                              1)))))
+                        '#((|SetCategory|) (|BasicType|) (|CoercibleTo| 12))
+                        (|makeByteWordVec2| 40
+                                            '(1 12 0 11 13 1 9 12 0 14 1 12 0
+                                              15 16 1 19 12 0 20 1 12 0 15 21 2
+                                              12 0 0 0 22 1 19 0 24 25 1 29 0
+                                              11 31 2 0 7 0 0 1 1 0 9 0 10 1 0
+                                              11 0 1 2 0 40 40 0 1 1 0 39 0 1 0
+                                              0 0 32 0 0 0 38 0 0 0 34 0 0 0 36
+                                              0 0 0 33 0 0 0 35 0 0 0 37 1 0 7
+                                              0 8 1 0 17 0 18 3 0 0 9 26 7 27 3
+                                              0 0 9 17 7 28 1 0 0 29 30 1 0 12
+                                              0 23 2 0 7 0 0 1)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|FortranType| 'NILADIC T) 

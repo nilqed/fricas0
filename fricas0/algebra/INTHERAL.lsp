@@ -8,13 +8,13 @@
         ((|f| R) (|derivation| |Mapping| UP UP) (|d0| R)
          ($ |Record| (|:| |answer| R) (|:| |logpart| R)))
         (SPROG
-         ((|iden| (UP)) (|inum| #1=(|Vector| UP)) (#2=#:G710 NIL)
-          (#3=#:G936 NIL) (#4=#:G938 NIL) (|i| NIL) (#5=#:G937 NIL)
-          (|ratform| (R)) (#6=#:G924 NIL) (|cnum| #1#)
+         ((|iden| (UP)) (|inum| #1=(|Vector| UP)) (#2=#:G713 NIL)
+          (#3=#:G941 NIL) (#4=#:G943 NIL) (|i| NIL) (#5=#:G942 NIL)
+          (|ratform| (R)) (#6=#:G928 NIL) (|cnum| #1#)
           (|corr| #7=(|Record| (|:| |num| #1#) (|:| |den| UP))) (|s0| (R))
           (|sol| (|Vector| UP)) (|p| (UP)) (|j| (|Integer|)) (|nn| (|Integer|))
-          (|sys| (|Matrix| UP)) (|u'| (UP)) (|u| (UP)) (#8=#:G922 NIL)
-          (|v| (UP)) (#9=#:G935 NIL) (|trm| NIL) (|coef| (UP)) (|e| (UP))
+          (|sys| (|Matrix| UP)) (|u'| (UP)) (|u| (UP)) (#8=#:G926 NIL)
+          (|v| (UP)) (#9=#:G940 NIL) (|trm| NIL) (|coef| (UP)) (|e| (UP))
           (|cform| #7#) (|m| (|Matrix| UP))
           (|mat| (|Record| (|:| |num| (|Matrix| UP)) (|:| |den| UP)))
           (|n| (|PositiveInteger|)))
@@ -302,12 +302,12 @@
         ((|mat| |Matrix| UP) (|vec| |Vector| UP) (|modulus| UP)
          ($ |Vector| UP))
         (SPROG
-         ((#1=#:G957 NIL)
+         ((#1=#:G962 NIL)
           (|bc|
            (|Union| (|Record| (|:| |coef1| UP) (|:| |coef2| UP)) "failed"))
-          (#2=#:G961 NIL) (|i| NIL)
-          (|sol| (|Union| (|Vector| (|Fraction| UP)) "failed")) (#3=#:G958 NIL)
-          (#4=#:G959 NIL) (|j| NIL) (#5=#:G960 NIL) (|k| NIL)
+          (#2=#:G966 NIL) (|i| NIL)
+          (|sol| (|Union| (|Vector| (|Fraction| UP)) "failed")) (#3=#:G963 NIL)
+          (#4=#:G964 NIL) (|j| NIL) (#5=#:G965 NIL) (|k| NIL)
           (|ans| (|Vector| UP)))
          (SEQ
           (EXIT
@@ -338,7 +338,7 @@
                         ((QEQCAR |bc| 1)
                          (PROGN
                           (LETT #1# (MAKEARR1 0 (|spadConstant| $ 11)) . #6#)
-                          (GO #7=#:G956)))
+                          (GO #7=#:G961)))
                         ('T (QSETAREF1O |ans| |i| (QCAR (QCDR |bc|)) 1)))))
                      (LETT |i|
                            (PROG1 (+ |i| 1)
@@ -396,9 +396,9 @@
 
 (DECLAIM (NOTINLINE |AlgebraicHermiteIntegration;|)) 
 
-(DEFUN |AlgebraicHermiteIntegration| (&REST #1=#:G962)
+(DEFUN |AlgebraicHermiteIntegration| (&REST #1=#:G967)
   (SPROG NIL
-         (PROG (#2=#:G963)
+         (PROG (#2=#:G968)
            (RETURN
             (COND
              ((LETT #2#

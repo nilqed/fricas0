@@ -1,6 +1,6 @@
 
 (SDEFUN |COMMONOP;operator;SBo;1| ((|s| |Symbol|) ($ |BasicOperator|))
-        (SPROG ((#1=#:G715 NIL) (#2=#:G716 NIL) (#3=#:G717 NIL) (|op| NIL))
+        (SPROG ((#1=#:G717 NIL) (#2=#:G718 NIL) (#3=#:G719 NIL) (|op| NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -24,12 +24,12 @@
                                     (PROGN
                                      (LETT #2# (SPADCALL |op| (QREFELT $ 161))
                                            . #4#)
-                                     (GO #5=#:G714))
+                                     (GO #5=#:G716))
                                     . #4#)
-                              (GO #6=#:G712))))))
+                              (GO #6=#:G714))))))
                          (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
                    #6# (EXIT #1#))
-                  (EXIT (SPADCALL |s| (QREFELT $ 44)))))
+                  (EXIT (SPADCALL |s| (QREFELT $ 46)))))
                 #5# (EXIT #2#)))) 
 
 (SDEFUN |COMMONOP;dpi| ((|l| |List| (|OutputForm|)) ($ |OutputForm|))
@@ -66,13 +66,13 @@
 
 (SDEFUN |COMMONOP;startUp| ((|b| |Boolean|) ($ |Void|))
         (SPROG
-         ((#1=#:G792 NIL) (|op| NIL) (#2=#:G791 NIL) (#3=#:G790 NIL)
-          (#4=#:G789 NIL) (#5=#:G788 NIL) (#6=#:G787 NIL) (#7=#:G786 NIL)
-          (#8=#:G785 NIL) (#9=#:G784 NIL) (#10=#:G783 NIL) (#11=#:G782 NIL)
-          (#12=#:G781 NIL) (#13=#:G780 NIL))
+         ((#1=#:G795 NIL) (|op| NIL) (#2=#:G794 NIL) (#3=#:G793 NIL)
+          (#4=#:G792 NIL) (#5=#:G791 NIL) (#6=#:G790 NIL) (#7=#:G789 NIL)
+          (#8=#:G788 NIL) (#9=#:G787 NIL) (#10=#:G786 NIL) (#11=#:G785 NIL)
+          (#12=#:G784 NIL) (#13=#:G783 NIL))
          (SEQ (SPADCALL (QREFELT $ 9) |b| (QREFELT $ 175))
-              (SPADCALL (QREFELT $ 46) (ELT $ 165) (QREFELT $ 177))
-              (SPADCALL (QREFELT $ 45) (ELT $ 178) (QREFELT $ 180))
+              (SPADCALL (QREFELT $ 45) (ELT $ 165) (QREFELT $ 177))
+              (SPADCALL (QREFELT $ 44) (ELT $ 178) (QREFELT $ 180))
               (SPADCALL (QREFELT $ 16) (CONS (|function| |COMMONOP;dpi|) $)
                         (QREFELT $ 180))
               (SPADCALL (QREFELT $ 18) (CONS (|function| |COMMONOP;dexp|) $)
@@ -98,7 +98,7 @@
                         (QREFELT $ 180))
               (SPADCALL (QREFELT $ 121) (CONS #'|COMMONOP;startUp!5| $)
                         (QREFELT $ 180))
-              (SPADCALL (QREFELT $ 46) (CONS #'|COMMONOP;startUp!6| $)
+              (SPADCALL (QREFELT $ 45) (CONS #'|COMMONOP;startUp!6| $)
                         (QREFELT $ 200))
               (SPADCALL (QREFELT $ 127) (CONS #'|COMMONOP;startUp!7| $)
                         (QREFELT $ 200))
@@ -195,7 +195,7 @@
                      (GO G191)))
                    (SEQ (EXIT (|COMMONOP;setDummyVar| |op| 2 $)))
                    (LETT #1# (CDR #1#) . #14#) (GO G190) G191 (EXIT NIL))
-              (SPADCALL (QREFELT $ 46) '|linear| (QREFELT $ 208))
+              (SPADCALL (QREFELT $ 45) '|linear| (QREFELT $ 208))
               (EXIT (SPADCALL (QREFELT $ 210)))))) 
 
 (SDEFUN |COMMONOP;startUp!8| ((|z1| NIL) ($ NIL))
@@ -251,7 +251,7 @@
 
 (DEFUN |CommonOperators| ()
   (SPROG NIL
-         (PROG (#1=#:G794)
+         (PROG (#1=#:G797)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|CommonOperators|)
@@ -309,9 +309,9 @@
           (QSETREFV $ 41 (SPADCALL '|acoth| 1 (QREFELT $ 13)))
           (QSETREFV $ 42 (SPADCALL '|asech| 1 (QREFELT $ 13)))
           (QSETREFV $ 43 (SPADCALL '|acsch| 1 (QREFELT $ 13)))
-          (QSETREFV $ 45 (SPADCALL '|%box| (QREFELT $ 44)))
-          (QSETREFV $ 46 (SPADCALL '|%paren| (QREFELT $ 44)))
-          (QSETREFV $ 47 (SPADCALL '|%quote| (QREFELT $ 44)))
+          (QSETREFV $ 44 (SPADCALL '|%box| 1 (QREFELT $ 13)))
+          (QSETREFV $ 45 (SPADCALL '|%paren| 1 (QREFELT $ 13)))
+          (QSETREFV $ 47 (SPADCALL '|%quote| (QREFELT $ 46)))
           (QSETREFV $ 48 (SPADCALL '|%diff| 3 (QREFELT $ 13)))
           (QSETREFV $ 49 (SPADCALL '|Si| 1 (QREFELT $ 13)))
           (QSETREFV $ 50 (SPADCALL '|Ci| 1 (QREFELT $ 13)))
@@ -343,8 +343,8 @@
           (QSETREFV $ 76 (SPADCALL '|weierstrassPPrime| 3 (QREFELT $ 13)))
           (QSETREFV $ 77 (SPADCALL '|weierstrassSigma| 3 (QREFELT $ 13)))
           (QSETREFV $ 78 (SPADCALL '|weierstrassZeta| 3 (QREFELT $ 13)))
-          (QSETREFV $ 79 (SPADCALL '|hypergeometricF| (QREFELT $ 44)))
-          (QSETREFV $ 80 (SPADCALL '|meijerG| (QREFELT $ 44)))
+          (QSETREFV $ 79 (SPADCALL '|hypergeometricF| (QREFELT $ 46)))
+          (QSETREFV $ 80 (SPADCALL '|meijerG| (QREFELT $ 46)))
           (QSETREFV $ 81 (SPADCALL '|whittakerM| 3 (QREFELT $ 13)))
           (QSETREFV $ 82 (SPADCALL '|whittakerW| 3 (QREFELT $ 13)))
           (QSETREFV $ 83 (SPADCALL '|angerJ| 2 (QREFELT $ 13)))
@@ -386,7 +386,7 @@
           (QSETREFV $ 119 (SPADCALL '|%erfs| 1 (QREFELT $ 13)))
           (QSETREFV $ 120 (SPADCALL '|%erfis| 1 (QREFELT $ 13)))
           (QSETREFV $ 121 (SPADCALL '|integral| 3 (QREFELT $ 13)))
-          (QSETREFV $ 122 (SPADCALL '|%iint| (QREFELT $ 44)))
+          (QSETREFV $ 122 (SPADCALL '|%iint| (QREFELT $ 46)))
           (QSETREFV $ 123 (SPADCALL '|%defint| 5 (QREFELT $ 13)))
           (QSETREFV $ 124 (SPADCALL '|factorial| 1 (QREFELT $ 13)))
           (QSETREFV $ 125 (SPADCALL '|permutation| 2 (QREFELT $ 13)))
@@ -405,8 +405,8 @@
           (QSETREFV $ 138 (SPADCALL '|arg| 1 (QREFELT $ 13)))
           (QSETREFV $ 139 (SPADCALL '|sign| 1 (QREFELT $ 13)))
           (QSETREFV $ 140 (SPADCALL '|diracDelta| 1 (QREFELT $ 13)))
-          (QSETREFV $ 141 (SPADCALL '|max| (QREFELT $ 44)))
-          (QSETREFV $ 142 (SPADCALL '|min| (QREFELT $ 44)))
+          (QSETREFV $ 141 (SPADCALL '|max| (QREFELT $ 46)))
+          (QSETREFV $ 142 (SPADCALL '|min| (QREFELT $ 46)))
           (QSETREFV $ 143 (LIST (QREFELT $ 15) (QREFELT $ 14)))
           (QSETREFV $ 144
                     (LIST (QREFELT $ 20) (QREFELT $ 21) (QREFELT $ 22)
@@ -461,7 +461,7 @@
                           (QREFELT $ 112) (QREFELT $ 113) (QREFELT $ 114)
                           (QREFELT $ 115) (QREFELT $ 116)))
           (QSETREFV $ 153
-                    (LIST (QREFELT $ 46) (QREFELT $ 48) (QREFELT $ 45)
+                    (LIST (QREFELT $ 45) (QREFELT $ 48) (QREFELT $ 44)
                           (QREFELT $ 47)))
           (QSETREFV $ 154
                     (SPADCALL
@@ -502,7 +502,7 @@
               '|opasin| '|opacos| '|opatan| '|opacot| '|opasec| '|opacsc|
               '|opsinh| '|opcosh| '|optanh| '|opcoth| '|opsech| '|opcsch|
               '|opasinh| '|opacosh| '|opatanh| '|opacoth| '|opasech| '|opacsch|
-              (11 . |operator|) '|opbox| '|oppren| '|opquote| '|opdiff| '|opsi|
+              '|opbox| '|oppren| (11 . |operator|) '|opquote| '|opdiff| '|opsi|
               '|opci| '|opshi| '|opchi| '|opei| '|opli| '|operf| '|operfi|
               '|opli2| '|opfis| '|opfic| '|opGamma| '|opGamma2| '|opBeta|
               '|opdigamma| '|oppolygamma| '|opBesselJ| '|opBesselY|
@@ -547,7 +547,7 @@
                        (CONS '#()
                              (|makeByteWordVec2| 210
                                                  '(1 7 0 6 8 2 12 0 10 11 13 1
-                                                   12 0 10 44 2 146 0 0 0 147 1
+                                                   12 0 10 46 2 146 0 0 0 147 1
                                                    7 6 0 159 2 12 6 0 10 160 1
                                                    12 0 0 161 1 10 163 0 164 1
                                                    163 0 0 165 2 163 0 0 0 166

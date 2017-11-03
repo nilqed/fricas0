@@ -7,8 +7,8 @@
 
 (SDEFUN |PUSHVAR;pushdown;PPRLPPR;2| ((|g| PPR) (|lv| |List| OV) ($ PPR))
         (SPROG
-         ((|vals| (|List| (|Polynomial| R))) (#1=#:G708 NIL) (|x| NIL)
-          (#2=#:G707 NIL))
+         ((|vals| (|List| (|Polynomial| R))) (#1=#:G710 NIL) (|x| NIL)
+          (#2=#:G709 NIL))
          (SEQ
           (LETT |vals|
                 (PROGN
@@ -33,7 +33,7 @@
 
 (SDEFUN |PUSHVAR;map;M2PPR;3|
         ((|f| |Mapping| PPR (|Polynomial| R)) (|p| PPR) ($ PPR))
-        (SPROG ((|v| (OV)) (#1=#:G710 NIL))
+        (SPROG ((|v| (OV)) (#1=#:G712 NIL))
                (SEQ
                 (COND
                  ((SPADCALL |p| (QREFELT $ 25))
@@ -65,7 +65,7 @@
 (SDEFUN |PUSHVAR;pushupCoef| ((|c| |Polynomial| R) (|lv| |List| OV) ($ PPR))
         (SPROG
          ((|uc| (|SparseUnivariatePolynomial| (|Polynomial| R))) (|ppr| (PPR))
-          (|v2| (|Union| OV "failed")) (|v| (|Symbol|)) (#1=#:G729 NIL))
+          (|v2| (|Union| OV "failed")) (|v| (|Symbol|)) (#1=#:G731 NIL))
          (SEQ
           (COND ((SPADCALL |c| (QREFELT $ 37)) (SPADCALL |c| (QREFELT $ 38)))
                 (#2='T
@@ -160,9 +160,9 @@
 
 (DECLAIM (NOTINLINE |PushVariables;|)) 
 
-(DEFUN |PushVariables| (&REST #1=#:G749)
+(DEFUN |PushVariables| (&REST #1=#:G752)
   (SPROG NIL
-         (PROG (#2=#:G750)
+         (PROG (#2=#:G753)
            (RETURN
             (COND
              ((LETT #2#

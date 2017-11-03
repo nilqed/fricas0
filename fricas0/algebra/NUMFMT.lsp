@@ -87,9 +87,9 @@
 
 (SDEFUN |NUMFMT;FormatRoman;PiS;9| ((|pn| |PositiveInteger|) ($ |String|))
         (SPROG
-         ((|s| (|String|)) (|mm| (|String|)) (#1=#:G771 NIL) (|j| NIL)
-          (#2=#:G770 NIL) (|m0| (|String|)) (|n| (|Integer|)) (|d| (|Integer|))
-          (|i| NIL) (#3=#:G757 NIL))
+         ((|s| (|String|)) (|mm| (|String|)) (#1=#:G775 NIL) (|j| NIL)
+          (#2=#:G774 NIL) (|m0| (|String|)) (|n| (|Integer|)) (|d| (|Integer|))
+          (|i| NIL) (#3=#:G761 NIL))
          (SEQ (LETT |n| |pn| . #4=(|NUMFMT;FormatRoman;PiS;9|))
               (LETT |d| (+ (REM |n| 10) (QREFELT $ 39)) . #4#)
               (LETT |n| (QUOTIENT2 |n| 10) . #4#)
@@ -242,9 +242,9 @@
 
 (SDEFUN |NUMFMT;ScanRoman;SPi;10| ((|s| |String|) ($ |PositiveInteger|))
         (SPROG
-         ((#1=#:G782 NIL) (|Max| (|Integer|)) (|tot| (|Integer|))
-          (|n| (|Integer|)) (#2=#:G785 NIL) (|i| (|Integer|))
-          (|c| (|Character|)) (#3=#:G786 NIL) (|k| NIL)
+         ((#1=#:G786 NIL) (|Max| (|Integer|)) (|tot| (|Integer|))
+          (|n| (|Integer|)) (#2=#:G789 NIL) (|i| (|Integer|))
+          (|c| (|Character|)) (#3=#:G790 NIL) (|k| NIL)
           (|nprens| (|PositiveInteger|)))
          (SEQ
           (LETT |s| (SPADCALL |s| (QREFELT $ 55))
@@ -314,7 +314,7 @@
                                                    (|error|
                                                     "Improper Roman numeral: unbalanced ')'")
                                                    . #4#)
-                                             (GO #5=#:G774)))))))
+                                             (GO #5=#:G778)))))))
                                        #5# (EXIT #2#))
                                       (LETT |k| (|inc_SI| |k|) . #4#) (GO G190)
                                       G191 (EXIT NIL))
@@ -343,7 +343,7 @@
 
 (DEFUN |NumberFormats| ()
   (SPROG NIL
-         (PROG (#1=#:G788)
+         (PROG (#1=#:G792)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|NumberFormats|)

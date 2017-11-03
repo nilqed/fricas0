@@ -35,7 +35,7 @@
 (SDEFUN |GTSET;roughUnitIdeal?;$B;11| ((|ts| $) ($ |Boolean|)) NIL) 
 
 (SDEFUN |GTSET;coerce;$Of;12| ((|ts| $) ($ |OutputForm|))
-        (SPROG ((#1=#:G730 NIL) (|p| NIL) (#2=#:G729 NIL) (|lp| (|List| P)))
+        (SPROG ((#1=#:G729 NIL) (|p| NIL) (#2=#:G728 NIL) (|lp| (|List| P)))
                (SEQ
                 (LETT |lp| (REVERSE (|GTSET;rep| |ts| $))
                       . #3=(|GTSET;coerce;$Of;12|))
@@ -136,9 +136,9 @@
 
 (DECLAIM (NOTINLINE |GeneralTriangularSet;|)) 
 
-(DEFUN |GeneralTriangularSet| (&REST #1=#:G790)
+(DEFUN |GeneralTriangularSet| (&REST #1=#:G793)
   (SPROG NIL
-         (PROG (#2=#:G791)
+         (PROG (#2=#:G794)
            (RETURN
             (COND
              ((LETT #2#
@@ -158,7 +158,7 @@
 
 (DEFUN |GeneralTriangularSet;| (|#1| |#2| |#3| |#4|)
   (SPROG
-   ((#1=#:G789 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL)
+   ((#1=#:G792 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL)
     (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #2=(|GeneralTriangularSet|))
@@ -245,9 +245,9 @@
               441 |extend| 447 |every?| 453 |eval| 459 |eq?| 485 |empty?| 491
               |empty| 496 |degree| 500 |count| 505 |copy| 517 |convert| 522
               |construct| 527 |collectUpper| 532 |collectUnder| 538
-              |collectQuasiMonic| 544 |collect| 549 |coerce| 555 |coHeight| 570
-              |basicSet| 575 |autoReduced?| 588 |any?| 594 |algebraicVariables|
-              600 |algebraic?| 605 = 611 |#| 617)
+              |collectQuasiMonic| 544 |collect| 549 |coerce| 555 |coHeight| 565
+              |basicSet| 570 |autoReduced?| 583 |any?| 589 |algebraicVariables|
+              595 |algebraic?| 600 = 606 |#| 612)
            'NIL
            (CONS (|makeByteWordVec2| 2 '(0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 2))
                  (CONS
@@ -296,9 +296,9 @@
                                          15 0 0 0 13 1 0 49 0 1 2 8 49 9 0 1 2
                                          7 49 53 0 1 1 0 0 0 12 1 2 54 0 1 1 0
                                          0 10 20 2 0 0 0 8 42 2 0 0 0 8 44 1 0
-                                         0 0 1 2 0 0 0 8 1 1 0 10 0 40 1 0 10 0
-                                         40 1 0 27 0 31 1 5 49 0 1 3 0 64 10 53
-                                         60 1 2 0 64 10 60 1 2 0 14 0 61 1 2 7
-                                         14 53 0 1 1 0 57 0 1 2 0 14 8 0 1 2 0
-                                         14 0 0 1 1 7 49 0 1)))))
+                                         0 0 1 2 0 0 0 8 1 1 0 10 0 40 1 0 27 0
+                                         31 1 5 49 0 1 3 0 64 10 53 60 1 2 0 64
+                                         10 60 1 2 0 14 0 61 1 2 7 14 53 0 1 1
+                                         0 57 0 1 2 0 14 8 0 1 2 0 14 0 0 1 1 7
+                                         49 0 1)))))
            '|lookupComplete|)) 

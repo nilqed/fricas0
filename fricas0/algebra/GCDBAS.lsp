@@ -41,13 +41,13 @@
          ($ |Record| (|:| |basis| #1=(|Vector| R))
           (|:| |transform| #2=(|Matrix| (|Integer|)))))
         (SPROG
-         ((#3=#:G727 NIL) (|j| NIL) (#4=#:G726 NIL) (|i| NIL)
+         ((#3=#:G732 NIL) (|j| NIL) (#4=#:G731 NIL) (|i| NIL)
           (|ct| (|Matrix| (|Integer|))) (|m| (|NonNegativeInteger|))
           (|ct0| #2#) (|cb| #1#)
           (|pr|
            (|Record| (|:| |basis| (|Vector| R))
                      (|:| |transform| (|Matrix| (|Integer|)))))
-          (#5=#:G725 NIL) (|nv| (|Vector| R)) (|n| (|NonNegativeInteger|)))
+          (#5=#:G730 NIL) (|nv| (|Vector| R)) (|n| (|NonNegativeInteger|)))
          (SEQ (LETT |n| (QVSIZE |v|) . #6=(|GCDBAS;gcdDecomposition;VR;3|))
               (LETT |nv|
                     (MAKEARR1 (SPADCALL 2 |n| (QREFELT $ 18))
@@ -94,24 +94,24 @@
          ($ |Record| (|:| |basis| #1=(|Vector| R))
           (|:| |transform| #2=(|Matrix| (|Integer|)))))
         (SPROG
-         ((#3=#:G773 NIL) (|i| NIL) (#4=#:G772 NIL)
-          (|nv| (|Vector| (|Integer|))) (|a| (R)) (#5=#:G771 NIL) (|l| NIL)
-          (#6=#:G770 NIL) (|m| (|NonNegativeInteger|))
-          (|firstAdded| (|Boolean|)) (|c| (|Integer|)) (#7=#:G769 NIL)
+         ((#3=#:G778 NIL) (|i| NIL) (#4=#:G777 NIL)
+          (|nv| (|Vector| (|Integer|))) (|a| (R)) (#5=#:G776 NIL) (|l| NIL)
+          (#6=#:G775 NIL) (|m| (|NonNegativeInteger|))
+          (|firstAdded| (|Boolean|)) (|c| (|Integer|)) (#7=#:G774 NIL)
           (|k| NIL) (|ov| (|Vector| (|Integer|)))
           (|n1| #8=(|NonNegativeInteger|)) (|ct1| #2#) (|cb1| #1#)
           (|dr1|
            (|Record| (|:| |basis| (|Vector| R))
                      (|:| |transform| (|Matrix| (|Integer|)))))
-          (#9=#:G768 NIL) (#10=#:G767 NIL) (#11=#:G766 NIL) (|cf| (R))
+          (#9=#:G773 NIL) (#10=#:G772 NIL) (#11=#:G771 NIL) (|cf| (R))
           (|b1| (R)) (|a1| (R))
           (|sr| (|Record| (|:| |fac1| R) (|:| |fac2| R) (|:| |commonfac| R)))
           (|sr1|
            (|Union|
             (|Record| (|:| |fac1| R) (|:| |fac2| R) (|:| |commonfac| R))
             "failed"))
-          (|pquo| (|Union| R "failed")) (|b| (R)) (#12=#:G765 NIL) (|j| NIL)
-          (|i0| (|NonNegativeInteger|)) (#13=#:G764 NIL)
+          (|pquo| (|Union| R "failed")) (|b| (R)) (#12=#:G770 NIL) (|j| NIL)
+          (|i0| (|NonNegativeInteger|)) (#13=#:G769 NIL)
           (|ct| (|FlexibleArray| (|Vector| (|Integer|)))) (|n| #8#)
           (|cb| (|FlexibleArray| R)))
          (SEQ
@@ -638,9 +638,9 @@
 
 (DECLAIM (NOTINLINE |GcdBasis;|)) 
 
-(DEFUN |GcdBasis| (#1=#:G774)
+(DEFUN |GcdBasis| (#1=#:G779)
   (SPROG NIL
-         (PROG (#2=#:G775)
+         (PROG (#2=#:G780)
            (RETURN
             (COND
              ((LETT #2#

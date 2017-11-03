@@ -70,7 +70,7 @@
          ((EQL |n| 0) (|spadConstant| $ 12)) ('T |x|))) 
 
 (SDEFUN |CARD;^;3$;12| ((|x| $) (|y| $) ($ $))
-        (SPROG ((#1=#:G760 NIL))
+        (SPROG ((#1=#:G762 NIL))
                (COND
                 ((SPADCALL |y| (|spadConstant| $ 12) (QREFELT $ 27))
                  (|spadConstant| $ 11))
@@ -98,7 +98,7 @@
 (SDEFUN |CARD;countable?;$B;14| ((|x| $) ($ |Boolean|)) (< (QCAR |x|) 1)) 
 
 (SDEFUN |CARD;retract;$Nni;15| ((|x| $) ($ |NonNegativeInteger|))
-        (SPROG ((#1=#:G769 NIL))
+        (SPROG ((#1=#:G771 NIL))
                (COND
                 ((SPADCALL |x| (QREFELT $ 26))
                  (PROG1 (LETT #1# (QCDR |x|) |CARD;retract;$Nni;15|)
@@ -108,7 +108,7 @@
 
 (SDEFUN |CARD;retractIfCan;$U;16|
         ((|x| $) ($ |Union| (|NonNegativeInteger|) "failed"))
-        (SPROG ((#1=#:G775 NIL))
+        (SPROG ((#1=#:G777 NIL))
                (COND
                 ((SPADCALL |x| (QREFELT $ 26))
                  (CONS 0
@@ -128,7 +128,7 @@
 
 (DEFUN |CardinalNumber| ()
   (SPROG NIL
-         (PROG (#1=#:G784)
+         (PROG (#1=#:G787)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|CardinalNumber|)
@@ -181,36 +181,40 @@
               (56 . |setelt!|)
               |CARD;generalizedContinuumHypothesisAssumed;2B;18|
               (|PositiveInteger|) (|String|) (|SingleInteger|) (|HashState|))
-           '#(~= 62 |zero?| 68 |smaller?| 73 |sample| 79 |retractIfCan| 83
-              |retract| 88 |recip| 93 |opposite?| 98 |one?| 104 |min| 109 |max|
-              115 |latex| 121 |hashUpdate!| 126 |hash| 132
-              |generalizedContinuumHypothesisAssumed?| 137
-              |generalizedContinuumHypothesisAssumed| 141 |finite?| 146
-              |countable?| 151 |coerce| 156 ^ 166 |Zero| 184 |One| 188 |Aleph|
-              192 >= 197 > 203 = 209 <= 215 < 221 - 227 + 233 * 239)
+           '#(~= 62 |zero?| 68 |smaller?| 73 |sample| 79 |rightRecip| 83
+              |rightPower| 88 |retractIfCan| 100 |retract| 105 |recip| 110
+              |opposite?| 115 |one?| 121 |min| 126 |max| 132 |leftRecip| 138
+              |leftPower| 143 |latex| 155 |hashUpdate!| 160 |hash| 166
+              |generalizedContinuumHypothesisAssumed?| 171
+              |generalizedContinuumHypothesisAssumed| 175 |finite?| 180
+              |countable?| 185 |coerce| 190 ^ 200 |Zero| 218 |One| 222 |Aleph|
+              226 >= 231 > 237 = 243 <= 249 < 255 - 261 + 267 * 273)
            'NIL
-           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0 0 0))
+           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0))
                  (CONS
-                  '#(|OrderedSet&| |Monoid&| |AbelianMonoid&| NIL |SemiGroup&|
-                     |AbelianSemiGroup&| |SetCategory&| NIL |RetractableTo&|
-                     |BasicType&| |PartialOrder&| NIL)
+                  '#(NIL |OrderedSet&| |MagmaWithUnit&| NIL |AbelianMonoid&|
+                     NIL |Magma&| |AbelianSemiGroup&| |SetCategory&| NIL
+                     |RetractableTo&| |BasicType&| |PartialOrder&| NIL)
                   (CONS
-                   '#((|OrderedSet|) (|Monoid|) (|AbelianMonoid|)
-                      (|Comparable|) (|SemiGroup|) (|AbelianSemiGroup|)
-                      (|SetCategory|) (|CommutativeStar|) (|RetractableTo| 13)
-                      (|BasicType|) (|PartialOrder|) (|CoercibleTo| 16))
+                   '#((|Monoid|) (|OrderedSet|) (|MagmaWithUnit|) (|SemiGroup|)
+                      (|AbelianMonoid|) (|Comparable|) (|Magma|)
+                      (|AbelianSemiGroup|) (|SetCategory|) (|CommutativeStar|)
+                      (|RetractableTo| 13) (|BasicType|) (|PartialOrder|)
+                      (|CoercibleTo| 16))
                    (|makeByteWordVec2| 50
                                        '(1 8 0 7 9 1 17 16 0 18 1 20 16 0 21 2
                                          16 0 0 22 23 2 20 7 0 0 25 2 20 7 0 0
                                          28 2 0 0 0 0 30 2 0 7 0 0 32 2 20 0 13
                                          0 36 1 8 7 0 38 2 8 7 0 7 45 2 0 7 0 0
-                                         1 1 0 7 0 1 2 0 7 0 0 1 0 0 0 1 1 0 42
-                                         0 43 1 0 13 0 41 1 0 33 0 1 2 0 7 0 0
-                                         1 1 0 7 0 1 2 0 0 0 0 1 2 0 0 0 0 30 1
-                                         0 48 0 1 2 0 50 50 0 1 1 0 49 0 1 0 0
-                                         7 44 1 0 7 7 46 1 0 7 0 26 1 0 7 0 40
-                                         1 0 0 13 14 1 0 16 0 24 2 0 0 0 0 39 2
-                                         0 0 0 47 1 2 0 0 0 13 1 0 0 0 12 0 0 0
+                                         1 1 0 7 0 1 2 0 7 0 0 1 0 0 0 1 1 0 33
+                                         0 1 2 0 0 0 47 1 2 0 0 0 13 1 1 0 42 0
+                                         43 1 0 13 0 41 1 0 33 0 1 2 0 7 0 0 1
+                                         1 0 7 0 1 2 0 0 0 0 1 2 0 0 0 0 30 1 0
+                                         33 0 1 2 0 0 0 47 1 2 0 0 0 13 1 1 0
+                                         48 0 1 2 0 50 50 0 1 1 0 49 0 1 0 0 7
+                                         44 1 0 7 7 46 1 0 7 0 26 1 0 7 0 40 1
+                                         0 0 13 14 1 0 16 0 24 2 0 0 0 0 39 2 0
+                                         0 0 47 1 2 0 0 0 13 1 0 0 0 12 0 0 0
                                          11 1 0 0 13 15 2 0 7 0 0 1 2 0 7 0 0
                                          32 2 0 7 0 0 27 2 0 7 0 0 1 2 0 7 0 0
                                          29 2 0 33 0 0 34 2 0 0 0 0 31 2 0 0 0

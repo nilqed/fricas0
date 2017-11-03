@@ -1,10 +1,10 @@
-;;; FriCAS0, Tue Oct 31 21:55:28 CET 2017
+;;; FriCAS0, Fri Nov 3 16:25:22 CET 2017
 (load "interp.lisp")
 (in-package :boot)
 (defvar $spadroot ".")
 (defvar |$defaultMsgDatabaseName| "msgs/s2-us.msgs")
 (defvar |$build_version| "COMMON-LISP")
-(defvar |$build_date| "Tue Oct 31 21:55:28 CET 2017")
+(defvar |$build_date| "Fri Nov 3 16:25:22 CET 2017")
  
 ;;; init      
 (|interpsysInitialization|)

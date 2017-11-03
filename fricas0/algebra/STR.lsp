@@ -104,7 +104,7 @@
          (|offsetz| |DoubleFloat|) (|scalex| |DoubleFloat|)
          (|scaley| |DoubleFloat|) (|scalez| |DoubleFloat|) ($ $))
         (SPROG
-         ((#1=#:G763 NIL) (|pp| (|Mapping| PT PT)) (|trConf| (CA))
+         ((#1=#:G770 NIL) (|pp| (|Mapping| PT PT)) (|trConf| (CA))
           (CA
            (|Join| (|Ring|) (|Algebra| #2=(|DoubleFloat|))
                    (CATEGORY |domain| (SIGNATURE |e| ($ (|PositiveInteger|)))
@@ -138,7 +138,7 @@
                             (LIST 0.0 |scaley| |offsety|) (LIST 0.0 0.0 1.0))
                       (QREFELT $ 15))
                      . #3=(|STR;stranslate;6Df$;6|))
-               (GO #4=#:G762))))
+               (GO #4=#:G769))))
             (COND
              ((EQUAL (QREFELT $ 6) (|SCartesian| 3))
               (PROGN
@@ -217,7 +217,7 @@
         ((|tr| $) (|inpt| |SCartesian| 2) ($ |SCartesian| 2))
         (SPROG
          ((|b| #1=(|DoubleFloat|)) (#2=#:G694 NIL) (|a| #1#)
-          (|vin| (|List| (|DoubleFloat|))) (#3=#:G772 NIL))
+          (|vin| (|List| (|DoubleFloat|))) (#3=#:G779 NIL))
          (SEQ
           (EXIT
            (SEQ
@@ -225,7 +225,7 @@
              ((QEQCAR |tr| 3)
               (PROGN
                (LETT #3# |inpt| . #4=(|STR;applyTransPt2|))
-               (GO #5=#:G771))))
+               (GO #5=#:G778))))
             (COND
              ((QEQCAR |tr| 1)
               (SEQ
@@ -233,9 +233,9 @@
                 (SPADCALL
                  "can't transform Euclidean point using general function"
                  (QREFELT $ 42))
-                (QREFELT $ 43))
+                (QREFELT $ 44))
                (EXIT (PROGN (LETT #3# |inpt| . #4#) (GO #5#))))))
-            (LETT |vin| (SPADCALL |inpt| (QREFELT $ 45)) . #4#)
+            (LETT |vin| (SPADCALL |inpt| (QREFELT $ 46)) . #4#)
             (LETT |a|
                   (|add_DF|
                    (|add_DF|
@@ -388,14 +388,14 @@
                      2)
                     (SPADCALL |vin| 3 (QREFELT $ 13))))
                   . #4#)
-            (EXIT (SPADCALL |a| |b| (QREFELT $ 46)))))
+            (EXIT (SPADCALL |a| |b| (QREFELT $ 47)))))
           #5# (EXIT #3#)))) 
 
 (SDEFUN |STR;applyTransPt3|
         ((|tr| $) (|inpt| |SCartesian| 3) ($ |SCartesian| 3))
         (SPROG
          ((|c| #1=(|DoubleFloat|)) (#2=#:G694 NIL) (|b| #1#) (|a| #1#)
-          (|vin| (|List| (|DoubleFloat|))) (#3=#:G780 NIL))
+          (|vin| (|List| (|DoubleFloat|))) (#3=#:G787 NIL))
          (SEQ
           (EXIT
            (SEQ
@@ -403,7 +403,7 @@
              ((QEQCAR |tr| 3)
               (PROGN
                (LETT #3# |inpt| . #4=(|STR;applyTransPt3|))
-               (GO #5=#:G779))))
+               (GO #5=#:G786))))
             (COND
              ((QEQCAR |tr| 1)
               (SEQ
@@ -411,9 +411,9 @@
                 (SPADCALL
                  "can't transform Euclidean point using general function"
                  (QREFELT $ 42))
-                (QREFELT $ 43))
+                (QREFELT $ 44))
                (EXIT (PROGN (LETT #3# |inpt| . #4#) (GO #5#))))))
-            (LETT |vin| (SPADCALL |inpt| (QREFELT $ 48)) . #4#)
+            (LETT |vin| (SPADCALL |inpt| (QREFELT $ 49)) . #4#)
             (LETT |a|
                   (|add_DF|
                    (|add_DF|
@@ -717,12 +717,12 @@
                      3)
                     (SPADCALL |vin| 4 (QREFELT $ 13))))
                   . #4#)
-            (EXIT (SPADCALL |a| |b| |c| (QREFELT $ 49)))))
+            (EXIT (SPADCALL |a| |b| |c| (QREFELT $ 50)))))
           #5# (EXIT #3#)))) 
 
 (SDEFUN |STR;applyTransCx| ((|tr| $) (|inpt| |SArgand|) ($ |SArgand|))
         (SPROG
-         ((|res| (PT)) (|f| (|Mapping| PT PT)) (#1=#:G695 NIL) (#2=#:G784 NIL))
+         ((|res| (PT)) (|f| (|Mapping| PT PT)) (#1=#:G695 NIL) (#2=#:G791 NIL))
          (SEQ
           (EXIT
            (SEQ
@@ -730,15 +730,15 @@
              ((QEQCAR |tr| 3)
               (PROGN
                (LETT #2# |inpt| . #3=(|STR;applyTransCx|))
-               (GO #4=#:G783))))
+               (GO #4=#:G790))))
             (COND
              ((QEQCAR |tr| 0)
               (SEQ
                (SPADCALL
                 (SPADCALL "can't transform complex using matrix"
                           (QREFELT $ 42))
-                (QREFELT $ 43))
-               (SPADCALL (SPADCALL |tr| (QREFELT $ 50)) (QREFELT $ 42))
+                (QREFELT $ 44))
+               (SPADCALL (SPADCALL |tr| (QREFELT $ 51)) (QREFELT $ 44))
                (EXIT (PROGN (LETT #2# |inpt| . #3#) (GO #4#))))))
             (LETT |f|
                   (PROG2 (LETT #1# |tr| . #3#)
@@ -785,7 +785,7 @@
                     (SIGNATURE |reverse| ($ $)) (SIGNATURE |conj| ($ $))
                     (SIGNATURE |setMode|
                      ((|Boolean|) (|String|) (|Boolean|))))))
-          (|m| (|Matrix| (|DoubleFloat|))) (#3=#:G789 NIL))
+          (|m| (|Matrix| (|DoubleFloat|))) (#3=#:G796 NIL))
          (SEQ
           (EXIT
            (SEQ
@@ -793,15 +793,15 @@
              ((QEQCAR |tr| 3)
               (PROGN
                (LETT #3# |inpt| . #4=(|STR;applyTransConf2|))
-               (GO #5=#:G788))))
+               (GO #5=#:G795))))
             (COND
              ((NULL (QEQCAR |tr| 2))
               (SEQ
                (SPADCALL
                 (SPADCALL "this transform not compatible with conformal"
                           (QREFELT $ 42))
-                (QREFELT $ 43))
-               (SPADCALL (SPADCALL |tr| (QREFELT $ 50)) (QREFELT $ 42))
+                (QREFELT $ 44))
+               (SPADCALL (SPADCALL |tr| (QREFELT $ 51)) (QREFELT $ 44))
                (EXIT (PROGN (LETT #3# |inpt| . #4#) (GO #5#))))))
             (LETT |m|
                   (SPADCALL
@@ -841,7 +841,7 @@
                    (|compiledLookupCheck| '* (LIST '$ '$ '$) CA))
                   . #4#)
             (LETT |res| |conjugation| . #4#)
-            (EXIT (SPADCALL |res| (QREFELT $ 52)))))
+            (EXIT (SPADCALL |res| (QREFELT $ 53)))))
           #5# (EXIT #3#)))) 
 
 (SDEFUN |STR;xform;$2PT;12| ((|tr| $) (|inpt| PT) ($ PT))
@@ -857,11 +857,11 @@
            (|STR;applyTransConf2| |tr| |inpt| $))
           ('T
            (SEQ (|error| "invalid point type in transform")
-                (EXIT (SPADCALL 0.0 0.0 (QREFELT $ 46)))))))) 
+                (EXIT (SPADCALL 0.0 0.0 (QREFELT $ 47)))))))) 
 
 (SDEFUN |STR;compound2| ((|tr| $) (|inpt| $) ($ $))
         (SPROG
-         ((#1=#:G801 NIL) (#2=#:G694 NIL) (|j| NIL) (|i| NIL)
+         ((#1=#:G808 NIL) (#2=#:G694 NIL) (|j| NIL) (|i| NIL)
           (|arr| (|PrimitiveArray| (|PrimitiveArray| (|DoubleFloat|)))))
          (SEQ
           (EXIT
@@ -1035,12 +1035,12 @@
                                 (LETT |j| (|inc_SI| |j|) . #3#) (GO G190) G191
                                 (EXIT NIL))))
                      (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191 (EXIT NIL))
-                (EXIT (PROGN (LETT #1# (CONS 0 |arr|) . #3#) (GO #5=#:G800)))))
+                (EXIT (PROGN (LETT #1# (CONS 0 |arr|) . #3#) (GO #5=#:G807)))))
           #5# (EXIT #1#)))) 
 
 (SDEFUN |STR;compound3| ((|tr| $) (|inpt| $) ($ $))
         (SPROG
-         ((#1=#:G811 NIL) (#2=#:G694 NIL) (|j| NIL) (|i| NIL)
+         ((#1=#:G818 NIL) (#2=#:G694 NIL) (|j| NIL) (|i| NIL)
           (|arr| (|PrimitiveArray| (|PrimitiveArray| (|DoubleFloat|)))))
          (SEQ
           (EXIT
@@ -1267,12 +1267,12 @@
                                 (LETT |j| (|inc_SI| |j|) . #3#) (GO G190) G191
                                 (EXIT NIL))))
                      (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191 (EXIT NIL))
-                (EXIT (PROGN (LETT #1# (CONS 0 |arr|) . #3#) (GO #5=#:G810)))))
+                (EXIT (PROGN (LETT #1# (CONS 0 |arr|) . #3#) (GO #5=#:G817)))))
           #5# (EXIT #1#)))) 
 
 (SDEFUN |STR;compoundConf2| ((|tr| $) (|inpt| $) ($ $))
         (SPROG
-         ((#1=#:G814 NIL) (|resConf| (CA)) (|inptConf| (CA)) (#2=#:G696 NIL)
+         ((#1=#:G821 NIL) (|resConf| (CA)) (|inptConf| (CA)) (#2=#:G696 NIL)
           (|trConf| (CA))
           (CA
            (|Join| (|Ring|) (|Algebra| #3=(|DoubleFloat|))
@@ -1346,12 +1346,12 @@
                   (SPADCALL |trConf| |inptConf|
                             (|compiledLookupCheck| '* (LIST '$ '$ '$) CA))
                   . #4#)
-            (EXIT (PROGN (LETT #1# (CONS 2 |resConf|) . #4#) (GO #6=#:G813)))))
+            (EXIT (PROGN (LETT #1# (CONS 2 |resConf|) . #4#) (GO #6=#:G820)))))
           #6# (EXIT #1#)))) 
 
 (SDEFUN |STR;compound;3$;16| ((|tr| $) (|inpt| $) ($ $))
         (SPROG
-         ((#1=#:G825 NIL) (|fn| (|Mapping| PT PT)) (|in2| (|Mapping| PT PT))
+         ((#1=#:G832 NIL) (|fn| (|Mapping| PT PT)) (|in2| (|Mapping| PT PT))
           (|in1| (|Mapping| PT PT)))
          (SEQ
           (EXIT
@@ -1360,7 +1360,7 @@
              ((QEQCAR |tr| 3)
               (PROGN
                (LETT #1# |inpt| . #2=(|STR;compound;3$;16|))
-               (GO #3=#:G824))))
+               (GO #3=#:G831))))
             (COND ((QEQCAR |inpt| 3) (PROGN (LETT #1# |tr| . #2#) (GO #3#))))
             (COND
              ((QEQCAR |tr| 0)
@@ -1384,7 +1384,7 @@
                ((QEQCAR |inpt| 1)
                 (SEQ (LETT |in1| (CDR |tr|) . #2#)
                      (LETT |in2| (CDR |inpt|) . #2#)
-                     (LETT |fn| (SPADCALL |in1| |in2| (QREFELT $ 55)) . #2#)
+                     (LETT |fn| (SPADCALL |in1| |in2| (QREFELT $ 56)) . #2#)
                      (EXIT
                       (PROGN (LETT #1# (CONS 1 |fn|) . #2#) (GO #3#))))))))
             (COND
@@ -1400,7 +1400,7 @@
 (SDEFUN |STR;outputArray|
         ((|x| |PrimitiveArray| (|DoubleFloat|)) ($ |OutputForm|))
         (SPROG
-         ((#1=#:G834 NIL) (|i| NIL) (#2=#:G833 NIL)
+         ((#1=#:G841 NIL) (|i| NIL) (#2=#:G840 NIL)
           (|m| (|NonNegativeInteger|)))
          (SEQ (LETT |m| (QVSIZE |x|) . #3=(|STR;outputArray|))
               (EXIT
@@ -1412,19 +1412,19 @@
                       (SEQ
                        (EXIT
                         (LETT #2#
-                              (CONS (SPADCALL (QAREF1 |x| |i|) (QREFELT $ 57))
+                              (CONS (SPADCALL (QAREF1 |x| |i|) (QREFELT $ 58))
                                     #2#)
                               . #3#)))
                       (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191
                       (EXIT (NREVERSE #2#))))
-                (QREFELT $ 59)))))) 
+                (QREFELT $ 60)))))) 
 
 (SDEFUN |STR;outputMatrix|
         ((|x| |PrimitiveArray| (|PrimitiveArray| (|DoubleFloat|)))
          ($ |OutputForm|))
         (SPROG
-         ((|l| (|List| (|List| (|OutputForm|)))) (#1=#:G846 NIL) (|j| NIL)
-          (#2=#:G845 NIL) (#3=#:G844 NIL) (|i| NIL) (#4=#:G843 NIL)
+         ((|l| (|List| (|List| (|OutputForm|)))) (#1=#:G853 NIL) (|j| NIL)
+          (#2=#:G852 NIL) (#3=#:G851 NIL) (|i| NIL) (#4=#:G850 NIL)
           (|m| (|NonNegativeInteger|)))
          (SEQ (LETT |m| (QVSIZE |x|) . #5=(|STR;outputMatrix|))
               (LETT |l|
@@ -1449,7 +1449,7 @@
                                                   (SPADCALL
                                                    (QAREF1 (QAREF1 |x| |i|)
                                                            |j|)
-                                                   (QREFELT $ 57))
+                                                   (QREFELT $ 58))
                                                   #2#)
                                                  . #5#)))
                                          (LETT |j| (|inc_SI| |j|) . #5#)
@@ -1459,26 +1459,31 @@
                           (LETT |i| (|inc_SI| |i|) . #5#) (GO G190) G191
                           (EXIT (NREVERSE #4#))))
                     . #5#)
-              (EXIT (SPADCALL |l| (QREFELT $ 61)))))) 
+              (EXIT (SPADCALL |l| (QREFELT $ 62)))))) 
 
 (SDEFUN |STR;coerce;$Of;19| ((|tr| $) ($ |OutputForm|))
-        (SPROG ((#1=#:G696 NIL) (#2=#:G849 NIL) (#3=#:G694 NIL))
+        (SPROG ((#1=#:G696 NIL) (#2=#:G856 NIL) (#3=#:G694 NIL))
                (SEQ
                 (EXIT
                  (SEQ
                   (COND
                    ((QEQCAR |tr| 3)
                     (PROGN
-                     (LETT #2# "iden" . #4=(|STR;coerce;$Of;19|))
-                     (GO #5=#:G848))))
+                     (LETT #2# (SPADCALL "iden" (QREFELT $ 42))
+                           . #4=(|STR;coerce;$Of;19|))
+                     (GO #5=#:G855))))
                   (COND
                    ((QEQCAR |tr| 1)
-                    (PROGN (LETT #2# "function as transform" . #4#) (GO #5#))))
+                    (PROGN
+                     (LETT #2#
+                           (SPADCALL "function as transform" (QREFELT $ 42))
+                           . #4#)
+                     (GO #5#))))
                   (COND
                    ((QEQCAR |tr| 0)
                     (PROGN
                      (LETT #2#
-                           (SPADCALL "mtx"
+                           (SPADCALL (SPADCALL "mtx" (QREFELT $ 42))
                                      (|STR;outputMatrix|
                                       (PROG2 (LETT #3# |tr| . #4#)
                                           (QCDR #3#)
@@ -1502,11 +1507,11 @@
                                                               #6="iden"))
                                                         #3#))
                                       $)
-                                     (QREFELT $ 62))
+                                     (QREFELT $ 63))
                            . #4#)
                      (GO #5#))))
                   (EXIT
-                   (SPADCALL "multiv"
+                   (SPADCALL (SPADCALL "multiv" (QREFELT $ 42))
                              (|STR;outputArray|
                               (PROG2 (LETT #1# |tr| . #4#)
                                   (QCDR #1#)
@@ -1528,14 +1533,14 @@
                                                  (|:| |iden| #6#))
                                                 #1#))
                               $)
-                             (QREFELT $ 62)))))
+                             (QREFELT $ 63)))))
                 #5# (EXIT #2#)))) 
 
 (DECLAIM (NOTINLINE |STransform;|)) 
 
-(DEFUN |STransform| (#1=#:G850)
+(DEFUN |STransform| (#1=#:G857)
   (SPROG NIL
-         (PROG (#2=#:G851)
+         (PROG (#2=#:G858)
            (RETURN
             (COND
              ((LETT #2#
@@ -1555,7 +1560,7 @@
          (PROGN
           (LETT DV$1 (|devaluate| |#1|) . #1=(|STransform|))
           (LETT |dv$| (LIST '|STransform| DV$1) . #1#)
-          (LETT $ (GETREFV 63) . #1#)
+          (LETT $ (GETREFV 64) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|STransform| (LIST DV$1) (CONS 1 $))
@@ -1583,13 +1588,13 @@
               (27 . |Zero|) (31 . |One|) (|Matrix| 12) (35 . |matrix|)
               (|SquareMatrix| '4 12) (40 . |squareMatrix|) (|PositiveInteger|)
               (|Float|) (45 . |float|) (52 . |coerce|) (57 . |complex|)
-              (63 . +) |STR;stranslate;6Df$;6| (|Void|) (|OutputForm|)
-              (69 . |print|) (74 . |coerce|) (|SCartesian| '2)
+              (63 . +) |STR;stranslate;6Df$;6| (|String|) (|OutputForm|)
+              (69 . |message|) (|Void|) (74 . |print|) (|SCartesian| '2)
               (79 . |extendedCoords|) (84 . |spnt|) (|SCartesian| '3)
               (90 . |extendedCoords|) (95 . |spnt|) |STR;coerce;$Of;19|
               (|SConformal| '2) (102 . |normalisePoint|) |STR;xform;$2PT;12|
               (|MappingPackage3| 6 6 6) (107 . *) |STR;compound;3$;16|
-              (113 . |coerce|) (|List| $) (118 . |bracket|) (|List| 58)
+              (113 . |coerce|) (|List| $) (118 . |bracket|) (|List| 59)
               (123 . |matrix|) (128 . |hconcat|))
            '#(|xform| 134 |stranslate| 140 |stransform| 150 |identity| 170
               |compound| 174 |coerce| 180)
@@ -1597,22 +1602,22 @@
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
-                             (|makeByteWordVec2| 62
+                             (|makeByteWordVec2| 63
                                                  '(2 10 8 0 9 11 2 8 12 0 9 13
                                                    1 19 18 0 20 1 19 0 18 21 1
                                                    24 0 8 25 0 12 0 27 0 12 0
                                                    28 1 29 0 10 30 1 31 0 29 32
                                                    3 34 0 9 9 33 35 1 34 12 0
                                                    36 2 18 0 12 12 37 2 18 0 0
-                                                   0 38 1 41 40 0 42 1 40 41 0
-                                                   43 1 44 8 0 45 2 44 0 12 12
-                                                   46 1 47 8 0 48 3 47 0 12 12
-                                                   12 49 1 51 0 0 52 2 54 16 16
-                                                   16 55 1 12 41 0 57 1 41 0 58
-                                                   59 1 41 0 60 61 2 41 0 0 0
-                                                   62 2 0 6 0 6 53 6 0 0 12 12
+                                                   0 38 1 41 0 40 42 1 41 43 0
+                                                   44 1 45 8 0 46 2 45 0 12 12
+                                                   47 1 48 8 0 49 3 48 0 12 12
+                                                   12 50 1 52 0 0 53 2 55 16 16
+                                                   16 56 1 12 41 0 58 1 41 0 59
+                                                   60 1 41 0 61 62 2 41 0 0 0
+                                                   63 2 0 6 0 6 54 6 0 0 12 12
                                                    12 12 12 12 39 1 0 0 16 17 1
                                                    0 0 10 15 1 0 0 8 26 1 0 0
-                                                   22 23 0 0 0 14 2 0 0 0 0 56
-                                                   1 0 41 0 50)))))
+                                                   22 23 0 0 0 14 2 0 0 0 0 57
+                                                   1 0 41 0 51)))))
            '|lookupComplete|)) 

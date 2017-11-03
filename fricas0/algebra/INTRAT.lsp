@@ -38,7 +38,7 @@
                                (QREFELT $ 33))))))))))) 
 
 (SDEFUN |INTRAT;infieldint;FU;1!0| ((|lg| NIL) ($ NIL))
-        (SPROG ((#1=#:G709 NIL) (|bv| NIL) (#2=#:G708 NIL) (|r1| NIL))
+        (SPROG ((#1=#:G710 NIL) (|bv| NIL) (#2=#:G709 NIL) (|r1| NIL))
                (SEQ
                 (LETT |r1|
                       (SPADCALL (SPADCALL (LIST |lg|) (QREFELT $ 10))
@@ -77,9 +77,9 @@
 
 (DECLAIM (NOTINLINE |RationalIntegration;|)) 
 
-(DEFUN |RationalIntegration| (&REST #1=#:G730)
+(DEFUN |RationalIntegration| (&REST #1=#:G732)
   (SPROG NIL
-         (PROG (#2=#:G731)
+         (PROG (#2=#:G733)
            (RETURN
             (COND
              ((LETT #2#

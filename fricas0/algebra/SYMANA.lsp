@@ -3,8 +3,8 @@
         (($ |JetVectorField| JB1 (|JetBundleExpression| JB1)))
         (SPROG
          ((|res| (|JetVectorField| JB1 (|JetBundleExpression| JB1)))
-          (#1=#:G739 NIL) (|f| (|JetBundleExpression| JB1)) (|s| (|Symbol|))
-          (#2=#:G745 NIL) (|i| NIL) (#3=#:G735 NIL) (#4=#:G744 NIL))
+          (#1=#:G742 NIL) (|f| (|JetBundleExpression| JB1)) (|s| (|Symbol|))
+          (#2=#:G748 NIL) (|i| NIL) (#3=#:G738 NIL) (#4=#:G747 NIL))
          (SEQ (LETT |res| (|spadConstant| $ 37) . #5=(|SYMANA;ansatz;Jvf;1|))
               (SEQ (LETT |i| 1 . #5#) (LETT #4# (QREFELT $ 11) . #5#) G190
                    (COND ((|greater_SI| |i| #4#) (GO G191)))
@@ -61,17 +61,17 @@
          ((|g| (|Expression| (|Integer|)))
           (|SubL| (|List| (|Kernel| (|Expression| (|Integer|)))))
           (JV (|List| (|Expression| (|Integer|))))
-          (|lower| (|List| (|PositiveInteger|))) (#1=#:G784 NIL)
-          (|id| #2=(|Integer|)) (#3=#:G800 NIL) (|d| NIL)
-          (|up| (|PositiveInteger|)) (#4=#:G782 NIL) (#5=#:G780 NIL)
+          (|lower| (|List| (|PositiveInteger|))) (#1=#:G787 NIL)
+          (|id| #2=(|Integer|)) (#3=#:G803 NIL) (|d| NIL)
+          (|up| (|PositiveInteger|)) (#4=#:G785 NIL) (#5=#:G783 NIL)
           (|diff| (|List| (|JetBundleExpression| JB1)))
           (|rarg| (|List| (|JetBundleExpression| JB1)))
-          (|arg| (|List| (|JetBundleExpression| JB1))) (#6=#:G799 NIL)
+          (|arg| (|List| (|JetBundleExpression| JB1))) (#6=#:G802 NIL)
           (|i| NIL) (|num| #2#) (|pos| (|Integer|)) (|fname| (|Symbol|))
-          (#7=#:G771 NIL) (#8=#:G761 NIL) (#9=#:G757 NIL) (|ind| #2#)
-          (|typ| (|Symbol|)) (#10=#:G749 NIL) (#11=#:G797 NIL) (|Ke| NIL)
-          (#12=#:G798 NIL) (|Op| NIL) (|LOps| (|List| (|BasicOperator|)))
-          (#13=#:G796 NIL) (#14=#:G795 NIL)
+          (#7=#:G774 NIL) (#8=#:G764 NIL) (#9=#:G760 NIL) (|ind| #2#)
+          (|typ| (|Symbol|)) (#10=#:G752 NIL) (#11=#:G800 NIL) (|Ke| NIL)
+          (#12=#:G801 NIL) (|Op| NIL) (|LOps| (|List| (|BasicOperator|)))
+          (#13=#:G799 NIL) (#14=#:G798 NIL)
           (|LKernels| (|List| (|Kernel| (|JetBundleExpression| JB1)))))
          (SEQ (LETT JV NIL . #15=(|SYMANA;transform;JbeJbe;2|))
               (LETT |SubL| NIL . #15#)
@@ -315,9 +315,9 @@
         ((|sys| |List| (|JetBundleExpression| JB1))
          ($ |List| (|JetBundleExpression| (|JetBundleSymAna| JB1 |xi| |eta|))))
         (SPROG
-         ((#1=#:G808 NIL) (|eq| NIL) (#2=#:G807 NIL)
-          (|ds| (|List| (|JetBundleExpression| JB1))) (#3=#:G806 NIL)
-          (#4=#:G805 NIL))
+         ((#1=#:G811 NIL) (|eq| NIL) (#2=#:G810 NIL)
+          (|ds| (|List| (|JetBundleExpression| JB1))) (#3=#:G809 NIL)
+          (#4=#:G808 NIL))
          (SEQ
           (LETT |ds|
                 (SPADCALL |sys|
@@ -356,7 +356,7 @@
         ((|sys| |List| (|JetBundleExpression| JB1))
          (|vf| |JetVectorField| JB1 (|JetBundleExpression| JB1))
          ($ |List| (|JetBundleExpression| JB1)))
-        (SPROG ((#1=#:G812 NIL) (|eq| NIL) (#2=#:G811 NIL))
+        (SPROG ((#1=#:G815 NIL) (|eq| NIL) (#2=#:G814 NIL))
                (SEQ
                 (SPADCALL |sys|
                           (PROGN
@@ -382,22 +382,22 @@
          (|vf| |JetVectorField| JB1 (|JetBundleExpression| JB1))
          ($ |List| (|JetBundleExpression| JB1)))
         (SPROG
-         ((#1=#:G869 NIL) (|co| NIL) (#2=#:G868 NIL)
+         ((#1=#:G872 NIL) (|co| NIL) (#2=#:G871 NIL)
           (|conds| (|List| (|Expression| (|Integer|))))
-          (|coL| (|List| (|List| (|Expression| (|Integer|))))) (#3=#:G867 NIL)
-          (|jp| NIL) (#4=#:G866 NIL)
+          (|coL| (|List| (|List| (|Expression| (|Integer|))))) (#3=#:G870 NIL)
+          (|jp| NIL) (#4=#:G869 NIL)
           (|pcrit|
            (|List|
             (|SparseMultivariatePolynomial| (|Expression| (|Integer|)) JB1)))
-          (#5=#:G865 NIL) (|eq| NIL) (#6=#:G864 NIL)
-          (|crit| (|List| (|JetBundleExpression| JB1))) (#7=#:G863 NIL)
-          (#8=#:G862 NIL)
+          (#5=#:G868 NIL) (|eq| NIL) (#6=#:G867 NIL)
+          (|crit| (|List| (|JetBundleExpression| JB1))) (#7=#:G866 NIL)
+          (#8=#:G865 NIL)
           (|pvf| (|JetVectorField| JB1 (|JetBundleExpression| JB1)))
           (|o| (|NonNegativeInteger|)) (|ol| (|List| (|NonNegativeInteger|)))
-          (#9=#:G861 NIL) (#10=#:G860 NIL)
+          (#9=#:G864 NIL) (#10=#:G863 NIL)
           (|solEq| (|List| (|Equation| (|JetBundleExpression| JB1))))
           (|tmp| (|Union| (|JetBundleExpression| JB1) "failed"))
-          (#11=#:G858 NIL) (#12=#:G859 NIL) (|jv| NIL))
+          (#11=#:G861 NIL) (#12=#:G862 NIL) (|jv| NIL))
          (SEQ (LETT |solEq| NIL . #13=(|SYMANA;detSys;LLJvfL;5|))
               (SEQ (LETT |jv| NIL . #13#) (LETT #12# |sjb| . #13#)
                    (LETT |eq| NIL . #13#) (LETT #11# |sys| . #13#) G190
@@ -511,9 +511,9 @@
         ((|sys| |List| (|JetBundleExpression| JB1))
          ($ |List| (|JetBundleExpression| (|JetBundleSymAna| JB1 |xi| |eta|))))
         (SPROG
-         ((#1=#:G877 NIL) (|eq| NIL) (#2=#:G876 NIL)
-          (|ds| (|List| (|JetBundleExpression| JB1))) (#3=#:G875 NIL)
-          (#4=#:G874 NIL))
+         ((#1=#:G880 NIL) (|eq| NIL) (#2=#:G879 NIL)
+          (|ds| (|List| (|JetBundleExpression| JB1))) (#3=#:G878 NIL)
+          (#4=#:G877 NIL))
          (SEQ
           (LETT |ds|
                 (SPADCALL |sys|
@@ -552,7 +552,7 @@
         ((|sys| |List| (|JetBundleExpression| JB1))
          (|vf| |JetVectorField| JB1 (|JetBundleExpression| JB1))
          ($ |List| (|JetBundleExpression| JB1)))
-        (SPROG ((#1=#:G881 NIL) (|eq| NIL) (#2=#:G880 NIL))
+        (SPROG ((#1=#:G884 NIL) (|eq| NIL) (#2=#:G883 NIL))
                (SEQ
                 (SPADCALL |sys|
                           (PROGN
@@ -579,12 +579,12 @@
          ($ |List| (|JetBundleExpression| JB1)))
         (SPROG
          ((|isc| #1=(|List| (|JetBundleExpression| JB1))) (|ijb| (|List| JB1))
-          (|cond| (|JetBundleExpression| JB1)) (|jv| (JB1)) (#2=#:G893 NIL)
-          (#3=#:G909 NIL) (|x| NIL) (#4=#:G910 NIL) (|i| NIL) (#5=#:G907 NIL)
-          (|e| NIL) (#6=#:G908 NIL) (|j| (|Integer|)) (|Eta| #1#)
-          (#7=#:G906 NIL) (#8=#:G904 NIL) (|co| NIL) (#9=#:G905 NIL)
+          (|cond| (|JetBundleExpression| JB1)) (|jv| (JB1)) (#2=#:G896 NIL)
+          (#3=#:G912 NIL) (|x| NIL) (#4=#:G913 NIL) (|i| NIL) (#5=#:G910 NIL)
+          (|e| NIL) (#6=#:G911 NIL) (|j| (|Integer|)) (|Eta| #1#)
+          (#7=#:G909 NIL) (#8=#:G907 NIL) (|co| NIL) (#9=#:G908 NIL)
           (|ind2| #10=(|List| (|PositiveInteger|))) (|tmp| #1#) (|ind1| #10#)
-          (|Xi| #1#) (|jt| (|Symbol|)) (#11=#:G902 NIL) (#12=#:G903 NIL)
+          (|Xi| #1#) (|jt| (|Symbol|)) (#11=#:G905 NIL) (#12=#:G906 NIL)
           (|coeffs| (|List| (|JetBundleExpression| JB1)))
           (|dirs| (|List| JB1)))
          (SEQ
@@ -711,9 +711,9 @@
 
 (DECLAIM (NOTINLINE |SymmetryAnalysis;|)) 
 
-(DEFUN |SymmetryAnalysis| (&REST #1=#:G929)
+(DEFUN |SymmetryAnalysis| (&REST #1=#:G932)
   (SPROG NIL
-         (PROG (#2=#:G930)
+         (PROG (#2=#:G933)
            (RETURN
             (COND
              ((LETT #2#
@@ -733,10 +733,10 @@
 
 (DEFUN |SymmetryAnalysis;| (|#1| |#2| |#3|)
   (SPROG
-   ((#1=#:G928 NIL) (|jv| NIL) (#2=#:G927 NIL) (#3=#:G926 NIL) (|i| NIL)
-    (#4=#:G925 NIL) (#5=#:G924 NIL) (#6=#:G923 NIL) (#7=#:G922 NIL)
-    (#8=#:G921 NIL) (#9=#:G715 NIL) (#10=#:G920 NIL) (#11=#:G919 NIL)
-    (#12=#:G712 NIL) (#13=#:G918 NIL) (#14=#:G917 NIL) (|pv$| NIL) ($ NIL)
+   ((#1=#:G931 NIL) (|jv| NIL) (#2=#:G930 NIL) (#3=#:G929 NIL) (|i| NIL)
+    (#4=#:G928 NIL) (#5=#:G927 NIL) (#6=#:G926 NIL) (#7=#:G925 NIL)
+    (#8=#:G924 NIL) (#9=#:G719 NIL) (#10=#:G923 NIL) (#11=#:G922 NIL)
+    (#12=#:G716 NIL) (#13=#:G921 NIL) (#14=#:G920 NIL) (|pv$| NIL) ($ NIL)
     (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
    (SEQ
     (PROGN
@@ -896,11 +896,13 @@
               (|BasicOperator|) (|Kernel| 33) (105 . |operator|) (110 . |has?|)
               (|Union| (|None|) '"failed") (116 . |property|) (|List| 33)
               (122 . |argument|) (127 . |second|) (132 . |retract|)
-              (|JetBundleSymAna| 6 7 8) (137 . X) (|Expression| 38)
-              (142 . |coerce|) (147 . >) (153 . |coerce|) (158 . |kernels|)
-              (163 . |name|) (168 . |position|) (174 . |minIndex|) (179 . >)
-              (185 . U) (|Kernel| $) (190 . |coerce|) (195 . |coerce|)
-              (|List| 9) (200 . |Pr|) (206 . |eval|) (|JetBundleExpression| 59)
+              (|JetBundleSymAna| 6 (NRTEVAL (QREFELT $ 7))
+                                 (NRTEVAL (QREFELT $ 8)))
+              (137 . X) (|Expression| 38) (142 . |coerce|) (147 . >)
+              (153 . |coerce|) (158 . |kernels|) (163 . |name|)
+              (168 . |position|) (174 . |minIndex|) (179 . >) (185 . U)
+              (|Kernel| $) (190 . |coerce|) (195 . |coerce|) (|List| 9)
+              (200 . |Pr|) (206 . |eval|) (|JetBundleExpression| 59)
               (213 . |coerce|) |SYMANA;transform;JbeJbe;2| (218 . |leadingDer|)
               |SYMANA;detSys;LLJvfL;5| (|List| 77) |SYMANA;detSys;LL;3|
               |SYMANA;detSys;LJvfL;4| (|Union| $ '"failed") (223 . |solveFor|)

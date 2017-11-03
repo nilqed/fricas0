@@ -51,9 +51,9 @@
 
 (DECLAIM (NOTINLINE |MatrixCommonDenominator;|)) 
 
-(DEFUN |MatrixCommonDenominator| (&REST #1=#:G715)
+(DEFUN |MatrixCommonDenominator| (&REST #1=#:G716)
   (SPROG NIL
-         (PROG (#2=#:G716)
+         (PROG (#2=#:G717)
            (RETURN
             (COND
              ((LETT #2#

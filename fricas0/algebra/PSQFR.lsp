@@ -1,7 +1,7 @@
 
 (SDEFUN |PSQFR;pPolRoot| ((|f| P) ($ P))
         (SPROG
-         ((|uf| (|SparseUnivariatePolynomial| P)) (#1=#:G710 NIL)
+         ((|uf| (|SparseUnivariatePolynomial| P)) (#1=#:G712 NIL)
           (|mv| (|VarSet|)) (|lvar| (|List| |VarSet|)))
          (SEQ
           (LETT |lvar| (SPADCALL |f| (QREFELT $ 14)) . #2=(|PSQFR;pPolRoot|))
@@ -53,8 +53,8 @@
 
 (SDEFUN |PSQFR;pthPower| ((|f| P) ($ |Factored| P))
         (SPROG
-         ((#1=#:G747 NIL) (|u| NIL) (#2=#:G746 NIL) (#3=#:G745 NIL)
-          (#4=#:G744 NIL) (|psqfr| (|Factored| P)) (|isSq| (|Boolean|))
+         ((#1=#:G750 NIL) (|u| NIL) (#2=#:G749 NIL) (#3=#:G748 NIL)
+          (#4=#:G747 NIL) (|psqfr| (|Factored| P)) (|isSq| (|Boolean|))
           (|proot| (P)) (|g| (|Union| P "failed")))
          (SEQ (LETT |proot| (|spadConstant| $ 24) . #5=(|PSQFR;pthPower|))
               (LETT |isSq| NIL . #5#)
@@ -127,11 +127,11 @@
             #1=(|Record| (|:| |flg| (|Union| "nil" "sqfr" "irred" "prime"))
                          (|:| |fctr| P) (|:| |xpnt| (|Integer|)))))
           (|sqp| #2=(|Factored| P)) (|cont| (P)) (|cont1| (P))
-          (|flistfin1| (|List| #1#)) (#3=#:G778 NIL) (|uu| NIL) (#4=#:G777 NIL)
-          (|listfin1| #2#) (|uexp| (|NonNegativeInteger|)) (#5=#:G761 NIL)
-          (#6=#:G776 NIL) (|u| NIL)
+          (|flistfin1| (|List| #1#)) (#3=#:G781 NIL) (|uu| NIL) (#4=#:G780 NIL)
+          (|listfin1| #2#) (|uexp| (|NonNegativeInteger|)) (#5=#:G764 NIL)
+          (#6=#:G779 NIL) (|u| NIL)
           (|squf| (|Factored| (|SparseUnivariatePolynomial| P)))
-          (|uf| (|SparseUnivariatePolynomial| P)) (#7=#:G749 NIL)
+          (|uf| (|SparseUnivariatePolynomial| P)) (#7=#:G752 NIL)
           (|mv| (|VarSet|)))
          (SEQ
           (COND ((NULL |lvar|) (|PSQFR;pthPower| |f| $))
@@ -281,9 +281,9 @@
            (|List|
             (|Record| (|:| |flg| (|Union| "nil" "sqfr" "irred" "prime"))
                       (|:| |fctr| P) (|:| |xpnt| (|Integer|)))))
-          (#1=#:G799 NIL) (|u| NIL) (#2=#:G798 NIL)
+          (#1=#:G802 NIL) (|u| NIL) (#2=#:G801 NIL)
           (|squp| (|Factored| (|SparseUnivariatePolynomial| P)))
-          (|up| (|SparseUnivariatePolynomial| P)) (#3=#:G784 NIL) (|cont| (P))
+          (|up| (|SparseUnivariatePolynomial| P)) (#3=#:G787 NIL) (|cont| (P))
           (|mv| (|Union| |VarSet| "failed")))
          (SEQ
           (LETT |mv| (SPADCALL |p| (QREFELT $ 55))
@@ -358,9 +358,9 @@
 
 (DECLAIM (NOTINLINE |PolynomialSquareFree;|)) 
 
-(DEFUN |PolynomialSquareFree| (&REST #1=#:G800)
+(DEFUN |PolynomialSquareFree| (&REST #1=#:G803)
   (SPROG NIL
-         (PROG (#2=#:G801)
+         (PROG (#2=#:G804)
            (RETURN
             (COND
              ((LETT #2#

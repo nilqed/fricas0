@@ -1517,10 +1517,10 @@
 ; 
 ;   -- transform segment variable into STEP
 ;   iterMs is [['Segment,.]] or iterMs is [['UniversalSegment,.]] =>
-;     lower := [mkAtreeNode 'lo,s]
+;     lower := [mkAtreeNode('low), s]
 ;     step := [mkAtreeNode 'incr, s]
 ;     upperList :=
-;       CAAR(iterMs) = 'Segment => [[mkAtreeNode 'hi,s]]
+;       CAAR(iterMs) = 'Segment => [[mkAtreeNode('high), s]]
 ;       NIL
 ;     upLoopIterSTEP(index,lower,step,upperList)
 ;     newIter := ['STEP,index,lower,step,:upperList]
@@ -1567,12 +1567,12 @@
                         (SETQ |ISTMP#2| (CDR |ISTMP#1|))
                         (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)))))))
            (PROGN
-            (SETQ |lower| (LIST (|mkAtreeNode| '|lo|) |s|))
+            (SETQ |lower| (LIST (|mkAtreeNode| '|low|) |s|))
             (SETQ |step| (LIST (|mkAtreeNode| '|incr|) |s|))
             (SETQ |upperList|
                     (COND
                      ((EQ (CAAR |iterMs|) '|Segment|)
-                      (LIST (LIST (|mkAtreeNode| '|hi|) |s|)))
+                      (LIST (LIST (|mkAtreeNode| '|high|) |s|)))
                      (#1# NIL)))
             (|upLoopIterSTEP| |index| |lower| |step| |upperList|)
             (SETQ |newIter|
@@ -2294,10 +2294,10 @@
 ; 
 ;   -- transform segment variable into STEP
 ;   iterMs is [['Segment,.]] or iterMs is [['UniversalSegment,.]] =>
-;     lower := [mkAtreeNode 'lo, s]
+;     lower := [mkAtreeNode('low), s]
 ;     step := [mkAtreeNode 'incr, s]
 ;     upperList :=
-;       CAAR(iterMs) = 'Segment => [[mkAtreeNode 'hi,s]]
+;       CAAR(iterMs) = 'Segment => [[mkAtreeNoder('high), s]]
 ;       NIL
 ;     upStreamIterSTEP(index,lower,step,upperList)
 ;     newIter := ['STEP,index,lower,step,:upperList]
@@ -2341,12 +2341,12 @@
                      (SETQ |ISTMP#2| (CDR |ISTMP#1|))
                      (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)))))))
         (PROGN
-         (SETQ |lower| (LIST (|mkAtreeNode| '|lo|) |s|))
+         (SETQ |lower| (LIST (|mkAtreeNode| '|low|) |s|))
          (SETQ |step| (LIST (|mkAtreeNode| '|incr|) |s|))
          (SETQ |upperList|
                  (COND
                   ((EQ (CAAR |iterMs|) '|Segment|)
-                   (LIST (LIST (|mkAtreeNode| '|hi|) |s|)))
+                   (LIST (LIST (|mkAtreeNoder| '|high|) |s|)))
                   (#1='T NIL)))
          (|upStreamIterSTEP| |index| |lower| |step| |upperList|)
          (SETQ |newIter|

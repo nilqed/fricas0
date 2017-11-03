@@ -52,7 +52,7 @@
 (SDEFUN |IBPTOOLS;mapUnivariateIfCan;MSupU;3|
         ((|f| |Mapping| #1=(|Union| K "failed") L)
          (|poly| |SparseUnivariatePolynomial| L) ($ |Union| R "failed"))
-        (SPROG ((|ans| (R)) (#2=#:G728 NIL) (|lc| #1#))
+        (SPROG ((|ans| (R)) (#2=#:G730 NIL) (|lc| #1#))
                (SEQ
                 (EXIT
                  (SEQ
@@ -71,7 +71,7 @@
                           ((QEQCAR |lc| 1)
                            (PROGN
                             (LETT #2# (CONS 1 "failed") . #3#)
-                            (GO #4=#:G727)))
+                            (GO #4=#:G729)))
                           ('T
                            (SEQ
                             (LETT |ans|
@@ -94,8 +94,8 @@
          (|mat| |Matrix| (|SparseUnivariatePolynomial| L))
          ($ |Union| (|Matrix| R) "failed"))
         (SPROG
-         ((#1=#:G749 NIL) (|poly| (|Union| R "failed")) (#2=#:G751 NIL)
-          (|j| NIL) (#3=#:G750 NIL) (|i| NIL) (|matOut| (|Matrix| R))
+         ((#1=#:G752 NIL) (|poly| (|Union| R "failed")) (#2=#:G754 NIL)
+          (|j| NIL) (#3=#:G753 NIL) (|i| NIL) (|matOut| (|Matrix| R))
           (|n| (|NonNegativeInteger|)) (|m| (|NonNegativeInteger|)))
          (SEQ
           (EXIT
@@ -119,7 +119,7 @@
                            ((QEQCAR |poly| 1)
                             (PROGN
                              (LETT #1# (CONS 1 "failed") . #4#)
-                             (GO #5=#:G748)))
+                             (GO #5=#:G751)))
                            ('T
                             (QSETAREF2O |matOut| |i| |j| (QCDR |poly|) 1 1)))))
                         (LETT |j| (|inc_SI| |j|) . #4#) (GO G190) G191
@@ -156,9 +156,9 @@
 
 (DECLAIM (NOTINLINE |IntegralBasisPolynomialTools;|)) 
 
-(DEFUN |IntegralBasisPolynomialTools| (&REST #1=#:G758)
+(DEFUN |IntegralBasisPolynomialTools| (&REST #1=#:G761)
   (SPROG NIL
-         (PROG (#2=#:G759)
+         (PROG (#2=#:G762)
            (RETURN
             (COND
              ((LETT #2#

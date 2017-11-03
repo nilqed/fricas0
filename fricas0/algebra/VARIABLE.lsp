@@ -15,9 +15,9 @@
 
 (DECLAIM (NOTINLINE |Variable;|)) 
 
-(DEFUN |Variable| (#1=#:G712)
+(DEFUN |Variable| (#1=#:G713)
   (SPROG NIL
-         (PROG (#2=#:G713)
+         (PROG (#2=#:G714)
            (RETURN
             (COND
              ((LETT #2#

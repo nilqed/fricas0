@@ -10,7 +10,7 @@
 (SDEFUN |GAUSSFAC;exactquo|
         ((|u| |Integer|) (|v| |Integer|) (|p| |Integer|)
          ($ |Union| (|Integer|) "failed"))
-        (SPROG ((#1=#:G709 NIL))
+        (SPROG ((#1=#:G710 NIL))
                (COND ((EQL |p| 0) (SPADCALL |u| |v| (QREFELT $ 9)))
                      ((EQL (REM |v| |p|) 0) (CONS 1 "failed"))
                      ('T
@@ -36,9 +36,9 @@
 
 (SDEFUN |GAUSSFAC;findelt| ((|q| |Integer|) ($ |Integer|))
         (SPROG
-         ((|t| (|FMod|)) (|s| (|FMod|)) (#1=#:G734 NIL) (|i| NIL)
+         ((|t| (|FMod|)) (|s| (|FMod|)) (#1=#:G739 NIL) (|i| NIL)
           (|qq1| (|FMod|)) (|r1| (|Union| (|Integer|) "failed"))
-          (|r| #2=(|Integer|)) (#3=#:G704 NIL) (|q1| #2#))
+          (|r| #2=(|Integer|)) (#3=#:G705 NIL) (|q1| #2#))
          (SEQ (LETT |q1| (- |q| 1) . #4=(|GAUSSFAC;findelt|))
               (LETT |r| |q1| . #4#)
               (LETT |r1| (SPADCALL |r| 4 (QREFELT $ 9)) . #4#)
@@ -108,7 +108,7 @@
                       (|:| |fctr| (|Complex| (|Integer|)))
                       (|:| |xpnt| (|Integer|)))))
           (|z| #1=(|Complex| (|Integer|))) (|sz| (|List| (|Integer|)))
-          (|unity| #1#) (#2=#:G776 NIL) (|exp| (|Integer|)) (#3=#:G792 NIL)
+          (|unity| #1#) (#2=#:G782 NIL) (|exp| (|Integer|)) (#3=#:G798 NIL)
           (|term| NIL) (|lfn| (|Factored| (|Integer|))))
          (SEQ
           (LETT |lfn| (SPADCALL |n| (QREFELT $ 31))
@@ -182,19 +182,19 @@
             (|Record| (|:| |flg| (|Union| "nil" "sqfr" "irred" "prime"))
                       (|:| |fctr| (|Complex| (|Integer|)))
                       (|:| |xpnt| (|Integer|)))))
-          (|z| (|Complex| (|Integer|))) (#1=#:G808 NIL)
+          (|z| (|Complex| (|Integer|))) (#1=#:G814 NIL)
           (|part|
            (|Record|
             (|:| |flg| (|Union| #2="nil" #3="sqfr" #4="irred" #5="prime"))
             (|:| |fctr| (|Complex| (|Integer|))) (|:| |xpnt| (|Integer|))))
-          (|g0| (|Complex| (|Integer|))) (#6=#:G804 NIL) (|exp| #7=(|Integer|))
-          (|n| (|Integer|)) (#8=#:G817 NIL) (|term| NIL)
+          (|g0| (|Complex| (|Integer|))) (#6=#:G810 NIL) (|exp| #7=(|Integer|))
+          (|n| (|Integer|)) (#8=#:G823 NIL) (|term| NIL)
           (|factn|
            (|List|
             (|Record| (|:| |flg| (|Union| #2# #3# #4# #5#))
                       (|:| |fctr| (|Integer|)) (|:| |xpnt| #7#))))
           (|r| #9=(|Factored| (|Complex| (|Integer|)))) (|b| (|Integer|))
-          (#10=#:G704 NIL) (|a| (|Integer|)) (|d| (|Integer|)) (|ris| #9#))
+          (#10=#:G705 NIL) (|a| (|Integer|)) (|d| (|Integer|)) (|ris| #9#))
          (SEQ
           (COND
            ((SPADCALL |m| (|spadConstant| $ 48) (QREFELT $ 49))
@@ -387,7 +387,7 @@
 
 (DEFUN |GaussianFactorizationPackage| ()
   (SPROG NIL
-         (PROG (#1=#:G827)
+         (PROG (#1=#:G833)
            (RETURN
             (COND
              ((LETT #1#

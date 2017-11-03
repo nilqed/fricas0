@@ -61,7 +61,7 @@
          (|l| |PatternMatchResult| (|Integer|) I)
          ($ |PatternMatchResult| (|Integer|) I))
         (SPROG
-         ((|r| (|Union| (|Integer|) "failed")) (#1=#:G762 NIL)
+         ((|r| (|Union| (|Integer|) "failed")) (#1=#:G765 NIL)
           (|v| (|Union| I "failed"))
           (|uvr|
            (|Record| (|:| |num| (|Pattern| (|Integer|)))
@@ -197,7 +197,7 @@
                                                                 $ 30)
                                                                $)
                                                               . #2#)
-                                                        (GO #4=#:G754))))))))))
+                                                        (GO #4=#:G757))))))))))
                                                (LETT |r|
                                                      (SPADCALL (QCDR |uvr|)
                                                                (QREFELT $ 17))
@@ -224,9 +224,9 @@
 
 (DECLAIM (NOTINLINE |PatternMatchIntegerNumberSystem;|)) 
 
-(DEFUN |PatternMatchIntegerNumberSystem| (#1=#:G763)
+(DEFUN |PatternMatchIntegerNumberSystem| (#1=#:G766)
   (SPROG NIL
-         (PROG (#2=#:G764)
+         (PROG (#2=#:G767)
            (RETURN
             (COND
              ((LETT #2#

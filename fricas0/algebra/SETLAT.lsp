@@ -11,8 +11,8 @@
 
 (SDEFUN |SETLAT;complement;2$;4| ((|a| $) ($ $))
         (SPROG
-         ((|r| (|List| S)) (|contains| (|Boolean|)) (#1=#:G717 NIL) (|c| NIL)
-          (#2=#:G716 NIL) (|b| NIL))
+         ((|r| (|List| S)) (|contains| (|Boolean|)) (#1=#:G718 NIL) (|c| NIL)
+          (#2=#:G717 NIL) (|b| NIL))
          (SEQ (LETT |r| NIL . #3=(|SETLAT;complement;2$;4|))
               (SEQ (LETT |b| NIL . #3#) (LETT #2# (QREFELT $ 7) . #3#) G190
                    (COND
@@ -41,8 +41,8 @@
 
 (SDEFUN |SETLAT;complement;$L$;5| ((|a| $) (|pseudoTop| |List| S) ($ $))
         (SPROG
-         ((|r| (|List| S)) (|contains| (|Boolean|)) (#1=#:G724 NIL) (|c| NIL)
-          (#2=#:G723 NIL) (|b| NIL))
+         ((|r| (|List| S)) (|contains| (|Boolean|)) (#1=#:G725 NIL) (|c| NIL)
+          (#2=#:G724 NIL) (|b| NIL))
          (SEQ (LETT |r| NIL . #3=(|SETLAT;complement;$L$;5|))
               (SEQ (LETT |b| NIL . #3#) (LETT #2# |pseudoTop| . #3#) G190
                    (COND
@@ -86,7 +86,7 @@
 
 (SDEFUN |SETLAT;coerce;$Of;10| ((|s| $) ($ |OutputForm|))
         (SPROG
-         ((|oup| (|List| (|OutputForm|))) (#1=#:G734 NIL) (|x| NIL)
+         ((|oup| (|List| (|OutputForm|))) (#1=#:G737 NIL) (|x| NIL)
           (|inp| ($)))
          (SEQ (LETT |inp| |s| . #2=(|SETLAT;coerce;$Of;10|))
               (LETT |oup| NIL . #2#)
@@ -105,9 +105,9 @@
 
 (DECLAIM (NOTINLINE |SubsetLattice;|)) 
 
-(DEFUN |SubsetLattice| (&REST #1=#:G735)
+(DEFUN |SubsetLattice| (&REST #1=#:G738)
   (SPROG NIL
-         (PROG (#2=#:G736)
+         (PROG (#2=#:G739)
            (RETURN
             (COND
              ((LETT #2#

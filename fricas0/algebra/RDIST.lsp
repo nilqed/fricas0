@@ -3,10 +3,10 @@
         ((|lvw| |List| (|Record| (|:| |value| S) (|:| |weight| (|Integer|))))
          ($ |Mapping| S))
         (SPROG
-         ((|totwt| (|Integer|)) (#1=#:G711 NIL) (|k| NIL) (#2=#:G712 NIL)
+         ((|totwt| (|Integer|)) (#1=#:G714 NIL) (|k| NIL) (#2=#:G715 NIL)
           (|i| NIL) (|wv| (|Vector| (|Integer|))) (|kv| (|Vector| S))
           (|n| (|NonNegativeInteger|)) (|kl| (|List| S)) (|w| (|Integer|))
-          (|u| (|Union| (|Integer|) "failed")) (#3=#:G710 NIL) (|r| NIL)
+          (|u| (|Union| (|Integer|) "failed")) (#3=#:G713 NIL) (|r| NIL)
           (|t| (|Table| S (|Integer|))))
          (SEQ (LETT |t| (SPADCALL (QREFELT $ 8)) . #4=(|RDIST;weighted;LM;1|))
               (SEQ (LETT |r| NIL . #4#) (LETT #3# |lvw| . #4#) G190
@@ -101,9 +101,9 @@
 
 (DECLAIM (NOTINLINE |RandomDistributions;|)) 
 
-(DEFUN |RandomDistributions| (#1=#:G729)
+(DEFUN |RandomDistributions| (#1=#:G732)
   (SPROG NIL
-         (PROG (#2=#:G730)
+         (PROG (#2=#:G733)
            (RETURN
             (COND
              ((LETT #2#

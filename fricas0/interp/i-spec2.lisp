@@ -637,9 +637,7 @@
 ;     b='noMapVal =>
 ;       [[MKQ true, ['throwKeyedMsg,MKQ "S2IM0018",
 ;         ['CONS,MKQ object2Identifier $mapName,NIL]]]]
-;     b='noBranch =>
-;       $lastLineInSEQ => [[MKQ true,['voidValue]]]
-;       NIL
+;     b = 'noBranch => [[MKQ true, ['voidValue]]]
 ;     [[MKQ true,genIFvalCode(b,m)]]
 ;   code:=['COND,[getArgValue(cond,$Boolean),
 ;     genIFvalCode(a,m)],:elseCode]
@@ -661,11 +659,8 @@
                        (LIST '|throwKeyedMsg| (MKQ 'S2IM0018)
                              (LIST 'CONS (MKQ (|object2Identifier| |$mapName|))
                                    NIL)))))
-               ((EQ |b| '|noBranch|)
-                (COND
-                 (|$lastLineInSEQ| (LIST (LIST (MKQ T) (LIST '|voidValue|))))
-                 (#2='T NIL)))
-               (#2# (LIST (LIST (MKQ T) (|genIFvalCode| |b| |m|))))))
+               ((EQ |b| '|noBranch|) (LIST (LIST (MKQ T) (LIST '|voidValue|))))
+               ('T (LIST (LIST (MKQ T) (|genIFvalCode| |b| |m|))))))
       (SETQ |code|
               (CONS 'COND
                     (CONS

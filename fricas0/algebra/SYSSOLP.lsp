@@ -5,7 +5,7 @@
 (SDEFUN |SYSSOLP;makeP2F|
         ((|p| |Polynomial| (|Fraction| (|Polynomial| R)))
          ($ |Fraction| (|Polynomial| R)))
-        (SPROG ((#1=#:G727 NIL) (|v| NIL) (|lv| (|List| (|Symbol|))))
+        (SPROG ((#1=#:G729 NIL) (|v| NIL) (|lv| (|List| (|Symbol|))))
                (SEQ
                 (LETT |lv| (SPADCALL |p| (QREFELT $ 13))
                       . #2=(|SYSSOLP;makeP2F|))
@@ -31,7 +31,7 @@
          (|lv| |List| (|Symbol|)) ($ |Equation| (|Fraction| (|Polynomial| R))))
         (SPROG
          ((|up| (|SparseUnivariatePolynomial| (|Polynomial| R)))
-          (#1=#:G735 NIL) (#2=#:G736 NIL) (|x| NIL) (|lx| (|List| (|Symbol|)))
+          (#1=#:G738 NIL) (#2=#:G739 NIL) (|x| NIL) (|lx| (|List| (|Symbol|)))
           (|np| (|Polynomial| R)) (|z| (|Symbol|)))
          (SEQ (LETT |z| (SPADCALL |lv| (QREFELT $ 20)) . #3=(|SYSSOLP;makeEq|))
               (LETT |np| (SPADCALL (|SYSSOLP;makeP2F| |p| $) (QREFELT $ 21))
@@ -47,7 +47,7 @@
                       (EXIT
                        (COND
                         ((SPADCALL |x| |lx| (QREFELT $ 23))
-                         (PROGN (LETT #1# |$NoValue| . #3#) (GO #4=#:G731))))))
+                         (PROGN (LETT #1# |$NoValue| . #3#) (GO #4=#:G733))))))
                      (LETT #2# (CDR #2#) . #3#) (GO G190) G191 (EXIT NIL)))
                #4# (EXIT #1#))
               (LETT |up| (SPADCALL |np| |x| (QREFELT $ 25)) . #3#)
@@ -74,8 +74,8 @@
 (SDEFUN |SYSSOLP;testDegree|
         ((|f| |Polynomial| R) (|lv| |List| (|Symbol|)) ($ |Boolean|))
         (SPROG
-         ((#1=#:G747 NIL) (#2=#:G746 #3=(|Boolean|)) (#4=#:G748 #3#)
-          (#5=#:G750 NIL) (|vv| NIL))
+         ((#1=#:G750 NIL) (#2=#:G749 #3=(|Boolean|)) (#4=#:G751 #3#)
+          (#5=#:G753 NIL) (|vv| NIL))
          (SEQ
           (PROGN
            (LETT #1# NIL . #6=(|SYSSOLP;testDegree|))
@@ -100,14 +100,14 @@
         ((|lf| |List| (|Fraction| (|Polynomial| R))) (|lv| |List| (|Symbol|))
          ($ |List| (|List| (|Polynomial| R))))
         (SPROG
-         ((#1=#:G798 NIL) (|pf| NIL) (#2=#:G797 NIL) (#3=#:G796 NIL) (|pr| NIL)
-          (#4=#:G795 NIL)
+         ((#1=#:G801 NIL) (|pf| NIL) (#2=#:G800 NIL) (#3=#:G799 NIL) (|pr| NIL)
+          (#4=#:G798 NIL)
           (|parRes|
            (|List|
             (|List|
              (|DistributedMultivariatePolynomial| |lv| (|Polynomial| R)))))
-          (#5=#:G772 NIL) (#6=#:G771 #7=(|Boolean|)) (#8=#:G773 #7#)
-          (#9=#:G794 NIL) (|fq| NIL) (#10=#:G793 NIL) (#11=#:G792 NIL)
+          (#5=#:G775 NIL) (#6=#:G774 #7=(|Boolean|)) (#8=#:G776 #7#)
+          (#9=#:G797 NIL) (|fq| NIL) (#10=#:G796 NIL) (#11=#:G795 NIL)
           (|gb|
            (CATEGORY |package|
             (SIGNATURE |credPol| (|dmp| |dmp| (|List| |dmp|)))
@@ -216,10 +216,10 @@
                         (|:| |pol| |dmp|))
               |dmp| (|NonNegativeInteger|)))
             (SIGNATURE |virtualDegree| ((|NonNegativeInteger|) |dmp|))))
-          (|lp| (|List| |dmp|)) (#13=#:G791 NIL) (|f| NIL) (#14=#:G790 NIL)
-          (|lq| (|List| |dmp|)) (|df| (|Polynomial| R)) (#15=#:G789 NIL)
-          (#16=#:G788 NIL) (|lvv| (|List| OV)) (#17=#:G766 NIL)
-          (#18=#:G787 NIL) (|vv| NIL) (#19=#:G786 NIL)
+          (|lp| (|List| |dmp|)) (#13=#:G794 NIL) (|f| NIL) (#14=#:G793 NIL)
+          (|lq| (|List| |dmp|)) (|df| (|Polynomial| R)) (#15=#:G792 NIL)
+          (#16=#:G791 NIL) (|lvv| (|List| OV)) (#17=#:G769 NIL)
+          (#18=#:G790 NIL) (|vv| NIL) (#19=#:G789 NIL)
           (|push|
            (CATEGORY |package| (SIGNATURE |pushdown| (|dmp| |dmp| OV))
             (SIGNATURE |pushdown| (|dmp| |dmp| (|List| OV)))
@@ -245,7 +245,7 @@
                                   (|OrderedVariableList| |lv|))
             (CATEGORY |domain|
              (SIGNATURE |reorder| ($ $ (|List| (|Integer|)))))))
-          (#20=#:G785 NIL) (|ff| NIL) (#21=#:G784 NIL)
+          (#20=#:G788 NIL) (|ff| NIL) (#21=#:G787 NIL)
           (|fp| (|Factored| (|Polynomial| R))) (|p| (|Polynomial| R)))
          (SEQ
           (COND ((OR (NULL |lv|) (NULL |lf|)) NIL)
@@ -645,7 +645,7 @@
         ((|pol| |Fraction| (|Polynomial| R)) (|var| |Symbol|)
          ($ |List| (|Equation| (|Fraction| (|Polynomial| R)))))
         (SPROG
-         ((#1=#:G822 NIL) (|ff| NIL) (#2=#:G821 NIL)
+         ((#1=#:G825 NIL) (|ff| NIL) (#2=#:G824 NIL)
           (|fp| (|Factored| (|Polynomial| R))) (|p| (|Polynomial| R)))
          (SEQ
           (COND
@@ -681,7 +681,7 @@
 (SDEFUN |SYSSOLP;makePolys|
         ((|l| |List| (|Equation| (|Fraction| (|Polynomial| R))))
          ($ |List| (|Fraction| (|Polynomial| R))))
-        (SPROG ((#1=#:G826 NIL) (|e| NIL) (#2=#:G825 NIL))
+        (SPROG ((#1=#:G829 NIL) (|e| NIL) (#2=#:G828 NIL))
                (SEQ
                 (PROGN
                  (LETT #2# NIL . #3=(|SYSSOLP;makePolys|))
@@ -707,17 +707,17 @@
           "failed"))
         (SPROG
          ((|eqs| (|List| (|Equation| (|Fraction| (|Polynomial| R)))))
-          (#1=#:G846 NIL) (|i| NIL) (#2=#:G845 NIL)
-          (|sym| (|Fraction| (|Polynomial| R))) (#3=#:G844 NIL) (|p| NIL)
+          (#1=#:G849 NIL) (|i| NIL) (#2=#:G848 NIL)
+          (|sym| (|Fraction| (|Polynomial| R))) (#3=#:G847 NIL) (|p| NIL)
           (|zeron| (|Vector| (|Fraction| (|Polynomial| R))))
-          (|rhs| (|Vector| (|Fraction| (|Polynomial| R)))) (#4=#:G833 NIL)
+          (|rhs| (|Vector| (|Fraction| (|Polynomial| R)))) (#4=#:G836 NIL)
           (|rec|
            (|Record|
             (|:| |particular|
                  (|Union| (|Vector| (|Fraction| (|Polynomial| R))) "failed"))
             (|:| |basis| (|List| (|Vector| (|Fraction| (|Polynomial| R)))))))
-          (|lr| (|List| (|Polynomial| R))) (#5=#:G843 NIL) (|f| NIL)
-          (#6=#:G842 NIL))
+          (|lr| (|List| (|Polynomial| R))) (#5=#:G846 NIL) (|f| NIL)
+          (#6=#:G845 NIL))
          (SEQ
           (LETT |lr|
                 (PROGN
@@ -811,8 +811,8 @@
         ((|lr| |List| (|Fraction| (|Polynomial| R)))
          ($ |List| (|List| (|Equation| (|Fraction| (|Polynomial| R))))))
         (SPROG
-         ((|lv| #1=(|List| (|Symbol|))) (#2=#:G848 NIL) (#3=#:G847 #1#)
-          (#4=#:G849 #1#) (#5=#:G852 NIL) (|p| NIL))
+         ((|lv| #1=(|List| (|Symbol|))) (#2=#:G851 NIL) (#3=#:G850 #1#)
+          (#4=#:G852 #1#) (#5=#:G855 NIL) (|p| NIL))
          (SEQ
           (LETT |lv|
                 (PROGN
@@ -848,8 +848,8 @@
         ((|le| |List| (|Equation| (|Fraction| (|Polynomial| R))))
          ($ |List| (|List| (|Equation| (|Fraction| (|Polynomial| R))))))
         (SPROG
-         ((|lv| #1=(|List| (|Symbol|))) (#2=#:G854 NIL) (#3=#:G853 #1#)
-          (#4=#:G855 #1#) (#5=#:G858 NIL) (|p| NIL)
+         ((|lv| #1=(|List| (|Symbol|))) (#2=#:G857 NIL) (#3=#:G856 #1#)
+          (#4=#:G858 #1#) (#5=#:G861 NIL) (|p| NIL)
           (|lr| (|List| (|Fraction| (|Polynomial| R)))))
          (SEQ
           (LETT |lr| (|SYSSOLP;makePolys| |le| $) . #6=(|SYSSOLP;solve;LL;15|))
@@ -893,11 +893,11 @@
         ((|lr| |List| (|Fraction| (|Polynomial| R))) (|vl| |List| (|Symbol|))
          ($ |Boolean|))
         (SPROG
-         ((#1=#:G867 NIL) (#2=#:G866 #3=(|Boolean|)) (#4=#:G868 #3#)
-          (#5=#:G876 NIL) (|pol| NIL) (#6=#:G871 NIL) (#7=#:G862 NIL)
-          (#8=#:G861 #9=(|Boolean|)) (#10=#:G863 #9#) (#11=#:G875 NIL)
-          (|x| NIL) (#12=#:G874 NIL) (|f| NIL) (|ld| (|List| (|Polynomial| R)))
-          (#13=#:G873 NIL) (#14=#:G872 NIL))
+         ((#1=#:G870 NIL) (#2=#:G869 #3=(|Boolean|)) (#4=#:G871 #3#)
+          (#5=#:G880 NIL) (|pol| NIL) (#6=#:G875 NIL) (#7=#:G865 NIL)
+          (#8=#:G864 #9=(|Boolean|)) (#10=#:G866 #9#) (#11=#:G879 NIL)
+          (|x| NIL) (#12=#:G878 NIL) (|f| NIL) (|ld| (|List| (|Polynomial| R)))
+          (#13=#:G877 NIL) (#14=#:G876 NIL))
          (SEQ
           (EXIT
            (SEQ
@@ -948,7 +948,7 @@
                            (LETT #11# (CDR #11#) . #15#) (GO G190) G191
                            (EXIT NIL))
                       (COND (#7# #8#) ('T NIL)))
-                     (PROGN (LETT #6# NIL . #15#) (GO #16=#:G870))))))
+                     (PROGN (LETT #6# NIL . #15#) (GO #16=#:G874))))))
                  (LETT #12# (CDR #12#) . #15#) (GO G190) G191 (EXIT NIL))
             (EXIT
              (PROGN
@@ -979,11 +979,11 @@
         ((|lr| |List| (|Fraction| (|Polynomial| R))) (|vl| |List| (|Symbol|))
          ($ |List| (|List| (|Equation| (|Fraction| (|Polynomial| R))))))
         (SPROG
-         ((#1=#:G892 NIL) (|f| NIL) (#2=#:G891 NIL) (#3=#:G890 NIL) (|pr| NIL)
-          (#4=#:G889 NIL) (|parRes| (|List| (|List| (|Polynomial| R))))
+         ((#1=#:G896 NIL) (|f| NIL) (#2=#:G895 NIL) (#3=#:G894 NIL) (|pr| NIL)
+          (#4=#:G893 NIL) (|parRes| (|List| (|List| (|Polynomial| R))))
           (|eqns| (|List| (|Equation| (|Fraction| (|Polynomial| R)))))
           (|rhs| (|Fraction| (|Polynomial| R)))
-          (|lhs| (|Fraction| (|Polynomial| R))) (#5=#:G888 NIL) (|i| NIL)
+          (|lhs| (|Fraction| (|Polynomial| R))) (#5=#:G892 NIL) (|i| NIL)
           (|soln|
            (|Union| (|List| (|Equation| (|Fraction| (|Polynomial| R))))
                     "failed")))
@@ -1076,9 +1076,9 @@
 
 (DECLAIM (NOTINLINE |SystemSolvePackage;|)) 
 
-(DEFUN |SystemSolvePackage| (#1=#:G893)
+(DEFUN |SystemSolvePackage| (#1=#:G897)
   (SPROG NIL
-         (PROG (#2=#:G894)
+         (PROG (#2=#:G898)
            (RETURN
             (COND
              ((LETT #2#

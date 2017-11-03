@@ -28,9 +28,9 @@
 
 (DECLAIM (NOTINLINE |QuadraticForm;|)) 
 
-(DEFUN |QuadraticForm| (&REST #1=#:G712)
+(DEFUN |QuadraticForm| (&REST #1=#:G717)
   (SPROG NIL
-         (PROG (#2=#:G713)
+         (PROG (#2=#:G718)
            (RETURN
             (COND
              ((LETT #2#
@@ -79,15 +79,16 @@
 
 (MAKEPROP '|QuadraticForm| '|infovec|
           (LIST
-           '#(NIL NIL NIL NIL NIL (|SquareMatrix| 6 7) (|local| |#1|)
-              (|local| |#2|) '|Rep| (|Boolean|) (0 . |symmetric?|)
-              |QFORM;quadraticForm;Sm$;1| |QFORM;matrix;$Sm;2|
-              (|DirectProduct| 6 7) (5 . *) (11 . |dot|) |QFORM;elt;$DpK;3|
-              (|InputForm|) (17 . |convert|) (|Symbol|) (|SExpression|)
-              (22 . |convert|) (27 . |convert|) (|List| $) (32 . |convert|)
-              (37 . |convert|) (|Integer|) (|Union| $ '"failed")
-              (|NonNegativeInteger|) (|PositiveInteger|) (|String|)
-              (|SingleInteger|) (|HashState|) (|OutputForm|))
+           '#(NIL NIL NIL NIL NIL (|SquareMatrix| (NRTEVAL (QREFELT $ 6)) 7)
+              (|local| |#1|) (|local| |#2|) '|Rep| (|Boolean|)
+              (0 . |symmetric?|) |QFORM;quadraticForm;Sm$;1|
+              |QFORM;matrix;$Sm;2| (|DirectProduct| (NRTEVAL (QREFELT $ 6)) 7)
+              (5 . *) (11 . |dot|) |QFORM;elt;$DpK;3| (|InputForm|)
+              (17 . |convert|) (|Symbol|) (|SExpression|) (22 . |convert|)
+              (27 . |convert|) (|List| $) (32 . |convert|) (37 . |convert|)
+              (|Integer|) (|Union| $ '"failed") (|NonNegativeInteger|)
+              (|PositiveInteger|) (|String|) (|SingleInteger|) (|HashState|)
+              (|OutputForm|))
            '#(~= 42 |zero?| 48 |subtractIfCan| 53 |sample| 59 |quadraticForm|
               63 |opposite?| 68 |matrix| 74 |latex| 79 |hashUpdate!| 84 |hash|
               90 |elt| 95 |convert| 101 |coerce| 106 |Zero| 111 = 115 - 121 +

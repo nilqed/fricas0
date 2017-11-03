@@ -19,8 +19,8 @@
 (SDEFUN |SBOUND;sunion;3$;6| ((|x| $) (|y| $) ($ $))
         (SPROG
          ((|ymax| (PT)) (#1=#:G711 NIL) (|ymin| (PT)) (|xmax| (PT))
-          (|xmin| (PT)) (#2=#:G770 NIL) (|res| ($)) (#3=#:G772 NIL) (|ptr| NIL)
-          (|p| (|List| $)) (#4=#:G712 NIL) (#5=#:G771 NIL))
+          (|xmin| (PT)) (#2=#:G772 NIL) (|res| ($)) (#3=#:G774 NIL) (|ptr| NIL)
+          (|p| (|List| $)) (#4=#:G712 NIL) (#5=#:G773 NIL))
          (SEQ
           (EXIT
            (SEQ
@@ -28,7 +28,7 @@
              ((QEQCAR |x| 0)
               (PROGN
                (LETT #2# |y| . #6=(|SBOUND;sunion;3$;6|))
-               (GO #7=#:G769))))
+               (GO #7=#:G771))))
             (COND ((QEQCAR |y| 0) (PROGN (LETT #2# |x| . #6#) (GO #7#))))
             (COND
              ((QEQCAR |x| 2)
@@ -492,8 +492,8 @@
 
 (SDEFUN |SBOUND;extendToPoint;$PT$;7| ((|n| $) (|p| PT) ($ $))
         (SPROG
-         ((|xmax| (PT)) (|xmin| (PT)) (#1=#:G784 NIL) (|res| ($))
-          (#2=#:G785 NIL) (|ptr| NIL) (|pa| (|List| $)) (#3=#:G712 NIL))
+         ((|xmax| (PT)) (|xmin| (PT)) (#1=#:G786 NIL) (|res| ($))
+          (#2=#:G787 NIL) (|ptr| NIL) (|pa| (|List| $)) (#3=#:G712 NIL))
          (SEQ
           (EXIT
            (SEQ
@@ -502,7 +502,7 @@
               (PROGN
                (LETT #1# (CONS 1 (VECTOR '|box| |p| |p|))
                      . #4=(|SBOUND;extendToPoint;$PT$;7|))
-               (GO #5=#:G783))))
+               (GO #5=#:G785))))
             (COND
              ((QEQCAR |n| 2)
               (SEQ
@@ -568,8 +568,8 @@
 
 (SDEFUN |SBOUND;containsPoint?;$PTB;8| ((|n| $) (|p| PT) ($ |Boolean|))
         (SPROG
-         ((#1=#:G711 NIL) (#2=#:G800 NIL) (|rDist| #3=(|DoubleFloat|))
-          (|pDist| #3#) (|pRel| (PT)) (#4=#:G801 NIL) (|sub| NIL)
+         ((#1=#:G711 NIL) (#2=#:G804 NIL) (|rDist| #3=(|DoubleFloat|))
+          (|pDist| #3#) (|pRel| (PT)) (#4=#:G805 NIL) (|sub| NIL)
           (|pa| (|List| $)) (#5=#:G712 NIL))
          (SEQ
           (EXIT
@@ -578,7 +578,7 @@
              ((QEQCAR |n| 0)
               (PROGN
                (LETT #2# NIL . #6=(|SBOUND;containsPoint?;$PTB;8|))
-               (GO #7=#:G799))))
+               (GO #7=#:G803))))
             (COND
              ((QEQCAR |n| 2)
               (SEQ
@@ -823,7 +823,7 @@
         (SPROG
          ((|y| #1=(|DoubleFloat|)) (|x| #1#) (|yp| #2=(|DoubleFloat|))
           (|xp| #3=(|DoubleFloat|)) (|b| #2#) (|a| #3#) (|rad| (PT))
-          (#4=#:G711 NIL) (|pRel| (PT)) (|cent| (PT)) (#5=#:G815 NIL)
+          (#4=#:G711 NIL) (|pRel| (PT)) (|cent| (PT)) (#5=#:G820 NIL)
           (|divisor| (|DoubleFloat|)) (|ab| (|DoubleFloat|)) (|centre| (PT)))
          (SEQ
           (EXIT
@@ -832,7 +832,7 @@
              ((QEQCAR |n| 0)
               (PROGN
                (LETT #5# |p| . #6=(|SBOUND;lineIntersect;$2PT;9|))
-               (GO #7=#:G814))))
+               (GO #7=#:G819))))
             (COND
              ((QEQCAR |n| 2)
               (|error| "cant compute lineIntersect with compound border")))
@@ -1068,7 +1068,7 @@
 (SDEFUN |SBOUND;isNull?;$B;10| ((|n| $) ($ |Boolean|)) (QEQCAR |n| 0)) 
 
 (SDEFUN |SBOUND;isEllipse?;$B;11| ((|n| $) ($ |Boolean|))
-        (SPROG ((#1=#:G824 NIL))
+        (SPROG ((#1=#:G829 NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -1076,12 +1076,12 @@
                    ((NULL (QEQCAR |n| 1))
                     (PROGN
                      (LETT #1# NIL |SBOUND;isEllipse?;$B;11|)
-                     (GO #2=#:G823))))
+                     (GO #2=#:G828))))
                   (EXIT (EQUAL (QVELT (CDR |n|) 0) '|ellipoid|))))
                 #2# (EXIT #1#)))) 
 
 (SDEFUN |SBOUND;isBox?;$B;12| ((|n| $) ($ |Boolean|))
-        (SPROG ((#1=#:G832 NIL))
+        (SPROG ((#1=#:G837 NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -1089,12 +1089,12 @@
                    ((NULL (QEQCAR |n| 1))
                     (PROGN
                      (LETT #1# NIL |SBOUND;isBox?;$B;12|)
-                     (GO #2=#:G831))))
+                     (GO #2=#:G836))))
                   (EXIT (EQUAL (QVELT (CDR |n|) 0) '|box|))))
                 #2# (EXIT #1#)))) 
 
 (SDEFUN |SBOUND;getMin;$PT;13| ((|n| $) ($ PT))
-        (SPROG ((#1=#:G711 NIL) (#2=#:G837 NIL))
+        (SPROG ((#1=#:G711 NIL) (#2=#:G842 NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -1166,7 +1166,7 @@
                              (QREFELT $ 23))
                             (QREFELT $ 49))
                            . #3#)
-                     (GO #5=#:G836))))
+                     (GO #5=#:G841))))
                   (EXIT
                    (QVELT
                     (PROG2 (LETT #1# |n| . #3#)
@@ -1193,7 +1193,7 @@
                 #5# (EXIT #2#)))) 
 
 (SDEFUN |SBOUND;getMax;$PT;14| ((|n| $) ($ PT))
-        (SPROG ((#1=#:G711 NIL) (#2=#:G842 NIL))
+        (SPROG ((#1=#:G711 NIL) (#2=#:G847 NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -1265,7 +1265,7 @@
                              (QREFELT $ 24))
                             (QREFELT $ 49))
                            . #3#)
-                     (GO #5=#:G841))))
+                     (GO #5=#:G846))))
                   (EXIT
                    (QVELT
                     (PROG2 (LETT #1# |n| . #3#)
@@ -1292,7 +1292,7 @@
                 #5# (EXIT #2#)))) 
 
 (SDEFUN |SBOUND;getCentre;$PT;15| ((|n| $) ($ PT))
-        (SPROG ((#1=#:G711 NIL) (#2=#:G847 NIL))
+        (SPROG ((#1=#:G711 NIL) (#2=#:G852 NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -1331,7 +1331,7 @@
                                               #1#))
                             1)
                            . #3#)
-                     (GO #5=#:G846))))
+                     (GO #5=#:G851))))
                   (EXIT
                    (SPADCALL
                     (SPADCALL (SPADCALL 5 -1 10 (QREFELT $ 40)) (QREFELT $ 41))
@@ -1403,8 +1403,8 @@
 
 (SDEFUN |SBOUND;coerce;$Of;17| ((|n| $) ($ |OutputForm|))
         (SPROG
-         ((|sub| (|OutputForm|)) (#1=#:G860 NIL) (#2=#:G712 NIL) (|x| NIL)
-          (#3=#:G859 NIL) (#4=#:G858 NIL) (#5=#:G711 NIL) (|s| (|OutputForm|))
+         ((|sub| (|OutputForm|)) (#1=#:G865 NIL) (#2=#:G712 NIL) (|x| NIL)
+          (#3=#:G864 NIL) (#4=#:G863 NIL) (#5=#:G711 NIL) (|s| (|OutputForm|))
           (|ty| (|OutputForm|)))
          (SEQ
           (EXIT
@@ -1421,13 +1421,13 @@
                   (SPADCALL (SPADCALL '|bound | (QREFELT $ 55)) |ty|
                             (QREFELT $ 57))
                   . #6#)
-            (COND ((QEQCAR |n| 0) (PROGN (LETT #4# |s| . #6#) (GO #7=#:G857))))
+            (COND ((QEQCAR |n| 0) (PROGN (LETT #4# |s| . #6#) (GO #7=#:G862))))
             (COND
              ((QEQCAR |n| 1)
               (PROGN
                (LETT #4#
                      (SPADCALL
-                      (LIST |s| ":"
+                      (LIST |s| (SPADCALL ":" (QREFELT $ 59))
                             (SPADCALL
                              (QVELT
                               (PROG2 (LETT #5# |n| . #6#)
@@ -1458,7 +1458,7 @@
                                                                      $)))))
                                                 #5#))
                               1)
-                             (QREFELT $ 58))
+                             (QREFELT $ 60))
                             (SPADCALL '-> (QREFELT $ 55))
                             (SPADCALL
                              (QVELT
@@ -1490,8 +1490,8 @@
                                                                      $)))))
                                                 #5#))
                               2)
-                             (QREFELT $ 58)))
-                      (QREFELT $ 59))
+                             (QREFELT $ 60)))
+                      (QREFELT $ 61))
                      . #6#)
                (GO #7#))))
             (LETT |sub|
@@ -1536,22 +1536,22 @@
                            (GO G191)))
                          (SEQ
                           (EXIT
-                           (LETT #3# (CONS (SPADCALL |x| (QREFELT $ 60)) #3#)
+                           (LETT #3# (CONS (SPADCALL |x| (QREFELT $ 62)) #3#)
                                  . #6#)))
                          (LETT #1# (CDR #1#) . #6#) (GO G190) G191
                          (EXIT (NREVERSE #3#))))
-                   (QREFELT $ 61))
+                   (QREFELT $ 63))
                   . #6#)
             (EXIT
              (SPADCALL (LIST |s| (SPADCALL '|:| (QREFELT $ 55)) |sub|)
-                       (QREFELT $ 59)))))
+                       (QREFELT $ 61)))))
           #7# (EXIT #4#)))) 
 
 (DECLAIM (NOTINLINE |SBoundary;|)) 
 
-(DEFUN |SBoundary| (#1=#:G861)
+(DEFUN |SBoundary| (#1=#:G866)
   (SPROG NIL
-         (PROG (#2=#:G862)
+         (PROG (#2=#:G867)
            (RETURN
             (COND
              ((LETT #2#
@@ -1571,7 +1571,7 @@
          (PROGN
           (LETT DV$1 (|devaluate| |#1|) . #1=(|SBoundary|))
           (LETT |dv$| (LIST '|SBoundary| DV$1) . #1#)
-          (LETT $ (GETREFV 62) . #1#)
+          (LETT $ (GETREFV 64) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|SBoundary| (LIST DV$1) (CONS 1 $))
@@ -1607,18 +1607,18 @@
               |SBOUND;isBox?;$B;12| (102 . |toPoint|) |SBOUND;getCentre;$PT;15|
               (|List| 6) |SBOUND;link;2$L;16| (|Symbol|) (|OutputForm|)
               (107 . |outputForm|) (112 . |coerce|) (117 . |hconcat|)
-              (123 . |coerce|) (128 . |hconcat|) |SBOUND;coerce;$Of;17|
-              (133 . |bracket|))
-           '#(|union| 138 |sunion| 143 |nullBoundary| 149 |link| 153
-              |lineIntersect| 159 |isNull?| 165 |isEllipse?| 170 |isBox?| 175
-              |intersection| 180 |getMin| 185 |getMax| 190 |getCentre| 195
-              |extendToPoint| 200 |ellipseBoundary| 206 |containsPoint?| 212
-              |coerce| 218 |boxBoundary| 223)
+              (|String|) (123 . |message|) (128 . |coerce|) (133 . |hconcat|)
+              |SBOUND;coerce;$Of;17| (138 . |bracket|))
+           '#(|union| 143 |sunion| 148 |nullBoundary| 154 |link| 158
+              |lineIntersect| 164 |isNull?| 170 |isEllipse?| 175 |isBox?| 180
+              |intersection| 185 |getMin| 190 |getMax| 195 |getCentre| 200
+              |extendToPoint| 205 |ellipseBoundary| 211 |containsPoint?| 217
+              |coerce| 223 |boxBoundary| 228)
            'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
-                             (|makeByteWordVec2| 61
+                             (|makeByteWordVec2| 63
                                                  '(2 6 0 0 0 9 2 6 0 0 0 10 1
                                                    17 16 0 18 1 17 2 0 19 2 17
                                                    2 0 21 22 2 6 0 0 0 23 2 6 0
@@ -1629,14 +1629,14 @@
                                                    31 0 41 2 6 0 31 0 42 0 43 0
                                                    44 2 31 28 0 0 45 1 6 0 0 49
                                                    1 54 0 53 55 1 53 54 0 56 2
-                                                   54 0 0 0 57 1 6 54 0 58 1 54
-                                                   0 13 59 1 54 0 13 61 1 0 0
-                                                   13 14 2 0 0 0 0 20 0 0 0 8 2
-                                                   0 51 0 0 52 2 0 6 0 6 46 1 0
-                                                   28 0 47 1 0 28 0 30 1 0 28 0
-                                                   48 1 0 0 13 15 1 0 6 0 26 1
-                                                   0 6 0 27 1 0 6 0 50 2 0 0 0
-                                                   6 25 2 0 0 6 6 12 2 0 28 0 6
-                                                   29 1 0 54 0 60 2 0 0 6 6
-                                                   11)))))
+                                                   54 0 0 0 57 1 54 0 58 59 1 6
+                                                   54 0 60 1 54 0 13 61 1 54 0
+                                                   13 63 1 0 0 13 14 2 0 0 0 0
+                                                   20 0 0 0 8 2 0 51 0 0 52 2 0
+                                                   6 0 6 46 1 0 28 0 47 1 0 28
+                                                   0 30 1 0 28 0 48 1 0 0 13 15
+                                                   1 0 6 0 26 1 0 6 0 27 1 0 6
+                                                   0 50 2 0 0 0 6 25 2 0 0 6 6
+                                                   12 2 0 28 0 6 29 1 0 54 0 62
+                                                   2 0 0 6 6 11)))))
            '|lookupComplete|)) 

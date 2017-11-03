@@ -4,22 +4,12 @@
 (DEFPARAMETER |Monoid;AL| 'NIL) 
 
 (DEFUN |Monoid| ()
-  (LET (#:G693)
+  (LET (#:G692)
     (COND (|Monoid;AL|) (T (SETQ |Monoid;AL| (|Monoid;|)))))) 
 
 (DEFUN |Monoid;| ()
-  (SPROG ((#1=#:G691 NIL))
-         (PROG1
-             (LETT #1#
-                   (|Join| (|SemiGroup|)
-                           (|mkCategory|
-                            '(((|One| ($) |constant|) T)
-                              ((|sample| ($) |constant|) T)
-                              ((|one?| ((|Boolean|) $)) T)
-                              ((^ ($ $ (|NonNegativeInteger|))) T)
-                              ((|recip| ((|Union| $ "failed") $)) T))
-                            NIL '((|NonNegativeInteger|) (|Boolean|)) NIL))
-                   |Monoid|)
+  (SPROG ((#1=#:G690 NIL))
+         (PROG1 (LETT #1# (|Join| (|SemiGroup|) (|MagmaWithUnit|)) |Monoid|)
            (SETELT #1# 0 '(|Monoid|))))) 
 
 (MAKEPROP '|Monoid| 'NILADIC T) 

@@ -1,9 +1,9 @@
 
 (DECLAIM (NOTINLINE |SparseTable;|)) 
 
-(DEFUN |SparseTable| (&REST #1=#:G750)
+(DEFUN |SparseTable| (&REST #1=#:G752)
   (SPROG NIL
-         (PROG (#2=#:G751)
+         (PROG (#2=#:G753)
            (RETURN
             (COND
              ((LETT #2#
@@ -22,7 +22,7 @@
 
 (DEFUN |SparseTable;| (|#1| |#2| |#3|)
   (SPROG
-   ((#1=#:G749 NIL) (#2=#:G748 NIL) (|pv$| NIL) (#3=#:G746 NIL) (#4=#:G747 NIL)
+   ((#1=#:G751 NIL) (#2=#:G750 NIL) (|pv$| NIL) (#3=#:G748 NIL) (#4=#:G749 NIL)
     ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #5=(|SparseTable|))
@@ -81,13 +81,6 @@
                                                             (|devaluate|
                                                              |#2|)))))
                                          #3#)
-                                        (OR (|HasCategory| |#2| '(|BasicType|))
-                                            #4#
-                                            (|HasCategory|
-                                             (|Record| (|:| |key| |#1|)
-                                                       (|:| |entry| |#2|))
-                                             '(|BasicType|))
-                                            #3#)
                                         (OR #4# #3#)
                                         (OR
                                          (|HasCategory| |#2|
@@ -107,31 +100,32 @@
     (QSETREFV $ 7 |#2|)
     (QSETREFV $ 8 |#3|)
     (AND (LETT #2# (|HasCategory| $ '(|finiteAggregate|)) . #5#)
-         (|augmentPredVector| $ 4096))
+         (|augmentPredVector| $ 2048))
     (AND #2#
          (|HasCategory| (|Record| (|:| |key| |#1|) (|:| |entry| |#2|))
                         '(|BasicType|))
-         (|augmentPredVector| $ 8192))
+         (|augmentPredVector| $ 4096))
     (AND
      (LETT #1#
            (AND (|HasCategory| |#2| '(|BasicType|))
                 (|HasCategory| $ '(|finiteAggregate|)))
            . #5#)
-     (|augmentPredVector| $ 16384))
+     (|augmentPredVector| $ 8192))
     (AND
      (OR #1# #4#
          (AND #2#
               (|HasCategory| (|Record| (|:| |key| |#1|) (|:| |entry| |#2|))
                              '(|BasicType|)))
          #3#)
-     (|augmentPredVector| $ 32768))
-    (AND (|HasCategory| $ '(|shallowlyMutable|)) (|augmentPredVector| $ 65536))
+     (|augmentPredVector| $ 16384))
+    (AND (|HasCategory| $ '(|shallowlyMutable|)) (|augmentPredVector| $ 32768))
     (SETF |pv$| (QREFELT $ 3))
     $))) 
 
 (MAKEPROP '|SparseTable| '|infovec|
           (LIST
-           '#(NIL NIL NIL NIL NIL (|GeneralSparseTable| 6 7 (|Table| 6 7) 8)
+           '#(NIL NIL NIL NIL NIL
+              (|GeneralSparseTable| 6 7 (|Table| 6 7) (NRTEVAL (QREFELT $ 8)))
               (|local| |#1|) (|local| |#2|) (|local| |#3|)
               (|Record| (|:| |key| 6) (|:| |entry| 7)) (|List| 9) (|List| 12)
               (|Equation| 9) (|Mapping| 9 9 9) (|Boolean|)
@@ -142,9 +136,9 @@
               (|Union| 7 '"failed") (|Union| 9 '"failed"))
            '#() 'NIL
            (CONS
-            (|makeByteWordVec2| 12
-                                '(0 0 0 0 0 0 0 0 0 0 0 9 7 11 0 0 0 9 1 7 10
-                                  12))
+            (|makeByteWordVec2| 11
+                                '(0 0 0 0 0 0 0 0 0 0 0 9 7 10 0 0 0 9 1 7 10
+                                  11))
             (CONS
              '#(|TableAggregate&| |KeyedDictionary&| |Dictionary&|
                 |DictionaryOperations&| |BagAggregate&| |Collection&|

@@ -98,9 +98,9 @@
 
 (DECLAIM (NOTINLINE |Localize;|)) 
 
-(DEFUN |Localize| (&REST #1=#:G726)
+(DEFUN |Localize| (&REST #1=#:G730)
   (SPROG NIL
-         (PROG (#2=#:G727)
+         (PROG (#2=#:G731)
            (RETURN
             (COND
              ((LETT #2#

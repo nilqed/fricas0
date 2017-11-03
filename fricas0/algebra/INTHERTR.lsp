@@ -39,9 +39,9 @@
          ($ |Record| (|:| |answer| (|Fraction| UP)) (|:| |lognum| UP)
           (|:| |logden| UP)))
         (SPROG
-         ((|mult| (UP)) (|p| (UP)) (|a| (UP)) (#1=#:G707 NIL) (|qr_rem| (UP))
+         ((|mult| (UP)) (|p| (UP)) (|a| (UP)) (#1=#:G708 NIL) (|qr_rem| (UP))
           (|qr| (|Record| (|:| |quotient| UP) (|:| |remainder| UP)))
-          (|bc| (|Record| (|:| |coef1| UP) (|:| |coef2| UP))) (#2=#:G713 NIL)
+          (|bc| (|Record| (|:| |coef1| UP) (|:| |coef2| UP))) (#2=#:G717 NIL)
           (|qtil| (UP)) (|qbarhat| (UP)) (|g| (UP)) (|qbar| (UP)) (|qhat| (UP))
           (|g0| (UP)) (|q| (UP)))
          (SEQ
@@ -157,9 +157,9 @@
 
 (DECLAIM (NOTINLINE |TranscendentalHermiteIntegration;|)) 
 
-(DEFUN |TranscendentalHermiteIntegration| (&REST #1=#:G720)
+(DEFUN |TranscendentalHermiteIntegration| (&REST #1=#:G724)
   (SPROG NIL
-         (PROG (#2=#:G721)
+         (PROG (#2=#:G725)
            (RETURN
             (COND
              ((LETT #2#

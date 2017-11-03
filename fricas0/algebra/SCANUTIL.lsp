@@ -6,7 +6,7 @@
         (SPROG
          ((|res| (|Integer|)) (|l2| #1=(|SingleInteger|)) (|tp| (|Integer|))
           (|l1| (|SingleInteger|)) (|s1| (|SingleInteger|)) (|dig_val| #1#)
-          (#2=#:G718 NIL) (|i| NIL) (#3=#:G717 NIL) (#4=#:G716 NIL)
+          (#2=#:G722 NIL) (|i| NIL) (#3=#:G721 NIL) (#4=#:G720 NIL)
           (|ten7| (|Integer|)) (|ten| #5=(|SingleInteger|)) (|b| #5#))
          (SEQ (LETT |b| 48 . #6=(|SCANUTIL;parse_integer2|))
               (LETT |ten| 10 . #6#) (LETT |ten7| 10000000 . #6#)
@@ -62,8 +62,8 @@
                       (LETT |l2| (|sub_SI| |l| |l1|) . #6#)
                       (LETT |res|
                             (|SCANUTIL;parse_integer2| |str|
-                             (|add_SI| |i0| (|mul_SI| 7 |l2|)) |l1| |l2l| |tpl|
-                             $)
+                             (|add_SI| |i0| (SPADCALL 7 |l2| (QREFELT $ 8)))
+                             |l1| |l2l| |tpl| $)
                             . #6#)
                       (SEQ G190
                            (COND
@@ -82,10 +82,10 @@
         (SPROG
          ((|res| (|Integer|)) (|j| (|SingleInteger|))
           (|s1| #1=(|SingleInteger|)) (|dig_val| #2=(|SingleInteger|))
-          (#3=#:G734 NIL) (|i| NIL) (#4=#:G733 NIL) (|k| NIL)
+          (#3=#:G738 NIL) (|i| NIL) (#4=#:G737 NIL) (|k| NIL)
           (|ll| #5=(|SingleInteger|)) (|tpl| (|List| #6=(|Integer|)))
           (|l2l| (|List| #1#)) (|tp| #6#) (|ten7| #6#) (|l2| #2#) (|l20| #2#)
-          (#7=#:G732 NIL) (|ten| #5#) (|l1| (|SingleInteger|)) (|l| #5#)
+          (#7=#:G736 NIL) (|ten| #5#) (|l1| (|SingleInteger|)) (|l| #5#)
           (|b| #5#))
          (SEQ (LETT |b| 48 . #8=(|SCANUTIL;parse_integer;SI;2|))
               (LETT |l| (QCSIZE |str|) . #8#)
@@ -167,7 +167,7 @@
 
 (DEFUN |ScanningUtilities| ()
   (SPROG NIL
-         (PROG (#1=#:G736)
+         (PROG (#1=#:G740)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|ScanningUtilities|)
@@ -189,7 +189,7 @@
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
           (LETT |dv$| '(|ScanningUtilities|) . #1=(|ScanningUtilities|))
-          (LETT $ (GETREFV 9) . #1#)
+          (LETT $ (GETREFV 11) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|ScanningUtilities| NIL (CONS 1 $))
@@ -199,11 +199,14 @@
 
 (MAKEPROP '|ScanningUtilities| '|infovec|
           (LIST
-           '#(NIL NIL NIL NIL NIL NIL (|Integer|) (|String|)
-              |SCANUTIL;parse_integer;SI;2|)
-           '#(|parse_integer| 0) 'NIL
+           '#(NIL NIL NIL NIL NIL NIL (|Integer|) (|SingleInteger|) (0 . *)
+              (|String|) |SCANUTIL;parse_integer;SI;2|)
+           '#(|parse_integer| 6) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#() (CONS '#() (|makeByteWordVec2| 8 '(1 0 6 7 8)))))
+                 (CONS '#()
+                       (CONS '#()
+                             (|makeByteWordVec2| 10
+                                                 '(2 7 0 6 0 8 1 0 6 9 10)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|ScanningUtilities| 'NILADIC T) 

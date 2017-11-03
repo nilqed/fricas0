@@ -14,9 +14,9 @@
 
 (DECLAIM (NOTINLINE |ParametricSurface;|)) 
 
-(DEFUN |ParametricSurface| (#1=#:G697)
+(DEFUN |ParametricSurface| (#1=#:G700)
   (SPROG NIL
-         (PROG (#2=#:G698)
+         (PROG (#2=#:G701)
            (RETURN
             (COND
              ((LETT #2#

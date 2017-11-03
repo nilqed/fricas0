@@ -8,7 +8,9 @@
          ('T
           (|error|
            (LIST '|mathprint|
-                 (LIST 'CONCAT "IO mode must be input or output"
+                 (LIST 'CONCAT
+                       (SPADCALL "IO mode must be input or output"
+                                 (QREFELT $ 13))
                        (SPADCALL |mode| (QREFELT $ 13)))))))) 
 
 (SDEFUN |KAFILE;=;2$B;2| ((|f1| $) (|f2| $) ($ |Boolean|))
@@ -55,7 +57,9 @@
                  ((SPADCALL (QVELT |f| 2) "input" (QREFELT $ 24))
                   (|error|
                    (LIST '|mathprint|
-                         (LIST 'CONCAT "File not in read state"
+                         (LIST 'CONCAT
+                               (SPADCALL "File not in read state"
+                                         (QREFELT $ 13))
                                (SPADCALL |f| (QREFELT $ 18))))))
                  (#1='T
                   (SEQ
@@ -66,7 +70,9 @@
                      ((NULL |ks|)
                       (|error|
                        (LIST '|mathprint|
-                             (LIST 'CONCAT "Attempt to read empty file"
+                             (LIST 'CONCAT
+                                   (SPADCALL "Attempt to read empty file"
+                                             (QREFELT $ 13))
                                    (SPADCALL |f| (QREFELT $ 18))))))
                      (#1#
                       (SEQ (LETT |ix| (RANDOM (LENGTH |ks|)) . #2#)
@@ -85,7 +91,8 @@
           ((SPADCALL (QVELT |f| 2) "output" (QREFELT $ 24))
            (|error|
             (LIST '|mathprint|
-                  (LIST 'CONCAT "File not in write state"
+                  (LIST 'CONCAT
+                        (SPADCALL "File not in write state" (QREFELT $ 13))
                         (SPADCALL |f| (QREFELT $ 18))))))
           ('T
            (SEQ (SPADRWRITE (QCAR |pr|) (QCDR |pr|) (QVELT |f| 1))
@@ -108,7 +115,7 @@
 
 (SDEFUN |KAFILE;keys;$L;13| ((|f| $) ($ |List| (|String|)))
         (SPROG
-         ((#1=#:G767 NIL) (|n| NIL) (#2=#:G766 NIL)
+         ((#1=#:G770 NIL) (|n| NIL) (#2=#:G769 NIL)
           (|l| (|List| (|SExpression|))))
          (SEQ (SPADCALL |f| (QREFELT $ 23))
               (LETT |l| (RKEYIDS (QVELT |f| 0)) . #3=(|KAFILE;keys;$L;13|))
@@ -165,9 +172,9 @@
 
 (DECLAIM (NOTINLINE |KeyedAccessFile;|)) 
 
-(DEFUN |KeyedAccessFile| (#1=#:G827)
+(DEFUN |KeyedAccessFile| (#1=#:G831)
   (SPROG NIL
-         (PROG (#2=#:G828)
+         (PROG (#2=#:G832)
            (RETURN
             (COND
              ((LETT #2#
@@ -185,7 +192,7 @@
                   (HREM |$ConstructorCache| '|KeyedAccessFile|)))))))))) 
 
 (DEFUN |KeyedAccessFile;| (|#1|)
-  (SPROG ((#1=#:G826 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
+  (SPROG ((#1=#:G830 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
           (LETT DV$1 (|devaluate| |#1|) . #2=(|KeyedAccessFile|))
           (LETT |dv$| (LIST '|KeyedAccessFile| DV$1) . #2#)

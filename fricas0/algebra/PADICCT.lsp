@@ -5,8 +5,8 @@
 
 (DEFPARAMETER |PAdicIntegerCategory;AL| 'NIL) 
 
-(DEFUN |PAdicIntegerCategory| (#1=#:G693)
-  (LET (#2=#:G694)
+(DEFUN |PAdicIntegerCategory| (#1=#:G694)
+  (LET (#2=#:G695)
     (COND
      ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |PAdicIntegerCategory;AL|))
       (CDR #2#))
@@ -17,7 +17,7 @@
       #2#)))) 
 
 (DEFUN |PAdicIntegerCategory;| (|t#1|)
-  (SPROG ((#1=#:G692 NIL))
+  (SPROG ((#1=#:G693 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))

@@ -2,7 +2,7 @@
 (SDEFUN |OMEXPR;outputOMArith1|
         ((|dev| |OpenMathDevice|) (|sym| |String|)
          (|args| |List| (|Expression| R)) ($ |Void|))
-        (SPROG ((#1=#:G723 NIL) (|arg| NIL))
+        (SPROG ((#1=#:G722 NIL) (|arg| NIL))
                (SEQ (SPADCALL |dev| (QREFELT $ 16))
                     (SPADCALL |dev| "arith1" |sym| (QREFELT $ 18))
                     (SEQ (LETT |arg| NIL . #2=(|OMEXPR;outputOMArith1|))
@@ -46,7 +46,7 @@
 
 (SDEFUN |OMEXPR;outputOMBinomial|
         ((|dev| |OpenMathDevice|) (|args| |List| (|Expression| R)) ($ |Void|))
-        (SPROG ((#1=#:G740 NIL) (|arg| NIL))
+        (SPROG ((#1=#:G742 NIL) (|arg| NIL))
                (SEQ
                 (COND
                  ((NULL (EQL (LENGTH |args|) 2))
@@ -150,7 +150,7 @@
         ((|dev| |OpenMathDevice|) (|op| |Symbol|)
          (|args| |List| (|Expression| R)) ($ |Void|))
         (SPROG
-         ((#1=#:G780 NIL) (|arg| NIL)
+         ((#1=#:G783 NIL) (|arg| NIL)
           (|omOp|
            (|Union| (|Record| (|:| |cd| (|String|)) (|:| |name| (|String|)))
                     "failed"))
@@ -219,7 +219,7 @@
 (SDEFUN |OMEXPR;outputOMExpr|
         ((|dev| |OpenMathDevice|) (|ex| |Expression| R) ($ |Void|))
         (SPROG
-         ((|k| (|Kernel| (|Expression| R))) (#1=#:G807 NIL)
+         ((|k| (|Kernel| (|Expression| R))) (#1=#:G810 NIL)
           (|z|
            (|Union|
             (|Record| (|:| |val| (|Expression| R))
@@ -249,7 +249,7 @@
                   ((NULL (QEQCAR |v| 1))
                    (PROGN
                     (LETT #1# (SPADCALL |dev| (QCDR |v|) (QREFELT $ 44)) . #2#)
-                    (GO #3=#:G804))))))
+                    (GO #3=#:G807))))))
                (SEQ (LETT |w| (SPADCALL |ex| (QREFELT $ 46)) . #2#)
                     (EXIT
                      (COND
@@ -361,9 +361,9 @@
 
 (DECLAIM (NOTINLINE |ExpressionToOpenMath;|)) 
 
-(DEFUN |ExpressionToOpenMath| (#1=#:G816)
+(DEFUN |ExpressionToOpenMath| (#1=#:G819)
   (SPROG NIL
-         (PROG (#2=#:G817)
+         (PROG (#2=#:G820)
            (RETURN
             (COND
              ((LETT #2#

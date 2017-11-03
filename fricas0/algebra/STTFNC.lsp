@@ -338,9 +338,9 @@
 
 (DECLAIM (NOTINLINE |StreamTranscendentalFunctionsNonCommutative;|)) 
 
-(DEFUN |StreamTranscendentalFunctionsNonCommutative| (#1=#:G806)
+(DEFUN |StreamTranscendentalFunctionsNonCommutative| (#1=#:G808)
   (SPROG NIL
-         (PROG (#2=#:G807)
+         (PROG (#2=#:G809)
            (RETURN
             (COND
              ((LETT #2#

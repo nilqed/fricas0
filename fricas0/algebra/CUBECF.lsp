@@ -1,21 +1,22 @@
 
 (SDEFUN |CUBECF;sphereSolid;NniFcc;1|
-        ((|dim| |NonNegativeInteger|)
-         ($ |FiniteCubicalComplex| (|VertexSetAbstract|)))
+        ((|dim| |NonNegativeInteger|) ($ |FiniteCubicalComplex| (|Integer|)))
         (SPROG
-         ((|r| (ASIMP)) (|vs1| (|VertexSetAbstract|))
-          (|v1| (|List| (|List| (|List| (|Integer|))))) (#1=#:G701 NIL)
-          (|n| NIL) (#2=#:G700 NIL)
+         ((|r| (ASIMP)) (|vs1| (|List| (|Integer|)))
+          (|v1| (|List| (|List| (|List| (|Integer|))))) (#1=#:G705 NIL)
+          (|n| NIL) (#2=#:G704 NIL)
           (ASIMP
            (|Join| (|SetCategory|)
                    (CATEGORY |domain|
                     (SIGNATURE |cubicalComplex|
-                     ($ #3=(|VertexSetAbstract|) (|List| (|CubicalFacet|))))
+                     ($ (|List| #3=(|Integer|)) (|List| (|CubicalFacet|))))
                     (SIGNATURE |cubicalComplex|
-                     ($ #3# (|List| (|List| (|Segment| (|Integer|))))))
+                     ($ (|List| #3#)
+                      (|List| (|List| (|Segment| (|Integer|))))))
                     (SIGNATURE |cubicalComplex|
-                     ($ #3# (|List| (|List| (|List| (|Integer|))))))
-                    (SIGNATURE |cubicalComplex| ($ #3#))
+                     ($ (|List| #3#) (|List| (|List| (|List| (|Integer|))))))
+                    (SIGNATURE |cubicalComplex| ($ (|List| #3#)))
+                    (SIGNATURE |maxIndex| ((|NonNegativeInteger|) $))
                     (SIGNATURE |addCube| ($ $ (|CubicalFacet|)))
                     (SIGNATURE |grade| ((|List| (|List| (|CubicalFacet|))) $))
                     (SIGNATURE |addImpliedFaces|
@@ -25,11 +26,11 @@
                     (SIGNATURE |fundamentalGroup|
                      ((|GroupPresentation|) $ (|Boolean|) (|Boolean|)))
                     (SIGNATURE |homology| ((|List| (|Homology|)) $))
-                    (SIGNATURE |delta| ($ $))
+                    (SIGNATURE |boundary| ($ $))
                     (SIGNATURE |chain| ((|ChainComplex|) $))
                     (SIGNATURE |coerce| ((|DeltaComplex| #3#) $))))))
          (SEQ
-          (LETT ASIMP (|FiniteCubicalComplex| (|VertexSetAbstract|))
+          (LETT ASIMP (|FiniteCubicalComplex| (|Integer|))
                 . #4=(|CUBECF;sphereSolid;NniFcc;1|))
           (LETT |v1|
                 (LIST
@@ -41,13 +42,13 @@
                        (LETT |n| (|inc_SI| |n|) . #4#) (GO G190) G191
                        (EXIT (NREVERSE #2#)))))
                 . #4#)
-          (LETT |vs1| (SPADCALL |dim| (QREFELT $ 8)) . #4#)
+          (LETT |vs1| NIL . #4#)
           (LETT |r|
                 (SPADCALL |vs1| |v1|
                           (|compiledLookupCheck| '|cubicalComplex|
                                                  (LIST '$
-                                                       (LIST
-                                                        '|VertexSetAbstract|)
+                                                       (LIST '|List|
+                                                             (LIST '|Integer|))
                                                        (LIST '|List|
                                                              (LIST '|List|
                                                                    (LIST
@@ -59,40 +60,39 @@
           (EXIT |r|)))) 
 
 (SDEFUN |CUBECF;sphereSurface;NniFcc;2|
-        ((|dim| |NonNegativeInteger|)
-         ($ |FiniteCubicalComplex| (|VertexSetAbstract|)))
+        ((|dim| |NonNegativeInteger|) ($ |FiniteCubicalComplex| (|Integer|)))
         (SPROG
-         ((|r| (|FiniteCubicalComplex| (|VertexSetAbstract|)))
-          (|s| (|FiniteCubicalComplex| (|VertexSetAbstract|))))
+         ((|r| (|FiniteCubicalComplex| (|Integer|)))
+          (|s| (|FiniteCubicalComplex| (|Integer|))))
          (SEQ
-          (LETT |s| (SPADCALL |dim| (QREFELT $ 10))
+          (LETT |s| (SPADCALL |dim| (QREFELT $ 8))
                 . #1=(|CUBECF;sphereSurface;NniFcc;2|))
-          (LETT |r| (SPADCALL |s| (QREFELT $ 11)) . #1#) (EXIT |r|)))) 
+          (LETT |r| (SPADCALL |s| (QREFELT $ 9)) . #1#) (EXIT |r|)))) 
 
-(SDEFUN |CUBECF;torusSurface;Fcc;3|
-        (($ |FiniteCubicalComplex| (|VertexSetAbstract|)))
-        (SPROG
-         ((|b| #1=(|FiniteCubicalComplex| (|VertexSetAbstract|))) (|a| #1#))
-         (SEQ
-          (LETT |a| (SPADCALL 2 (QREFELT $ 12))
-                . #2=(|CUBECF;torusSurface;Fcc;3|))
-          (LETT |b| (SPADCALL 2 (QREFELT $ 12)) . #2#)
-          (EXIT (SPADCALL |a| |b| (QREFELT $ 13)))))) 
+(SDEFUN |CUBECF;torusSurface;Fcc;3| (($ |FiniteCubicalComplex| (|Integer|)))
+        (SPROG ((|b| #1=(|FiniteCubicalComplex| (|Integer|))) (|a| #1#))
+               (SEQ
+                (LETT |a| (SPADCALL 2 (QREFELT $ 10))
+                      . #2=(|CUBECF;torusSurface;Fcc;3|))
+                (LETT |b| (SPADCALL 2 (QREFELT $ 10)) . #2#)
+                (EXIT (SPADCALL |a| |b| (QREFELT $ 11)))))) 
 
-(SDEFUN |CUBECF;band;Fcc;4| (($ |FiniteCubicalComplex| (|VertexSetAbstract|)))
+(SDEFUN |CUBECF;band;Fcc;4| (($ |FiniteCubicalComplex| (|Integer|)))
         (SPROG
-         ((|b| (ASIMP)) (|vs1| (|VertexSetAbstract|))
+         ((|b| (ASIMP)) (|vs1| (|List| (|Integer|)))
           (|v1| (|List| (|List| (|List| (|Integer|)))))
           (ASIMP
            (|Join| (|SetCategory|)
                    (CATEGORY |domain|
                     (SIGNATURE |cubicalComplex|
-                     ($ #1=(|VertexSetAbstract|) (|List| (|CubicalFacet|))))
+                     ($ (|List| #1=(|Integer|)) (|List| (|CubicalFacet|))))
                     (SIGNATURE |cubicalComplex|
-                     ($ #1# (|List| (|List| (|Segment| (|Integer|))))))
+                     ($ (|List| #1#)
+                      (|List| (|List| (|Segment| (|Integer|))))))
                     (SIGNATURE |cubicalComplex|
-                     ($ #1# (|List| (|List| (|List| (|Integer|))))))
-                    (SIGNATURE |cubicalComplex| ($ #1#))
+                     ($ (|List| #1#) (|List| (|List| (|List| (|Integer|))))))
+                    (SIGNATURE |cubicalComplex| ($ (|List| #1#)))
+                    (SIGNATURE |maxIndex| ((|NonNegativeInteger|) $))
                     (SIGNATURE |addCube| ($ $ (|CubicalFacet|)))
                     (SIGNATURE |grade| ((|List| (|List| (|CubicalFacet|))) $))
                     (SIGNATURE |addImpliedFaces|
@@ -102,20 +102,20 @@
                     (SIGNATURE |fundamentalGroup|
                      ((|GroupPresentation|) $ (|Boolean|) (|Boolean|)))
                     (SIGNATURE |homology| ((|List| (|Homology|)) $))
-                    (SIGNATURE |delta| ($ $))
+                    (SIGNATURE |boundary| ($ $))
                     (SIGNATURE |chain| ((|ChainComplex|) $))
                     (SIGNATURE |coerce| ((|DeltaComplex| #1#) $)))))
-          (|a| (|FiniteCubicalComplex| (|VertexSetAbstract|))))
-         (SEQ (LETT |a| (SPADCALL 2 (QREFELT $ 12)) . #2=(|CUBECF;band;Fcc;4|))
-              (LETT ASIMP (|FiniteCubicalComplex| (|VertexSetAbstract|)) . #2#)
-              (LETT |v1| (LIST (LIST (LIST 1 2))) . #2#)
-              (LETT |vs1| (SPADCALL 2 (QREFELT $ 8)) . #2#)
+          (|a| (|FiniteCubicalComplex| (|Integer|))))
+         (SEQ (LETT |a| (SPADCALL 2 (QREFELT $ 10)) . #2=(|CUBECF;band;Fcc;4|))
+              (LETT ASIMP (|FiniteCubicalComplex| (|Integer|)) . #2#)
+              (LETT |v1| (LIST (LIST (LIST 1 2))) . #2#) (LETT |vs1| NIL . #2#)
               (LETT |b|
                     (SPADCALL |vs1| |v1|
                               (|compiledLookupCheck| '|cubicalComplex|
                                                      (LIST '$
-                                                           (LIST
-                                                            '|VertexSetAbstract|)
+                                                           (LIST '|List|
+                                                                 (LIST
+                                                                  '|Integer|))
                                                            (LIST '|List|
                                                                  (LIST '|List|
                                                                        (LIST
@@ -124,23 +124,25 @@
                                                                          '|Integer|)))))
                                                      ASIMP))
                     . #2#)
-              (EXIT (SPADCALL |a| |b| (QREFELT $ 13)))))) 
+              (EXIT (SPADCALL |a| |b| (QREFELT $ 11)))))) 
 
-(SDEFUN |CUBECF;projectivePlane;Fcc;5|
-        (($ |FiniteCubicalComplex| (|VertexSetAbstract|)))
+(SDEFUN |CUBECF;projectiveSpace;NniFcc;5|
+        ((|dim| |NonNegativeInteger|) ($ |FiniteCubicalComplex| (|Integer|)))
         (SPROG
-         ((|r| (ASIMP)) (|vs1| (|VertexSetAbstract|))
+         ((|r| (ASIMP)) (|vs1| (|List| (|Integer|)))
           (|v1| (|List| (|List| (|List| (|Integer|)))))
           (ASIMP
            (|Join| (|SetCategory|)
                    (CATEGORY |domain|
                     (SIGNATURE |cubicalComplex|
-                     ($ #1=(|VertexSetAbstract|) (|List| (|CubicalFacet|))))
+                     ($ (|List| #1=(|Integer|)) (|List| (|CubicalFacet|))))
                     (SIGNATURE |cubicalComplex|
-                     ($ #1# (|List| (|List| (|Segment| (|Integer|))))))
+                     ($ (|List| #1#)
+                      (|List| (|List| (|Segment| (|Integer|))))))
                     (SIGNATURE |cubicalComplex|
-                     ($ #1# (|List| (|List| (|List| (|Integer|))))))
-                    (SIGNATURE |cubicalComplex| ($ #1#))
+                     ($ (|List| #1#) (|List| (|List| (|List| (|Integer|))))))
+                    (SIGNATURE |cubicalComplex| ($ (|List| #1#)))
+                    (SIGNATURE |maxIndex| ((|NonNegativeInteger|) $))
                     (SIGNATURE |addCube| ($ $ (|CubicalFacet|)))
                     (SIGNATURE |grade| ((|List| (|List| (|CubicalFacet|))) $))
                     (SIGNATURE |addImpliedFaces|
@@ -150,12 +152,15 @@
                     (SIGNATURE |fundamentalGroup|
                      ((|GroupPresentation|) $ (|Boolean|) (|Boolean|)))
                     (SIGNATURE |homology| ((|List| (|Homology|)) $))
-                    (SIGNATURE |delta| ($ $))
+                    (SIGNATURE |boundary| ($ $))
                     (SIGNATURE |chain| ((|ChainComplex|) $))
                     (SIGNATURE |coerce| ((|DeltaComplex| #1#) $))))))
          (SEQ
-          (LETT ASIMP (|FiniteCubicalComplex| (|VertexSetAbstract|))
-                . #2=(|CUBECF;projectivePlane;Fcc;5|))
+          (LETT ASIMP (|FiniteCubicalComplex| (|Integer|))
+                . #2=(|CUBECF;projectiveSpace;NniFcc;5|))
+          (COND
+           ((SPADCALL |dim| 2 (QREFELT $ 15))
+            (|error| "projectiveSpace only defined for plane")))
           (LETT |v1|
                 (LIST
                  (LIST (LIST 1 2) (LIST 1 1) (LIST 1 1) (LIST 1 2) (LIST 1 1))
@@ -179,13 +184,13 @@
                  (LIST (LIST 1 1) (LIST 1 1) (LIST 1 2) (LIST 2 2) (LIST 1 2))
                  (LIST (LIST 1 1) (LIST 1 1) (LIST 2 2) (LIST 1 2) (LIST 1 2)))
                 . #2#)
-          (LETT |vs1| (SPADCALL 6 (QREFELT $ 8)) . #2#)
+          (LETT |vs1| NIL . #2#)
           (LETT |r|
                 (SPADCALL |vs1| |v1|
                           (|compiledLookupCheck| '|cubicalComplex|
                                                  (LIST '$
-                                                       (LIST
-                                                        '|VertexSetAbstract|)
+                                                       (LIST '|List|
+                                                             (LIST '|Integer|))
                                                        (LIST '|List|
                                                              (LIST '|List|
                                                                    (LIST
@@ -200,7 +205,7 @@
 
 (DEFUN |CubicalComplexFactory| ()
   (SPROG NIL
-         (PROG (#1=#:G715)
+         (PROG (#1=#:G721)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|CubicalComplexFactory|)
@@ -234,23 +239,22 @@
 
 (MAKEPROP '|CubicalComplexFactory| '|infovec|
           (LIST
-           '#(NIL NIL NIL NIL NIL NIL (|NonNegativeInteger|)
-              (|VertexSetAbstract|) (0 . |vertexSeta|)
-              (|FiniteCubicalComplex| 7) |CUBECF;sphereSolid;NniFcc;1|
-              (5 . |delta|) |CUBECF;sphereSurface;NniFcc;2| (10 . |product|)
-              |CUBECF;torusSurface;Fcc;3| |CUBECF;band;Fcc;4|
-              |CUBECF;projectivePlane;Fcc;5|)
-           '#(|torusSurface| 16 |sphereSurface| 20 |sphereSolid| 25
-              |projectivePlane| 30 |moebiusBand| 34 |kleinBottle| 38 |band| 42)
+           '#(NIL NIL NIL NIL NIL NIL (|FiniteCubicalComplex| (|Integer|))
+              (|NonNegativeInteger|) |CUBECF;sphereSolid;NniFcc;1|
+              (0 . |boundary|) |CUBECF;sphereSurface;NniFcc;2| (5 . |product|)
+              |CUBECF;torusSurface;Fcc;3| |CUBECF;band;Fcc;4| (|Boolean|)
+              (11 . ~=) |CUBECF;projectiveSpace;NniFcc;5|)
+           '#(|torusSurface| 17 |sphereSurface| 21 |sphereSolid| 26
+              |projectiveSpace| 31 |moebiusBand| 36 |kleinBottle| 40 |band| 44)
            'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
                              (|makeByteWordVec2| 16
-                                                 '(1 7 0 6 8 1 9 0 0 11 2 9 0 0
-                                                   0 13 0 0 9 14 1 0 9 6 12 1 0
-                                                   9 6 10 0 0 9 16 0 0 9 1 0 0
-                                                   9 1 0 0 9 15)))))
+                                                 '(1 6 0 0 9 2 6 0 0 0 11 2 7
+                                                   14 0 0 15 0 0 6 12 1 0 6 7
+                                                   10 1 0 6 7 8 1 0 6 7 16 0 0
+                                                   6 1 0 0 6 1 0 0 6 13)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|CubicalComplexFactory| 'NILADIC T) 

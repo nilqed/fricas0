@@ -1306,7 +1306,7 @@
          (|$comp370_apply| (FUNCALL |$comp370_apply| |fname| |nbody|)))))))))
  
 ; MKPF(l, op) ==
-;     if FLAGP(op, "NARY") then
+;     if GET(op, "NARY") then
 ;         l := MKPFFLATTEN1(l, op, nil)
 ;     MKPF1(l, op)
  
@@ -1314,7 +1314,7 @@
   (PROG ()
     (RETURN
      (PROGN
-      (COND ((FLAGP |op| 'NARY) (SETQ |l| (MKPFFLATTEN1 |l| |op| NIL))))
+      (COND ((GET |op| 'NARY) (SETQ |l| (MKPFFLATTEN1 |l| |op| NIL))))
       (MKPF1 |l| |op|)))))
  
 ; MKPFFLATTEN(x, op) ==

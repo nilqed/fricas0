@@ -1,9 +1,9 @@
 
 (DECLAIM (NOTINLINE |ModularField;|)) 
 
-(DEFUN |ModularField| (&REST #1=#:G738)
+(DEFUN |ModularField| (&REST #1=#:G743)
   (SPROG NIL
-         (PROG (#2=#:G739)
+         (PROG (#2=#:G744)
            (RETURN
             (COND
              ((LETT #2#
@@ -47,44 +47,50 @@
 
 (MAKEPROP '|ModularField| '|infovec|
           (LIST
-           '#(NIL NIL NIL NIL NIL (|ModularRing| 6 7 8 9 10) (|local| |#1|)
-              (|local| |#2|) (|local| |#3|) (|local| |#4|) (|local| |#5|)
-              (|Union| $ '"failed") (|Fraction| 13) (|Integer|) (|Boolean|)
-              (|Factored| $) (|Union| 17 '#1="failed") (|List| $)
+           '#(NIL NIL NIL NIL NIL
+              (|ModularRing| 6 7 (NRTEVAL (QREFELT $ 8))
+                             (NRTEVAL (QREFELT $ 9)) (NRTEVAL (QREFELT $ 10)))
+              (|local| |#1|) (|local| |#2|) (|local| |#3|) (|local| |#4|)
+              (|local| |#5|) (|Union| $ '"failed") (|Fraction| 13) (|Integer|)
+              (|Factored| $) (|Boolean|) (|Union| 17 '#1="failed") (|List| $)
               (|Record| (|:| |coef1| $) (|:| |coef2| $) (|:| |generator| $))
               (|Record| (|:| |coef1| $) (|:| |coef2| $)) (|Union| 19 '#1#)
               (|NonNegativeInteger|)
               (|Record| (|:| |quotient| $) (|:| |remainder| $))
-              (|SparseUnivariatePolynomial| $)
               (|Record| (|:| |coef| 17) (|:| |generator| $))
+              (|SparseUnivariatePolynomial| $)
               (|Record| (|:| |llcm_res| $) (|:| |coeff1| $) (|:| |coeff2| $))
               (|Record| (|:| |unit| $) (|:| |canonical| $) (|:| |associate| $))
-              (|PositiveInteger|) (|HashState|) (|String|) (|OutputForm|)
-              (|SingleInteger|))
+              (|PositiveInteger|) (|String|) (|SingleInteger|) (|HashState|)
+              (|OutputForm|))
            '#() 'NIL
            (CONS
             (|makeByteWordVec2| 1
                                 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-                                  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0))
+                                  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0))
             (CONS
              '#(|Field&| |EuclideanDomain&| NIL |UniqueFactorizationDomain&|
-                |GcdDomain&| |DivisionRing&| NIL |Algebra&| NIL |Algebra&|
-                |Module&| NIL |EntireRing&| |Module&| NIL NIL |Ring&| NIL NIL
-                NIL |Rng&| NIL |AbelianGroup&| NIL NIL |AbelianMonoid&|
-                |Monoid&| NIL |SemiGroup&| |AbelianSemiGroup&| |SetCategory&|
-                NIL NIL NIL NIL NIL |BasicType&| NIL)
+                |GcdDomain&| NIL |DivisionRing&| NIL NIL |Algebra&|
+                |EntireRing&| |Algebra&| NIL |Rng&| NIL |Module&| |Module&| NIL
+                NIL NIL |NonAssociativeRing&| NIL NIL NIL |NonAssociativeRng&|
+                NIL |AbelianGroup&| NIL NIL NIL NIL |MagmaWithUnit&|
+                |NonAssociativeSemiRng&| |AbelianMonoid&| |Magma&|
+                |AbelianSemiGroup&| |SetCategory&| NIL NIL NIL NIL NIL
+                |BasicType&| NIL)
              (CONS
               '#((|Field|) (|EuclideanDomain|) (|PrincipalIdealDomain|)
-                 (|UniqueFactorizationDomain|) (|GcdDomain|) (|DivisionRing|)
-                 (|IntegralDomain|) (|Algebra| 12) (|LeftOreRing|)
-                 (|Algebra| $$) (|Module| 12) (|CommutativeRing|)
-                 (|EntireRing|) (|Module| $$) (|BiModule| 12 12)
-                 (|BiModule| $$ $$) (|Ring|) (|RightModule| 12)
-                 (|LeftModule| 12) (|LeftModule| $$) (|Rng|) (|RightModule| $$)
-                 (|AbelianGroup|) (|CancellationAbelianMonoid|) (|SemiRing|)
-                 (|AbelianMonoid|) (|Monoid|) (|SemiRng|) (|SemiGroup|)
+                 (|UniqueFactorizationDomain|) (|GcdDomain|) (|IntegralDomain|)
+                 (|DivisionRing|) (|CommutativeRing|) (|LeftOreRing|)
+                 (|Algebra| 12) (|EntireRing|) (|Algebra| $$) (|Ring|) (|Rng|)
+                 (|SemiRing|) (|Module| 12) (|Module| $$) (|SemiRng|)
+                 (|BiModule| 12 12) (|BiModule| $$ $$) (|NonAssociativeRing|)
+                 (|RightModule| 12) (|LeftModule| 12) (|LeftModule| $$)
+                 (|NonAssociativeRng|) (|RightModule| $$) (|AbelianGroup|)
+                 (|Monoid|) (|NonAssociativeSemiRing|)
+                 (|CancellationAbelianMonoid|) (|SemiGroup|) (|MagmaWithUnit|)
+                 (|NonAssociativeSemiRng|) (|AbelianMonoid|) (|Magma|)
                  (|AbelianSemiGroup|) (|SetCategory|) (|canonicalsClosed|)
                  (|canonicalUnitNormal|) (|noZeroDivisors|) (|CommutativeStar|)
-                 (|unitsKnown|) (|BasicType|) (|CoercibleTo| 30))
+                 (|unitsKnown|) (|BasicType|) (|CoercibleTo| 31))
               (|makeByteWordVec2| -999999 'NIL))))
            '|lookupIncomplete|)) 

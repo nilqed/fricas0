@@ -18,9 +18,9 @@
           (|:| |fail| #1="failed") (|:| |pole| "potentialPole")))
         (SPROG
          ((|ans| (|List| (|OrderedCompletion| (|Expression| R))))
-          (#2=#:G733 NIL)
+          (#2=#:G735 NIL)
           (|v| (|Union| (|OrderedCompletion| (|Expression| R)) "failed"))
-          (#3=#:G734 NIL) (|g| NIL)
+          (#3=#:G736 NIL) (|g| NIL)
           (|u| (|Union| (|Expression| R) (|List| (|Expression| R))))
           (|k| (|Kernel| (|Expression| R))))
          (SEQ
@@ -53,7 +53,7 @@
                             ((QEQCAR |v| 1)
                              (PROGN
                               (LETT #2# (CONS 2 #1#) . #4#)
-                              (GO #6=#:G732)))
+                              (GO #6=#:G734)))
                             ('T
                              (LETT |ans|
                                    (SPADCALL |ans| (LIST (QCDR |v|))
@@ -119,12 +119,12 @@
                (SEQ
                 (COND
                  ((SPADCALL |a| |b| (QREFELT $ 46))
-                  (CONS 0 (|spadConstant| $ 47)))
+                  (CONS 0 (SPADCALL (|spadConstant| $ 47) (QREFELT $ 48))))
                  (#2='T
                   (SEQ
                    (LETT |z|
-                         (SPADCALL (SPADCALL |f| (QREFELT $ 49)) |x| |a| |b| 'T
-                                   (QREFELT $ 51))
+                         (SPADCALL (SPADCALL |f| (QREFELT $ 50)) |x| |a| |b| 'T
+                                   (QREFELT $ 52))
                          |DEFINTRF;int|)
                    (EXIT
                     (COND
@@ -137,9 +137,9 @@
 
 (DECLAIM (NOTINLINE |RationalFunctionDefiniteIntegration;|)) 
 
-(DEFUN |RationalFunctionDefiniteIntegration| (#1=#:G759)
+(DEFUN |RationalFunctionDefiniteIntegration| (#1=#:G761)
   (SPROG NIL
-         (PROG (#2=#:G760)
+         (PROG (#2=#:G762)
            (RETURN
             (COND
              ((LETT #2#
@@ -164,7 +164,7 @@
           (LETT DV$1 (|devaluate| |#1|)
                 . #1=(|RationalFunctionDefiniteIntegration|))
           (LETT |dv$| (LIST '|RationalFunctionDefiniteIntegration| DV$1) . #1#)
-          (LETT $ (GETREFV 52) . #1#)
+          (LETT $ (GETREFV 53) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache|
@@ -179,27 +179,28 @@
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|Symbol|)
               (|SegmentBinding| 12) (0 . |variable|) (|Segment| 12)
-              (5 . |segment|) (|OrderedCompletion| 24) (10 . |lo|) (15 . |hi|)
+              (5 . |segment|) (|OrderedCompletion| 24) (10 . |low|)
+              (15 . |high|)
               (|Union| (|:| |f1| 12) (|:| |f2| 28) (|:| |fail| '"failed")
                        (|:| |pole| '"potentialPole"))
-              (|Fraction| 48) |DEFINTRF;integrate;FSbU;1| (|Kernel| 24)
+              (|Fraction| 49) |DEFINTRF;integrate;FSbU;1| (|Kernel| 24)
               (20 . |kernel|) (|Union| 24 (|List| 24))
               (|IntegrationResultRFToFunction| 6) (25 . |integrate|)
               (|Union| 12 '"failed") (|Expression| 6) (|Boolean|)
               (|DefiniteIntegrationTools| 6 24) (31 . |computeInt|) (|List| 12)
               (40 . |concat!|) (|SegmentBinding| 35) (46 . |variable|)
               (51 . |coerce|) (|Segment| 35) (56 . |segment|)
-              (|OrderedCompletion| 16) (61 . |lo|) (|Mapping| 24 16)
-              (|OrderedCompletionFunctions2| 16 24) (66 . |map|) (72 . |hi|)
+              (|OrderedCompletion| 16) (61 . |low|) (|Mapping| 24 16)
+              (|OrderedCompletionFunctions2| 16 24) (66 . |map|) (72 . |high|)
               |DEFINTRF;integrate;FSbU;3| (|String|) (77 . |ignore?|)
               |DEFINTRF;integrate;FSbSU;4| |DEFINTRF;integrate;FSbSU;5|
-              (82 . =) (88 . |Zero|) (|Polynomial| 6) (92 . |denom|)
-              (|Union| 25 '"failed") (97 . |checkForZero|))
-           '#(|integrate| 106) 'NIL
+              (82 . =) (88 . |Zero|) (92 . |coerce|) (|Polynomial| 6)
+              (97 . |denom|) (|Union| 25 '"failed") (102 . |checkForZero|))
+           '#(|integrate| 111) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
-                             (|makeByteWordVec2| 51
+                             (|makeByteWordVec2| 52
                                                  '(1 8 7 0 9 1 8 10 0 11 1 10
                                                    12 0 13 1 10 12 0 14 1 18 0
                                                    7 19 2 21 20 16 7 22 5 26 23
@@ -208,9 +209,9 @@
                                                    1 30 33 0 34 1 33 35 0 36 2
                                                    38 12 37 35 39 1 33 35 0 40
                                                    1 26 25 42 43 2 12 25 0 0 46
-                                                   0 12 0 47 1 16 48 0 49 5 26
-                                                   50 48 7 12 12 25 51 3 0 15
-                                                   16 8 42 45 2 0 15 16 8 17 3
-                                                   0 15 16 30 42 44 2 0 15 16
-                                                   30 41)))))
+                                                   0 24 0 47 1 12 0 24 48 1 16
+                                                   49 0 50 5 26 51 49 7 12 12
+                                                   25 52 3 0 15 16 8 42 45 2 0
+                                                   15 16 8 17 3 0 15 16 30 42
+                                                   44 2 0 15 16 30 41)))))
            '|lookupComplete|)) 

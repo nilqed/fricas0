@@ -155,13 +155,13 @@
         (SPROG
          ((|f3| (F)) (|nres3| (|IntegrationResult| F))
           (|nres2| (|IntegrationResult| F)) (|nrat| (F)) (|alpha| (F))
-          (#1=#:G815 NIL)
+          (#1=#:G819 NIL)
           (|nlogs|
            (|List|
             (|Record| (|:| |scalar| (|Fraction| (|Integer|)))
                       (|:| |coeff| (|SparseUnivariatePolynomial| F))
                       (|:| |logand| (|SparseUnivariatePolynomial| F)))))
-          (|cpol| #2=(|SparseUnivariatePolynomial| F)) (#3=#:G816 NIL)
+          (|cpol| #2=(|SparseUnivariatePolynomial| F)) (#3=#:G820 NIL)
           (|lg| NIL)
           (|logs|
            (|List|
@@ -261,7 +261,7 @@
                                              (PROGN
                                               (LETT #1# (CONS 1 "failed")
                                                     . #4#)
-                                              (GO #6=#:G814)))
+                                              (GO #6=#:G818)))
                                             ('T
                                              (SEQ
                                               (LETT |alpha|
@@ -396,7 +396,7 @@
                      (|:| |pol2| (|SparseUnivariatePolynomial| F))
                      (|:| |prim| (|SparseUnivariatePolynomial| F))))
           (|res| (|IntegrationResult| F)) (|ir1| (|IntegrationResult| F))
-          (|oroot| (F)) (#1=#:G854 NIL)
+          (|oroot| (F)) (#1=#:G858 NIL)
           (|al|
            (|List|
             (|Record| (|:| |funs| (|List| F)) (|:| |nroot| F)
@@ -583,7 +583,7 @@
 
 (SDEFUN |INTEF;addx|
         ((|i| |IntegrationResult| F) (|x| F) ($ |IntegrationResult| F))
-        (SPROG ((#1=#:G889 NIL) (|ne| NIL) (#2=#:G888 NIL))
+        (SPROG ((#1=#:G893 NIL) (|ne| NIL) (#2=#:G892 NIL))
                (SEQ
                 (COND ((SPADCALL |i| (QREFELT $ 150)) |i|)
                       ('T
@@ -770,8 +770,8 @@
                   (|IntegrationResult|
                    (|Fraction| (|SparseUnivariatePolynomial| F)))))
             (|Fraction| (|SparseUnivariatePolynomial| F))))
-          (|lk| (|List| (|Kernel| F))) (#1=#:G985 NIL) (|a| NIL)
-          (#2=#:G984 NIL))
+          (|lk| (|List| (|Kernel| F))) (#1=#:G990 NIL) (|a| NIL)
+          (#2=#:G989 NIL))
          (SEQ
           (LETT |lk|
                 (SPADCALL
@@ -945,9 +945,9 @@
 
 (DECLAIM (NOTINLINE |ElementaryIntegration;|)) 
 
-(DEFUN |ElementaryIntegration| (&REST #1=#:G1002)
+(DEFUN |ElementaryIntegration| (&REST #1=#:G1007)
   (SPROG NIL
-         (PROG (#2=#:G1003)
+         (PROG (#2=#:G1008)
            (RETURN
             (COND
              ((LETT #2#

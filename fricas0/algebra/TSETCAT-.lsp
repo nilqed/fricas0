@@ -1,6 +1,6 @@
 
 (SDEFUN |TSETCAT-;=;2SB;1| ((|ts| S) (|us| S) ($ |Boolean|))
-        (SPROG ((#1=#:G775 NIL) (#2=#:G772 NIL))
+        (SPROG ((#1=#:G776 NIL) (#2=#:G773 NIL))
                (COND
                 ((SPADCALL |ts| (QREFELT $ 12)) (SPADCALL |us| (QREFELT $ 12)))
                 ((OR (SPADCALL |us| (QREFELT $ 12))
@@ -32,7 +32,7 @@
                   (QREFELT $ 18)))))) 
 
 (SDEFUN |TSETCAT-;infRittWu?;2SB;2| ((|ts| S) (|us| S) ($ |Boolean|))
-        (SPROG ((|v| (V)) (|q| (P)) (#1=#:G783 NIL) (|p| (P)))
+        (SPROG ((|v| (V)) (|q| (P)) (#1=#:G784 NIL) (|p| (P)))
                (SEQ
                 (COND
                  ((SPADCALL |us| (QREFELT $ 12))
@@ -293,7 +293,7 @@
 (SDEFUN |TSETCAT-;reduce;PSMMP;13|
         ((|p| P) (|ts| S) (|redOp| |Mapping| P P P)
          (|redOp?| |Mapping| (|Boolean|) P P) ($ P))
-        (SPROG ((#1=#:G898 NIL) (|reductor| (P)) (#2=#:G895 NIL) (|ts0| (S)))
+        (SPROG ((#1=#:G900 NIL) (|reductor| (P)) (#2=#:G897 NIL) (|ts0| (S)))
                (SEQ
                 (COND
                  ((OR (SPADCALL |ts| (QREFELT $ 12))
@@ -402,7 +402,7 @@
 
 (SDEFUN |TSETCAT-;removeZero;PSP;18| ((|p| P) (|ts| S) ($ P))
         (SPROG
-         ((|q| (P)) (#1=#:G952 NIL) (#2=#:G942 NIL) (|ts_v-| (S)) (|v| (V)))
+         ((|q| (P)) (#1=#:G955 NIL) (#2=#:G944 NIL) (|ts_v-| (S)) (|v| (V)))
          (SEQ
           (EXIT
            (COND
@@ -433,7 +433,7 @@
                  (EXIT
                   (COND
                    ((SPADCALL |q| (QREFELT $ 31))
-                    (PROGN (LETT #1# |q| . #3#) (GO #4=#:G951)))
+                    (PROGN (LETT #1# |q| . #3#) (GO #4=#:G954)))
                    ((SPADCALL (SPADCALL |q| |ts_v-| (QREFELT $ 84))
                               (QREFELT $ 31))
                     (PROGN
@@ -512,7 +512,7 @@
         (SPADCALL |ts| (ELT $ 105) (QREFELT $ 100))) 
 
 (SDEFUN |TSETCAT-;mvar;SV;25| ((|ts| S) ($ V))
-        (SPROG ((#1=#:G978 NIL))
+        (SPROG ((#1=#:G981 NIL))
                (COND
                 ((SPADCALL |ts| (QREFELT $ 12))
                  (|error| "Error from TSETCAT in mvar : #1 is empty"))
@@ -570,7 +570,7 @@
         (SPADCALL (ELT $ 22) (SPADCALL |ts| (QREFELT $ 28)) (QREFELT $ 36))) 
 
 (SDEFUN |TSETCAT-;algebraicVariables;SL;30| ((|ts| S) ($ |List| V))
-        (SPROG ((#1=#:G1012 NIL) (|p| NIL) (#2=#:G1011 NIL))
+        (SPROG ((#1=#:G1015 NIL) (|p| NIL) (#2=#:G1014 NIL))
                (SEQ
                 (PROGN
                  (LETT #2# NIL . #3=(|TSETCAT-;algebraicVariables;SL;30|))
@@ -718,7 +718,7 @@
 
 (SDEFUN |TSETCAT-;coHeight;SNni;39| ((|ts| S) ($ |NonNegativeInteger|))
         (SPROG
-         ((#1=#:G1063 NIL) (|m| (|NonNegativeInteger|))
+         ((#1=#:G1066 NIL) (|m| (|NonNegativeInteger|))
           (|n| (|NonNegativeInteger|)))
          (SEQ
           (LETT |n| (SPADCALL (QREFELT $ 127))
@@ -825,8 +825,8 @@
               |infRittWu?| 478 |headReduced?| 484 |headReduce| 495 |first| 501
               |extend| 506 |degree| 512 |construct| 517 |collectUpper| 522
               |collectUnder| 528 |collectQuasiMonic| 534 |coerce| 539
-              |coHeight| 549 |basicSet| 554 |autoReduced?| 567
-              |algebraicVariables| 573 |algebraic?| 578 = 584)
+              |coHeight| 544 |basicSet| 549 |autoReduced?| 562
+              |algebraicVariables| 568 |algebraic?| 573 = 579)
            'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
@@ -880,9 +880,8 @@
                                                    10 126 1 0 49 0 51 1 0 0 27
                                                    123 2 0 0 0 9 121 2 0 0 0 9
                                                    120 1 0 0 0 119 1 0 27 0 112
-                                                   1 0 27 0 112 1 0 49 0 129 3
-                                                   0 41 27 32 29 44 2 0 41 27
-                                                   29 42 2 0 11 0 98 99 1 0 113
-                                                   0 114 2 0 11 9 0 117 2 0 11
-                                                   0 0 19)))))
+                                                   1 0 49 0 129 3 0 41 27 32 29
+                                                   44 2 0 41 27 29 42 2 0 11 0
+                                                   98 99 1 0 113 0 114 2 0 11 9
+                                                   0 117 2 0 11 0 0 19)))))
            '|lookupComplete|)) 

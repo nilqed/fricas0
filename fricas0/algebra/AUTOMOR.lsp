@@ -68,7 +68,7 @@
 
 (SDEFUN |AUTOMOR;iterat|
         ((|f| |Mapping| R R) (|g| |Mapping| R R) (|n| |Integer|) (|r| R) ($ R))
-        (SPROG ((#1=#:G728 NIL) (#2=#:G726 NIL))
+        (SPROG ((#1=#:G730 NIL) (#2=#:G728 NIL))
                (COND
                 ((< |n| 0)
                  (|AUTOMOR;iter| |g|
@@ -85,7 +85,7 @@
 
 (SDEFUN |AUTOMOR;iter|
         ((|f| |Mapping| R R) (|n| |NonNegativeInteger|) (|r| R) ($ R))
-        (SPROG ((#1=#:G734 NIL) (|i| NIL))
+        (SPROG ((#1=#:G737 NIL) (|i| NIL))
                (SEQ
                 (SEQ (LETT |i| 1 . #2=(|AUTOMOR;iter|)) (LETT #1# |n| . #2#)
                      G190 (COND ((|greater_SI| |i| #1#) (GO G191)))
@@ -136,9 +136,9 @@
 
 (DECLAIM (NOTINLINE |Automorphism;|)) 
 
-(DEFUN |Automorphism| (#1=#:G745)
+(DEFUN |Automorphism| (#1=#:G749)
   (SPROG NIL
-         (PROG (#2=#:G746)
+         (PROG (#2=#:G750)
            (RETURN
             (COND
              ((LETT #2#
@@ -180,28 +180,31 @@
               (|Mapping| 6 6 12) |AUTOMOR;morphism;M$;9| (|Mapping| 6 6)
               |AUTOMOR;morphism;2M$;11| |AUTOMOR;morphism;M$;10| (16 . |Zero|)
               (|PositiveInteger|) (20 . ^) |AUTOMOR;*;3$;15|
-              (|NonNegativeInteger|) (|Union| $ '"failed") (|SingleInteger|)
-              (|HashState|))
-           '#(~= 26 |sample| 32 |recip| 36 |one?| 41 |morphism| 46 |latex| 62
-              |inv| 67 |hashUpdate!| 72 |hash| 78 |elt| 83 |conjugate| 89
-              |commutator| 95 |coerce| 101 ^ 106 |One| 124 = 128 / 134 * 140)
+              (|NonNegativeInteger|) (|Union| $ '"failed") (|HashState|)
+              (|SingleInteger|))
+           '#(~= 26 |sample| 32 |rightRecip| 36 |rightPower| 41 |recip| 53
+              |one?| 58 |morphism| 63 |leftRecip| 79 |leftPower| 84 |latex| 96
+              |inv| 101 |hashUpdate!| 106 |hash| 112 |elt| 117 |conjugate| 123
+              |commutator| 129 |coerce| 135 ^ 140 |One| 158 = 162 / 168 * 174)
            'NIL
-           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0))
+           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0))
                  (CONS
-                  '#(|Group&| |Monoid&| |SemiGroup&| |SetCategory&|
-                     |BasicType&| NIL NIL NIL)
+                  '#(|Group&| NIL NIL |MagmaWithUnit&| |Magma&| |SetCategory&|
+                     NIL NIL |BasicType&| NIL)
                   (CONS
-                   '#((|Group|) (|Monoid|) (|SemiGroup|) (|SetCategory|)
-                      (|BasicType|) (|Eltable| 6 6) (|unitsKnown|)
-                      (|CoercibleTo| 18))
+                   '#((|Group|) (|Monoid|) (|SemiGroup|) (|MagmaWithUnit|)
+                      (|Magma|) (|SetCategory|) (|Eltable| 6 6) (|unitsKnown|)
+                      (|BasicType|) (|CoercibleTo| 18))
                    (|makeByteWordVec2| 33
-                                       '(1 12 0 0 13 2 12 0 12 0 15 1 18 0 17
-                                         19 0 6 0 26 2 0 0 0 27 28 2 0 9 0 0 1
-                                         0 0 0 1 1 0 31 0 1 1 0 9 0 1 2 0 0 23
-                                         23 24 1 0 0 21 22 1 0 0 23 25 1 0 17 0
-                                         1 1 0 0 0 14 2 0 33 33 0 1 1 0 32 0 1
-                                         2 0 6 0 6 11 2 0 0 0 0 1 2 0 0 0 0 1 1
-                                         0 18 0 20 2 0 0 0 12 16 2 0 0 0 30 1 2
-                                         0 0 0 27 28 0 0 0 8 2 0 9 0 0 10 2 0 0
-                                         0 0 1 2 0 0 0 0 29)))))
+                                       '(1 12 0 0 13 2 12 0 0 0 15 1 18 0 17 19
+                                         0 6 0 26 2 0 0 0 27 28 2 0 9 0 0 1 0 0
+                                         0 1 1 0 31 0 1 2 0 0 0 30 1 2 0 0 0 27
+                                         1 1 0 31 0 1 1 0 9 0 1 1 0 0 21 22 1 0
+                                         0 23 25 2 0 0 23 23 24 1 0 31 0 1 2 0
+                                         0 0 30 1 2 0 0 0 27 1 1 0 17 0 1 1 0 0
+                                         0 14 2 0 32 32 0 1 1 0 33 0 1 2 0 6 0
+                                         6 11 2 0 0 0 0 1 2 0 0 0 0 1 1 0 18 0
+                                         20 2 0 0 0 12 16 2 0 0 0 30 1 2 0 0 0
+                                         27 28 0 0 0 8 2 0 9 0 0 10 2 0 0 0 0 1
+                                         2 0 0 0 0 29)))))
            '|lookupComplete|)) 

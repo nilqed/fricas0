@@ -1,7 +1,6 @@
 
-(PUT '|NONE;coerce;$Of;1| '|SPADreplace| '(XLAM (|none|) "NONE")) 
-
-(SDEFUN |NONE;coerce;$Of;1| ((|none| $) ($ |OutputForm|)) "NONE") 
+(SDEFUN |NONE;coerce;$Of;1| ((|none| $) ($ |OutputForm|))
+        (SPADCALL "NONE" (QREFELT $ 8))) 
 
 (PUT '|NONE;=;2$B;2| '|SPADreplace| 'EQ) 
 
@@ -11,7 +10,7 @@
 
 (DEFUN |None| ()
   (SPROG NIL
-         (PROG (#1=#:G694)
+         (PROG (#1=#:G695)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|None|) . #2=(|None|))
@@ -29,7 +28,7 @@
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
           (LETT |dv$| '(|None|) . #1=(|None|))
-          (LETT $ (GETREFV 13) . #1#)
+          (LETT $ (GETREFV 14) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|None| NIL (CONS 1 $))
@@ -39,18 +38,18 @@
 
 (MAKEPROP '|None| '|infovec|
           (LIST
-           '#(NIL NIL NIL NIL NIL NIL (|OutputForm|) |NONE;coerce;$Of;1|
-              (|Boolean|) |NONE;=;2$B;2| (|String|) (|SingleInteger|)
+           '#(NIL NIL NIL NIL NIL NIL (|String|) (|OutputForm|) (0 . |message|)
+              |NONE;coerce;$Of;1| (|Boolean|) |NONE;=;2$B;2| (|SingleInteger|)
               (|HashState|))
-           '#(~= 0 |latex| 6 |hashUpdate!| 11 |hash| 17 |coerce| 22 = 27) 'NIL
+           '#(~= 5 |latex| 11 |hashUpdate!| 16 |hash| 22 |coerce| 27 = 32) 'NIL
            (CONS (|makeByteWordVec2| 1 '(0 0 0))
                  (CONS '#(|SetCategory&| |BasicType&| NIL)
                        (CONS
-                        '#((|SetCategory|) (|BasicType|) (|CoercibleTo| 6))
-                        (|makeByteWordVec2| 12
-                                            '(2 0 8 0 0 1 1 0 10 0 1 2 0 12 12
-                                              0 1 1 0 11 0 1 1 0 6 0 7 2 0 8 0
-                                              0 9)))))
+                        '#((|SetCategory|) (|BasicType|) (|CoercibleTo| 7))
+                        (|makeByteWordVec2| 13
+                                            '(1 7 0 6 8 2 0 10 0 0 1 1 0 6 0 1
+                                              2 0 13 13 0 1 1 0 12 0 1 1 0 7 0
+                                              9 2 0 10 0 0 11)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|None| 'NILADIC T) 

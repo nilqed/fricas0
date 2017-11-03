@@ -1,9 +1,9 @@
 
 (DECLAIM (NOTINLINE |Quaternion;|)) 
 
-(DEFUN |Quaternion| (#1=#:G719)
+(DEFUN |Quaternion| (#1=#:G724)
   (SPROG NIL
-         (PROG (#2=#:G720)
+         (PROG (#2=#:G725)
            (RETURN
             (COND
              ((LETT #2#
@@ -19,7 +19,7 @@
                  ((NOT #2#) (HREM |$ConstructorCache| '|Quaternion|)))))))))) 
 
 (DEFUN |Quaternion;| (|#1|)
-  (SPROG ((|pv$| NIL) (#1=#:G718 NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
+  (SPROG ((|pv$| NIL) (#1=#:G723 NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
           (LETT DV$1 (|devaluate| |#1|) . #2=(|Quaternion|))
           (LETT |dv$| (LIST '|Quaternion| DV$1) . #2#)
@@ -109,48 +109,51 @@
               (|Union| $ '"failed") (|InputForm|) (|NonNegativeInteger|)
               (|Record| (|:| |unit| $) (|:| |canonical| $) (|:| |associate| $))
               (|Boolean|) (|List| 17) (|Equation| 6) (|List| 6) (|Integer|)
-              (|List| 21) (|Symbol|) (|Union| 10 '"failed") (|Matrix| 19)
+              (|Symbol|) (|List| 20) (|Union| 10 '"failed") (|Matrix| 19)
               (|Matrix| $) (|Record| (|:| |mat| 23) (|:| |vec| (|Vector| 19)))
               (|Vector| $) (|List| 13) (|Union| 19 '#1="failed") (|Matrix| 6)
               (|Record| (|:| |mat| 29) (|:| |vec| (|Vector| 6)))
-              (|Mapping| 6 6) (|Union| 6 '#1#) (|PositiveInteger|) (|String|)
-              (|SingleInteger|) (|HashState|) (|OutputForm|))
+              (|Mapping| 6 6) (|Union| 6 '#1#) (|PositiveInteger|)
+              (|HashState|) (|String|) (|OutputForm|) (|SingleInteger|))
            '#(|One| 13) 'NIL
            (CONS
             (|makeByteWordVec2| 15
-                                '(0 4 0 0 0 4 0 0 1 2 6 4 10 11 15 0 0 5 4 0 0
-                                  0 0 5 4 4 0 0 0 0 0 0 7 0 0 0 7 0 0 13 0 0 0
-                                  0 3 5 7 8 9 12 13 14))
+                                '(0 0 0 4 0 0 1 2 6 4 10 11 15 0 0 0 0 0 4 0 0
+                                  0 4 0 0 0 0 0 4 4 0 0 0 0 0 0 0 0 7 0 0 0 7 0
+                                  0 13 0 0 0 0 3 5 7 8 9 12 13 14))
             (CONS
-             '#(|QuaternionCategory&| |DivisionRing&| |Algebra&|
-                |FullyLinearlyExplicitOver&| |DifferentialExtension&|
-                |Algebra&| NIL |Module&| NIL NIL |EntireRing&| |Module&|
-                |PartialDifferentialRing&| |DifferentialRing&| NIL |Ring&| NIL
-                NIL NIL |Rng&| NIL NIL NIL NIL NIL NIL |AbelianGroup&| NIL NIL
-                |AbelianMonoid&| |Monoid&| NIL |OrderedSet&|
-                |FullyEvalableOver&| |SemiGroup&| |AbelianSemiGroup&| NIL
-                |FullyRetractableTo&| |SetCategory&| |Evalable&|
+             '#(|QuaternionCategory&| |FullyLinearlyExplicitOver&|
+                |DifferentialExtension&| |DivisionRing&| |Algebra&| NIL NIL NIL
+                |EntireRing&| |Algebra&| |PartialDifferentialRing&|
+                |DifferentialRing&| NIL NIL |Rng&| NIL |Module&| NIL |Module&|
+                NIL |NonAssociativeRing&| NIL NIL NIL NIL |NonAssociativeRng&|
+                NIL NIL NIL NIL |AbelianGroup&| NIL NIL NIL NIL
+                |MagmaWithUnit&| |NonAssociativeSemiRng&| |AbelianMonoid&|
+                |OrderedSet&| |FullyEvalableOver&| |Magma&| |AbelianSemiGroup&|
+                NIL |FullyRetractableTo&| |SetCategory&| |Evalable&|
                 |RetractableTo&| NIL |BasicType&| NIL NIL NIL |PartialOrder&|
                 |RetractableTo&| |RetractableTo&| |InnerEvalable&|
                 |InnerEvalable&| NIL)
              (CONS
-              '#((|QuaternionCategory| 6) (|DivisionRing|) (|Algebra| 6)
-                 (|FullyLinearlyExplicitOver| 6) (|DifferentialExtension| 6)
-                 (|Algebra| 10) (|LinearlyExplicitOver| 6) (|Module| 6)
-                 (|CharacteristicNonZero|) (|CharacteristicZero|)
-                 (|EntireRing|) (|Module| 10) (|PartialDifferentialRing| 21)
-                 (|DifferentialRing|) (|LinearlyExplicitOver| 19) (|Ring|)
-                 (|BiModule| 6 6) (|BiModule| $$ $$) (|BiModule| 10 10) (|Rng|)
-                 (|RightModule| 6) (|LeftModule| 6) (|LeftModule| $$)
-                 (|RightModule| $$) (|LeftModule| 10) (|RightModule| 10)
-                 (|AbelianGroup|) (|CancellationAbelianMonoid|) (|SemiRing|)
-                 (|AbelianMonoid|) (|Monoid|) (|SemiRng|) (|OrderedSet|)
-                 (|FullyEvalableOver| 6) (|SemiGroup|) (|AbelianSemiGroup|)
-                 (|Comparable|) (|FullyRetractableTo| 6) (|SetCategory|)
-                 (|Evalable| 6) (|RetractableTo| 6) (|unitsKnown|)
-                 (|BasicType|) (|CoercibleTo| 37) (|ConvertibleTo| 12)
-                 (|noZeroDivisors|) (|PartialOrder|) (|RetractableTo| 10)
-                 (|RetractableTo| 19) (|InnerEvalable| 21 6)
-                 (|InnerEvalable| 6 6) (|Eltable| 6 $$))
+              '#((|QuaternionCategory| 6) (|FullyLinearlyExplicitOver| 6)
+                 (|DifferentialExtension| 6) (|DivisionRing|) (|Algebra| 6)
+                 (|LinearlyExplicitOver| 6) (|CharacteristicNonZero|)
+                 (|CharacteristicZero|) (|EntireRing|) (|Algebra| 10)
+                 (|PartialDifferentialRing| 20) (|DifferentialRing|)
+                 (|LinearlyExplicitOver| 19) (|Ring|) (|Rng|) (|SemiRing|)
+                 (|Module| 6) (|SemiRng|) (|Module| 10) (|BiModule| 6 6)
+                 (|NonAssociativeRing|) (|BiModule| $$ $$) (|BiModule| 10 10)
+                 (|RightModule| 6) (|LeftModule| 6) (|NonAssociativeRng|)
+                 (|RightModule| $$) (|LeftModule| $$) (|LeftModule| 10)
+                 (|RightModule| 10) (|AbelianGroup|) (|Monoid|)
+                 (|NonAssociativeSemiRing|) (|CancellationAbelianMonoid|)
+                 (|SemiGroup|) (|MagmaWithUnit|) (|NonAssociativeSemiRng|)
+                 (|AbelianMonoid|) (|OrderedSet|) (|FullyEvalableOver| 6)
+                 (|Magma|) (|AbelianSemiGroup|) (|Comparable|)
+                 (|FullyRetractableTo| 6) (|SetCategory|) (|Evalable| 6)
+                 (|RetractableTo| 6) (|unitsKnown|) (|BasicType|)
+                 (|CoercibleTo| 36) (|ConvertibleTo| 12) (|noZeroDivisors|)
+                 (|PartialOrder|) (|RetractableTo| 10) (|RetractableTo| 19)
+                 (|InnerEvalable| 20 6) (|InnerEvalable| 6 6) (|Eltable| 6 $$))
               (|makeByteWordVec2| 9 '(0 0 0 7 0 6 0 8 1 6 0 0 9 0 0 0 7)))))
            '|lookupIncomplete|)) 

@@ -26,7 +26,7 @@
             (SIGNATURE |retractable?| ((|Boolean|) (|Any|)))
             (SIGNATURE |retract| (#1# (|Any|)))))
           (|uts| (|Union| (|UnivariateTaylorSeries| FE |x| |a|) #2="failed"))
-          (|uls| (|Uls|)) (#3=#:G737 NIL)
+          (|uls| (|Uls|)) (#3=#:G746 NIL)
           (|ans|
            (|Union| (|:| |%series| |Uls|)
                     (|:| |%problem|
@@ -238,21 +238,19 @@
 
 (SDEFUN |EXPR2UPS;taylor;FEA;4| ((|fcn| FE) ($ |Any|))
         (SPROG ((|vars| (|List| (|Symbol|))))
-               (SEQ
-                (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                      |EXPR2UPS;taylor;FEA;4|)
-                (EXIT
-                 (COND
-                  ((NULL |vars|)
-                   (|error| "taylor: expression has no variables"))
-                  ((NULL (NULL (CDR |vars|)))
-                   (|error| "taylor: expression has more than one variable"))
-                  ('T
-                   (SPADCALL |fcn|
-                             (SPADCALL
-                              (SPADCALL (|SPADfirst| |vars|) (QREFELT $ 11))
-                              (|spadConstant| $ 17) (QREFELT $ 14))
-                             (QREFELT $ 24)))))))) 
+               (COND
+                ((NULL
+                  (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
+                        |EXPR2UPS;taylor;FEA;4|))
+                 (|error| "taylor: expression has no variables"))
+                ((NULL (NULL (CDR |vars|)))
+                 (|error| "taylor: expression has more than one variable"))
+                ('T
+                 (SPADCALL |fcn|
+                           (SPADCALL
+                            (SPADCALL (|SPADfirst| |vars|) (QREFELT $ 11))
+                            (|spadConstant| $ 17) (QREFELT $ 14))
+                           (QREFELT $ 24)))))) 
 
 (SDEFUN |EXPR2UPS;taylor;FENniA;5|
         ((|fcn| FE) (|n| |NonNegativeInteger|) ($ |Any|))
@@ -284,44 +282,44 @@
                         |noBranch|))))
           (|x| (|Symbol|)) (|vars| (|List| (|Symbol|))))
          (SEQ
-          (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                . #1=(|EXPR2UPS;taylor;FENniA;5|))
-          (EXIT
-           (COND
-            ((NULL |vars|) (|error| "taylor: expression has no variables"))
-            ((NULL (NULL (CDR |vars|)))
-             (|error| "taylor: expression has more than one variable"))
-            ('T
-             (SEQ (LETT |x| (|SPADfirst| |vars|) . #1#)
-                  (LETT |uts|
-                        (|UnivariateTaylorSeries| (QREFELT $ 7) |x|
-                                                  (|spadConstant| $ 17))
-                        . #1#)
-                  (LETT |any1| (|AnyFunctions1| |uts|) . #1#)
-                  (LETT |series|
-                        (SPADCALL
-                         (SPADCALL |fcn|
-                                   (SPADCALL (SPADCALL |x| (QREFELT $ 11))
-                                             (|spadConstant| $ 17)
-                                             (QREFELT $ 14))
-                                   (QREFELT $ 24))
-                         (|compiledLookupCheck| '|retract|
-                                                (LIST (|devaluate| |uts|)
-                                                      (LIST '|Any|))
-                                                |any1|))
-                        . #1#)
-                  (EXIT
-                   (SPADCALL
-                    (SPADCALL |series| |n|
-                              (|compiledLookupCheck| '|extend|
-                                                     (LIST '$ '$
-                                                           (LIST
-                                                            '|NonNegativeInteger|))
-                                                     |uts|))
-                    (|compiledLookupCheck| '|coerce|
-                                           (LIST (LIST '|Any|)
-                                                 (|devaluate| |uts|))
-                                           |any1|)))))))))) 
+          (COND
+           ((NULL
+             (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
+                   . #1=(|EXPR2UPS;taylor;FENniA;5|)))
+            (|error| "taylor: expression has no variables"))
+           ((NULL (NULL (CDR |vars|)))
+            (|error| "taylor: expression has more than one variable"))
+           ('T
+            (SEQ (LETT |x| (|SPADfirst| |vars|) . #1#)
+                 (LETT |uts|
+                       (|UnivariateTaylorSeries| (QREFELT $ 7) |x|
+                                                 (|spadConstant| $ 17))
+                       . #1#)
+                 (LETT |any1| (|AnyFunctions1| |uts|) . #1#)
+                 (LETT |series|
+                       (SPADCALL
+                        (SPADCALL |fcn|
+                                  (SPADCALL (SPADCALL |x| (QREFELT $ 11))
+                                            (|spadConstant| $ 17)
+                                            (QREFELT $ 14))
+                                  (QREFELT $ 24))
+                        (|compiledLookupCheck| '|retract|
+                                               (LIST (|devaluate| |uts|)
+                                                     (LIST '|Any|))
+                                               |any1|))
+                       . #1#)
+                 (EXIT
+                  (SPADCALL
+                   (SPADCALL |series| |n|
+                             (|compiledLookupCheck| '|extend|
+                                                    (LIST '$ '$
+                                                          (LIST
+                                                           '|NonNegativeInteger|))
+                                                    |uts|))
+                   (|compiledLookupCheck| '|coerce|
+                                          (LIST (LIST '|Any|)
+                                                (|devaluate| |uts|))
+                                          |any1|))))))))) 
 
 (SDEFUN |EXPR2UPS;taylor;FEEA;6| ((|fcn| FE) (|eq| |Equation| FE) ($ |Any|))
         (SPROG
@@ -400,7 +398,7 @@
 
 (SDEFUN |EXPR2UPS;iLaurent| ((|fcn| FE) (|x| |Symbol|) (|a| FE) ($ |Any|))
         (SPROG
-         ((#1=#:G783 NIL)
+         ((#1=#:G794 NIL)
           (|any1|
            (CATEGORY |package|
             (SIGNATURE |coerce|
@@ -590,21 +588,19 @@
 
 (SDEFUN |EXPR2UPS;laurent;FEA;10| ((|fcn| FE) ($ |Any|))
         (SPROG ((|vars| (|List| (|Symbol|))))
-               (SEQ
-                (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                      |EXPR2UPS;laurent;FEA;10|)
-                (EXIT
-                 (COND
-                  ((NULL |vars|)
-                   (|error| "laurent: expression has no variables"))
-                  ((NULL (NULL (CDR |vars|)))
-                   (|error| "laurent: expression has more than one variable"))
-                  ('T
-                   (SPADCALL |fcn|
-                             (SPADCALL
-                              (SPADCALL (|SPADfirst| |vars|) (QREFELT $ 11))
-                              (|spadConstant| $ 17) (QREFELT $ 14))
-                             (QREFELT $ 35)))))))) 
+               (COND
+                ((NULL
+                  (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
+                        |EXPR2UPS;laurent;FEA;10|))
+                 (|error| "laurent: expression has no variables"))
+                ((NULL (NULL (CDR |vars|)))
+                 (|error| "laurent: expression has more than one variable"))
+                ('T
+                 (SPADCALL |fcn|
+                           (SPADCALL
+                            (SPADCALL (|SPADfirst| |vars|) (QREFELT $ 11))
+                            (|spadConstant| $ 17) (QREFELT $ 14))
+                           (QREFELT $ 35)))))) 
 
 (SDEFUN |EXPR2UPS;laurent;FEIA;11| ((|fcn| FE) (|n| |Integer|) ($ |Any|))
         (SPROG
@@ -628,43 +624,43 @@
                  |noBranch|))))
           (|x| (|Symbol|)) (|vars| (|List| (|Symbol|))))
          (SEQ
-          (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                . #1=(|EXPR2UPS;laurent;FEIA;11|))
-          (EXIT
-           (COND
-            ((NULL |vars|) (|error| "laurent: expression has no variables"))
-            ((NULL (NULL (CDR |vars|)))
-             (|error| "laurent: expression has more than one variable"))
-            ('T
-             (SEQ (LETT |x| (|SPADfirst| |vars|) . #1#)
-                  (LETT |uls|
-                        (|UnivariateLaurentSeries| (QREFELT $ 7) |x|
-                                                   (|spadConstant| $ 17))
-                        . #1#)
-                  (LETT |any1| (|AnyFunctions1| |uls|) . #1#)
-                  (LETT |series|
-                        (SPADCALL
-                         (SPADCALL |fcn|
-                                   (SPADCALL (SPADCALL |x| (QREFELT $ 11))
-                                             (|spadConstant| $ 17)
-                                             (QREFELT $ 14))
-                                   (QREFELT $ 35))
-                         (|compiledLookupCheck| '|retract|
-                                                (LIST (|devaluate| |uls|)
-                                                      (LIST '|Any|))
-                                                |any1|))
-                        . #1#)
-                  (EXIT
-                   (SPADCALL
-                    (SPADCALL |series| |n|
-                              (|compiledLookupCheck| '|extend|
-                                                     (LIST '$ '$
-                                                           (LIST '|Integer|))
-                                                     |uls|))
-                    (|compiledLookupCheck| '|coerce|
-                                           (LIST (LIST '|Any|)
-                                                 (|devaluate| |uls|))
-                                           |any1|)))))))))) 
+          (COND
+           ((NULL
+             (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
+                   . #1=(|EXPR2UPS;laurent;FEIA;11|)))
+            (|error| "laurent: expression has no variables"))
+           ((NULL (NULL (CDR |vars|)))
+            (|error| "laurent: expression has more than one variable"))
+           ('T
+            (SEQ (LETT |x| (|SPADfirst| |vars|) . #1#)
+                 (LETT |uls|
+                       (|UnivariateLaurentSeries| (QREFELT $ 7) |x|
+                                                  (|spadConstant| $ 17))
+                       . #1#)
+                 (LETT |any1| (|AnyFunctions1| |uls|) . #1#)
+                 (LETT |series|
+                       (SPADCALL
+                        (SPADCALL |fcn|
+                                  (SPADCALL (SPADCALL |x| (QREFELT $ 11))
+                                            (|spadConstant| $ 17)
+                                            (QREFELT $ 14))
+                                  (QREFELT $ 35))
+                        (|compiledLookupCheck| '|retract|
+                                               (LIST (|devaluate| |uls|)
+                                                     (LIST '|Any|))
+                                               |any1|))
+                       . #1#)
+                 (EXIT
+                  (SPADCALL
+                   (SPADCALL |series| |n|
+                             (|compiledLookupCheck| '|extend|
+                                                    (LIST '$ '$
+                                                          (LIST '|Integer|))
+                                                    |uls|))
+                   (|compiledLookupCheck| '|coerce|
+                                          (LIST (LIST '|Any|)
+                                                (|devaluate| |uls|))
+                                          |any1|))))))))) 
 
 (SDEFUN |EXPR2UPS;laurent;FEEA;12| ((|fcn| FE) (|eq| |Equation| FE) ($ |Any|))
         (SPROG
@@ -742,7 +738,7 @@
 
 (SDEFUN |EXPR2UPS;iPuiseux| ((|fcn| FE) (|x| |Symbol|) (|a| FE) ($ |Any|))
         (SPROG
-         ((#1=#:G825 NIL)
+         ((#1=#:G837 NIL)
           (|any1|
            (CATEGORY |package|
             (SIGNATURE |coerce|
@@ -948,21 +944,19 @@
 
 (SDEFUN |EXPR2UPS;puiseux;FEA;16| ((|fcn| FE) ($ |Any|))
         (SPROG ((|vars| (|List| (|Symbol|))))
-               (SEQ
-                (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                      |EXPR2UPS;puiseux;FEA;16|)
-                (EXIT
-                 (COND
-                  ((NULL |vars|)
-                   (|error| "puiseux: expression has no variables"))
-                  ((NULL (NULL (CDR |vars|)))
-                   (|error| "puiseux: expression has more than one variable"))
-                  ('T
-                   (SPADCALL |fcn|
-                             (SPADCALL
-                              (SPADCALL (|SPADfirst| |vars|) (QREFELT $ 11))
-                              (|spadConstant| $ 17) (QREFELT $ 14))
-                             (QREFELT $ 43)))))))) 
+               (COND
+                ((NULL
+                  (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
+                        |EXPR2UPS;puiseux;FEA;16|))
+                 (|error| "puiseux: expression has no variables"))
+                ((NULL (NULL (CDR |vars|)))
+                 (|error| "puiseux: expression has more than one variable"))
+                ('T
+                 (SPADCALL |fcn|
+                           (SPADCALL
+                            (SPADCALL (|SPADfirst| |vars|) (QREFELT $ 11))
+                            (|spadConstant| $ 17) (QREFELT $ 14))
+                           (QREFELT $ 43)))))) 
 
 (SDEFUN |EXPR2UPS;puiseux;FEFA;17|
         ((|fcn| FE) (|n| |Fraction| (|Integer|)) ($ |Any|))
@@ -988,45 +982,45 @@
                  |noBranch|))))
           (|x| (|Symbol|)) (|vars| (|List| (|Symbol|))))
          (SEQ
-          (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                . #2=(|EXPR2UPS;puiseux;FEFA;17|))
-          (EXIT
-           (COND
-            ((NULL |vars|) (|error| "puiseux: expression has no variables"))
-            ((NULL (NULL (CDR |vars|)))
-             (|error| "puiseux: expression has more than one variable"))
-            ('T
-             (SEQ (LETT |x| (|SPADfirst| |vars|) . #2#)
-                  (LETT |upxs|
-                        (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x|
-                                                   (|spadConstant| $ 17))
-                        . #2#)
-                  (LETT |any1| (|AnyFunctions1| |upxs|) . #2#)
-                  (LETT |series|
-                        (SPADCALL
-                         (SPADCALL |fcn|
-                                   (SPADCALL (SPADCALL |x| (QREFELT $ 11))
-                                             (|spadConstant| $ 17)
-                                             (QREFELT $ 14))
-                                   (QREFELT $ 43))
-                         (|compiledLookupCheck| '|retract|
-                                                (LIST (|devaluate| |upxs|)
-                                                      (LIST '|Any|))
-                                                |any1|))
-                        . #2#)
-                  (EXIT
-                   (SPADCALL
-                    (SPADCALL |series| |n|
-                              (|compiledLookupCheck| '|extend|
-                                                     (LIST '$ '$
-                                                           (LIST '|Fraction|
-                                                                 (LIST
-                                                                  '|Integer|)))
-                                                     |upxs|))
-                    (|compiledLookupCheck| '|coerce|
-                                           (LIST (LIST '|Any|)
-                                                 (|devaluate| |upxs|))
-                                           |any1|)))))))))) 
+          (COND
+           ((NULL
+             (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
+                   . #2=(|EXPR2UPS;puiseux;FEFA;17|)))
+            (|error| "puiseux: expression has no variables"))
+           ((NULL (NULL (CDR |vars|)))
+            (|error| "puiseux: expression has more than one variable"))
+           ('T
+            (SEQ (LETT |x| (|SPADfirst| |vars|) . #2#)
+                 (LETT |upxs|
+                       (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x|
+                                                  (|spadConstant| $ 17))
+                       . #2#)
+                 (LETT |any1| (|AnyFunctions1| |upxs|) . #2#)
+                 (LETT |series|
+                       (SPADCALL
+                        (SPADCALL |fcn|
+                                  (SPADCALL (SPADCALL |x| (QREFELT $ 11))
+                                            (|spadConstant| $ 17)
+                                            (QREFELT $ 14))
+                                  (QREFELT $ 43))
+                        (|compiledLookupCheck| '|retract|
+                                               (LIST (|devaluate| |upxs|)
+                                                     (LIST '|Any|))
+                                               |any1|))
+                       . #2#)
+                 (EXIT
+                  (SPADCALL
+                   (SPADCALL |series| |n|
+                             (|compiledLookupCheck| '|extend|
+                                                    (LIST '$ '$
+                                                          (LIST '|Fraction|
+                                                                (LIST
+                                                                 '|Integer|)))
+                                                    |upxs|))
+                   (|compiledLookupCheck| '|coerce|
+                                          (LIST (LIST '|Any|)
+                                                (|devaluate| |upxs|))
+                                          |any1|))))))))) 
 
 (SDEFUN |EXPR2UPS;puiseux;FEEA;18| ((|fcn| FE) (|eq| |Equation| FE) ($ |Any|))
         (SPROG
@@ -1115,7 +1109,7 @@
              ((|Union| #2# . #3=("failed")) . #4=((|Any|))))
             #5=(SIGNATURE |retractable?| ((|Boolean|) (|Any|)))
             (SIGNATURE |retract| (#2# . #6=((|Any|))))))
-          (#7=#:G861 NIL)
+          (#7=#:G873 NIL)
           (|anyone|
            (CATEGORY |package|
             (SIGNATURE |coerce|
@@ -1389,21 +1383,19 @@
 
 (SDEFUN |EXPR2UPS;series;FEA;22| ((|fcn| FE) ($ |Any|))
         (SPROG ((|vars| (|List| (|Symbol|))))
-               (SEQ
-                (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                      |EXPR2UPS;series;FEA;22|)
-                (EXIT
-                 (COND
-                  ((NULL |vars|)
-                   (|error| "series: expression has no variables"))
-                  ((NULL (NULL (CDR |vars|)))
-                   (|error| "series: expression has more than one variable"))
-                  ('T
-                   (SPADCALL |fcn|
-                             (SPADCALL
-                              (SPADCALL (|SPADfirst| |vars|) (QREFELT $ 11))
-                              (|spadConstant| $ 17) (QREFELT $ 14))
-                             (QREFELT $ 48)))))))) 
+               (COND
+                ((NULL
+                  (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
+                        |EXPR2UPS;series;FEA;22|))
+                 (|error| "series: expression has no variables"))
+                ((NULL (NULL (CDR |vars|)))
+                 (|error| "series: expression has more than one variable"))
+                ('T
+                 (SPADCALL |fcn|
+                           (SPADCALL
+                            (SPADCALL (|SPADfirst| |vars|) (QREFELT $ 11))
+                            (|spadConstant| $ 17) (QREFELT $ 14))
+                           (QREFELT $ 48)))))) 
 
 (SDEFUN |EXPR2UPS;series;FEFA;23|
         ((|fcn| FE) (|n| |Fraction| (|Integer|)) ($ |Any|))
@@ -1429,45 +1421,45 @@
                  |noBranch|))))
           (|x| (|Symbol|)) (|vars| (|List| (|Symbol|))))
          (SEQ
-          (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                . #2=(|EXPR2UPS;series;FEFA;23|))
-          (EXIT
-           (COND
-            ((NULL |vars|) (|error| "series: expression has no variables"))
-            ((NULL (NULL (CDR |vars|)))
-             (|error| "series: expression has more than one variable"))
-            ('T
-             (SEQ (LETT |x| (|SPADfirst| |vars|) . #2#)
-                  (LETT |upxs|
-                        (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x|
-                                                   (|spadConstant| $ 17))
-                        . #2#)
-                  (LETT |any1| (|AnyFunctions1| |upxs|) . #2#)
-                  (LETT |series|
-                        (SPADCALL
-                         (SPADCALL |fcn|
-                                   (SPADCALL (SPADCALL |x| (QREFELT $ 11))
-                                             (|spadConstant| $ 17)
-                                             (QREFELT $ 14))
-                                   (QREFELT $ 48))
-                         (|compiledLookupCheck| '|retract|
-                                                (LIST (|devaluate| |upxs|)
-                                                      (LIST '|Any|))
-                                                |any1|))
-                        . #2#)
-                  (EXIT
-                   (SPADCALL
-                    (SPADCALL |series| |n|
-                              (|compiledLookupCheck| '|extend|
-                                                     (LIST '$ '$
-                                                           (LIST '|Fraction|
-                                                                 (LIST
-                                                                  '|Integer|)))
-                                                     |upxs|))
-                    (|compiledLookupCheck| '|coerce|
-                                           (LIST (LIST '|Any|)
-                                                 (|devaluate| |upxs|))
-                                           |any1|)))))))))) 
+          (COND
+           ((NULL
+             (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
+                   . #2=(|EXPR2UPS;series;FEFA;23|)))
+            (|error| "series: expression has no variables"))
+           ((NULL (NULL (CDR |vars|)))
+            (|error| "series: expression has more than one variable"))
+           ('T
+            (SEQ (LETT |x| (|SPADfirst| |vars|) . #2#)
+                 (LETT |upxs|
+                       (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x|
+                                                  (|spadConstant| $ 17))
+                       . #2#)
+                 (LETT |any1| (|AnyFunctions1| |upxs|) . #2#)
+                 (LETT |series|
+                       (SPADCALL
+                        (SPADCALL |fcn|
+                                  (SPADCALL (SPADCALL |x| (QREFELT $ 11))
+                                            (|spadConstant| $ 17)
+                                            (QREFELT $ 14))
+                                  (QREFELT $ 48))
+                        (|compiledLookupCheck| '|retract|
+                                               (LIST (|devaluate| |upxs|)
+                                                     (LIST '|Any|))
+                                               |any1|))
+                       . #2#)
+                 (EXIT
+                  (SPADCALL
+                   (SPADCALL |series| |n|
+                             (|compiledLookupCheck| '|extend|
+                                                    (LIST '$ '$
+                                                          (LIST '|Fraction|
+                                                                (LIST
+                                                                 '|Integer|)))
+                                                    |upxs|))
+                   (|compiledLookupCheck| '|coerce|
+                                          (LIST (LIST '|Any|)
+                                                (|devaluate| |upxs|))
+                                          |any1|))))))))) 
 
 (SDEFUN |EXPR2UPS;series;FEEA;24| ((|fcn| FE) (|eq| |Equation| FE) ($ |Any|))
         (SPROG
@@ -1548,9 +1540,9 @@
 
 (DECLAIM (NOTINLINE |ExpressionToUnivariatePowerSeries;|)) 
 
-(DEFUN |ExpressionToUnivariatePowerSeries| (&REST #1=#:G891)
+(DEFUN |ExpressionToUnivariatePowerSeries| (&REST #1=#:G903)
   (SPROG NIL
-         (PROG (#2=#:G892)
+         (PROG (#2=#:G904)
            (RETURN
             (COND
              ((LETT #2#

@@ -7,7 +7,7 @@
 
 (DEFUN |AnonymousFunction| ()
   (SPROG NIL
-         (PROG (#1=#:G693)
+         (PROG (#1=#:G694)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|AnonymousFunction|)

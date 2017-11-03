@@ -4,7 +4,7 @@
          ($ |LinearOrdinaryDifferentialOperator3| |Coeff| |Ab| R))
         (SPROG
          ((|l3| (|LinearOrdinaryDifferentialOperator3| |Coeff| |Ab| R))
-          (#1=#:G698 NIL))
+          (#1=#:G702 NIL))
          (SEQ
           (LETT |l3| (|spadConstant| $ 10)
                 . #2=(|LODOCONV;convert;LodoLodo;1|))
@@ -84,9 +84,9 @@
 
 (DECLAIM (NOTINLINE |LODOConvertions;|)) 
 
-(DEFUN |LODOConvertions| (&REST #1=#:G708)
+(DEFUN |LODOConvertions| (&REST #1=#:G712)
   (SPROG NIL
-         (PROG (#2=#:G709)
+         (PROG (#2=#:G713)
            (RETURN
             (COND
              ((LETT #2#

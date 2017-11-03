@@ -1,7 +1,7 @@
 
 (SDEFUN |TENSPO2;linearExtend;MTpM2;1|
         ((|f| |Mapping| M2 (|List| B)) (|x| |TensorPower| |n| R B M1) ($ M2))
-        (SPROG ((|res| (M2)) (#1=#:G702 NIL) (|t| NIL))
+        (SPROG ((|res| (M2)) (#1=#:G705 NIL) (|t| NIL))
                (SEQ
                 (LETT |res| (|spadConstant| $ 11)
                       . #2=(|TENSPO2;linearExtend;MTpM2;1|))
@@ -27,9 +27,9 @@
 
 (DECLAIM (NOTINLINE |TensorPowerFunctions2;|)) 
 
-(DEFUN |TensorPowerFunctions2| (&REST #1=#:G703)
+(DEFUN |TensorPowerFunctions2| (&REST #1=#:G706)
   (SPROG NIL
-         (PROG (#2=#:G704)
+         (PROG (#2=#:G707)
            (RETURN
             (COND
              ((LETT #2#
@@ -77,9 +77,9 @@
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
               (|local| |#3|) (|local| |#4|) (|local| |#5|) (0 . |Zero|)
               (|Record| (|:| |k| 17) (|:| |c| 7)) (|List| 12)
-              (|TensorPower| 6 7 8 9) (4 . |listOfTerms|) (|List| 8)
-              (|Vector| 8) (9 . |parts|) (14 . *) (20 . +) (|Mapping| 10 16)
-              |TENSPO2;linearExtend;MTpM2;1|)
+              (|TensorPower| (NRTEVAL (QREFELT $ 6)) 7 8 9) (4 . |listOfTerms|)
+              (|List| 8) (|Vector| 8) (9 . |parts|) (14 . *) (20 . +)
+              (|Mapping| 10 16) |TENSPO2;linearExtend;MTpM2;1|)
            '#(|linearExtend| 26) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()

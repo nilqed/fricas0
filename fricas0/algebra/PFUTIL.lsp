@@ -2,11 +2,11 @@
 (SDEFUN |PFUTIL;decompose;UP2L;1| ((|nn| UP) (|dens| |List| UP) ($ |List| UP))
         (SPROG
          ((|res| (|List| UP)) (|cden| (|Factored| UP)) (|cnum| (UP))
-          (|ct| (|PartialFraction| UP)) (#1=#:G726 NIL) (|i| NIL)
-          (#2=#:G725 NIL) (|fden| NIL) (|nfacs| (|Integer|))
+          (|ct| (|PartialFraction| UP)) (#1=#:G729 NIL) (|i| NIL)
+          (#2=#:G728 NIL) (|fden| NIL) (|nfacs| (|Integer|))
           (|pfr| (|PartialFraction| UP)) (|nd| (|Factored| UP))
-          (|fdens| (|List| (|Factored| UP))) (#3=#:G724 NIL) (|nden| NIL)
-          (#4=#:G723 NIL))
+          (|fdens| (|List| (|Factored| UP))) (#3=#:G727 NIL) (|nden| NIL)
+          (#4=#:G726 NIL))
          (SEQ
           (LETT |fdens|
                 (PROGN
@@ -63,9 +63,9 @@
 
 (DECLAIM (NOTINLINE |PartialFractionUtilities;|)) 
 
-(DEFUN |PartialFractionUtilities| (&REST #1=#:G727)
+(DEFUN |PartialFractionUtilities| (&REST #1=#:G730)
   (SPROG NIL
-         (PROG (#2=#:G728)
+         (PROG (#2=#:G731)
            (RETURN
             (COND
              ((LETT #2#

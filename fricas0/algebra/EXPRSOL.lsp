@@ -2,7 +2,7 @@
 (SDEFUN |EXPRSOL;replaceDiffs;FBoSF;1|
         ((|expr| F) (|op| |BasicOperator|) (|sy| |Symbol|) ($ F))
         (SPROG
-         ((|differentiand| (F)) (|args| (|List| F)) (|arg| (F)) (#1=#:G717 NIL)
+         ((|differentiand| (F)) (|args| (|List| F)) (|arg| (F)) (#1=#:G720 NIL)
           (|k| NIL) (|lk| (|List| (|Kernel| F))))
          (SEQ
           (LETT |lk| (SPADCALL |expr| (QREFELT $ 17))
@@ -98,9 +98,9 @@
 
 (DECLAIM (NOTINLINE |ExpressionSolve;|)) 
 
-(DEFUN |ExpressionSolve| (&REST #1=#:G724)
+(DEFUN |ExpressionSolve| (&REST #1=#:G727)
   (SPROG NIL
-         (PROG (#2=#:G725)
+         (PROG (#2=#:G728)
            (RETURN
             (COND
              ((LETT #2#

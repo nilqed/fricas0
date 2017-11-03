@@ -3,17 +3,14 @@
         (SPADCALL |x| |y| (QREFELT $ 8))) 
 
 (SDEFUN |EAB;<;2$B;2| ((|x| $) (|y| $) ($ |Boolean|))
-        (COND ((NULL |x|) |y|) ((NULL |y|) NIL)
-              (#1='T
-               (COND
-                ((EQL (|SPADfirst| |x|) (|SPADfirst| |y|))
-                 (SPADCALL (CDR |x|) (CDR |y|) (QREFELT $ 10)))
-                (#1#
-                 (SPADCALL (|SPADfirst| |x|) (|SPADfirst| |y|)
-                           (QREFELT $ 12))))))) 
+        (COND ((NULL |x|) (NULL (NULL |y|))) ((NULL |y|) NIL)
+              ((EQL (|SPADfirst| |x|) (|SPADfirst| |y|))
+               (SPADCALL (CDR |x|) (CDR |y|) (QREFELT $ 10)))
+              ('T
+               (SPADCALL (|SPADfirst| |x|) (|SPADfirst| |y|) (QREFELT $ 12))))) 
 
 (SDEFUN |EAB;coerce;L$;3| ((|li| |List| (|Integer|)) ($ $))
-        (SPROG ((#1=#:G712 NIL) (|x| NIL))
+        (SPROG ((#1=#:G719 NIL) (|x| NIL))
                (SEQ
                 (SEQ (LETT |x| NIL . #2=(|EAB;coerce;L$;3|))
                      (LETT #1# |li| . #2#) G190
@@ -32,8 +29,8 @@
 
 (SDEFUN |EAB;degree;$Nni;4| ((|x| $) ($ |NonNegativeInteger|))
         (SPROG
-         ((#1=#:G719 NIL) (#2=#:G717 NIL) (#3=#:G716 #4=(|Integer|))
-          (#5=#:G718 #4#) (#6=#:G721 NIL) (#7=#:G690 NIL))
+         ((#1=#:G727 NIL) (#2=#:G725 NIL) (#3=#:G724 #4=(|Integer|))
+          (#5=#:G726 #4#) (#6=#:G729 NIL) (#7=#:G690 NIL))
          (SEQ
           (PROG1
               (LETT #1#
@@ -63,7 +60,7 @@
         (SPADCALL |x| (QREFELT $ 18))) 
 
 (SDEFUN |EAB;Nul;Nni$;6| ((|n| |NonNegativeInteger|) ($ $))
-        (SPROG ((#1=#:G727 NIL) (|i| NIL) (#2=#:G726 NIL))
+        (SPROG ((#1=#:G736 NIL) (|i| NIL) (#2=#:G735 NIL))
                (SEQ
                 (PROGN
                  (LETT #2# NIL . #3=(|EAB;Nul;Nni$;6|))
@@ -80,7 +77,7 @@
 
 (DEFUN |ExtAlgBasis| ()
   (SPROG NIL
-         (PROG (#1=#:G730)
+         (PROG (#1=#:G739)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|ExtAlgBasis|)

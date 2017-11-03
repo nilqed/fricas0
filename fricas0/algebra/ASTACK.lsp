@@ -9,7 +9,7 @@
 
 (SDEFUN |ASTACK;coerce;$Of;4| ((|d| $) ($ |OutputForm|))
         (SPROG
-         ((#1=#:G712 NIL) (|i| NIL) (#2=#:G711 NIL)
+         ((#1=#:G715 NIL) (|i| NIL) (#2=#:G714 NIL)
           (|n| (|NonNegativeInteger|)))
          (SEQ
           (COND ((SPADCALL |d| (QREFELT $ 16)) (SPADCALL NIL (QREFELT $ 19)))
@@ -85,9 +85,9 @@
 
 (DECLAIM (NOTINLINE |ArrayStack;|)) 
 
-(DEFUN |ArrayStack| (#1=#:G743)
+(DEFUN |ArrayStack| (#1=#:G746)
   (SPROG NIL
-         (PROG (#2=#:G744)
+         (PROG (#2=#:G747)
            (RETURN
             (COND
              ((LETT #2#
@@ -104,7 +104,7 @@
 
 (DEFUN |ArrayStack;| (|#1|)
   (SPROG
-   ((#1=#:G742 NIL) (|pv$| NIL) (#2=#:G739 NIL) (#3=#:G740 NIL) (#4=#:G741 NIL)
+   ((#1=#:G745 NIL) (|pv$| NIL) (#2=#:G742 NIL) (#3=#:G743 NIL) (#4=#:G744 NIL)
     ($ NIL) (|dv$| NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #5=(|ArrayStack|))

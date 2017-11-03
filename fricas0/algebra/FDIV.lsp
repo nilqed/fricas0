@@ -101,7 +101,7 @@
 
 (SDEFUN |FDIV;intReduce| ((|h| R) (|b| UP) ($ R))
         (SPROG
-         ((#1=#:G745 NIL) (#2=#:G747 NIL) (|i| NIL) (#3=#:G746 NIL)
+         ((#1=#:G750 NIL) (#2=#:G752 NIL) (|i| NIL) (#3=#:G751 NIL)
           (|v| (|Vector| UP)))
          (SEQ
           (LETT |v| (QCAR (SPADCALL |h| (QREFELT $ 72)))
@@ -156,8 +156,8 @@
 
 (SDEFUN |FDIV;divisor;2FI$;29| ((|a| F) (|b| F) (|n| |Integer|) ($ $))
         (SPROG
-         ((|g| ($)) (|m| (|NonNegativeInteger|)) (#1=#:G757 NIL)
-          (#2=#:G756 NIL) (|d| (UP)))
+         ((|g| ($)) (|m| (|NonNegativeInteger|)) (#1=#:G762 NIL)
+          (#2=#:G761 NIL) (|d| (UP)))
          (SEQ
           (COND
            ((NULL
@@ -291,7 +291,7 @@
 
 (SDEFUN |FDIV;generator;$U;32| ((|d| $) ($ |Union| R "failed"))
         (SPROG
-         ((#1=#:G784 NIL) (#2=#:G785 NIL) (#3=#:G786 NIL) (|i| NIL)
+         ((#1=#:G789 NIL) (#2=#:G790 NIL) (#3=#:G791 NIL) (|i| NIL)
           (|bsis| (|Vector| R)))
          (SEQ
           (EXIT
@@ -315,9 +315,9 @@
                                            (SPADCALL (QAREF1O |bsis| |i| 1)
                                                      (QREFELT $ 119)))
                                      . #4#)
-                               (GO #5=#:G783))
+                               (GO #5=#:G788))
                               . #4#)
-                        (GO #6=#:G781))))))
+                        (GO #6=#:G786))))))
                    (LETT |i| (+ |i| 1) . #4#) (GO G190) G191 (EXIT NIL)))
              #6# (EXIT #1#))
             (EXIT (CONS 1 "failed"))))
@@ -364,9 +364,9 @@
 
 (DECLAIM (NOTINLINE |FiniteDivisor;|)) 
 
-(DEFUN |FiniteDivisor| (&REST #1=#:G793)
+(DEFUN |FiniteDivisor| (&REST #1=#:G798)
   (SPROG NIL
-         (PROG (#2=#:G794)
+         (PROG (#2=#:G799)
            (RETURN
             (COND
              ((LETT #2#
@@ -491,12 +491,12 @@
               (389 . |splitDenominator|) (394 . |retract|) (399 . *)
               (405 . |reduce|) (410 . |norm|) (415 . |denom|) (420 . /)
               (426 . |coerce|) (|Mapping| 67 67) (431 . |map|) (437 . |empty?|)
-              (|FramedModule| 7 67 8 9 51) (442 . |module|) (447 . |basis|)
-              (452 . |normalizeAtInfinity|) (457 . |finiteBasis|)
-              (462 . |integralAtInfinity?|) (467 . |primitivePart|)
-              (472 . |reduceBasisAtInfinity|) (|Mapping| 9 9) (477 . |map!|)
-              (483 . |lSpaceBasis|) (488 . ^) (|HashState|) (|String|)
-              (|SingleInteger|))
+              (|FractionalIdealAsModule| 7 67 8 9 (NRTEVAL (QREFELT $ 51)))
+              (442 . |module|) (447 . |basis|) (452 . |normalizeAtInfinity|)
+              (457 . |finiteBasis|) (462 . |integralAtInfinity?|)
+              (467 . |primitivePart|) (472 . |reduceBasisAtInfinity|)
+              (|Mapping| 9 9) (477 . |map!|) (483 . |lSpaceBasis|) (488 . ^)
+              (|HashState|) (|String|) (|SingleInteger|))
            '#(~= 494 |zero?| 500 |subtractIfCan| 505 |sample| 511 |reduce| 515
               |principal?| 520 |opposite?| 525 |latex| 531 |lSpaceBasis| 536
               |ideal| 541 |hashUpdate!| 546 |hash| 552 |generator| 557

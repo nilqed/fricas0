@@ -29,9 +29,9 @@
 
 (DECLAIM (NOTINLINE |NumericComplexEigenPackage;|)) 
 
-(DEFUN |NumericComplexEigenPackage| (#1=#:G735)
+(DEFUN |NumericComplexEigenPackage| (#1=#:G738)
   (SPROG NIL
-         (PROG (#2=#:G736)
+         (PROG (#2=#:G739)
            (RETURN
             (COND
              ((LETT #2#

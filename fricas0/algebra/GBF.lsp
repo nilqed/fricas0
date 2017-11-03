@@ -11,14 +11,14 @@
          (|listOfBases| |List| (|List| |Dpol|)) (|info| |Boolean|)
          ($ |List| (|List| |Dpol|)))
         (SPROG
-         ((|newBasis| (|List| |Dpol|)) (#1=#:G761 NIL) (|p| (|Dpol|))
-          (#2=#:G760 NIL) (|newInputPolys| (|List| |Dpol|)) (#3=#:G759 NIL)
-          (|fnP| (|Dpol|)) (#4=#:G755 NIL) (|nP| (|Dpol|))
-          (|allReducedFactors| (|List| |Dpol|)) (#5=#:G758 NIL)
+         ((|newBasis| (|List| |Dpol|)) (#1=#:G767 NIL) (|p| (|Dpol|))
+          (#2=#:G766 NIL) (|newInputPolys| (|List| |Dpol|)) (#3=#:G765 NIL)
+          (|fnP| (|Dpol|)) (#4=#:G761 NIL) (|nP| (|Dpol|))
+          (|allReducedFactors| (|List| |Dpol|)) (#5=#:G764 NIL)
           (|doSplitting?| #6=(|Boolean|))
           (|irreducibleFactors| (|List| |Dpol|)) (|terminateWithBasis| #6#)
-          (|stopDividing| #6#) (#7=#:G714 NIL)
-          (|nPq| (|Union| |Dpol| #8="failed")) (#9=#:G757 NIL) (#10=#:G756 NIL)
+          (|stopDividing| #6#) (#7=#:G720 NIL)
+          (|nPq| (|Union| |Dpol| #8="failed")) (#9=#:G763 NIL) (#10=#:G762 NIL)
           (|q| NIL) (|h| (|Dpol|)))
          (SEQ (LETT |doSplitting?| NIL . #11=(|GBF;createGroebnerBases|))
               (LETT |terminateWithBasis| NIL . #11#)
@@ -37,25 +37,25 @@
                        (SEQ
                         (LETT |nP|
                               (COND
-                               ((NULL |inputPolys|)
-                                (SEQ
-                                 (LETT |h|
-                                       (SPADCALL (|SPADfirst| |lcP|)
-                                                 (QREFELT $ 12))
-                                       . #11#)
-                                 (LETT |lcP| (CDR |lcP|) . #11#)
-                                 (EXIT
-                                  (SPADCALL
-                                   (SPADCALL |h| |redPols| (QREFELT $ 14))
-                                   (QREFELT $ 15)))))
-                               ('T
+                               ((NULL (NULL |inputPolys|))
                                 (SEQ
                                  (LETT |p| (|SPADfirst| |inputPolys|) . #11#)
                                  (LETT |inputPolys| (CDR |inputPolys|) . #11#)
                                  (EXIT
                                   (SPADCALL
-                                   (SPADCALL |p| |redPols| (QREFELT $ 14))
-                                   (QREFELT $ 15))))))
+                                   (SPADCALL |p| |redPols| (QREFELT $ 12))
+                                   (QREFELT $ 13)))))
+                               ('T
+                                (SEQ
+                                 (LETT |h|
+                                       (SPADCALL (|SPADfirst| |lcP|)
+                                                 (QREFELT $ 15))
+                                       . #11#)
+                                 (LETT |lcP| (CDR |lcP|) . #11#)
+                                 (EXIT
+                                  (SPADCALL
+                                   (SPADCALL |h| |redPols| (QREFELT $ 12))
+                                   (QREFELT $ 13))))))
                               . #11#)
                         (EXIT
                          (COND
@@ -147,8 +147,8 @@
                                            (LETT |nP|
                                                  (SPADCALL
                                                   (SPADCALL |nP| |redPols|
-                                                            (QREFELT $ 14))
-                                                  (QREFELT $ 15))
+                                                            (QREFELT $ 12))
+                                                  (QREFELT $ 13))
                                                  . #11#)
                                            (EXIT
                                             (COND
@@ -203,8 +203,8 @@
                                                                           |redPols|
                                                                           (QREFELT
                                                                            $
-                                                                           14))
-                                                                (QREFELT $ 15))
+                                                                           12))
+                                                                (QREFELT $ 13))
                                                                . #11#)
                                                          (EXIT
                                                           (LETT
@@ -250,7 +250,7 @@
                                                                              29))
                                                           . #11#)))))))))))))))
                                       . #11#)
-                                (GO #12=#:G739)))))
+                                (GO #12=#:G745)))))
                             #12# (EXIT #4#))))))))))
                    NIL (GO G190) G191 (EXIT NIL))
               (EXIT
@@ -346,7 +346,7 @@
 
 (SDEFUN |GBF;createAllFactors| ((|p| |Dpol|) ($ |List| |Dpol|))
         (SPROG
-         ((|loF| (|List| |Dpol|)) (#1=#:G777 NIL) (|el| NIL) (#2=#:G776 NIL))
+         ((|loF| (|List| |Dpol|)) (#1=#:G783 NIL) (|el| NIL) (#2=#:G782 NIL))
          (SEQ
           (LETT |loF|
                 (PROGN
@@ -386,7 +386,7 @@
             (|Record| (|:| |lcmfij| |Expon|)
                       (|:| |totdeg| (|NonNegativeInteger|)) (|:| |poli| |Dpol|)
                       (|:| |polj| |Dpol|))))
-          (#1=#:G788 NIL) (|q| NIL) (#2=#:G787 NIL)
+          (#1=#:G794 NIL) (|q| NIL) (#2=#:G793 NIL)
           (|totdegreeOfp| (|NonNegativeInteger|)))
          (SEQ
           (LETT |totdegreeOfp| (SPADCALL |p| (QREFELT $ 28))
@@ -445,8 +445,8 @@
 (SDEFUN |GBF;factorGroebnerBasis;LBL;7|
         ((|basis| |List| |Dpol|) (|info| |Boolean|) ($ |List| (|List| |Dpol|)))
         (SPROG
-         ((|foundAReducible| (|Boolean|)) (#1=#:G804 NIL) (|el| NIL)
-          (#2=#:G803 NIL) (#3=#:G802 NIL) (|p| NIL))
+         ((|foundAReducible| (|Boolean|)) (#1=#:G810 NIL) (|el| NIL)
+          (#2=#:G809 NIL) (#3=#:G808 NIL) (|p| NIL))
          (SEQ
           (LETT |foundAReducible| NIL . #4=(|GBF;factorGroebnerBasis;LBL;7|))
           (SEQ (LETT |p| NIL . #4#) (LETT #3# |basis| . #4#) G190
@@ -507,7 +507,7 @@
 (SDEFUN |GBF;groebnerFactorize;2LBL;9|
         ((|basis| |List| |Dpol|) (|nonZeroRestrictions| |List| |Dpol|)
          (|info| |Boolean|) ($ |List| (|List| |Dpol|)))
-        (SPROG ((#1=#:G815 NIL) (|p| NIL) (#2=#:G814 NIL))
+        (SPROG ((#1=#:G821 NIL) (|p| NIL) (#2=#:G820 NIL))
                (SEQ
                 (COND ((SPADCALL |basis| NIL (QREFELT $ 67)) (LIST |basis|))
                       (#3='T
@@ -536,7 +536,7 @@
                                          (EXIT
                                           (LETT #2#
                                                 (CONS
-                                                 (SPADCALL |p| (QREFELT $ 15))
+                                                 (SPADCALL |p| (QREFELT $ 13))
                                                  #2#)
                                                 . #4#)))
                                         (LETT #1# (CDR #1#) . #4#) (GO G190)
@@ -574,9 +574,9 @@
 
 (DECLAIM (NOTINLINE |GroebnerFactorizationPackage;|)) 
 
-(DEFUN |GroebnerFactorizationPackage| (&REST #1=#:G818)
+(DEFUN |GroebnerFactorizationPackage| (&REST #1=#:G824)
   (SPROG NIL
-         (PROG (#2=#:G819)
+         (PROG (#2=#:G825)
            (RETURN
             (COND
              ((LETT #2#
@@ -623,17 +623,17 @@
 (MAKEPROP '|GroebnerFactorizationPackage| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
-              (|local| |#3|) (|local| |#4|)
+              (|local| |#3|) (|local| |#4|) (|List| 9)
+              (|GroebnerInternalPackage| 6 7 8 9) (0 . |redPol|) (6 . |hMonic|)
               (|Record| (|:| |lcmfij| 7) (|:| |totdeg| 27) (|:| |poli| 9)
                         (|:| |polj| 9))
-              (|GroebnerInternalPackage| 6 7 8 9) (0 . |sPol|) (|List| 9)
-              (5 . |redPol|) (11 . |hMonic|) (16 . |One|) (|Boolean|) (20 . =)
-              (26 . |Zero|) (30 . |Zero|) (34 . |Zero|) (38 . ~=)
-              (|Union| $ '"failed") (44 . |exquo|) (50 . |degree|)
-              (55 . |zero?|) (|NonNegativeInteger|) (60 . |virtualDegree|)
-              (65 . |concat|) (71 . >) (|Mapping| 17 9 9) (77 . |sort|)
-              (|Void|) (|String|) (|OutputForm|) (83 . |messagePrint|)
-              (88 . |minGbasis|) (93 . |coerce|) (98 . |print|) (|List| 13)
+              (11 . |sPol|) (16 . |One|) (|Boolean|) (20 . =) (26 . |Zero|)
+              (30 . |Zero|) (34 . |Zero|) (38 . ~=) (|Union| $ '"failed")
+              (44 . |exquo|) (50 . |degree|) (55 . |zero?|)
+              (|NonNegativeInteger|) (60 . |virtualDegree|) (65 . |concat|)
+              (71 . >) (|Mapping| 17 9 9) (77 . |sort|) (|Void|) (|String|)
+              (|OutputForm|) (83 . |messagePrint|) (88 . |minGbasis|)
+              (93 . |coerce|) (98 . |print|) (|List| 10)
               |GBF;factorGroebnerBasis;LBL;7| (103 . |append|)
               (109 . |removeDuplicates|) (|Factored| 9)
               (|MultivariateFactorize| 8 7 6 9) (114 . |factor|)
@@ -641,7 +641,7 @@
               (|Record| (|:| |flg| 47) (|:| |fctr| 9) (|:| |xpnt| (|Integer|)))
               (|List| 48) (119 . |factorList|) (124 . <)
               (|Record| (|:| |totdeg| 27) (|:| |pol| 9)) (130 . |makeCrit|)
-              (137 . |critpOrder|) (|Mapping| 17 10 10) (|List| 10)
+              (137 . |critpOrder|) (|Mapping| 17 14 14) (|List| 14)
               (143 . |sort|) (149 . |critMTonD1|) (154 . |critBonD|)
               (160 . |updatD|) (|List| 52) (166 . |updatF|)
               |GBF;factorGroebnerBasis;LL;6| (173 . |One|)
@@ -654,26 +654,26 @@
                  (CONS '#()
                        (CONS '#()
                              (|makeByteWordVec2| 73
-                                                 '(1 11 9 10 12 2 11 9 9 13 14
-                                                   1 11 9 9 15 0 9 0 16 2 9 17
-                                                   0 0 18 0 6 0 19 0 7 0 20 0 9
-                                                   0 21 2 9 17 0 0 22 2 9 23 0
-                                                   0 24 1 9 7 0 25 1 7 17 0 26
-                                                   1 11 27 9 28 2 13 0 0 9 29 2
-                                                   7 17 0 0 30 2 13 0 31 0 32 1
-                                                   35 33 34 36 1 11 13 13 37 1
-                                                   13 35 0 38 1 35 33 0 39 2 40
+                                                 '(2 11 9 9 10 12 1 11 9 9 13 1
+                                                   11 9 14 15 0 9 0 16 2 9 17 0
+                                                   0 18 0 6 0 19 0 7 0 20 0 9 0
+                                                   21 2 9 17 0 0 22 2 9 23 0 0
+                                                   24 1 9 7 0 25 1 7 17 0 26 1
+                                                   11 27 9 28 2 10 0 0 9 29 2 7
+                                                   17 0 0 30 2 10 0 31 0 32 1
+                                                   35 33 34 36 1 11 10 10 37 1
+                                                   10 35 0 38 1 35 33 0 39 2 40
                                                    0 0 0 42 1 40 0 0 43 1 45 44
                                                    9 46 1 44 49 0 50 2 7 17 0 0
-                                                   51 3 11 10 52 9 27 53 2 11
-                                                   17 10 10 54 2 56 0 55 0 57 1
+                                                   51 3 11 14 52 9 27 53 2 11
+                                                   17 14 14 54 2 56 0 55 0 57 1
                                                    11 56 56 58 2 11 56 9 56 59
                                                    2 11 56 56 56 60 3 11 61 9
-                                                   27 61 62 0 6 0 64 2 13 17 0
-                                                   0 67 1 9 17 0 68 2 13 0 69 0
-                                                   70 2 13 17 9 0 71 2 0 40 13
-                                                   13 66 3 0 40 13 13 17 65 2 0
-                                                   40 13 17 73 1 0 40 13 72 1 0
-                                                   40 13 63 2 0 40 13 17
+                                                   27 61 62 0 6 0 64 2 10 17 0
+                                                   0 67 1 9 17 0 68 2 10 0 69 0
+                                                   70 2 10 17 9 0 71 2 0 40 10
+                                                   10 66 3 0 40 10 10 17 65 2 0
+                                                   40 10 17 73 1 0 40 10 72 1 0
+                                                   40 10 63 2 0 40 10 17
                                                    41)))))
            '|lookupComplete|)) 

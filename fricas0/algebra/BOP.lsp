@@ -116,7 +116,7 @@
 
 (SDEFUN |BOP;arity;$U;25|
         ((|op| $) ($ |Union| (|NonNegativeInteger|) "failed"))
-        (SPROG ((#1=#:G783 NIL) (|n| (|SingleInteger|)))
+        (SPROG ((#1=#:G785 NIL) (|n| (|SingleInteger|)))
                (COND
                 ((|negative?_SI|
                   (LETT |n| (QVELT |op| 1) . #2=(|BOP;arity;$U;25|)))
@@ -128,7 +128,7 @@
                                            '(|Integer|) #1#))))))) 
 
 (SDEFUN |BOP;copy;2$;26| ((|op| $) ($ $))
-        (SPROG ((#1=#:G793 NIL) (|r| NIL) (#2=#:G792 NIL))
+        (SPROG ((#1=#:G795 NIL) (|r| NIL) (#2=#:G794 NIL))
                (SEQ
                 (|BOP;oper| (SPADCALL |op| (QREFELT $ 13)) (QVELT |op| 1)
                  (SPADCALL
@@ -282,7 +282,7 @@
 
 (DEFUN |BasicOperator| ()
   (SPROG NIL
-         (PROG (#1=#:G830)
+         (PROG (#1=#:G832)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|BasicOperator|)
@@ -343,7 +343,7 @@
               |BOP;arity;$U;25| (|Record| (|:| |key| 12) (|:| |entry| 29))
               (|List| 61) (44 . |entries|) (49 . |table|) |BOP;copy;2$;26|
               (54 . ~=) (60 . ~=) (|List| 12) (66 . |keys|) (|Set| 12)
-              (71 . |brace|) (76 . ~=) |BOP;=;2$B;27| |BOP;weight;$Nni;28|
+              (71 . |set|) (76 . ~=) |BOP;=;2$B;27| |BOP;weight;$Nni;28|
               (82 . ~=) (88 . |#|) (93 . |difference|) (99 . |inspect|)
               |BOP;<;2$B;29| (|String|) (|HashState|))
            '#(~= 104 |weight| 110 |unary?| 121 |smaller?| 126 |setProperty| 132

@@ -11,9 +11,9 @@
 
 (DECLAIM (NOTINLINE |AttachPredicates;|)) 
 
-(DEFUN |AttachPredicates| (#1=#:G700)
+(DEFUN |AttachPredicates| (#1=#:G701)
   (SPROG NIL
-         (PROG (#2=#:G701)
+         (PROG (#2=#:G702)
            (RETURN
             (COND
              ((LETT #2#

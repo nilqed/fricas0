@@ -80,7 +80,7 @@
 (SDEFUN |IEP;characteristicPolynomial;MSup;8|
         ((A |Matrix| F) ($ |SparseUnivariatePolynomial| F))
         (SPROG
-         ((#1=#:G751 NIL) (|j| NIL) (#2=#:G750 NIL) (|i| NIL)
+         ((#1=#:G754 NIL) (|j| NIL) (#2=#:G753 NIL) (|i| NIL)
           (B (|Matrix| (|SparseUnivariatePolynomial| F)))
           (|dimA| (|NonNegativeInteger|)))
          (SEQ
@@ -124,10 +124,10 @@
           (|SparseUnivariatePolynomial| F))
          ($ |List| (|Union| F (|SparseUnivariatePolynomial| F))))
         (SPROG
-         ((#1=#:G767 NIL) (|ls| NIL) (#2=#:G766 NIL) (#3=#:G765 NIL) (|lr| NIL)
-          (#4=#:G764 NIL) (|lsym| (|List| (|SparseUnivariatePolynomial| F)))
+         ((#1=#:G770 NIL) (|ls| NIL) (#2=#:G769 NIL) (#3=#:G768 NIL) (|lr| NIL)
+          (#4=#:G767 NIL) (|lsym| (|List| (|SparseUnivariatePolynomial| F)))
           (|lrat| (|List| F)) (|rv| (F))
-          (|f1| (|SparseUnivariatePolynomial| F)) (#5=#:G763 NIL) (|fr| NIL)
+          (|f1| (|SparseUnivariatePolynomial| F)) (#5=#:G766 NIL) (|fr| NIL)
           (|fp| (|Factored| (|SparseUnivariatePolynomial| F)))
           (|pol| (|SparseUnivariatePolynomial| F)))
          (SEQ
@@ -188,9 +188,9 @@
          ($ |List| (|Vector| (|SparseUnivariatePolynomial| F))))
         (SPROG
          ((|sol| (|List| (|Vector| (|SparseUnivariatePolynomial| F))))
-          (#1=#:G786 NIL) (|i| NIL)
-          (|w| (|Vector| (|SparseUnivariatePolynomial| F))) (#2=#:G785 NIL)
-          (|v| NIL) (#3=#:G784 NIL) (|j| NIL) (#4=#:G783 NIL) (B (|Matrix| F))
+          (#1=#:G790 NIL) (|i| NIL)
+          (|w| (|Vector| (|SparseUnivariatePolynomial| F))) (#2=#:G789 NIL)
+          (|v| NIL) (#3=#:G788 NIL) (|j| NIL) (#4=#:G787 NIL) (B (|Matrix| F))
           (|n| (|NonNegativeInteger|)))
          (SEQ (LETT |n| (ANROWS A) . #5=(|IEP;intRatEig|))
               (LETT B (SPADCALL |n| |n| (QREFELT $ 61)) . #5#)
@@ -244,9 +244,9 @@
          ($ |List| (|Vector| (|SparseUnivariatePolynomial| F))))
         (SPROG
          ((|sol| (|List| (|Vector| (|SparseUnivariatePolynomial| F))))
-          (#1=#:G813 NIL) (|i| NIL)
-          (|w| (|Vector| (|SparseUnivariatePolynomial| F))) (#2=#:G812 NIL)
-          (|vec| NIL) (#3=#:G811 NIL) (|j| NIL) (#4=#:G810 NIL) (B (AM))
+          (#1=#:G817 NIL) (|i| NIL)
+          (|w| (|Vector| (|SparseUnivariatePolynomial| F))) (#2=#:G816 NIL)
+          (|vec| NIL) (#3=#:G815 NIL) (|j| NIL) (#4=#:G814 NIL) (B (AM))
           (|alg| (MM)) (|pol| (|SparseUnivariatePolynomial| F))
           (AM
            (|Join| (|MatrixCategory| MM (|Vector| MM) (|Vector| MM))
@@ -418,7 +418,7 @@
         ((|alpha| |Union| F (|SparseUnivariatePolynomial| F)) (A |Matrix| F)
          (|k| |NonNegativeInteger|) (|g| |NonNegativeInteger|)
          ($ |List| (|Vector| (|SparseUnivariatePolynomial| F))))
-        (SPROG ((#1=#:G818 NIL) (#2=#:G817 NIL))
+        (SPROG ((#1=#:G822 NIL) (#2=#:G821 NIL))
                (COND
                 ((QEQCAR |alpha| 0)
                  (|IEP;intRatEig| (QCDR |alpha|) A
@@ -454,7 +454,7 @@
                          (|List|
                           (|Vector| (|SparseUnivariatePolynomial| F)))))))
         (SPROG
-         ((#1=#:G831 NIL) (|leg| NIL) (#2=#:G830 NIL)
+         ((#1=#:G835 NIL) (|leg| NIL) (#2=#:G834 NIL)
           (|leig|
            (|List|
             (|Record|
@@ -497,9 +497,9 @@
                 (|:| |eigmult| (|NonNegativeInteger|))
                 (|:| |eigvec|
                      (|List| (|Vector| (|SparseUnivariatePolynomial| F)))))))
-          (#2=#:G839 NIL) (|alpha| #3=(|SparseUnivariatePolynomial| F))
-          (|ratSol| #1#) (#4=#:G837 NIL) (|vec| (F)) (|pol| #3#)
-          (#5=#:G845 NIL) (|fact| NIL)
+          (#2=#:G843 NIL) (|alpha| #3=(|SparseUnivariatePolynomial| F))
+          (|ratSol| #1#) (#4=#:G841 NIL) (|vec| (F)) (|pol| #3#)
+          (#5=#:G849 NIL) (|fact| NIL)
           (|lff|
            (|List| (|Record| (|:| |factor| #3#) (|:| |exponent| (|Integer|)))))
           (|p| (|SparseUnivariatePolynomial| F)) (|n| (|NonNegativeInteger|)))
@@ -558,9 +558,9 @@
 
 (DECLAIM (NOTINLINE |InnerEigenPackage;|)) 
 
-(DEFUN |InnerEigenPackage| (#1=#:G846)
+(DEFUN |InnerEigenPackage| (#1=#:G850)
   (SPROG NIL
-         (PROG (#2=#:G847)
+         (PROG (#2=#:G851)
            (RETURN
             (COND
              ((LETT #2#

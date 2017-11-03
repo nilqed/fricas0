@@ -65,7 +65,9 @@
           (LIST
            '#(NIL NIL NIL NIL NIL
               (|FunctionSpaceToUnivariatePowerSeries2| 6 7 8 9 10 11 12
-                                                       (NRTEVAL (ELT $ 14)) 13)
+                                                       (NRTEVAL (ELT $ 14))
+                                                       (NRTEVAL
+                                                        (QREFELT $ 13)))
               (|local| |#1|) (|local| |#2|) (|local| |#3|) (|local| |#4|)
               (|local| |#5|) (|local| |#6|) (|local| |#7|) (|local| |#8|)
               (0 . |coerce|)

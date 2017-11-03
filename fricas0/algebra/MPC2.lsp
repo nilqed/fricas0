@@ -44,9 +44,9 @@
 
 (DECLAIM (NOTINLINE |MPolyCatFunctions2;|)) 
 
-(DEFUN |MPolyCatFunctions2| (&REST #1=#:G707)
+(DEFUN |MPolyCatFunctions2| (&REST #1=#:G709)
   (SPROG NIL
-         (PROG (#2=#:G708)
+         (PROG (#2=#:G710)
            (RETURN
             (COND
              ((LETT #2#

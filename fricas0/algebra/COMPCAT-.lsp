@@ -58,14 +58,14 @@
         ((|pp| |SparseUnivariatePolynomial| S)
          ($ |Factored| (|SparseUnivariatePolynomial| S)))
         (SPROG
-         ((#1=#:G803 NIL)
+         ((#1=#:G807 NIL)
           (|lF|
            (|List|
             (|Record| (|:| |flg| (|Union| "nil" "sqfr" "irred" "prime"))
                       (|:| |fctr| (|SparseUnivariatePolynomial| S))
                       (|:| |xpnt| (|Integer|)))))
           (|p2| (|SparseUnivariatePolynomial| S))
-          (|p1| (|SparseUnivariatePolynomial| S)) (#2=#:G810 NIL) (|u| NIL)
+          (|p1| (|SparseUnivariatePolynomial| S)) (#2=#:G814 NIL) (|u| NIL)
           (|fR| (|Factored| (|SparseUnivariatePolynomial| R)))
           (|pnorm| (|SparseUnivariatePolynomial| R)) (|k| (R)))
          (SEQ
@@ -299,7 +299,7 @@
 
 (SDEFUN |COMPCAT-;coordinates;SVV;29| ((|x| S) (|v| |Vector| S) ($ |Vector| R))
         (SPROG
-         ((|ix| (R)) (|rx| (R)) (#1=#:G856 NIL) (|d| (|Union| R "failed"))
+         ((|ix| (R)) (|rx| (R)) (#1=#:G861 NIL) (|d| (|Union| R "failed"))
           (|ia| (R)) (|ib| (R)) (|rb| (R)) (|b| (S)) (|ra| (R)) (|a| (S)))
          (SEQ
           (EXIT
@@ -338,7 +338,7 @@
                (EXIT
                 (COND
                  ((QEQCAR |d| 1)
-                  (PROGN (LETT #1# (|error| #3#) . #2#) (GO #4=#:G854))))))))
+                  (PROGN (LETT #1# (|error| #3#) . #2#) (GO #4=#:G859))))))))
             (LETT |rx| (SPADCALL |x| (QREFELT $ 24)) . #2#)
             (LETT |ix| (SPADCALL |x| (QREFELT $ 87)) . #2#)
             (EXIT
@@ -751,7 +751,7 @@
 (SDEFUN |COMPCAT-;divide;2SR;60|
         ((|x| S) (|y| S) ($ |Record| (|:| |quotient| S) (|:| |remainder| S)))
         (SPROG
-         ((#1=#:G990 NIL) (|y1| (S)) (|b| (R)) (|x2| (R)) (|a| (R)) (|x1| (R))
+         ((#1=#:G996 NIL) (|y1| (S)) (|b| (R)) (|x2| (R)) (|a| (R)) (|x1| (R))
           (|xx| (S)) (|r| (R)))
          (SEQ
           (LETT |r| (SPADCALL |y| (QREFELT $ 19))
@@ -809,7 +809,7 @@
             |y1|))))) 
 
 (SDEFUN |COMPCAT-;atan2loc| ((|x| R) (|y| R) ($ R))
-        (SPROG ((|theta| (R)) (#1=#:G995 NIL) (|pi2| (R)) (|pi1| (R)))
+        (SPROG ((|theta| (R)) (#1=#:G1001 NIL) (|pi2| (R)) (|pi1| (R)))
                (SEQ
                 (LETT |pi1| (SPADCALL (QREFELT $ 243))
                       . #2=(|COMPCAT-;atan2loc|))
@@ -853,7 +853,7 @@
          (SPADCALL |x| (QREFELT $ 87)) $)) 
 
 (SDEFUN |COMPCAT-;argument;SR;63| ((|x| S) ($ R))
-        (SPROG ((#1=#:G995 NIL) (|x1| (R)) (|n1| (R)))
+        (SPROG ((#1=#:G1001 NIL) (|x1| (R)) (|n1| (R)))
                (SEQ
                 (LETT |n1|
                       (SPADCALL (SPADCALL |x| (QREFELT $ 19)) (QREFELT $ 167))
@@ -881,7 +881,7 @@
                            (QREFELT $ 121)))))) 
 
 (SDEFUN |COMPCAT-;argument;SR;64| ((|x| S) ($ R))
-        (SPROG ((#1=#:G995 NIL) (|x1| (R)) (|n1| (R)))
+        (SPROG ((#1=#:G1001 NIL) (|x1| (R)) (|n1| (R)))
                (SEQ
                 (LETT |n1|
                       (SPADCALL
@@ -994,7 +994,7 @@
                   (QREFELT $ 30)))))) 
 
 (SDEFUN |COMPCAT-;cos;2S;83| ((|x| S) ($ S))
-        (SPROG ((#1=#:G1026 NIL) (|e| (S)))
+        (SPROG ((#1=#:G1032 NIL) (|e| (S)))
                (SEQ
                 (LETT |e|
                       (SPADCALL
@@ -1019,7 +1019,7 @@
                            (QREFELT $ 225)))))) 
 
 (SDEFUN |COMPCAT-;sin;2S;84| ((|x| S) ($ S))
-        (SPROG ((#1=#:G1031 NIL) (|e| (S)))
+        (SPROG ((#1=#:G1037 NIL) (|e| (S)))
                (SEQ
                 (LETT |e|
                       (SPADCALL
@@ -1143,7 +1143,7 @@
                      (QREFELT $ 30))))))))) 
 
 (SDEFUN |COMPCAT-;^;SFS;90| ((|x| S) (|q| |Fraction| (|Integer|)) ($ S))
-        (SPROG ((|e| (R)) (|t| (R)) (#1=#:G995 NIL) (|i| (R)) (|r| (R)))
+        (SPROG ((|e| (R)) (|t| (R)) (#1=#:G1001 NIL) (|i| (R)) (|r| (R)))
                (SEQ
                 (COND
                  ((SPADCALL |q| (QREFELT $ 278))
@@ -1239,7 +1239,7 @@
 
 (DEFUN |ComplexCategory&| (|#1| |#2|)
   (SPROG
-   ((#1=#:G995 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
+   ((#1=#:G1001 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #2=(|ComplexCategory&|))
     (LETT DV$2 (|devaluate| |#2|) . #2#)
@@ -1583,9 +1583,9 @@
               (931 . |polarCoordinates|) (936 . |zero?|) (941 . |positive?|)
               (946 . ^) (952 . |denom|) (957 . |coerce|) (962 . ^)
               (968 . |numer|) (973 . |coerce|) (978 . /) (984 . =) (990 . ^)
-              (|List| 145) (|List| 10) (|Fraction| 11)
-              (|Record| (|:| |mat| 293) (|:| |vec| (|Vector| 25)))
-              (|Matrix| 25) (|Union| 25 '"failed"))
+              (|List| 145) (|List| 10) (|Fraction| 11) (|Matrix| 25)
+              (|Record| (|:| |mat| 292) (|:| |vec| (|Vector| 25)))
+              (|Union| 25 '"failed"))
            '#(|unitNormal| 996 |trace| 1001 |tanh| 1006 |tan| 1011 |squareFree|
               1016 |solveLinearPolynomialEquation| 1021 |smaller?| 1027 |sinh|
               1033 |sin| 1038 |retractIfCan| 1043 |retract| 1048 |rem| 1053
@@ -1723,9 +1723,9 @@
                                                    0 115 127 0 0 11 128 1 0 0 0
                                                    259 1 0 0 0 253 1 0 123 0
                                                    124 2 0 123 0 141 142 1 0
-                                                   179 0 184 1 0 171 0 173 1 0
-                                                   176 0 178 1 0 185 0 188 1 0
-                                                   189 0 192 1 0 0 0 112 1 0
+                                                   171 0 173 1 0 179 0 184 1 0
+                                                   176 0 178 1 0 189 0 192 1 0
+                                                   185 0 188 1 0 0 0 112 1 0
                                                    143 0 150 1 0 11 0 23 0 0 10
                                                    114 1 0 0 0 263 1 0 0 0 257
                                                    1 0 0 0 261 1 0 0 0 255 1 0

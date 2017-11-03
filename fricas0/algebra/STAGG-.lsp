@@ -6,7 +6,7 @@
         (SPADCALL |x| (QREFELT $ 9))) 
 
 (SDEFUN |STAGG-;first;ANniA;3| ((|x| A) (|n| |NonNegativeInteger|) ($ A))
-        (SPROG ((#1=#:G724 NIL) (|i| NIL) (#2=#:G723 NIL))
+        (SPROG ((#1=#:G727 NIL) (|i| NIL) (#2=#:G726 NIL))
                (SEQ
                 (SPADCALL
                  (PROGN
@@ -31,7 +31,7 @@
               ('T (SPADCALL |x| (QREFELT $ 18))))) 
 
 (SDEFUN |STAGG-;elt;AIS;5| ((|x| A) (|i| |Integer|) ($ S))
-        (SPROG ((#1=#:G728 NIL))
+        (SPROG ((#1=#:G731 NIL))
                (SEQ
                 (LETT |i| (- |i| (SPADCALL |x| (QREFELT $ 20)))
                       . #2=(|STAGG-;elt;AIS;5|))
@@ -53,7 +53,7 @@
 (SDEFUN |STAGG-;elt;AUsA;6|
         ((|x| A) (|i| |UniversalSegment| (|Integer|)) ($ A))
         (SPROG
-         ((#1=#:G737 NIL) (#2=#:G736 NIL) (|h| #3=(|Integer|)) (#4=#:G733 NIL)
+         ((#1=#:G740 NIL) (#2=#:G739 NIL) (|h| #3=(|Integer|)) (#4=#:G736 NIL)
           (|l| #3#))
          (SEQ
           (LETT |l|
@@ -96,7 +96,7 @@
         (SPADCALL (SPADCALL |x| (QREFELT $ 26)) |y| (QREFELT $ 31))) 
 
 (SDEFUN |STAGG-;concat;LA;8| ((|l| |List| A) ($ A))
-        (SPROG ((|res| (A)) (#1=#:G750 NIL) (|x| NIL) (|l1| (|List| A)))
+        (SPROG ((|res| (A)) (#1=#:G753 NIL) (|x| NIL) (|l1| (|List| A)))
                (SEQ
                 (COND ((NULL |l|) (SPADCALL (QREFELT $ 28)))
                       ('T
@@ -132,7 +132,7 @@
                     (EXIT |x|)))) 
 
 (SDEFUN |STAGG-;setelt!;AI2S;10| ((|x| A) (|i| |Integer|) (|s| S) ($ S))
-        (SPROG ((#1=#:G757 NIL))
+        (SPROG ((#1=#:G760 NIL))
                (SEQ
                 (LETT |i| (- |i| (SPADCALL |x| (QREFELT $ 20)))
                       . #2=(|STAGG-;setelt!;AI2S;10|))
@@ -154,7 +154,7 @@
 (SDEFUN |STAGG-;setelt!;AUs2S;11|
         ((|x| A) (|i| |UniversalSegment| (|Integer|)) (|s| S) ($ S))
         (SPROG
-         ((|y| (A)) (|z| (A)) (#1=#:G764 NIL) (#2=#:G763 NIL) (|h| (|Integer|))
+         ((|y| (A)) (|z| (A)) (#1=#:G767 NIL) (#2=#:G766 NIL) (|h| (|Integer|))
           (|l| (|Integer|)))
          (SEQ
           (LETT |l|
@@ -252,7 +252,7 @@
               (10 . |construct|) (|NonNegativeInteger|) |STAGG-;first;ANniA;3|
               (15 . |empty?|) (20 . |first|) (|Integer|) (25 . |minIndex|)
               (30 . |rest|) |STAGG-;elt;AIS;5| (|UniversalSegment| 19)
-              (36 . |lo|) (41 . |hasHi|) (46 . |copy|) (51 . |hi|)
+              (36 . |low|) (41 . |hasHi|) (46 . |copy|) (51 . |high|)
               (56 . |empty|) (60 . |first|) |STAGG-;elt;AUsA;6|
               (66 . |concat!|) (72 . |concat|) (|List| $) (78 . |concat|)
               (83 . |setfirst!|) (89 . |fill!|) (95 . |setelt!|)

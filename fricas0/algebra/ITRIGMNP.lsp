@@ -35,7 +35,7 @@
                   (QREFELT $ 40))) 
 
 (SDEFUN |ITRIGMNP;KG2F| ((|k| |Kernel| FG) ($ F))
-        (SPROG ((#1=#:G760 NIL) (|a| NIL) (#2=#:G759 NIL))
+        (SPROG ((#1=#:G765 NIL) (|a| NIL) (#2=#:G764 NIL))
                (SEQ
                 (SPADCALL
                  (SPADCALL (SPADCALL |k| (QREFELT $ 44)) (QREFELT $ 45))
@@ -56,7 +56,7 @@
 
 (SDEFUN |ITRIGMNP;KF2FG| ((|k| |Kernel| F) ($ FG))
         (SPROG
-         ((#1=#:G780 NIL) (|a| NIL) (#2=#:G779 NIL) (|op| (|BasicOperator|))
+         ((#1=#:G785 NIL) (|a| NIL) (#2=#:G784 NIL) (|op| (|BasicOperator|))
           (|akl| (|List| F)))
          (SEQ
           (LETT |akl| (SPADCALL |k| (QREFELT $ 52)) . #3=(|ITRIGMNP;KF2FG|))
@@ -91,8 +91,8 @@
 (SDEFUN |ITRIGMNP;ker2explogs|
         ((|k| |Kernel| FG) (|l| |List| (|Kernel| FG)) ($ FG))
         (SPROG
-         ((|e| (FG)) (|z| (FG)) (|args| (|List| FG)) (#1=#:G793 NIL) (|a| NIL)
-          (#2=#:G792 NIL) (|kf| (FG)))
+         ((|e| (FG)) (|z| (FG)) (|args| (|List| FG)) (#1=#:G798 NIL) (|a| NIL)
+          (#2=#:G797 NIL) (|kf| (FG)))
          (SEQ
           (LETT |kf| (SPADCALL |k| (QREFELT $ 64))
                 . #3=(|ITRIGMNP;ker2explogs|))
@@ -269,10 +269,10 @@
 (SDEFUN |ITRIGMNP;ker2trigs|
         ((|op| |BasicOperator|) (|arg| |List| (|Complex| F)) ($ |Complex| F))
         (SPROG
-         ((#1=#:G855 NIL) (|x| NIL) (#2=#:G854 NIL) (#3=#:G853 NIL)
-          (#4=#:G852 NIL) (|a| (|Complex| F)) (#5=#:G851 NIL) (#6=#:G850 NIL)
-          (#7=#:G811 NIL) (#8=#:G810 #9=(|Boolean|)) (#10=#:G812 #9#)
-          (#11=#:G849 NIL))
+         ((#1=#:G860 NIL) (|x| NIL) (#2=#:G859 NIL) (#3=#:G858 NIL)
+          (#4=#:G857 NIL) (|a| (|Complex| F)) (#5=#:G856 NIL) (#6=#:G855 NIL)
+          (#7=#:G816 NIL) (#8=#:G815 #9=(|Boolean|)) (#10=#:G817 #9#)
+          (#11=#:G854 NIL))
          (SEQ
           (COND
            ((PROGN
@@ -458,8 +458,8 @@
           (|den|
            #2=(|SparseUnivariatePolynomial|
                (|SparseMultivariatePolynomial| (|Complex| R) (|Kernel| FG))))
-          (|num| #2#) (|arg| (|List| (|Complex| F))) (#3=#:G872 NIL) (|x| NIL)
-          (#4=#:G871 NIL) (|op| (|BasicOperator|)) (|k| (|Kernel| FG))
+          (|num| #2#) (|arg| (|List| (|Complex| F))) (#3=#:G877 NIL) (|x| NIL)
+          (#4=#:G876 NIL) (|op| (|BasicOperator|)) (|k| (|Kernel| FG))
           (|m| (|Union| (|Kernel| FG) "failed"))
           (|df| (|SparseMultivariatePolynomial| (|Complex| R) (|Kernel| FG)))
           (|nf| (|SparseMultivariatePolynomial| (|Complex| R) (|Kernel| FG))))
@@ -617,9 +617,9 @@
 
 (DECLAIM (NOTINLINE |InnerTrigonometricManipulations;|)) 
 
-(DEFUN |InnerTrigonometricManipulations| (&REST #1=#:G886)
+(DEFUN |InnerTrigonometricManipulations| (&REST #1=#:G891)
   (SPROG NIL
-         (PROG (#2=#:G887)
+         (PROG (#2=#:G892)
            (RETURN
             (COND
              ((LETT #2#

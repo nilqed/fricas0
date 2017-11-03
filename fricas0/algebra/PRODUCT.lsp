@@ -39,7 +39,7 @@
         (* (SPADCALL (QREFELT $ 32)) (SPADCALL (QREFELT $ 33)))) 
 
 (SDEFUN |PRODUCT;index;Pi$;10| ((|n| |PositiveInteger|) ($ $))
-        (SPROG ((#1=#:G713 NIL) (#2=#:G712 NIL))
+        (SPROG ((#1=#:G716 NIL) (#2=#:G715 NIL))
                (SPADCALL
                 (SPADCALL
                  (PROG1
@@ -64,7 +64,7 @@
                   (QREFELT $ 19))) 
 
 (SDEFUN |PRODUCT;lookup;$Pi;12| ((|x| $) ($ |PositiveInteger|))
-        (SPROG ((#1=#:G717 NIL))
+        (SPROG ((#1=#:G720 NIL))
                (PROG1
                    (LETT #1#
                          (+
@@ -165,9 +165,9 @@
 
 (DECLAIM (NOTINLINE |Product;|)) 
 
-(DEFUN |Product| (&REST #1=#:G752)
+(DEFUN |Product| (&REST #1=#:G756)
   (SPROG NIL
-         (PROG (#2=#:G753)
+         (PROG (#2=#:G757)
            (RETURN
             (COND
              ((LETT #2#
@@ -185,7 +185,7 @@
 
 (DEFUN |Product;| (|#1| |#2|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G749 NIL) (#2=#:G750 NIL) (#3=#:G751 NIL) ($ NIL)
+   ((|pv$| NIL) (#1=#:G753 NIL) (#2=#:G754 NIL) (#3=#:G755 NIL) ($ NIL)
     (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #4=(|Product|))
@@ -379,28 +379,30 @@
               (321 . |smaller?|) (327 . |smaller?|) (|InputForm|) (|String|)
               (|SingleInteger|))
            '#(~= 333 |zero?| 339 |sup| 344 |subtractIfCan| 350 |smaller?| 356
-              |size| 362 |second| 366 |sample| 371 |recip| 375 |random| 380
-              |opposite?| 384 |one?| 390 |min| 395 |max| 401 |lookup| 407
-              |latex| 412 |inv| 417 |index| 422 |hashUpdate!| 427 |hash| 433
-              |first| 438 |enumerate| 443 |convert| 447 |construct| 452
-              |conjugate| 458 |commutator| 464 |coerce| 470 ^ 475 |Zero| 493
-              |One| 497 >= 501 > 507 = 513 <= 519 < 525 / 531 - 537 + 548 *
-              554)
+              |size| 362 |second| 366 |sample| 371 |rightRecip| 375
+              |rightPower| 380 |recip| 392 |random| 397 |opposite?| 401 |one?|
+              407 |min| 412 |max| 418 |lookup| 424 |leftRecip| 429 |leftPower|
+              434 |latex| 446 |inv| 451 |index| 456 |hashUpdate!| 461 |hash|
+              467 |first| 472 |enumerate| 477 |convert| 481 |construct| 486
+              |conjugate| 492 |commutator| 498 |coerce| 504 ^ 509 |Zero| 527
+              |One| 531 >= 535 > 541 = 547 <= 553 < 559 / 565 - 571 + 582 *
+              588)
            'NIL
            (CONS
-            (|makeByteWordVec2| 9 '(1 1 1 3 1 4 6 2 5 7 8 9 5 7 0 0 0 2 6 8))
+            (|makeByteWordVec2| 9
+                                '(1 1 1 3 6 1 4 7 2 5 7 7 8 9 5 7 0 0 0 2 6 8))
             (CONS
-             '#(NIL NIL NIL |AbelianGroup&| NIL NIL |Group&| |OrderedSet&|
-                |AbelianMonoid&| |Monoid&| |Finite&| NIL |AbelianSemiGroup&|
-                |SemiGroup&| |SetCategory&| |BasicType&| NIL |PartialOrder&|
-                NIL NIL)
+             '#(NIL NIL NIL |AbelianGroup&| |Group&| NIL NIL NIL |OrderedSet&|
+                |AbelianMonoid&| NIL |MagmaWithUnit&| |Finite&| NIL
+                |AbelianSemiGroup&| |Magma&| |SetCategory&| |BasicType&| NIL
+                |PartialOrder&| NIL NIL)
              (CONS
               '#((|OrderedAbelianMonoidSup|)
                  (|OrderedCancellationAbelianMonoid|) (|OrderedAbelianMonoid|)
-                 (|AbelianGroup|) (|OrderedAbelianSemiGroup|)
-                 (|CancellationAbelianMonoid|) (|Group|) (|OrderedSet|)
-                 (|AbelianMonoid|) (|Monoid|) (|Finite|) (|Comparable|)
-                 (|AbelianSemiGroup|) (|SemiGroup|) (|SetCategory|)
+                 (|AbelianGroup|) (|Group|) (|OrderedAbelianSemiGroup|)
+                 (|CancellationAbelianMonoid|) (|Monoid|) (|OrderedSet|)
+                 (|AbelianMonoid|) (|SemiGroup|) (|MagmaWithUnit|) (|Finite|)
+                 (|Comparable|) (|AbelianSemiGroup|) (|Magma|) (|SetCategory|)
                  (|BasicType|) (|CoercibleTo| 9) (|PartialOrder|)
                  (|unitsKnown|) (|ConvertibleTo| 84))
               (|makeByteWordVec2| 86
@@ -424,15 +426,16 @@
                                     7 15 0 0 82 2 0 15 0 0 83 2 0 15 0 0 1 1 5
                                     15 0 1 2 1 0 0 0 77 2 4 61 0 0 64 2 9 15 0
                                     0 83 0 8 28 34 1 0 7 0 21 0 10 0 1 1 7 61 0
-                                    1 0 8 0 41 2 5 15 0 0 1 1 7 15 0 1 2 2 0 0
-                                    0 1 2 2 0 0 0 1 1 8 35 0 44 1 0 85 0 1 1 6
-                                    0 0 51 1 8 0 35 38 2 0 45 45 0 48 1 0 86 0
-                                    1 1 0 6 0 20 0 8 12 1 1 8 84 0 1 2 0 0 6 7
-                                    19 2 6 0 0 0 1 2 6 0 0 0 1 1 0 9 0 14 2 6 0
-                                    0 71 1 2 7 0 0 28 31 2 7 0 0 35 1 0 5 0 54
-                                    0 7 0 24 2 2 15 0 0 1 2 2 15 0 0 1 2 0 15 0
-                                    0 18 2 2 15 0 0 1 2 2 15 0 0 80 2 6 0 0 0 1
-                                    1 3 0 0 67 2 3 0 0 0 70 2 5 0 0 0 57 2 3 0
-                                    71 0 74 2 5 0 28 0 60 2 5 0 35 0 1 2 7 0 0
-                                    0 27)))))
+                                    1 2 7 0 0 28 1 2 7 0 0 35 1 1 7 61 0 1 0 8
+                                    0 41 2 5 15 0 0 1 1 7 15 0 1 2 2 0 0 0 1 2
+                                    2 0 0 0 1 1 8 35 0 44 1 7 61 0 1 2 7 0 0 28
+                                    1 2 7 0 0 35 1 1 0 85 0 1 1 6 0 0 51 1 8 0
+                                    35 38 2 0 45 45 0 48 1 0 86 0 1 1 0 6 0 20
+                                    0 8 12 1 1 8 84 0 1 2 0 0 6 7 19 2 6 0 0 0
+                                    1 2 6 0 0 0 1 1 0 9 0 14 2 6 0 0 71 1 2 7 0
+                                    0 28 31 2 7 0 0 35 1 0 5 0 54 0 7 0 24 2 2
+                                    15 0 0 1 2 2 15 0 0 1 2 0 15 0 0 18 2 2 15
+                                    0 0 1 2 2 15 0 0 80 2 6 0 0 0 1 2 3 0 0 0
+                                    70 1 3 0 0 67 2 5 0 0 0 57 2 3 0 71 0 74 2
+                                    5 0 28 0 60 2 5 0 35 0 1 2 7 0 0 0 27)))))
            '|lookupComplete|)) 

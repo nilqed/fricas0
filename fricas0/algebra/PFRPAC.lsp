@@ -22,12 +22,12 @@
         ((|p| |Polynomial| R) (|facq| |Factored| (|Polynomial| R))
          (|v| |Symbol|) ($ |Any|))
         (SPROG
-         ((|pfup| (|PartialFraction| |up|)) (|nflist| (|fup|)) (#1=#:G725 NIL)
-          (#2=#:G724 (|fup|)) (#3=#:G726 (|fup|)) (#4=#:G732 NIL) (|ff| NIL)
+         ((|pfup| (|PartialFraction| |up|)) (|nflist| (|fup|)) (#1=#:G727 NIL)
+          (#2=#:G726 (|fup|)) (#3=#:G728 (|fup|)) (#4=#:G734 NIL) (|ff| NIL)
           (|fcont| (|up|))
           (|ffact|
            (|List| (|Record| (|:| |irr| |up|) (|:| |pow| (|Integer|)))))
-          (#5=#:G731 NIL) (|u| NIL) (#6=#:G730 NIL)
+          (#5=#:G733 NIL) (|u| NIL) (#6=#:G732 NIL)
           (|fup|
            (|Join| (|IntegralDomain|) (|DifferentialExtension| |up|)
                    (|Algebra| |up|) (|FullyEvalableOver| |up|)
@@ -195,9 +195,9 @@
 
 (DECLAIM (NOTINLINE |PartialFractionPackage;|)) 
 
-(DEFUN |PartialFractionPackage| (#1=#:G733)
+(DEFUN |PartialFractionPackage| (#1=#:G735)
   (SPROG NIL
-         (PROG (#2=#:G734)
+         (PROG (#2=#:G736)
            (RETURN
             (COND
              ((LETT #2#

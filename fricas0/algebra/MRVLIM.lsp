@@ -2,7 +2,7 @@
 (SDEFUN |MRVLIM;var_kers|
         ((|e| |Expression| (|Integer|))
          ($ |List| (|Kernel| (|Expression| (|Integer|)))))
-        (SPROG ((#1=#:G754 NIL) (|kk| NIL) (#2=#:G753 NIL))
+        (SPROG ((#1=#:G756 NIL) (|kk| NIL) (#2=#:G755 NIL))
                (SEQ
                 (PROGN
                  (LETT #2# NIL . #3=(|MRVLIM;var_kers|))
@@ -30,7 +30,7 @@
           (|:| |atan_kers| (|List| (|Kernel| (|Expression| (|Integer|))))))
          ($ |Expression| (|Integer|)))
         (SPROG
-         ((#1=#:G802 NIL) (|nk| (|Expression| (|Integer|))) (|ss| (|Integer|))
+         ((#1=#:G806 NIL) (|nk| (|Expression| (|Integer|))) (|ss| (|Integer|))
           (|la| (|OrderedCompletion| (|Expression| (|Integer|))))
           (|l_ts| (|List| (|Symbol|)))
           (|l_tan| (|List| (|Kernel| (|Expression| (|Integer|)))))
@@ -42,10 +42,10 @@
           (|arg1| (|Expression| (|Integer|))) (|nm| (|Symbol|))
           (|ntf| (|List| (|Expression| (|Integer|))))
           (|rtf| (|List| (|Kernel| (|Expression| (|Integer|)))))
-          (|nargs| (|List| (|Expression| (|Integer|)))) (#2=#:G805 NIL)
-          (|arg| NIL) (#3=#:G804 NIL)
+          (|nargs| (|List| (|Expression| (|Integer|)))) (#2=#:G809 NIL)
+          (|arg| NIL) (#3=#:G808 NIL)
           (|args| (|List| (|Expression| (|Integer|)))) (|op| (|BasicOperator|))
-          (#4=#:G803 NIL) (|k| NIL)
+          (#4=#:G807 NIL) (|k| NIL)
           (|tf| (|List| (|Kernel| (|Expression| (|Integer|))))))
          (SEQ
           (LETT |f| (SPADCALL |f| (QREFELT $ 28))
@@ -418,7 +418,7 @@
                                                                 (QREFELT $
                                                                          49))))))))))))))
                                       . #5#)
-                                (GO #6=#:G795)))))
+                                (GO #6=#:G799)))))
                             #6# (EXIT #1#))))))))))
                (LETT #4# (CDR #4#) . #5#) (GO G190) G191 (EXIT NIL))
           (QSETVELT |state| 0 |l_ts|) (QSETVELT |state| 1 |l_as|)
@@ -625,11 +625,11 @@
                     (|:| |coeff| (|Expression| (|Integer|))))
           "failed"))
         (SPROG
-         ((#1=#:G888 NIL)
+         ((#1=#:G892 NIL)
           (|vkers| (|List| (|Kernel| (|Expression| (|Integer|)))))
-          (|ssl| (|Upg|)) (|kk| (|Integer|)) (#2=#:G887 NIL)
+          (|ssl| (|Upg|)) (|kk| (|Integer|)) (#2=#:G891 NIL)
           (|lc| (|Expression| (|Integer|))) (|ssll| (|Upg|))
-          (|deg| (|OrderedExpression|)) (|ssl0| (|Upg|)) (#3=#:G874 NIL)
+          (|deg| (|OrderedExpression|)) (|ssl0| (|Upg|)) (#3=#:G878 NIL)
           (|ss|
            (|Union| (|:| |%series| |Upg|)
                     (|:| |%problem|
@@ -692,7 +692,7 @@
                                           (QREFELT $ 26))
                                 (PROGN
                                  (LETT #2# |$NoValue| . #4#)
-                                 (GO #6=#:G879)))
+                                 (GO #6=#:G883)))
                                ('T
                                 (SEQ (LETT |kk| (+ |kk| 1) . #4#)
                                      (EXIT
@@ -717,7 +717,7 @@
                        ((NULL |vkers|)
                         (PROGN
                          (LETT #1# (CONS 0 (CONS |deg| |lc|)) . #4#)
-                         (GO #7=#:G886)))
+                         (GO #7=#:G890)))
                        (#5# (|error| "Too many variable kernels"))))))))))
           #7# (EXIT #1#)))) 
 
@@ -761,7 +761,9 @@
              (SEQ (LETT |pp1| (QCDR |ppu|) . #2#)
                   (EXIT
                    (COND
-                    ((SPADCALL |pp1| (|spadConstant| $ 118) (QREFELT $ 119))
+                    ((SPADCALL |pp1|
+                               (SPADCALL (|spadConstant| $ 7) (QREFELT $ 118))
+                               (QREFELT $ 119))
                      (CONS 0 (CONS -1 (|spadConstant| $ 7))))
                     ((SPADCALL |pp1| (QREFELT $ 120))
                      (CONS 0 (CONS 0 (SPADCALL |pp1| (QREFELT $ 121)))))
@@ -786,10 +788,10 @@
           (|ic|
            (|Record| (|:| |sign| (|Integer|))
                      (|:| |coeff| (|Expression| (|Integer|)))))
-          (#4=#:G928 NIL)
+          (#4=#:G932 NIL)
           (|icu|
            (|Union| (|Record| (|:| |sign| #3#) (|:| |coeff| #2#)) "failed"))
-          (#5=#:G929 NIL) (|y| NIL)
+          (#5=#:G933 NIL) (|y| NIL)
           (|kers| (|List| (|Kernel| (|Expression| (|Integer|))))))
          (SEQ
           (EXIT
@@ -820,7 +822,7 @@
                         ((QEQCAR |icu| 1)
                          (PROGN
                           (LETT #4# (CONS 1 "failed") . #6#)
-                          (GO #7=#:G927)))
+                          (GO #7=#:G931)))
                         ('T
                          (SEQ (LETT |ic| (QCDR |icu|) . #6#)
                               (LETT |i| (QCAR |ic|) . #6#)
@@ -849,7 +851,7 @@
          (|lx| |List| (|Kernel| (|Expression| (|Integer|))))
          (|ly| |List| (|Expression| (|Integer|))) ($ |Expression| (|Integer|)))
         (SPROG
-         ((#1=#:G933 NIL) (|x| NIL) (#2=#:G934 NIL) (|y| NIL)
+         ((#1=#:G937 NIL) (|x| NIL) (#2=#:G938 NIL) (|y| NIL)
           (|rly| (|List| (|Expression| (|Integer|))))
           (|rlx| (|List| (|Kernel| (|Expression| (|Integer|))))))
          (SEQ (LETT |rlx| (REVERSE |lx|) . #3=(|MRVLIM;mrv_rewrite1|))
@@ -879,8 +881,8 @@
          ((|lxx| (|List| (|Kernel| (|Expression| (|Integer|)))))
           (|ly| (|List| (|Expression| (|Integer|))))
           (|yi| (|Expression| (|Integer|)))
-          (|ei| #1=(|Expression| (|Integer|))) (#2=#:G941 NIL) (|xi| NIL)
-          (#3=#:G942 NIL) (|ci| NIL) (|e0| #1#)
+          (|ei| #1=(|Expression| (|Integer|))) (#2=#:G945 NIL) (|xi| NIL)
+          (#3=#:G946 NIL) (|ci| NIL) (|e0| #1#)
           (|c0| (|Expression| (|Integer|))))
          (SEQ
           (LETT |c0| (|SPADfirst| |lc|) . #4=(|MRVLIM;mrv_rewrite0;ELL2E;11|))
@@ -946,13 +948,13 @@
         (SPROG
          ((|lxx| (|List| (|Kernel| (|Expression| (|Integer|)))))
           (|x00| (|Expression| (|Integer|)))
-          (|lcc| (|List| (|Expression| (|Integer|)))) (#1=#:G965 NIL)
-          (|ci| NIL) (#2=#:G964 NIL) (|ss| (|Integer|))
+          (|lcc| (|List| (|Expression| (|Integer|)))) (#1=#:G969 NIL)
+          (|ci| NIL) (#2=#:G968 NIL) (|ss| (|Integer|))
           (|lipp| (|OrderedCompletion| (|Expression| (|Integer|))))
           (|lip|
            (|Union| (|OrderedCompletion| (|Expression| (|Integer|))) "failed"))
-          (|e0| (|Expression| (|Integer|))) (#3=#:G963 NIL) (|ei| NIL)
-          (#4=#:G962 NIL) (|x0| (|Kernel| (|Expression| (|Integer|)))))
+          (|e0| (|Expression| (|Integer|))) (#3=#:G967 NIL) (|ei| NIL)
+          (#4=#:G966 NIL) (|x0| (|Kernel| (|Expression| (|Integer|)))))
          (SEQ
           (LETT |x0| (|SPADfirst| |lx|) . #5=(|MRVLIM;mrv_rewrite;ELLSRU;12|))
           (EXIT
@@ -1164,7 +1166,7 @@
               ((NULL (SPADCALL |ve| (QVELT |state| 0) (QREFELT $ 88)))
                (COND
                 ((NULL (SPADCALL |ve| (QVELT |state| 1) (QREFELT $ 88)))
-                 (EXIT (CONS 0 (SPADCALL |e| (QREFELT $ 134))))))))
+                 (EXIT (CONS 0 (SPADCALL |e| (QREFELT $ 118))))))))
              (EXIT (CONS 1 "failed"))))
            (#4='T
             (SEQ (LETT |rkcu| (SPADCALL |e| |v| |state| (QREFELT $ 127)) . #3#)
@@ -1186,17 +1188,20 @@
                                            (EXIT
                                             (COND
                                              ((SPADCALL |deg|
-                                                        (|spadConstant| $ 135)
-                                                        (QREFELT $ 136))
-                                              (CONS 0 (|spadConstant| $ 118)))
+                                                        (|spadConstant| $ 134)
+                                                        (QREFELT $ 135))
+                                              (CONS 0
+                                                    (SPADCALL
+                                                     (|spadConstant| $ 7)
+                                                     (QREFELT $ 118))))
                                              ((SPADCALL |deg|
-                                                        (|spadConstant| $ 135)
-                                                        (QREFELT $ 137))
+                                                        (|spadConstant| $ 134)
+                                                        (QREFELT $ 136))
                                               (SPADCALL (QCDR |ss|) |v| |state|
                                                         (QREFELT $ 44)))
                                              ((SPADCALL |deg|
-                                                        (|spadConstant| $ 135)
-                                                        (QREFELT $ 138))
+                                                        (|spadConstant| $ 134)
+                                                        (QREFELT $ 137))
                                               (SEQ
                                                (LETT |su|
                                                      (SPADCALL (QCDR |ss|) |v|
@@ -1219,7 +1224,7 @@
                                                      ((EQL |s| -1)
                                                       (CONS 0
                                                             (SPADCALL
-                                                             (QREFELT $ 139))))
+                                                             (QREFELT $ 138))))
                                                      (#4#
                                                       (|error|
                                                        "Nonzero term has no sign")))))))))))))))))))))))))) 
@@ -1254,165 +1259,277 @@
                          #1#)))
           "failed"))
         (SPROG
-         ((|lr|
-           #2=(|Union| (|OrderedCompletion| (|Expression| (|Integer|))) #1#))
-          (|et| (|Expression| (|Integer|))) (|ll| #2#)
-          (|vK| (|Kernel| (|Expression| (|Integer|)))) (|resu| #2#)
-          (|ii| (|SingleInteger|))
-          (|a| (|OrderedCompletion| (|Expression| (|Integer|))))
-          (|v| (|Symbol|)) (|var| (|Union| (|Symbol|) "failed"))
+         ((|var| (|Union| (|Symbol|) "failed"))
           (|f| (|Union| (|Expression| (|Integer|)) "failed")))
          (SEQ
-          (LETT |f| (SPADCALL (SPADCALL |eq| (QREFELT $ 142)) (QREFELT $ 144))
-                . #3=(|MRVLIM;mrv_limit;EEU;16|))
-          (EXIT
-           (COND
-            ((QEQCAR |f| 1)
-             (|error| "limit:left hand side must be a variable"))
-            (#4='T
-             (SEQ (LETT |var| (SPADCALL (QCDR |f|) (QREFELT $ 146)) . #3#)
-                  (EXIT
-                   (COND
-                    ((QEQCAR |var| 1)
-                     (|error| "limit:left hand side must be a variable"))
-                    (#4#
-                     (SEQ (LETT |v| (QCDR |var|) . #3#)
-                          (LETT |a| (SPADCALL |eq| (QREFELT $ 147)) . #3#)
-                          (LETT |ii| (SPADCALL |a| (QREFELT $ 52)) . #3#)
-                          (EXIT
-                           (COND
-                            ((|eql_SI| |ii| 1)
-                             (SEQ
-                              (LETT |resu| (SPADCALL |e| |v| (QREFELT $ 140))
-                                    . #3#)
-                              (EXIT
-                               (COND ((QEQCAR |resu| 1) (CONS 2 "failed"))
-                                     (#4# (CONS 0 (QCDR |resu|)))))))
-                            ((|eql_SI| |ii| -1)
-                             (SEQ
-                              (LETT |vK|
-                                    (SPADCALL (SPADCALL |v| (QREFELT $ 45))
-                                              (QREFELT $ 148))
-                                    . #3#)
-                              (LETT |et|
-                                    (SPADCALL |e| |vK|
-                                              (SPADCALL
-                                               (SPADCALL |vK| (QREFELT $ 23))
-                                               (QREFELT $ 58))
-                                              (QREFELT $ 85))
-                                    . #3#)
-                              (LETT |resu| (SPADCALL |et| |v| (QREFELT $ 140))
-                                    . #3#)
-                              (EXIT
-                               (COND ((QEQCAR |resu| 1) (CONS 2 "failed"))
-                                     (#4# (CONS 0 (QCDR |resu|)))))))
-                            ((|eql_SI| |ii| 0)
-                             (SEQ
-                              (LETT |vK|
-                                    (SPADCALL (SPADCALL |v| (QREFELT $ 45))
-                                              (QREFELT $ 148))
-                                    . #3#)
-                              (LETT |et|
-                                    (SPADCALL |e| |vK|
-                                              (SPADCALL
-                                               (SPADCALL |a| (QREFELT $ 121))
-                                               (SPADCALL
-                                                (SPADCALL |vK| (QREFELT $ 23))
-                                                (QREFELT $ 149))
-                                               (QREFELT $ 57))
-                                              (QREFELT $ 85))
-                                    . #3#)
-                              (LETT |ll| (SPADCALL |et| |v| (QREFELT $ 140))
-                                    . #3#)
-                              (LETT |et|
-                                    (SPADCALL |e| |vK|
-                                              (SPADCALL
-                                               (SPADCALL |a| (QREFELT $ 121))
-                                               (SPADCALL
-                                                (SPADCALL |vK| (QREFELT $ 23))
-                                                (QREFELT $ 149))
-                                               (QREFELT $ 150))
-                                              (QREFELT $ 85))
-                                    . #3#)
-                              (LETT |lr| (SPADCALL |et| |v| (QREFELT $ 140))
-                                    . #3#)
-                              (EXIT
-                               (COND
-                                ((SPADCALL |ll| |lr| (QREFELT $ 151))
-                                 (COND ((QEQCAR |lr| 1) (CONS 2 "failed"))
-                                       (#4# (CONS 0 (QCDR |lr|)))))
-                                (#4# (CONS 1 (CONS |ll| |lr|)))))))))))))))))))) 
-
-(SDEFUN |MRVLIM;mrv_limit;EESU;17|
-        ((|e| |Expression| (|Integer|))
-         (|eq| |Equation| (|Expression| (|Integer|))) (|s| |String|)
-         ($ |Union| (|OrderedCompletion| (|Expression| (|Integer|))) "failed"))
-        (SPROG
-         ((#1=#:G1054 NIL) (|et| (|Expression| (|Integer|)))
-          (|vK| (|Kernel| (|Expression| (|Integer|))))
-          (|a| (|Expression| (|Integer|))) (|v| (|Symbol|))
-          (|f| (|Union| (|Symbol|) "failed")))
-         (SEQ
-          (LETT |f| (SPADCALL (SPADCALL |eq| (QREFELT $ 156)) (QREFELT $ 146))
-                . #2=(|MRVLIM;mrv_limit;EESU;17|))
+          (LETT |f| (SPADCALL (SPADCALL |eq| (QREFELT $ 141)) (QREFELT $ 143))
+                . #2=(|MRVLIM;mrv_limit;EEU;16|))
           (EXIT
            (COND
             ((QEQCAR |f| 1)
              (|error| "limit:left hand side must be a variable"))
             (#3='T
-             (SEQ (LETT |v| (QCDR |f|) . #2#)
-                  (LETT |a| (SPADCALL |eq| (QREFELT $ 157)) . #2#)
+             (SEQ (LETT |var| (SPADCALL (QCDR |f|) (QREFELT $ 145)) . #2#)
                   (EXIT
                    (COND
-                    ((EQL (SPADCALL |s| (QREFELT $ 160)) 1)
-                     (SEQ
-                      (LETT |vK|
-                            (SPADCALL (SPADCALL |v| (QREFELT $ 45))
-                                      (QREFELT $ 148))
-                            . #2#)
-                      (LETT |et|
-                            (SPADCALL |e| |vK|
-                                      (SPADCALL |a|
-                                                (SPADCALL
-                                                 (SPADCALL |vK| (QREFELT $ 23))
-                                                 (QREFELT $ 149))
-                                                (QREFELT $ 150))
-                                      (QREFELT $ 85))
-                            . #2#)
-                      (EXIT (SPADCALL |et| |v| (QREFELT $ 140)))))
+                    ((QEQCAR |var| 1)
+                     (|error| "limit:left hand side must be a variable"))
                     (#3#
-                     (SEQ
-                      (EXIT
-                       (COND
-                        ((EQL (SPADCALL |s| (QREFELT $ 160)) -1)
-                         (PROGN
-                          (LETT #1#
-                                (SEQ
-                                 (LETT |vK|
-                                       (SPADCALL (SPADCALL |v| (QREFELT $ 45))
-                                                 (QREFELT $ 148))
-                                       . #2#)
-                                 (LETT |et|
-                                       (SPADCALL |e| |vK|
-                                                 (SPADCALL |a|
-                                                           (SPADCALL
-                                                            (SPADCALL |vK|
-                                                                      (QREFELT
-                                                                       $ 23))
-                                                            (QREFELT $ 149))
-                                                           (QREFELT $ 57))
-                                                 (QREFELT $ 85))
-                                       . #2#)
-                                 (EXIT (SPADCALL |et| |v| (QREFELT $ 140))))
-                                . #2#)
-                          (GO #4=#:G1050)))))
-                      #4# (EXIT #1#)))))))))))) 
+                     (SPADCALL |e| (QCDR |var|) (SPADCALL |eq| (QREFELT $ 146))
+                               (QREFELT $ 149)))))))))))) 
+
+(SDEFUN |MRVLIM;mrv_limit2|
+        ((|e| |Expression| (|Integer|)) (|v| |Symbol|)
+         (|a| |OrderedCompletion| (|Expression| (|Integer|)))
+         ($ |Union| (|OrderedCompletion| (|Expression| (|Integer|)))
+          (|Record|
+           (|:| |leftHandLimit|
+                (|Union| (|OrderedCompletion| (|Expression| (|Integer|)))
+                         #1="failed"))
+           (|:| |rightHandLimit|
+                (|Union| (|OrderedCompletion| (|Expression| (|Integer|)))
+                         #1#)))
+          "failed"))
+        (SPROG
+         ((|lr|
+           #2=(|Union| (|OrderedCompletion| (|Expression| (|Integer|))) #1#))
+          (|et| (|Expression| (|Integer|))) (|ll| #2#)
+          (|vK| (|Kernel| (|Expression| (|Integer|)))) (|resu| #2#)
+          (|ii| (|SingleInteger|)))
+         (SEQ
+          (LETT |ii| (SPADCALL |a| (QREFELT $ 52)) . #3=(|MRVLIM;mrv_limit2|))
+          (EXIT
+           (COND
+            ((|eql_SI| |ii| 1)
+             (SEQ (LETT |resu| (SPADCALL |e| |v| (QREFELT $ 139)) . #3#)
+                  (EXIT
+                   (COND ((QEQCAR |resu| 1) (CONS 2 "failed"))
+                         (#4='T (CONS 0 (QCDR |resu|)))))))
+            ((|eql_SI| |ii| -1)
+             (SEQ
+              (LETT |vK|
+                    (SPADCALL (SPADCALL |v| (QREFELT $ 45)) (QREFELT $ 151))
+                    . #3#)
+              (LETT |et|
+                    (SPADCALL |e| |vK|
+                              (SPADCALL (SPADCALL |vK| (QREFELT $ 23))
+                                        (QREFELT $ 58))
+                              (QREFELT $ 85))
+                    . #3#)
+              (LETT |resu| (SPADCALL |et| |v| (QREFELT $ 139)) . #3#)
+              (EXIT
+               (COND ((QEQCAR |resu| 1) (CONS 2 "failed"))
+                     (#4# (CONS 0 (QCDR |resu|)))))))
+            ((|eql_SI| |ii| 0)
+             (SEQ
+              (LETT |vK|
+                    (SPADCALL (SPADCALL |v| (QREFELT $ 45)) (QREFELT $ 151))
+                    . #3#)
+              (LETT |et|
+                    (SPADCALL |e| |vK|
+                              (SPADCALL (SPADCALL |a| (QREFELT $ 121))
+                                        (SPADCALL
+                                         (SPADCALL |vK| (QREFELT $ 23))
+                                         (QREFELT $ 152))
+                                        (QREFELT $ 57))
+                              (QREFELT $ 85))
+                    . #3#)
+              (LETT |ll| (SPADCALL |et| |v| (QREFELT $ 139)) . #3#)
+              (LETT |et|
+                    (SPADCALL |e| |vK|
+                              (SPADCALL (SPADCALL |a| (QREFELT $ 121))
+                                        (SPADCALL
+                                         (SPADCALL |vK| (QREFELT $ 23))
+                                         (QREFELT $ 152))
+                                        (QREFELT $ 153))
+                              (QREFELT $ 85))
+                    . #3#)
+              (LETT |lr| (SPADCALL |et| |v| (QREFELT $ 139)) . #3#)
+              (EXIT
+               (COND
+                ((SPADCALL |ll| |lr| (QREFELT $ 154))
+                 (COND ((QEQCAR |lr| 1) (CONS 2 "failed"))
+                       (#4# (CONS 0 (QCDR |lr|)))))
+                (#4# (CONS 1 (CONS |ll| |lr|)))))))))))) 
+
+(SDEFUN |MRVLIM;subst_in_result|
+        ((|r| |Union| (|OrderedCompletion| (|Expression| (|Integer|)))
+          #1="failed")
+         (|k| |Kernel| (|Expression| (|Integer|)))
+         (|f| |Expression| (|Integer|))
+         ($ |Union| (|OrderedCompletion| (|Expression| (|Integer|))) #1#))
+        (SPROG ((|ru| (|Union| (|Expression| (|Integer|)) "failed")))
+               (SEQ
+                (COND ((QEQCAR |r| 1) |r|)
+                      (#2='T
+                       (SEQ
+                        (LETT |ru| (SPADCALL (QCDR |r|) (QREFELT $ 143))
+                              |MRVLIM;subst_in_result|)
+                        (EXIT
+                         (COND ((QEQCAR |ru| 1) |r|)
+                               (#2#
+                                (CONS 0
+                                      (SPADCALL
+                                       (SPADCALL (QCDR |ru|) (LIST |k|)
+                                                 (LIST |f|) (QREFELT $ 155))
+                                       (QREFELT $ 118)))))))))))) 
+
+(SDEFUN |MRVLIM;mrv_limit;ESOcU;19|
+        ((|e| |Expression| (|Integer|)) (|v| |Symbol|)
+         (|a| |OrderedCompletion| (|Expression| (|Integer|)))
+         ($ |Union| (|OrderedCompletion| (|Expression| (|Integer|)))
+          (|Record|
+           (|:| |leftHandLimit|
+                (|Union| (|OrderedCompletion| (|Expression| (|Integer|)))
+                         #1="failed"))
+           (|:| |rightHandLimit|
+                (|Union| (|OrderedCompletion| (|Expression| (|Integer|)))
+                         #1#)))
+          #2="failed"))
+        (SPROG
+         ((#3=#:G1064 NIL)
+          (|res2|
+           (|Union| (|OrderedCompletion| (|Expression| (|Integer|))) #1#))
+          (|res1|
+           (|Union| (|OrderedCompletion| (|Expression| (|Integer|)))
+                    (|Record|
+                     (|:| |leftHandLimit|
+                          (|Union|
+                           (|OrderedCompletion| (|Expression| (|Integer|)))
+                           #1#))
+                     (|:| |rightHandLimit|
+                          (|Union|
+                           (|OrderedCompletion| (|Expression| (|Integer|)))
+                           #1#)))
+                    #2#))
+          (|a1| (|Expression| (|Integer|)))
+          (|kv| #4=(|Kernel| (|Expression| (|Integer|)))) (|knv| #4#)
+          (|ae| (|Union| (|Expression| (|Integer|)) "failed")))
+         (SEQ
+          (EXIT
+           (SEQ
+            (SEQ
+             (LETT |ae| (SPADCALL |a| (QREFELT $ 143))
+                   . #5=(|MRVLIM;mrv_limit;ESOcU;19|))
+             (EXIT
+              (COND
+               ((QEQCAR |ae| 0)
+                (COND
+                 ((SPADCALL |v| (SPADCALL (QCDR |ae|) (QREFELT $ 87))
+                            (QREFELT $ 132))
+                  (PROGN
+                   (LETT #3#
+                         (SEQ
+                          (LETT |knv|
+                                (SPADCALL (SPADCALL (QREFELT $ 10))
+                                          (QREFELT $ 156))
+                                . #5#)
+                          (LETT |kv| (SPADCALL |v| (QREFELT $ 156)) . #5#)
+                          (LETT |a1|
+                                (SPADCALL (QCDR |ae|) (LIST |kv|)
+                                          (LIST
+                                           (SPADCALL |knv| (QREFELT $ 23)))
+                                          (QREFELT $ 155))
+                                . #5#)
+                          (LETT |res1|
+                                (|MRVLIM;mrv_limit2| |e| |v|
+                                 (SPADCALL |a1| (QREFELT $ 118)) $)
+                                . #5#)
+                          (EXIT
+                           (COND ((QEQCAR |res1| 2) |res1|)
+                                 ((QEQCAR |res1| 1) (|error| "impossible"))
+                                 (#6='T
+                                  (SEQ
+                                   (LETT |res2|
+                                         (|MRVLIM;subst_in_result|
+                                          (CONS 0 (QCDR |res1|)) |knv|
+                                          (SPADCALL |kv| (QREFELT $ 23)) $)
+                                         . #5#)
+                                   (EXIT
+                                    (COND
+                                     ((QEQCAR |res2| 1) (|error| "impossible"))
+                                     (#6# (CONS 0 (QCDR |res2|))))))))))
+                         . #5#)
+                   (GO #7=#:G1062))))))))
+            (EXIT (|MRVLIM;mrv_limit2| |e| |v| |a| $))))
+          #7# (EXIT #3#)))) 
+
+(SDEFUN |MRVLIM;mrv_limit;EESU;20|
+        ((|e| |Expression| (|Integer|))
+         (|eq| |Equation| (|Expression| (|Integer|))) (|s| |String|)
+         ($ |Union| (|OrderedCompletion| (|Expression| (|Integer|))) "failed"))
+        (SPROG ((|f| (|Union| (|Symbol|) "failed")))
+               (SEQ
+                (LETT |f|
+                      (SPADCALL (SPADCALL |eq| (QREFELT $ 158))
+                                (QREFELT $ 145))
+                      |MRVLIM;mrv_limit;EESU;20|)
+                (EXIT
+                 (COND
+                  ((QEQCAR |f| 1)
+                   (|error| "limit:left hand side must be a variable"))
+                  ('T
+                   (SPADCALL |e| (QCDR |f|) (SPADCALL |eq| (QREFELT $ 159)) |s|
+                             (QREFELT $ 161)))))))) 
+
+(SDEFUN |MRVLIM;mrv_limit3|
+        ((|e| |Expression| (|Integer|)) (|v| |Symbol|)
+         (|a| |Expression| (|Integer|)) (|s| |String|)
+         ($ |Union| (|OrderedCompletion| (|Expression| (|Integer|))) "failed"))
+        (SPROG
+         ((|et| (|Expression| (|Integer|)))
+          (|delta| (|Expression| (|Integer|)))
+          (|vK| (|Kernel| (|Expression| (|Integer|)))))
+         (SEQ
+          (LETT |vK| (SPADCALL |v| (QREFELT $ 156)) . #1=(|MRVLIM;mrv_limit3|))
+          (LETT |delta|
+                (COND
+                 ((EQL (SPADCALL |s| (QREFELT $ 164)) 1)
+                  (SPADCALL (SPADCALL |vK| (QREFELT $ 23)) (QREFELT $ 152)))
+                 ('T
+                  (SPADCALL
+                   (SPADCALL (SPADCALL |vK| (QREFELT $ 23)) (QREFELT $ 152))
+                   (QREFELT $ 58))))
+                . #1#)
+          (LETT |et|
+                (SPADCALL |e| |vK| (SPADCALL |a| |delta| (QREFELT $ 153))
+                          (QREFELT $ 85))
+                . #1#)
+          (EXIT (SPADCALL |et| |v| (QREFELT $ 139)))))) 
+
+(SDEFUN |MRVLIM;mrv_limit;ESESU;22|
+        ((|e| |Expression| (|Integer|)) (|v| |Symbol|)
+         (|a| |Expression| (|Integer|)) (|s| |String|)
+         ($ |Union| (|OrderedCompletion| (|Expression| (|Integer|)))
+          #1="failed"))
+        (SPROG
+         ((|res1|
+           (|Union| (|OrderedCompletion| (|Expression| (|Integer|))) #1#))
+          (|a1| (|Expression| (|Integer|)))
+          (|kv| #2=(|Kernel| (|Expression| (|Integer|)))) (|knv| #2#))
+         (SEQ
+          (COND
+           ((SPADCALL |v| (SPADCALL |a| (QREFELT $ 87)) (QREFELT $ 132))
+            (SEQ
+             (LETT |knv| (SPADCALL (SPADCALL (QREFELT $ 10)) (QREFELT $ 156))
+                   . #3=(|MRVLIM;mrv_limit;ESESU;22|))
+             (LETT |kv| (SPADCALL |v| (QREFELT $ 156)) . #3#)
+             (LETT |a1|
+                   (SPADCALL |a| (LIST |kv|)
+                             (LIST (SPADCALL |knv| (QREFELT $ 23)))
+                             (QREFELT $ 155))
+                   . #3#)
+             (LETT |res1| (|MRVLIM;mrv_limit3| |e| |v| |a1| |s| $) . #3#)
+             (EXIT
+              (|MRVLIM;subst_in_result| |res1| |knv|
+               (SPADCALL |kv| (QREFELT $ 23)) $))))
+           ('T (|MRVLIM;mrv_limit3| |e| |v| |a| |s| $)))))) 
 
 (DECLAIM (NOTINLINE |MrvLimitPackage;|)) 
 
 (DEFUN |MrvLimitPackage| ()
   (SPROG NIL
-         (PROG (#1=#:G1056)
+         (PROG (#1=#:G1077)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|MrvLimitPackage|)
@@ -1433,7 +1550,7 @@
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
           (LETT |dv$| '(|MrvLimitPackage|) . #1=(|MrvLimitPackage|))
-          (LETT $ (GETREFV 162) . #1#)
+          (LETT $ (GETREFV 165) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|MrvLimitPackage| NIL (CONS 1 $))
@@ -1513,7 +1630,7 @@
               (247 . |setIntersection|) (253 . |setIntersection|)
               (259 . |concat|) (265 . |empty?|) (270 . |#|) (275 . |One|)
               (279 . ~=) (285 . |first|) (290 . <) (296 . |Zero|) (300 . |is?|)
-              (|Record| (|:| |func| 158) (|:| |prob| 158))
+              (|Record| (|:| |func| 160) (|:| |prob| 160))
               (|Union| (|:| |%series| 67) (|:| |%problem| 99))
               (|Union| '"complex" '"real: two sides" '"real: left side"
                        '"real: right side" '"just do it")
@@ -1523,32 +1640,32 @@
               (|PrintPackage|) (349 . |print|) (354 . |reductum|)
               (|Record| (|:| |degree| 68) (|:| |coeff| 6))
               (|Union| 115 '"failed") |MRVLIM;expr_to_series;EKRU;7|
-              (359 . |Zero|) (363 . =) (369 . |finite?|) (374 . |retract|)
+              (359 . |coerce|) (364 . =) (370 . |finite?|) (375 . |retract|)
               (|Record| (|:| |sign| 40) (|:| |coeff| 6))
               (|Union| 122 '"failed") |MRVLIM;mrv_cmp;2KSRU;8|
               (|Record| (|:| |lk| 47) (|:| |lc| 32)) (|Union| 125 '"failed")
-              |MRVLIM;mrv_set;ESRU;9| (379 . ^) |MRVLIM;mrv_rewrite0;ELL2E;11|
-              |MRVLIM;mrv_rewrite;ELLSRU;12| (385 . |plusInfinity|)
-              (389 . |member?|) |MRVLIM;mrv_sign;ESRU;13| (395 . |coerce|)
-              (400 . |Zero|) (404 . >) (410 . =) (416 . <)
-              (422 . |minusInfinity|) |MRVLIM;mrv_limit1;ESU;15|
-              (|Equation| 51) (426 . |lhs|) (|Union| 6 '"failed")
-              (431 . |retractIfCan|) (|Union| 9 '"failed")
-              (436 . |retractIfCan|) (441 . |rhs|) (446 . |retract|)
-              (451 . |inv|) (456 . +) (462 . =)
+              |MRVLIM;mrv_set;ESRU;9| (380 . ^) |MRVLIM;mrv_rewrite0;ELL2E;11|
+              |MRVLIM;mrv_rewrite;ELLSRU;12| (386 . |plusInfinity|)
+              (390 . |member?|) |MRVLIM;mrv_sign;ESRU;13| (396 . |Zero|)
+              (400 . >) (406 . =) (412 . <) (418 . |minusInfinity|)
+              |MRVLIM;mrv_limit1;ESU;15| (|Equation| 51) (422 . |lhs|)
+              (|Union| 6 '"failed") (427 . |retractIfCan|)
+              (|Union| 9 '"failed") (432 . |retractIfCan|) (437 . |rhs|)
               (|Record| (|:| |leftHandLimit| 42) (|:| |rightHandLimit| 42))
-              (|Union| 51 152 '"failed") |MRVLIM;mrv_limit;EEU;16|
-              (|Equation| 6) (468 . |lhs|) (473 . |rhs|) (|String|)
-              (|ToolsForSign| 40) (478 . |direction|)
-              |MRVLIM;mrv_limit;EESU;17|)
-           '#(|mrv_sign| 483 |mrv_set| 490 |mrv_rewrite0| 497 |mrv_rewrite| 505
-              |mrv_normalize| 514 |mrv_limit1| 521 |mrv_limit| 527 |mrv_cmp|
-              547 |expr_to_series| 555)
+              (|Union| 51 147 '"failed") |MRVLIM;mrv_limit;ESOcU;19|
+              |MRVLIM;mrv_limit;EEU;16| (442 . |retract|) (447 . |inv|)
+              (452 . +) (458 . =) (464 . |subst|) (471 . |kernel|)
+              (|Equation| 6) (476 . |lhs|) (481 . |rhs|) (|String|)
+              |MRVLIM;mrv_limit;ESESU;22| |MRVLIM;mrv_limit;EESU;20|
+              (|ToolsForSign| 40) (486 . |direction|))
+           '#(|mrv_sign| 491 |mrv_set| 498 |mrv_rewrite0| 505 |mrv_rewrite| 513
+              |mrv_normalize| 522 |mrv_limit1| 529 |mrv_limit| 535 |mrv_cmp|
+              570 |expr_to_series| 578)
            'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
-                             (|makeByteWordVec2| 161
+                             (|makeByteWordVec2| 164
                                                  '(0 6 0 7 0 9 0 10 1 13 12 9
                                                    14 1 6 12 12 15 1 6 20 0 21
                                                    1 6 0 22 23 2 6 0 0 9 24 2 6
@@ -1580,27 +1697,29 @@
                                                    104 2 67 0 0 68 105 1 67 6 0
                                                    106 0 66 0 107 2 40 25 0 0
                                                    108 1 67 109 0 110 1 112 111
-                                                   109 113 1 67 0 0 114 0 51 0
-                                                   118 2 51 25 0 0 119 1 51 25
-                                                   0 120 1 51 6 0 121 2 6 0 0 0
-                                                   128 0 51 0 131 2 86 25 9 0
-                                                   132 1 51 0 6 134 0 68 0 135
-                                                   2 68 25 0 0 136 2 68 25 0 0
-                                                   137 2 68 25 0 0 138 0 51 0
-                                                   139 1 141 51 0 142 1 51 143
-                                                   0 144 1 6 145 0 146 1 141 51
-                                                   0 147 1 6 22 0 148 1 6 0 0
-                                                   149 2 6 0 0 0 150 2 42 25 0
-                                                   0 151 1 155 6 0 156 1 155 6
-                                                   0 157 1 159 40 158 160 3 0
-                                                   80 6 9 43 133 3 0 126 6 9 43
-                                                   127 4 0 6 6 47 32 6 129 5 0
-                                                   116 6 47 32 9 43 130 3 0 6 6
-                                                   9 43 65 2 0 42 6 9 140 3 0
-                                                   42 6 155 158 161 2 0 153 6
-                                                   141 154 3 0 42 6 9 43 44 4 0
-                                                   123 30 30 9 43 124 3 0 116 6
-                                                   30 43 117)))))
+                                                   109 113 1 67 0 0 114 1 51 0
+                                                   6 118 2 51 25 0 0 119 1 51
+                                                   25 0 120 1 51 6 0 121 2 6 0
+                                                   0 0 128 0 51 0 131 2 86 25 9
+                                                   0 132 0 68 0 134 2 68 25 0 0
+                                                   135 2 68 25 0 0 136 2 68 25
+                                                   0 0 137 0 51 0 138 1 140 51
+                                                   0 141 1 51 142 0 143 1 6 144
+                                                   0 145 1 140 51 0 146 1 6 22
+                                                   0 151 1 6 0 0 152 2 6 0 0 0
+                                                   153 2 42 25 0 0 154 3 6 0 0
+                                                   20 34 155 1 30 0 9 156 1 157
+                                                   6 0 158 1 157 6 0 159 1 163
+                                                   40 160 164 3 0 80 6 9 43 133
+                                                   3 0 126 6 9 43 127 4 0 6 6
+                                                   47 32 6 129 5 0 116 6 47 32
+                                                   9 43 130 3 0 6 6 9 43 65 2 0
+                                                   42 6 9 139 2 0 148 6 140 150
+                                                   3 0 42 6 157 160 162 3 0 148
+                                                   6 9 51 149 4 0 42 6 9 6 160
+                                                   161 3 0 42 6 9 43 44 4 0 123
+                                                   30 30 9 43 124 3 0 116 6 30
+                                                   43 117)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|MrvLimitPackage| 'NILADIC T) 

@@ -465,6 +465,14 @@
                         (COND ((NULL |ans|) (SETQ |ans| 1)))))
                       |ans|))))))))))
  
+; stringMatches?(pattern, subject) ==
+;     FIXP basicMatch?(pattern,subject) => true
+;     false
+ 
+(DEFUN |stringMatches?| (|pattern| |subject|)
+  (PROG ()
+    (RETURN (COND ((FIXP (|basicMatch?| |pattern| |subject|)) T) ('T NIL)))))
+ 
 ; matchSegment?(pattern,subject,k) ==
 ;   matchAnySegment?(pattern,DOWNCASE subject,k,nil)
  

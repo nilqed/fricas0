@@ -20,7 +20,7 @@
           (|Record| (|:| |left| (|Fraction| (|Integer|)))
                     (|:| |right| (|Fraction| (|Integer|)))))
          ($ |List| (|Fraction| (|Integer|))))
-        (SPROG ((#1=#:G714 NIL) (|x| NIL) (#2=#:G713 NIL))
+        (SPROG ((#1=#:G716 NIL) (|x| NIL) (#2=#:G715 NIL))
                (SEQ
                 (PROGN
                  (LETT #2# NIL . #3=(|REAL0;midpoints;LL;3|))
@@ -37,8 +37,8 @@
 
 (SDEFUN |REAL0;makeSqfr| ((F |Pol|) ($ |Pol|))
         (SPROG
-         ((#1=#:G726 NIL) (#2=#:G725 (|Pol|)) (#3=#:G727 (|Pol|))
-          (#4=#:G730 NIL) (|s| NIL) (|sqfr| (|Factored| |Pol|)))
+         ((#1=#:G728 NIL) (#2=#:G727 (|Pol|)) (#3=#:G729 (|Pol|))
+          (#4=#:G732 NIL) (|s| NIL) (|sqfr| (|Factored| |Pol|)))
          (SEQ (LETT |sqfr| (SPADCALL F (QREFELT $ 21)) . #5=(|REAL0;makeSqfr|))
               (EXIT
                (LETT F
@@ -80,7 +80,7 @@
          ($ |List|
           (|Record| (|:| |left| (|Fraction| (|Integer|)))
                     (|:| |right| (|Fraction| (|Integer|))))))
-        (SPROG ((#1=#:G736 NIL) (|int| NIL) (#2=#:G735 NIL))
+        (SPROG ((#1=#:G738 NIL) (|int| NIL) (#2=#:G737 NIL))
                (SEQ
                 (LETT F (|REAL0;makeSqfr| F $)
                       . #3=(|REAL0;realZeros;PolFL;6|))
@@ -110,13 +110,13 @@
           (|Record| (|:| |left| (|Fraction| (|Integer|)))
                     (|:| |right| (|Fraction| (|Integer|))))))
         (SPROG
-         ((#1=#:G738 NIL)
+         ((#1=#:G740 NIL)
           (|rint|
            (|Union|
             (|Record| (|:| |left| (|Fraction| (|Integer|)))
                       (|:| |right| (|Fraction| (|Integer|))))
             #2="failed"))
-          (#3=#:G744 NIL) (|int| NIL) (#4=#:G743 NIL))
+          (#3=#:G746 NIL) (|int| NIL) (#4=#:G745 NIL))
          (SEQ (LETT F (|REAL0;makeSqfr| F $) . #5=(|REAL0;realZeros;PolRL;7|))
               (EXIT
                (PROGN
@@ -169,7 +169,7 @@
          ($ |List|
           (|Record| (|:| |left| (|Fraction| (|Integer|)))
                     (|:| |right| (|Fraction| (|Integer|))))))
-        (SPROG ((#1=#:G749 NIL) (|int| NIL) (#2=#:G748 NIL))
+        (SPROG ((#1=#:G751 NIL) (|int| NIL) (#2=#:G750 NIL))
                (SEQ
                 (LETT F (|REAL0;makeSqfr| F $)
                       . #3=(|REAL0;realZeros;PolRFL;8|))
@@ -206,7 +206,7 @@
            (|List|
             (|Record| (|:| |left| (|Fraction| (|Integer|)))
                       (|:| |right| (|Fraction| (|Integer|))))))
-          (#1=#:G765 NIL) (|int| NIL) (#2=#:G764 NIL)
+          (#1=#:G768 NIL) (|int| NIL) (#2=#:G767 NIL)
           (|tempF| (|Union| |Pol| "failed"))
           (L
            (|List|
@@ -283,7 +283,7 @@
            (|List|
             (|Record| (|:| |left| (|Fraction| (|Integer|)))
                       (|:| |right| (|Fraction| (|Integer|))))))
-          (#1=#:G770 NIL) (|int| NIL) (#2=#:G769 NIL) (|b| (|Integer|)))
+          (#1=#:G773 NIL) (|int| NIL) (#2=#:G772 NIL) (|b| (|Integer|)))
          (SEQ (LETT |b| (|REAL0;rootBound| F $) . #3=(|REAL0;PosZero|))
               (LETT F (|REAL0;transMult| |b| F $) . #3#)
               (LETT L (|REAL0;Zero1| F $) . #3#)
@@ -320,12 +320,12 @@
            (|List|
             (|Record| (|:| |left| (|Fraction| (|Integer|)))
                       (|:| |right| (|Fraction| (|Integer|))))))
-          (#1=#:G784 NIL) (|int| NIL) (#2=#:G783 NIL)
+          (#1=#:G788 NIL) (|int| NIL) (#2=#:G787 NIL)
           (J
            (|List|
             (|Record| (|:| |left| (|Fraction| (|Integer|)))
                       (|:| |right| (|Fraction| (|Integer|))))))
-          (#3=#:G782 NIL) (#4=#:G781 NIL) (G (|Pol|))
+          (#3=#:G786 NIL) (#4=#:G785 NIL) (G (|Pol|))
           (|tempG| #5=(|Union| |Pol| "failed")) (Q (|Pol|)) (H (|Pol|))
           (|tempH| #5#)
           (L
@@ -501,7 +501,7 @@
 (SDEFUN |REAL0;transMultInv| ((|c| |Integer|) (F |Pol|) ($ |Pol|))
         (SPROG
          ((|d| #1=(|NonNegativeInteger|)) (G (|Pol|)) (|cc| (|Integer|))
-          (#2=#:G796 NIL) (|n| #1#))
+          (#2=#:G801 NIL) (|n| #1#))
          (SEQ
           (LETT |d| (SPADCALL F (QREFELT $ 38)) . #3=(|REAL0;transMultInv|))
           (LETT |cc| 1 . #3#)
@@ -535,8 +535,8 @@
 
 (SDEFUN |REAL0;transAdd1| ((F |Pol|) ($ |Pol|))
         (SPROG
-         ((|ans| (|Pol|)) (#1=#:G809 NIL) (|i| NIL) (#2=#:G808 NIL) (|j| NIL)
-          (#3=#:G807 NIL) (|v| (|Vector| (|Integer|)))
+         ((|ans| (|Pol|)) (#1=#:G815 NIL) (|i| NIL) (#2=#:G814 NIL) (|j| NIL)
+          (#3=#:G813 NIL) (|v| (|Vector| (|Integer|)))
           (|n| (|NonNegativeInteger|)))
          (SEQ (LETT |n| (SPADCALL F (QREFELT $ 38)) . #4=(|REAL0;transAdd1|))
               (LETT |v| (SPADCALL F (+ |n| 1) (QREFELT $ 57)) . #4#)
@@ -609,7 +609,7 @@
                     (EXIT G)))) 
 
 (SDEFUN |REAL0;invert| ((F |Pol|) ($ |Pol|))
-        (SPROG ((G (|Pol|)) (#1=#:G816 NIL) (|n| (|NonNegativeInteger|)))
+        (SPROG ((G (|Pol|)) (#1=#:G822 NIL) (|n| (|NonNegativeInteger|)))
                (SEQ (LETT G (|spadConstant| $ 34) . #2=(|REAL0;invert|))
                     (LETT |n| (SPADCALL F (QREFELT $ 38)) . #2#)
                     (SEQ G190
@@ -728,7 +728,7 @@
          ((|xfl| (|Boolean|)) (|ad| #1=(|Integer|)) (|an| #2=(|Integer|))
           (|b| (|Fraction| (|Integer|))) (|a| (|Fraction| (|Integer|)))
           (|bd| #1#) (|bn| #2#) (|v| #3=(|Integer|)) (|midd| #1#) (|midn| #2#)
-          (|mid| (|Fraction| (|Integer|))) (|u| #3#) (#4=#:G835 NIL))
+          (|mid| (|Fraction| (|Integer|))) (|u| #3#) (#4=#:G841 NIL))
          (SEQ (LETT |a| (QCAR |int|) . #5=(|REAL0;refine;PolRFR;20|))
               (LETT |b| (QCDR |int|) . #5#)
               (EXIT
@@ -834,17 +834,19 @@
                                                                (|Fraction|
                                                                 (|Integer|))))
                                                          0))
-                                          "is not a valid isolation interval for"
-                                          (SPADCALL F (QREFELT $ 68)))))))
+                                          (SPADCALL
+                                           "is not a valid isolation interval for"
+                                           (QREFELT $ 69))
+                                          (SPADCALL F (QREFELT $ 70)))))))
                            (COND
                             ((SPADCALL |eps| (|spadConstant| $ 41)
-                                       (QREFELT $ 69))
+                                       (QREFELT $ 71))
                              (|error| "precision must be positive")))
                            (SEQ G190
                                 (COND
                                  ((NULL
                                    (SPADCALL (SPADCALL |b| |a| (QREFELT $ 60))
-                                             |eps| (QREFELT $ 70)))
+                                             |eps| (QREFELT $ 72)))
                                   (GO G191)))
                                 (SEQ
                                  (LETT |mid|
@@ -883,9 +885,9 @@
 
 (DECLAIM (NOTINLINE |RealZeroPackage;|)) 
 
-(DEFUN |RealZeroPackage| (#1=#:G850)
+(DEFUN |RealZeroPackage| (#1=#:G856)
   (SPROG NIL
-         (PROG (#2=#:G851)
+         (PROG (#2=#:G857)
            (RETURN
             (COND
              ((LETT #2#
@@ -907,7 +909,7 @@
          (PROGN
           (LETT DV$1 (|devaluate| |#1|) . #1=(|RealZeroPackage|))
           (LETT |dv$| (LIST '|RealZeroPackage| DV$1) . #1#)
-          (LETT $ (GETREFV 71) . #1#)
+          (LETT $ (GETREFV 73) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|RealZeroPackage| (LIST DV$1)
@@ -937,15 +939,16 @@
               (128 . <=) (|PositiveInteger|) (134 . *) (140 . ~=) (|Vector| 11)
               (146 . |vectorise|) (152 . |min|) (158 . |max|) (164 . -)
               (170 . <) (176 . =) (182 . |denom|) (187 . |numer|) (192 . |elt|)
-              (198 . -) (|OutputForm|) (204 . |coerce|) (209 . <=) (215 . >=))
-           '#(|refine| 221 |realZeros| 235 |midpoints| 259 |midpoint| 264) 'NIL
+              (198 . -) (|OutputForm|) (|String|) (204 . |coerce|)
+              (209 . |coerce|) (214 . <=) (220 . >=))
+           '#(|refine| 226 |realZeros| 240 |midpoints| 264 |midpoint| 269) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
-                             (|makeByteWordVec2| 70
+                             (|makeByteWordVec2| 72
                                                  '(1 7 0 0 8 0 6 0 9 0 7 0 10 2
                                                    7 0 11 11 12 2 7 0 0 0 13 2
-                                                   7 0 0 0 14 1 6 20 0 21 1 24
+                                                   7 0 0 7 14 1 6 20 0 21 1 24
                                                    23 0 25 2 6 0 0 0 26 0 6 0
                                                    34 2 6 35 0 0 36 1 6 37 0 38
                                                    1 6 37 0 39 2 37 35 0 0 40 0
@@ -959,11 +962,11 @@
                                                    2 7 0 0 0 59 2 7 0 0 0 60 2
                                                    7 35 0 0 61 2 7 35 0 0 62 1
                                                    7 11 0 63 1 7 11 0 64 2 6 11
-                                                   0 11 65 2 6 0 0 0 66 1 6 67
-                                                   0 68 2 7 35 0 0 69 2 7 35 0
-                                                   0 70 3 0 30 6 15 15 31 3 0
-                                                   15 6 15 7 28 2 0 18 6 15 32
-                                                   1 0 18 6 27 3 0 18 6 15 7 33
-                                                   2 0 18 6 7 29 1 0 17 18 19 1
-                                                   0 7 15 16)))))
+                                                   0 11 65 2 6 0 0 0 66 1 68 67
+                                                   0 69 1 6 67 0 70 2 7 35 0 0
+                                                   71 2 7 35 0 0 72 3 0 30 6 15
+                                                   15 31 3 0 15 6 15 7 28 2 0
+                                                   18 6 15 32 1 0 18 6 27 3 0
+                                                   18 6 15 7 33 2 0 18 6 7 29 1
+                                                   0 17 18 19 1 0 7 15 16)))))
            '|lookupComplete|)) 

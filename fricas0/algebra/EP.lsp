@@ -30,7 +30,7 @@
         ((|v| |Vector|
           (|SparseUnivariatePolynomial| (|Fraction| (|Polynomial| R))))
          (|x| |Symbol|) ($ |Matrix| (|Fraction| (|Polynomial| R))))
-        (SPROG ((#1=#:G731 NIL) (|i| NIL) (#2=#:G730 NIL))
+        (SPROG ((#1=#:G734 NIL) (|i| NIL) (#2=#:G733 NIL))
                (SEQ
                 (SPADCALL
                  (PROGN
@@ -69,7 +69,7 @@
          (|m| |Matrix| (|Fraction| (|Polynomial| R)))
          ($ |List| (|Matrix| (|Fraction| (|Polynomial| R)))))
         (SPROG
-         ((#1=#:G744 NIL) (|v| NIL) (#2=#:G743 NIL)
+         ((#1=#:G747 NIL) (|v| NIL) (#2=#:G746 NIL)
           (|res1|
            (|List|
             (|Vector|
@@ -98,7 +98,7 @@
          (|k| |NonNegativeInteger|) (|g| |NonNegativeInteger|)
          ($ |List| (|Matrix| (|Fraction| (|Polynomial| R)))))
         (SPROG
-         ((#1=#:G752 NIL) (|v| NIL) (#2=#:G751 NIL)
+         ((#1=#:G755 NIL) (|v| NIL) (#2=#:G754 NIL)
           (|res1|
            (|List|
             (|Vector|
@@ -165,7 +165,7 @@
           (|Union| (|Fraction| (|Polynomial| R))
                    (|SuchThat| (|Symbol|) (|Polynomial| R)))))
         (SPROG
-         ((#1=#:G771 NIL) (|a| NIL) (#2=#:G770 NIL)
+         ((#1=#:G774 NIL) (|a| NIL) (#2=#:G773 NIL)
           (|res1|
            (|List|
             (|Union| (|Fraction| (|Polynomial| R))
@@ -198,8 +198,8 @@
            (|:| |eigmult| (|NonNegativeInteger|))
            (|:| |eigvec| (|List| (|Matrix| (|Fraction| (|Polynomial| R))))))))
         (SPROG
-         ((#1=#:G782 NIL) (|v| NIL) (#2=#:G781 NIL) (#3=#:G780 NIL) (|ri| NIL)
-          (#4=#:G779 NIL)
+         ((#1=#:G785 NIL) (|v| NIL) (#2=#:G784 NIL) (#3=#:G783 NIL) (|ri| NIL)
+          (#4=#:G782 NIL)
           (|res1|
            (|List|
             (|Record|
@@ -263,8 +263,8 @@
            (|:| |geneigvec|
                 (|List| (|Matrix| (|Fraction| (|Polynomial| R))))))))
         (SPROG
-         ((#1=#:G794 NIL) (|v| NIL) (#2=#:G793 NIL) (#3=#:G792 NIL) (|ri| NIL)
-          (#4=#:G791 NIL)
+         ((#1=#:G797 NIL) (|v| NIL) (#2=#:G796 NIL) (#3=#:G795 NIL) (|ri| NIL)
+          (#4=#:G794 NIL)
           (|res1|
            (|List|
             (|Record|
@@ -319,9 +319,9 @@
 
 (DECLAIM (NOTINLINE |EigenPackage;|)) 
 
-(DEFUN |EigenPackage| (#1=#:G795)
+(DEFUN |EigenPackage| (#1=#:G798)
   (SPROG NIL
-         (PROG (#2=#:G796)
+         (PROG (#2=#:G799)
            (RETURN
             (COND
              ((LETT #2#

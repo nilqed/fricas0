@@ -7,17 +7,17 @@
 (SDEFUN |TENSOR;tensor;M1M2$;2| ((|x1| M1) (|x2| M2) ($ $))
         (SPROG
          ((|res| (|List| (|Record| (|:| |k| (|Product| B1 B2)) (|:| |c| R))))
-          (#1=#:G718 NIL) (|s2| NIL) (#2=#:G717 NIL) (|s1| NIL)
+          (#1=#:G722 NIL) (|s2| NIL) (#2=#:G721 NIL) (|s1| NIL)
           (|ltx2| (|List| (|Record| (|:| |k| B2) (|:| |c| R))))
           (|ltx1| (|List| (|Record| (|:| |k| B1) (|:| |c| R))))
-          (#3=#:G716 NIL))
+          (#3=#:G720 NIL))
          (SEQ
           (EXIT
            (COND
             ((OR (SPADCALL |x1| (QREFELT $ 14)) (SPADCALL |x2| (QREFELT $ 16)))
              (PROGN
               (LETT #3# (|spadConstant| $ 15) . #4=(|TENSOR;tensor;M1M2$;2|))
-              (GO #5=#:G715)))
+              (GO #5=#:G719)))
             ('T
              (SEQ (LETT |ltx1| (SPADCALL |x1| (QREFELT $ 19)) . #4#)
                   (LETT |ltx2| (SPADCALL |x2| (QREFELT $ 22)) . #4#)
@@ -56,9 +56,9 @@
 (SDEFUN |TENSOR;*;3$;3| ((|x1| $) (|x2| $) ($ $))
         (SPROG
          ((|res| (|List| (|Record| (|:| |k| (|Product| B1 B2)) (|:| |c| R))))
-          (#1=#:G727 NIL) (|t| NIL) (|t2b| (M2)) (|t2a| (M1)) (|t1b| (M2))
+          (#1=#:G731 NIL) (|t| NIL) (|t2b| (M2)) (|t2a| (M1)) (|t1b| (M2))
           (|t1a| (M1)) (|t2k| #2=(|Product| B1 B2)) (|t1k| #2#) (|t2c| (R))
-          (|t1c| (R)) (#3=#:G726 NIL) (|t2| NIL) (#4=#:G725 NIL) (|t1| NIL))
+          (|t1c| (R)) (#3=#:G730 NIL) (|t2| NIL) (#4=#:G729 NIL) (|t1| NIL))
          (SEQ (LETT |res| NIL . #5=(|TENSOR;*;3$;3|))
               (SEQ (LETT |t1| NIL . #5#)
                    (LETT #4# (SPADCALL |x1| (QREFELT $ 29)) . #5#) G190
@@ -128,7 +128,7 @@
 
 (SDEFUN |TENSOR;coerce;$Of;4| ((|x| $) ($ |OutputForm|))
         (SPROG
-         ((|le| (|List| (|OutputForm|))) (|ko| (|OutputForm|)) (#1=#:G736 NIL)
+         ((|le| (|List| (|OutputForm|))) (|ko| (|OutputForm|)) (#1=#:G740 NIL)
           (|rec| NIL))
          (SEQ
           (COND
@@ -170,9 +170,9 @@
 
 (DECLAIM (NOTINLINE |TensorProduct;|)) 
 
-(DEFUN |TensorProduct| (&REST #1=#:G747)
+(DEFUN |TensorProduct| (&REST #1=#:G752)
   (SPROG NIL
-         (PROG (#2=#:G748)
+         (PROG (#2=#:G753)
            (RETURN
             (COND
              ((LETT #2#
@@ -252,6 +252,18 @@
                                              (OR
                                               (|HasCategory| |#1|
                                                              '(|AbelianGroup|))
+                                              (AND
+                                               (|HasCategory| |#4|
+                                                              (LIST '|Algebra|
+                                                                    (|devaluate|
+                                                                     |#1|)))
+                                               (|HasCategory| |#5|
+                                                              (LIST '|Algebra|
+                                                                    (|devaluate|
+                                                                     |#1|)))))
+                                             (OR
+                                              (|HasCategory| |#1|
+                                                             '(|AbelianGroup|))
                                               (|HasCategory| |#1|
                                                              '(|AbelianMonoid|))
                                               (|HasCategory| |#1|
@@ -270,18 +282,6 @@
                                                              '(|AbelianGroup|))
                                               (|HasCategory| |#1|
                                                              '(|CancellationAbelianMonoid|))
-                                              (AND
-                                               (|HasCategory| |#4|
-                                                              (LIST '|Algebra|
-                                                                    (|devaluate|
-                                                                     |#1|)))
-                                               (|HasCategory| |#5|
-                                                              (LIST '|Algebra|
-                                                                    (|devaluate|
-                                                                     |#1|)))))
-                                             (OR
-                                              (|HasCategory| |#1|
-                                                             '(|AbelianGroup|))
                                               (AND
                                                (|HasCategory| |#4|
                                                               (LIST '|Algebra|
@@ -295,13 +295,9 @@
                                                             '(|CommutativeRing|))
                                              (OR
                                               (|HasCategory| |#1|
-                                                             '(|AbelianMonoid|))
-                                              (AND
-                                               (|HasCategory| |#1|
-                                                              '(|OrderedAbelianMonoid|))
-                                               (|HasCategory|
-                                                (|Product| |#2| |#3|)
-                                                '(|OrderedSet|)))
+                                                             '(|AbelianGroup|))
+                                              (|HasCategory| |#1|
+                                                             '(|CancellationAbelianMonoid|))
                                               (AND
                                                (|HasCategory| |#1|
                                                               '(|OrderedAbelianMonoidSup|))
@@ -319,9 +315,13 @@
                                                                      |#1|)))))
                                              (OR
                                               (|HasCategory| |#1|
-                                                             '(|AbelianGroup|))
-                                              (|HasCategory| |#1|
-                                                             '(|CancellationAbelianMonoid|))
+                                                             '(|AbelianMonoid|))
+                                              (AND
+                                               (|HasCategory| |#1|
+                                                              '(|OrderedAbelianMonoid|))
+                                               (|HasCategory|
+                                                (|Product| |#2| |#3|)
+                                                '(|OrderedSet|)))
                                               (AND
                                                (|HasCategory| |#1|
                                                               '(|OrderedAbelianMonoidSup|))
@@ -370,45 +370,53 @@
               (110 . |Zero|) (|OutputForm|) (114 . |coerce|) (119 . |coerce|)
               (124 . |coerce|) (129 . |tensor|) (135 . =) (141 . *) (147 . +)
               (|Mapping| 42 42 42) (|List| 42) (153 . |reduce|)
-              |TENSOR;coerce;$Of;4| (|NonNegativeInteger|) (|Integer|)
-              (|Union| $ '"failed") (|PositiveInteger|) (|Mapping| 6 12)
-              (|Union| 12 '"failed") (|Mapping| 6 6) (|List| 6) (|List| $)
-              (|List| 12) (|HashState|) (|String|) (|SingleInteger|))
+              |TENSOR;coerce;$Of;4| (|NonNegativeInteger|)
+              (|Union| $ '"failed") (|Integer|) (|PositiveInteger|)
+              (|Mapping| 6 12) (|Union| 12 '"failed") (|Mapping| 6 6)
+              (|List| 12) (|List| 6) (|List| $) (|String|) (|SingleInteger|)
+              (|HashState|))
            '#(~= 159 |zero?| 165 |tensor| 170 |support| 176 |sup| 181
-              |subtractIfCan| 187 |smaller?| 193 |sample| 199 |retractIfCan|
-              203 |retract| 208 |reductum| 213 |recip| 218 |opposite?| 223
-              |one?| 229 |numberOfMonomials| 234 |monomials| 239 |monomial?|
-              244 |monomial| 249 |min| 255 |max| 261 |map| 267 |listOfTerms|
-              273 |linearExtend| 278 |leadingTerm| 284 |leadingSupport| 289
-              |leadingMonomial| 294 |leadingCoefficient| 299 |latex| 304
-              |hashUpdate!| 309 |hash| 315 |constructOrdered| 320 |construct|
-              325 |coerce| 330 |coefficients| 350 |coefficient| 355
-              |characteristic| 361 |annihilate?| 365 ^ 371 |Zero| 383 |One| 387
-              >= 391 > 397 = 403 <= 409 < 415 - 421 + 432 * 438)
+              |subtractIfCan| 187 |smaller?| 193 |sample| 199 |rightRecip| 203
+              |rightPower| 208 |retractIfCan| 220 |retract| 225 |reductum| 230
+              |recip| 235 |opposite?| 240 |one?| 246 |numberOfMonomials| 251
+              |monomials| 256 |monomial?| 261 |monomial| 266 |min| 272 |max|
+              278 |map| 284 |listOfTerms| 290 |linearExtend| 295 |leftRecip|
+              301 |leftPower| 306 |leadingTerm| 318 |leadingSupport| 323
+              |leadingMonomial| 328 |leadingCoefficient| 333 |latex| 338
+              |hashUpdate!| 343 |hash| 349 |constructOrdered| 354 |construct|
+              359 |commutator| 364 |coerce| 370 |coefficients| 390
+              |coefficient| 395 |characteristic| 401 |associator| 405
+              |antiCommutator| 412 |annihilate?| 418 ^ 424 |Zero| 436 |One| 440
+              >= 444 > 450 = 456 <= 462 < 468 - 474 + 485 * 491)
            'NIL
            (CONS
             (|makeByteWordVec2| 8
-                                '(0 0 5 0 0 0 2 5 0 0 0 2 5 5 4 8 4 7 5 4 6 5 5
-                                  0 3 5 0 0 0 1 4 5))
+                                '(5 5 0 0 5 5 0 0 5 0 2 5 5 0 0 0 2 5 5 5 6 4 4
+                                  8 5 5 4 7 5 5 5 0 3 5 0 0 0 1 4 5))
             (CONS
-             '#(NIL |FreeModuleCategory&| |Algebra&| |Module&| NIL NIL NIL
-                |Ring&| NIL NIL NIL NIL |Rng&| NIL NIL |AbelianGroup&| NIL NIL
-                NIL |OrderedSet&| |AbelianMonoid&| NIL |Monoid&|
-                |AbelianSemiGroup&| NIL |SemiGroup&| |SetCategory&|
-                |BasicType&| NIL |RetractableTo&| |PartialOrder&| NIL)
+             '#(|Algebra&| NIL NIL |FreeModuleCategory&| |Rng&| NIL |Module&|
+                NIL NIL NIL NIL NIL |NonAssociativeRing&| NIL NIL NIL NIL NIL
+                NIL |NonAssociativeRng&| |AbelianGroup&| NIL NIL NIL NIL NIL
+                |OrderedSet&| |AbelianMonoid&| |MagmaWithUnit&| NIL
+                |NonAssociativeSemiRng&| |AbelianSemiGroup&| NIL |Magma&|
+                |SetCategory&| |BasicType&| NIL |RetractableTo&|
+                |PartialOrder&| NIL)
              (CONS
-              '#((|TensorProductCategory| 6 9 10)
-                 (|FreeModuleCategory| 6 (|Product| 7 8)) (|Algebra| 6)
+              '#((|Algebra| 6) (|Ring|) (|TensorProductCategory| 6 9 10)
+                 (|FreeModuleCategory| 6 (|Product| 7 8)) (|Rng|) (|SemiRing|)
                  (|Module| 6)
-                 (|IndexedDirectProductCategory| 6 (|Product| 7 8))
-                 (|BiModule| 6 6) (|OrderedAbelianMonoidSup|) (|Ring|)
+                 (|IndexedDirectProductCategory| 6 (|Product| 7 8)) (|SemiRng|)
+                 (|BiModule| 6 6) (|OrderedAbelianMonoidSup|)
+                 (|BiModule| $$ $$) (|NonAssociativeRing|)
                  (|AbelianProductCategory| 6) (|LeftModule| 6)
-                 (|RightModule| 6) (|OrderedCancellationAbelianMonoid|) (|Rng|)
-                 (|LeftModule| $$) (|OrderedAbelianMonoid|) (|AbelianGroup|)
+                 (|RightModule| 6) (|OrderedCancellationAbelianMonoid|)
+                 (|LeftModule| $$) (|RightModule| $$) (|NonAssociativeRng|)
+                 (|AbelianGroup|) (|OrderedAbelianMonoid|)
                  (|OrderedAbelianSemiGroup|) (|CancellationAbelianMonoid|)
-                 (|SemiRing|) (|OrderedSet|) (|AbelianMonoid|) (|SemiRng|)
-                 (|Monoid|) (|AbelianSemiGroup|) (|Comparable|) (|SemiGroup|)
-                 (|SetCategory|) (|BasicType|) (|CoercibleTo| 42)
+                 (|NonAssociativeSemiRing|) (|Monoid|) (|OrderedSet|)
+                 (|AbelianMonoid|) (|MagmaWithUnit|) (|SemiGroup|)
+                 (|NonAssociativeSemiRng|) (|AbelianSemiGroup|) (|Comparable|)
+                 (|Magma|) (|SetCategory|) (|BasicType|) (|CoercibleTo| 42)
                  (|RetractableTo| (|Product| 7 8)) (|PartialOrder|)
                  (|unitsKnown|))
               (|makeByteWordVec2| 66
@@ -421,21 +429,23 @@
                                     0 41 1 6 42 0 43 1 7 42 0 44 1 8 42 0 45 2
                                     42 0 0 0 46 2 6 11 0 0 47 2 42 0 0 0 48 2
                                     42 0 0 0 49 2 51 42 50 0 52 2 0 11 0 0 1 1
-                                    10 11 0 40 2 0 0 9 10 28 1 0 63 0 1 2 2 0 0
-                                    0 1 2 11 56 0 0 1 2 3 11 0 0 1 0 10 0 1 1 1
-                                    59 0 1 1 1 12 0 1 1 0 0 0 1 1 5 56 0 1 2 10
-                                    11 0 0 1 1 5 11 0 1 1 0 54 0 1 1 0 62 0 1 1
-                                    0 11 0 1 2 0 0 6 12 1 2 4 0 0 0 1 2 4 0 0 0
-                                    1 2 0 0 60 0 1 1 0 26 0 29 2 9 6 58 0 1 1 0
-                                    25 0 1 1 0 12 0 1 1 0 0 0 1 1 0 6 0 1 1 0
-                                    65 0 1 2 0 64 64 0 1 1 0 66 0 1 1 0 0 26 27
-                                    1 0 0 26 38 1 5 0 6 1 1 5 0 55 1 1 1 0 12 1
-                                    1 0 42 0 53 1 0 61 0 1 2 0 6 0 12 1 0 5 54
-                                    1 2 5 11 0 0 1 2 5 0 0 54 1 2 5 0 0 57 1 0
-                                    10 0 15 0 5 0 32 2 4 11 0 0 1 2 4 11 0 0 1
-                                    2 0 11 0 0 1 2 4 11 0 0 1 2 4 11 0 0 1 1 8
-                                    0 0 1 2 8 0 0 0 1 2 0 0 0 0 1 2 5 0 0 0 39
-                                    2 8 0 55 0 1 2 10 0 54 0 1 2 0 0 6 12 1 2 0
-                                    0 12 6 1 2 0 0 6 0 1 2 0 0 0 6 1 2 0 0 57 0
-                                    1)))))
+                                    11 11 0 40 2 0 0 9 10 28 1 0 61 0 1 2 2 0 0
+                                    0 1 2 10 55 0 0 1 2 3 11 0 0 1 0 11 0 1 1 5
+                                    55 0 1 2 5 0 0 54 1 2 5 0 0 57 1 1 1 59 0 1
+                                    1 1 12 0 1 1 0 0 0 1 1 5 55 0 1 2 11 11 0 0
+                                    1 1 5 11 0 1 1 0 54 0 1 1 0 63 0 1 1 0 11 0
+                                    1 2 0 0 6 12 1 2 4 0 0 0 1 2 4 0 0 0 1 2 0
+                                    0 60 0 1 1 0 26 0 29 2 9 6 58 0 1 1 5 55 0
+                                    1 2 5 0 0 54 1 2 5 0 0 57 1 1 0 25 0 1 1 0
+                                    12 0 1 1 0 0 0 1 1 0 6 0 1 1 0 64 0 1 2 0
+                                    66 66 0 1 1 0 65 0 1 1 0 0 26 27 1 0 0 26
+                                    38 2 5 0 0 0 1 1 5 0 6 1 1 5 0 56 1 1 1 0
+                                    12 1 1 0 42 0 53 1 0 62 0 1 2 0 6 0 12 1 0
+                                    5 54 1 3 5 0 0 0 0 1 2 5 0 0 0 1 2 5 11 0 0
+                                    1 2 5 0 0 54 1 2 5 0 0 57 1 0 11 0 15 0 5 0
+                                    32 2 4 11 0 0 1 2 4 11 0 0 1 2 0 11 0 0 1 2
+                                    4 11 0 0 1 2 4 11 0 0 1 1 6 0 0 1 2 6 0 0 0
+                                    1 2 0 0 0 0 1 2 5 0 0 0 39 2 6 0 56 0 1 2
+                                    11 0 54 0 1 2 0 0 6 12 1 2 0 0 12 6 1 2 0 0
+                                    0 6 1 2 0 0 57 0 1 2 0 0 6 0 1)))))
            '|lookupComplete|)) 

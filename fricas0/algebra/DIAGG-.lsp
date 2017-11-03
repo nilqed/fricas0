@@ -1,6 +1,6 @@
 
 (SDEFUN |DIAGG-;dictionary;LA;1| ((|l| |List| S) ($ A))
-        (SPROG ((#1=#:G714 NIL) (|x| NIL) (|d| (A)))
+        (SPROG ((#1=#:G715 NIL) (|x| NIL) (|d| (A)))
                (SEQ
                 (LETT |d| (SPADCALL (QREFELT $ 8))
                       . #2=(|DIAGG-;dictionary;LA;1|))
@@ -36,7 +36,7 @@
           (RETURN (PROGN (SPADCALL |x| |t| (QREFELT $ 21)))))) 
 
 (SDEFUN |DIAGG-;remove!;M2A;4| ((|f| |Mapping| (|Boolean|) S) (|t| A) ($ A))
-        (SPROG ((#1=#:G735 NIL) (|m| NIL))
+        (SPROG ((#1=#:G736 NIL) (|m| NIL))
                (SEQ
                 (SEQ (LETT |m| NIL . #2=(|DIAGG-;remove!;M2A;4|))
                      (LETT #1# (SPADCALL |t| (QREFELT $ 22)) . #2#) G190

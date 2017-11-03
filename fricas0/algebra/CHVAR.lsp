@@ -14,7 +14,7 @@
           (RETURN (PROGN (SPADCALL |s| |x| (QREFELT $ 10)))))) 
 
 (SDEFUN |CHVAR;good?| ((|a| F) (|p| UP) (|lq| |List| UP) ($ |Boolean|))
-        (SPROG ((#1=#:G717 NIL) (#2=#:G718 NIL) (|q| NIL))
+        (SPROG ((#1=#:G720 NIL) (#2=#:G721 NIL) (|q| NIL))
                (SEQ
                 (EXIT
                  (COND
@@ -34,7 +34,7 @@
                            (COND
                             ((SPADCALL (SPADCALL |q| |a| (QREFELT $ 20))
                                        (|spadConstant| $ 21) (QREFELT $ 23))
-                             (PROGN (LETT #1# NIL . #3#) (GO #4=#:G716))))))
+                             (PROGN (LETT #1# NIL . #3#) (GO #4=#:G719))))))
                          (LETT #2# (CDR #2#) . #3#) (GO G190) G191 (EXIT NIL))
                     (EXIT 'T)))))
                 #4# (EXIT #1#)))) 
@@ -128,11 +128,11 @@
           (|:| |c1| (|Fraction| UP)) (|:| |c2| (|Fraction| UP))
           (|:| |deg| (|NonNegativeInteger|))))
         (SPROG
-         ((#1=#:G748 NIL) (|f| NIL) (#2=#:G747 NIL) (|ir2| #3=(|Fraction| UP))
+         ((#1=#:G752 NIL) (|f| NIL) (#2=#:G751 NIL) (|ir2| #3=(|Fraction| UP))
           (|im2| (|Fraction| UP)) (|t| #3#) (|r2c| (UP))
           (|r2| #4=(|Record| (|:| |coef| (|Fraction| UP)) (|:| |poly| UPUP)))
           (|x| (|Fraction| UP)) (|a| (F)) (|inf_deg| (|NonNegativeInteger|))
-          (|lf1| (|List| UPUP)) (#5=#:G746 NIL) (#6=#:G745 NIL) (|m1| (UPUP))
+          (|lf1| (|List| UPUP)) (#5=#:G750 NIL) (#6=#:G749 NIL) (|m1| (UPUP))
           (|r1inv| #3#) (|r1| #4#))
          (SEQ
           (LETT |r1| (SPADCALL |modulus| (QREFELT $ 36))
@@ -358,8 +358,8 @@
 
 (SDEFUN |CHVAR;goodPoint;LUPUPF;9| ((|lp| |List| UPUP) (|modulus| UPUP) ($ F))
         (SPROG
-         ((#1=#:G784 NIL) (#2=#:G785 NIL) (|a| (F)) (|i| NIL)
-          (|ld| (|List| UP)) (#3=#:G787 NIL) (|p| NIL) (#4=#:G786 NIL)
+         ((#1=#:G789 NIL) (#2=#:G790 NIL) (|a| (F)) (|i| NIL)
+          (|ld| (|List| UP)) (#3=#:G792 NIL) (|p| NIL) (#4=#:G791 NIL)
           (|q| (UP))
           (|r|
            (|Union|
@@ -405,7 +405,7 @@
                      ((|CHVAR;good?|
                        (LETT |a| (SPADCALL |i| (QREFELT $ 81)) . #5#) |q| |ld|
                        $)
-                      (PROGN (LETT #2# |a| . #5#) (GO #6=#:G783)))
+                      (PROGN (LETT #2# |a| . #5#) (GO #6=#:G788)))
                      ('T
                       (SEQ
                        (EXIT
@@ -419,7 +419,7 @@
                                         . #5#)
                                   (GO #6#))
                                  . #5#)
-                           (GO #7=#:G779)))))
+                           (GO #7=#:G784)))))
                        #7# (EXIT #1#))))))
                   (LETT |i| (|inc_SI| |i|) . #5#) (GO G190) G191 (EXIT NIL)))))
           #6# (EXIT #2#)))) 
@@ -447,12 +447,12 @@
          ($ |Record| (|:| |exponent| (|NonNegativeInteger|))
           (|:| |coef| (|Fraction| UP)) (|:| |radicand| UP)))
         (SPROG
-         ((#1=#:G811 NIL) (#2=#:G810 (UP)) (#3=#:G812 (UP)) (#4=#:G816 NIL)
+         ((#1=#:G816 NIL) (#2=#:G815 (UP)) (#3=#:G817 (UP)) (#4=#:G821 NIL)
           (#5=#:G690 NIL)
           (|pr|
            (|Record| (|:| |exponent| (|NonNegativeInteger|)) (|:| |coef| UP)
                      (|:| |radicand| (|List| UP))))
-          (#6=#:G808 NIL) (|d| (UP)))
+          (#6=#:G813 NIL) (|d| (UP)))
          (SEQ
           (COND ((SPADCALL |g| (QREFELT $ 85)) (|error| "Should not happen"))
                 (#7='T
@@ -504,9 +504,9 @@
 
 (DECLAIM (NOTINLINE |ChangeOfVariable;|)) 
 
-(DEFUN |ChangeOfVariable| (&REST #1=#:G817)
+(DEFUN |ChangeOfVariable| (&REST #1=#:G822)
   (SPROG NIL
-         (PROG (#2=#:G818)
+         (PROG (#2=#:G823)
            (RETURN
             (COND
              ((LETT #2#
@@ -603,7 +603,7 @@
                                                    15 0 0 48 2 8 0 15 0 49 2 7
                                                    9 0 9 50 2 15 0 0 0 51 1 60
                                                    0 59 61 1 60 0 0 62 2 60 0
-                                                   59 0 63 0 60 0 64 0 7 0 65 0
+                                                   16 0 63 0 60 0 64 0 7 0 65 0
                                                    8 0 66 2 8 22 0 0 67 1 8 16
                                                    0 68 2 60 0 0 0 69 2 60 0 0
                                                    0 70 1 8 0 0 71 2 60 22 0 0

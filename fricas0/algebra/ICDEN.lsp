@@ -48,9 +48,9 @@
 
 (DECLAIM (NOTINLINE |InnerCommonDenominator;|)) 
 
-(DEFUN |InnerCommonDenominator| (&REST #1=#:G713)
+(DEFUN |InnerCommonDenominator| (&REST #1=#:G717)
   (SPROG NIL
-         (PROG (#2=#:G714)
+         (PROG (#2=#:G718)
            (RETURN
             (COND
              ((LETT #2#

@@ -169,8 +169,6 @@
 ;   --mc is the "mode of computation"; fn the "implementation"
 ;   $functorForm is ['CategoryDefaults,:.] and mc="$" => e
 ;     --don't put CD modemaps into environment
-;   --fn is ['Subsumed,:.] => e  -- don't skip subsumed modemaps
-;                                -- breaks -:($,$)->U($,failed) in DP
 ;   op = 'elt or op = "setelt!" => addEltModemap(op, mc, sig, pred, fn, e)
 ;   addModemap1(op,mc,sig,pred,fn,e)
  
@@ -749,6 +747,32 @@
                                     (SETQ |bfVar#18| (CDR |bfVar#18|))))
                                  NIL |funList| NIL)))))
       (LIST |form| |catForm| |e|)))))
+ 
+; addModemap(op, mc, sig, pred, fn, $e) ==
+;     $InteractiveMode => $e
+;     if knownInfo pred then pred := true
+;     $insideCapsuleFunctionIfTrue = true =>
+;         $CapsuleModemapFrame :=
+;           addModemap0(op, mc, sig, pred, fn, $CapsuleModemapFrame)
+;         $e
+;     addModemap0(op, mc, sig, pred, fn, $e)
+ 
+(DEFUN |addModemap| (|op| |mc| |sig| |pred| |fn| |$e|)
+  (DECLARE (SPECIAL |$e|))
+  (PROG ()
+    (RETURN
+     (COND (|$InteractiveMode| |$e|)
+           (#1='T
+            (PROGN
+             (COND ((|knownInfo| |pred|) (SETQ |pred| T)))
+             (COND
+              ((EQUAL |$insideCapsuleFunctionIfTrue| T)
+               (PROGN
+                (SETQ |$CapsuleModemapFrame|
+                        (|addModemap0| |op| |mc| |sig| |pred| |fn|
+                         |$CapsuleModemapFrame|))
+                |$e|))
+              (#1# (|addModemap0| |op| |mc| |sig| |pred| |fn| |$e|)))))))))
  
 ; addConstructorModemaps(name,form is [functorName,:.],e) ==
 ;   $InteractiveMode: local:= nil

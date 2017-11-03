@@ -1,9 +1,9 @@
 
 (DECLAIM (NOTINLINE |IndexedVector;|)) 
 
-(DEFUN |IndexedVector| (&REST #1=#:G2040)
+(DEFUN |IndexedVector| (&REST #1=#:G2024)
   (SPROG NIL
-         (PROG (#2=#:G2041)
+         (PROG (#2=#:G2025)
            (RETURN
             (COND
              ((LETT #2#
@@ -22,7 +22,7 @@
 
 (DEFUN |IndexedVector;| (|#1| |#2|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G2037 NIL) (#2=#:G2038 NIL) (#3=#:G2039 NIL) ($ NIL)
+   ((|pv$| NIL) (#1=#:G2021 NIL) (#2=#:G2022 NIL) (#3=#:G2023 NIL) ($ NIL)
     (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #4=(|IndexedVector|))
@@ -143,7 +143,8 @@
 
 (MAKEPROP '|IndexedVector| '|infovec|
           (LIST
-           '#(NIL NIL NIL NIL NIL (|IndexedOneDimensionalArray| 6 7)
+           '#(NIL NIL NIL NIL NIL
+              (|IndexedOneDimensionalArray| 6 (NRTEVAL (QREFELT $ 7)))
               (|local| |#1|) (|local| |#2|) (|Mapping| 11 6 6) (|Integer|)
               (|Mapping| 6 6 6) (|Boolean|) (|NonNegativeInteger|) (|List| 6)
               (|Equation| 6) (|List| 14) (|OutputForm|) (|SingleInteger|)

@@ -5,7 +5,7 @@
 
 (SDEFUN |BALFACT;balSqfr1|
         ((|a| UP) (|n| |Integer|) (|b| UP) ($ |Factored| UP))
-        (SPROG ((#1=#:G710 NIL) (|fa| (|Factored| UP)) (|g| (UP)))
+        (SPROG ((#1=#:G711 NIL) (|fa| (|Factored| UP)) (|g| (UP)))
                (SEQ
                 (LETT |g| (SPADCALL |a| |b| (QREFELT $ 12))
                       . #2=(|BALFACT;balSqfr1|))
@@ -49,8 +49,8 @@
 (SDEFUN |BALFACT;balSqfr|
         ((|a| UP) (|n| |Integer|) (|l| |List| UP) ($ |Factored| UP))
         (SPROG
-         ((#1=#:G720 NIL) (#2=#:G719 #3=(|Factored| UP)) (#4=#:G721 #3#)
-          (#5=#:G724 NIL) (|f| NIL) (|b| (UP)))
+         ((#1=#:G723 NIL) (#2=#:G722 #3=(|Factored| UP)) (#4=#:G724 #3#)
+          (#5=#:G727 NIL) (|f| NIL) (|b| (UP)))
          (SEQ (LETT |b| (|SPADfirst| |l|) . #6=(|BALFACT;balSqfr|))
               (EXIT
                (COND ((NULL (CDR |l|)) (|BALFACT;balSqfr1| |a| |n| |b| $))
@@ -89,8 +89,8 @@
 (SDEFUN |BALFACT;balancedFactorisation;UPLF;4|
         ((|a| UP) (|l| |List| UP) ($ |Factored| UP))
         (SPROG
-         ((#1=#:G728 NIL) (#2=#:G727 #3=(|Factored| UP)) (#4=#:G729 #3#)
-          (#5=#:G733 NIL) (|f| NIL) (|sa| (|Factored| UP)) (|ll| (|List| UP)))
+         ((#1=#:G731 NIL) (#2=#:G730 #3=(|Factored| UP)) (#4=#:G732 #3#)
+          (#5=#:G736 NIL) (|f| NIL) (|sa| (|Factored| UP)) (|ll| (|List| UP)))
          (SEQ
           (COND
            ((NULL
@@ -140,9 +140,9 @@
 
 (DECLAIM (NOTINLINE |BalancedFactorisation;|)) 
 
-(DEFUN |BalancedFactorisation| (&REST #1=#:G734)
+(DEFUN |BalancedFactorisation| (&REST #1=#:G737)
   (SPROG NIL
-         (PROG (#2=#:G735)
+         (PROG (#2=#:G738)
            (RETURN
             (COND
              ((LETT #2#

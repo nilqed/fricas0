@@ -27,31 +27,15 @@
                           ('T
                            (LETT |FramedAlgebra;CAT|
                                  (|Join| (|FiniteRankAlgebra| '|t#1| '|t#2|)
+                                         (|FramedModule| '|t#1|)
                                          (|mkCategory|
-                                          '(((|basis| ((|Vector| $))) T)
-                                            ((|coordinates|
-                                              ((|Vector| |t#1|) $))
-                                             T)
-                                            ((|coordinates|
-                                              ((|Matrix| |t#1|) (|Vector| $)))
-                                             T)
-                                            ((|represents|
-                                              ($ (|Vector| |t#1|)))
-                                             T)
-                                            ((|convert| ((|Vector| |t#1|) $))
-                                             T)
-                                            ((|convert| ($ (|Vector| |t#1|)))
-                                             T)
-                                            ((|traceMatrix| ((|Matrix| |t#1|)))
+                                          '(((|traceMatrix| ((|Matrix| |t#1|)))
                                              T)
                                             ((|discriminant| (|t#1|)) T)
                                             ((|regularRepresentation|
                                               ((|Matrix| |t#1|) $))
                                              T))
-                                          NIL
-                                          '((|Matrix| |t#1|) (|Vector| |t#1|)
-                                            (|Vector| $))
-                                          NIL))
+                                          NIL '((|Matrix| |t#1|)) NIL))
                                  . #2=(|FramedAlgebra|)))))
                    . #2#)
            (SETELT #1# 0

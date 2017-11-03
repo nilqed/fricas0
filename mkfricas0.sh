@@ -4,8 +4,8 @@
 rename_cmd=rename.ul
 
 FRICAS0=fricas0
-FRICAS_TREE=/home/xyz/devel/fricas-1.3.0
-FRICAS0_TMP=/home/xyz/devel/mkfricas0/$FRICAS0
+FRICAS_TREE=/home/kfp/devel/fricas-1.3.2
+FRICAS0_TMP=/home/kfp/devel/mkfricas0/$FRICAS0
 
 INTERP_LISP=$FRICAS0_TMP/interp.lisp
 COMPILE_ALGEBRA=$FRICAS0_TMP/compile-algebra.lisp

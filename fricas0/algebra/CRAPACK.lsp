@@ -15,9 +15,9 @@
 (SDEFUN |CRAPACK;chineseRemainder;2LR;2|
         ((|lv| |List| R) (|lm| |List| R) ($ R))
         (SPROG
-         ((|y| (BB)) (|l| (|List| R)) (#1=#:G724 NIL) (|v| NIL) (#2=#:G725 NIL)
+         ((|y| (BB)) (|l| (|List| R)) (#1=#:G726 NIL) (|v| NIL) (#2=#:G727 NIL)
           (|u| (|Union| (|Record| (|:| |coef1| R) (|:| |coef2| R)) "failed"))
-          (#3=#:G726 NIL) (|m| NIL) (#4=#:G723 NIL) (|linv| (|List| R))
+          (#3=#:G728 NIL) (|m| NIL) (#4=#:G725 NIL) (|linv| (|List| R))
           (|inv| (R)) (|x| (BB)))
          (SEQ
           (COND
@@ -118,9 +118,9 @@
 (SDEFUN |CRAPACK;chineseRemainder;L2L;3|
         ((|llv| |List| (|List| R)) (|lm| |List| R) ($ |List| R))
         (SPROG
-         ((|retVal| (|List| R)) (|y| (BB)) (|l| (|List| R)) (#1=#:G743 NIL)
-          (|v| NIL) (#2=#:G744 NIL) (|u3| NIL) (#3=#:G745 NIL) (|m| NIL)
-          (#4=#:G742 NIL) (#5=#:G741 NIL) (|lv| NIL) (|linv| (|List| R))
+         ((|retVal| (|List| R)) (|y| (BB)) (|l| (|List| R)) (#1=#:G745 NIL)
+          (|v| NIL) (#2=#:G746 NIL) (|u3| NIL) (#3=#:G747 NIL) (|m| NIL)
+          (#4=#:G744 NIL) (#5=#:G743 NIL) (|lv| NIL) (|linv| (|List| R))
           (|inv| (R))
           (|u| (|Union| (|Record| (|:| |coef1| R) (|:| |coef2| R)) "failed"))
           (|x| (BB)))
@@ -240,8 +240,10 @@
              (|error|
               (LIST '|mathprint|
                     (LIST 'CONCAT (SPADCALL |c| (QREFELT $ 35))
-                          " not spanned by " (SPADCALL |a| (QREFELT $ 35))
-                          " and " (SPADCALL |b| (QREFELT $ 35))))))
+                          (SPADCALL " not spanned by " (QREFELT $ 37))
+                          (SPADCALL |a| (QREFELT $ 35))
+                          (SPADCALL " and " (QREFELT $ 37))
+                          (SPADCALL |b| (QREFELT $ 35))))))
             ('T (LIST (QCDR (QCDR |u|)) (QCAR (QCDR |u|))))))))) 
 
 (SDEFUN |CRAPACK;multiEuclideanTree;LRL;5|
@@ -256,14 +258,14 @@
                  (SPADCALL
                   (SPADCALL |x| |rhs|
                             (CONS (|function| |CRAPACK;extEuclidean|) $)
-                            (QREFELT $ 37))
+                            (QREFELT $ 39))
                   (QREFELT $ 18)))))) 
 
 (DECLAIM (NOTINLINE |CRApackage;|)) 
 
-(DEFUN |CRApackage| (#1=#:G759)
+(DEFUN |CRApackage| (#1=#:G763)
   (SPROG NIL
-         (PROG (#2=#:G760)
+         (PROG (#2=#:G764)
            (RETURN
             (COND
              ((LETT #2#
@@ -283,7 +285,7 @@
          (PROGN
           (LETT DV$1 (|devaluate| |#1|) . #1=(|CRApackage|))
           (LETT |dv$| (LIST '|CRApackage| DV$1) . #1#)
-          (LETT $ (GETREFV 39) . #1#)
+          (LETT $ (GETREFV 41) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|CRApackage| (LIST DV$1) (CONS 1 $))
@@ -305,14 +307,14 @@
               (|Union| 28 '"failed") (79 . |extendedEuclidean|)
               |CRAPACK;chineseRemainder;2LR;2| (|List| 11)
               |CRAPACK;chineseRemainder;L2L;3| (|OutputForm|) (86 . |coerce|)
-              (|Mapping| 11 6 6 6) (91 . |mapDown!|)
+              (|String|) (91 . |coerce|) (|Mapping| 11 6 6 6) (96 . |mapDown!|)
               |CRAPACK;multiEuclideanTree;LRL;5|)
-           '#(|multiEuclideanTree| 98 |modTree| 104 |chineseRemainder| 110)
+           '#(|multiEuclideanTree| 103 |modTree| 109 |chineseRemainder| 115)
            'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
-                             (|makeByteWordVec2| 38
+                             (|makeByteWordVec2| 40
                                                  '(0 6 0 8 2 7 0 9 6 10 2 7 0 0
                                                    11 12 2 6 0 0 0 13 2 7 6 0
                                                    14 15 2 6 0 0 0 16 3 7 0 0 6
@@ -320,8 +322,8 @@
                                                    21 0 6 0 22 1 7 0 0 23 2 6 0
                                                    0 0 24 3 7 0 0 0 25 26 1 7 6
                                                    0 27 3 6 29 0 0 0 30 1 6 34
-                                                   0 35 3 7 0 0 6 36 37 2 0 11
-                                                   11 6 38 2 0 11 6 11 19 2 0 6
-                                                   11 11 31 2 0 11 32 11
-                                                   33)))))
+                                                   0 35 1 36 34 0 37 3 7 0 0 6
+                                                   38 39 2 0 11 11 6 40 2 0 11
+                                                   6 11 19 2 0 6 11 11 31 2 0
+                                                   11 32 11 33)))))
            '|lookupComplete|)) 

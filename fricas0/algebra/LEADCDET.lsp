@@ -2,9 +2,9 @@
 (SDEFUN |LEADCDET;polCase;ZNniLB;1|
         ((|d| Z) (|nk| |NonNegativeInteger|) (|lval| |List| Z) ($ |Boolean|))
         (SPROG
-         ((|distlist| (|List| Z)) (#1=#:G727 NIL) (|q| (Z)) (|y| (Z))
-          (#2=#:G718 NIL) (#3=#:G729 NIL) (#4=#:G717 NIL) (|j| NIL)
-          (#5=#:G728 NIL) (|i| NIL))
+         ((|distlist| (|List| Z)) (#1=#:G730 NIL) (|q| (Z)) (|y| (Z))
+          (#2=#:G721 NIL) (#3=#:G732 NIL) (#4=#:G720 NIL) (|j| NIL)
+          (#5=#:G731 NIL) (|i| NIL))
          (SEQ
           (EXIT
            (SEQ (LETT |distlist| (LIST |d|) . #6=(|LEADCDET;polCase;ZNniLB;1|))
@@ -52,7 +52,7 @@
                              (COND
                               ((SPADCALL |q| (|spadConstant| $ 15)
                                          (QREFELT $ 21))
-                               (PROGN (LETT #1# NIL . #6#) (GO #7=#:G726))))))
+                               (PROGN (LETT #1# NIL . #6#) (GO #7=#:G729))))))
                            (LETT |j| (|inc_SI| |j|) . #6#) (GO G190) G191
                            (EXIT NIL))
                       (EXIT
@@ -64,14 +64,14 @@
           #7# (EXIT #1#)))) 
 
 (SDEFUN |LEADCDET;checkpow| ((|a| Z) (|b| Z) ($ |NonNegativeInteger|))
-        (SPROG ((#1=#:G737 NIL) (|qt| (|Union| Z "failed")) (|i| NIL))
+        (SPROG ((#1=#:G740 NIL) (|qt| (|Union| Z "failed")) (|i| NIL))
                (SEQ
                 (EXIT
                  (SEQ (LETT |i| 0 . #2=(|LEADCDET;checkpow|)) G190 NIL
                       (SEQ (LETT |qt| (SPADCALL |b| |a| (QREFELT $ 26)) . #2#)
                            (COND
                             ((QEQCAR |qt| 1)
-                             (PROGN (LETT #1# |i| . #2#) (GO #3=#:G736))))
+                             (PROGN (LETT #1# |i| . #2#) (GO #3=#:G739))))
                            (EXIT (LETT |b| (QCDR |qt|) . #2#)))
                       (LETT |i| (|inc_SI| |i|) . #2#) (GO G190) G191
                       (EXIT NIL)))
@@ -83,7 +83,7 @@
          ($ |Record| (|:| |polfac| (|List| P)) (|:| |correct| Z)
           (|:| |corrfact| (|List| (|SparseUnivariatePolynomial| Z)))))
         (SPROG
-         ((#1=#:G747 NIL) (|i| NIL) (|d| (Z)) (|lcp| (Z)) (#2=#:G746 NIL)
+         ((#1=#:G751 NIL) (|i| NIL) (|d| (Z)) (|lcp| (Z)) (#2=#:G750 NIL)
           (|nf| (|NonNegativeInteger|)))
          (SEQ (LETT |nf| (LENGTH |unilist|) . #3=(|LEADCDET;distribute|))
               (SEQ (LETT |i| 1 . #3#) (LETT #2# |nf| . #3#) G190
@@ -141,12 +141,12 @@
                     (|:| |corrfact| (|List| (|SparseUnivariatePolynomial| Z))))
           "failed"))
         (SPROG
-         ((#1=#:G789 NIL) (|i| NIL) (#2=#:G788 NIL) (#3=#:G779 NIL)
-          (#4=#:G787 NIL) (|k| NIL) (|c| (Z)) (|d| (Z))
-          (|h| (|NonNegativeInteger|)) (#5=#:G786 NIL) (#6=#:G785 NIL)
-          (|aux| (|List| P)) (#7=#:G784 NIL) (#8=#:G783 NIL) (|vlp| (|List| Z))
-          (#9=#:G782 NIL) (#10=#:G781 NIL) (|lexp| (|List| (|Integer|)))
-          (|lpol| (|List| P)) (#11=#:G780 NIL) (|fpl| NIL)
+         ((#1=#:G794 NIL) (|i| NIL) (#2=#:G793 NIL) (#3=#:G784 NIL)
+          (#4=#:G792 NIL) (|k| NIL) (|c| (Z)) (|d| (Z))
+          (|h| (|NonNegativeInteger|)) (#5=#:G791 NIL) (#6=#:G790 NIL)
+          (|aux| (|List| P)) (#7=#:G789 NIL) (#8=#:G788 NIL) (|vlp| (|List| Z))
+          (#9=#:G787 NIL) (#10=#:G786 NIL) (|lexp| (|List| (|Integer|)))
+          (|lpol| (|List| P)) (#11=#:G785 NIL) (|fpl| NIL)
           (|nf| (|NonNegativeInteger|)))
          (SEQ
           (EXIT
@@ -230,7 +230,7 @@
                                                 (QREFELT $ 44))
                                       (PROGN
                                        (LETT #3# (CONS 1 "failed") . #12#)
-                                       (GO #13=#:G778))))
+                                       (GO #13=#:G783))))
                                     (SPADCALL |lexp| |k|
                                               (-
                                                (SPADCALL |lexp| |k|
@@ -313,9 +313,9 @@
 
 (DECLAIM (NOTINLINE |LeadingCoefDetermination;|)) 
 
-(DEFUN |LeadingCoefDetermination| (&REST #1=#:G790)
+(DEFUN |LeadingCoefDetermination| (&REST #1=#:G795)
   (SPROG NIL
-         (PROG (#2=#:G791)
+         (PROG (#2=#:G796)
            (RETURN
             (COND
              ((LETT #2#

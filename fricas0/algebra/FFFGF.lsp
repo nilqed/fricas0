@@ -3,7 +3,7 @@
         ((|v| |Vector| D) (M |Matrix| (|SparseUnivariatePolynomial| D))
          ($ |Matrix| (|SparseUnivariatePolynomial| D)))
         (SPROG
-         ((#1=#:G707 NIL) (|j| NIL) (#2=#:G706 NIL) (|i| NIL)
+         ((#1=#:G711 NIL) (|j| NIL) (#2=#:G710 NIL) (|i| NIL)
           (|n| (|NonNegativeInteger|)))
          (SEQ (LETT |n| (QVSIZE |v|) . #3=(|FFFGF;multiplyRows!|))
               (SEQ (LETT |i| 1 . #3#) (LETT #2# |n| . #3#) G190
@@ -33,7 +33,7 @@
          ($ |Matrix| (|SparseUnivariatePolynomial| D)))
         (SPROG
          ((M (|Matrix| (|SparseUnivariatePolynomial| D)))
-          (|c| (|List| (|Fraction| D))) (#1=#:G716 NIL) (|i| NIL)
+          (|c| (|List| (|Fraction| D))) (#1=#:G721 NIL) (|i| NIL)
           (|den| (|Vector| D)) (|g| (|Vector| V)) (|n| (|NonNegativeInteger|)))
          (SEQ
           (LETT |n| (QVSIZE |f|) . #2=(|FFFGF;generalInterpolation;LMVLM;2|))
@@ -73,9 +73,9 @@
 
 (DECLAIM (NOTINLINE |FractionFreeFastGaussianFractions;|)) 
 
-(DEFUN |FractionFreeFastGaussianFractions| (&REST #1=#:G717)
+(DEFUN |FractionFreeFastGaussianFractions| (&REST #1=#:G722)
   (SPROG NIL
-         (PROG (#2=#:G718)
+         (PROG (#2=#:G723)
            (RETURN
             (COND
              ((LETT #2#

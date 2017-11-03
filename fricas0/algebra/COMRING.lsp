@@ -11,7 +11,7 @@
 (DEFUN |CommutativeRing;| ()
   (SPROG ((#1=#:G690 NIL))
          (PROG1
-             (LETT #1# (|Join| (|Ring|) (|BiModule| '$ '$) (|CommutativeStar|))
+             (LETT #1# (|Join| (|Ring|) (|Algebra| '$) (|CommutativeStar|))
                    |CommutativeRing|)
            (SETELT #1# 0 '(|CommutativeRing|))))) 
 

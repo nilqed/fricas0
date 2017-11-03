@@ -115,13 +115,13 @@
           (|henselInfo|
            (|Record| (|:| |plist| #8#)
                      (|:| |modulo| (|SparseUnivariatePolynomial| E))))
-          (|deg| (|PositiveInteger|)) (#9=#:G754 NIL)
+          (|deg| (|PositiveInteger|)) (#9=#:G758 NIL)
           (|primaries|
            (|List|
             (|SparseUnivariatePolynomial| (|SparseUnivariatePolynomial| E))))
-          (#10=#:G775 NIL) (|ff| NIL) (#11=#:G774 NIL)
+          (#10=#:G779 NIL) (|ff| NIL) (#11=#:G778 NIL)
           (|redFactors| (|List| (|SparseUnivariatePolynomial| |sae|)))
-          (#12=#:G773 NIL) (|f| NIL) (#13=#:G772 NIL)
+          (#12=#:G777 NIL) (|f| NIL) (#13=#:G776 NIL)
           (|factorListSAE|
            (|List|
             (|Record| (|:| |factor| (|SparseUnivariatePolynomial| |sae|))
@@ -145,7 +145,7 @@
                         (IF (|has| K . #5#)
                             . #6#)
                         . #7#))))
-          (|irrPoly| (|SparseUnivariatePolynomial| K)) (#16=#:G737 NIL)
+          (|irrPoly| (|SparseUnivariatePolynomial| K)) (#16=#:G741 NIL)
           (|r| #17=(|NonNegativeInteger|)) (|disc0| (R)) (|n| #17#))
          (SEQ
           (LETT |n| (SPADCALL |poly0| (QREFELT $ 36))
@@ -821,19 +821,19 @@
           (|base|
            (|Record| (|:| |basis| (|Matrix| R)) (|:| |basisDen| R)
                      (|:| |basisInv| (|Matrix| R))))
-          (|degPp| (|NonNegativeInteger|)) (#1=#:G814 NIL) (|pp| NIL)
-          (#2=#:G815 NIL) (|k| NIL) (#3=#:G816 NIL) (|qq| NIL)
+          (|degPp| (|NonNegativeInteger|)) (#1=#:G818 NIL) (|pp| NIL)
+          (#2=#:G819 NIL) (|k| NIL) (#3=#:G820 NIL) (|qq| NIL)
           (|degPrime| (|NonNegativeInteger|)) (|henselFactors| #4=(|List| UP))
           (|henselInfo| (|Record| (|:| |plist| #4#) (|:| |modulo| R)))
-          (|deg| (|PositiveInteger|)) (#5=#:G793 NIL) (|primaries| (|List| UP))
-          (#6=#:G813 NIL) (|ff| NIL) (#7=#:G812 NIL)
+          (|deg| (|PositiveInteger|)) (#5=#:G797 NIL) (|primaries| (|List| UP))
+          (#6=#:G817 NIL) (|ff| NIL) (#7=#:G816 NIL)
           (|redPrimaries| (|List| (|SparseUnivariatePolynomial| |sae|)))
-          (#8=#:G789 NIL) (#9=#:G811 NIL) (|f| NIL) (#10=#:G810 NIL)
-          (|expons| (|List| (|NonNegativeInteger|))) (#11=#:G787 NIL)
-          (#12=#:G809 NIL) (#13=#:G808 NIL) (|primes| (|List| UP))
-          (#14=#:G807 NIL) (#15=#:G806 NIL)
+          (#8=#:G793 NIL) (#9=#:G815 NIL) (|f| NIL) (#10=#:G814 NIL)
+          (|expons| (|List| (|NonNegativeInteger|))) (#11=#:G791 NIL)
+          (#12=#:G813 NIL) (#13=#:G812 NIL) (|primes| (|List| UP))
+          (#14=#:G811 NIL) (#15=#:G810 NIL)
           (|redPrimes| (|List| (|SparseUnivariatePolynomial| |sae|)))
-          (#16=#:G805 NIL) (#17=#:G804 NIL)
+          (#16=#:G809 NIL) (#17=#:G808 NIL)
           (|factorListSAE|
            (|List|
             (|Record| (|:| |factor| (|SparseUnivariatePolynomial| |sae|))
@@ -1151,7 +1151,7 @@
 
 (SDEFUN |PWFFINTB;listSquaredFactors| ((|px| R) ($ |List| R))
         (SPROG
-         ((|ans| (|List| R)) (#1=#:G826 NIL) (|f| NIL)
+         ((|ans| (|List| R)) (#1=#:G830 NIL) (|f| NIL)
           (|factored| (|Factored| R)))
          (SEQ (LETT |ans| NIL . #2=(|PWFFINTB;listSquaredFactors|))
               (LETT |factored| (SPADCALL |px| (QREFELT $ 74)) . #2#)
@@ -1178,7 +1178,7 @@
           (|lb|
            (|Record| (|:| |basis| #3#) (|:| |basisDen| R) (|:| |basisInv| #2#)
                      (|:| |discr| R)))
-          (#4=#:G834 NIL) (|prime| NIL) (|redDisc| (R)) (|singList| (|List| R))
+          (#4=#:G838 NIL) (|prime| NIL) (|redDisc| (R)) (|singList| (|List| R))
           (|n| (|PositiveInteger|)) (|p| (UP)))
          (SEQ
           (LETT |p| (SPADCALL (QREFELT $ 70))
@@ -1235,9 +1235,9 @@
 
 (DECLAIM (NOTINLINE |PAdicWildFunctionFieldIntegralBasis;|)) 
 
-(DEFUN |PAdicWildFunctionFieldIntegralBasis| (&REST #1=#:G835)
+(DEFUN |PAdicWildFunctionFieldIntegralBasis| (&REST #1=#:G839)
   (SPROG NIL
-         (PROG (#2=#:G836)
+         (PROG (#2=#:G840)
            (RETURN
             (COND
              ((LETT #2#

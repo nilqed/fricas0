@@ -10,7 +10,8 @@
 (DEFUN |SemiRing;| ()
   (SPROG ((#1=#:G690 NIL))
          (PROG1
-             (LETT #1# (|Join| (|SemiRng|) (|AbelianMonoid|) (|Monoid|))
+             (LETT #1#
+                   (|Join| (|NonAssociativeSemiRing|) (|SemiRng|) (|Monoid|))
                    |SemiRing|)
            (SETELT #1# 0 '(|SemiRing|))))) 
 

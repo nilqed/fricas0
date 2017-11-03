@@ -290,8 +290,6 @@
  
 ; compFormWithModemap(form is [op,:argl],m,e,modemap) ==
 ;   [map:= [.,target,:.],[pred,impl]]:= modemap
-;   -- this fails if the subsuming modemap is conditional
-;   --impl is ['Subsumed,:.] => nil
 ;   if isCategoryForm(target,e) and isFunctor op then
 ;     [modemap,e]:= substituteIntoFunctorModemap(argl,modemap,e) or return nil
 ;     [map:= [.,target,:.],:cexpr]:= modemap
@@ -617,7 +615,7 @@
 ; --+ store the signature instead.
 ; 
 ; --$NRTflag=true and f is [op1,d,.] and NE(d,'$) and member(op1,'(ELT CONST)) =>
-;   f is [op1,d,.] and member(op1,'(ELT CONST Subsumed)) =>
+;   f is [op1,d,.] and member(op1,'(ELT CONST)) =>
 ;     [genDeltaEntry [op,:modemap],lt',$bindings]
 ;   [f,lt',$bindings]
  
@@ -700,7 +698,7 @@
                                     (SETQ |ISTMP#2| (CDR |ISTMP#1|))
                                     (AND (CONSP |ISTMP#2|)
                                          (EQ (CDR |ISTMP#2|) NIL)))))
-                             (|member| |op1| '(ELT CONST |Subsumed|)))
+                             (|member| |op1| '(ELT CONST)))
                         (LIST (|genDeltaEntry| (CONS |op| |modemap|)) |lt'|
                               |$bindings|))
                        (#2# (LIST |f| |lt'| |$bindings|)))))))))))))

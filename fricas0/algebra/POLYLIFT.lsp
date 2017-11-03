@@ -48,9 +48,9 @@
 
 (DECLAIM (NOTINLINE |PolynomialCategoryLifting;|)) 
 
-(DEFUN |PolynomialCategoryLifting| (&REST #1=#:G710)
+(DEFUN |PolynomialCategoryLifting| (&REST #1=#:G714)
   (SPROG NIL
-         (PROG (#2=#:G711)
+         (PROG (#2=#:G715)
            (RETURN
             (COND
              ((LETT #2#

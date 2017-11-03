@@ -10,9 +10,9 @@
 
 (DECLAIM (NOTINLINE |BoundIntegerRoots;|)) 
 
-(DEFUN |BoundIntegerRoots| (&REST #1=#:G694)
+(DEFUN |BoundIntegerRoots| (&REST #1=#:G695)
   (SPROG NIL
-         (PROG (#2=#:G695)
+         (PROG (#2=#:G696)
            (RETURN
             (COND
              ((LETT #2#

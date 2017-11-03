@@ -6,7 +6,7 @@
         (SPROG
          ((|da| #1=(|NonNegativeInteger|))
           (|q| (|SparseUnivariatePolynomial| (|Integer|)))
-          (|t| (|SparseUnivariatePolynomial| (|Integer|))) (#2=#:G711 NIL)
+          (|t| (|SparseUnivariatePolynomial| (|Integer|))) (#2=#:G714 NIL)
           (|db| #1#))
          (SEQ
           (COND
@@ -41,9 +41,9 @@
 (SDEFUN |PNTHEORY;cyclotomic;ISup;2|
         ((|n| . #1=(|Integer|)) ($ |SparseUnivariatePolynomial| (|Integer|)))
         (SPROG
-         ((|m| (|NonNegativeInteger|)) (#2=#:G725 NIL) (|s| #3=(|Integer|))
+         ((|m| (|NonNegativeInteger|)) (#2=#:G728 NIL) (|s| #3=(|Integer|))
           (|c| (|SparseUnivariatePolynomial| (|Integer|)))
-          (|t| (|SparseUnivariatePolynomial| (|Integer|))) (#4=#:G721 NIL)
+          (|t| (|SparseUnivariatePolynomial| (|Integer|))) (#4=#:G724 NIL)
           (|r| #5=(|Integer|)) (|q| #6=(|Integer|))
           (|#G6| #7=(|Record| (|:| |quotient| #6#) (|:| |remainder| #5#)))
           (|k| #1#) (|#G5| #7#) (|p| #3#))
@@ -104,9 +104,9 @@
          ($ |SparseUnivariatePolynomial| (|Fraction| (|Integer|))))
         (SPROG
          ((|p| #1=(|SparseUnivariatePolynomial| (|Fraction| (|Integer|))))
-          (|c| (|Fraction| (|Integer|))) (#2=#:G733 NIL)
+          (|c| (|Fraction| (|Integer|))) (#2=#:G738 NIL)
           (|t| (|SparseUnivariatePolynomial| (|Fraction| (|Integer|))))
-          (#3=#:G739 NIL) (|i| NIL) (|s| #4=(|Integer|))
+          (#3=#:G744 NIL) (|i| NIL) (|s| #4=(|Integer|))
           (|#G10|
            (|Record| (|:| |En| (|Integer|))
                      (|:| |Ev|
@@ -169,7 +169,7 @@
          ((|p| #1=(|SparseUnivariatePolynomial| (|Fraction| (|Integer|))))
           (|c| (|Fraction| (|Integer|)))
           (|t| (|SparseUnivariatePolynomial| (|Fraction| (|Integer|))))
-          (#2=#:G746 NIL) (|i| NIL) (|s| #3=(|Integer|))
+          (#2=#:G751 NIL) (|i| NIL) (|s| #3=(|Integer|))
           (|#G17|
            (|Record| (|:| |Bn| (|Integer|))
                      (|:| |Bv|
@@ -216,7 +216,7 @@
 (SDEFUN |PNTHEORY;fixedDivisor;SupI;5|
         ((|a| |SparseUnivariatePolynomial| (|Integer|)) ($ |Integer|))
         (SPROG
-         ((|g| (|Integer|)) (#1=#:G750 NIL) (|k| NIL)
+         ((|g| (|Integer|)) (#1=#:G755 NIL) (|k| NIL)
           (|d| (|NonNegativeInteger|)))
          (SEQ (|SparseUnivariatePolynomial| (|Integer|))
               (LETT |d| (SPADCALL |a| (QREFELT $ 30))
@@ -241,7 +241,7 @@
         (SPROG
          ((|q| (|SparseUnivariatePolynomial| (|Integer|)))
           (|p| #1=(|SparseUnivariatePolynomial| (|Integer|))) (|#G30| #1#)
-          (|#G29| (|SparseUnivariatePolynomial| (|Integer|))) (#2=#:G757 NIL)
+          (|#G29| (|SparseUnivariatePolynomial| (|Integer|))) (#2=#:G762 NIL)
           (|k| NIL) (|s| (|Integer|))
           (|#G24|
            (|Record| (|:| |Hn| (|Integer|))
@@ -293,7 +293,7 @@
           (|p| #1=(|SparseUnivariatePolynomial| (|Fraction| (|Integer|))))
           (|#G38| #1#)
           (|#G37| (|SparseUnivariatePolynomial| (|Fraction| (|Integer|))))
-          (|t| (|Integer|)) (#2=#:G765 NIL) (|k| NIL) (|s| (|Integer|))
+          (|t| (|Integer|)) (#2=#:G770 NIL) (|k| NIL) (|s| (|Integer|))
           (|#G32|
            (|Record| (|:| |Pn| (|Integer|))
                      (|:| P1
@@ -348,7 +348,7 @@
          ((|q| (|SparseUnivariatePolynomial| (|Integer|)))
           (|p| #1=(|SparseUnivariatePolynomial| (|Integer|))) (|#G46| #1#)
           (|#G45| (|SparseUnivariatePolynomial| (|Integer|))) (|t| (|Integer|))
-          (#2=#:G773 NIL) (|k| NIL) (|s| (|Integer|))
+          (#2=#:G778 NIL) (|k| NIL) (|s| (|Integer|))
           (|#G40|
            (|Record| (|:| |Ln| (|Integer|))
                      (|:| L1 (|SparseUnivariatePolynomial| (|Integer|)))
@@ -398,7 +398,7 @@
         (SPROG
          ((|q| (|SparseUnivariatePolynomial| (|Integer|)))
           (|p| #1=(|SparseUnivariatePolynomial| (|Integer|))) (|#G54| #1#)
-          (|#G53| (|SparseUnivariatePolynomial| (|Integer|))) (#2=#:G780 NIL)
+          (|#G53| (|SparseUnivariatePolynomial| (|Integer|))) (#2=#:G785 NIL)
           (|k| NIL) (|s| (|Integer|))
           (|#G48|
            (|Record| (|:| |Tn| (|Integer|))
@@ -445,7 +445,7 @@
         (SPROG
          ((|q| (|SparseUnivariatePolynomial| (|Integer|)))
           (|p| #1=(|SparseUnivariatePolynomial| (|Integer|))) (|#G62| #1#)
-          (|#G61| (|SparseUnivariatePolynomial| (|Integer|))) (#2=#:G787 NIL)
+          (|#G61| (|SparseUnivariatePolynomial| (|Integer|))) (#2=#:G792 NIL)
           (|k| NIL) (|s| (|Integer|))
           (|#G56|
            (|Record| (|:| |Un| (|Integer|))
@@ -491,7 +491,7 @@
 
 (DEFUN |PolynomialNumberTheoryFunctions| ()
   (SPROG NIL
-         (PROG (#1=#:G789)
+         (PROG (#1=#:G794)
            (RETURN
             (COND
              ((LETT #1#

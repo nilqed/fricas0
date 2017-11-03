@@ -9,9 +9,9 @@
 
 (DECLAIM (NOTINLINE |UnivariateLaurentSeriesFunctions2;|)) 
 
-(DEFUN |UnivariateLaurentSeriesFunctions2| (&REST #1=#:G697)
+(DEFUN |UnivariateLaurentSeriesFunctions2| (&REST #1=#:G698)
   (SPROG NIL
-         (PROG (#2=#:G698)
+         (PROG (#2=#:G699)
            (RETURN
             (COND
              ((LETT #2#
@@ -66,12 +66,20 @@
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
               (|local| |#3|) (|local| |#4|) (|local| |#5|) (|local| |#6|)
-              (|Integer|) (|UnivariateLaurentSeries| 6 8 10) (0 . |degree|)
-              (|UnivariateTaylorSeries| 6 8 10) (5 . |taylorRep|)
-              (|UnivariateTaylorSeries| 7 9 11) (|Mapping| 7 6)
-              (|UnivariateTaylorSeriesFunctions2| 6 7 15 17) (10 . |map|)
-              (|UnivariateLaurentSeries| 7 9 11) (16 . |laurent|)
-              |ULS2;map;MUlsUls;1|)
+              (|Integer|)
+              (|UnivariateLaurentSeries| 6 (NRTEVAL (QREFELT $ 8))
+                                         (NRTEVAL (QREFELT $ 10)))
+              (0 . |degree|)
+              (|UnivariateTaylorSeries| 6 (NRTEVAL (QREFELT $ 8))
+                                        (NRTEVAL (QREFELT $ 10)))
+              (5 . |taylorRep|)
+              (|UnivariateTaylorSeries| 7 (NRTEVAL (QREFELT $ 9))
+                                        (NRTEVAL (QREFELT $ 11)))
+              (|Mapping| 7 6) (|UnivariateTaylorSeriesFunctions2| 6 7 15 17)
+              (10 . |map|)
+              (|UnivariateLaurentSeries| 7 (NRTEVAL (QREFELT $ 9))
+                                         (NRTEVAL (QREFELT $ 11)))
+              (16 . |laurent|) |ULS2;map;MUlsUls;1|)
            '#(|map| 22) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()

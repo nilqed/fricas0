@@ -7,7 +7,7 @@
 (SDEFUN |CARTEN2;map;MCtCt;2|
         ((|f| |Mapping| T$ S) (|s| |CartesianTensor| |minix| |dim| S)
          ($ |CartesianTensor| |minix| |dim| T$))
-        (SPROG ((#1=#:G701 NIL) (|e| NIL) (#2=#:G700 NIL))
+        (SPROG ((#1=#:G703 NIL) (|e| NIL) (#2=#:G702 NIL))
                (SEQ
                 (SPADCALL
                  (PROGN
@@ -25,9 +25,9 @@
 
 (DECLAIM (NOTINLINE |CartesianTensorFunctions2;|)) 
 
-(DEFUN |CartesianTensorFunctions2| (&REST #1=#:G702)
+(DEFUN |CartesianTensorFunctions2| (&REST #1=#:G704)
   (SPROG NIL
-         (PROG (#2=#:G703)
+         (PROG (#2=#:G705)
            (RETURN
             (COND
              ((LETT #2#
@@ -73,9 +73,13 @@
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
               (|local| |#3|) (|local| |#4|) (|List| 9)
-              (|CartesianTensor| 6 7 9) (0 . |unravel|)
-              (|CartesianTensor| 6 7 8) |CARTEN2;reshape;LCtCt;1| (|List| 8)
-              (5 . |ravel|) (|Mapping| 9 8) |CARTEN2;map;MCtCt;2|)
+              (|CartesianTensor| (NRTEVAL (QREFELT $ 6))
+                                 (NRTEVAL (QREFELT $ 7)) 9)
+              (0 . |unravel|)
+              (|CartesianTensor| (NRTEVAL (QREFELT $ 6))
+                                 (NRTEVAL (QREFELT $ 7)) 8)
+              |CARTEN2;reshape;LCtCt;1| (|List| 8) (5 . |ravel|)
+              (|Mapping| 9 8) |CARTEN2;map;MCtCt;2|)
            '#(|reshape| 10 |map| 16) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()

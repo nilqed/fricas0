@@ -25,7 +25,7 @@
 
 (SDEFUN |JVF;coerce;$Of;6| ((|v| $) ($ |OutputForm|))
         (SPROG
-         ((#1=#:G732 NIL) (|c| NIL) (#2=#:G733 NIL) (|jb| NIL) (#3=#:G731 NIL))
+         ((#1=#:G735 NIL) (|c| NIL) (#2=#:G736 NIL) (|jb| NIL) (#3=#:G734 NIL))
          (SEQ
           (COND
            ((NULL (QCDR |v|)) (SPADCALL (|spadConstant| $ 32) (QREFELT $ 30)))
@@ -82,7 +82,7 @@
 (SDEFUN |JVF;zero?;$B;12| ((|v| $) ($ |Boolean|)) (NULL (QCDR |v|))) 
 
 (SDEFUN |JVF;-;2$;13| ((|v| $) ($ $))
-        (SPROG ((#1=#:G744 NIL) (|c| NIL) (#2=#:G743 NIL))
+        (SPROG ((#1=#:G747 NIL) (|c| NIL) (#2=#:G746 NIL))
                (SEQ
                 (CONS
                  (PROGN
@@ -102,8 +102,8 @@
 (SDEFUN |JVF;+;3$;14| ((|v| $) (|w| $) ($ $))
         (SPROG
          ((|lj2| (|List| JB)) (|lc2| (|List| D)) (|resJ| (|List| JB))
-          (|resC| (|List| D)) (|sum| (D)) (#1=#:G761 NIL) (|c1| NIL)
-          (#2=#:G762 NIL) (|j1| NIL))
+          (|resC| (|List| D)) (|sum| (D)) (#1=#:G764 NIL) (|c1| NIL)
+          (#2=#:G765 NIL) (|j1| NIL))
          (SEQ
           (COND ((SPADCALL |v| (QREFELT $ 52)) |w|)
                 ((SPADCALL |w| (QREFELT $ 52)) |v|)
@@ -167,7 +167,7 @@
                                    (QREFELT $ 60)))))))))) 
 
 (SDEFUN |JVF;*;D2$;15| ((|f| D) (|v| $) ($ $))
-        (SPROG ((#1=#:G767 NIL) (|c| NIL) (#2=#:G766 NIL))
+        (SPROG ((#1=#:G770 NIL) (|c| NIL) (#2=#:G769 NIL))
                (SEQ
                 (COND ((SPADCALL |f| (QREFELT $ 58)) (|spadConstant| $ 51))
                       ('T
@@ -194,17 +194,17 @@
         (SPROG
          ((|oldDir| (|List| JB)) (|oldCo| #1=(|List| D)) (|newDir| (|List| JB))
           (|newCo| #1#) (|res| ($)) (|newco| (D))
-          (|nu| (|List| (|NonNegativeInteger|))) (#2=#:G836 NIL) (|i| NIL)
-          (|j| (|Integer|)) (#3=#:G811 NIL) (|newjv| (JB)) (#4=#:G806 NIL)
-          (#5=#:G804 NIL) (#6=#:G835 NIL) (|k| NIL)
+          (|nu| (|List| (|NonNegativeInteger|))) (#2=#:G839 NIL) (|i| NIL)
+          (|j| (|Integer|)) (#3=#:G814 NIL) (|newjv| (JB)) (#4=#:G809 NIL)
+          (#5=#:G807 NIL) (#6=#:G838 NIL) (|k| NIL)
           (|mu| (|List| (|NonNegativeInteger|))) (|a| (|PositiveInteger|))
-          (|jm| (|SparseEchelonMatrix| JB D)) (#7=#:G833 NIL) (|jv| NIL)
-          (#8=#:G834 NIL) (|co| NIL) (#9=#:G832 NIL) (|qq| NIL)
-          (#10=#:G795 NIL) (#11=#:G831 NIL) (#12=#:G830 NIL) (#13=#:G829 NIL)
-          (#14=#:G827 NIL) (#15=#:G828 NIL) (#16=#:G784 NIL) (#17=#:G826 NIL)
-          (#18=#:G825 NIL) (|dxi| (|Matrix| D))
+          (|jm| (|SparseEchelonMatrix| JB D)) (#7=#:G836 NIL) (|jv| NIL)
+          (#8=#:G837 NIL) (|co| NIL) (#9=#:G835 NIL) (|qq| NIL)
+          (#10=#:G798 NIL) (#11=#:G834 NIL) (#12=#:G833 NIL) (#13=#:G832 NIL)
+          (#14=#:G830 NIL) (#15=#:G831 NIL) (#16=#:G787 NIL) (#17=#:G829 NIL)
+          (#18=#:G828 NIL) (|dxi| (|Matrix| D))
           (|ind2| #19=(|List| (|PositiveInteger|))) (|eta| #1#) (|ind1| #19#)
-          (|xi| #1#) (|jt| (|Symbol|)) (#20=#:G823 NIL) (#21=#:G824 NIL)
+          (|xi| #1#) (|jt| (|Symbol|)) (#20=#:G826 NIL) (#21=#:G827 NIL)
           (|coeffs| (|List| D)) (|dirs| (|List| JB)))
          (SEQ
           (COND ((ZEROP |q|) |v|)
@@ -481,7 +481,7 @@
 
 (SDEFUN |JVF;eval;$2D;17| ((|v| $) (|f| D) ($ D))
         (SPROG
-         ((|res| (D)) (#1=#:G840 NIL) (|c| NIL) (#2=#:G841 NIL) (|jb| NIL))
+         ((|res| (D)) (#1=#:G843 NIL) (|c| NIL) (#2=#:G844 NIL) (|jb| NIL))
          (SEQ (LETT |res| (|spadConstant| $ 32) . #3=(|JVF;eval;$2D;17|))
               (SEQ (LETT |jb| NIL . #3#) (LETT #2# (QCDR |v|) . #3#)
                    (LETT |c| NIL . #3#) (LETT #1# (QCAR |v|) . #3#) G190
@@ -507,9 +507,9 @@
 (SDEFUN |JVF;commutator;3$;18| ((|v| $) (|w| $) ($ $))
         (SPROG
          ((|res2| ($)) (|rjb| (|List| JB)) (|rco| (|List| D)) (|sum| (D))
-          (#1=#:G858 NIL) (|c1| NIL) (#2=#:G859 NIL) (|j1| NIL) (#3=#:G856 NIL)
-          (|c2| NIL) (#4=#:G857 NIL) (|j2| NIL) (|res1| ($)) (#5=#:G854 NIL)
-          (#6=#:G855 NIL) (#7=#:G852 NIL) (#8=#:G853 NIL))
+          (#1=#:G861 NIL) (|c1| NIL) (#2=#:G862 NIL) (|j1| NIL) (#3=#:G859 NIL)
+          (|c2| NIL) (#4=#:G860 NIL) (|j2| NIL) (|res1| ($)) (#5=#:G857 NIL)
+          (#6=#:G858 NIL) (#7=#:G855 NIL) (#8=#:G856 NIL))
          (SEQ (LETT |rco| NIL . #9=(|JVF;commutator;3$;18|))
               (LETT |rjb| NIL . #9#)
               (SEQ (LETT |j1| NIL . #9#) (LETT #8# (QCDR |v|) . #9#)
@@ -599,8 +599,8 @@
 
 (SDEFUN |JVF;table;LTda;19| ((|lv| |List| $) ($ |TwoDimensionalArray| $))
         (SPROG
-         ((|c| ($)) (#1=#:G870 NIL) (|v2| NIL) (|j| NIL) (|v1| ($)) (|i| NIL)
-          (#2=#:G869 NIL) (|res| (|TwoDimensionalArray| $))
+         ((|c| ($)) (#1=#:G873 NIL) (|v2| NIL) (|j| NIL) (|v1| ($)) (|i| NIL)
+          (#2=#:G872 NIL) (|res| (|TwoDimensionalArray| $))
           (|len| (|NonNegativeInteger|)))
          (SEQ
           (LETT |len| (SPADCALL |lv| (QREFELT $ 91))
@@ -654,9 +654,9 @@
 
 (DECLAIM (NOTINLINE |JetVectorField;|)) 
 
-(DEFUN |JetVectorField| (&REST #1=#:G876)
+(DEFUN |JetVectorField| (&REST #1=#:G879)
   (SPROG NIL
-         (PROG (#2=#:G877)
+         (PROG (#2=#:G880)
            (RETURN
             (COND
              ((LETT #2#
@@ -676,7 +676,7 @@
 
 (DEFUN |JetVectorField;| (|#1| |#2|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G875 NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
+   ((|pv$| NIL) (#1=#:G878 NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #2=(|JetVectorField|))
     (LETT DV$2 (|devaluate| |#2|) . #2#)

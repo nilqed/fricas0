@@ -24,9 +24,9 @@
 
 (DECLAIM (NOTINLINE |DataList;|)) 
 
-(DEFUN |DataList| (#1=#:G722)
+(DEFUN |DataList| (#1=#:G725)
   (SPROG NIL
-         (PROG (#2=#:G723)
+         (PROG (#2=#:G726)
            (RETURN
             (COND
              ((LETT #2#
@@ -42,8 +42,8 @@
 
 (DEFUN |DataList;| (|#1|)
   (SPROG
-   ((#1=#:G718 NIL) (#2=#:G719 NIL) (#3=#:G721 NIL) (#4=#:G720 NIL) (|pv$| NIL)
-    (#5=#:G715 NIL) (#6=#:G716 NIL) (#7=#:G717 NIL) ($ NIL) (|dv$| NIL)
+   ((#1=#:G721 NIL) (#2=#:G722 NIL) (#3=#:G724 NIL) (#4=#:G723 NIL) (|pv$| NIL)
+    (#5=#:G718 NIL) (#6=#:G719 NIL) (#7=#:G720 NIL) ($ NIL) (|dv$| NIL)
     (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #8=(|DataList|))

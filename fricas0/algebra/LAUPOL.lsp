@@ -111,7 +111,7 @@
                        (EXIT (SPADCALL (ELT $ 59) |l| (QREFELT $ 61))))))))) 
 
 (SDEFUN |LAUPOL;coefficient;$IR;23| ((|p| $) (|n| |Integer|) ($ R))
-        (SPROG ((#1=#:G761 NIL) (|m| (|Integer|)))
+        (SPROG ((#1=#:G765 NIL) (|m| (|Integer|)))
                (SEQ
                 (LETT |m| (- |n| (SPADCALL |p| (QREFELT $ 19)))
                       . #2=(|LAUPOL;coefficient;$IR;23|))
@@ -180,7 +180,7 @@
                                (- (SPADCALL |p| (QREFELT $ 19))) $)))))))) 
 
 (SDEFUN |LAUPOL;+;3$;28| ((|p| $) (|q| $) ($ $))
-        (SPROG ((#1=#:G783 NIL) (#2=#:G782 NIL) (|d| (|Integer|)))
+        (SPROG ((#1=#:G787 NIL) (#2=#:G786 NIL) (|d| (|Integer|)))
                (SEQ
                 (COND ((SPADCALL |q| (QREFELT $ 52)) |p|)
                       ((SPADCALL |p| (QREFELT $ 52)) |q|)
@@ -229,7 +229,7 @@
                             $)))))))))) 
 
 (SDEFUN |LAUPOL;mkgpol| ((|n| |Integer|) (|p| UP) ($ $))
-        (SPROG ((#1=#:G789 NIL) (|d| (|NonNegativeInteger|)))
+        (SPROG ((#1=#:G793 NIL) (|d| (|NonNegativeInteger|)))
                (SEQ
                 (COND ((SPADCALL |p| (QREFELT $ 47)) (|spadConstant| $ 9))
                       ('T
@@ -272,7 +272,7 @@
                                (QCDR |r|) $)))))))) 
 
 (SDEFUN |LAUPOL;retractIfCan;$U;31| ((|p| $) ($ |Union| UP "failed"))
-        (SPROG ((#1=#:G806 NIL))
+        (SPROG ((#1=#:G810 NIL))
                (COND
                 ((< (SPADCALL |p| (QREFELT $ 19)) 0)
                  (|error| "Not retractable"))
@@ -308,8 +308,8 @@
          ($ |Record| (|:| |polyPart| $) (|:| |fracPart| (|Fraction| UP))))
         (SPROG
          ((|qr| (|Record| (|:| |quotient| UP) (|:| |remainder| UP)))
-          (|bc| (|Record| (|:| |coef1| UP) (|:| |coef2| UP))) (#1=#:G826 NIL)
-          (|q| (UP)) (#2=#:G822 NIL) (|tn| (UP)) (|n| (|NonNegativeInteger|)))
+          (|bc| (|Record| (|:| |coef1| UP) (|:| |coef2| UP))) (#1=#:G830 NIL)
+          (|q| (UP)) (#2=#:G826 NIL) (|tn| (UP)) (|n| (|NonNegativeInteger|)))
          (SEQ
           (LETT |n|
                 (SPADCALL
@@ -361,7 +361,7 @@
         ((|p| $) (|q| $) ($ |Record| (|:| |quotient| $) (|:| |remainder| $)))
         (SPROG
          ((|qr| (|Record| (|:| |quotient| UP) (|:| |remainder| UP)))
-          (#1=#:G837 NIL) (|c| (|Integer|)))
+          (#1=#:G841 NIL) (|c| (|Integer|)))
          (SEQ
           (LETT |c|
                 (MIN (SPADCALL |p| (QREFELT $ 19))
@@ -418,9 +418,9 @@
 
 (DECLAIM (NOTINLINE |LaurentPolynomial;|)) 
 
-(DEFUN |LaurentPolynomial| (&REST #1=#:G868)
+(DEFUN |LaurentPolynomial| (&REST #1=#:G873)
   (SPROG NIL
-         (PROG (#2=#:G869)
+         (PROG (#2=#:G874)
            (RETURN
             (COND
              ((LETT #2#
@@ -533,54 +533,60 @@
               (260 . |separate|) (265 . |divide|) (271 . |euclideanSize|)
               (276 . |extendedEuclidean|) (|Union| 103 '#2#) (|List| $)
               (|Record| (|:| |coef1| $) (|:| |coef2| $) (|:| |generator| $))
-              (|Record| (|:| |coef| 103) (|:| |generator| $))
               (|SparseUnivariatePolynomial| $)
+              (|Record| (|:| |coef| 103) (|:| |generator| $))
               (|Record| (|:| |llcm_res| $) (|:| |coeff1| $) (|:| |coeff2| $))
-              (|Union| 109 '#1#) (|Fraction| 18) (|Union| 18 '#1#) (|List| 112)
+              (|Fraction| 18) (|Union| 108 '#1#) (|Union| 18 '#1#) (|List| 112)
               (|Symbol|) (|List| 27)
               (|Record| (|:| |unit| $) (|:| |canonical| $) (|:| |associate| $))
               (|PositiveInteger|) (|String|) (|SingleInteger|) (|HashState|))
            '#(~= 283 |zero?| 289 |unitNormal| 294 |unitCanonical| 299 |unit?|
               304 |trailingCoefficient| 309 |subtractIfCan| 314 |sizeLess?| 320
-              |separate| 326 |sample| 331 |retractIfCan| 335 |retract| 355
-              |rem| 375 |reductum| 381 |recip| 386 |quo| 391 |principalIdeal|
-              397 |order| 402 |opposite?| 407 |one?| 413 |multiEuclidean| 418
-              |monomial?| 424 |monomial| 429 |leadingCoefficient| 435 |lcmCoef|
-              440 |lcm| 446 |latex| 457 |hashUpdate!| 462 |hash| 468
-              |gcdPolynomial| 473 |gcd| 479 |extendedEuclidean| 490 |exquo| 503
-              |expressIdealMember| 509 |euclideanSize| 515 |divide| 520
-              |differentiate| 526 |degree| 576 |convert| 581 |coerce| 586
-              |coefficient| 616 |charthRoot| 622 |characteristic| 627
-              |associates?| 631 |annihilate?| 637 ^ 643 |Zero| 655 |One| 659 D
-              663 = 713 - 719 + 730 * 736)
+              |separate| 326 |sample| 331 |rightRecip| 335 |rightPower| 340
+              |retractIfCan| 352 |retract| 372 |rem| 392 |reductum| 398 |recip|
+              403 |quo| 408 |principalIdeal| 414 |order| 419 |opposite?| 424
+              |one?| 430 |multiEuclidean| 435 |monomial?| 441 |monomial| 446
+              |leftRecip| 452 |leftPower| 457 |leadingCoefficient| 469
+              |lcmCoef| 474 |lcm| 480 |latex| 491 |hashUpdate!| 496 |hash| 502
+              |gcdPolynomial| 507 |gcd| 513 |extendedEuclidean| 524 |exquo| 537
+              |expressIdealMember| 543 |euclideanSize| 549 |divide| 554
+              |differentiate| 560 |degree| 610 |convert| 615 |commutator| 620
+              |coerce| 626 |coefficient| 656 |charthRoot| 662 |characteristic|
+              667 |associator| 671 |associates?| 678 |antiCommutator| 684
+              |annihilate?| 690 ^ 696 |Zero| 708 |One| 712 D 716 = 766 - 772 +
+              783 * 789)
            'NIL
            (CONS
             (|makeByteWordVec2| 7
-                                '(5 5 5 0 0 0 5 0 0 0 1 2 6 7 0 0 0 0 0 0 0 0 0
-                                  0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 4))
+                                '(5 5 5 0 0 0 5 0 0 1 2 6 7 0 0 0 0 0 0 0 0 0 0
+                                  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 4))
             (CONS
              '#(|EuclideanDomain&| NIL |GcdDomain&| NIL
-                |DifferentialExtension&| |Algebra&| NIL |EntireRing&| |Module&|
-                NIL |PartialDifferentialRing&| |DifferentialRing&| NIL NIL NIL
-                |Ring&| NIL NIL |Rng&| |AbelianGroup&| NIL NIL |AbelianMonoid&|
-                |Monoid&| NIL |SemiGroup&| |AbelianSemiGroup&|
-                |FullyRetractableTo&| |SetCategory&| |RetractableTo&|
-                |RetractableTo&| NIL NIL NIL NIL |BasicType&| NIL
-                |RetractableTo&| |RetractableTo&|)
+                |DifferentialExtension&| NIL NIL |EntireRing&| |Algebra&|
+                |PartialDifferentialRing&| |DifferentialRing&| NIL NIL NIL
+                |Rng&| NIL |Module&| NIL NIL |NonAssociativeRing&| NIL
+                |NonAssociativeRng&| NIL |AbelianGroup&| NIL NIL NIL NIL
+                |MagmaWithUnit&| |NonAssociativeSemiRng&| |AbelianMonoid&|
+                |Magma&| |AbelianSemiGroup&| |FullyRetractableTo&|
+                |SetCategory&| |RetractableTo&| |RetractableTo&| NIL NIL NIL
+                NIL |BasicType&| NIL |RetractableTo&| |RetractableTo&|)
              (CONS
               '#((|EuclideanDomain|) (|PrincipalIdealDomain|) (|GcdDomain|)
-                 (|IntegralDomain|) (|DifferentialExtension| 7) (|Algebra| $$)
-                 (|LeftOreRing|) (|EntireRing|) (|Module| $$)
-                 (|CommutativeRing|) (|PartialDifferentialRing| 112)
+                 (|IntegralDomain|) (|DifferentialExtension| 7)
+                 (|CommutativeRing|) (|LeftOreRing|) (|EntireRing|)
+                 (|Algebra| $$) (|PartialDifferentialRing| 112)
                  (|DifferentialRing|) (|CharacteristicNonZero|)
-                 (|CharacteristicZero|) (|BiModule| $$ $$) (|Ring|)
-                 (|LeftModule| $$) (|RightModule| $$) (|Rng|) (|AbelianGroup|)
-                 (|CancellationAbelianMonoid|) (|SemiRing|) (|AbelianMonoid|)
-                 (|Monoid|) (|SemiRng|) (|SemiGroup|) (|AbelianSemiGroup|)
+                 (|CharacteristicZero|) (|Ring|) (|Rng|) (|SemiRing|)
+                 (|Module| $$) (|SemiRng|) (|BiModule| $$ $$)
+                 (|NonAssociativeRing|) (|LeftModule| $$) (|NonAssociativeRng|)
+                 (|RightModule| $$) (|AbelianGroup|) (|Monoid|)
+                 (|NonAssociativeSemiRing|) (|CancellationAbelianMonoid|)
+                 (|SemiGroup|) (|MagmaWithUnit|) (|NonAssociativeSemiRng|)
+                 (|AbelianMonoid|) (|Magma|) (|AbelianSemiGroup|)
                  (|FullyRetractableTo| 6) (|SetCategory|) (|RetractableTo| 7)
                  (|RetractableTo| 6) (|ConvertibleTo| (|Fraction| 7))
                  (|noZeroDivisors|) (|CommutativeStar|) (|unitsKnown|)
-                 (|BasicType|) (|CoercibleTo| 53) (|RetractableTo| 109)
+                 (|BasicType|) (|CoercibleTo| 53) (|RetractableTo| 108)
                  (|RetractableTo| 18))
               (|makeByteWordVec2| 118
                                   '(0 6 0 10 0 7 0 11 0 6 0 13 0 7 0 14 2 7 15
@@ -601,27 +607,30 @@
                                     100 3 0 92 0 0 0 101 2 0 15 0 0 56 1 0 15 0
                                     52 1 0 114 0 1 1 0 0 0 1 1 0 15 0 1 1 0 6 0
                                     49 2 0 73 0 0 1 2 5 15 0 0 1 1 5 97 38 98 0
-                                    0 0 1 1 3 108 0 1 1 4 110 0 1 1 0 81 0 82 1
-                                    0 84 0 86 1 3 109 0 1 1 4 18 0 1 1 0 7 0 1
-                                    1 0 6 0 1 2 5 0 0 0 1 1 0 0 0 24 1 0 73 0
-                                    75 2 5 0 0 0 1 1 5 105 103 1 1 0 18 0 19 2
-                                    0 15 0 0 1 1 0 15 0 1 2 5 102 103 0 1 1 0
-                                    15 0 36 2 0 0 6 18 21 1 0 6 0 51 2 5 107 0
-                                    0 1 1 5 0 103 1 2 5 0 0 0 1 1 0 116 0 1 2 0
-                                    118 118 0 1 1 0 117 0 1 2 5 106 106 106 1 1
-                                    5 0 103 1 2 5 0 0 0 88 2 5 104 0 0 1 3 5 92
-                                    0 0 0 101 2 0 73 0 0 80 2 5 102 103 0 1 1 5
-                                    27 0 100 2 5 94 0 0 99 1 2 0 0 1 2 2 0 0 27
-                                    1 2 1 0 0 111 1 2 1 0 0 112 1 3 1 0 0 112
-                                    27 1 3 1 0 0 111 113 1 3 0 0 0 65 27 1 2 0
-                                    0 0 65 66 1 0 18 0 34 1 0 38 0 42 1 3 0 109
+                                    0 0 1 1 0 73 0 1 2 0 0 0 27 1 2 0 0 0 115 1
+                                    1 3 109 0 1 1 4 110 0 1 1 0 81 0 82 1 0 84
+                                    0 86 1 3 108 0 1 1 4 18 0 1 1 0 7 0 1 1 0 6
+                                    0 1 2 5 0 0 0 1 1 0 0 0 24 1 0 73 0 75 2 5
+                                    0 0 0 1 1 5 106 103 1 1 0 18 0 19 2 0 15 0
+                                    0 1 1 0 15 0 1 2 5 102 103 0 1 1 0 15 0 36
+                                    2 0 0 6 18 21 1 0 73 0 1 2 0 0 0 27 1 2 0 0
+                                    0 115 1 1 0 6 0 51 2 5 107 0 0 1 1 5 0 103
+                                    1 2 5 0 0 0 1 1 0 116 0 1 2 0 118 118 0 1 1
+                                    0 117 0 1 2 5 105 105 105 1 1 5 0 103 1 2 5
+                                    0 0 0 88 3 5 92 0 0 0 101 2 5 104 0 0 1 2 0
+                                    73 0 0 80 2 5 102 103 0 1 1 5 27 0 100 2 5
+                                    94 0 0 99 1 2 0 0 1 2 2 0 0 27 1 2 1 0 0
+                                    111 1 2 1 0 0 112 1 3 1 0 0 112 27 1 3 1 0
+                                    0 111 113 1 3 0 0 0 65 27 1 2 0 0 0 65 66 1
+                                    0 18 0 34 1 0 38 0 42 2 0 0 0 0 1 1 3 0 108
                                     1 1 0 0 7 22 1 0 0 6 31 1 0 0 0 1 1 0 0 18
                                     32 1 0 53 0 62 2 0 6 0 18 63 1 6 73 0 1 0 0
-                                    27 29 2 0 15 0 0 1 2 0 15 0 0 1 2 0 0 0 27
-                                    1 2 0 0 0 115 1 0 0 0 9 0 0 0 12 1 2 0 0 1
-                                    2 2 0 0 27 1 2 1 0 0 112 1 3 1 0 0 112 27 1
-                                    2 1 0 0 111 1 3 1 0 0 111 113 1 2 0 0 0 65
-                                    1 3 0 0 0 65 27 1 2 0 15 0 0 17 1 0 0 0 46
-                                    2 0 0 0 0 1 2 0 0 0 0 77 2 0 0 0 0 44 2 0 0
-                                    18 0 26 2 0 0 27 0 1 2 0 0 115 0 1)))))
+                                    27 29 3 0 0 0 0 0 1 2 0 15 0 0 1 2 0 0 0 0
+                                    1 2 0 15 0 0 1 2 0 0 0 27 1 2 0 0 0 115 1 0
+                                    0 0 9 0 0 0 12 1 2 0 0 1 2 2 0 0 27 1 2 1 0
+                                    0 112 1 2 1 0 0 111 1 3 1 0 0 111 113 1 3 1
+                                    0 0 112 27 1 3 0 0 0 65 27 1 2 0 0 0 65 1 2
+                                    0 15 0 0 17 1 0 0 0 46 2 0 0 0 0 1 2 0 0 0
+                                    0 77 2 0 0 27 0 1 2 0 0 18 0 26 2 0 0 0 0
+                                    44 2 0 0 115 0 1)))))
            '|lookupComplete|)) 

@@ -7,7 +7,7 @@
          ($ |Record| (|:| |gen| S) (|:| |exp| (|Integer|))))
         (SPROG
          ((|mx| (|Record| (|:| |gen| S) (|:| |exp| (|Integer|))))
-          (#1=#:G715 NIL) (|t| NIL))
+          (#1=#:G716 NIL) (|t| NIL))
          (SEQ (LETT |mx| (|SPADfirst| |l|) . #2=(|FAGROUP;inmax|))
               (SEQ (LETT |t| NIL . #2#) (LETT #1# (CDR |l|) . #2#) G190
                    (COND
@@ -65,9 +65,9 @@
 
 (DECLAIM (NOTINLINE |FreeAbelianGroup;|)) 
 
-(DEFUN |FreeAbelianGroup| (#1=#:G734)
+(DEFUN |FreeAbelianGroup| (#1=#:G738)
   (SPROG NIL
-         (PROG (#2=#:G735)
+         (PROG (#2=#:G739)
            (RETURN
             (COND
              ((LETT #2#

@@ -56,7 +56,7 @@
         (SPADCALL (LENGTH |data|) (QREFELT $ 30))) 
 
 (SDEFUN |DBASE;display;$V;7| ((|data| $) ($ |Void|))
-        (SPROG ((#1=#:G715 NIL) (|x| NIL))
+        (SPROG ((#1=#:G717 NIL) (|x| NIL))
                (SEQ (LETT |x| NIL . #2=(|DBASE;display;$V;7|))
                     (LETT #1# |data| . #2#) G190
                     (COND
@@ -66,7 +66,7 @@
                     (LETT #1# (CDR #1#) . #2#) (GO G190) G191 (EXIT NIL)))) 
 
 (SDEFUN |DBASE;fullDisplay;$V;8| ((|data| $) ($ |Void|))
-        (SPROG ((#1=#:G718 NIL) (|x| NIL))
+        (SPROG ((#1=#:G720 NIL) (|x| NIL))
                (SEQ (LETT |x| NIL . #2=(|DBASE;fullDisplay;$V;8|))
                     (LETT #1# |data| . #2#) G190
                     (COND
@@ -77,7 +77,7 @@
 
 (SDEFUN |DBASE;fullDisplay;$2PiV;9|
         ((|data| $) (|n| |PositiveInteger|) (|m| |PositiveInteger|) ($ |Void|))
-        (SPROG ((#1=#:G722 NIL) (|x| NIL) (#2=#:G723 NIL) (|i| NIL))
+        (SPROG ((#1=#:G726 NIL) (|x| NIL) (#2=#:G727 NIL) (|i| NIL))
                (SEQ (LETT |i| 1 . #3=(|DBASE;fullDisplay;$2PiV;9|))
                     (LETT #2# |m| . #3#) (LETT |x| NIL . #3#)
                     (LETT #1# |data| . #3#) G190
@@ -94,9 +94,9 @@
 
 (DECLAIM (NOTINLINE |Database;|)) 
 
-(DEFUN |Database| (#1=#:G724)
+(DEFUN |Database| (#1=#:G728)
   (SPROG NIL
-         (PROG (#2=#:G725)
+         (PROG (#2=#:G729)
            (RETURN
             (COND
              ((LETT #2#

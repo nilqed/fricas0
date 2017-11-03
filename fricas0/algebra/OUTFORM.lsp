@@ -301,7 +301,7 @@
         (SPADCALL (LIST (|OUTFORM;eform| 'NOTHING $)) (QREFELT $ 19))) 
 
 (SDEFUN |OUTFORM;infix?;$B;67| ((|a| $) ($ |Boolean|))
-        (SPROG ((|e| ($)) (#1=#:G2363 NIL))
+        (SPROG ((|e| ($)) (#1=#:G2364 NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -310,7 +310,7 @@
                               (#2='T
                                (PROGN
                                 (LETT #1# NIL . #3=(|OUTFORM;infix?;$B;67|))
-                                (GO #4=#:G2362))))
+                                (GO #4=#:G2363))))
                         . #3#)
                   (EXIT (COND ((GET |e| 'INFIXOP) 'T) (#2# NIL)))))
                 #4# (EXIT #1#)))) 
@@ -406,7 +406,7 @@
 
 (SDEFUN |OUTFORM;differentiate;$Nni$;90|
         ((|a| $) (|nn| |NonNegativeInteger|) ($ $))
-        (SPROG ((|s| (|String|)) (|r| (|String|)) (#1=#:G2394 NIL))
+        (SPROG ((|s| (|String|)) (|r| (|String|)) (#1=#:G2396 NIL))
                (SEQ
                 (COND ((ZEROP |nn|) |a|)
                       ((< |nn| 4) (SPADCALL |a| |nn| (QREFELT $ 103)))
@@ -473,7 +473,7 @@
 
 (DEFUN |OutputForm| ()
   (SPROG NIL
-         (PROG (#1=#:G2409)
+         (PROG (#1=#:G2411)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|OutputForm|)
@@ -525,7 +525,7 @@
               |OUTFORM;brace;2$;30| |OUTFORM;brace;L$;31|
               |OUTFORM;bracket;2$;32| |OUTFORM;paren;2$;34|
               |OUTFORM;paren;L$;35| |OUTFORM;sub;3$;36| |OUTFORM;super;3$;37|
-              |OUTFORM;presub;3$;38| |OUTFORM;presuper;3$;39| (50 . |null|)
+              |OUTFORM;presub;3$;38| |OUTFORM;presuper;3$;39| (50 . |empty?|)
               (55 . |rest|) (60 . |first|) |OUTFORM;scripts;$L$;40|
               (|NonNegativeInteger|) (65 . |#|) (70 . |append|)
               |OUTFORM;supersub;$L$;41| |OUTFORM;hconcat;L$;43|

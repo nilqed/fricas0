@@ -1264,37 +1264,20 @@
 ; tuple2List l ==
 ;   l is [a,:l'] =>
 ;     u:= tuple2List l'
-;     a is ['SEGMENT,p,q] =>
-;       null u => ['construct,postTranSegment(p,q)]
-;       ["nconc",['construct,postTranSegment(p,q)],tuple2List l']
 ;     null u => ['construct,postTran a]
-;     ["cons",postTran a,tuple2List l']
+;     ["cons", postTran a, u]
 ;   nil
  
 (DEFUN |tuple2List| (|l|)
-  (PROG (|a| |l'| |u| |ISTMP#1| |p| |ISTMP#2| |q|)
+  (PROG (|a| |l'| |u|)
     (RETURN
      (COND
       ((AND (CONSP |l|)
             (PROGN (SETQ |a| (CAR |l|)) (SETQ |l'| (CDR |l|)) #1='T))
        (PROGN
         (SETQ |u| (|tuple2List| |l'|))
-        (COND
-         ((AND (CONSP |a|) (EQ (CAR |a|) 'SEGMENT)
-               (PROGN
-                (SETQ |ISTMP#1| (CDR |a|))
-                (AND (CONSP |ISTMP#1|)
-                     (PROGN
-                      (SETQ |p| (CAR |ISTMP#1|))
-                      (SETQ |ISTMP#2| (CDR |ISTMP#1|))
-                      (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
-                           (PROGN (SETQ |q| (CAR |ISTMP#2|)) #1#))))))
-          (COND ((NULL |u|) (LIST '|construct| (|postTranSegment| |p| |q|)))
-                (#1#
-                 (LIST '|nconc| (LIST '|construct| (|postTranSegment| |p| |q|))
-                       (|tuple2List| |l'|)))))
-         ((NULL |u|) (LIST '|construct| (|postTran| |a|)))
-         (#1# (LIST '|cons| (|postTran| |a|) (|tuple2List| |l'|))))))
+        (COND ((NULL |u|) (LIST '|construct| (|postTran| |a|)))
+              (#1# (LIST '|cons| (|postTran| |a|) |u|)))))
       (#1# NIL)))))
  
 ; postReduce ['Reduce,op,expr] ==

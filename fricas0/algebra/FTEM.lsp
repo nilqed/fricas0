@@ -54,7 +54,7 @@
 
 (SDEFUN |FTEM;processTemplate;2Fn;7| ((|tp| |FileName|) ($ |FileName|))
         (SPROG
-         ((|active| #1=(|Boolean|)) (|line| (|String|)) (#2=#:G719 NIL)
+         ((|active| #1=(|Boolean|)) (|line| (|String|)) (#2=#:G721 NIL)
           (|endInput| #1#) (|fp| (|TextFile|)))
          (SEQ
           (LETT |fp| (SPADCALL |tp| "input" (QREFELT $ 28))
@@ -85,7 +85,7 @@
                                (PROGN
                                 (LETT #2# (SPADCALL |line| (QREFELT $ 31))
                                       . #3#)
-                                (GO #4=#:G709)))))
+                                (GO #4=#:G711)))))
                             #4# (EXIT #2#)))))))
                   ('T
                    (SEQ (LETT |line| (SPADCALL |fp| (QREFELT $ 18)) . #3#)
@@ -109,7 +109,7 @@
 
 (DEFUN |FortranTemplate| ()
   (SPROG NIL
-         (PROG (#1=#:G721)
+         (PROG (#1=#:G723)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|FortranTemplate|)

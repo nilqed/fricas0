@@ -1,4 +1,4 @@
-;;; Load interpreter,Tue Oct 31 21:55:27 CET 2017
+;;; Load interpreter,Fri Nov 3 16:07:26 CET 2017
 (load "lisp/fricas-package")
 (load "lisp/fricas-lisp")
 (load "lisp/primitives")
@@ -44,7 +44,7 @@
 (load "interp/i-spec2")
 (load "interp/i-syscmd")
 (load "interp/i-toplev")
-(load "interp/i-util")
+;(load "interp/i-util")
 (load "interp/incl")
 (load "interp/interop")
 (load "interp/int-top")
@@ -87,7 +87,7 @@
 (load "interp/spaderror")
 ;;;
 (load "interp/ax")
-(load "interp/dq")
+;(load "interp/dq")
 ;;;
 (load "interp/bc-matrix")
 (load "interp/bc-misc")

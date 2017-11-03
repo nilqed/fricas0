@@ -60,10 +60,12 @@
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
               (|SparseUnivariatePolynomial| $) (|Symbol|) (|Polynomial| 7)
-              (0 . |univariate|) (|UnivariatePolynomial| 6 10)
+              (0 . |univariate|)
+              (|UnivariatePolynomial| (NRTEVAL (QREFELT $ 6)) 10)
               (|Mapping| 10 10) (|SparseUnivariatePolynomial| 10)
               (|UnivariatePolynomialCategoryFunctions2| 10 14 10 12)
-              (6 . |map|) (|Variable| 6) |POLY2UP;univariate;PVUp;1|)
+              (6 . |map|) (|Variable| (NRTEVAL (QREFELT $ 6)))
+              |POLY2UP;univariate;PVUp;1|)
            '#(|univariate| 12) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()

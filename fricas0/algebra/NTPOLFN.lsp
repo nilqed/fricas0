@@ -78,9 +78,9 @@
 
 (DECLAIM (NOTINLINE |NumberTheoreticPolynomialFunctions;|)) 
 
-(DEFUN |NumberTheoreticPolynomialFunctions| (#1=#:G708)
+(DEFUN |NumberTheoreticPolynomialFunctions| (#1=#:G711)
   (SPROG NIL
-         (PROG (#2=#:G709)
+         (PROG (#2=#:G712)
            (RETURN
             (COND
              ((LETT #2#

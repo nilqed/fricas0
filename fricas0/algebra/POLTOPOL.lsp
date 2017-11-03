@@ -75,9 +75,9 @@
 
 (DECLAIM (NOTINLINE |PolToPol;|)) 
 
-(DEFUN |PolToPol| (&REST #1=#:G722)
+(DEFUN |PolToPol| (&REST #1=#:G724)
   (SPROG NIL
-         (PROG (#2=#:G723)
+         (PROG (#2=#:G725)
            (RETURN
             (COND
              ((LETT #2#
@@ -113,16 +113,17 @@
 (MAKEPROP '|PolToPol| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
-              (|Union| $ '"failed") (|Symbol|) (|OrderedVariableList| 6)
-              (0 . |variable|)
-              (|HomogeneousDistributedMultivariatePolynomial| 6 7)
+              (|Union| $ '"failed") (|Symbol|)
+              (|OrderedVariableList| (NRTEVAL (QREFELT $ 6))) (0 . |variable|)
+              (|HomogeneousDistributedMultivariatePolynomial|
+               (NRTEVAL (QREFELT $ 6)) 7)
               (|Mapping| 10 9) (|Polynomial| 7)
               (|MPolyCatFunctions3| 9 10 (|IndexedExponents| 9) 40 7 14 12)
               (5 . |map|) |POLTOPOL;pToHdmp;PHdmp;2| (11 . |convert|)
               (|Mapping| 9 10)
               (|MPolyCatFunctions3| 10 9 40 (|IndexedExponents| 9) 7 12 14)
               (16 . |map|) |POLTOPOL;hdmpToP;HdmpP;3|
-              (|DistributedMultivariatePolynomial| 6 7)
+              (|DistributedMultivariatePolynomial| (NRTEVAL (QREFELT $ 6)) 7)
               (|MPolyCatFunctions3| 10 9 36 (|IndexedExponents| 9) 7 23 14)
               (22 . |map|) |POLTOPOL;dmpToP;DmpP;4|
               (|MPolyCatFunctions3| 9 10 (|IndexedExponents| 9) 36 7 14 23)

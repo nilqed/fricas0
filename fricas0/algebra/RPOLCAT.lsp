@@ -156,128 +156,29 @@
                                        ((|Union| $ "failed")
                                         (|Polynomial| (|Integer|))))
                                       (AND
-                                       (|has| |t#1|
-                                              (|Algebra|
-                                               (|Fraction| (|Integer|))))
-                                       (|has| |t#3|
-                                              (|ConvertibleTo| (|Symbol|)))))
-                                     ((|retract|
-                                       ($ (|Polynomial| (|Integer|))))
-                                      (AND
-                                       (|has| |t#1|
-                                              (|Algebra|
-                                               (|Fraction| (|Integer|))))
-                                       (|has| |t#3|
-                                              (|ConvertibleTo| (|Symbol|)))))
-                                     ((|convert|
-                                       ($ (|Polynomial| (|Integer|))))
-                                      (AND
-                                       (|has| |t#1|
-                                              (|Algebra|
-                                               (|Fraction| (|Integer|))))
-                                       (|has| |t#3|
-                                              (|ConvertibleTo| (|Symbol|)))))
-                                     ((|retractIfCan|
-                                       ((|Union| $ "failed")
-                                        (|Polynomial| |t#1|)))
-                                      (AND
-                                       (|not|
-                                        (|has| |t#1|
-                                               (|QuotientFieldCategory|
-                                                (|Integer|))))
-                                       (|has| |t#1|
-                                              (|Algebra|
-                                               (|Fraction| (|Integer|))))
-                                       (|has| |t#3|
-                                              (|ConvertibleTo| (|Symbol|)))))
-                                     ((|retract| ($ (|Polynomial| |t#1|)))
-                                      (AND
-                                       (|not|
-                                        (|has| |t#1|
-                                               (|QuotientFieldCategory|
-                                                (|Integer|))))
-                                       (|has| |t#1|
-                                              (|Algebra|
-                                               (|Fraction| (|Integer|))))
-                                       (|has| |t#3|
-                                              (|ConvertibleTo| (|Symbol|)))))
-                                     ((|retractIfCan|
-                                       ((|Union| $ "failed")
-                                        (|Polynomial| (|Integer|))))
-                                      (AND
-                                       (|not|
-                                        (|has| |t#1|
-                                               (|Algebra|
-                                                (|Fraction| (|Integer|)))))
                                        (|has| |t#1| (|Algebra| (|Integer|)))
                                        (|has| |t#3|
                                               (|ConvertibleTo| (|Symbol|)))))
                                      ((|retract|
                                        ($ (|Polynomial| (|Integer|))))
                                       (AND
-                                       (|not|
-                                        (|has| |t#1|
-                                               (|Algebra|
-                                                (|Fraction| (|Integer|)))))
                                        (|has| |t#1| (|Algebra| (|Integer|)))
                                        (|has| |t#3|
                                               (|ConvertibleTo| (|Symbol|)))))
                                      ((|convert|
                                        ($ (|Polynomial| (|Integer|))))
                                       (AND
-                                       (|not|
-                                        (|has| |t#1|
-                                               (|Algebra|
-                                                (|Fraction| (|Integer|)))))
                                        (|has| |t#1| (|Algebra| (|Integer|)))
                                        (|has| |t#3|
                                               (|ConvertibleTo| (|Symbol|)))))
                                      ((|retractIfCan|
                                        ((|Union| $ "failed")
                                         (|Polynomial| |t#1|)))
-                                      (AND
-                                       (|not|
-                                        (|has| |t#1| (|IntegerNumberSystem|)))
-                                       (|not|
-                                        (|has| |t#1|
-                                               (|Algebra|
-                                                (|Fraction| (|Integer|)))))
-                                       (|has| |t#1| (|Algebra| (|Integer|)))
-                                       (|has| |t#3|
-                                              (|ConvertibleTo| (|Symbol|)))))
+                                      (|has| |t#3|
+                                             (|ConvertibleTo| (|Symbol|))))
                                      ((|retract| ($ (|Polynomial| |t#1|)))
-                                      (AND
-                                       (|not|
-                                        (|has| |t#1| (|IntegerNumberSystem|)))
-                                       (|not|
-                                        (|has| |t#1|
-                                               (|Algebra|
-                                                (|Fraction| (|Integer|)))))
-                                       (|has| |t#1| (|Algebra| (|Integer|)))
-                                       (|has| |t#3|
-                                              (|ConvertibleTo| (|Symbol|)))))
-                                     ((|retractIfCan|
-                                       ((|Union| $ "failed")
-                                        (|Polynomial| |t#1|)))
-                                      (AND
-                                       (|not|
-                                        (|has| |t#1|
-                                               (|Algebra|
-                                                (|Fraction| (|Integer|)))))
-                                       (|not|
-                                        (|has| |t#1| (|Algebra| (|Integer|))))
-                                       (|has| |t#3|
-                                              (|ConvertibleTo| (|Symbol|)))))
-                                     ((|retract| ($ (|Polynomial| |t#1|)))
-                                      (AND
-                                       (|not|
-                                        (|has| |t#1|
-                                               (|Algebra|
-                                                (|Fraction| (|Integer|)))))
-                                       (|not|
-                                        (|has| |t#1| (|Algebra| (|Integer|))))
-                                       (|has| |t#3|
-                                              (|ConvertibleTo| (|Symbol|)))))
+                                      (|has| |t#3|
+                                             (|ConvertibleTo| (|Symbol|))))
                                      ((|convert| ($ (|Polynomial| |t#1|)))
                                       (|has| |t#3|
                                              (|ConvertibleTo| (|Symbol|))))

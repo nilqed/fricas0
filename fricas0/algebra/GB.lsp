@@ -18,7 +18,7 @@
                   (QREFELT $ 21))) 
 
 (SDEFUN |GB;groebner;2L;3| ((|Pol| |List| |Dpol|) ($ |List| |Dpol|))
-        (SPROG ((#1=#:G709 NIL) (|x| NIL) (#2=#:G708 NIL))
+        (SPROG ((#1=#:G712 NIL) (|x| NIL) (#2=#:G711 NIL))
                (SEQ
                 (COND ((SPADCALL |Pol| NIL (QREFELT $ 23)) |Pol|)
                       (#3='T
@@ -60,7 +60,7 @@
 
 (SDEFUN |GB;groebner;LSL;4|
         ((|Pol| |List| |Dpol|) (|xx1| |String|) ($ |List| |Dpol|))
-        (SPROG ((#1=#:G718 NIL) (|x| NIL) (#2=#:G717 NIL))
+        (SPROG ((#1=#:G722 NIL) (|x| NIL) (#2=#:G721 NIL))
                (SEQ
                 (COND ((SPADCALL |Pol| NIL (QREFELT $ 23)) |Pol|)
                       (#3='T
@@ -125,7 +125,7 @@
 (SDEFUN |GB;groebner;L2SL;5|
         ((|Pol| |List| |Dpol|) (|xx1| |String|) (|xx2| |String|)
          ($ |List| |Dpol|))
-        (SPROG ((#1=#:G729 NIL) (|x| NIL) (#2=#:G728 NIL))
+        (SPROG ((#1=#:G733 NIL) (|x| NIL) (#2=#:G732 NIL))
                (SEQ
                 (COND ((SPADCALL |Pol| NIL (QREFELT $ 23)) |Pol|)
                       (#3='T
@@ -238,9 +238,9 @@
 
 (DECLAIM (NOTINLINE |GroebnerPackage;|)) 
 
-(DEFUN |GroebnerPackage| (&REST #1=#:G730)
+(DEFUN |GroebnerPackage| (&REST #1=#:G734)
   (SPROG NIL
-         (PROG (#2=#:G731)
+         (PROG (#2=#:G735)
            (RETURN
             (COND
              ((LETT #2#

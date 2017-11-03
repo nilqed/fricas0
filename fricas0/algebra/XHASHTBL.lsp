@@ -3,8 +3,8 @@
         ((|a| |PrimitiveArray| (|None|)) (|k| |Key|)
          (|h| |Mapping| (|SingleInteger|) |Key|) ($ |Integer|))
         (SPROG
-         ((|q| (|Integer|)) (|mk| (|None|)) (|p| (|Integer|)) (#1=#:G726 NIL)
-          (#2=#:G725 NIL) (|deletedPosition?| (|Boolean|)) (|h2| (|Integer|))
+         ((|q| (|Integer|)) (|mk| (|None|)) (|p| (|Integer|)) (#1=#:G729 NIL)
+          (#2=#:G728 NIL) (|deletedPosition?| (|Boolean|)) (|h2| (|Integer|))
           (|h1| (|Integer|)) (|n| (|Integer|)))
          (SEQ
           (EXIT
@@ -27,9 +27,9 @@
                                 (EXIT
                                  (PROGN
                                   (LETT #2# |$NoValue| . #3#)
-                                  (GO #4=#:G713)))))
+                                  (GO #4=#:G716)))))
                           ((SPADCALL |k| |mk| (QREFELT $ 17))
-                           (PROGN (LETT #1# |p| . #3#) (GO #5=#:G724)))
+                           (PROGN (LETT #1# |p| . #3#) (GO #5=#:G727)))
                           ('T
                            (SEQ (LETT |p| (+ |p| |h2|) . #3#)
                                 (COND
@@ -70,7 +70,7 @@
 
 (SDEFUN |XHASHTBL;rehashAux!| ((|x| $) (|ix| |Integer|) ($ $))
         (SPROG
-         ((|p| (|Integer|)) (|k| (|Key|)) (|mk| (|None|)) (#1=#:G745 NIL)
+         ((|p| (|Integer|)) (|k| (|Key|)) (|mk| (|None|)) (#1=#:G749 NIL)
           (|i| NIL) (|c| (|PrimitiveArray| (|None|))) (|n| (|Integer|))
           (|a| (|PrimitiveArray| (|None|)))
           (|h| (|Mapping| (|SingleInteger|) |Key|))
@@ -136,7 +136,7 @@
 (SDEFUN |XHASHTBL;inspect;$R;8|
         ((|x| $) ($ |Record| (|:| |key| |Key|) (|:| |entry| |Entry|)))
         (SPROG
-         ((#1=#:G779 NIL) (|mk| (|None|)) (#2=#:G780 NIL) (|i| NIL)
+         ((#1=#:G783 NIL) (|mk| (|None|)) (#2=#:G784 NIL) (|i| NIL)
           (|n| (|Integer|)) (|a| (|PrimitiveArray| (|None|))))
          (SEQ
           (EXIT
@@ -157,13 +157,13 @@
                                 (QREFELT $ 9)))))
                          (PROGN
                           (LETT #1# (CONS |mk| (QAREF1 |a| (+ |n| |i|))) . #3#)
-                          (GO #4=#:G778))))))
+                          (GO #4=#:G782))))))
                      (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191 (EXIT NIL))
                 (EXIT (|error| "table must be non-empty"))))
           #4# (EXIT #1#)))) 
 
 (SDEFUN |XHASHTBL;#;$Nni;9| ((|x| $) ($ |NonNegativeInteger|))
-        (SPROG ((#1=#:G782 NIL))
+        (SPROG ((#1=#:G786 NIL))
                (PROG1 (LETT #1# (QVELT |x| 0) |XHASHTBL;#;$Nni;9|)
                  (|check_subtype2| (>= #1# 0) '(|NonNegativeInteger|)
                                    '(|Integer|) #1#)))) 
@@ -289,7 +289,7 @@
 
 (SDEFUN |XHASHTBL;fill!;$Entry$;16| ((|x| $) (|e| |Entry|) ($ $))
         (SPROG
-         ((#1=#:G838 NIL) (|i| NIL) (|n| (|NonNegativeInteger|))
+         ((#1=#:G842 NIL) (|i| NIL) (|n| (|NonNegativeInteger|))
           (|a| (|PrimitiveArray| (|None|))))
          (SEQ (LETT |a| (QVELT |x| 5) . #2=(|XHASHTBL;fill!;$Entry$;16|))
               (LETT |n| (ASH (QVSIZE |a|) -1) . #2#)
@@ -306,7 +306,7 @@
 
 (SDEFUN |XHASHTBL;map!;M2$;17| ((|f| |Mapping| |Entry| |Entry|) (|x| $) ($ $))
         (SPROG
-         ((#1=#:G846 NIL) (|i| NIL) (|n| (|NonNegativeInteger|))
+         ((#1=#:G850 NIL) (|i| NIL) (|n| (|NonNegativeInteger|))
           (|a| (|PrimitiveArray| (|None|))))
          (SEQ (LETT |a| (QVELT |x| 5) . #2=(|XHASHTBL;map!;M2$;17|))
               (LETT |n| (ASH (QVSIZE |a|) -1) . #2#)
@@ -324,7 +324,7 @@
 
 (SDEFUN |XHASHTBL;keys;$L;18| ((|x| $) ($ |List| |Key|))
         (SPROG
-         ((|l| (|List| |Key|)) (|mk| (|None|)) (#1=#:G857 NIL) (|i| NIL)
+         ((|l| (|List| |Key|)) (|mk| (|None|)) (#1=#:G861 NIL) (|i| NIL)
           (|a| (|PrimitiveArray| (|None|))))
          (SEQ (LETT |a| (QVELT |x| 5) . #2=(|XHASHTBL;keys;$L;18|))
               (LETT |l| NIL . #2#)
@@ -347,7 +347,7 @@
 
 (SDEFUN |XHASHTBL;parts;$L;19| ((|x| $) ($ |List| |Entry|))
         (SPROG
-         ((|l| (|List| |Entry|)) (#1=#:G864 NIL) (|i| NIL)
+         ((|l| (|List| |Entry|)) (#1=#:G868 NIL) (|i| NIL)
           (|n| (|NonNegativeInteger|)) (|a| (|PrimitiveArray| (|None|))))
          (SEQ (LETT |a| (QVELT |x| 5) . #2=(|XHASHTBL;parts;$L;19|))
               (LETT |n| (ASH (QVSIZE |a|) -1) . #2#) (LETT |l| NIL . #2#)
@@ -366,7 +366,7 @@
         ((|x| $) ($ |List| (|Record| (|:| |key| |Key|) (|:| |entry| |Entry|))))
         (SPROG
          ((|l| (|List| (|Record| (|:| |key| |Key|) (|:| |entry| |Entry|))))
-          (|mk| (|None|)) (#1=#:G873 NIL) (|i| NIL)
+          (|mk| (|None|)) (#1=#:G877 NIL) (|i| NIL)
           (|n| (|NonNegativeInteger|)) (|a| (|PrimitiveArray| (|None|))))
          (SEQ (LETT |a| (QVELT |x| 5) . #2=(|XHASHTBL;parts;$L;20|))
               (LETT |n| (ASH (QVSIZE |a|) -1) . #2#) (LETT |l| NIL . #2#)
@@ -394,8 +394,8 @@
 
 (SDEFUN |XHASHTBL;=;2$B;22| ((|x| $) (|y| $) ($ |Boolean|))
         (SPROG
-         ((#1=#:G885 NIL) (#2=#:G886 NIL) (|p| (|Integer|)) (|mk| (|None|))
-          (#3=#:G887 NIL) (|i| NIL) (|h| (|Mapping| (|SingleInteger|) |Key|))
+         ((#1=#:G889 NIL) (#2=#:G890 NIL) (|p| (|Integer|)) (|mk| (|None|))
+          (#3=#:G891 NIL) (|i| NIL) (|h| (|Mapping| (|SingleInteger|) |Key|))
           (|yn| #4=(|NonNegativeInteger|))
           (|ya| #5=(|PrimitiveArray| (|None|))) (|xn| #4#) (|xa| #5#))
          (SEQ
@@ -429,7 +429,7 @@
                             (EXIT
                              (COND
                               ((< |p| 0)
-                               (PROGN (LETT #2# NIL . #7#) (GO #8=#:G884)))
+                               (PROGN (LETT #2# NIL . #7#) (GO #8=#:G888)))
                               ('T
                                (SEQ
                                 (EXIT
@@ -441,7 +441,7 @@
                                     (LETT #1#
                                           (PROGN (LETT #2# NIL . #7#) (GO #8#))
                                           . #7#)
-                                    (GO #9=#:G879)))))
+                                    (GO #9=#:G883)))))
                                 #9# (EXIT #1#))))))))))
                        (LETT |i| (|inc_SI| |i|) . #7#) (GO G190) G191
                        (EXIT NIL))
@@ -450,9 +450,9 @@
 
 (DECLAIM (NOTINLINE |XHashTable;|)) 
 
-(DEFUN |XHashTable| (&REST #1=#:G935)
+(DEFUN |XHashTable| (&REST #1=#:G939)
   (SPROG NIL
-         (PROG (#2=#:G936)
+         (PROG (#2=#:G940)
            (RETURN
             (COND
              ((LETT #2#
@@ -471,7 +471,7 @@
 
 (DEFUN |XHashTable;| (|#1| |#2|)
   (SPROG
-   ((#1=#:G934 NIL) (#2=#:G933 NIL) (|pv$| NIL) (#3=#:G931 NIL) (#4=#:G932 NIL)
+   ((#1=#:G938 NIL) (#2=#:G937 NIL) (|pv$| NIL) (#3=#:G935 NIL) (#4=#:G936 NIL)
     ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #5=(|XHashTable|))

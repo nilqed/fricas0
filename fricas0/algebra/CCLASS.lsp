@@ -42,7 +42,7 @@
         (SPADCALL (SPADCALL |cl| (QREFELT $ 31)) (QREFELT $ 32))) 
 
 (SDEFUN |CCLASS;convert;$L;14| ((|cl| $) ($ |List| (|Character|)))
-        (SPROG ((#1=#:G714 NIL) (|i| NIL) (#2=#:G713 NIL))
+        (SPROG ((#1=#:G718 NIL) (|i| NIL) (#2=#:G717 NIL))
                (SEQ
                 (PROGN
                  (LETT #2# NIL . #3=(|CCLASS;convert;$L;14|))
@@ -58,7 +58,7 @@
                       (EXIT (NREVERSE #2#))))))) 
 
 (SDEFUN |CCLASS;charClass;S$;15| ((|s| |String|) ($ $))
-        (SPROG ((|j| (|Integer|)) (#1=#:G719 NIL) (|i| NIL) (|cl| ($)))
+        (SPROG ((|j| (|Integer|)) (#1=#:G723 NIL) (|i| NIL) (|cl| ($)))
                (SEQ
                 (LETT |cl| (SPADCALL (QREFELT $ 7) NIL (QREFELT $ 36))
                       . #2=(|CCLASS;charClass;S$;15|))
@@ -75,7 +75,7 @@
                 (EXIT |cl|)))) 
 
 (SDEFUN |CCLASS;charClass;L$;16| ((|l| |List| (|Character|)) ($ $))
-        (SPROG ((|j| (|Integer|)) (#1=#:G724 NIL) (|c| NIL) (|cl| ($)))
+        (SPROG ((|j| (|Integer|)) (#1=#:G728 NIL) (|c| NIL) (|cl| ($)))
                (SEQ
                 (LETT |cl| (SPADCALL (QREFELT $ 7) NIL (QREFELT $ 36))
                       . #2=(|CCLASS;charClass;L$;16|))
@@ -96,7 +96,7 @@
         (SPADCALL (SPADCALL |cl| (QREFELT $ 33)) (QREFELT $ 43))) 
 
 (SDEFUN |CCLASS;#;$Nni;18| ((|a| $) ($ |NonNegativeInteger|))
-        (SPROG ((|n| (|NonNegativeInteger|)) (#1=#:G729 NIL) (|i| NIL))
+        (SPROG ((|n| (|NonNegativeInteger|)) (#1=#:G733 NIL) (|i| NIL))
                (SEQ (LETT |n| 0 . #2=(|CCLASS;#;$Nni;18|))
                     (SEQ (LETT |i| 0 . #2#)
                          (LETT #1# (- (QREFELT $ 7) 1) . #2#) G190
@@ -112,33 +112,31 @@
 
 (SDEFUN |CCLASS;empty;$;19| (($ $)) (SPADCALL NIL (QREFELT $ 41))) 
 
-(SDEFUN |CCLASS;brace;$;20| (($ $)) (SPADCALL NIL (QREFELT $ 41))) 
-
-(SDEFUN |CCLASS;insert!;C2$;21| ((|c| |Character|) (|a| $) ($ $))
+(SDEFUN |CCLASS;insert!;C2$;20| ((|c| |Character|) (|a| $) ($ $))
         (SPROG ((|i| (|Integer|)))
-               (SEQ (LETT |i| |c| |CCLASS;insert!;C2$;21|)
+               (SEQ (LETT |i| |c| |CCLASS;insert!;C2$;20|)
                     (EXIT
                      (COND
                       ((< |i| (QREFELT $ 7))
                        (SEQ (SPADCALL |a| |i| 'T (QREFELT $ 40)) (EXIT |a|)))
                       ('T (|error| "character code too large"))))))) 
 
-(SDEFUN |CCLASS;remove!;C2$;22| ((|c| |Character|) (|a| $) ($ $))
+(SDEFUN |CCLASS;remove!;C2$;21| ((|c| |Character|) (|a| $) ($ $))
         (SPROG ((|i| (|Integer|)))
                (SEQ
-                (SEQ (LETT |i| |c| |CCLASS;remove!;C2$;22|)
+                (SEQ (LETT |i| |c| |CCLASS;remove!;C2$;21|)
                      (EXIT
                       (COND
                        ((< |i| (QREFELT $ 7))
                         (SPADCALL |a| |i| NIL (QREFELT $ 40))))))
                 (EXIT |a|)))) 
 
-(SDEFUN |CCLASS;inspect;$C;23| ((|a| $) ($ |Character|))
-        (SPROG ((#1=#:G741 NIL) (#2=#:G742 NIL) (|i| NIL))
+(SDEFUN |CCLASS;inspect;$C;22| ((|a| $) ($ |Character|))
+        (SPROG ((#1=#:G744 NIL) (#2=#:G745 NIL) (|i| NIL))
                (SEQ
                 (EXIT
                  (SEQ
-                  (SEQ (LETT |i| 0 . #3=(|CCLASS;inspect;$C;23|))
+                  (SEQ (LETT |i| 0 . #3=(|CCLASS;inspect;$C;22|))
                        (LETT #2# (- (QREFELT $ 7) 1) . #3#) G190
                        (COND ((|greater_SI| |i| #2#) (GO G191)))
                        (SEQ
@@ -147,19 +145,19 @@
                           ((SPADCALL |a| |i| (QREFELT $ 21))
                            (PROGN
                             (LETT #1# (SPADCALL |i| (QREFELT $ 34)) . #3#)
-                            (GO #4=#:G740))))))
+                            (GO #4=#:G743))))))
                        (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191
                        (EXIT NIL))
                   (EXIT
                    (|error| "Cannot take a character from an empty class."))))
                 #4# (EXIT #1#)))) 
 
-(SDEFUN |CCLASS;extract!;$C;24| ((|a| $) ($ |Character|))
-        (SPROG ((#1=#:G747 NIL) (#2=#:G748 NIL) (|i| NIL))
+(SDEFUN |CCLASS;extract!;$C;23| ((|a| $) ($ |Character|))
+        (SPROG ((#1=#:G750 NIL) (#2=#:G751 NIL) (|i| NIL))
                (SEQ
                 (EXIT
                  (SEQ
-                  (SEQ (LETT |i| 0 . #3=(|CCLASS;extract!;$C;24|))
+                  (SEQ (LETT |i| 0 . #3=(|CCLASS;extract!;$C;23|))
                        (LETT #2# (- (QREFELT $ 7) 1) . #3#) G190
                        (COND ((|greater_SI| |i| #2#) (GO G191)))
                        (SEQ
@@ -171,19 +169,19 @@
                                  (PROGN
                                   (LETT #1# (SPADCALL |i| (QREFELT $ 34))
                                         . #3#)
-                                  (GO #4=#:G746))))))))
+                                  (GO #4=#:G749))))))))
                        (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191
                        (EXIT NIL))
                   (EXIT
                    (|error| "Cannot take a character from an empty class."))))
                 #4# (EXIT #1#)))) 
 
-(SDEFUN |CCLASS;map;M2$;25|
+(SDEFUN |CCLASS;map;M2$;24|
         ((|f| |Mapping| #1=(|Character|) #1#) (|a| $) ($ $))
-        (SPROG ((#2=#:G753 NIL) (|i| NIL) (|b| ($)))
+        (SPROG ((#2=#:G756 NIL) (|i| NIL) (|b| ($)))
                (SEQ
                 (LETT |b| (SPADCALL (QREFELT $ 7) NIL (QREFELT $ 36))
-                      . #3=(|CCLASS;map;M2$;25|))
+                      . #3=(|CCLASS;map;M2$;24|))
                 (SEQ (LETT |i| 0 . #3#) (LETT #2# (- (QREFELT $ 7) 1) . #3#)
                      G190 (COND ((|greater_SI| |i| #2#) (GO G191)))
                      (SEQ
@@ -196,30 +194,30 @@
                      (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191 (EXIT NIL))
                 (EXIT |b|)))) 
 
-(SDEFUN |CCLASS;map!;M2$;26|
+(SDEFUN |CCLASS;map!;M2$;25|
         ((|f| |Mapping| #1=(|Character|) #1#) (|a| $) ($ $))
-        (SPROG ((#2=#:G757 NIL) (|i| NIL))
-               (SEQ (SPADCALL (QREFELT $ 54) NIL (QREFELT $ 55))
-                    (SEQ (LETT |i| 0 . #3=(|CCLASS;map!;M2$;26|))
+        (SPROG ((#2=#:G760 NIL) (|i| NIL))
+               (SEQ (SPADCALL (QREFELT $ 53) NIL (QREFELT $ 54))
+                    (SEQ (LETT |i| 0 . #3=(|CCLASS;map!;M2$;25|))
                          (LETT #2# (- (QREFELT $ 7) 1) . #3#) G190
                          (COND ((|greater_SI| |i| #2#) (GO G191)))
                          (SEQ
                           (EXIT
                            (COND
                             ((SPADCALL |a| |i| (QREFELT $ 21))
-                             (SPADCALL (QREFELT $ 54)
+                             (SPADCALL (QREFELT $ 53)
                                        (SPADCALL (SPADCALL |i| (QREFELT $ 34))
                                                  |f|)
                                        'T (QREFELT $ 40))))))
                          (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191
                          (EXIT NIL))
-                    (EXIT (SPADCALL |a| (QREFELT $ 54) 0 (QREFELT $ 56)))))) 
+                    (EXIT (SPADCALL |a| (QREFELT $ 53) 0 (QREFELT $ 55)))))) 
 
-(SDEFUN |CCLASS;parts;$L;27| ((|a| $) ($ |List| (|Character|)))
-        (SPROG ((#1=#:G761 NIL) (|i| NIL) (#2=#:G760 NIL))
+(SDEFUN |CCLASS;parts;$L;26| ((|a| $) ($ |List| (|Character|)))
+        (SPROG ((#1=#:G764 NIL) (|i| NIL) (#2=#:G763 NIL))
                (SEQ
                 (PROGN
-                 (LETT #2# NIL . #3=(|CCLASS;parts;$L;27|))
+                 (LETT #2# NIL . #3=(|CCLASS;parts;$L;26|))
                  (SEQ (LETT |i| 0 . #3#) (LETT #1# (- (QREFELT $ 7) 1) . #3#)
                       G190 (COND ((|greater_SI| |i| #1#) (GO G191)))
                       (SEQ
@@ -235,7 +233,7 @@
 
 (DEFUN |CharacterClass| ()
   (SPROG NIL
-         (PROG (#1=#:G770)
+         (PROG (#1=#:G773)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|CharacterClass|)
@@ -253,10 +251,10 @@
                   (HREM |$ConstructorCache| '|CharacterClass|)))))))))) 
 
 (DEFUN |CharacterClass;| ()
-  (SPROG ((|dv$| NIL) ($ NIL) (#1=#:G767 NIL) (|pv$| NIL) (#2=#:G768 NIL))
+  (SPROG ((|dv$| NIL) ($ NIL) (#1=#:G770 NIL) (|pv$| NIL) (#2=#:G771 NIL))
          (PROGN
           (LETT |dv$| '(|CharacterClass|) . #3=(|CharacterClass|))
-          (LETT $ (GETREFV 69) . #3#)
+          (LETT $ (GETREFV 68) . #3#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -309,7 +307,7 @@
           (SETF |pv$| (QREFELT $ 3))
           (QSETREFV $ 6 (|IndexedBits| 0))
           (QSETREFV $ 7 256)
-          (QSETREFV $ 54 (SPADCALL (QREFELT $ 7) NIL (QREFELT $ 36)))
+          (QSETREFV $ 53 (SPADCALL (QREFELT $ 7) NIL (QREFELT $ 36)))
           $))) 
 
 (MAKEPROP '|CharacterClass| '|infovec|
@@ -338,14 +336,13 @@
               (50 . |maxIndex|) (55 . |elt|) (61 . |setelt!|)
               |CCLASS;charClass;L$;16| (|OutputForm|) (68 . |coerce|)
               |CCLASS;coerce;$Of;17| |CCLASS;#;$Nni;18| |CCLASS;empty;$;19|
-              |CCLASS;brace;$;20| |CCLASS;insert!;C2$;21|
-              |CCLASS;remove!;C2$;22| |CCLASS;inspect;$C;23|
-              |CCLASS;extract!;$C;24| (|Mapping| 22 22) |CCLASS;map;M2$;25|
-              '|temp| (73 . |fill!|) (79 . |copyInto!|) |CCLASS;map!;M2$;26|
-              |CCLASS;parts;$L;27| (|List| 60) (|Equation| 22)
-              (|Mapping| 22 22 22) (|InputForm|) (|List| $) (|PositiveInteger|)
-              (|Mapping| 17 22) (|Union| 22 '"failed") (|SingleInteger|)
-              (|HashState|))
+              |CCLASS;insert!;C2$;20| |CCLASS;remove!;C2$;21|
+              |CCLASS;inspect;$C;22| |CCLASS;extract!;$C;23| (|Mapping| 22 22)
+              |CCLASS;map;M2$;24| '|temp| (73 . |fill!|) (79 . |copyInto!|)
+              |CCLASS;map!;M2$;25| |CCLASS;parts;$L;26| (|List| 59)
+              (|Equation| 22) (|Mapping| 22 22 22) (|InputForm|) (|List| $)
+              (|PositiveInteger|) (|Mapping| 17 22) (|Union| 22 '"failed")
+              (|SingleInteger|) (|HashState|))
            '#(~= 86 |upperCase| 92 |universe| 96 |union| 100
               |symmetricDifference| 118 |subset?| 124 |smaller?| 130 |size?|
               136 |size| 142 |set| 146 |select!| 155 |select| 161 |sample| 167
@@ -358,9 +355,8 @@
               |eq?| 369 |enumerate| 375 |empty?| 379 |empty| 384 |digit| 388
               |difference| 392 |dictionary| 404 |count| 413 |copy| 425
               |convert| 430 |construct| 445 |complement| 450 |coerce| 455
-              |charClass| 460 |cardinality| 470 |brace| 475 |any?| 484
-              |alphanumeric| 490 |alphabetic| 494 >= 498 > 504 = 510 <= 516 <
-              522 |#| 528)
+              |charClass| 460 |cardinality| 470 |any?| 475 |alphanumeric| 481
+              |alphabetic| 485 >= 489 > 495 = 501 <= 507 < 513 |#| 519)
            'NIL
            (CONS
             (|makeByteWordVec2| 6
@@ -380,36 +376,36 @@
                  (|finiteAggregate|) (|PartialOrder|) (|BasicType|)
                  (|shallowlyMutable|) (|Type|) (|ConvertibleTo| 8)
                  (|CoercibleTo| 42) (|InnerEvalable| 22 22)
-                 (|ConvertibleTo| 62))
-              (|makeByteWordVec2| 68
+                 (|ConvertibleTo| 61))
+              (|makeByteWordVec2| 67
                                   '(2 6 17 0 0 18 2 6 17 0 20 21 2 6 0 0 0 24 2
                                     6 0 0 0 25 1 6 0 0 27 1 8 0 30 32 1 22 0 20
                                     34 2 6 0 35 17 36 1 8 20 0 37 1 8 20 0 38 2
                                     8 22 0 20 39 3 6 17 0 20 17 40 1 8 42 0 43
-                                    2 6 0 0 17 55 3 6 0 0 0 20 56 2 0 17 0 0 1
-                                    0 0 0 12 0 3 0 1 2 0 0 22 0 1 2 0 0 0 0 14
-                                    2 0 0 0 22 1 2 0 0 0 0 1 2 0 17 0 0 1 2 2
+                                    2 6 0 0 17 54 3 6 0 0 0 20 55 2 0 17 0 0 1
+                                    0 0 0 12 0 3 0 1 2 0 0 0 22 1 2 0 0 22 0 1
+                                    2 0 0 0 0 14 2 0 0 0 0 1 2 0 17 0 0 1 2 2
                                     17 0 0 1 2 0 17 0 35 1 0 3 35 1 1 0 0 30 1
-                                    0 0 0 1 2 9 0 65 0 1 2 9 0 65 0 1 0 0 0 1 1
-                                    10 0 0 1 2 10 0 22 0 49 2 9 0 65 0 1 2 10 0
-                                    22 0 1 2 9 0 65 0 1 4 10 22 61 0 22 22 1 3
-                                    9 22 61 0 22 1 2 9 22 61 0 1 0 3 0 1 1 9 30
-                                    0 58 2 0 17 0 35 1 1 4 22 0 1 1 9 30 0 1 2
-                                    10 17 22 0 23 1 4 22 0 1 2 8 0 52 0 57 2 0
-                                    0 52 0 53 0 0 0 13 1 3 64 0 1 2 0 17 0 35 1
-                                    1 0 8 0 1 2 0 0 0 0 26 1 0 22 0 50 2 0 0 22
-                                    0 48 1 3 0 64 1 0 0 0 11 2 0 68 68 0 1 1 0
-                                    67 0 1 2 0 66 65 0 1 1 0 22 0 51 2 9 17 65
-                                    0 1 2 5 0 0 59 1 3 5 0 0 22 22 1 2 5 0 0 60
-                                    1 3 5 0 0 30 30 1 2 0 17 0 0 1 0 3 63 1 1 0
-                                    17 0 1 0 0 0 46 0 0 0 10 2 0 0 0 22 1 2 0 0
-                                    0 0 28 0 0 0 1 1 0 0 30 1 2 10 35 22 0 1 2
-                                    9 35 65 0 1 1 0 0 0 1 1 1 62 0 1 1 0 30 0
+                                    0 0 0 1 2 9 0 64 0 1 2 9 0 64 0 1 0 0 0 1 1
+                                    10 0 0 1 2 10 0 22 0 48 2 9 0 64 0 1 2 10 0
+                                    22 0 1 2 9 0 64 0 1 4 10 22 60 0 22 22 1 3
+                                    9 22 60 0 22 1 2 9 22 60 0 1 0 3 0 1 1 9 30
+                                    0 57 2 0 17 0 35 1 1 4 22 0 1 1 9 30 0 1 2
+                                    10 17 22 0 23 1 4 22 0 1 2 8 0 51 0 56 2 0
+                                    0 51 0 52 0 0 0 13 1 3 63 0 1 2 0 17 0 35 1
+                                    1 0 8 0 1 2 0 0 0 0 26 1 0 22 0 49 2 0 0 22
+                                    0 47 1 3 0 63 1 0 0 0 11 2 0 67 67 0 1 1 0
+                                    66 0 1 2 0 65 64 0 1 1 0 22 0 50 2 9 17 64
+                                    0 1 2 5 0 0 58 1 3 5 0 0 22 22 1 2 5 0 0 59
+                                    1 3 5 0 0 30 30 1 2 0 17 0 0 1 0 3 62 1 1 0
+                                    17 0 1 0 0 0 46 0 0 0 10 2 0 0 0 0 28 2 0 0
+                                    0 22 1 1 0 0 30 1 0 0 0 1 2 10 35 22 0 1 2
+                                    9 35 64 0 1 1 0 0 0 1 1 1 61 0 1 1 0 30 0
                                     31 1 0 8 0 33 1 0 0 30 1 1 3 0 0 29 1 0 42
-                                    0 44 1 0 0 30 41 1 0 0 8 9 1 0 35 0 1 1 0 0
-                                    30 1 0 0 0 47 2 9 17 65 0 1 0 0 0 16 0 0 0
-                                    15 2 0 17 0 0 1 2 0 17 0 0 1 2 0 17 0 0 19
-                                    2 0 17 0 0 1 2 0 17 0 0 1 1 9 35 0 45)))))
+                                    0 44 1 0 0 30 41 1 0 0 8 9 1 0 35 0 1 2 9
+                                    17 64 0 1 0 0 0 16 0 0 0 15 2 0 17 0 0 1 2
+                                    0 17 0 0 1 2 0 17 0 0 19 2 0 17 0 0 1 2 0
+                                    17 0 0 1 1 9 35 0 45)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|CharacterClass| 'NILADIC T) 

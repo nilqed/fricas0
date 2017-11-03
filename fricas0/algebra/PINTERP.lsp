@@ -54,7 +54,7 @@
 (MAKEPROP '|PolynomialInterpolation| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
-              (|UnivariatePolynomial| 6 7) (|List| 7)
+              (|UnivariatePolynomial| (NRTEVAL (QREFELT $ 6)) 7) (|List| 7)
               (|PolynomialInterpolationAlgorithms| 7 8)
               (0 . |LagrangeInterpolation|) (6 . |elt|)
               |PINTERP;interpolate;Up2LUp;1| (|SparseUnivariatePolynomial| 7)

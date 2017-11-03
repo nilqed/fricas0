@@ -70,8 +70,8 @@
 (MAKEPROP '|UniversalSegmentFunctions2| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
-              (|UniversalSegment| 6) (0 . |lo|) (|Boolean|) (5 . |hasHi|)
-              (10 . |hi|) (|UniversalSegment| 7) (15 . |segment|)
+              (|UniversalSegment| 6) (0 . |low|) (|Boolean|) (5 . |hasHi|)
+              (10 . |high|) (|UniversalSegment| 7) (15 . |segment|)
               (21 . |segment|) (|Mapping| 7 6) |UNISEG2;map;MUsUs;1|
               (|Stream| 6) (26 . |expand|) (|Stream| 7)
               (|StreamFunctions2| 6 7) (31 . |map|) (37 . |map|))

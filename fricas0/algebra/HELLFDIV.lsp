@@ -48,7 +48,7 @@
 
 (SDEFUN |HELLFDIV;+;3$;8| ((|d1| $) (|d2| $) ($ $))
         (SPROG
-         ((|dd| ($)) (|b| (UP)) (#1=#:G707 NIL) (|a| (UP)) (|h| #2=(|List| UP))
+         ((|dd| ($)) (|b| (UP)) (#1=#:G708 NIL) (|a| (UP)) (|h| #2=(|List| UP))
           (|d| (UP)) (|rec| (|Record| (|:| |coef| #2#) (|:| |generator| UP)))
           (|b2| (UP)) (|b1| (UP)) (|a2| (UP)) (|a1| (UP)))
          (SEQ (LETT |a1| (QVELT |d1| 0) . #3=(|HELLFDIV;+;3$;8|))
@@ -197,7 +197,7 @@
 
 (SDEFUN |HELLFDIV;redpolyIfCan| ((|h| R) (|a| UP) ($ |Union| UP "failed"))
         (SPROG
-         ((#1=#:G707 NIL)
+         ((#1=#:G708 NIL)
           (|rec|
            (|Record| (|:| |coef1| UP) (|:| |coef2| UP) (|:| |generator| UP)))
           (|q| (|Fraction| UP)) (|p| (UPUP)))
@@ -265,7 +265,7 @@
 
 (SDEFUN |HELLFDIV;reduce;2$;14| ((|d| $) ($ $))
         (SPROG
-         ((|g| (R)) (|b0| (UP)) (|a0| (UP)) (#1=#:G707 NIL) (|b| (UP))
+         ((|g| (R)) (|b0| (UP)) (|a0| (UP)) (#1=#:G708 NIL) (|b| (UP))
           (|a| (UP)))
          (SEQ
           (COND ((QVELT |d| 3) |d|)
@@ -274,7 +274,30 @@
                    (LETT |a| (QVELT |d| 0) . #2=(|HELLFDIV;reduce;2$;14|))
                    (QREFELT $ 17))
                   (QREFELT $ 22) (QREFELT $ 101))
-                 (SEQ (QSETVELT |d| 3 'T) (EXIT |d|)))
+                 (SEQ
+                  (COND
+                   ((SPADCALL |a| (QREFELT $ 92))
+                    (COND
+                     ((NULL
+                       (SPADCALL |a| (|spadConstant| $ 32) (QREFELT $ 35)))
+                      (EXIT
+                       (SPADCALL
+                        (|HELLFDIV;makeDivisor| (|spadConstant| $ 32)
+                         (PROG2
+                             (LETT #1#
+                                   (SPADCALL (QVELT |d| 1) |a| (QREFELT $ 60))
+                                   . #2#)
+                             (QCDR #1#)
+                           (|check_union2| (QEQCAR #1# 0) (QREFELT $ 7)
+                                           (|Union| (QREFELT $ 7) #3="failed")
+                                           #1#))
+                         (SPADCALL (QVELT |d| 2)
+                                   (SPADCALL (SPADCALL |a| (QREFELT $ 45))
+                                             (QREFELT $ 46))
+                                   (QREFELT $ 102))
+                         $)
+                        (QREFELT $ 67)))))))
+                  (QSETVELT |d| 3 'T) (EXIT |d|)))
                 ('T
                  (SEQ (LETT |b| (QVELT |d| 1) . #2#)
                       (LETT |a0|
@@ -284,16 +307,15 @@
                                        (SPADCALL (QREFELT $ 15)
                                                  (SPADCALL |b| 2
                                                            (QREFELT $ 59))
-                                                 (QREFELT $ 102))
+                                                 (QREFELT $ 103))
                                        |a| (QREFELT $ 60))
                                       . #2#)
                                 (QCDR #1#)
                               (|check_union2| (QEQCAR #1# 0) (QREFELT $ 7)
-                                              (|Union| (QREFELT $ 7) "failed")
-                                              #1#))
+                                              (|Union| (QREFELT $ 7) #3#) #1#))
                             . #2#)
                       (LETT |b0|
-                            (SPADCALL (SPADCALL |b| (QREFELT $ 103)) |a0|
+                            (SPADCALL (SPADCALL |b| (QREFELT $ 104)) |a0|
                                       (QREFELT $ 64))
                             . #2#)
                       (LETT |g|
@@ -311,7 +333,7 @@
                                        (QREFELT $ 66))
                              (SPADCALL (SPADCALL |a0| (QREFELT $ 45))
                                        (QREFELT $ 46))
-                             (QREFELT $ 104))
+                             (QREFELT $ 102))
                             . #2#)
                       (EXIT
                        (SPADCALL (|HELLFDIV;makeDivisor| |a0| |b0| |g| $)
@@ -325,16 +347,18 @@
                 ('T (CONS 1 "failed")))))) 
 
 (SDEFUN |HELLFDIV;-;2$;16| ((|d| $) ($ $))
-        (SPROG ((|a| (UP)))
-               (SEQ (LETT |a| (QVELT |d| 0) |HELLFDIV;-;2$;16|)
-                    (EXIT
-                     (|HELLFDIV;makeDivisor| |a|
-                      (SPADCALL (QVELT |d| 1) (QREFELT $ 103))
-                      (SPADCALL
-                       (SPADCALL (SPADCALL |a| (QREFELT $ 45)) (QVELT |d| 2)
-                                 (QREFELT $ 65))
-                       (QREFELT $ 107))
-                      $))))) 
+        (SPROG ((|di| ($)) (|a| (UP)))
+               (SEQ (LETT |a| (QVELT |d| 0) . #1=(|HELLFDIV;-;2$;16|))
+                    (LETT |di|
+                          (|HELLFDIV;makeDivisor| |a|
+                           (SPADCALL (QVELT |d| 1) (QREFELT $ 104))
+                           (SPADCALL
+                            (SPADCALL (SPADCALL |a| (QREFELT $ 45))
+                                      (QVELT |d| 2) (QREFELT $ 65))
+                            (QREFELT $ 107))
+                           $)
+                          . #1#)
+                    (QSETVELT |di| 3 (QVELT |d| 3)) (EXIT |di|)))) 
 
 (SDEFUN |HELLFDIV;=;2$B;17| ((|d1| $) (|d2| $) ($ |Boolean|))
         (SEQ
@@ -360,7 +384,7 @@
                     (SPADCALL
                      (LETT |d|
                            (SPADCALL |x| (SPADCALL |a| (QREFELT $ 110))
-                                     (QREFELT $ 102))
+                                     (QREFELT $ 103))
                            . #1#)
                      (SPADCALL (SPADCALL (QREFELT $ 111)) (QREFELT $ 112))
                      (QREFELT $ 113))
@@ -372,7 +396,7 @@
 
 (SDEFUN |HELLFDIV;intReduce| ((|h| R) (|b| UP) ($ R))
         (SPROG
-         ((#1=#:G807 NIL) (#2=#:G809 NIL) (|i| NIL) (#3=#:G808 NIL)
+         ((#1=#:G813 NIL) (#2=#:G815 NIL) (|i| NIL) (#3=#:G814 NIL)
           (|v| (|Vector| UP)))
          (SEQ
           (LETT |v| (QCAR (SPADCALL |h| (QREFELT $ 116)))
@@ -401,7 +425,7 @@
 (SDEFUN |HELLFDIV;divisor;R3UPF$;20|
         ((|h| R) (|a| UP) (|dp| UP) (|g| UP) (|r| F) ($ $))
         (SPROG
-         ((|bb| (UP)) (#1=#:G707 NIL)
+         ((|bb| (UP)) (#1=#:G708 NIL)
           (|rec|
            (|Record| (|:| |coef1| UP) (|:| |coef2| UP) (|:| |generator| UP)))
           (|b| (|Fraction| UP)) (|hh| (UPUP)))
@@ -463,9 +487,9 @@
 
 (DECLAIM (NOTINLINE |HyperellipticFiniteDivisor;|)) 
 
-(DEFUN |HyperellipticFiniteDivisor| (&REST #1=#:G816)
+(DEFUN |HyperellipticFiniteDivisor| (&REST #1=#:G822)
   (SPROG NIL
-         (PROG (#2=#:G817)
+         (PROG (#2=#:G823)
            (RETURN
             (COND
              ((LETT #2#
@@ -486,7 +510,7 @@
 
 (DEFUN |HyperellipticFiniteDivisor;| (|#1| |#2| |#3| |#4|)
   (SPROG
-   ((#1=#:G715 NIL) (#2=#:G707 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL)
+   ((#1=#:G719 NIL) (#2=#:G708 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL)
     (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #3=(|HyperellipticFiniteDivisor|))
@@ -566,7 +590,7 @@
               (251 . |extendedEuclidean|) (257 . |ground?|) (262 . |numer|)
               (267 . |coerce|) (272 . |bracket|) (277 . |coerce|)
               (282 . |prefix|) (288 . =) (294 . +) |HELLFDIV;coerce;$Of;13|
-              (300 . <=) (306 . -) (312 . -) (317 . /) (|Union| 9 '"failed")
+              (300 . <=) (306 . /) (312 . -) (318 . -) (|Union| 9 '"failed")
               |HELLFDIV;generator;$U;15| (323 . |inv|) |HELLFDIV;=;2$B;17|
               (328 . |monomial|) (334 . |coerce|) (339 . |discriminant|)
               (343 . |retract|) (348 . |gcd|) |HELLFDIV;divisor;2F$;18|
@@ -610,7 +634,7 @@
                                          7 34 0 92 1 44 7 0 93 1 7 23 0 94 1 23
                                          0 54 95 1 9 23 0 96 2 23 0 0 54 97 2 9
                                          34 0 0 98 2 23 0 0 0 99 2 20 34 0 0
-                                         101 2 7 0 0 0 102 1 7 0 0 103 2 9 0 0
+                                         101 2 9 0 0 0 102 2 7 0 0 0 103 1 7 0
                                          0 104 1 9 0 0 107 2 7 0 6 16 109 1 7 0
                                          6 110 0 9 44 111 1 44 7 0 112 2 7 0 0
                                          0 113 1 9 115 0 116 1 117 20 0 118 2 9

@@ -533,7 +533,6 @@
 ;     -- new macros look like  macro f ==  or macro f(x) ===
 ;     -- so transform into that format
 ;     mkAtree1 ['DEF,['macro,sym],junk1,junk2,val]
-;   x is ["~=",a,b] => mkAtree1 ['not,["=",a,b]]
 ;   x is ["+->",funargs,funbody] =>
 ;     if funbody is [":",body,type] then
 ;       types := [type]
@@ -594,8 +593,8 @@
 (DEFUN |mkAtree3| (|x| |op| |argl|)
   (PROG (|op1| |ISTMP#1| |axis| |ISTMP#2| |body| |lhs| |ISTMP#3| |rhs| |var|
          |lb| |ISTMP#4| |ul| |upTest| |lowTest| |z| |p| |a| |sym| |junk1|
-         |junk2| |val| |b| |funargs| |funbody| |type| |types| |v| |arg| |r|
-         |r'| |at| |before| |after| |form| |ISTMP#5| |ISTMP#6|)
+         |junk2| |val| |funargs| |funbody| |type| |types| |v| |arg| |r| |r'|
+         |at| |before| |after| |form| |ISTMP#5| |ISTMP#6|)
     (RETURN
      (COND
       ((AND (EQ |op| 'REDUCE) (CONSP |argl|)
@@ -707,16 +706,6 @@
                                      (SETQ |val| (CAR |ISTMP#4|))
                                      #1#))))))))))
        (|mkAtree1| (LIST 'DEF (LIST '|macro| |sym|) |junk1| |junk2| |val|)))
-      ((AND (CONSP |x|) (EQ (CAR |x|) '~=)
-            (PROGN
-             (SETQ |ISTMP#1| (CDR |x|))
-             (AND (CONSP |ISTMP#1|)
-                  (PROGN
-                   (SETQ |a| (CAR |ISTMP#1|))
-                   (SETQ |ISTMP#2| (CDR |ISTMP#1|))
-                   (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
-                        (PROGN (SETQ |b| (CAR |ISTMP#2|)) #1#))))))
-       (|mkAtree1| (LIST '|not| (LIST '= |a| |b|))))
       ((AND (CONSP |x|) (EQ (CAR |x|) '+->)
             (PROGN
              (SETQ |ISTMP#1| (CDR |x|))

@@ -56,8 +56,10 @@
 (MAKEPROP '|UnivariatePolynomialFunctions2| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
-              (|local| |#3|) (|local| |#4|) (|UnivariatePolynomial| 8 9)
-              (|Mapping| 9 7) (|UnivariatePolynomial| 6 7)
+              (|local| |#3|) (|local| |#4|)
+              (|UnivariatePolynomial| (NRTEVAL (QREFELT $ 8)) 9)
+              (|Mapping| 9 7)
+              (|UnivariatePolynomial| (NRTEVAL (QREFELT $ 6)) 7)
               (|UnivariatePolynomialCategoryFunctions2| 7 12 9 10) (0 . |map|)
               |UP2;map;MUpUp;1|)
            '#(|map| 6) 'NIL

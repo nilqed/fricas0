@@ -1,9 +1,9 @@
 
 (DECLAIM (NOTINLINE |Operator;|)) 
 
-(DEFUN |Operator| (#1=#:G704)
+(DEFUN |Operator| (#1=#:G708)
   (SPROG NIL
-         (PROG (#2=#:G705)
+         (PROG (#2=#:G709)
            (RETURN
             (COND
              ((LETT #2#
@@ -44,29 +44,34 @@
 (MAKEPROP '|Operator| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL (|ModuleOperator| 6 6) (|local| |#1|)
-              (|Union| $ '"failed") (|BasicOperator|) (|FreeGroup| 8)
-              (|Integer|) (|Mapping| 6 6) (|Union| 8 '#1="failed")
+              (|Union| $ '"failed") (|FreeGroup| 10) (|Integer|)
+              (|BasicOperator|) (|Mapping| 6 6) (|Union| 10 '#1="failed")
               (|Union| 6 '#1#) (|NonNegativeInteger|) (|Boolean|)
-              (|PositiveInteger|) (|String|) (|SingleInteger|) (|HashState|)
-              (|OutputForm|))
+              (|PositiveInteger|) (|HashState|) (|String|) (|OutputForm|)
+              (|SingleInteger|))
            '#() 'NIL
            (CONS
             (|makeByteWordVec2| 3
-                                '(1 1 2 3 0 1 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0
-                                  0 0))
+                                '(1 2 3 0 0 0 0 1 0 0 1 0 0 0 1 1 0 0 0 0 0 0 0
+                                  0 0 0 0 0 0 0 0 0 0))
             (CONS
-             '#(|Algebra&| |Module&| NIL NIL |Ring&| NIL |Rng&| NIL NIL NIL
-                |AbelianGroup&| NIL NIL |AbelianMonoid&| |Monoid&| NIL
-                |SemiGroup&| |AbelianSemiGroup&| |SetCategory&| NIL
-                |RetractableTo&| |RetractableTo&| NIL |BasicType&| NIL)
+             '#(|Algebra&| NIL NIL NIL |Rng&| NIL NIL |Module&|
+                |NonAssociativeRing&| NIL NIL |NonAssociativeRng&| NIL NIL NIL
+                NIL |AbelianGroup&| NIL NIL NIL NIL |MagmaWithUnit&|
+                |NonAssociativeSemiRng&| |AbelianMonoid&| |Magma&|
+                |AbelianSemiGroup&| |SetCategory&| NIL |RetractableTo&|
+                |RetractableTo&| NIL |BasicType&| NIL)
              (CONS
-              '#((|Algebra| 6) (|Module| 6) (|CharacteristicNonZero|)
-                 (|CharacteristicZero|) (|Ring|) (|BiModule| 6 6) (|Rng|)
-                 (|LeftModule| $$) (|LeftModule| 6) (|RightModule| 6)
-                 (|AbelianGroup|) (|CancellationAbelianMonoid|) (|SemiRing|)
-                 (|AbelianMonoid|) (|Monoid|) (|SemiRng|) (|SemiGroup|)
-                 (|AbelianSemiGroup|) (|SetCategory|) (|Eltable| 6 6)
-                 (|RetractableTo| 8) (|RetractableTo| 6) (|unitsKnown|)
-                 (|BasicType|) (|CoercibleTo| 20))
+              '#((|Algebra| 6) (|CharacteristicNonZero|) (|CharacteristicZero|)
+                 (|Ring|) (|Rng|) (|SemiRing|) (|SemiRng|) (|Module| 6)
+                 (|NonAssociativeRing|) (|BiModule| $$ $$) (|BiModule| 6 6)
+                 (|NonAssociativeRng|) (|RightModule| $$) (|LeftModule| $$)
+                 (|LeftModule| 6) (|RightModule| 6) (|AbelianGroup|) (|Monoid|)
+                 (|NonAssociativeSemiRing|) (|CancellationAbelianMonoid|)
+                 (|SemiGroup|) (|MagmaWithUnit|) (|NonAssociativeSemiRng|)
+                 (|AbelianMonoid|) (|Magma|) (|AbelianSemiGroup|)
+                 (|SetCategory|) (|Eltable| 6 6) (|RetractableTo| 10)
+                 (|RetractableTo| 6) (|unitsKnown|) (|BasicType|)
+                 (|CoercibleTo| 19))
               (|makeByteWordVec2| -999999 'NIL))))
            '|lookupIncomplete|)) 

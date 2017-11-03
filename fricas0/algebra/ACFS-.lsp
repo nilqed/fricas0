@@ -162,7 +162,14 @@
                 . #1#)
           (LETT $ (GETREFV 53) . #1#)
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3
+                    (LETT |pv$|
+                          (|buildPredVector| 0 0
+                                             (LIST
+                                              (|HasCategory| |#2|
+                                                             '(|RetractableTo|
+                                                               (|Integer|)))))
+                          . #1#))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)
           (QSETREFV $ 7 |#2|)

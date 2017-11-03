@@ -9,7 +9,7 @@
 
 (SDEFUN |OMSERVER;OMsend;OmcAV;2|
         ((|conn| |OpenMathConnection|) (|value| |Any|) ($ |Void|))
-        (SPROG ((#1=#:G709 NIL) (|dev| (|OpenMathDevice|)))
+        (SPROG ((#1=#:G712 NIL) (|dev| (|OpenMathDevice|)))
                (SEQ
                 (LETT |dev| (SPADCALL |conn| (QREFELT $ 17))
                       . #2=(|OMSERVER;OMsend;OmcAV;2|))
@@ -38,7 +38,7 @@
                               (SPADCALL |dev| (SPADCALL |value| (QREFELT $ 42))
                                         'T (QREFELT $ 43))
                               . #2#)
-                        (GO #3=#:G703)))))
+                        (GO #3=#:G706)))))
                     #3# (EXIT #1#)))))))) 
 
 (SDEFUN |OMSERVER;OMserve;2SiV;3|
@@ -58,7 +58,7 @@
 
 (DEFUN |OpenMathServerPackage| ()
   (SPROG NIL
-         (PROG (#1=#:G715)
+         (PROG (#1=#:G718)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|OpenMathServerPackage|)

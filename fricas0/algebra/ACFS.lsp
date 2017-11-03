@@ -51,7 +51,11 @@
                                                      $)
                                                     (|Symbol|)))
                                                   T))
-                                               NIL
+                                               '(((|RetractableTo|
+                                                   (|AlgebraicNumber|))
+                                                  (|has| |t#1|
+                                                         (|RetractableTo|
+                                                          (|Integer|)))))
                                                '((|SparseUnivariatePolynomial|
                                                   $)
                                                  (|Symbol|) (|List| $))

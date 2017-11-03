@@ -42,9 +42,9 @@
          (|uSeg| |Segment| (|DoubleFloat|)) (|vSeg| |Segment| (|DoubleFloat|))
          (|opts| |List| (|DrawOption|)) ($ |ThreeSpace| (|DoubleFloat|)))
         (SPROG
-         ((|space| #1#) (|aProp| (|SubSpaceComponentProperty|)) (#3=#:G725 NIL)
-          (|lProp| (|List| (|SubSpaceComponentProperty|))) (#4=#:G724 NIL)
-          (|l| NIL) (#5=#:G723 NIL) (|someV| #6=(|DoubleFloat|))
+         ((|space| #1#) (|aProp| (|SubSpaceComponentProperty|)) (#3=#:G730 NIL)
+          (|lProp| (|List| (|SubSpaceComponentProperty|))) (#4=#:G729 NIL)
+          (|l| NIL) (#5=#:G728 NIL) (|someV| #6=(|DoubleFloat|))
           (|llp| (|List| (|List| (|Point| (|DoubleFloat|))))) (|someU| #6#)
           (|lp| (|List| (|Point| (|DoubleFloat|)))) (|pt| #2#) (|iu| NIL)
           (|iv| NIL) (|vstep| #7=(|DoubleFloat|)) (|ustep| #7#)
@@ -180,7 +180,7 @@
 
 (DEFUN |MeshCreationRoutinesForThreeDimensions| ()
   (SPROG NIL
-         (PROG (#1=#:G777)
+         (PROG (#1=#:G782)
            (RETURN
             (COND
              ((LETT #1#
@@ -226,7 +226,7 @@
               (5 . |var1StepsDefault|) (|List| (|DrawOption|))
               (|DrawOptionFunctions0|) (9 . |var1Steps|)
               (15 . |var2StepsDefault|) (19 . |var2Steps|) (|DoubleFloat|)
-              (|Segment| 21) (25 . |lo|) (30 . |hi|)
+              (|Segment| 21) (25 . |low|) (30 . |high|)
               (|SubSpaceComponentProperty|) (35 . |new|) (|Boolean|)
               (39 . |close|) (45 . |solid|) (|List| (|List| 7)) (|List| 25)
               (|ThreeSpace| 21) (51 . |mesh|) |MESH;meshPar2Var;TsM2SLTs;3|

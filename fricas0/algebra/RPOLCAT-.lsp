@@ -1,7 +1,7 @@
 
 (SDEFUN |RPOLCAT-;coerce;SOf;1| ((|p| S) ($ |OutputForm|))
         (SPROG
-         ((#1=#:G850 NIL) (|dp| (|NonNegativeInteger|)) (|tp| (S)) (|ip| (S)))
+         ((#1=#:G852 NIL) (|dp| (|NonNegativeInteger|)) (|tp| (S)) (|ip| (S)))
          (SEQ
           (EXIT
            (COND
@@ -27,7 +27,7 @@
                                    (SPADCALL (SPADCALL |p| (QREFELT $ 23))
                                              (QREFELT $ 24))
                                    . #3#)
-                             (GO #4=#:G849)))
+                             (GO #4=#:G851)))
                            (#2#
                             (PROGN
                              (LETT #1#
@@ -119,7 +119,7 @@
           #4# (EXIT #1#)))) 
 
 (SDEFUN |RPOLCAT-;mvar;SV;2| ((|p| S) ($ V))
-        (SPROG ((#1=#:G852 NIL))
+        (SPROG ((#1=#:G854 NIL))
                (COND
                 ((SPADCALL |p| (QREFELT $ 11))
                  (|error| "Error in mvar from RPOLCAT : #1 is constant."))
@@ -132,7 +132,7 @@
                                    (|Union| (QREFELT $ 9) "failed") #1#)))))) 
 
 (SDEFUN |RPOLCAT-;mdeg;SNni;3| ((|p| S) ($ |NonNegativeInteger|))
-        (SPROG ((#1=#:G857 NIL))
+        (SPROG ((#1=#:G859 NIL))
                (COND ((SPADCALL |p| (QREFELT $ 11)) 0)
                      ('T
                       (SPADCALL |p|
@@ -147,7 +147,7 @@
                                 (QREFELT $ 34)))))) 
 
 (SDEFUN |RPOLCAT-;init;2S;4| ((|p| S) ($ S))
-        (SPROG ((|v| (V)) (#1=#:G862 NIL))
+        (SPROG ((|v| (V)) (#1=#:G864 NIL))
                (SEQ
                 (COND
                  ((SPADCALL |p| (QREFELT $ 11))
@@ -177,7 +177,7 @@
                 ('T (SPADCALL |p| |v| |d| (QREFELT $ 36)))))) 
 
 (SDEFUN |RPOLCAT-;head;2S;6| ((|p| S) ($ S))
-        (SPROG ((|d| (|NonNegativeInteger|)) (|v| (V)) (#1=#:G874 NIL))
+        (SPROG ((|d| (|NonNegativeInteger|)) (|v| (V)) (#1=#:G876 NIL))
                (SEQ
                 (COND ((SPADCALL |p| (QREFELT $ 11)) |p|)
                       ('T
@@ -256,7 +256,7 @@
               ('T (SPADCALL (SPADCALL |p| (QREFELT $ 15)) (QREFELT $ 11))))) 
 
 (SDEFUN |RPOLCAT-;mainMonomial;2S;15| ((|p| S) ($ S))
-        (SPROG ((|v| (V)) (#1=#:G902 NIL))
+        (SPROG ((|v| (V)) (#1=#:G904 NIL))
                (SEQ
                 (COND
                  ((SPADCALL |p| (QREFELT $ 20))
@@ -279,7 +279,7 @@
                               (QREFELT $ 39))))))))) 
 
 (SDEFUN |RPOLCAT-;leastMonomial;2S;16| ((|p| S) ($ S))
-        (SPROG ((|v| (V)) (#1=#:G909 NIL))
+        (SPROG ((|v| (V)) (#1=#:G911 NIL))
                (SEQ
                 (COND
                  ((SPADCALL |p| (QREFELT $ 20))
@@ -302,7 +302,7 @@
                               (QREFELT $ 39))))))))) 
 
 (SDEFUN |RPOLCAT-;mainCoefficients;SL;17| ((|p| S) ($ |List| S))
-        (SPROG ((|v| (V)) (#1=#:G916 NIL))
+        (SPROG ((|v| (V)) (#1=#:G918 NIL))
                (SEQ
                 (COND
                  ((SPADCALL |p| (QREFELT $ 20))
@@ -326,9 +326,9 @@
 
 (SDEFUN |RPOLCAT-;mainMonomials;SL;18| ((|p| S) ($ |List| S))
         (SPROG
-         ((#1=#:G931 NIL) (|m| NIL) (#2=#:G930 NIL)
+         ((#1=#:G933 NIL) (|m| NIL) (#2=#:G932 NIL)
           (|lm| (|List| (|SparseUnivariatePolynomial| S))) (|v| (V))
-          (#3=#:G923 NIL))
+          (#3=#:G925 NIL))
          (SEQ
           (COND
            ((SPADCALL |p| (QREFELT $ 20))
@@ -477,7 +477,7 @@
 
 (SDEFUN |RPOLCAT-;lazyPrem;2SVS;28| ((|a| S) (|b| S) (|v| V) ($ S))
         (SPROG
-         ((|test| (|Integer|)) (|term| (S)) (#1=#:G973 NIL) (|lcav| (S))
+         ((|test| (|Integer|)) (|term| (S)) (#1=#:G976 NIL) (|lcav| (S))
           (|lcbv| (S)) (|dav| #2=(|NonNegativeInteger|)) (|dbv| #2#))
          (SEQ
           (COND
@@ -684,8 +684,8 @@
          ($ |Record| (|:| |coef| S) (|:| |gap| (|NonNegativeInteger|))
           (|:| |remainder| S)))
         (SPROG
-         ((#1=#:G1022 NIL) (|test| (|Integer|)) (|delta| (|Integer|))
-          (|term| (S)) (#2=#:G1018 NIL) (#3=#:G1012 NIL)
+         ((#1=#:G1025 NIL) (|test| (|Integer|)) (|delta| (|Integer|))
+          (|term| (S)) (#2=#:G1021 NIL) (#3=#:G1015 NIL)
           (|db| (|NonNegativeInteger|)) (|lcb| (S)) (|xb| (V)) (|xa| (V)))
          (SEQ
           (COND
@@ -788,8 +788,8 @@
          ($ |Record| (|:| |coef| S) (|:| |gap| (|NonNegativeInteger|))
           (|:| |remainder| S)))
         (SPROG
-         ((#1=#:G1036 NIL) (|test| (|Integer|)) (|delta| (|Integer|))
-          (|term| (S)) (#2=#:G1032 NIL) (|lcav| (S)) (|lcbv| (S))
+         ((#1=#:G1039 NIL) (|test| (|Integer|)) (|delta| (|Integer|))
+          (|term| (S)) (#2=#:G1035 NIL) (|lcav| (S)) (|lcbv| (S))
           (|dav| #3=(|NonNegativeInteger|)) (|dbv| #3#))
          (SEQ
           (COND
@@ -886,8 +886,8 @@
          ($ |Record| (|:| |coef| S) (|:| |gap| (|NonNegativeInteger|))
           (|:| |quotient| S) (|:| |remainder| S)))
         (SPROG
-         ((#1=#:G1062 NIL) (|test| (|Integer|)) (|delta| (|Integer|)) (|q| (S))
-          (|term| (S)) (#2=#:G1058 NIL) (#3=#:G1052 NIL)
+         ((#1=#:G1065 NIL) (|test| (|Integer|)) (|delta| (|Integer|)) (|q| (S))
+          (|term| (S)) (#2=#:G1061 NIL) (#3=#:G1055 NIL)
           (|db| (|NonNegativeInteger|)) (|lcb| (S)) (|xb| (V)) (|xa| (V)))
          (SEQ
           (COND
@@ -1002,8 +1002,8 @@
          ($ |Record| (|:| |coef| S) (|:| |gap| (|NonNegativeInteger|))
           (|:| |quotient| S) (|:| |remainder| S)))
         (SPROG
-         ((#1=#:G1076 NIL) (|test| (|Integer|)) (|delta| (|Integer|)) (|q| (S))
-          (|term| (S)) (#2=#:G1072 NIL) (|lcav| (S)) (|lcbv| (S))
+         ((#1=#:G1079 NIL) (|test| (|Integer|)) (|delta| (|Integer|)) (|q| (S))
+          (|term| (S)) (#2=#:G1075 NIL) (|lcav| (S)) (|lcbv| (S))
           (|dav| #3=(|NonNegativeInteger|)) (|dbv| #3#))
          (SEQ
           (COND
@@ -1089,7 +1089,7 @@
                                            |q| |a|)))))))))))))))) 
 
 (SDEFUN |RPOLCAT-;monicModulo;3S;37| ((|a| S) (|b| S) ($ S))
-        (SPROG ((#1=#:G1085 NIL) (|rec| (|Union| S "failed")) (|ib| (S)))
+        (SPROG ((#1=#:G1088 NIL) (|rec| (|Union| S "failed")) (|ib| (S)))
                (SEQ
                 (COND
                  ((SPADCALL |b| (QREFELT $ 11))
@@ -1141,7 +1141,7 @@
           (|:| |power| (|NonNegativeInteger|))))
         (SPROG
          ((|test| (|Integer|)) (|pow| (|NonNegativeInteger|)) (|term| (S))
-          (#1=#:G1101 NIL) (#2=#:G1095 NIL) (|db| (|NonNegativeInteger|))
+          (#1=#:G1104 NIL) (#2=#:G1098 NIL) (|db| (|NonNegativeInteger|))
           (|lcb| (S)) (|xb| (V)) (|xa| (V)))
          (SEQ
           (COND
@@ -1330,7 +1330,7 @@
         (SPADCALL |r| |s| (QREFELT $ 126))) 
 
 (SDEFUN |RPOLCAT-;iexactQuo;3R;48| ((|r| R) (|s| R) ($ R))
-        (SPROG ((#1=#:G1144 NIL))
+        (SPROG ((#1=#:G1147 NIL))
                (PROG2
                    (LETT #1# (SPADCALL |r| |s| (QREFELT $ 128))
                          |RPOLCAT-;iexactQuo;3R;48|)
@@ -1342,7 +1342,7 @@
         (SPADCALL |r| |s| (QREFELT $ 129))) 
 
 (SDEFUN |RPOLCAT-;exactQuotient;SRS;50| ((|p| S) (|r| R) ($ S))
-        (SPROG ((#1=#:G1149 NIL))
+        (SPROG ((#1=#:G1152 NIL))
                (PROG2
                    (LETT #1# (SPADCALL |p| |r| (QREFELT $ 130))
                          |RPOLCAT-;exactQuotient;SRS;50|)
@@ -1351,7 +1351,7 @@
                                  (|Union| (QREFELT $ 6) "failed") #1#)))) 
 
 (SDEFUN |RPOLCAT-;exactQuotient;3S;51| ((|a| S) (|b| S) ($ S))
-        (SPROG ((#1=#:G1153 NIL))
+        (SPROG ((#1=#:G1156 NIL))
                (COND
                 ((SPADCALL |b| (QREFELT $ 11))
                  (SPADCALL |a| (SPADCALL |b| (QREFELT $ 12)) (QREFELT $ 132)))
@@ -1364,7 +1364,7 @@
                                    (|Union| (QREFELT $ 6) "failed") #1#)))))) 
 
 (SDEFUN |RPOLCAT-;exactQuotient!;3S;52| ((|a| S) (|b| S) ($ S))
-        (SPROG ((#1=#:G1158 NIL))
+        (SPROG ((#1=#:G1161 NIL))
                (COND
                 ((SPADCALL |b| (QREFELT $ 11))
                  (SPADCALL |a| (SPADCALL |b| (QREFELT $ 12)) (QREFELT $ 135)))
@@ -1433,7 +1433,7 @@
 
 (SDEFUN |RPOLCAT-;mainContent;2S;61| ((|p| S) ($ S))
         (SPROG
-         ((#1=#:G1176 NIL) (#2=#:G1175 (S)) (#3=#:G1177 (S)) (#4=#:G1180 NIL)
+         ((#1=#:G1179 NIL) (#2=#:G1178 (S)) (#3=#:G1180 (S)) (#4=#:G1183 NIL)
           (#5=#:G690 NIL))
          (SEQ
           (COND ((SPADCALL |p| (QREFELT $ 20)) |p|)
@@ -1461,7 +1461,7 @@
                   (COND (#1# #2#) (#6# (|spadConstant| $ 41))))))))) 
 
 (SDEFUN |RPOLCAT-;mainPrimitivePart;2S;62| ((|p| S) ($ S))
-        (SPROG ((#1=#:G1182 NIL))
+        (SPROG ((#1=#:G1185 NIL))
                (COND ((SPADCALL |p| (QREFELT $ 20)) |p|)
                      ('T
                       (QVELT
@@ -1480,7 +1480,7 @@
 
 (SDEFUN |RPOLCAT-;mainSquareFreePart;2S;63| ((|p| S) ($ S))
         (SPROG
-         ((|sfp| (|SparseUnivariatePolynomial| S)) (|v| (V)) (#1=#:G1188 NIL))
+         ((|sfp| (|SparseUnivariatePolynomial| S)) (|v| (V)) (#1=#:G1191 NIL))
          (SEQ
           (COND ((SPADCALL |p| (QREFELT $ 11)) |p|)
                 ('T
@@ -1529,8 +1529,8 @@
 (SDEFUN |RPOLCAT-;localRetract| ((|p| |Polynomial| R) ($ S))
         (SPROG
          ((|newp| (S)) (|xvimvp| (S)) (|c| (S)) (|d| (|NonNegativeInteger|))
-          (|vimvp| (V)) (|imvp| (|PositiveInteger|)) (#1=#:G1213 NIL)
-          (|mvp| (|Symbol|)) (#2=#:G1211 NIL))
+          (|vimvp| (V)) (|imvp| (|PositiveInteger|)) (#1=#:G1218 NIL)
+          (|mvp| (|Symbol|)) (#2=#:G1216 NIL))
          (SEQ
           (COND
            ((SPADCALL |p| (QREFELT $ 174))
@@ -1588,8 +1588,8 @@
         ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ S))
         (SPROG
          ((|newp| (S)) (|xvimvp| (S)) (|c| (S)) (|d| (|NonNegativeInteger|))
-          (|vimvp| (V)) (|imvp| (|PositiveInteger|)) (#1=#:G1223 NIL)
-          (|mvp| (|Symbol|)) (#2=#:G1221 NIL))
+          (|vimvp| (V)) (|imvp| (|PositiveInteger|)) (#1=#:G1228 NIL)
+          (|mvp| (|Symbol|)) (#2=#:G1226 NIL))
          (SEQ
           (COND
            ((SPADCALL |pq| (QREFELT $ 186))
@@ -1649,8 +1649,8 @@
 (SDEFUN |RPOLCAT-;localRetractPZ| ((|pz| |Polynomial| (|Integer|)) ($ S))
         (SPROG
          ((|newp| (S)) (|xvimvp| (S)) (|c| (S)) (|d| (|NonNegativeInteger|))
-          (|vimvp| (V)) (|imvp| (|PositiveInteger|)) (#1=#:G1233 NIL)
-          (|mvp| (|Symbol|)) (#2=#:G1231 NIL))
+          (|vimvp| (V)) (|imvp| (|PositiveInteger|)) (#1=#:G1238 NIL)
+          (|mvp| (|Symbol|)) (#2=#:G1236 NIL))
          (SEQ
           (COND
            ((SPADCALL |pz| (QREFELT $ 196))
@@ -1787,10 +1787,11 @@
         ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ |Polynomial| R))
         (SPADCALL (CONS (|function| |RPOLCAT-;QToR|) $) |pq| (QREFELT $ 213))) 
 
-(SDEFUN |RPOLCAT-;retract;PS;79| ((|pz| |Polynomial| (|Integer|)) ($ S))
+(SDEFUN |RPOLCAT-;retract;PS;79|
+        ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ S))
         (SPROG ((|rif| (|Union| S "failed")))
                (SEQ
-                (LETT |rif| (SPADCALL |pz| (QREFELT $ 214))
+                (LETT |rif| (SPADCALL |pq| (QREFELT $ 214))
                       |RPOLCAT-;retract;PS;79|)
                 (EXIT
                  (COND
@@ -1798,97 +1799,96 @@
                    (|error| "failed in retract: POLY Z -> % from RPOLCAT"))
                   ('T (QCDR |rif|))))))) 
 
-(SDEFUN |RPOLCAT-;convert;PS;80| ((|pz| |Polynomial| (|Integer|)) ($ S))
-        (SPADCALL |pz| (QREFELT $ 216))) 
-
-(SDEFUN |RPOLCAT-;retract;PS;81|
+(SDEFUN |RPOLCAT-;convert;PS;80|
         ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ S))
-        (SPROG ((|rif| (|Union| S "failed")))
-               (SEQ
-                (LETT |rif| (SPADCALL |pq| (QREFELT $ 218))
-                      |RPOLCAT-;retract;PS;81|)
-                (EXIT
-                 (COND
-                  ((QEQCAR |rif| 1)
-                   (|error| "failed in retract: POLY Z -> % from RPOLCAT"))
-                  ('T (QCDR |rif|))))))) 
-
-(SDEFUN |RPOLCAT-;convert;PS;82|
-        ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ S))
-        (SPADCALL |pq| (QREFELT $ 220))) 
+        (SPADCALL |pq| (QREFELT $ 216))) 
 
 (SDEFUN |RPOLCAT-;ZToQ| ((|z| |Integer|) ($ |Fraction| (|Integer|)))
-        (SPADCALL |z| (QREFELT $ 224))) 
+        (SPADCALL |z| (QREFELT $ 220))) 
 
 (SDEFUN |RPOLCAT-;RToQ| ((|r| R) ($ |Fraction| (|Integer|)))
-        (SPADCALL |r| (QREFELT $ 225))) 
+        (SPADCALL |r| (QREFELT $ 221))) 
 
 (SDEFUN |RPOLCAT-;PZToPQ|
         ((|pz| |Polynomial| (|Integer|))
          ($ |Polynomial| (|Fraction| (|Integer|))))
-        (SPADCALL (CONS (|function| |RPOLCAT-;ZToQ|) $) |pz| (QREFELT $ 227))) 
+        (SPADCALL (CONS (|function| |RPOLCAT-;ZToQ|) $) |pz| (QREFELT $ 223))) 
 
 (SDEFUN |RPOLCAT-;PRToPQ|
         ((|pr| |Polynomial| R) ($ |Polynomial| (|Fraction| (|Integer|))))
-        (SPADCALL (CONS (|function| |RPOLCAT-;RToQ|) $) |pr| (QREFELT $ 229))) 
+        (SPADCALL (CONS (|function| |RPOLCAT-;RToQ|) $) |pr| (QREFELT $ 225))) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;87|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;85|
         ((|pz| |Polynomial| (|Integer|)) ($ |Union| S "failed"))
         (SPROG ((|pq| (|Polynomial| (|Fraction| (|Integer|)))))
                (SEQ
                 (LETT |pq| (|RPOLCAT-;PZToPQ| |pz| $)
-                      |RPOLCAT-;retractIfCan;PU;87|)
-                (EXIT (SPADCALL |pq| (QREFELT $ 218)))))) 
+                      |RPOLCAT-;retractIfCan;PU;85|)
+                (EXIT (SPADCALL |pq| (QREFELT $ 214)))))) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;88|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;86|
         ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ |Union| S "failed"))
         (|RPOLCAT-;localRetractIfCanPQ| |pq| $)) 
 
-(SDEFUN |RPOLCAT-;convert;PS;89| ((|pr| |Polynomial| R) ($ S))
+(SDEFUN |RPOLCAT-;convert;PS;87| ((|pr| |Polynomial| R) ($ S))
         (SPROG ((|lrif| (|Union| S "failed")))
                (SEQ
                 (LETT |lrif| (|RPOLCAT-;localRetractIfCan| |pr| $)
-                      |RPOLCAT-;convert;PS;89|)
+                      |RPOLCAT-;convert;PS;87|)
                 (EXIT
                  (COND
                   ((QEQCAR |lrif| 1)
                    (|error| "failed in convert: PR->% from RPOLCAT"))
                   ('T (QCDR |lrif|))))))) 
 
-(SDEFUN |RPOLCAT-;convert;PS;90| ((|pr| |Polynomial| R) ($ S))
+(SDEFUN |RPOLCAT-;convert;PS;88| ((|pr| |Polynomial| R) ($ S))
         (SPROG ((|pq| (|Polynomial| (|Fraction| (|Integer|)))))
                (SEQ
-                (LETT |pq| (|RPOLCAT-;PRToPQ| |pr| $) |RPOLCAT-;convert;PS;90|)
-                (EXIT (SPADCALL |pq| (QREFELT $ 220)))))) 
+                (LETT |pq| (|RPOLCAT-;PRToPQ| |pr| $) |RPOLCAT-;convert;PS;88|)
+                (EXIT (SPADCALL |pq| (QREFELT $ 216)))))) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;91|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;89|
         ((|pr| |Polynomial| R) ($ |Union| S "failed"))
         (|RPOLCAT-;localRetractIfCan| |pr| $)) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;92|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;90|
         ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ |Union| S "failed"))
         (|RPOLCAT-;localRetractIfCanPQ| |pq| $)) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;93|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;91|
         ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ |Union| S "failed"))
         (SPROG ((|pr| (|Polynomial| R)))
                (SEQ
                 (LETT |pr| (|RPOLCAT-;PQToPR| |pq| $)
-                      |RPOLCAT-;retractIfCan;PU;93|)
-                (EXIT (SPADCALL |pr| (QREFELT $ 234)))))) 
+                      |RPOLCAT-;retractIfCan;PU;91|)
+                (EXIT (SPADCALL |pr| (QREFELT $ 230)))))) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;94|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;92|
         ((|pz| |Polynomial| (|Integer|)) ($ |Union| S "failed"))
         (SPROG ((|pr| (|Polynomial| R)))
                (SEQ
                 (LETT |pr| (|RPOLCAT-;PZToPR| |pz| $)
-                      |RPOLCAT-;retractIfCan;PU;94|)
-                (EXIT (SPADCALL |pr| (QREFELT $ 234)))))) 
+                      |RPOLCAT-;retractIfCan;PU;92|)
+                (EXIT (SPADCALL |pr| (QREFELT $ 230)))))) 
 
-(SDEFUN |RPOLCAT-;retract;PS;95| ((|pr| |Polynomial| R) ($ S))
+(SDEFUN |RPOLCAT-;retract;PS;93| ((|pr| |Polynomial| R) ($ S))
         (SPROG ((|rif| (|Union| S "failed")))
                (SEQ
-                (LETT |rif| (SPADCALL |pr| (QREFELT $ 234))
+                (LETT |rif| (SPADCALL |pr| (QREFELT $ 230))
+                      |RPOLCAT-;retract;PS;93|)
+                (EXIT
+                 (COND
+                  ((QEQCAR |rif| 1)
+                   (|error| "failed in retract: POLY Z -> % from RPOLCAT"))
+                  ('T (QCDR |rif|))))))) 
+
+(SDEFUN |RPOLCAT-;convert;PS;94| ((|pr| |Polynomial| R) ($ S))
+        (SPADCALL |pr| (QREFELT $ 232))) 
+
+(SDEFUN |RPOLCAT-;retract;PS;95| ((|pz| |Polynomial| (|Integer|)) ($ S))
+        (SPROG ((|rif| (|Union| S "failed")))
+               (SEQ
+                (LETT |rif| (SPADCALL |pz| (QREFELT $ 233))
                       |RPOLCAT-;retract;PS;95|)
                 (EXIT
                  (COND
@@ -1896,79 +1896,65 @@
                    (|error| "failed in retract: POLY Z -> % from RPOLCAT"))
                   ('T (QCDR |rif|))))))) 
 
-(SDEFUN |RPOLCAT-;convert;PS;96| ((|pr| |Polynomial| R) ($ S))
-        (SPADCALL |pr| (QREFELT $ 236))) 
-
-(SDEFUN |RPOLCAT-;retract;PS;97| ((|pz| |Polynomial| (|Integer|)) ($ S))
-        (SPROG ((|rif| (|Union| S "failed")))
-               (SEQ
-                (LETT |rif| (SPADCALL |pz| (QREFELT $ 214))
-                      |RPOLCAT-;retract;PS;97|)
-                (EXIT
-                 (COND
-                  ((QEQCAR |rif| 1)
-                   (|error| "failed in retract: POLY Z -> % from RPOLCAT"))
-                  ('T (QCDR |rif|))))))) 
-
-(SDEFUN |RPOLCAT-;convert;PS;98| ((|pz| |Polynomial| (|Integer|)) ($ S))
-        (SPADCALL |pz| (QREFELT $ 216))) 
+(SDEFUN |RPOLCAT-;convert;PS;96| ((|pz| |Polynomial| (|Integer|)) ($ S))
+        (SPADCALL |pz| (QREFELT $ 235))) 
 
 (SDEFUN |RPOLCAT-;RToZ| ((|r| R) ($ |Integer|)) (SPADCALL |r| (QREFELT $ 238))) 
 
 (SDEFUN |RPOLCAT-;PRToPZ| ((|pr| |Polynomial| R) ($ |Polynomial| (|Integer|)))
         (SPADCALL (CONS (|function| |RPOLCAT-;RToZ|) $) |pr| (QREFELT $ 240))) 
 
-(SDEFUN |RPOLCAT-;convert;PS;101| ((|pr| |Polynomial| R) ($ S))
+(SDEFUN |RPOLCAT-;convert;PS;99| ((|pr| |Polynomial| R) ($ S))
         (SPROG ((|lrif| (|Union| S "failed")))
                (SEQ
                 (LETT |lrif| (|RPOLCAT-;localRetractIfCan| |pr| $)
-                      |RPOLCAT-;convert;PS;101|)
+                      |RPOLCAT-;convert;PS;99|)
                 (EXIT
                  (COND
                   ((QEQCAR |lrif| 1)
                    (|error| "failed in convert: PR->% from RPOLCAT"))
                   ('T (QCDR |lrif|))))))) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;102|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;100|
         ((|pz| |Polynomial| (|Integer|)) ($ |Union| S "failed"))
         (|RPOLCAT-;localRetractIfCanPZ| |pz| $)) 
 
-(SDEFUN |RPOLCAT-;convert;PS;103| ((|pr| |Polynomial| R) ($ S))
+(SDEFUN |RPOLCAT-;convert;PS;101| ((|pr| |Polynomial| R) ($ S))
         (SPROG ((|pz| (|Polynomial| (|Integer|))))
                (SEQ
                 (LETT |pz| (|RPOLCAT-;PRToPZ| |pr| $)
-                      |RPOLCAT-;convert;PS;103|)
-                (EXIT (SPADCALL |pz| (QREFELT $ 216)))))) 
+                      |RPOLCAT-;convert;PS;101|)
+                (EXIT (SPADCALL |pz| (QREFELT $ 235)))))) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;104|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;102|
         ((|pr| |Polynomial| R) ($ |Union| S "failed"))
         (|RPOLCAT-;localRetractIfCan| |pr| $)) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;105|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;103|
         ((|pz| |Polynomial| (|Integer|)) ($ |Union| S "failed"))
         (|RPOLCAT-;localRetractIfCanPZ| |pz| $)) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;106|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;104|
         ((|pz| |Polynomial| (|Integer|)) ($ |Union| S "failed"))
         (SPROG ((|pr| (|Polynomial| R)))
                (SEQ
                 (LETT |pr| (|RPOLCAT-;PZToPR| |pz| $)
-                      |RPOLCAT-;retractIfCan;PU;106|)
-                (EXIT (SPADCALL |pr| (QREFELT $ 234)))))) 
+                      |RPOLCAT-;retractIfCan;PU;104|)
+                (EXIT (SPADCALL |pr| (QREFELT $ 230)))))) 
 
-(SDEFUN |RPOLCAT-;retract;PS;107| ((|pr| |Polynomial| R) ($ S))
+(SDEFUN |RPOLCAT-;retract;PS;105| ((|pr| |Polynomial| R) ($ S))
         (SPROG ((|rif| (|Union| S "failed")))
                (SEQ
-                (LETT |rif| (SPADCALL |pr| (QREFELT $ 234))
-                      |RPOLCAT-;retract;PS;107|)
+                (LETT |rif| (SPADCALL |pr| (QREFELT $ 230))
+                      |RPOLCAT-;retract;PS;105|)
                 (EXIT
                  (COND
                   ((QEQCAR |rif| 1)
                    (|error| "failed in retract: POLY Z -> % from RPOLCAT"))
                   ('T (QCDR |rif|))))))) 
 
-(SDEFUN |RPOLCAT-;convert;PS;108| ((|pr| |Polynomial| R) ($ S))
-        (SPADCALL |pr| (QREFELT $ 236))) 
+(SDEFUN |RPOLCAT-;convert;PS;106| ((|pr| |Polynomial| R) ($ S))
+        (SPADCALL |pr| (QREFELT $ 232))) 
 
 (SDEFUN |RPOLCAT-;ZToR| ((|z| |Integer|) ($ R)) (SPADCALL |z| (QREFELT $ 198))) 
 
@@ -1982,209 +1968,195 @@
         ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ |Polynomial| R))
         (SPADCALL (CONS (|function| |RPOLCAT-;QToR|) $) |pq| (QREFELT $ 213))) 
 
-(SDEFUN |RPOLCAT-;retract;PS;113| ((|pz| |Polynomial| (|Integer|)) ($ S))
+(SDEFUN |RPOLCAT-;retract;PS;111|
+        ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ S))
         (SPROG ((|rif| (|Union| S "failed")))
                (SEQ
-                (LETT |rif| (SPADCALL |pz| (QREFELT $ 214))
-                      |RPOLCAT-;retract;PS;113|)
+                (LETT |rif| (SPADCALL |pq| (QREFELT $ 214))
+                      |RPOLCAT-;retract;PS;111|)
                 (EXIT
                  (COND
                   ((QEQCAR |rif| 1)
                    (|error| "failed in retract: POLY Z -> % from RPOLCAT"))
                   ('T (QCDR |rif|))))))) 
 
-(SDEFUN |RPOLCAT-;convert;PS;114| ((|pz| |Polynomial| (|Integer|)) ($ S))
-        (SPADCALL |pz| (QREFELT $ 216))) 
-
-(SDEFUN |RPOLCAT-;retract;PS;115|
+(SDEFUN |RPOLCAT-;convert;PS;112|
         ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ S))
-        (SPROG ((|rif| (|Union| S "failed")))
-               (SEQ
-                (LETT |rif| (SPADCALL |pq| (QREFELT $ 218))
-                      |RPOLCAT-;retract;PS;115|)
-                (EXIT
-                 (COND
-                  ((QEQCAR |rif| 1)
-                   (|error| "failed in retract: POLY Z -> % from RPOLCAT"))
-                  ('T (QCDR |rif|))))))) 
-
-(SDEFUN |RPOLCAT-;convert;PS;116|
-        ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ S))
-        (SPADCALL |pq| (QREFELT $ 220))) 
+        (SPADCALL |pq| (QREFELT $ 216))) 
 
 (SDEFUN |RPOLCAT-;ZToQ| ((|z| |Integer|) ($ |Fraction| (|Integer|)))
-        (SPADCALL |z| (QREFELT $ 224))) 
+        (SPADCALL |z| (QREFELT $ 220))) 
 
 (SDEFUN |RPOLCAT-;RToQ| ((|r| R) ($ |Fraction| (|Integer|)))
-        (SPADCALL |r| (QREFELT $ 225))) 
+        (SPADCALL |r| (QREFELT $ 221))) 
 
 (SDEFUN |RPOLCAT-;PZToPQ|
         ((|pz| |Polynomial| (|Integer|))
          ($ |Polynomial| (|Fraction| (|Integer|))))
-        (SPADCALL (CONS (|function| |RPOLCAT-;ZToQ|) $) |pz| (QREFELT $ 227))) 
+        (SPADCALL (CONS (|function| |RPOLCAT-;ZToQ|) $) |pz| (QREFELT $ 223))) 
 
 (SDEFUN |RPOLCAT-;PRToPQ|
         ((|pr| |Polynomial| R) ($ |Polynomial| (|Fraction| (|Integer|))))
-        (SPADCALL (CONS (|function| |RPOLCAT-;RToQ|) $) |pr| (QREFELT $ 229))) 
+        (SPADCALL (CONS (|function| |RPOLCAT-;RToQ|) $) |pr| (QREFELT $ 225))) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;121|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;117|
         ((|pz| |Polynomial| (|Integer|)) ($ |Union| S "failed"))
         (SPROG ((|pq| (|Polynomial| (|Fraction| (|Integer|)))))
                (SEQ
                 (LETT |pq| (|RPOLCAT-;PZToPQ| |pz| $)
-                      |RPOLCAT-;retractIfCan;PU;121|)
-                (EXIT (SPADCALL |pq| (QREFELT $ 218)))))) 
+                      |RPOLCAT-;retractIfCan;PU;117|)
+                (EXIT (SPADCALL |pq| (QREFELT $ 214)))))) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;122|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;118|
         ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ |Union| S "failed"))
         (|RPOLCAT-;localRetractIfCanPQ| |pq| $)) 
 
-(SDEFUN |RPOLCAT-;convert;PS;123| ((|pr| |Polynomial| R) ($ S))
+(SDEFUN |RPOLCAT-;convert;PS;119| ((|pr| |Polynomial| R) ($ S))
         (SPROG ((|lrif| (|Union| S "failed")))
                (SEQ
                 (LETT |lrif| (|RPOLCAT-;localRetractIfCan| |pr| $)
-                      |RPOLCAT-;convert;PS;123|)
+                      |RPOLCAT-;convert;PS;119|)
                 (EXIT
                  (COND
                   ((QEQCAR |lrif| 1)
                    (|error| "failed in convert: PR->% from RPOLCAT"))
                   ('T (QCDR |lrif|))))))) 
 
-(SDEFUN |RPOLCAT-;convert;PS;124| ((|pr| |Polynomial| R) ($ S))
+(SDEFUN |RPOLCAT-;convert;PS;120| ((|pr| |Polynomial| R) ($ S))
         (SPROG ((|pq| (|Polynomial| (|Fraction| (|Integer|)))))
                (SEQ
                 (LETT |pq| (|RPOLCAT-;PRToPQ| |pr| $)
-                      |RPOLCAT-;convert;PS;124|)
-                (EXIT (SPADCALL |pq| (QREFELT $ 220)))))) 
+                      |RPOLCAT-;convert;PS;120|)
+                (EXIT (SPADCALL |pq| (QREFELT $ 216)))))) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;125|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;121|
         ((|pr| |Polynomial| R) ($ |Union| S "failed"))
         (|RPOLCAT-;localRetractIfCan| |pr| $)) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;126|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;122|
         ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ |Union| S "failed"))
         (|RPOLCAT-;localRetractIfCanPQ| |pq| $)) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;127|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;123|
         ((|pq| |Polynomial| (|Fraction| (|Integer|))) ($ |Union| S "failed"))
         (SPROG ((|pr| (|Polynomial| R)))
                (SEQ
                 (LETT |pr| (|RPOLCAT-;PQToPR| |pq| $)
-                      |RPOLCAT-;retractIfCan;PU;127|)
-                (EXIT (SPADCALL |pr| (QREFELT $ 234)))))) 
+                      |RPOLCAT-;retractIfCan;PU;123|)
+                (EXIT (SPADCALL |pr| (QREFELT $ 230)))))) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;128|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;124|
         ((|pz| |Polynomial| (|Integer|)) ($ |Union| S "failed"))
         (SPROG ((|pr| (|Polynomial| R)))
                (SEQ
                 (LETT |pr| (|RPOLCAT-;PZToPR| |pz| $)
-                      |RPOLCAT-;retractIfCan;PU;128|)
-                (EXIT (SPADCALL |pr| (QREFELT $ 234)))))) 
+                      |RPOLCAT-;retractIfCan;PU;124|)
+                (EXIT (SPADCALL |pr| (QREFELT $ 230)))))) 
 
-(SDEFUN |RPOLCAT-;retract;PS;129| ((|pr| |Polynomial| R) ($ S))
+(SDEFUN |RPOLCAT-;retract;PS;125| ((|pr| |Polynomial| R) ($ S))
         (SPROG ((|rif| (|Union| S "failed")))
                (SEQ
-                (LETT |rif| (SPADCALL |pr| (QREFELT $ 234))
-                      |RPOLCAT-;retract;PS;129|)
+                (LETT |rif| (SPADCALL |pr| (QREFELT $ 230))
+                      |RPOLCAT-;retract;PS;125|)
                 (EXIT
                  (COND
                   ((QEQCAR |rif| 1)
                    (|error| "failed in retract: POLY Z -> % from RPOLCAT"))
                   ('T (QCDR |rif|))))))) 
 
-(SDEFUN |RPOLCAT-;convert;PS;130| ((|pr| |Polynomial| R) ($ S))
-        (SPADCALL |pr| (QREFELT $ 236))) 
+(SDEFUN |RPOLCAT-;convert;PS;126| ((|pr| |Polynomial| R) ($ S))
+        (SPADCALL |pr| (QREFELT $ 232))) 
 
-(SDEFUN |RPOLCAT-;retract;PS;131| ((|pz| |Polynomial| (|Integer|)) ($ S))
+(SDEFUN |RPOLCAT-;retract;PS;127| ((|pz| |Polynomial| (|Integer|)) ($ S))
         (SPROG ((|rif| (|Union| S "failed")))
                (SEQ
-                (LETT |rif| (SPADCALL |pz| (QREFELT $ 214))
-                      |RPOLCAT-;retract;PS;131|)
+                (LETT |rif| (SPADCALL |pz| (QREFELT $ 233))
+                      |RPOLCAT-;retract;PS;127|)
                 (EXIT
                  (COND
                   ((QEQCAR |rif| 1)
                    (|error| "failed in retract: POLY Z -> % from RPOLCAT"))
                   ('T (QCDR |rif|))))))) 
 
-(SDEFUN |RPOLCAT-;convert;PS;132| ((|pz| |Polynomial| (|Integer|)) ($ S))
-        (SPADCALL |pz| (QREFELT $ 216))) 
+(SDEFUN |RPOLCAT-;convert;PS;128| ((|pz| |Polynomial| (|Integer|)) ($ S))
+        (SPADCALL |pz| (QREFELT $ 235))) 
 
 (SDEFUN |RPOLCAT-;RToZ| ((|r| R) ($ |Integer|)) (SPADCALL |r| (QREFELT $ 238))) 
 
 (SDEFUN |RPOLCAT-;PRToPZ| ((|pr| |Polynomial| R) ($ |Polynomial| (|Integer|)))
         (SPADCALL (CONS (|function| |RPOLCAT-;RToZ|) $) |pr| (QREFELT $ 240))) 
 
-(SDEFUN |RPOLCAT-;convert;PS;135| ((|pr| |Polynomial| R) ($ S))
+(SDEFUN |RPOLCAT-;convert;PS;131| ((|pr| |Polynomial| R) ($ S))
         (SPROG ((|lrif| (|Union| S "failed")))
                (SEQ
                 (LETT |lrif| (|RPOLCAT-;localRetractIfCan| |pr| $)
-                      |RPOLCAT-;convert;PS;135|)
+                      |RPOLCAT-;convert;PS;131|)
                 (EXIT
                  (COND
                   ((QEQCAR |lrif| 1)
                    (|error| "failed in convert: PR->% from RPOLCAT"))
                   ('T (QCDR |lrif|))))))) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;136|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;132|
         ((|pz| |Polynomial| (|Integer|)) ($ |Union| S "failed"))
         (|RPOLCAT-;localRetractIfCanPZ| |pz| $)) 
 
-(SDEFUN |RPOLCAT-;convert;PS;137| ((|pr| |Polynomial| R) ($ S))
+(SDEFUN |RPOLCAT-;convert;PS;133| ((|pr| |Polynomial| R) ($ S))
         (SPROG ((|pz| (|Polynomial| (|Integer|))))
                (SEQ
                 (LETT |pz| (|RPOLCAT-;PRToPZ| |pr| $)
-                      |RPOLCAT-;convert;PS;137|)
-                (EXIT (SPADCALL |pz| (QREFELT $ 216)))))) 
+                      |RPOLCAT-;convert;PS;133|)
+                (EXIT (SPADCALL |pz| (QREFELT $ 235)))))) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;138|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;134|
         ((|pr| |Polynomial| R) ($ |Union| S "failed"))
         (|RPOLCAT-;localRetractIfCan| |pr| $)) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;139|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;135|
         ((|pz| |Polynomial| (|Integer|)) ($ |Union| S "failed"))
         (|RPOLCAT-;localRetractIfCanPZ| |pz| $)) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;140|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;136|
         ((|pz| |Polynomial| (|Integer|)) ($ |Union| S "failed"))
         (SPROG ((|pr| (|Polynomial| R)))
                (SEQ
                 (LETT |pr| (|RPOLCAT-;PZToPR| |pz| $)
-                      |RPOLCAT-;retractIfCan;PU;140|)
-                (EXIT (SPADCALL |pr| (QREFELT $ 234)))))) 
+                      |RPOLCAT-;retractIfCan;PU;136|)
+                (EXIT (SPADCALL |pr| (QREFELT $ 230)))))) 
 
-(SDEFUN |RPOLCAT-;retract;PS;141| ((|pr| |Polynomial| R) ($ S))
+(SDEFUN |RPOLCAT-;retract;PS;137| ((|pr| |Polynomial| R) ($ S))
         (SPROG ((|rif| (|Union| S "failed")))
                (SEQ
-                (LETT |rif| (SPADCALL |pr| (QREFELT $ 234))
-                      |RPOLCAT-;retract;PS;141|)
+                (LETT |rif| (SPADCALL |pr| (QREFELT $ 230))
+                      |RPOLCAT-;retract;PS;137|)
                 (EXIT
                  (COND
                   ((QEQCAR |rif| 1)
                    (|error| "failed in retract: POLY Z -> % from RPOLCAT"))
                   ('T (QCDR |rif|))))))) 
 
-(SDEFUN |RPOLCAT-;convert;PS;142| ((|pr| |Polynomial| R) ($ S))
-        (SPADCALL |pr| (QREFELT $ 236))) 
+(SDEFUN |RPOLCAT-;convert;PS;138| ((|pr| |Polynomial| R) ($ S))
+        (SPADCALL |pr| (QREFELT $ 232))) 
 
-(SDEFUN |RPOLCAT-;retractIfCan;PU;143|
+(SDEFUN |RPOLCAT-;retractIfCan;PU;139|
         ((|pr| |Polynomial| R) ($ |Union| S "failed"))
         (|RPOLCAT-;localRetractIfCan| |pr| $)) 
 
-(SDEFUN |RPOLCAT-;retract;PS;144| ((|pr| |Polynomial| R) ($ S))
+(SDEFUN |RPOLCAT-;retract;PS;140| ((|pr| |Polynomial| R) ($ S))
         (SPROG ((|rif| (|Union| S "failed")))
                (SEQ
-                (LETT |rif| (SPADCALL |pr| (QREFELT $ 234))
-                      |RPOLCAT-;retract;PS;144|)
+                (LETT |rif| (SPADCALL |pr| (QREFELT $ 230))
+                      |RPOLCAT-;retract;PS;140|)
                 (EXIT
                  (COND
                   ((QEQCAR |rif| 1)
                    (|error| "failed in retract: POLY Z -> % from RPOLCAT"))
                   ('T (QCDR |rif|))))))) 
 
-(SDEFUN |RPOLCAT-;convert;PS;145| ((|pr| |Polynomial| R) ($ S))
-        (SPADCALL |pr| (QREFELT $ 236))) 
+(SDEFUN |RPOLCAT-;convert;PS;141| ((|pr| |Polynomial| R) ($ S))
+        (SPADCALL |pr| (QREFELT $ 232))) 
 
-(SDEFUN |RPOLCAT-;convert;SS;146| ((|pol| S) ($ |String|))
+(SDEFUN |RPOLCAT-;convert;SS;142| ((|pol| S) ($ |String|))
         (SPROG
          ((|stpol| #1=(|String|)) (|n| (|Integer|)) (|sdpol| #1#)
           (|svpol| (|String|)) (|sipol| #1#) (|tpol| (S))
@@ -2197,7 +2169,7 @@
            (#2='T
             (SEQ
              (LETT |ipol| (SPADCALL |pol| (QREFELT $ 15))
-                   . #3=(|RPOLCAT-;convert;SS;146|))
+                   . #3=(|RPOLCAT-;convert;SS;142|))
              (LETT |vpol| (SPADCALL |pol| (QREFELT $ 23)) . #3#)
              (LETT |dpol| (SPADCALL |pol| (QREFELT $ 22)) . #3#)
              (LETT |tpol| (SPADCALL |pol| (QREFELT $ 19)) . #3#)
@@ -2255,7 +2227,7 @@
 
 (DEFUN |RecursivePolynomialCategory&| (|#1| |#2| |#3| |#4|)
   (SPROG
-   ((#1=#:G1208 NIL) (#2=#:G1513 NIL) (|i| NIL) (#3=#:G1512 NIL) (|pv$| NIL)
+   ((#1=#:G1213 NIL) (#2=#:G1505 NIL) (|i| NIL) (#3=#:G1504 NIL) (|pv$| NIL)
     ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
    (SEQ
     (PROGN
@@ -2278,12 +2250,7 @@
                                                         '(|RetractableTo|
                                                           (|Integer|)))
                                          (|HasCategory| |#2|
-                                                        '(|IntegerNumberSystem|))
-                                         (|HasCategory| |#2|
                                                         '(|Algebra|
-                                                          (|Integer|)))
-                                         (|HasCategory| |#2|
-                                                        '(|QuotientFieldCategory|
                                                           (|Integer|)))
                                          (|HasCategory| |#2|
                                                         '(|Algebra|
@@ -2374,7 +2341,7 @@
                    (|dispatchFunction| |RPOLCAT-;mainSquareFreePart;2S;63|)
                    $)))))
      (COND
-      ((|testBitVector| |pv$| 8)
+      ((|testBitVector| |pv$| 6)
        (PROGN
         (QSETREFV $ 167 (CONS (|dispatchFunction| |RPOLCAT-;convert;SP;64|) $))
         (QSETREFV $ 168 (CONS (|dispatchFunction| |RPOLCAT-;coerce;SP;65|) $))
@@ -2411,10 +2378,10 @@
                                    . #4#)))
                            (LETT |i| (|inc_SI| |i|) . #4#) (GO G190) G191
                            (EXIT (NREVERSE #3#)))))
-           (COND ((|testBitVector| |pv$| 7)))
-           (COND ((|testBitVector| |pv$| 5))))))
+           (COND ((|testBitVector| |pv$| 5)))
+           (COND ((|testBitVector| |pv$| 4))))))
         (COND
-         ((|testBitVector| |pv$| 5)
+         ((|testBitVector| |pv$| 4)
           (PROGN
            (QSETREFV $ 208
                      (|MPolyCatFunctions2| (|Symbol|)
@@ -2424,7 +2391,7 @@
                                            (|Polynomial| (|Integer|))
                                            (|Polynomial| |#2|)))
            (COND
-            ((|testBitVector| |pv$| 7)
+            ((|testBitVector| |pv$| 5)
              (PROGN
               (QSETREFV $ 211
                         (|MPolyCatFunctions2| (|Symbol|)
@@ -2438,14 +2405,10 @@
                         (CONS (|dispatchFunction| |RPOLCAT-;retract;PS;79|) $))
               (QSETREFV $ 217
                         (CONS (|dispatchFunction| |RPOLCAT-;convert;PS;80|) $))
-              (QSETREFV $ 219
-                        (CONS (|dispatchFunction| |RPOLCAT-;retract;PS;81|) $))
-              (QSETREFV $ 221
-                        (CONS (|dispatchFunction| |RPOLCAT-;convert;PS;82|) $))
               (COND
-               ((|testBitVector| |pv$| 6)
+               ((|HasCategory| |#2| '(|QuotientFieldCategory| (|Integer|)))
                 (PROGN
-                 (QSETREFV $ 222
+                 (QSETREFV $ 218
                            (|MPolyCatFunctions2| (|Symbol|)
                                                  (|IndexedExponents|
                                                   (|Symbol|))
@@ -2456,7 +2419,7 @@
                                                  (|Polynomial| (|Integer|))
                                                  (|Polynomial|
                                                   (|Fraction| (|Integer|)))))
-                 (QSETREFV $ 223
+                 (QSETREFV $ 219
                            (|MPolyCatFunctions2| (|Symbol|)
                                                  (|IndexedExponents|
                                                   (|Symbol|))
@@ -2466,73 +2429,73 @@
                                                  (|Polynomial| |#2|)
                                                  (|Polynomial|
                                                   (|Fraction| (|Integer|)))))
-                 (QSETREFV $ 230
+                 (QSETREFV $ 226
                            (CONS
-                            (|dispatchFunction| |RPOLCAT-;retractIfCan;PU;87|)
+                            (|dispatchFunction| |RPOLCAT-;retractIfCan;PU;85|)
                             $))
                  (COND
                   ((|HasCategory| |#4| '(|Finite|))
                    (PROGN
-                    (QSETREFV $ 231
+                    (QSETREFV $ 227
                               (CONS
                                (|dispatchFunction|
-                                |RPOLCAT-;retractIfCan;PU;88|)
+                                |RPOLCAT-;retractIfCan;PU;86|)
                                $))
-                    (QSETREFV $ 232
+                    (QSETREFV $ 228
                               (CONS
-                               (|dispatchFunction| |RPOLCAT-;convert;PS;89|)
+                               (|dispatchFunction| |RPOLCAT-;convert;PS;87|)
                                $))))
                   ('T
-                   (QSETREFV $ 232
+                   (QSETREFV $ 228
                              (CONS
-                              (|dispatchFunction| |RPOLCAT-;convert;PS;90|)
+                              (|dispatchFunction| |RPOLCAT-;convert;PS;88|)
                               $))))))
                ('T
                 (PROGN
                  (COND
                   ((|HasCategory| |#4| '(|Finite|))
                    (PROGN
-                    (QSETREFV $ 233
+                    (QSETREFV $ 229
                               (CONS
                                (|dispatchFunction|
-                                |RPOLCAT-;retractIfCan;PU;91|)
+                                |RPOLCAT-;retractIfCan;PU;89|)
                                $))
-                    (QSETREFV $ 231
+                    (QSETREFV $ 227
                               (CONS
                                (|dispatchFunction|
-                                |RPOLCAT-;retractIfCan;PU;92|)
+                                |RPOLCAT-;retractIfCan;PU;90|)
                                $))))
                   ('T
-                   (QSETREFV $ 231
+                   (QSETREFV $ 227
                              (CONS
                               (|dispatchFunction|
-                               |RPOLCAT-;retractIfCan;PU;93|)
+                               |RPOLCAT-;retractIfCan;PU;91|)
                               $))))
-                 (QSETREFV $ 230
+                 (QSETREFV $ 226
                            (CONS
-                            (|dispatchFunction| |RPOLCAT-;retractIfCan;PU;94|)
+                            (|dispatchFunction| |RPOLCAT-;retractIfCan;PU;92|)
                             $))
-                 (QSETREFV $ 235
-                           (CONS (|dispatchFunction| |RPOLCAT-;retract;PS;95|)
+                 (QSETREFV $ 231
+                           (CONS (|dispatchFunction| |RPOLCAT-;retract;PS;93|)
                                  $))
-                 (QSETREFV $ 232
-                           (CONS (|dispatchFunction| |RPOLCAT-;convert;PS;96|)
+                 (QSETREFV $ 228
+                           (CONS (|dispatchFunction| |RPOLCAT-;convert;PS;94|)
                                  $))))))))
            (COND
-            ((|testBitVector| |pv$| 5)
-             (COND ((|testBitVector| |pv$| 7))
+            ((|testBitVector| |pv$| 4)
+             (COND ((|testBitVector| |pv$| 5))
                    ('T
                     (PROGN
-                     (QSETREFV $ 215
+                     (QSETREFV $ 234
                                (CONS
-                                (|dispatchFunction| |RPOLCAT-;retract;PS;97|)
+                                (|dispatchFunction| |RPOLCAT-;retract;PS;95|)
                                 $))
-                     (QSETREFV $ 217
+                     (QSETREFV $ 236
                                (CONS
-                                (|dispatchFunction| |RPOLCAT-;convert;PS;98|)
+                                (|dispatchFunction| |RPOLCAT-;convert;PS;96|)
                                 $))
                      (COND
-                      ((|testBitVector| |pv$| 4)
+                      ((|HasCategory| |#2| '(|IntegerNumberSystem|))
                        (PROGN
                         (QSETREFV $ 237
                                   (|MPolyCatFunctions2| (|Symbol|)
@@ -2547,54 +2510,54 @@
                         (COND
                          ((|HasCategory| |#4| '(|Finite|))
                           (PROGN
-                           (QSETREFV $ 232
+                           (QSETREFV $ 228
                                      (CONS
                                       (|dispatchFunction|
-                                       |RPOLCAT-;convert;PS;101|)
+                                       |RPOLCAT-;convert;PS;99|)
                                       $))
-                           (QSETREFV $ 230
+                           (QSETREFV $ 226
                                      (CONS
                                       (|dispatchFunction|
-                                       |RPOLCAT-;retractIfCan;PU;102|)
+                                       |RPOLCAT-;retractIfCan;PU;100|)
                                       $))))
                          ('T
-                          (QSETREFV $ 232
+                          (QSETREFV $ 228
                                     (CONS
                                      (|dispatchFunction|
-                                      |RPOLCAT-;convert;PS;103|)
+                                      |RPOLCAT-;convert;PS;101|)
                                      $))))))
                       ('T
                        (PROGN
                         (COND
                          ((|HasCategory| |#4| '(|Finite|))
                           (PROGN
-                           (QSETREFV $ 233
+                           (QSETREFV $ 229
                                      (CONS
                                       (|dispatchFunction|
-                                       |RPOLCAT-;retractIfCan;PU;104|)
+                                       |RPOLCAT-;retractIfCan;PU;102|)
                                       $))
-                           (QSETREFV $ 230
+                           (QSETREFV $ 226
                                      (CONS
                                       (|dispatchFunction|
-                                       |RPOLCAT-;retractIfCan;PU;105|)
+                                       |RPOLCAT-;retractIfCan;PU;103|)
                                       $))))
                          ('T
-                          (QSETREFV $ 230
+                          (QSETREFV $ 226
                                     (CONS
                                      (|dispatchFunction|
-                                      |RPOLCAT-;retractIfCan;PU;106|)
+                                      |RPOLCAT-;retractIfCan;PU;104|)
                                      $))))
-                        (QSETREFV $ 235
+                        (QSETREFV $ 231
                                   (CONS
                                    (|dispatchFunction|
-                                    |RPOLCAT-;retract;PS;107|)
+                                    |RPOLCAT-;retract;PS;105|)
                                    $))
-                        (QSETREFV $ 232
+                        (QSETREFV $ 228
                                   (CONS
                                    (|dispatchFunction|
-                                    |RPOLCAT-;convert;PS;108|)
+                                    |RPOLCAT-;convert;PS;106|)
                                    $))))))))))))
-         ((|testBitVector| |pv$| 7)
+         ((|testBitVector| |pv$| 5)
           (PROGN
            (SETELT $ 208
                    (|MPolyCatFunctions2| (|Symbol|)
@@ -2604,7 +2567,7 @@
                                          (|Polynomial| (|Integer|))
                                          (|Polynomial| |#2|)))
            (COND
-            ((|testBitVector| |pv$| 7)
+            ((|testBitVector| |pv$| 5)
              (PROGN
               (SETELT $ 211
                       (|MPolyCatFunctions2| (|Symbol|)
@@ -2615,21 +2578,15 @@
                                              (|Fraction| (|Integer|)))
                                             (|Polynomial| |#2|)))
               (QSETREFV $ 215
-                        (CONS (|dispatchFunction| |RPOLCAT-;retract;PS;113|)
+                        (CONS (|dispatchFunction| |RPOLCAT-;retract;PS;111|)
                               $))
               (QSETREFV $ 217
-                        (CONS (|dispatchFunction| |RPOLCAT-;convert;PS;114|)
-                              $))
-              (QSETREFV $ 219
-                        (CONS (|dispatchFunction| |RPOLCAT-;retract;PS;115|)
-                              $))
-              (QSETREFV $ 221
-                        (CONS (|dispatchFunction| |RPOLCAT-;convert;PS;116|)
+                        (CONS (|dispatchFunction| |RPOLCAT-;convert;PS;112|)
                               $))
               (COND
-               ((|testBitVector| |pv$| 6)
+               ((|HasCategory| |#2| '(|QuotientFieldCategory| (|Integer|)))
                 (PROGN
-                 (SETELT $ 222
+                 (SETELT $ 218
                          (|MPolyCatFunctions2| (|Symbol|)
                                                (|IndexedExponents| (|Symbol|))
                                                (|IndexedExponents| (|Symbol|))
@@ -2638,7 +2595,7 @@
                                                (|Polynomial| (|Integer|))
                                                (|Polynomial|
                                                 (|Fraction| (|Integer|)))))
-                 (SETELT $ 223
+                 (SETELT $ 219
                          (|MPolyCatFunctions2| (|Symbol|)
                                                (|IndexedExponents| (|Symbol|))
                                                (|IndexedExponents| (|Symbol|))
@@ -2646,73 +2603,73 @@
                                                (|Polynomial| |#2|)
                                                (|Polynomial|
                                                 (|Fraction| (|Integer|)))))
-                 (QSETREFV $ 230
+                 (QSETREFV $ 226
                            (CONS
-                            (|dispatchFunction| |RPOLCAT-;retractIfCan;PU;121|)
+                            (|dispatchFunction| |RPOLCAT-;retractIfCan;PU;117|)
                             $))
                  (COND
                   ((|HasCategory| |#4| '(|Finite|))
                    (PROGN
-                    (QSETREFV $ 231
+                    (QSETREFV $ 227
                               (CONS
                                (|dispatchFunction|
-                                |RPOLCAT-;retractIfCan;PU;122|)
+                                |RPOLCAT-;retractIfCan;PU;118|)
                                $))
-                    (QSETREFV $ 232
+                    (QSETREFV $ 228
                               (CONS
-                               (|dispatchFunction| |RPOLCAT-;convert;PS;123|)
+                               (|dispatchFunction| |RPOLCAT-;convert;PS;119|)
                                $))))
                   ('T
-                   (QSETREFV $ 232
+                   (QSETREFV $ 228
                              (CONS
-                              (|dispatchFunction| |RPOLCAT-;convert;PS;124|)
+                              (|dispatchFunction| |RPOLCAT-;convert;PS;120|)
                               $))))))
                ('T
                 (PROGN
                  (COND
                   ((|HasCategory| |#4| '(|Finite|))
                    (PROGN
-                    (QSETREFV $ 233
+                    (QSETREFV $ 229
                               (CONS
                                (|dispatchFunction|
-                                |RPOLCAT-;retractIfCan;PU;125|)
+                                |RPOLCAT-;retractIfCan;PU;121|)
                                $))
-                    (QSETREFV $ 231
+                    (QSETREFV $ 227
                               (CONS
                                (|dispatchFunction|
-                                |RPOLCAT-;retractIfCan;PU;126|)
+                                |RPOLCAT-;retractIfCan;PU;122|)
                                $))))
                   ('T
-                   (QSETREFV $ 231
+                   (QSETREFV $ 227
                              (CONS
                               (|dispatchFunction|
-                               |RPOLCAT-;retractIfCan;PU;127|)
+                               |RPOLCAT-;retractIfCan;PU;123|)
                               $))))
-                 (QSETREFV $ 230
+                 (QSETREFV $ 226
                            (CONS
-                            (|dispatchFunction| |RPOLCAT-;retractIfCan;PU;128|)
+                            (|dispatchFunction| |RPOLCAT-;retractIfCan;PU;124|)
                             $))
-                 (QSETREFV $ 235
-                           (CONS (|dispatchFunction| |RPOLCAT-;retract;PS;129|)
+                 (QSETREFV $ 231
+                           (CONS (|dispatchFunction| |RPOLCAT-;retract;PS;125|)
                                  $))
-                 (QSETREFV $ 232
-                           (CONS (|dispatchFunction| |RPOLCAT-;convert;PS;130|)
+                 (QSETREFV $ 228
+                           (CONS (|dispatchFunction| |RPOLCAT-;convert;PS;126|)
                                  $))))))))
            (COND
-            ((|testBitVector| |pv$| 5)
-             (COND ((|testBitVector| |pv$| 7))
+            ((|testBitVector| |pv$| 4)
+             (COND ((|testBitVector| |pv$| 5))
                    ('T
                     (PROGN
-                     (QSETREFV $ 215
+                     (QSETREFV $ 234
                                (CONS
-                                (|dispatchFunction| |RPOLCAT-;retract;PS;131|)
+                                (|dispatchFunction| |RPOLCAT-;retract;PS;127|)
                                 $))
-                     (QSETREFV $ 217
+                     (QSETREFV $ 236
                                (CONS
-                                (|dispatchFunction| |RPOLCAT-;convert;PS;132|)
+                                (|dispatchFunction| |RPOLCAT-;convert;PS;128|)
                                 $))
                      (COND
-                      ((|testBitVector| |pv$| 4)
+                      ((|HasCategory| |#2| '(|IntegerNumberSystem|))
                        (PROGN
                         (SETELT $ 237
                                 (|MPolyCatFunctions2| (|Symbol|)
@@ -2727,73 +2684,73 @@
                         (COND
                          ((|HasCategory| |#4| '(|Finite|))
                           (PROGN
-                           (QSETREFV $ 232
+                           (QSETREFV $ 228
                                      (CONS
                                       (|dispatchFunction|
-                                       |RPOLCAT-;convert;PS;135|)
+                                       |RPOLCAT-;convert;PS;131|)
                                       $))
-                           (QSETREFV $ 230
+                           (QSETREFV $ 226
                                      (CONS
                                       (|dispatchFunction|
-                                       |RPOLCAT-;retractIfCan;PU;136|)
+                                       |RPOLCAT-;retractIfCan;PU;132|)
                                       $))))
                          ('T
-                          (QSETREFV $ 232
+                          (QSETREFV $ 228
                                     (CONS
                                      (|dispatchFunction|
-                                      |RPOLCAT-;convert;PS;137|)
+                                      |RPOLCAT-;convert;PS;133|)
                                      $))))))
                       ('T
                        (PROGN
                         (COND
                          ((|HasCategory| |#4| '(|Finite|))
                           (PROGN
-                           (QSETREFV $ 233
+                           (QSETREFV $ 229
                                      (CONS
                                       (|dispatchFunction|
-                                       |RPOLCAT-;retractIfCan;PU;138|)
+                                       |RPOLCAT-;retractIfCan;PU;134|)
                                       $))
-                           (QSETREFV $ 230
+                           (QSETREFV $ 226
                                      (CONS
                                       (|dispatchFunction|
-                                       |RPOLCAT-;retractIfCan;PU;139|)
+                                       |RPOLCAT-;retractIfCan;PU;135|)
                                       $))))
                          ('T
-                          (QSETREFV $ 230
+                          (QSETREFV $ 226
                                     (CONS
                                      (|dispatchFunction|
-                                      |RPOLCAT-;retractIfCan;PU;140|)
+                                      |RPOLCAT-;retractIfCan;PU;136|)
                                      $))))
-                        (QSETREFV $ 235
+                        (QSETREFV $ 231
                                   (CONS
                                    (|dispatchFunction|
-                                    |RPOLCAT-;retract;PS;141|)
+                                    |RPOLCAT-;retract;PS;137|)
                                    $))
-                        (QSETREFV $ 232
+                        (QSETREFV $ 228
                                   (CONS
                                    (|dispatchFunction|
-                                    |RPOLCAT-;convert;PS;142|)
+                                    |RPOLCAT-;convert;PS;138|)
                                    $)))))))))))))
-        (COND ((OR (|testBitVector| |pv$| 5) (|testBitVector| |pv$| 7)))
+        (COND ((OR (|testBitVector| |pv$| 4) (|testBitVector| |pv$| 5)))
               ('T
                (PROGN
                 (COND
                  ((|HasCategory| |#4| '(|Finite|))
-                  (QSETREFV $ 233
+                  (QSETREFV $ 229
                             (CONS
                              (|dispatchFunction|
-                              |RPOLCAT-;retractIfCan;PU;143|)
+                              |RPOLCAT-;retractIfCan;PU;139|)
                              $))))
-                (QSETREFV $ 235
-                          (CONS (|dispatchFunction| |RPOLCAT-;retract;PS;144|)
+                (QSETREFV $ 231
+                          (CONS (|dispatchFunction| |RPOLCAT-;retract;PS;140|)
                                 $))
-                (QSETREFV $ 232
-                          (CONS (|dispatchFunction| |RPOLCAT-;convert;PS;145|)
+                (QSETREFV $ 228
+                          (CONS (|dispatchFunction| |RPOLCAT-;convert;PS;141|)
                                 $)))))
         (COND
          ((|testBitVector| |pv$| 3)
           (QSETREFV $ 253
-                    (CONS (|dispatchFunction| |RPOLCAT-;convert;SS;146|)
+                    (CONS (|dispatchFunction| |RPOLCAT-;convert;SS;142|)
                           $)))))))
      $)))) 
 
@@ -2882,13 +2839,13 @@
               (697 . |variables|) (702 . |variables|) '|mpc2Z| (|Mapping| 7 70)
               (707 . |map|) '|mpc2Q| (|Mapping| 7 187) (713 . |map|)
               (719 . |retractIfCan|) (724 . |retract|) (729 . |retract|)
-              (734 . |convert|) (739 . |retractIfCan|) (744 . |retract|)
-              (749 . |retract|) (754 . |convert|) '|mpc2ZQ| '|mpc2RQ|
-              (759 . |coerce|) (764 . |retract|) (|Mapping| 187 70)
-              (769 . |map|) (|Mapping| 187 7) (775 . |map|)
-              (781 . |retractIfCan|) (786 . |retractIfCan|) (791 . |convert|)
-              (796 . |retractIfCan|) (801 . |retractIfCan|) (806 . |retract|)
-              (811 . |retract|) '|mpc2RZ| (816 . |retract|) (|Mapping| 70 7)
+              (734 . |convert|) '|mpc2ZQ| '|mpc2RQ| (739 . |coerce|)
+              (744 . |retract|) (|Mapping| 187 70) (749 . |map|)
+              (|Mapping| 187 7) (755 . |map|) (761 . |retractIfCan|)
+              (766 . |retractIfCan|) (771 . |convert|) (776 . |retractIfCan|)
+              (781 . |retractIfCan|) (786 . |retract|) (791 . |retract|)
+              (796 . |retractIfCan|) (801 . |retract|) (806 . |retract|)
+              (811 . |convert|) '|mpc2RZ| (816 . |retract|) (|Mapping| 70 7)
               (821 . |map|) (827 . -) (|String|) (832 . |convert|)
               (837 . |monomial?|) (842 . |concat|) (847 . |string|)
               (852 . |Zero|) (|Character|) (856 . |elt|) (862 . |coerce|)
@@ -2981,17 +2938,17 @@
                                                    204 2 179 10 161 0 205 1 185
                                                    179 0 206 1 195 179 0 207 2
                                                    208 158 209 195 210 2 211
-                                                   158 212 185 213 1 6 53 195
-                                                   214 1 0 0 195 215 1 6 0 195
-                                                   216 1 0 0 195 217 1 6 53 185
-                                                   218 1 0 0 185 219 1 6 0 185
-                                                   220 1 0 0 185 221 1 187 0 70
-                                                   224 1 7 187 0 225 2 222 185
-                                                   226 195 227 2 223 185 228
-                                                   158 229 1 0 53 195 230 1 0
-                                                   53 185 231 1 0 0 158 232 1 0
-                                                   53 158 233 1 6 53 158 234 1
-                                                   0 0 158 235 1 6 0 158 236 1
+                                                   158 212 185 213 1 6 53 185
+                                                   214 1 0 0 185 215 1 6 0 185
+                                                   216 1 0 0 185 217 1 187 0 70
+                                                   220 1 7 187 0 221 2 218 185
+                                                   222 195 223 2 219 185 224
+                                                   158 225 1 0 53 195 226 1 0
+                                                   53 185 227 1 0 0 158 228 1 0
+                                                   53 158 229 1 6 53 158 230 1
+                                                   0 0 158 231 1 6 0 158 232 1
+                                                   6 53 195 233 1 0 0 195 234 1
+                                                   6 0 195 235 1 0 0 195 236 1
                                                    7 70 0 238 2 237 195 239 158
                                                    240 1 6 0 0 241 1 6 242 0
                                                    243 1 6 10 0 244 1 242 0 49
@@ -2999,10 +2956,10 @@
                                                    247 2 242 248 0 70 249 1 242
                                                    0 248 250 2 251 10 242 0 252
                                                    1 0 242 0 253 1 0 0 0 45 2 0
-                                                   10 0 0 77 1 0 53 158 233 1 0
-                                                   53 195 230 1 0 53 185 231 1
-                                                   0 0 158 235 1 0 0 195 215 1
-                                                   0 0 185 219 2 0 0 0 9 43 2 0
+                                                   10 0 0 77 1 0 53 158 229 1 0
+                                                   53 195 226 1 0 53 185 227 1
+                                                   0 0 158 231 1 0 0 195 234 1
+                                                   0 0 185 215 2 0 0 0 9 43 2 0
                                                    10 0 0 115 2 0 10 0 49 116 1
                                                    0 10 0 56 2 0 109 0 0 110 1
                                                    0 0 0 143 1 0 0 0 139 1 0 0
@@ -3028,8 +2985,8 @@
                                                    147 2 0 0 0 0 136 2 0 0 0 0
                                                    134 2 0 0 0 7 131 1 0 0 0 48
                                                    1 0 0 0 52 1 0 158 0 167 1 0
-                                                   242 0 253 1 0 0 158 232 1 0
-                                                   0 195 217 1 0 0 185 221 1 0
+                                                   242 0 253 1 0 0 158 228 1 0
+                                                   0 195 236 1 0 0 185 217 1 0
                                                    158 0 168 1 0 13 0 30 2 0 72
                                                    0 0 74)))))
            '|lookupComplete|)) 

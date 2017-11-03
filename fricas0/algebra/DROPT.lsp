@@ -141,7 +141,7 @@
          ('T NIL))) 
 
 (SDEFUN |DROPT;option?;LSB;31| ((|l| |List| $) (|s| |Symbol|) ($ |Boolean|))
-        (SPROG ((#1=#:G765 NIL) (#2=#:G766 NIL) (#3=#:G767 NIL) (|x| NIL))
+        (SPROG ((#1=#:G770 NIL) (#2=#:G771 NIL) (#3=#:G772 NIL) (|x| NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -159,9 +159,9 @@
                             ((EQUAL (QCAR |x|) |s|)
                              (PROGN
                               (LETT #1#
-                                    (PROGN (LETT #2# 'T . #4#) (GO #5=#:G764))
+                                    (PROGN (LETT #2# 'T . #4#) (GO #5=#:G769))
                                     . #4#)
-                              (GO #6=#:G762))))))
+                              (GO #6=#:G767))))))
                          (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
                    #6# (EXIT #1#))
                   (EXIT NIL)))
@@ -169,7 +169,7 @@
 
 (SDEFUN |DROPT;option;LSU;32|
         ((|l| |List| $) (|s| |Symbol|) ($ |Union| (|Any|) "failed"))
-        (SPROG ((#1=#:G779 NIL) (#2=#:G780 NIL) (#3=#:G781 NIL) (|x| NIL))
+        (SPROG ((#1=#:G784 NIL) (#2=#:G785 NIL) (#3=#:G786 NIL) (|x| NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -189,9 +189,9 @@
                               (LETT #1#
                                     (PROGN
                                      (LETT #2# (CONS 0 (QCDR |x|)) . #4#)
-                                     (GO #5=#:G778))
+                                     (GO #5=#:G783))
                                     . #4#)
-                              (GO #6=#:G773))))))
+                              (GO #6=#:G778))))))
                          (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
                    #6# (EXIT #1#))
                   (EXIT (CONS 1 "failed"))))
@@ -201,7 +201,7 @@
 
 (DEFUN |DrawOption| ()
   (SPROG NIL
-         (PROG (#1=#:G783)
+         (PROG (#1=#:G788)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|DrawOption|)

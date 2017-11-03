@@ -2,8 +2,8 @@
 (SDEFUN |CYCLOTOM;cyclotomic;ISup;1|
         ((|n| |Integer|) ($ |SparseUnivariatePolynomial| (|Integer|)))
         (SPROG
-         ((|l| (|SparseUnivariatePolynomial| (|Integer|))) (#1=#:G713 NIL)
-          (#2=#:G712 NIL) (#3=#:G710 NIL) (#4=#:G718 NIL) (|u| NIL)
+         ((|l| (|SparseUnivariatePolynomial| (|Integer|))) (#1=#:G715 NIL)
+          (#2=#:G714 NIL) (#3=#:G712 NIL) (#4=#:G720 NIL) (|u| NIL)
           (|g|
            (|List|
             (|Record| (|:| |factor| (|Integer|))
@@ -61,9 +61,9 @@
         (SPROG
          ((|l| (|List| (|SparseUnivariatePolynomial| (|Integer|))))
           (|m| (|List| (|SparseUnivariatePolynomial| (|Integer|))))
-          (#1=#:G725 NIL) (#2=#:G738 NIL) (|z| NIL) (#3=#:G737 NIL)
-          (#4=#:G736 NIL) (|rr| NIL) (#5=#:G722 NIL) (#6=#:G735 NIL)
-          (#7=#:G734 NIL) (#8=#:G733 NIL) (|u| NIL)
+          (#1=#:G728 NIL) (#2=#:G741 NIL) (|z| NIL) (#3=#:G740 NIL)
+          (#4=#:G739 NIL) (|rr| NIL) (#5=#:G724 NIL) (#6=#:G738 NIL)
+          (#7=#:G737 NIL) (#8=#:G736 NIL) (|u| NIL)
           (|g|
            (|List|
             (|Record| (|:| |factor| (|Integer|))
@@ -155,7 +155,7 @@
          ($ |Factored| (|SparseUnivariatePolynomial| (|Integer|))))
         (SPROG
          ((|fr| (|Factored| (|SparseUnivariatePolynomial| (|Integer|))))
-          (#1=#:G742 NIL) (|f| NIL))
+          (#1=#:G745 NIL) (|f| NIL))
          (SEQ
           (LETT |fr| (|spadConstant| $ 28)
                 . #2=(|CYCLOTOM;cyclotomicFactorization;IF;3|))
@@ -177,7 +177,7 @@
 
 (DEFUN |CyclotomicPolynomialPackage| ()
   (SPROG NIL
-         (PROG (#1=#:G744)
+         (PROG (#1=#:G747)
            (RETURN
             (COND
              ((LETT #1#

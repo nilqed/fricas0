@@ -4,13 +4,13 @@
          ($ |Record| (|:| |exponent| (|NonNegativeInteger|)) (|:| |coef| M)
           (|:| |radicand| (|List| M))))
         (SPROG
-         ((#1=#:G740 NIL) (|radi| (|List| M)) (|coeff| (M))
+         ((#1=#:G743 NIL) (|radi| (|List| M)) (|coeff| (M))
           (|qr|
            (|Record| (|:| |quotient| (|NonNegativeInteger|))
                      (|:| |remainder| (|NonNegativeInteger|))))
-          (#2=#:G725 NIL) (#3=#:G743 NIL) (|term| NIL)
-          (|d| (|NonNegativeInteger|)) (#4=#:G723 NIL) (#5=#:G721 NIL)
-          (#6=#:G742 NIL) (|t| NIL) (#7=#:G741 NIL)
+          (#2=#:G727 NIL) (#3=#:G746 NIL) (|term| NIL)
+          (|d| (|NonNegativeInteger|)) (#4=#:G725 NIL) (#5=#:G723 NIL)
+          (#6=#:G745 NIL) (|t| NIL) (#7=#:G744 NIL)
           (|lf|
            (|List| (|Record| (|:| |factor| M) (|:| |exponent| (|Integer|))))))
          (SEQ
@@ -97,7 +97,7 @@
                                             (QREFELT $ 22))
                                   . #8#)
                             . #8#)
-                      (GO #10=#:G735)))))))
+                      (GO #10=#:G738)))))))
                 #10# (EXIT #1#))
                (LETT #3# (CDR #3#) . #8#) (GO G190) G191 (EXIT NIL))
           (EXIT (VECTOR |n| |coeff| |radi|))))) 
@@ -107,7 +107,7 @@
          ($ |List|
           (|Record| (|:| |coef| (|NonNegativeInteger|)) (|:| |logand| M))))
         (SPROG
-         ((#1=#:G746 NIL) (#2=#:G753 NIL) (|term| NIL) (#3=#:G752 NIL)
+         ((#1=#:G749 NIL) (#2=#:G756 NIL) (|term| NIL) (#3=#:G755 NIL)
           (|ans| (M)))
          (SEQ
           (LETT |ans| (SPADCALL |ff| (QREFELT $ 9)) . #4=(|FACTFUNC;log;FL;2|))
@@ -138,9 +138,9 @@
 
 (DECLAIM (NOTINLINE |FactoredFunctions;|)) 
 
-(DEFUN |FactoredFunctions| (#1=#:G754)
+(DEFUN |FactoredFunctions| (#1=#:G757)
   (SPROG NIL
-         (PROG (#2=#:G755)
+         (PROG (#2=#:G758)
            (RETURN
             (COND
              ((LETT #2#

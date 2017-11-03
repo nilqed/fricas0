@@ -8,7 +8,7 @@
         (SPADCALL (SPADCALL |d| (QREFELT $ 13)) (QREFELT $ 9))) 
 
 (SDEFUN |DIOPS-;coerce;AOf;4| ((|s| A) ($ |OutputForm|))
-        (SPROG ((#1=#:G714 NIL) (|x| NIL) (#2=#:G713 NIL))
+        (SPROG ((#1=#:G716 NIL) (|x| NIL) (#2=#:G715 NIL))
                (SEQ
                 (SPADCALL (SPADCALL "dictionary" (QREFELT $ 17))
                           (PROGN
@@ -46,9 +46,6 @@
                                              (LIST
                                               (|HasCategory| |#2|
                                                              '(|BasicType|))
-                                              (|HasCategory| |#2|
-                                                             '(|CoercibleTo|
-                                                               (|OutputForm|)))
                                               (|HasCategory| |#1|
                                                              '(|finiteAggregate|))))
                           . #1#))
@@ -57,11 +54,11 @@
           (QSETREFV $ 7 |#2|)
           (SETF |pv$| (QREFELT $ 3))
           (COND
-           ((|testBitVector| |pv$| 3)
+           ((|testBitVector| |pv$| 2)
             (PROGN
              (QSETREFV $ 14 (CONS (|dispatchFunction| |DIOPS-;copy;2A;3|) $))
              (COND
-              ((|testBitVector| |pv$| 2)
+              ((|HasCategory| |#2| '(|CoercibleTo| (|OutputForm|)))
                (QSETREFV $ 21
                          (CONS (|dispatchFunction| |DIOPS-;coerce;AOf;4|)
                                $)))))))

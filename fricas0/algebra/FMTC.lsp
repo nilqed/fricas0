@@ -4,17 +4,17 @@
 (DEFPARAMETER |FortranMachineTypeCategory;AL| 'NIL) 
 
 (DEFUN |FortranMachineTypeCategory| ()
-  (LET (#:G695)
+  (LET (#:G696)
     (COND (|FortranMachineTypeCategory;AL|)
           (T
            (SETQ |FortranMachineTypeCategory;AL|
                    (|FortranMachineTypeCategory;|)))))) 
 
 (DEFUN |FortranMachineTypeCategory;| ()
-  (SPROG ((#1=#:G693 NIL))
+  (SPROG ((#1=#:G694 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(#2=#:G692) (LIST '(|Integer|)))
+                   (|sublisV| (PAIR '(#2=#:G693) (LIST '(|Integer|)))
                               (|Join| (|IntegralDomain|) (|OrderedSet|)
                                       (|RetractableTo| '#2#)))
                    |FortranMachineTypeCategory|)

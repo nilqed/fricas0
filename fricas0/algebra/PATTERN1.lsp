@@ -20,7 +20,7 @@
         (SPADCALL |p| (SPADCALL |v| (QREFELT $ 17)) (QREFELT $ 18))) 
 
 (SDEFUN |PATTERN1;badValues;PL;4| ((|p| |Pattern| R) ($ |List| D))
-        (SPROG ((#1=#:G719 NIL) (|v| NIL) (#2=#:G718 NIL))
+        (SPROG ((#1=#:G720 NIL) (|v| NIL) (#2=#:G719 NIL))
                (SEQ
                 (PROGN
                  (LETT #2# NIL . #3=(|PATTERN1;badValues;PL;4|))
@@ -63,7 +63,7 @@
           ('T (SPADCALL |l| (SPADCALL (QCDR |rec|) (QREFELT $ 38))))))) 
 
 (SDEFUN |PATTERN1;applyAll| ((|l| |List| (|Any|)) (|d| D) ($ |Boolean|))
-        (SPROG ((#1=#:G734 NIL) (#2=#:G735 NIL) (#3=#:G736 NIL) (|f| NIL))
+        (SPROG ((#1=#:G735 NIL) (#2=#:G736 NIL) (#3=#:G737 NIL) (|f| NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -82,9 +82,9 @@
                               (SPADCALL |d| (SPADCALL |f| (QREFELT $ 40))))
                              (PROGN
                               (LETT #1#
-                                    (PROGN (LETT #2# NIL . #4#) (GO #5=#:G733))
+                                    (PROGN (LETT #2# NIL . #4#) (GO #5=#:G734))
                                     . #4#)
-                              (GO #6=#:G731))))))
+                              (GO #6=#:G732))))))
                          (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
                    #6# (EXIT #1#))
                   (EXIT 'T)))
@@ -93,7 +93,7 @@
 (SDEFUN |PATTERN1;suchThat;PLP;10|
         ((|p| |Pattern| R) (|l| |List| (|Mapping| (|Boolean|) D))
          ($ |Pattern| R))
-        (SPROG ((#1=#:G742 NIL) (|f| NIL) (#2=#:G741 NIL))
+        (SPROG ((#1=#:G743 NIL) (|f| NIL) (#2=#:G742 NIL))
                (SEQ
                 (|PATTERN1;st| |p|
                  (PROGN
@@ -112,9 +112,9 @@
 
 (DECLAIM (NOTINLINE |PatternFunctions1;|)) 
 
-(DEFUN |PatternFunctions1| (&REST #1=#:G743)
+(DEFUN |PatternFunctions1| (&REST #1=#:G744)
   (SPROG NIL
-         (PROG (#2=#:G744)
+         (PROG (#2=#:G745)
            (RETURN
             (COND
              ((LETT #2#

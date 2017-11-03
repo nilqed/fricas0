@@ -1,9 +1,9 @@
 
 (DECLAIM (NOTINLINE |GuessPolynomial;|)) 
 
-(DEFUN |GuessPolynomial| (#1=#:G721)
+(DEFUN |GuessPolynomial| (#1=#:G723)
   (SPROG NIL
-         (PROG (#2=#:G722)
+         (PROG (#2=#:G724)
            (RETURN
             (COND
              ((LETT #2#

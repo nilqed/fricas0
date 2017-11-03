@@ -82,90 +82,6 @@
          (SETQ |bfVar#1| (CDR |bfVar#1|))))
       NIL |l| NIL))))
  
-; parseIs [a, b] == ["is", parseTran a, parseTran b]
- 
-(DEFUN |parseIs| (|bfVar#3|)
-  (PROG (|a| |b|)
-    (RETURN
-     (PROGN
-      (SETQ |a| (CAR |bfVar#3|))
-      (SETQ |b| (CADR |bfVar#3|))
-      (LIST '|is| (|parseTran| |a|) (|parseTran| |b|))))))
- 
-; parseIsnt [a,b] == BREAK()
- 
-(DEFUN |parseIsnt| (|bfVar#4|)
-  (PROG (|a| |b|)
-    (RETURN
-     (PROGN (SETQ |a| (CAR |bfVar#4|)) (SETQ |b| (CADR |bfVar#4|)) (BREAK)))))
- 
-; parseLET [x,y] ==
-;   p := ['LET,parseTran x,parseTranCheckForRecord(y,opOf x)]
-;   opOf x = 'cons => BREAK()
-;   p
- 
-(DEFUN |parseLET| (|bfVar#5|)
-  (PROG (|x| |y| |p|)
-    (RETURN
-     (PROGN
-      (SETQ |x| (CAR |bfVar#5|))
-      (SETQ |y| (CADR |bfVar#5|))
-      (SETQ |p|
-              (LIST 'LET (|parseTran| |x|)
-                    (|parseTranCheckForRecord| |y| (|opOf| |x|))))
-      (COND ((EQ (|opOf| |x|) '|cons|) (BREAK)) ('T |p|))))))
- 
-; parseColon u ==
-;   u is [x] => [":",parseTran x]
-;   u is [x, typ] => [":", parseTran x, parseTran typ]
- 
-(DEFUN |parseColon| (|u|)
-  (PROG (|x| |ISTMP#1| |typ|)
-    (RETURN
-     (COND
-      ((AND (CONSP |u|) (EQ (CDR |u|) NIL) (PROGN (SETQ |x| (CAR |u|)) #1='T))
-       (LIST '|:| (|parseTran| |x|)))
-      ((AND (CONSP |u|)
-            (PROGN
-             (SETQ |x| (CAR |u|))
-             (SETQ |ISTMP#1| (CDR |u|))
-             (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
-                  (PROGN (SETQ |typ| (CAR |ISTMP#1|)) #1#))))
-       (LIST '|:| (|parseTran| |x|) (|parseTran| |typ|)))))))
- 
-; parseCoerce [x,typ] ==
-;   ["::",parseTran x,parseTran typ]
- 
-(DEFUN |parseCoerce| (|bfVar#6|)
-  (PROG (|x| |typ|)
-    (RETURN
-     (PROGN
-      (SETQ |x| (CAR |bfVar#6|))
-      (SETQ |typ| (CADR |bfVar#6|))
-      (LIST '|::| (|parseTran| |x|) (|parseTran| |typ|))))))
- 
-; parseAtSign [x,typ] ==
-;   ["@",parseTran x,parseTran typ]
- 
-(DEFUN |parseAtSign| (|bfVar#7|)
-  (PROG (|x| |typ|)
-    (RETURN
-     (PROGN
-      (SETQ |x| (CAR |bfVar#7|))
-      (SETQ |typ| (CADR |bfVar#7|))
-      (LIST '@ (|parseTran| |x|) (|parseTran| |typ|))))))
- 
-; parsePretend [x,typ] ==
-;   ['pretend,parseTran x,parseTran typ]
- 
-(DEFUN |parsePretend| (|bfVar#8|)
-  (PROG (|x| |typ|)
-    (RETURN
-     (PROGN
-      (SETQ |x| (CAR |bfVar#8|))
-      (SETQ |typ| (CADR |bfVar#8|))
-      (LIST '|pretend| (|parseTran| |x|) (|parseTran| |typ|))))))
- 
 ; parseHas [x,y] ==
 ;   mkand [['has,x,u] for u in fn y] where
 ;     mkand x ==
@@ -180,20 +96,20 @@
 ;       y is ['SIGNATURE,:.] => [y]
 ;       [makeNonAtomic y]
  
-(DEFUN |parseHas| (|bfVar#15|)
+(DEFUN |parseHas| (|bfVar#9|)
   (PROG (|x| |y|)
     (RETURN
      (PROGN
-      (SETQ |x| (CAR |bfVar#15|))
-      (SETQ |y| (CADR |bfVar#15|))
+      (SETQ |x| (CAR |bfVar#9|))
+      (SETQ |y| (CADR |bfVar#9|))
       (|parseHas,mkand|
-       ((LAMBDA (|bfVar#10| |bfVar#9| |u|)
+       ((LAMBDA (|bfVar#4| |bfVar#3| |u|)
           (LOOP
            (COND
-            ((OR (ATOM |bfVar#9|) (PROGN (SETQ |u| (CAR |bfVar#9|)) NIL))
-             (RETURN (NREVERSE |bfVar#10|)))
-            ('T (SETQ |bfVar#10| (CONS (LIST '|has| |x| |u|) |bfVar#10|))))
-           (SETQ |bfVar#9| (CDR |bfVar#9|))))
+            ((OR (ATOM |bfVar#3|) (PROGN (SETQ |u| (CAR |bfVar#3|)) NIL))
+             (RETURN (NREVERSE |bfVar#4|)))
+            ('T (SETQ |bfVar#4| (CONS (LIST '|has| |x| |u|) |bfVar#4|))))
+           (SETQ |bfVar#3| (CDR |bfVar#3|))))
         NIL (|parseHas,fn| |y|) NIL))))))
 (DEFUN |parseHas,mkand| (|x|)
   (PROG (|a|)
@@ -223,45 +139,43 @@
         (LIST (LIST 'SIGNATURE |op| |map|))))
       ((AND (CONSP |y|) (EQ (CAR |y|) '|Join|)
             (PROGN (SETQ |u| (CDR |y|)) #1#))
-       ((LAMBDA (|bfVar#12| |bfVar#11| |z|)
+       ((LAMBDA (|bfVar#6| |bfVar#5| |z|)
           (LOOP
            (COND
-            ((OR (ATOM |bfVar#11|) (PROGN (SETQ |z| (CAR |bfVar#11|)) NIL))
-             (RETURN |bfVar#12|))
-            (#1# (SETQ |bfVar#12| (APPEND |bfVar#12| (|parseHas,fn| |z|)))))
-           (SETQ |bfVar#11| (CDR |bfVar#11|))))
+            ((OR (ATOM |bfVar#5|) (PROGN (SETQ |z| (CAR |bfVar#5|)) NIL))
+             (RETURN |bfVar#6|))
+            (#1# (SETQ |bfVar#6| (APPEND |bfVar#6| (|parseHas,fn| |z|)))))
+           (SETQ |bfVar#5| (CDR |bfVar#5|))))
         NIL |u| NIL))
       ((AND (CONSP |y|) (EQ (CAR |y|) 'CATEGORY)
             (PROGN (SETQ |u| (CDR |y|)) #1#))
-       ((LAMBDA (|bfVar#14| |bfVar#13| |z|)
+       ((LAMBDA (|bfVar#8| |bfVar#7| |z|)
           (LOOP
            (COND
-            ((OR (ATOM |bfVar#13|) (PROGN (SETQ |z| (CAR |bfVar#13|)) NIL))
-             (RETURN |bfVar#14|))
-            (#1# (SETQ |bfVar#14| (APPEND |bfVar#14| (|parseHas,fn| |z|)))))
-           (SETQ |bfVar#13| (CDR |bfVar#13|))))
+            ((OR (ATOM |bfVar#7|) (PROGN (SETQ |z| (CAR |bfVar#7|)) NIL))
+             (RETURN |bfVar#8|))
+            (#1# (SETQ |bfVar#8| (APPEND |bfVar#8| (|parseHas,fn| |z|)))))
+           (SETQ |bfVar#7| (CDR |bfVar#7|))))
         NIL |u| NIL))
       ((AND (CONSP |y|) (EQ (CAR |y|) 'SIGNATURE)) (LIST |y|))
       (#1# (LIST (|makeNonAtomic| |y|)))))))
  
-; parseDEF [$lhs,tList,specialList,body] ==
-;   setDefOp $lhs
-;   ['DEF,parseLhs $lhs,parseTranList tList,parseTranList specialList,
-;     parseTranCheckForRecord(body,opOf $lhs)]
+; parseDEF [lhs,tList,specialList,body] ==
+;   setDefOp lhs
+;   ['DEF, parseLhs lhs, parseTranList tList, parseTranList specialList,
+;     parseTran(body)]
  
-(DEFUN |parseDEF| (|bfVar#16|)
-  (PROG (|$lhs| |body| |specialList| |tList|)
-    (DECLARE (SPECIAL |$lhs|))
+(DEFUN |parseDEF| (|bfVar#10|)
+  (PROG (|lhs| |tList| |specialList| |body|)
     (RETURN
      (PROGN
-      (SETQ |$lhs| (CAR |bfVar#16|))
-      (SETQ |tList| (CADR . #1=(|bfVar#16|)))
+      (SETQ |lhs| (CAR |bfVar#10|))
+      (SETQ |tList| (CADR . #1=(|bfVar#10|)))
       (SETQ |specialList| (CADDR . #1#))
       (SETQ |body| (CADDDR . #1#))
-      (|setDefOp| |$lhs|)
-      (LIST 'DEF (|parseLhs| |$lhs|) (|parseTranList| |tList|)
-            (|parseTranList| |specialList|)
-            (|parseTranCheckForRecord| |body| (|opOf| |$lhs|)))))))
+      (|setDefOp| |lhs|)
+      (LIST 'DEF (|parseLhs| |lhs|) (|parseTranList| |tList|)
+            (|parseTranList| |specialList|) (|parseTran| |body|))))))
  
 ; parseLhs x ==
 ;   atom x => parseTran x
@@ -274,77 +188,32 @@
      (COND ((ATOM |x|) (|parseTran| |x|))
            ((ATOM (CAR |x|))
             (CONS (|parseTran| (CAR |x|))
-                  ((LAMBDA (|bfVar#18| |bfVar#17| |y|)
+                  ((LAMBDA (|bfVar#12| |bfVar#11| |y|)
                      (LOOP
                       (COND
-                       ((OR (ATOM |bfVar#17|)
-                            (PROGN (SETQ |y| (CAR |bfVar#17|)) NIL))
-                        (RETURN (NREVERSE |bfVar#18|)))
+                       ((OR (ATOM |bfVar#11|)
+                            (PROGN (SETQ |y| (CAR |bfVar#11|)) NIL))
+                        (RETURN (NREVERSE |bfVar#12|)))
                        (#1='T
-                        (SETQ |bfVar#18| (CONS (|parseTran| |y|) |bfVar#18|))))
-                      (SETQ |bfVar#17| (CDR |bfVar#17|))))
+                        (SETQ |bfVar#12| (CONS (|parseTran| |y|) |bfVar#12|))))
+                      (SETQ |bfVar#11| (CDR |bfVar#11|))))
                    NIL (CDR |x|) NIL)))
            (#1# (|parseTran| |x|))))))
  
-; parseMDEF [$lhs,tList,specialList,body] ==
-;   ['MDEF,parseTran $lhs,parseTranList tList,parseTranList specialList,
-;     parseTranCheckForRecord(body,opOf $lhs)]
+; parseMDEF [lhs,tList,specialList,body] ==
+;   ['MDEF, parseTran lhs, parseTranList tList, parseTranList specialList,
+;     parseTran(body)]
  
-(DEFUN |parseMDEF| (|bfVar#19|)
-  (PROG (|$lhs| |body| |specialList| |tList|)
-    (DECLARE (SPECIAL |$lhs|))
+(DEFUN |parseMDEF| (|bfVar#13|)
+  (PROG (|lhs| |tList| |specialList| |body|)
     (RETURN
      (PROGN
-      (SETQ |$lhs| (CAR |bfVar#19|))
-      (SETQ |tList| (CADR . #1=(|bfVar#19|)))
+      (SETQ |lhs| (CAR |bfVar#13|))
+      (SETQ |tList| (CADR . #1=(|bfVar#13|)))
       (SETQ |specialList| (CADDR . #1#))
       (SETQ |body| (CADDDR . #1#))
-      (LIST 'MDEF (|parseTran| |$lhs|) (|parseTranList| |tList|)
-            (|parseTranList| |specialList|)
-            (|parseTranCheckForRecord| |body| (|opOf| |$lhs|)))))))
- 
-; parseTranCheckForRecord(x,op) ==
-;   (x:= parseTran x) is ['Record,:l] =>
-;     or/[y for y in l | y isnt [":",.,.]] =>
-;       postError ['"   Constructor",:bright x,'"has missing label"]
-;     x
-;   x
- 
-(DEFUN |parseTranCheckForRecord| (|x| |op|)
-  (PROG (|ISTMP#1| |l| |ISTMP#2|)
-    (RETURN
-     (COND
-      ((PROGN
-        (SETQ |ISTMP#1| (SETQ |x| (|parseTran| |x|)))
-        (AND (CONSP |ISTMP#1|) (EQ (CAR |ISTMP#1|) '|Record|)
-             (PROGN (SETQ |l| (CDR |ISTMP#1|)) #1='T)))
-       (COND
-        (((LAMBDA (|bfVar#21| |bfVar#20| |y|)
-            (LOOP
-             (COND
-              ((OR (ATOM |bfVar#20|) (PROGN (SETQ |y| (CAR |bfVar#20|)) NIL))
-               (RETURN |bfVar#21|))
-              (#1#
-               (AND
-                (NOT
-                 (AND (CONSP |y|) (EQ (CAR |y|) '|:|)
-                      (PROGN
-                       (SETQ |ISTMP#1| (CDR |y|))
-                       (AND (CONSP |ISTMP#1|)
-                            (PROGN
-                             (SETQ |ISTMP#2| (CDR |ISTMP#1|))
-                             (AND (CONSP |ISTMP#2|)
-                                  (EQ (CDR |ISTMP#2|) NIL)))))))
-                (PROGN
-                 (SETQ |bfVar#21| |y|)
-                 (COND (|bfVar#21| (RETURN |bfVar#21|)))))))
-             (SETQ |bfVar#20| (CDR |bfVar#20|))))
-          NIL |l| NIL)
-         (|postError|
-          (CONS "   Constructor"
-                (APPEND (|bright| |x|) (CONS "has missing label" NIL)))))
-        (#1# |x|)))
-      (#1# |x|)))))
+      (LIST 'MDEF (|parseTran| |lhs|) (|parseTranList| |tList|)
+            (|parseTranList| |specialList|) (|parseTran| |body|))))))
  
 ; parseCategory x ==
 ;   l:= parseTranList x
@@ -414,12 +283,12 @@
 ;     ['exit,a,:b]
 ;   ['exit,1,a]
  
-(DEFUN |parseExit| (|bfVar#22|)
+(DEFUN |parseExit| (|bfVar#14|)
   (PROG (|a| |b|)
     (RETURN
      (PROGN
-      (SETQ |a| (CAR |bfVar#22|))
-      (SETQ |b| (CDR |bfVar#22|))
+      (SETQ |a| (CAR |bfVar#14|))
+      (SETQ |b| (CDR |bfVar#14|))
       (SETQ |a| (|parseTran| |a|))
       (SETQ |b| (|parseTran| |b|))
       (COND
@@ -441,12 +310,12 @@
 ;     ['leave,a,:b]
 ;   ['leave,1,a]
  
-(DEFUN |parseLeave| (|bfVar#23|)
+(DEFUN |parseLeave| (|bfVar#15|)
   (PROG (|a| |b|)
     (RETURN
      (PROGN
-      (SETQ |a| (CAR |bfVar#23|))
-      (SETQ |b| (CDR |bfVar#23|))
+      (SETQ |a| (CAR |bfVar#15|))
+      (SETQ |b| (CDR |bfVar#15|))
       (SETQ |a| (|parseTran| |a|))
       (SETQ |b| (|parseTran| |b|))
       (COND
@@ -458,29 +327,6 @@
            (LIST '|leave| 1 |a|)))
          (#1='T (CONS '|leave| (CONS |a| |b|)))))
        (#1# (LIST '|leave| 1 |a|)))))))
- 
-; parseReturn [a,:b] ==
-;   a:= parseTran a
-;   b:= parseTran b
-;   b =>
-;     (if a~=1 then MOAN '"multiple-level 'return' not allowed"; ["return",1,:b])
-;   ["return",1,a]
- 
-(DEFUN |parseReturn| (|bfVar#24|)
-  (PROG (|a| |b|)
-    (RETURN
-     (PROGN
-      (SETQ |a| (CAR |bfVar#24|))
-      (SETQ |b| (CDR |bfVar#24|))
-      (SETQ |a| (|parseTran| |a|))
-      (SETQ |b| (|parseTran| |b|))
-      (COND
-       (|b|
-        (PROGN
-         (COND
-          ((NOT (EQL |a| 1)) (MOAN "multiple-level 'return' not allowed")))
-         (CONS '|return| (CONS 1 |b|))))
-       ('T (LIST '|return| 1 |a|)))))))
  
 ; parseJoin l ==
 ;   ['Join,:fn parseTranList l] where
@@ -504,51 +350,6 @@
             (APPEND |x| (|parseJoin,fn| |y|)))
            (#1# (CONS (CAR |l|) (|parseJoin,fn| (CDR |l|))))))))
  
-; parseInBy [i,n,inc] ==
-;   (u:= parseIn [i,n]) isnt ['STEP,i,a,j,:r] =>
-;     postError ["   You cannot use",:bright '"by",
-;       '"except for an explicitly indexed sequence."]
-;   inc:= parseTran inc
-;   ['STEP,i,a,parseTran inc,:r]
- 
-(DEFUN |parseInBy| (|bfVar#25|)
-  (PROG (|i| |n| |inc| |u| |ISTMP#1| |ISTMP#2| |ISTMP#3| |a| |ISTMP#4| |j| |r|)
-    (RETURN
-     (PROGN
-      (SETQ |i| (CAR |bfVar#25|))
-      (SETQ |n| (CADR . #1=(|bfVar#25|)))
-      (SETQ |inc| (CADDR . #1#))
-      (COND
-       ((NOT
-         (PROGN
-          (SETQ |ISTMP#1| (SETQ |u| (|parseIn| (LIST |i| |n|))))
-          (AND (CONSP |ISTMP#1|) (EQ (CAR |ISTMP#1|) 'STEP)
-               (PROGN
-                (SETQ |ISTMP#2| (CDR |ISTMP#1|))
-                (AND (CONSP |ISTMP#2|)
-                     (PROGN
-                      (SETQ |i| (CAR |ISTMP#2|))
-                      (SETQ |ISTMP#3| (CDR |ISTMP#2|))
-                      (AND (CONSP |ISTMP#3|)
-                           (PROGN
-                            (SETQ |a| (CAR |ISTMP#3|))
-                            (SETQ |ISTMP#4| (CDR |ISTMP#3|))
-                            (AND (CONSP |ISTMP#4|)
-                                 (PROGN
-                                  (SETQ |j| (CAR |ISTMP#4|))
-                                  (SETQ |r| (CDR |ISTMP#4|))
-                                  #2='T))))))))))
-        (|postError|
-         (CONS '|   You cannot use|
-               (APPEND (|bright| "by")
-                       (CONS "except for an explicitly indexed sequence."
-                             NIL)))))
-       (#2#
-        (PROGN
-         (SETQ |inc| (|parseTran| |inc|))
-         (CONS 'STEP
-               (CONS |i| (CONS |a| (CONS (|parseTran| |inc|) |r|)))))))))))
- 
 ; parseSegment p ==
 ;   p is [a,b] =>
 ;     b => ['SEGMENT,parseTran a, parseTran b]
@@ -568,85 +369,6 @@
        (COND (|b| (LIST 'SEGMENT (|parseTran| |a|) (|parseTran| |b|)))
              (#1# (LIST 'SEGMENT (|parseTran| |a|)))))
       (#1# (CONS 'SEGMENT |p|))))))
- 
-; parseIn [i,n] ==
-;   i:= parseTran i
-;   n:= parseTran n
-;   n is ['SEGMENT,a] => ['STEP,i,a,1]
-;   n is ['reverse,['SEGMENT,a]] =>
-;     postError ['"  You cannot reverse an infinite sequence."]
-;   n is ['SEGMENT,a,b] => (b => ['STEP,i,a,1,b]; ['STEP,i,a,1])
-;   n is ['reverse,['SEGMENT,a,b]] =>
-;     b => ['STEP,i,b,-1,a]
-;     postError ['"  You cannot reverse an infinite sequence."]
-;   n is ['tails,s] => ['ON,i,s]
-;   ['IN,i,n]
- 
-(DEFUN |parseIn| (|bfVar#26|)
-  (PROG (|i| |n| |ISTMP#1| |a| |ISTMP#2| |ISTMP#3| |b| |ISTMP#4| |s|)
-    (RETURN
-     (PROGN
-      (SETQ |i| (CAR |bfVar#26|))
-      (SETQ |n| (CADR |bfVar#26|))
-      (SETQ |i| (|parseTran| |i|))
-      (SETQ |n| (|parseTran| |n|))
-      (COND
-       ((AND (CONSP |n|) (EQ (CAR |n|) 'SEGMENT)
-             (PROGN
-              (SETQ |ISTMP#1| (CDR |n|))
-              (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
-                   (PROGN (SETQ |a| (CAR |ISTMP#1|)) #1='T))))
-        (LIST 'STEP |i| |a| 1))
-       ((AND (CONSP |n|) (EQ (CAR |n|) '|reverse|)
-             (PROGN
-              (SETQ |ISTMP#1| (CDR |n|))
-              (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
-                   (PROGN
-                    (SETQ |ISTMP#2| (CAR |ISTMP#1|))
-                    (AND (CONSP |ISTMP#2|) (EQ (CAR |ISTMP#2|) 'SEGMENT)
-                         (PROGN
-                          (SETQ |ISTMP#3| (CDR |ISTMP#2|))
-                          (AND (CONSP |ISTMP#3|) (EQ (CDR |ISTMP#3|) NIL)
-                               (PROGN (SETQ |a| (CAR |ISTMP#3|)) #1#))))))))
-        (|postError| (LIST "  You cannot reverse an infinite sequence.")))
-       ((AND (CONSP |n|) (EQ (CAR |n|) 'SEGMENT)
-             (PROGN
-              (SETQ |ISTMP#1| (CDR |n|))
-              (AND (CONSP |ISTMP#1|)
-                   (PROGN
-                    (SETQ |a| (CAR |ISTMP#1|))
-                    (SETQ |ISTMP#2| (CDR |ISTMP#1|))
-                    (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
-                         (PROGN (SETQ |b| (CAR |ISTMP#2|)) #1#))))))
-        (COND (|b| (LIST 'STEP |i| |a| 1 |b|)) (#1# (LIST 'STEP |i| |a| 1))))
-       ((AND (CONSP |n|) (EQ (CAR |n|) '|reverse|)
-             (PROGN
-              (SETQ |ISTMP#1| (CDR |n|))
-              (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
-                   (PROGN
-                    (SETQ |ISTMP#2| (CAR |ISTMP#1|))
-                    (AND (CONSP |ISTMP#2|) (EQ (CAR |ISTMP#2|) 'SEGMENT)
-                         (PROGN
-                          (SETQ |ISTMP#3| (CDR |ISTMP#2|))
-                          (AND (CONSP |ISTMP#3|)
-                               (PROGN
-                                (SETQ |a| (CAR |ISTMP#3|))
-                                (SETQ |ISTMP#4| (CDR |ISTMP#3|))
-                                (AND (CONSP |ISTMP#4|) (EQ (CDR |ISTMP#4|) NIL)
-                                     (PROGN
-                                      (SETQ |b| (CAR |ISTMP#4|))
-                                      #1#))))))))))
-        (COND (|b| (LIST 'STEP |i| |b| (- 1) |a|))
-              (#1#
-               (|postError|
-                (LIST "  You cannot reverse an infinite sequence.")))))
-       ((AND (CONSP |n|) (EQ (CAR |n|) '|tails|)
-             (PROGN
-              (SETQ |ISTMP#1| (CDR |n|))
-              (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
-                   (PROGN (SETQ |s| (CAR |ISTMP#1|)) #1#))))
-        (LIST 'ON |i| |s|))
-       (#1# (LIST 'IN |i| |n|)))))))
  
 ; parseIf t ==
 ;   t isnt [p,a,b] => t
@@ -815,11 +537,6 @@
               (LIST 'LET (LIST '|:| (SETQ |g| (GENSYM)) (LIST '|Boolean|)) |p|)
               |g|)))))))
  
-; parseWhere l == ["where", :parseTranList(l)]
- 
-(DEFUN |parseWhere| (|l|)
-  (PROG () (RETURN (CONS '|where| (|parseTranList| |l|)))))
- 
 ; parseSeq l ==
 ;   not (l is [:.,['exit,:.]]) =>
 ;     postError ['"   Invalid ending to block: ",last l]
@@ -952,31 +669,31 @@
                                                                  '|noBranch|)))))))))))))))
                           (PROGN (SETQ |l| (CDR |ISTMP#2|)) #1#)
                           (PROGN (SETQ |l| (NREVERSE |l|)) #1#)))
-                    ((LAMBDA (|bfVar#28| |bfVar#27| |x|)
+                    ((LAMBDA (|bfVar#17| |bfVar#16| |x|)
                        (LOOP
                         (COND
-                         ((OR (ATOM |bfVar#27|)
-                              (PROGN (SETQ |x| (CAR |bfVar#27|)) NIL))
-                          (RETURN |bfVar#28|))
+                         ((OR (ATOM |bfVar#16|)
+                              (PROGN (SETQ |x| (CAR |bfVar#16|)) NIL))
+                          (RETURN |bfVar#17|))
                          (#1#
                           (PROGN
-                           (SETQ |bfVar#28|
+                           (SETQ |bfVar#17|
                                    (AND (CONSP |x|) (EQ (CAR |x|) 'LET)))
-                           (COND ((NOT |bfVar#28|) (RETURN NIL))))))
-                        (SETQ |bfVar#27| (CDR |bfVar#27|))))
+                           (COND ((NOT |bfVar#17|) (RETURN NIL))))))
+                        (SETQ |bfVar#16| (CDR |bfVar#16|))))
                      T |l| NIL))
                (CONS 'SEQ
                      (APPEND
-                      ((LAMBDA (|bfVar#30| |bfVar#29| |x|)
+                      ((LAMBDA (|bfVar#19| |bfVar#18| |x|)
                          (LOOP
                           (COND
-                           ((OR (ATOM |bfVar#29|)
-                                (PROGN (SETQ |x| (CAR |bfVar#29|)) NIL))
-                            (RETURN (NREVERSE |bfVar#30|)))
+                           ((OR (ATOM |bfVar#18|)
+                                (PROGN (SETQ |x| (CAR |bfVar#18|)) NIL))
+                            (RETURN (NREVERSE |bfVar#19|)))
                            (#1#
-                            (SETQ |bfVar#30|
-                                    (CONS (|decExitLevel| |x|) |bfVar#30|))))
-                          (SETQ |bfVar#29| (CDR |bfVar#29|))))
+                            (SETQ |bfVar#19|
+                                    (CONS (|decExitLevel| |x|) |bfVar#19|))))
+                          (SETQ |bfVar#18| (CDR |bfVar#18|))))
                        NIL |l| NIL)
                       (CONS
                        (LIST '|exit| 1

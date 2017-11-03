@@ -131,9 +131,9 @@
 
 (DECLAIM (NOTINLINE |RationalFunctionSum;|)) 
 
-(DEFUN |RationalFunctionSum| (#1=#:G732)
+(DEFUN |RationalFunctionSum| (#1=#:G734)
   (SPROG NIL
-         (PROG (#2=#:G733)
+         (PROG (#2=#:G735)
            (RETURN
             (COND
              ((LETT #2#
@@ -172,13 +172,13 @@
               (|Expression| 6) (5 . |coerce|) (|SegmentBinding| 11)
               (|Mapping| 11 10) (|SegmentBindingFunctions2| 10 11) (10 . |map|)
               (|SegmentBinding| $) (16 . |summation|) (22 . |One|) (26 . |One|)
-              (|Segment| 10) (30 . |segment|) (35 . |hi|) (40 . +)
-              (|RationalFunction| 6) (46 . |eval|) (53 . |lo|) (58 . -)
+              (|Segment| 10) (30 . |segment|) (35 . |high|) (40 . +)
+              (|RationalFunction| 6) (46 . |eval|) (53 . |low|) (58 . -)
               (|Union| 10 11) |SUMRF;sum;FSbU;1| (64 . |summation|)
               |SUMRF;sum;FSU;2| (|SegmentBinding| 35) (70 . |variable|)
               (|Polynomial| 6) |SUMRF;sum;PSF;5| (75 . |One|) (|Segment| 35)
-              (79 . |segment|) (84 . |hi|) (89 . +) (95 . |coerce|)
-              (100 . |lo|) |SUMRF;sum;PSbF;3| (|Union| 35 '"failed")
+              (79 . |segment|) (84 . |high|) (89 . +) (95 . |coerce|)
+              (100 . |low|) |SUMRF;sum;PSbF;3| (|Union| 35 '"failed")
               (105 . |retractIfCan|) (110 . -) (115 . |coerce|) (120 . /)
               (126 . |new|) (|Union| 10 '"failed") (|Mapping| 7)
               (|GosperSummationMethod| (|IndexedExponents| 7) 7 6 35 10)

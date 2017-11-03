@@ -7,22 +7,26 @@
            ((NULL (SPADCALL |fn| (QREFELT $ 9)))
             (|error|
              (LIST '|mathprint|
-                   (LIST 'CONCAT "File is not readable"
-                         (SPADCALL |fn| (QREFELT $ 11))))))
-           (#1='T (BINARY_OPEN_INPUT (SPADCALL |fn| (QREFELT $ 13))))))
+                   (LIST 'CONCAT
+                         (SPADCALL "File is not readable" (QREFELT $ 12))
+                         (SPADCALL |fn| (QREFELT $ 13))))))
+           (#1='T (BINARY_OPEN_INPUT (SPADCALL |fn| (QREFELT $ 14))))))
          ((EQUAL |mode| "output")
           (COND
-           ((NULL (SPADCALL |fn| (QREFELT $ 14)))
+           ((NULL (SPADCALL |fn| (QREFELT $ 15)))
             (|error|
              (LIST '|mathprint|
-                   (LIST 'CONCAT "File is not writable"
-                         (SPADCALL |fn| (QREFELT $ 11))))))
-           (#1# (BINARY_OPEN_OUTPUT (SPADCALL |fn| (QREFELT $ 13))))))
+                   (LIST 'CONCAT
+                         (SPADCALL "File is not writable" (QREFELT $ 12))
+                         (SPADCALL |fn| (QREFELT $ 13))))))
+           (#1# (BINARY_OPEN_OUTPUT (SPADCALL |fn| (QREFELT $ 14))))))
          ('T
           (|error|
            (LIST '|mathprint|
-                 (LIST 'CONCAT "IO mode must be input or output"
-                       (SPADCALL |mode| (QREFELT $ 15)))))))) 
+                 (LIST 'CONCAT
+                       (SPADCALL "IO mode must be input or output"
+                                 (QREFELT $ 12))
+                       (SPADCALL |mode| (QREFELT $ 12)))))))) 
 
 (SDEFUN |BINFILE;open;FnS$;2| ((|fname| |FileName|) (|mode| |String|) ($ $))
         (SPROG ((|fstream| (|SExpression|)))
@@ -96,7 +100,7 @@
 
 (DEFUN |BinaryFile| ()
   (SPROG NIL
-         (PROG (#1=#:G747)
+         (PROG (#1=#:G751)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|BinaryFile|)
@@ -131,8 +135,8 @@
 (MAKEPROP '|BinaryFile| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL (|File| 20) '|Rep| (|Boolean|) (|FileName|)
-              (0 . |readable?|) (|OutputForm|) (5 . |coerce|) (|String|)
-              (10 . |coerce|) (15 . |writable?|) (20 . |coerce|)
+              (0 . |readable?|) (|OutputForm|) (|String|) (5 . |coerce|)
+              (10 . |coerce|) (15 . |coerce|) (20 . |writable?|)
               |BINFILE;open;FnS$;2| |BINFILE;reopen!;$S$;3|
               |BINFILE;close!;2$;4| (25 . ~=) (|SingleInteger|)
               |BINFILE;read!;$Si;5| (|Union| 20 '"failed")
@@ -148,12 +152,12 @@
                         '#((|FileCategory| 8 20) (|SetCategory|) (|BasicType|)
                            (|CoercibleTo| 10))
                         (|makeByteWordVec2| 28
-                                            '(1 8 7 0 9 1 8 10 0 11 1 8 12 0 13
-                                              1 8 7 0 14 1 12 10 0 15 2 12 7 0
-                                              0 19 2 24 7 0 0 25 2 0 20 0 20 26
-                                              2 0 0 0 12 17 1 0 22 0 23 1 0 20
-                                              0 21 2 0 20 0 20 28 1 0 20 0 27 2
-                                              0 0 8 12 16 1 0 0 0 18)))))
+                                            '(1 8 7 0 9 1 11 10 0 12 1 8 10 0
+                                              13 1 8 11 0 14 1 8 7 0 15 2 11 7
+                                              0 0 19 2 24 7 0 0 25 2 0 20 0 20
+                                              26 2 0 0 0 11 17 1 0 22 0 23 1 0
+                                              20 0 21 2 0 20 0 20 28 1 0 20 0
+                                              27 2 0 0 8 11 16 1 0 0 0 18)))))
            '|lookupIncomplete|)) 
 
 (MAKEPROP '|BinaryFile| 'NILADIC T) 

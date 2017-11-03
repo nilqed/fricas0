@@ -12,7 +12,7 @@
          (PROG1
              (LETT #1#
                    (|Join| (|OrderedAbelianGroup|) (|Ring|)
-                           (|CharacteristicZero|) (|Monoid|)
+                           (|CharacteristicZero|)
                            (|mkCategory|
                             '(((|positive?| ((|Boolean|) $)) T)
                               ((|negative?| ((|Boolean|) $)) T)

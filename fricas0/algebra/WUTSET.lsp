@@ -8,7 +8,7 @@
 (SDEFUN |WUTSET;per| ((|l| |List| P) ($ $)) |l|) 
 
 (SDEFUN |WUTSET;removeAssociates| ((|lp| |List| P) ($ |List| P))
-        (SPROG ((#1=#:G723 NIL) (|p| NIL) (#2=#:G722 NIL))
+        (SPROG ((#1=#:G724 NIL) (|p| NIL) (#2=#:G723 NIL))
                (SEQ
                 (SPADCALL
                  (PROGN
@@ -31,7 +31,7 @@
          ($ |Union| (|Record| (|:| |bas| $) (|:| |top| (|List| P)))
           #1="failed"))
         (SPROG
-         ((|contradiction| (|Boolean|)) (|rs| #2=(|List| P)) (#3=#:G726 NIL)
+         ((|contradiction| (|Boolean|)) (|rs| #2=(|List| P)) (#3=#:G727 NIL)
           (|bs| ($))
           (|rec|
            (|Union| (|Record| (|:| |bas| $) (|:| |top| (|List| P))) "failed"))
@@ -180,7 +180,7 @@
          (|redOp| |Mapping| P P P) ($ |Union| $ "failed"))
         (SPROG
          ((|qs| #1=(|List| P)) (|contradiction| (|Boolean|)) (|rs| #1#)
-          (#2=#:G726 NIL) (|ms| ($))
+          (#2=#:G727 NIL) (|ms| ($))
           (|rec|
            (|Union| (|Record| (|:| |bas| $) (|:| |top| (|List| P)))
                     #3="failed")))
@@ -309,7 +309,7 @@
         ((|ps| |List| P) (|redOp?| |Mapping| (|Boolean|) P P)
          (|redOp| |Mapping| P P P) ($ |List| $))
         (SPROG
-         ((#1=#:G821 NIL) (|ln| (|List| (|SplittingNode| (|List| P) $)))
+         ((#1=#:G822 NIL) (|ln| (|List| (|SplittingNode| (|List| P) $)))
           (|newps| (|List| P)) (|lics| (|List| P)) (|cs| ($))
           (|charSet?| (|Union| $ "failed"))
           (|esl| (|Union| (|SplittingTree| (|List| P) $) #2="failed"))
@@ -443,7 +443,7 @@
 
 (SDEFUN |WUTSET;removeSquares| ((|ts| $) ($ . #1=(|Union| $ "failed")))
         (SPROG
-         ((|p| (P)) (|newts| ($)) (|rsts| #1#) (#2=#:G785 NIL) (#3=#:G848 NIL))
+         ((|p| (P)) (|newts| ($)) (|rsts| #1#) (#2=#:G786 NIL) (#3=#:G849 NIL))
          (SEQ
           (COND ((SPADCALL |ts| (QREFELT $ 66)) (CONS 0 |ts|))
                 (#4='T
@@ -548,9 +548,9 @@
 
 (DECLAIM (NOTINLINE |WuWenTsunTriangularSet;|)) 
 
-(DEFUN |WuWenTsunTriangularSet| (&REST #1=#:G888)
+(DEFUN |WuWenTsunTriangularSet| (&REST #1=#:G891)
   (SPROG NIL
-         (PROG (#2=#:G889)
+         (PROG (#2=#:G892)
            (RETURN
             (COND
              ((LETT #2#
@@ -570,7 +570,7 @@
 
 (DEFUN |WuWenTsunTriangularSet;| (|#1| |#2| |#3| |#4|)
   (SPROG
-   ((#1=#:G887 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL)
+   ((#1=#:G890 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL)
     (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #2=(|WuWenTsunTriangularSet|))
@@ -665,8 +665,8 @@
               |rewriteIdealWithRemainder| 322 |rest| 328 |removeZero| 333
               |mvar| 339 |members| 344 |medialSet| 349 |initials| 361
               |initiallyReduce| 366 |infRittWu?| 372 |first| 378 |empty?| 383
-              |empty| 388 |coerce| 392 |characteristicSet| 402
-              |characteristicSerie| 414 |basicSet| 426)
+              |empty| 388 |coerce| 392 |characteristicSet| 397
+              |characteristicSerie| 409 |basicSet| 421)
            'NIL
            (CONS (|makeByteWordVec2| 2 '(0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 2))
                  (CONS
@@ -708,7 +708,7 @@
                                          28 3 0 30 11 13 14 31 1 0 30 11 34 1 0
                                          11 0 49 2 0 9 9 0 73 2 0 17 0 0 84 1 0
                                          67 0 68 1 0 17 0 66 0 0 0 41 1 0 11 0
-                                         56 1 0 11 0 56 1 0 30 11 40 3 0 30 11
-                                         13 14 39 1 0 63 11 65 3 0 63 11 13 14
-                                         64 2 0 22 11 13 23)))))
+                                         56 1 0 30 11 40 3 0 30 11 13 14 39 1 0
+                                         63 11 65 3 0 63 11 13 14 64 2 0 22 11
+                                         13 23)))))
            '|lookupIncomplete|)) 

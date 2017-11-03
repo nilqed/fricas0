@@ -104,7 +104,7 @@
 
 (SDEFUN |LF;eqint| ((|k1| |Kernel| F) (|k2| |Kernel| F) ($ |Boolean|))
         (SPROG
-         ((|res| (|Boolean|)) (#1=#:G778 NIL) (|a2| #2=(|List| F)) (|a1| #2#))
+         ((|res| (|Boolean|)) (#1=#:G781 NIL) (|a2| #2=(|List| F)) (|a1| #2#))
          (SEQ
           (EXIT
            (SEQ (LETT |a1| (SPADCALL |k1| (QREFELT $ 70)) . #3=(|LF;eqint|))
@@ -114,7 +114,7 @@
                                 (SPADCALL |k2| (QREFELT $ 71)) (QREFELT $ 72))
                       . #3#)
                 (COND
-                 ((NULL |res|) (PROGN (LETT #1# |res| . #3#) (GO #4=#:G777))))
+                 ((NULL |res|) (PROGN (LETT #1# |res| . #3#) (GO #4=#:G780))))
                 (LETT |res| (SPADCALL |a1| |a2| (QREFELT $ 73)) . #3#)
                 (COND (|res| (PROGN (LETT #1# |res| . #3#) (GO #4#))))
                 (EXIT
@@ -175,8 +175,8 @@
 
 (SDEFUN |LF;dviint| ((|l| |List| F) (|v| |Symbol|) ($ F))
         (SPROG
-         ((|m| (|Integer|)) (|lv| (|List| (|Symbol|))) (#1=#:G799 NIL)
-          (|vf| NIL) (#2=#:G798 NIL) (|lvf| (|List| F))
+         ((|m| (|Integer|)) (|lv| (|List| (|Symbol|))) (#1=#:G803 NIL)
+          (|vf| NIL) (#2=#:G802 NIL) (|lvf| (|List| F))
           (|n| (|NonNegativeInteger|))
           (|nu| (|Union| (|NonNegativeInteger|) "failed")))
          (SEQ
@@ -348,9 +348,9 @@
 
 (DECLAIM (NOTINLINE |LiouvillianFunction;|)) 
 
-(DEFUN |LiouvillianFunction| (&REST #1=#:G899)
+(DEFUN |LiouvillianFunction| (&REST #1=#:G904)
   (SPROG NIL
-         (PROG (#2=#:G900)
+         (PROG (#2=#:G905)
            (RETURN
             (COND
              ((LETT #2#
@@ -543,8 +543,9 @@
               (|Mapping| 42 7) (193 . |every?|) (199 . |first|)
               (205 . |retract|) (|List| 9) (210 . |position|) (216 . |Zero|)
               (220 . -) (|SegmentBinding| 7) (226 . |variable|) (|Segment| 7)
-              (231 . |segment|) (236 . |lo|) (241 . |hi|) |LF;integral;FSbF;31|
-              (246 . |is?|) (252 . |is?|) |LF;operator;2Bo;34| (|Mapping| 7 7)
+              (231 . |segment|) (236 . |low|) (241 . |high|)
+              |LF;integral;FSbF;31| (246 . |is?|) (252 . |is?|)
+              |LF;operator;2Bo;34| (|Mapping| 7 7)
               (|BasicOperatorFunctions1| 7) (258 . |evaluate|) (|Mapping| 7 51)
               (264 . |evaluate|) (270 . |sin|) (275 . /) (281 . |derivative|)
               (287 . |cos|) (292 . |sinh|) (297 . |cosh|) (302 . |exp|)

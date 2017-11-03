@@ -27,8 +27,8 @@
 
 (SDEFUN |GPOLSET;=;2$B;8| ((|ps1| $) (|ps2| $) ($ |Boolean|))
         (SPROG
-         ((#1=#:G719 NIL) (|p| NIL) (#2=#:G718 NIL) (#3=#:G717 NIL)
-          (#4=#:G716 NIL))
+         ((#1=#:G718 NIL) (|p| NIL) (#2=#:G717 NIL) (#3=#:G716 NIL)
+          (#4=#:G715 NIL))
          (SEQ
           (SPADCALL
            (SPADCALL
@@ -58,7 +58,7 @@
            (QREFELT $ 29))))) 
 
 (SDEFUN |GPOLSET;coerce;$Of;9| ((|ps| $) ($ |OutputForm|))
-        (SPROG ((#1=#:G726 NIL) (|p| NIL) (#2=#:G725 NIL) (|lp| (|List| P)))
+        (SPROG ((#1=#:G725 NIL) (|p| NIL) (#2=#:G724 NIL) (|lp| (|List| P)))
                (SEQ
                 (LETT |lp|
                       (SPADCALL (ELT $ 31) (SPADCALL |ps| (QREFELT $ 14))
@@ -110,9 +110,9 @@
 
 (DECLAIM (NOTINLINE |GeneralPolynomialSet;|)) 
 
-(DEFUN |GeneralPolynomialSet| (&REST #1=#:G751)
+(DEFUN |GeneralPolynomialSet| (&REST #1=#:G752)
   (SPROG NIL
-         (PROG (#2=#:G752)
+         (PROG (#2=#:G753)
            (RETURN
             (COND
              ((LETT #2#
@@ -132,7 +132,7 @@
 
 (DEFUN |GeneralPolynomialSet;| (|#1| |#2| |#3| |#4|)
   (SPROG
-   ((#1=#:G750 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL)
+   ((#1=#:G751 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL)
     (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #2=(|GeneralPolynomialSet|))
@@ -207,7 +207,7 @@
               |find| 303 |every?| 309 |eval| 315 |eq?| 341 |empty?| 347 |empty|
               352 |count| 356 |copy| 368 |convert| 373 |construct| 383
               |collectUpper| 388 |collectUnder| 394 |collect| 400 |coerce| 406
-              |any?| 421 = 427 |#| 433)
+              |any?| 416 = 422 |#| 428)
            'NIL
            (CONS (|makeByteWordVec2| 2 '(0 0 0 0 0 1 0 0 0 0 0 0 0 1 2))
                  (CONS
@@ -247,7 +247,6 @@
                                          17 2 7 50 9 0 1 2 6 50 54 0 1 1 0 0 0
                                          16 1 2 55 0 1 1 0 0 11 49 1 0 0 11 13
                                          2 0 0 0 8 1 2 0 0 0 8 1 2 0 0 0 8 1 1
-                                         0 11 0 48 1 0 11 0 48 1 0 34 0 38 2 6
-                                         24 54 0 1 2 0 24 0 0 30 1 6 50 0
-                                         1)))))
+                                         0 11 0 48 1 0 34 0 38 2 6 24 54 0 1 2
+                                         0 24 0 0 30 1 6 50 0 1)))))
            '|lookupComplete|)) 

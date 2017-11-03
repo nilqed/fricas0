@@ -14,7 +14,7 @@
 
 (DEFUN |PolynomialAN2Expression| ()
   (SPROG NIL
-         (PROG (#1=#:G706)
+         (PROG (#1=#:G708)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|PolynomialAN2Expression|)

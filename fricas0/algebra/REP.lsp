@@ -4,7 +4,7 @@
          (|alg| |Expression| (|Integer|)) (|x| |Symbol|)
          ($ |Matrix| (|Expression| (|Integer|))))
         (SPROG
-         ((|v| (|Expression| (|Integer|))) (#1=#:G714 NIL) (|i| NIL)
+         ((|v| (|Expression| (|Integer|))) (#1=#:G718 NIL) (|i| NIL)
           (|w| (|Matrix| (|Expression| (|Integer|))))
           (|xx| (|Kernel| (|Expression| (|Integer|))))
           (|n| (|NonNegativeInteger|)))
@@ -64,8 +64,8 @@
          (A |Matrix| (|Fraction| (|Polynomial| (|Integer|))))
          ($ |List| (|Matrix| (|Expression| (|Integer|)))))
         (SPROG
-         ((#1=#:G739 NIL) (|v| NIL) (#2=#:G738 NIL) (#3=#:G737 NIL) (|j| NIL)
-          (#4=#:G736 NIL) (|i| NIL) (B (|Matrix| (|Expression| (|Integer|))))
+         ((#1=#:G742 NIL) (|v| NIL) (#2=#:G741 NIL) (#3=#:G740 NIL) (|j| NIL)
+          (#4=#:G739 NIL) (|i| NIL) (B (|Matrix| (|Expression| (|Integer|))))
           (|n| (|NonNegativeInteger|)))
          (SEQ (LETT |n| (ANROWS A) . #5=(|REP;radicalEigenvector;EML;5|))
               (LETT B (SPADCALL |n| |n| (QREFELT $ 14)) . #5#)
@@ -118,14 +118,14 @@
                       (|:| |radmult| (|Integer|))
                       (|:| |radvect|
                            (|List| (|Matrix| (|Expression| (|Integer|))))))))
-          (|nsl| #1#) (#2=#:G764 NIL) (|ep| NIL) (#3=#:G763 NIL)
-          (#4=#:G762 NIL) (|alg| NIL)
+          (|nsl| #1#) (#2=#:G767 NIL) (|ep| NIL) (#3=#:G766 NIL)
+          (#4=#:G765 NIL) (|alg| NIL)
           (|lval| (|List| (|Expression| (|Integer|)))) (|xx| (|Symbol|))
           (|sym| (|SuchThat| (|Symbol|) (|Polynomial| (|Integer|))))
-          (#5=#:G744 NIL) (#6=#:G743 NIL)
+          (#5=#:G747 NIL) (#6=#:G746 NIL)
           (|veclist| (|List| (|Matrix| (|Expression| (|Integer|)))))
-          (#7=#:G761 NIL) (|i| NIL) (|m| (|Matrix| (|Expression| (|Integer|))))
-          (#8=#:G760 NIL) (|ll| NIL) (#9=#:G759 NIL) (|eig| NIL)
+          (#7=#:G764 NIL) (|i| NIL) (|m| (|Matrix| (|Expression| (|Integer|))))
+          (#8=#:G763 NIL) (|ll| NIL) (#9=#:G762 NIL) (|eig| NIL)
           (|n| (|NonNegativeInteger|))
           (|leig|
            (|List|
@@ -267,14 +267,14 @@
          ($ |List| (|Matrix| (|Expression| (|Integer|)))))
         (SPROG
          ((|orth| (|List| (|Matrix| (|Expression| (|Integer|)))))
-          (|pol| (|Matrix| (|Expression| (|Integer|)))) (#1=#:G772 NIL)
-          (#2=#:G771 (RMR)) (#3=#:G773 (RMR)) (#4=#:G779 NIL) (|w| NIL)
-          (#5=#:G778 NIL) (|v| (|Matrix| (|Expression| (|Integer|))))
+          (|pol| (|Matrix| (|Expression| (|Integer|)))) (#1=#:G776 NIL)
+          (#2=#:G775 (RMR)) (#3=#:G777 (RMR)) (#4=#:G783 NIL) (|w| NIL)
+          (#5=#:G782 NIL) (|v| (|Matrix| (|Expression| (|Integer|))))
           (RMR
            (|Join|
             (|RectangularMatrixCategory|
              #6=(PROG1
-                    (LET #7=#:G766
+                    (LET #7=#:G770
                       |n|)
                   (|check_subtype2| (> #7# 0) '(|PositiveInteger|)
                                     '#8=(|NonNegativeInteger|) #7#))
@@ -290,7 +290,7 @@
                  |noBranch|)
              (SIGNATURE |rectangularMatrix| ($ (|Matrix| #10#)))
              (SIGNATURE |coerce| ((|Matrix| #10#) $)))))
-          (#11=#:G767 NIL) (|n| #8#))
+          (#11=#:G771 NIL) (|n| #8#))
          (SEQ
           (COND ((SPADCALL |lvect| NIL (QREFELT $ 58)) NIL)
                 ('T
@@ -382,10 +382,10 @@
         ((A |Matrix| (|Fraction| (|Polynomial| (|Integer|))))
          ($ |Union| (|Matrix| (|Expression| (|Integer|))) "failed"))
         (SPROG
-         ((|d| (|Matrix| (|Expression| (|Integer|)))) (#1=#:G795 NIL) (|v| NIL)
+         ((|d| (|Matrix| (|Expression| (|Integer|)))) (#1=#:G799 NIL) (|v| NIL)
           (|n| (|NonNegativeInteger|))
           (|lef| #2=(|List| (|Matrix| (|Expression| (|Integer|)))))
-          (#3=#:G785 NIL) (#4=#:G784 #2#) (#5=#:G786 #2#) (#6=#:G794 NIL)
+          (#3=#:G789 NIL) (#4=#:G788 #2#) (#5=#:G790 #2#) (#6=#:G798 NIL)
           (|eiv| NIL))
          (SEQ
           (LETT |lef|
@@ -435,7 +435,7 @@
         (SPROG
          ((|basis| (|List| (|Matrix| (|Expression| (|Integer|)))))
           (|lvec| (|List| (|Matrix| (|Expression| (|Integer|)))))
-          (#1=#:G804 NIL) (|alterm| NIL) (|n| (|NonNegativeInteger|))
+          (#1=#:G808 NIL) (|alterm| NIL) (|n| (|NonNegativeInteger|))
           (|alglist|
            (|List|
             (|Record| (|:| |radval| (|Expression| (|Integer|)))
@@ -484,7 +484,7 @@
 
 (DEFUN |RadicalEigenPackage| ()
   (SPROG NIL
-         (PROG (#1=#:G806)
+         (PROG (#1=#:G810)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|RadicalEigenPackage|)

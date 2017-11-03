@@ -11,7 +11,7 @@
 (SDEFUN |SCIFS;meshIndex|
         ((|i| |Integer|) (|j| |Integer|) (|c| |Integer|)
          ($ |NonNegativeInteger|))
-        (SPROG ((#1=#:G708 NIL))
+        (SPROG ((#1=#:G713 NIL))
                (PROG1 (LETT #1# (+ (* |j| |c|) |i|) |SCIFS;meshIndex|)
                  (|check_subtype2| (>= #1# 0) '(|NonNegativeInteger|)
                                    '(|Integer|) #1#)))) 
@@ -22,7 +22,7 @@
          ((|j| #1=(|NonNegativeInteger|))
           (|in2| (|List| (|List| (|NonNegativeInteger|))))
           (|thisLine| (|List| (|NonNegativeInteger|))) (|i| #1#)
-          (|pt2| (|List| PT)) (#2=#:G731 NIL) (|p| NIL) (#3=#:G730 NIL)
+          (|pt2| (|List| PT)) (#2=#:G736 NIL) (|p| NIL) (#3=#:G735 NIL)
           (|lpt| NIL) (|colLength| (|NonNegativeInteger|))
           (|rowLength| (|NonNegativeInteger|)))
          (SEQ (LETT |pt2| NIL . #4=(|SCIFS;smesh;LB$;4|))
@@ -91,8 +91,8 @@
 
 (SDEFUN |SCIFS;singleFace;L$;5| ((|ptin| |List| PT) ($ $))
         (SPROG
-         ((|in2| (|List| (|List| (|NonNegativeInteger|)))) (#1=#:G737 NIL)
-          (|i| NIL) (#2=#:G736 NIL) (|pt2| (|List| PT)))
+         ((|in2| (|List| (|List| (|NonNegativeInteger|)))) (#1=#:G743 NIL)
+          (|i| NIL) (#2=#:G742 NIL) (|pt2| (|List| PT)))
          (SEQ (LETT |pt2| |ptin| . #3=(|SCIFS;singleFace;L$;5|))
               (LETT |in2|
                     (LIST
@@ -112,10 +112,10 @@
          ((|indexSize| (|NonNegativeInteger|))
           (|in2| (|List| (|List| (|NonNegativeInteger|))))
           (|indexPos| (|NonNegativeInteger|))
-          (|newFace| (|List| (|NonNegativeInteger|))) (#1=#:G756 NIL) (|j| NIL)
-          (#2=#:G755 NIL) (#3=#:G754 NIL) (|ptIx| NIL) (|pt2| (|List| PT))
-          (|newPt| (PT)) (#4=#:G753 NIL) (#5=#:G752 NIL) (|faceIx| NIL)
-          (#6=#:G751 NIL) (|i| NIL) (#7=#:G750 NIL))
+          (|newFace| (|List| (|NonNegativeInteger|))) (#1=#:G762 NIL) (|j| NIL)
+          (#2=#:G761 NIL) (#3=#:G760 NIL) (|ptIx| NIL) (|pt2| (|List| PT))
+          (|newPt| (PT)) (#4=#:G759 NIL) (#5=#:G758 NIL) (|faceIx| NIL)
+          (#6=#:G757 NIL) (|i| NIL) (#7=#:G756 NIL))
          (SEQ
           (LETT |indexSize| (LENGTH (QCDR |me|)) . #8=(|SCIFS;subdivide;2$;6|))
           (LETT |pt2|
@@ -200,14 +200,14 @@
 (SDEFUN |SCIFS;sierpinskiDivide;$Nni$;7|
         ((|me| $) (|level| |NonNegativeInteger|) ($ $))
         (SPROG
-         ((#1=#:G769 NIL) (#2=#:G772 NIL) (|indexSize| (|NonNegativeInteger|))
+         ((#1=#:G775 NIL) (#2=#:G778 NIL) (|indexSize| (|NonNegativeInteger|))
           (|in2| (|List| (|List| (|NonNegativeInteger|))))
           (|index2| (|NonNegativeInteger|)) (|index1| (|NonNegativeInteger|))
           (|newFace| (|List| #3=(|NonNegativeInteger|))) (|ix4| #3#)
-          (|ix3| #3#) (#4=#:G777 NIL) (|offset| NIL) (#5=#:G762 NIL)
+          (|ix3| #3#) (#4=#:G783 NIL) (|offset| NIL) (#5=#:G768 NIL)
           (|pt2| (|List| PT)) (|newPt| (PT)) (|ix2| #3#)
-          (|ix1| (|NonNegativeInteger|)) (#6=#:G776 NIL) (#7=#:G775 NIL)
-          (|faceIx| NIL) (#8=#:G774 NIL) (|i| NIL) (#9=#:G773 NIL))
+          (|ix1| (|NonNegativeInteger|)) (#6=#:G782 NIL) (#7=#:G781 NIL)
+          (|faceIx| NIL) (#8=#:G780 NIL) (|i| NIL) (#9=#:G779 NIL))
          (SEQ
           (EXIT
            (SEQ
@@ -310,7 +310,7 @@
                  (LETT #7# (CDR #7#) . #10#) (GO G190) G191 (EXIT NIL))
             (COND
              ((< |level| 1)
-              (PROGN (LETT #2# (CONS |in2| |pt2|) . #10#) (GO #11=#:G771))))
+              (PROGN (LETT #2# (CONS |in2| |pt2|) . #10#) (GO #11=#:G777))))
             (EXIT
              (SPADCALL (CONS |in2| |pt2|)
                        (PROG1 (LETT #1# (- |level| 1) . #10#)
@@ -326,7 +326,7 @@
                     (|:| |knots| (|List| (|DoubleFloat|)))
                     (|:| |points| (|List| PT))))
          ($ |List| (|List| PT)))
-        (SPROG ((|outList| (|List| (|List| PT))) (#1=#:G782 NIL) (|curve| NIL))
+        (SPROG ((|outList| (|List| (|List| PT))) (#1=#:G788 NIL) (|curve| NIL))
                (SEQ (LETT |outList| NIL . #2=(|SCIFS;listBranches|))
                     (SEQ (LETT |curve| NIL . #2#) (LETT #1# |functions| . #2#)
                          G190
@@ -395,8 +395,8 @@
           (|begtriad| #1#)
           (|midtriads|
            (|List| (|Record| (|:| |tang| PT) (|:| |norm| PT) (|:| |bin| PT))))
-          (#2=#:G800 NIL) (|pl| NIL) (#3=#:G801 NIL) (|po| NIL) (#4=#:G802 NIL)
-          (|pr| NIL) (#5=#:G799 NIL) (|triad| #1#) (|b| (PT))
+          (#2=#:G806 NIL) (|pl| NIL) (#3=#:G807 NIL) (|po| NIL) (#4=#:G808 NIL)
+          (|pr| NIL) (#5=#:G805 NIL) (|triad| #1#) (|b| (PT))
           (|k| (|NonNegativeInteger|)))
          (SEQ (LETT |k| (LENGTH |l|) . #6=(|SCIFS;curveTriads|))
               (EXIT
@@ -508,7 +508,7 @@
         ((|n| |Integer|) ($ |List| (|List| (|DoubleFloat|))))
         (SPROG
          ((|ans| (|List| (|List| (|DoubleFloat|)))) (|angle| (|DoubleFloat|))
-          (#1=#:G810 NIL) (|i| NIL) (|theta| (|DoubleFloat|)))
+          (#1=#:G817 NIL) (|i| NIL) (|theta| (|DoubleFloat|)))
          (SEQ (LETT |ans| NIL . #2=(|SCIFS;cosSinInfo|))
               (LETT |theta|
                     (|div_DF_I|
@@ -535,7 +535,7 @@
          ((|pt| (PT)) (|ans| (|List| PT)) (|sin| (|DoubleFloat|))
           (|cos| (|DoubleFloat|)) (|cossin| (|List| (|DoubleFloat|))))
          (SEQ (LETT |ans| NIL . #1=(|SCIFS;loopPoints|))
-              (SEQ G190 (COND ((NULL |cosSin|) (GO G191)))
+              (SEQ G190 (COND ((NULL (NULL (NULL |cosSin|))) (GO G191)))
                    (SEQ (LETT |cossin| (|SPADfirst| |cosSin|) . #1#)
                         (LETT |cos| (|SPADfirst| |cossin|) . #1#)
                         (LETT |sin| (SPADCALL |cossin| (QREFELT $ 56)) . #1#)
@@ -565,8 +565,8 @@
         ((|pts1| |List| PT) (|r| |DoubleFloat|) (|nn| |Integer|)
          ($ |List| (|List| PT)))
         (SPROG
-         ((|loops| (|List| (|List| PT))) (|b| (PT)) (|n| (PT)) (#1=#:G819 NIL)
-          (|pt| NIL) (#2=#:G820 NIL) (|triad| NIL)
+         ((|loops| (|List| (|List| PT))) (|b| (PT)) (|n| (PT)) (#1=#:G827 NIL)
+          (|pt| NIL) (#2=#:G828 NIL) (|triad| NIL)
           (|cosSin| (|List| (|List| (|DoubleFloat|))))
           (|triads|
            (|List| (|Record| (|:| |tang| PT) (|:| |norm| PT) (|:| |bin| PT)))))
@@ -601,7 +601,7 @@
                     (|:| |points| (|List| PT))))
          (|r| |DoubleFloat|) (|n| |Integer|) ($ $))
         (SPROG
-         ((|loops| (|List| (|List| PT))) (#1=#:G828 NIL) (|bran| NIL)
+         ((|loops| (|List| (|List| PT))) (#1=#:G836 NIL) (|bran| NIL)
           (|brans| (|List| (|List| PT))))
          (SEQ
           (COND ((< |n| 3) (|error| "tube: n should be at least 3"))
@@ -628,8 +628,8 @@
 
 (SDEFUN |SCIFS;coerce;$Of;16| ((|me| $) ($ |OutputForm|))
         (SPROG
-         ((|res| (|List| (|OutputForm|))) (|r| (|OutputForm|)) (#1=#:G839 NIL)
-          (|pIx| NIL) (#2=#:G838 NIL) (|faceIx| NIL) (#3=#:G837 NIL) (|p| NIL))
+         ((|res| (|List| (|OutputForm|))) (|r| (|OutputForm|)) (#1=#:G847 NIL)
+          (|pIx| NIL) (#2=#:G846 NIL) (|faceIx| NIL) (#3=#:G845 NIL) (|p| NIL))
          (SEQ (LETT |r| (SPADCALL (QREFELT $ 64)) . #4=(|SCIFS;coerce;$Of;16|))
               (SEQ (LETT |p| NIL . #4#) (LETT #3# (QCDR |me|) . #4#) G190
                    (COND
@@ -640,7 +640,11 @@
                           (SPADCALL |r| (SPADCALL |p| (QREFELT $ 65))
                                     (QREFELT $ 66))
                           . #4#)
-                    (EXIT (LETT |r| (SPADCALL |r| " " (QREFELT $ 66)) . #4#)))
+                    (EXIT
+                     (LETT |r|
+                           (SPADCALL |r| (SPADCALL " " (QREFELT $ 68))
+                                     (QREFELT $ 66))
+                           . #4#)))
                    (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL))
               (LETT |res| (LIST |r|) . #4#)
               (SEQ (LETT |faceIx| NIL . #4#) (LETT #2# (QCAR |me|) . #4#) G190
@@ -658,25 +662,28 @@
                              (SEQ
                               (LETT |r|
                                     (SPADCALL |r|
-                                              (SPADCALL |pIx| (QREFELT $ 67))
+                                              (SPADCALL |pIx| (QREFELT $ 69))
                                               (QREFELT $ 66))
                                     . #4#)
                               (EXIT
-                               (LETT |r| (SPADCALL |r| " " (QREFELT $ 66))
+                               (LETT |r|
+                                     (SPADCALL |r|
+                                               (SPADCALL " " (QREFELT $ 68))
+                                               (QREFELT $ 66))
                                      . #4#)))
                              (LETT #1# (CDR #1#) . #4#) (GO G190) G191
                              (EXIT NIL))
                         (EXIT
-                         (LETT |res| (SPADCALL |res| |r| (QREFELT $ 69))
+                         (LETT |res| (SPADCALL |res| |r| (QREFELT $ 71))
                                . #4#)))
                    (LETT #2# (CDR #2#) . #4#) (GO G190) G191 (EXIT NIL))
-              (EXIT (SPADCALL |res| (QREFELT $ 71)))))) 
+              (EXIT (SPADCALL |res| (QREFELT $ 73)))))) 
 
 (DECLAIM (NOTINLINE |SceneIFS;|)) 
 
-(DEFUN |SceneIFS| (#1=#:G840)
+(DEFUN |SceneIFS| (#1=#:G848)
   (SPROG NIL
-         (PROG (#2=#:G841)
+         (PROG (#2=#:G849)
            (RETURN
             (COND
              ((LETT #2#
@@ -695,7 +702,7 @@
          (PROGN
           (LETT DV$1 (|devaluate| |#1|) . #1=(|SceneIFS|))
           (LETT |dv$| (LIST '|SceneIFS| DV$1) . #1#)
-          (LETT $ (GETREFV 73) . #1#)
+          (LETT $ (GETREFV 75) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|SceneIFS| (LIST DV$1) (CONS 1 $))
@@ -737,17 +744,17 @@
                         (|:| |ranges| (|List| (|Segment| 26))) (|:| |knots| 55)
                         (|:| |points| 10))
               (|List| 60) |SCIFS;stube;LDfI$;15| (|OutputForm|) (152 . |empty|)
-              (156 . |coerce|) (161 . |hconcat|) (167 . |coerce|) (|List| 63)
-              (172 . |concat|) (|List| $) (178 . |vconcat|)
-              |SCIFS;coerce;$Of;16|)
-           '#(|subdivide| 183 |stube| 188 |smesh| 195 |singleFace| 201
-              |sierpinskiDivide| 206 |pointList| 212 |indexes| 217 |curveLoops|
-              222 |coerce| 229)
+              (156 . |coerce|) (161 . |hconcat|) (|String|) (167 . |message|)
+              (172 . |coerce|) (|List| 63) (177 . |concat|) (|List| $)
+              (183 . |vconcat|) |SCIFS;coerce;$Of;16|)
+           '#(|subdivide| 188 |stube| 193 |smesh| 200 |singleFace| 206
+              |sierpinskiDivide| 211 |pointList| 217 |indexes| 222 |curveLoops|
+              227 |coerce| 234)
            'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
-                             (|makeByteWordVec2| 72
+                             (|makeByteWordVec2| 74
                                                  '(2 10 0 0 6 12 2 14 13 0 0 15
                                                    2 8 0 0 16 17 2 10 6 0 21 22
                                                    3 6 0 21 21 21 23 2 6 0 0 0
@@ -762,11 +769,11 @@
                                                    52 2 26 0 31 0 53 2 26 0 14
                                                    0 54 1 55 26 0 56 2 18 0 0 0
                                                    58 0 63 0 64 1 6 63 0 65 2
-                                                   63 0 0 0 66 1 14 63 0 67 2
-                                                   68 0 0 63 69 1 63 0 70 71 1
-                                                   0 0 0 30 3 0 0 61 26 21 62 2
-                                                   0 0 18 13 19 1 0 0 10 20 2 0
-                                                   0 0 14 35 1 0 10 0 11 1 0 8
-                                                   0 9 3 0 18 10 26 21 57 1 0
-                                                   63 0 72)))))
+                                                   63 0 0 0 66 1 63 0 67 68 1
+                                                   14 63 0 69 2 70 0 0 63 71 1
+                                                   63 0 72 73 1 0 0 0 30 3 0 0
+                                                   61 26 21 62 2 0 0 18 13 19 1
+                                                   0 0 10 20 2 0 0 0 14 35 1 0
+                                                   10 0 11 1 0 8 0 9 3 0 18 10
+                                                   26 21 57 1 0 63 0 74)))))
            '|lookupComplete|)) 

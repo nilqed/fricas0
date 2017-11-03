@@ -461,6 +461,19 @@
              (HPUT |$infoHash| |pred| |ress|)
              |ress|))))))
  
+; get_catlist(vmode, e) ==
+;     -- FIXME: setting $compForModeIfTrue should be not needed
+;     $compForModeIfTrue : local := true
+;     compMakeCategoryObject(vmode, e)
+ 
+(DEFUN |get_catlist| (|vmode| |e|)
+  (PROG (|$compForModeIfTrue|)
+    (DECLARE (SPECIAL |$compForModeIfTrue|))
+    (RETURN
+     (PROGN
+      (SETQ |$compForModeIfTrue| T)
+      (|compMakeCategoryObject| |vmode| |e|)))))
+ 
 ; knownInfo1 pred ==
 ;   pred is ["OR",:l] => or/[knownInfo u for u in l]
 ;   pred is ["AND",:l] => and/[knownInfo u for u in l]
@@ -471,12 +484,15 @@
 ;     cat is ["ATTRIBUTE",:a] => BREAK()
 ;     cat is ["SIGNATURE",:a] => knownInfo ["SIGNATURE",name,:a]
 ;     name is ['Union,:.] => false
+;     -- FIXME: there is confusion between '$ in outer domain
+;     -- (the one which needs info) and freshly compiled
+;     -- domain...
 ;     v:= compForMode(name,$EmptyMode,$e)
 ;     null v => stackSemanticError(["can't find category of ",name],nil)
 ;     vmode := CADR v
 ;     cat = vmode => true
 ;     vmode is ["Join",:l] and member(cat,l) => true
-;     [vv,.,.]:= compMakeCategoryObject(vmode,$e)
+;     [vv, ., .] := get_catlist(vmode, $e)
 ;     catlist := vv.4
 ;     --catlist := SUBST(name,'$,vv.4)
 ;     null vv => stackSemanticError(["can't make category of ",name],nil)
@@ -604,7 +620,7 @@
                     T)
                    (#1#
                     (PROGN
-                     (SETQ |LETTMP#1| (|compMakeCategoryObject| |vmode| |$e|))
+                     (SETQ |LETTMP#1| (|get_catlist| |vmode| |$e|))
                      (SETQ |vv| (CAR |LETTMP#1|))
                      (SETQ |catlist| (ELT |vv| 4))
                      (COND

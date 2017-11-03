@@ -36,7 +36,7 @@
 
 (DEFUN |OpenMathErrorKind| ()
   (SPROG NIL
-         (PROG (#1=#:G731)
+         (PROG (#1=#:G732)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|OpenMathErrorKind|)

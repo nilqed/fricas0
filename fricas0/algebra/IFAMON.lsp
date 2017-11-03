@@ -51,7 +51,7 @@
         (SPADCALL |f| |x| (QREFELT $ 45))) 
 
 (SDEFUN |IFAMON;coefficient;S$E;14| ((|s| S) (|f| $) ($ E))
-        (SPROG ((#1=#:G727 NIL) (#2=#:G728 NIL) (#3=#:G729 NIL) (|x| NIL))
+        (SPROG ((#1=#:G729 NIL) (#2=#:G730 NIL) (#3=#:G731 NIL) (|x| NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -71,16 +71,16 @@
                               (LETT #1#
                                     (PROGN
                                      (LETT #2# (QCDR |x|) . #4#)
-                                     (GO #5=#:G726))
+                                     (GO #5=#:G728))
                                     . #4#)
-                              (GO #6=#:G724))))))
+                              (GO #6=#:G726))))))
                          (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
                    #6# (EXIT #1#))
                   (EXIT (|spadConstant| $ 48))))
                 #5# (EXIT #2#)))) 
 
 (SDEFUN |IFAMON;highCommonTerms;3$;15| ((|f| $) (|g| $) ($ $))
-        (SPROG ((|n| (E)) (#1=#:G734 NIL) (|x| NIL) (#2=#:G733 NIL))
+        (SPROG ((|n| (E)) (#1=#:G736 NIL) (|x| NIL) (#2=#:G735 NIL))
                (SEQ
                 (SPADCALL
                  (PROGN
@@ -110,9 +110,9 @@
 
 (DECLAIM (NOTINLINE |InnerFreeAbelianMonoid;|)) 
 
-(DEFUN |InnerFreeAbelianMonoid| (&REST #1=#:G742)
+(DEFUN |InnerFreeAbelianMonoid| (&REST #1=#:G746)
   (SPROG NIL
-         (PROG (#2=#:G743)
+         (PROG (#2=#:G747)
            (RETURN
             (COND
              ((LETT #2#
@@ -163,8 +163,9 @@
 
 (MAKEPROP '|InnerFreeAbelianMonoid| '|infovec|
           (LIST
-           '#(NIL NIL NIL NIL NIL (|ListMonoidOps| 6 7 8) (|local| |#1|)
-              (|local| |#2|) (|local| |#3|) '|Rep| (0 . |makeUnit|)
+           '#(NIL NIL NIL NIL NIL (|ListMonoidOps| 6 7 (NRTEVAL (QREFELT $ 8)))
+              (|local| |#1|) (|local| |#2|) (|local| |#3|) '|Rep|
+              (0 . |makeUnit|)
               (CONS IDENTITY
                     (FUNCALL (|dispatchFunction| |IFAMON;Zero;$;1|) $))
               (|Record| (|:| |gen| 6) (|:| |exp| 7)) (|List| 12)

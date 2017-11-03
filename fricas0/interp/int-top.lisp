@@ -169,8 +169,6 @@
 ;     $erMsgToss             : local := false --------------->!!!
 ;     $ncMsgList             : local := nil
 ; 
-;     $promptMsg             : local := 'S2CTP023
-; 
 ;     interactive? =>
 ;         if printFirstPrompt?() then
 ;             princPrompt()
@@ -180,11 +178,11 @@
 ;     []
  
 (DEFUN |SpadInterpretStream| (|step_num| |source| |interactive?|)
-  (PROG (|$promptMsg| |$ncMsgList| |$erMsgToss| |$lastPos| |$inclAssertions|
+  (PROG (|$ncMsgList| |$erMsgToss| |$lastPos| |$inclAssertions|
          |$newcompErrorCount| |pile?|)
     (DECLARE
-     (SPECIAL |$promptMsg| |$ncMsgList| |$erMsgToss| |$lastPos|
-      |$inclAssertions| |$newcompErrorCount|))
+     (SPECIAL |$ncMsgList| |$erMsgToss| |$lastPos| |$inclAssertions|
+      |$newcompErrorCount|))
     (RETURN
      (PROGN
       (SETQ |pile?| (NULL |interactive?|))
@@ -193,7 +191,6 @@
       (SETQ |$lastPos| |$nopos|)
       (SETQ |$erMsgToss| NIL)
       (SETQ |$ncMsgList| NIL)
-      (SETQ |$promptMsg| 'S2CTP023)
       (COND
        (|interactive?|
         (PROGN

@@ -162,7 +162,7 @@
 
 (DEFUN |FortranCodePackage1| ()
   (SPROG NIL
-         (PROG (#1=#:G711)
+         (PROG (#1=#:G712)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|FortranCodePackage1|)

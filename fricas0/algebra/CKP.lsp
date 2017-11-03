@@ -61,28 +61,35 @@
         (SEQ
          (COND ((< (QREFELT $ 16) 4) (SPADCALL (QREFELT $ 31)))
                (#1='T
-                (SEQ (|CKP;write| " " $)
+                (SEQ (|CKP;write| (SPADCALL " " (QREFELT $ 33)) $)
                      (COND
                       ((EQL |flag| 1)
                        (|CKP;write|
                         (SPADCALL
-                         (LIST "Symbol " (|CKP;outM| |q| |s| $) " involutive! "
-                               "Dimension: " (SPADCALL |dim| (QREFELT $ 34)))
+                         (LIST (SPADCALL "Symbol " (QREFELT $ 33))
+                               (|CKP;outM| |q| |s| $)
+                               (SPADCALL " involutive! " (QREFELT $ 33))
+                               (SPADCALL "Dimension: " (QREFELT $ 33))
+                               (SPADCALL |dim| (QREFELT $ 34)))
                          (QREFELT $ 41))
                         $))
                       ((EQL |flag| 2)
                        (|CKP;write|
                         (SPADCALL
-                         (LIST "Symbol " (|CKP;outM| |q| |s| $)
-                               " not involutive! " "Dimension: "
+                         (LIST (SPADCALL "Symbol " (QREFELT $ 33))
+                               (|CKP;outM| |q| |s| $)
+                               (SPADCALL " not involutive! " (QREFELT $ 33))
+                               (SPADCALL "Dimension: " (QREFELT $ 33))
                                (SPADCALL |dim| (QREFELT $ 34)))
                          (QREFELT $ 41))
                         $))
                       (#1#
                        (|CKP;write|
                         (SPADCALL
-                         (LIST "Equation " (|CKP;outR| |q| |s| $)
-                               " not involutive! " "Dimension: "
+                         (LIST (SPADCALL "Equation " (QREFELT $ 33))
+                               (|CKP;outR| |q| |s| $)
+                               (SPADCALL " not involutive! " (QREFELT $ 33))
+                               (SPADCALL "Dimension: " (QREFELT $ 33))
                                (SPADCALL |dim| (QREFELT $ 34)))
                          (QREFELT $ 41))
                         $)))
@@ -95,30 +102,35 @@
         (SEQ
          (COND ((< (QREFELT $ 16) 5) (SPADCALL (QREFELT $ 31)))
                ('T
-                (SEQ (|CKP;write| " " $)
-                     (|CKP;write| "****************************************" $)
-                     (|CKP;write| " " $)
+                (SEQ (|CKP;write| (SPADCALL " " (QREFELT $ 33)) $)
                      (|CKP;write|
-                      (SPADCALL "Order: " (SPADCALL |q| (QREFELT $ 34))
-                                (QREFELT $ 42))
+                      (SPADCALL "****************************************"
+                                (QREFELT $ 33))
+                      $)
+                     (|CKP;write| (SPADCALL " " (QREFELT $ 33)) $)
+                     (|CKP;write|
+                      (SPADCALL (SPADCALL "Order: " (QREFELT $ 33))
+                                (SPADCALL |q| (QREFELT $ 34)) (QREFELT $ 42))
                       $)
                      (|CKP;write|
-                      (SPADCALL "Projections: " (SPADCALL |s| (QREFELT $ 34))
-                                (QREFELT $ 42))
+                      (SPADCALL (SPADCALL "Projections: " (QREFELT $ 33))
+                                (SPADCALL |s| (QREFELT $ 34)) (QREFELT $ 42))
                       $)
                      (|CKP;write|
                       (SPADCALL
-                       "System without prolonged equations. Dimension: "
+                       (SPADCALL
+                        "System without prolonged equations. Dimension: "
+                        (QREFELT $ 33))
                        (SPADCALL |DimRq| (QREFELT $ 34)) (QREFELT $ 42))
                       $)
                      (|CKP;write| (SPADCALL |Sys| (QREFELT $ 44)) $)
                      (COND
                       ((SPADCALL (QREFELT $ 16) 5 (QREFELT $ 23))
-                       (SEQ (|CKP;write| " " $)
+                       (SEQ (|CKP;write| (SPADCALL " " (QREFELT $ 33)) $)
                             (|CKP;write|
-                             (SPADCALL "Symbol. Dimension: "
-                                       (SPADCALL |DimMq| (QREFELT $ 34))
-                                       (QREFELT $ 42))
+                             (SPADCALL
+                              (SPADCALL "Symbol. Dimension: " (QREFELT $ 33))
+                              (SPADCALL |DimMq| (QREFELT $ 34)) (QREFELT $ 42))
                              $)
                             (EXIT
                              (|CKP;write| (SPADCALL |Symb| (QREFELT $ 46))
@@ -130,96 +142,103 @@
         (SEQ
          (COND ((< (QREFELT $ 16) 3) (SPADCALL (QREFELT $ 31)))
                ('T
-                (SEQ (|CKP;write| " " $)
+                (SEQ (|CKP;write| (SPADCALL " " (QREFELT $ 33)) $)
                      (|CKP;write|
                       (SPADCALL
-                       (LIST "======= " (SPADCALL |s| (QREFELT $ 34))
-                             ". Projection =======")
+                       (LIST (SPADCALL "======= " (QREFELT $ 33))
+                             (SPADCALL |s| (QREFELT $ 34))
+                             (SPADCALL ". Projection =======" (QREFELT $ 33)))
                        (QREFELT $ 41))
                       $)
-                     (|CKP;write| "Integrability condition(s)" $)
+                     (|CKP;write|
+                      (SPADCALL "Integrability condition(s)" (QREFELT $ 33)) $)
                      (|CKP;write| (SPADCALL |Cond| (QREFELT $ 44)) $)
-                     (|CKP;write| "=============================" $)
+                     (|CKP;write|
+                      (SPADCALL "=============================" (QREFELT $ 33))
+                      $)
                      (EXIT (SPADCALL (QREFELT $ 31)))))))) 
 
 (SDEFUN |CKP;displayCartan|
         ((|Sys| |List| D) (|dim| |NonNegativeInteger|)
          (|q| |NonNegativeInteger|) (|s| |NonNegativeInteger|)
          (|CarChar| |List| (|NonNegativeInteger|)) ($ |Void|))
-        (SPROG ((#1=#:G749 NIL) (|cc| NIL) (#2=#:G748 NIL))
+        (SPROG ((#1=#:G752 NIL) (|cc| NIL) (#2=#:G751 NIL))
                (SEQ
                 (COND ((EQL (QREFELT $ 16) 0) (SPADCALL (QREFELT $ 31)))
                       (#3='T
-                       (SEQ (|CKP;write| " " $)
-                            (|CKP;write|
-                             "*************** Final Result ***************" $)
-                            (|CKP;write| " " $)
+                       (SEQ (|CKP;write| (SPADCALL " " (QREFELT $ 33)) $)
                             (|CKP;write|
                              (SPADCALL
-                              (LIST "Equation " (|CKP;outR| |q| |s| $)
-                                    " involutive!")
+                              "*************** Final Result ***************"
+                              (QREFELT $ 33))
+                             $)
+                            (|CKP;write| (SPADCALL " " (QREFELT $ 33)) $)
+                            (|CKP;write|
+                             (SPADCALL
+                              (LIST (SPADCALL "Equation " (QREFELT $ 33))
+                                    (|CKP;outR| |q| |s| $)
+                                    (SPADCALL " involutive!" (QREFELT $ 33)))
                               (QREFELT $ 41))
                              $)
                             (|CKP;write|
                              (SPADCALL
-                              "System without prolonged equations. Dimension: "
+                              (SPADCALL
+                               "System without prolonged equations. Dimension: "
+                               (QREFELT $ 33))
                               (SPADCALL |dim| (QREFELT $ 34)) (QREFELT $ 42))
                              $)
                             (|CKP;write| (SPADCALL |Sys| (QREFELT $ 44)) $)
                             (COND
                              ((SPADCALL (QREFELT $ 16) 1 (QREFELT $ 23))
-                              (SEQ (|CKP;write| " " $)
-                                   (EXIT
-                                    (COND
-                                     ((ZEROP
-                                       (SPADCALL (ELT $ 49) |CarChar| 0
-                                                 (QREFELT $ 52)))
-                                      (|CKP;write| "System of finite type." $))
-                                     (#3#
-                                      (|CKP;write|
-                                       (SPADCALL "Cartan characters: "
-                                                 (SPADCALL
-                                                  (PROGN
-                                                   (LETT #2# NIL
-                                                         . #4=(|CKP;displayCartan|))
-                                                   (SEQ (LETT |cc| NIL . #4#)
-                                                        (LETT #1# |CarChar|
-                                                              . #4#)
-                                                        G190
-                                                        (COND
-                                                         ((OR (ATOM #1#)
-                                                              (PROGN
-                                                               (LETT |cc|
-                                                                     (CAR #1#)
-                                                                     . #4#)
-                                                               NIL))
-                                                          (GO G191)))
-                                                        (SEQ
-                                                         (EXIT
-                                                          (LETT #2#
-                                                                (CONS
-                                                                 (SPADCALL |cc|
-                                                                           (QREFELT
-                                                                            $
-                                                                            34))
-                                                                 #2#)
-                                                                . #4#)))
-                                                        (LETT #1# (CDR #1#)
-                                                              . #4#)
-                                                        (GO G190) G191
-                                                        (EXIT (NREVERSE #2#))))
-                                                  (QREFELT $ 53))
-                                                 (QREFELT $ 42))
-                                       $)))))))
+                              (SEQ
+                               (|CKP;write| (SPADCALL " " (QREFELT $ 33)) $)
+                               (EXIT
+                                (COND
+                                 ((ZEROP
+                                   (SPADCALL (ELT $ 49) |CarChar| 0
+                                             (QREFELT $ 52)))
+                                  (|CKP;write|
+                                   (SPADCALL "System of finite type."
+                                             (QREFELT $ 33))
+                                   $))
+                                 (#3#
+                                  (|CKP;write|
+                                   (SPADCALL
+                                    (SPADCALL "Cartan characters: "
+                                              (QREFELT $ 33))
+                                    (SPADCALL
+                                     (PROGN
+                                      (LETT #2# NIL . #4=(|CKP;displayCartan|))
+                                      (SEQ (LETT |cc| NIL . #4#)
+                                           (LETT #1# |CarChar| . #4#) G190
+                                           (COND
+                                            ((OR (ATOM #1#)
+                                                 (PROGN
+                                                  (LETT |cc| (CAR #1#) . #4#)
+                                                  NIL))
+                                             (GO G191)))
+                                           (SEQ
+                                            (EXIT
+                                             (LETT #2#
+                                                   (CONS
+                                                    (SPADCALL |cc|
+                                                              (QREFELT $ 34))
+                                                    #2#)
+                                                   . #4#)))
+                                           (LETT #1# (CDR #1#) . #4#) (GO G190)
+                                           G191 (EXIT (NREVERSE #2#))))
+                                     (QREFELT $ 53))
+                                    (QREFELT $ 42))
+                                   $)))))))
                             (EXIT (SPADCALL (QREFELT $ 31))))))))) 
 
 (SDEFUN |CKP;stirling;4Nni;11|
         ((|i| |NonNegativeInteger|) (|k| |NonNegativeInteger|)
          (|q| |NonNegativeInteger|) ($ |NonNegativeInteger|))
         (SPROG
-         ((|res| (|NonNegativeInteger|)) (#1=#:G781 NIL) (#2=#:G780 NIL)
-          (#3=#:G779 NIL) (#4=#:G791 NIL) (|j| NIL) (#5=#:G790 NIL)
-          (#6=#:G789 NIL) (#7=#:G788 NIL)
+         ((|res| (|NonNegativeInteger|)) (#1=#:G785 NIL) (#2=#:G784 NIL)
+          (#3=#:G783 NIL) (#4=#:G795 NIL) (|j| NIL) (#5=#:G794 NIL)
+          (#6=#:G793 NIL) (#7=#:G792 NIL)
           (|ans| (|Union| (|NonNegativeInteger|) "failed")))
          (SEQ
           (COND
@@ -306,8 +325,8 @@
         ((|q| |NonNegativeInteger|) (|beta| |List| (|NonNegativeInteger|))
          ($ |List| (|NonNegativeInteger|)))
         (SPROG
-         ((#1=#:G792 NIL) (#2=#:G796 NIL) (|bi| NIL) (#3=#:G797 NIL) (|i| NIL)
-          (#4=#:G795 NIL))
+         ((#1=#:G796 NIL) (#2=#:G800 NIL) (|bi| NIL) (#3=#:G801 NIL) (|i| NIL)
+          (#4=#:G799 NIL))
          (SEQ
           (PROGN
            (LETT #4# NIL . #5=(|CKP;alpha;Nni2L;12|))
@@ -347,8 +366,8 @@
         (SPROG
          ((|ifac| #1=(|Integer|))
           (|res| (|SparseUnivariatePolynomial| (|Fraction| (|Integer|))))
-          (|coeff| (|Fraction| (|Integer|))) (#2=#:G802 NIL) (|kfac| #1#)
-          (#3=#:G810 NIL) (|k| NIL) (#4=#:G809 NIL) (|i| NIL))
+          (|coeff| (|Fraction| (|Integer|))) (#2=#:G807 NIL) (|kfac| #1#)
+          (#3=#:G815 NIL) (|k| NIL) (#4=#:G814 NIL) (|i| NIL))
          (SEQ (LETT |res| (|spadConstant| $ 69) . #5=(|CKP;hilbert;LSup;13|))
               (LETT |ifac| 1 . #5#)
               (SEQ (LETT |i| 0 . #5#) (LETT #4# (- (QREFELT $ 10) 1) . #5#)
@@ -407,10 +426,10 @@
         ((|hilp| |SparseUnivariatePolynomial| (|Fraction| (|Integer|)))
          ($ |List| (|NonNegativeInteger|)))
         (SPROG
-         ((|res| (|List| (|NonNegativeInteger|))) (#1=#:G896 NIL)
-          (|ai| (|Integer|)) (#2=#:G894 NIL) (|kfac| #3=(|Integer|))
-          (|sum| (|Fraction| (|Integer|))) (#4=#:G814 NIL) (#5=#:G813 NIL)
-          (#6=#:G901 NIL) (|k| NIL) (|ifac| #3#) (|i| NIL))
+         ((|res| (|List| (|NonNegativeInteger|))) (#1=#:G924 NIL)
+          (|ai| (|Integer|)) (#2=#:G922 NIL) (|kfac| #3=(|Integer|))
+          (|sum| (|Fraction| (|Integer|))) (#4=#:G819 NIL) (#5=#:G818 NIL)
+          (#6=#:G929 NIL) (|k| NIL) (|ifac| #3#) (|i| NIL))
          (SEQ (LETT |res| NIL . #7=(|CKP;alphaHilbert;SupL;14|))
               (LETT |ifac| (SPADCALL (QREFELT $ 10) (QREFELT $ 80)) . #7#)
               (SEQ (LETT |i| (QREFELT $ 10) . #7#) G190
@@ -486,8 +505,8 @@
          (|CarChar| |List| (|NonNegativeInteger|)) ($ |List| (|Integer|)))
         (SPROG
          ((|res| (|List| (|Integer|))) (|t| (|Fraction| (|Integer|)))
-          (#1=#:G933 NIL) (#2=#:G932 NIL) (#3=#:G926 NIL) (|kfac| (|Integer|))
-          (|ki| (|NonNegativeInteger|)) (#4=#:G910 NIL) (#5=#:G940 NIL)
+          (#1=#:G975 NIL) (#2=#:G974 NIL) (#3=#:G965 NIL) (|kfac| (|Integer|))
+          (|ki| (|NonNegativeInteger|)) (#4=#:G938 NIL) (#5=#:G982 NIL)
           (|k| NIL) (|ifac| (|Integer|)) (|i| NIL))
          (SEQ
           (LETT |res| (LIST (SPADCALL |CarChar| (QREFELT $ 10) (QREFELT $ 86)))
@@ -562,10 +581,10 @@
          (|gamma| |List| (|NonNegativeInteger|)) ($ |List| (|Integer|)))
         (SPROG
          ((|res| (|List| (|Integer|))) (|t| (|Fraction| (|Integer|)))
-          (#1=#:G959 NIL) (#2=#:G958 NIL) (|kfac| (|Integer|))
-          (|ki| (|NonNegativeInteger|)) (#3=#:G952 NIL) (#4=#:G969 NIL)
-          (|k| NIL) (|ifac| (|Integer|)) (#5=#:G950 NIL) (#6=#:G949 NIL)
-          (#7=#:G967 NIL) (|l| NIL) (#8=#:G968 NIL) (|g| NIL) (|i| NIL)
+          (#1=#:G1004 NIL) (#2=#:G1003 NIL) (|kfac| (|Integer|))
+          (|ki| (|NonNegativeInteger|)) (#3=#:G994 NIL) (#4=#:G1014 NIL)
+          (|k| NIL) (|ifac| (|Integer|)) (#5=#:G992 NIL) (#6=#:G991 NIL)
+          (#7=#:G1012 NIL) (|l| NIL) (#8=#:G1013 NIL) (|g| NIL) (|i| NIL)
           (|rnf| (|Fraction| (|Integer|))) (|n1| (|Integer|))
           (|gp| (|NonNegativeInteger|)))
          (SEQ
@@ -683,9 +702,9 @@
          ($ |SparseUnivariatePolynomial| (|Fraction| (|Integer|))))
         (SPROG
          ((|res| (|SparseUnivariatePolynomial| (|Fraction| (|Integer|))))
-          (|t| (|NonNegativeInteger|)) (#1=#:G971 NIL) (#2=#:G970 NIL)
-          (#3=#:G979 NIL) (|l| NIL) (#4=#:G980 NIL) (|g| NIL) (#5=#:G978 NIL)
-          (|k| NIL) (|rnf| (|Fraction| (|Integer|)))
+          (|t| (|NonNegativeInteger|)) (#1=#:G1016 NIL) (#2=#:G1015 NIL)
+          (#3=#:G1024 NIL) (|l| NIL) (#4=#:G1025 NIL) (|g| NIL)
+          (#5=#:G1023 NIL) (|k| NIL) (|rnf| (|Fraction| (|Integer|)))
           (|gp| (|NonNegativeInteger|)))
          (SEQ
           (LETT |gp| (SPADCALL |gamma| (QREFELT $ 92))
@@ -767,8 +786,8 @@
         ((|nn| |NonNegativeInteger|) (|mm| |NonNegativeInteger|)
          (|qq| |NonNegativeInteger|) ($ |NonNegativeInteger|))
         (SPROG
-         ((#1=#:G985 NIL) (#2=#:G982 NIL) (|tmp| (|NonNegativeInteger|))
-          (#3=#:G981 NIL))
+         ((#1=#:G1030 NIL) (#2=#:G1027 NIL) (|tmp| (|NonNegativeInteger|))
+          (#3=#:G1026 NIL))
          (SEQ
           (COND
            ((EQL |qq| 1)
@@ -838,9 +857,9 @@
                      (|:| IC (|List| D))))
           (|PrevDe| #1#) (|CompSys| (|List| D)) (|s| #2=(|NonNegativeInteger|))
           (|InvDe| (|Boolean|)) (|ProjDeDim| #3=(|NonNegativeInteger|))
-          (#4=#:G1010 NIL) (|ProjDe| (|JetDifferentialEquation| JB D))
+          (#4=#:G1055 NIL) (|ProjDe| (|JetDifferentialEquation| JB D))
           (|InvSymb| (|Boolean|)) (|CurDeDim| #3#) (|CurSymbDim| #2#)
-          (#5=#:G1002 NIL)
+          (#5=#:G1047 NIL)
           (|CurMV|
            (|Record| (|:| |Rank| (|NonNegativeInteger|))
                      (|:| |NumMultVar| (|NonNegativeInteger|))
@@ -853,7 +872,7 @@
                      (|:| |Betas| (|List| (|NonNegativeInteger|)))))
           (|dimSq1| #6=(|NonNegativeInteger|)) (|dimSq| #6#)
           (|q1| (|NonNegativeInteger|)) (|q| (|NonNegativeInteger|))
-          (#7=#:G997 NIL) (#8=#:G995 NIL) (#9=#:G1019 NIL)
+          (#7=#:G1042 NIL) (#8=#:G1040 NIL) (#9=#:G1064 NIL)
           (|solved?| (|Boolean|)))
          (SEQ
           (LETT |PrevDe| (QCAR (SPADCALL |De| (QREFELT $ 103)))
@@ -1073,9 +1092,9 @@
 
 (DECLAIM (NOTINLINE |CartanKuranishi;|)) 
 
-(DEFUN |CartanKuranishi| (&REST #1=#:G1020)
+(DEFUN |CartanKuranishi| (&REST #1=#:G1065)
   (SPROG NIL
-         (PROG (#2=#:G1021)
+         (PROG (#2=#:G1066)
            (RETURN
             (COND
              ((LETT #2#
@@ -1182,7 +1201,7 @@
                                                    17 0 0 0 49 3 51 17 50 0 17
                                                    52 1 25 0 37 53 0 55 0 56 2
                                                    55 58 54 0 59 2 51 17 50 0
-                                                   60 2 17 0 17 0 61 3 55 17 0
+                                                   60 2 17 0 0 0 61 3 55 17 0
                                                    54 17 63 2 64 0 0 0 65 2 64
                                                    0 8 0 66 0 68 0 69 0 70 0 71
                                                    2 64 0 17 0 72 2 51 17 0 64
@@ -1194,7 +1213,7 @@
                                                    0 84 2 51 17 0 64 86 2 87 64
                                                    0 64 88 1 70 0 64 89 2 70 0
                                                    0 64 90 1 51 17 0 92 2 87 0
-                                                   17 64 93 2 70 0 0 0 94 2 70
+                                                   17 64 93 2 70 0 0 70 94 2 70
                                                    0 17 0 96 1 18 102 0 103 1
                                                    18 43 0 104 1 7 37 37 105 1
                                                    18 102 0 106 2 7 37 37 37

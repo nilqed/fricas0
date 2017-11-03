@@ -11,7 +11,7 @@
   (SPROG ((#1=#:G690 NIL))
          (PROG1
              (LETT #1#
-                   (|Join| (|AbelianGroup|) (|SemiRng|)
+                   (|Join| (|NonAssociativeRng|) (|SemiRng|)
                            (|mkCategory|
                             '(((|annihilate?| ((|Boolean|) $ $)) T)) NIL
                             '((|Boolean|)) NIL))

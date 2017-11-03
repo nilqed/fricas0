@@ -22,8 +22,8 @@
          ($ |Record| (|:| |pol| (|SparseUnivariatePolynomial| R1))
           (|:| |deg| (|PositiveInteger|))))
         (SPROG
-         ((#1=#:G718 NIL) (#2=#:G715 NIL) (#3=#:G713 NIL) (|g| #4=(|Integer|))
-          (#5=#:G707 NIL) (#6=#:G706 #4#) (#7=#:G708 #4#) (#8=#:G722 NIL)
+         ((#1=#:G721 NIL) (#2=#:G718 NIL) (#3=#:G716 NIL) (|g| #4=(|Integer|))
+          (#5=#:G708 NIL) (#6=#:G707 #4#) (#7=#:G709 #4#) (#8=#:G725 NIL)
           (|d| NIL))
          (SEQ
           (LETT |g|
@@ -99,7 +99,7 @@
 (SDEFUN |DEGRED;expand;EPiL;4|
         ((|s| |Expression| R2) (|g| |PositiveInteger|)
          ($ |List| (|Expression| R2)))
-        (SPROG ((#1=#:G736 NIL) (|i| NIL) (#2=#:G735 NIL))
+        (SPROG ((#1=#:G741 NIL) (|i| NIL) (#2=#:G740 NIL))
                (SEQ
                 (COND ((EQL |g| 1) (LIST |s|))
                       ('T
@@ -125,9 +125,9 @@
 
 (DECLAIM (NOTINLINE |DegreeReductionPackage;|)) 
 
-(DEFUN |DegreeReductionPackage| (&REST #1=#:G737)
+(DEFUN |DegreeReductionPackage| (&REST #1=#:G742)
   (SPROG NIL
-         (PROG (#2=#:G738)
+         (PROG (#2=#:G743)
            (RETURN
             (COND
              ((LETT #2#

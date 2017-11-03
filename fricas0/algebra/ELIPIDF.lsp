@@ -6,7 +6,7 @@
         ((|x| |DoubleFloat|) (|y| |DoubleFloat|) ($ |DoubleFloat|))
         (SPROG
          ((Q #1=(|DoubleFloat|)) (|mu| #1#) (|lambda| #2=(|DoubleFloat|))
-          (#3=#:G712 NIL) (S0 #2#) (S1 #2#) (|sn2| #1#) (|sn| #1#)
+          (#3=#:G718 NIL) (S0 #2#) (S1 #2#) (|sn2| #1#) (|sn| #1#)
           (|mu_inv| (|DoubleFloat|)))
          (SEQ
           (EXIT
@@ -55,7 +55,7 @@
                                                                             |sn|
                                                                             S1)))))
                                    . #4#)
-                             (GO #5=#:G711)))))
+                             (GO #5=#:G717)))))
                      ('T
                       (SEQ
                        (LETT |lambda|
@@ -85,7 +85,7 @@
         (SPROG
          ((Q #1=(|DoubleFloat|)) (|mu| #1#) (|lambda| #2=(|DoubleFloat|))
           (|znroot| #3=(|DoubleFloat|)) (|ynroot| #3#) (|xnroot| #3#)
-          (#4=#:G719 NIL) (|s| #2#) (|e3| #1#) (|e2| (|DoubleFloat|))
+          (#4=#:G725 NIL) (|s| #2#) (|e3| #1#) (|e2| (|DoubleFloat|))
           (|zndev| #1#) (|yndev| #1#) (|xndev| #1#) (|mu_inv| (|DoubleFloat|))
           (|zadev| #5=(|DoubleFloat|)) (|yadev| #5#) (|xadev| #5#))
          (SEQ
@@ -137,7 +137,7 @@
                             (PROGN
                              (LETT #4# (|mul_DF| |s| (|qsqrt_DF| |mu_inv|))
                                    . #6#)
-                             (GO #7=#:G718)))))
+                             (GO #7=#:G724)))))
                      ('T
                       (SEQ (LETT |xnroot| (|qsqrt_DF| |x|) . #6#)
                            (LETT |ynroot| (|qsqrt_DF| |y|) . #6#)
@@ -176,7 +176,7 @@
          ((Q #1=(|DoubleFloat|)) (|mu| #1#) (|power4| (|DoubleFloat|))
           (|sigma| (|DoubleFloat|)) (|lambda| #2=(|DoubleFloat|))
           (|znroot| #3=(|DoubleFloat|)) (|ynroot| #3#) (|xnroot| #3#)
-          (#4=#:G726 NIL) (|ss| #1#) (|s2| #1#) (|s1| #1#) (|ef| #2#)
+          (#4=#:G732 NIL) (|ss| #1#) (|s2| #1#) (|s1| #1#) (|ef| #2#)
           (|ed| #5=(|DoubleFloat|)) (|ec| #5#) (|eb| #1#) (|ea| #1#)
           (|zndev| #1#) (|yndev| #1#) (|xndev| #1#) (|mu_inv| (|DoubleFloat|))
           (|zadev| #6=(|DoubleFloat|)) (|yadev| #6#) (|xadev| #6#))
@@ -274,7 +274,7 @@
                                          |sigma|)
                                         (|mul_DF| |power4| |ss|))
                                        . #7#)
-                                 (GO #8=#:G725)))))
+                                 (GO #8=#:G731)))))
                          ('T
                           (SEQ (LETT |xnroot| (|qsqrt_DF| |x|) . #7#)
                                (LETT |ynroot| (|qsqrt_DF| |y|) . #7#)
@@ -323,7 +323,7 @@
          ((Q #1=(|DoubleFloat|)) (|mu| #1#) (|power4| (|DoubleFloat|))
           (|sigma| (|DoubleFloat|)) (|beta| #1#) (|alfa| #2=(|DoubleFloat|))
           (|lambda| #2#) (|znroot| #3=(|DoubleFloat|)) (|ynroot| #3#)
-          (|xnroot| #3#) (#4=#:G733 NIL) (|ss| #1#) (|s3| #5=(|DoubleFloat|))
+          (|xnroot| #3#) (#4=#:G739 NIL) (|ss| #1#) (|s3| #5=(|DoubleFloat|))
           (|s2| #1#) (|s1| #1#) (|e3| #2#) (|e2| #5#) (|ec| #1#) (|eb| #1#)
           (|ea| #2#) (|pndev| #1#) (|zndev| #1#) (|yndev| #1#) (|xndev| #1#)
           (|mu_inv| (|DoubleFloat|)) (|padev| #6=(|DoubleFloat|)) (|zadev| #6#)
@@ -447,7 +447,7 @@
                                          |sigma|)
                                         (|mul_DF| |power4| |ss|))
                                        . #7#)
-                                 (GO #8=#:G732)))))
+                                 (GO #8=#:G738)))))
                          ('T
                           (SEQ (LETT |xnroot| (|qsqrt_DF| |x|) . #7#)
                                (LETT |ynroot| (|qsqrt_DF| |y|) . #7#)
@@ -565,7 +565,7 @@
          ($ |Complex| (|DoubleFloat|)))
         (SPROG
          ((Q (|DoubleFloat|)) (|mu| (|Complex| (|DoubleFloat|)))
-          (|lambda| #1=(|Complex| (|DoubleFloat|))) (#2=#:G745 NIL) (S0 #1#)
+          (|lambda| #1=(|Complex| (|DoubleFloat|))) (#2=#:G751 NIL) (S0 #1#)
           (S1 #1#) (|sn2| #3=(|Complex| (|DoubleFloat|))) (|sn| #3#)
           (|mu_inv| (|Complex| (|DoubleFloat|))))
          (SEQ
@@ -646,7 +646,7 @@
                                                    (QREFELT $ 48))
                                          (QREFELT $ 53))
                                . #4#)
-                         (GO #5=#:G744)))))
+                         (GO #5=#:G750)))))
                      ('T
                       (SEQ
                        (LETT |lambda|
@@ -684,7 +684,7 @@
          ((Q (|DoubleFloat|)) (|mu| (|Complex| (|DoubleFloat|)))
           (|lambda| #1=(|Complex| (|DoubleFloat|)))
           (|znroot| #2=(|Complex| (|DoubleFloat|))) (|ynroot| #2#)
-          (|xnroot| #2#) (#3=#:G752 NIL) (|s| #1#)
+          (|xnroot| #2#) (#3=#:G758 NIL) (|s| #1#)
           (|e3| #4=(|Complex| (|DoubleFloat|)))
           (|e2| (|Complex| (|DoubleFloat|))) (|zndev| #4#) (|yndev| #4#)
           (|xndev| #4#) (|mu_inv| (|Complex| (|DoubleFloat|)))
@@ -767,7 +767,7 @@
                                (SPADCALL |s| (SPADCALL |mu_inv| (QREFELT $ 55))
                                          (QREFELT $ 53))
                                . #6#)
-                         (GO #7=#:G751)))))
+                         (GO #7=#:G757)))))
                      ('T
                       (SEQ (LETT |xnroot| (SPADCALL |x| (QREFELT $ 55)) . #6#)
                            (LETT |ynroot| (SPADCALL |y| (QREFELT $ 55)) . #6#)
@@ -819,7 +819,7 @@
           (|sigma| (|Complex| (|DoubleFloat|)))
           (|lambda| #1=(|Complex| (|DoubleFloat|)))
           (|znroot| #2=(|Complex| (|DoubleFloat|))) (|ynroot| #2#)
-          (|xnroot| #2#) (#3=#:G759 NIL) (|ss| #4=(|Complex| (|DoubleFloat|)))
+          (|xnroot| #2#) (#3=#:G765 NIL) (|ss| #4=(|Complex| (|DoubleFloat|)))
           (|s2| #4#) (|s1| #4#) (|ef| #1#)
           (|ed| #5=(|Complex| (|DoubleFloat|))) (|ec| #5#) (|eb| #4#)
           (|ea| #4#) (|zndev| #4#) (|yndev| #4#) (|xndev| #4#)
@@ -949,7 +949,7 @@
                                 (SPADCALL |power4| |ss| (QREFELT $ 53))
                                 (QREFELT $ 48))
                                . #7#)
-                         (GO #8=#:G758)))))
+                         (GO #8=#:G764)))))
                      ('T
                       (SEQ (LETT |xnroot| (SPADCALL |x| (QREFELT $ 55)) . #7#)
                            (LETT |ynroot| (SPADCALL |y| (QREFELT $ 55)) . #7#)
@@ -1020,7 +1020,7 @@
           (|beta| #1=(|Complex| (|DoubleFloat|)))
           (|alfa| #2=(|Complex| (|DoubleFloat|))) (|lambda| #2#)
           (|znroot| #3=(|Complex| (|DoubleFloat|))) (|ynroot| #3#)
-          (|xnroot| #3#) (#4=#:G766 NIL) (|ss| #1#)
+          (|xnroot| #3#) (#4=#:G772 NIL) (|ss| #1#)
           (|s3| #5=(|Complex| (|DoubleFloat|))) (|s2| #1#) (|s1| #1#)
           (|e3| #2#) (|e2| #5#) (|ec| #1#) (|eb| #1#) (|ea| #2#) (|pndev| #1#)
           (|zndev| #1#) (|yndev| #1#) (|xndev| #1#)
@@ -1190,7 +1190,7 @@
                                 (SPADCALL |power4| |ss| (QREFELT $ 53))
                                 (QREFELT $ 48))
                                . #7#)
-                         (GO #8=#:G765)))))
+                         (GO #8=#:G771)))))
                      ('T
                       (SEQ (LETT |xnroot| (SPADCALL |x| (QREFELT $ 55)) . #7#)
                            (LETT |ynroot| (SPADCALL |y| (QREFELT $ 55)) . #7#)
@@ -1382,7 +1382,7 @@
 
 (DEFUN |DoubleFloatEllipticIntegrals| ()
   (SPROG NIL
-         (PROG (#1=#:G773)
+         (PROG (#1=#:G779)
            (RETURN
             (COND
              ((LETT #1#

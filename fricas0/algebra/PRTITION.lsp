@@ -36,7 +36,7 @@
                      (SPADCALL |x| (CDR |y|) (QREFELT $ 21)))))) 
 
 (SDEFUN |PRTITION;*;Nni2$;8| ((|n| |NonNegativeInteger|) (|x| $) ($ $))
-        (SPROG ((#1=#:G737 NIL))
+        (SPROG ((#1=#:G740 NIL))
                (COND ((ZEROP |n|) (|spadConstant| $ 7))
                      ('T
                       (SPADCALL |x|
@@ -116,10 +116,11 @@
 (SDEFUN |PRTITION;mkterm| ((|i1| |Integer|) (|i2| |Integer|) ($ |OutputForm|))
         (COND
          ((EQL |i2| 1)
-          (SPADCALL (SPADCALL |i1| (QREFELT $ 34)) " " (QREFELT $ 35)))
+          (SPADCALL (SPADCALL |i1| (QREFELT $ 34))
+                    (SPADCALL " " (QREFELT $ 36)) (QREFELT $ 37)))
          ('T
           (SPADCALL (SPADCALL |i1| (QREFELT $ 34))
-                    (SPADCALL |i2| (QREFELT $ 34)) (QREFELT $ 35))))) 
+                    (SPADCALL |i2| (QREFELT $ 34)) (QREFELT $ 37))))) 
 
 (SDEFUN |PRTITION;mkexp1|
         ((|lli| |List| (|List| (|Integer|))) ($ |List| (|OutputForm|)))
@@ -131,7 +132,7 @@
                             (COND
                              ((NULL (CDR |lli|))
                               (COND
-                               ((EQL (SPADCALL |li| (QREFELT $ 36)) 1)
+                               ((EQL (SPADCALL |li| (QREFELT $ 38)) 1)
                                 (EXIT
                                  (CONS
                                   (SPADCALL (|SPADfirst| |li|) (QREFELT $ 34))
@@ -139,22 +140,22 @@
                             (EXIT
                              (CONS
                               (|PRTITION;mkterm| (|SPADfirst| |li|)
-                               (SPADCALL |li| (QREFELT $ 36)) $)
+                               (SPADCALL |li| (QREFELT $ 38)) $)
                               (|PRTITION;mkexp1| (CDR |lli|) $))))))))) 
 
 (SDEFUN |PRTITION;coerce;$Of;17| ((|x| $) ($ |OutputForm|))
-        (COND ((NULL |x|) (SPADCALL |x| (QREFELT $ 37)))
+        (COND ((NULL |x|) (SPADCALL |x| (QREFELT $ 39)))
               ('T
                (SPADCALL
-                (SPADCALL (ELT $ 38)
+                (SPADCALL (ELT $ 40)
                           (|PRTITION;mkexp1| (SPADCALL |x| (QREFELT $ 29)) $)
-                          (QREFELT $ 41))
-                (QREFELT $ 42))))) 
+                          (QREFELT $ 43))
+                (QREFELT $ 44))))) 
 
 (SDEFUN |PRTITION;pdct;$I;18| ((|x| $) ($ |Integer|))
         (SPROG
-         ((#1=#:G778 NIL) (#2=#:G777 #3=(|Integer|)) (#4=#:G779 #3#)
-          (#5=#:G781 NIL) (|a| NIL))
+         ((#1=#:G781 NIL) (#2=#:G780 #3=(|Integer|)) (#4=#:G782 #3#)
+          (#5=#:G784 NIL) (|a| NIL))
          (SEQ
           (PROGN
            (LETT #1# NIL . #6=(|PRTITION;pdct;$I;18|))
@@ -168,10 +169,10 @@
                   (PROGN
                    (LETT #4#
                          (*
-                          (SPADCALL (SPADCALL |a| (QREFELT $ 36))
-                                    (QREFELT $ 44))
+                          (SPADCALL (SPADCALL |a| (QREFELT $ 38))
+                                    (QREFELT $ 46))
                           (EXPT (|SPADfirst| |a|)
-                                (SPADCALL |a| (QREFELT $ 36))))
+                                (SPADCALL |a| (QREFELT $ 38))))
                          . #6#)
                    (COND (#1# (LETT #2# (* #2# #4#) . #6#))
                          ('T
@@ -183,7 +184,7 @@
 
 (DEFUN |Partition| ()
   (SPROG NIL
-         (PROG (#1=#:G784)
+         (PROG (#1=#:G788)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|Partition|)
@@ -203,7 +204,7 @@
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
           (LETT |dv$| '(|Partition|) . #1=(|Partition|))
-          (LETT $ (GETREFV 50) . #1#)
+          (LETT $ (GETREFV 51) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|Partition| NIL (CONS 1 $))
@@ -226,15 +227,16 @@
               |PRTITION;subtractIfCan;2$U;11| (|List| 8)
               |PRTITION;powers;LL;13| (|PartitionsAndPermutations|)
               (35 . |conjugate|) |PRTITION;conjugate;2$;14| (|OutputForm|)
-              (40 . |coerce|) (45 . ^) (51 . |second|) (56 . |coerce|) (61 . *)
-              (|Mapping| 33 33 33) (|List| 33) (67 . |reduce|) (73 . |paren|)
-              |PRTITION;coerce;$Of;17| (78 . |factorial|) |PRTITION;pdct;$I;18|
-              (|PositiveInteger|) (|HashState|) (|String|) (|SingleInteger|))
-           '#(~= 83 |zero?| 89 |subtractIfCan| 94 |smaller?| 100 |sample| 106
-              |powers| 110 |pdct| 115 |partition| 120 |opposite?| 125 |min| 131
-              |max| 137 |latex| 143 |hashUpdate!| 148 |hash| 154 |convert| 159
-              |conjugate| 164 |coerce| 169 |Zero| 179 >= 183 > 189 = 195 <= 201
-              < 207 + 213 * 219)
+              (40 . |coerce|) (|String|) (45 . |message|) (50 . ^)
+              (56 . |second|) (61 . |coerce|) (66 . *) (|Mapping| 33 33 33)
+              (|List| 33) (72 . |reduce|) (78 . |paren|)
+              |PRTITION;coerce;$Of;17| (83 . |factorial|) |PRTITION;pdct;$I;18|
+              (|PositiveInteger|) (|HashState|) (|SingleInteger|))
+           '#(~= 88 |zero?| 94 |subtractIfCan| 99 |smaller?| 105 |sample| 111
+              |powers| 115 |pdct| 120 |partition| 125 |opposite?| 130 |min| 136
+              |max| 142 |latex| 148 |hashUpdate!| 153 |hash| 159 |convert| 164
+              |conjugate| 169 |coerce| 174 |Zero| 184 >= 188 > 194 = 200 <= 206
+              < 212 + 218 * 224)
            'NIL
            (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0 0 0 0))
                  (CONS
@@ -248,21 +250,22 @@
                       (|AbelianMonoid|) (|Comparable|) (|AbelianSemiGroup|)
                       (|SetCategory|) (|ConvertibleTo| 8) (|BasicType|)
                       (|PartialOrder|) (|CoercibleTo| 33))
-                   (|makeByteWordVec2| 49
+                   (|makeByteWordVec2| 50
                                        '(1 8 0 0 10 2 13 12 0 0 14 2 6 0 15 0
                                          16 2 13 12 0 0 20 2 23 22 0 0 24 2 6
-                                         12 13 0 26 1 30 8 8 31 1 13 33 0 34 2
-                                         33 0 0 0 35 1 6 13 0 36 1 6 33 0 37 2
-                                         33 0 0 0 38 2 40 33 39 0 41 1 33 0 0
-                                         42 1 13 0 0 44 2 0 12 0 0 1 1 0 12 0 1
-                                         2 0 22 0 0 27 2 0 12 0 0 1 0 0 0 1 1 0
-                                         28 8 29 1 0 13 0 45 1 0 0 8 17 2 0 12
-                                         0 0 1 2 0 0 0 0 1 2 0 0 0 0 1 1 0 48 0
-                                         1 2 0 47 47 0 1 1 0 49 0 1 1 0 8 0 11
-                                         1 0 0 0 32 1 0 8 0 9 1 0 33 0 43 0 0 0
-                                         7 2 0 12 0 0 1 2 0 12 0 0 1 2 0 12 0 0
-                                         19 2 0 12 0 0 1 2 0 12 0 0 18 2 0 0 0
-                                         0 21 2 0 0 23 0 25 2 0 0 46 0 1)))))
+                                         12 13 0 26 1 30 8 8 31 1 13 33 0 34 1
+                                         33 0 35 36 2 33 0 0 0 37 1 6 13 0 38 1
+                                         6 33 0 39 2 33 0 0 0 40 2 42 33 41 0
+                                         43 1 33 0 0 44 1 13 0 0 46 2 0 12 0 0
+                                         1 1 0 12 0 1 2 0 22 0 0 27 2 0 12 0 0
+                                         1 0 0 0 1 1 0 28 8 29 1 0 13 0 47 1 0
+                                         0 8 17 2 0 12 0 0 1 2 0 0 0 0 1 2 0 0
+                                         0 0 1 1 0 35 0 1 2 0 49 49 0 1 1 0 50
+                                         0 1 1 0 8 0 11 1 0 0 0 32 1 0 8 0 9 1
+                                         0 33 0 45 0 0 0 7 2 0 12 0 0 1 2 0 12
+                                         0 0 1 2 0 12 0 0 19 2 0 12 0 0 1 2 0
+                                         12 0 0 18 2 0 0 0 0 21 2 0 0 23 0 25 2
+                                         0 0 48 0 1)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|Partition| 'NILADIC T) 

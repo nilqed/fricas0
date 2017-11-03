@@ -170,7 +170,7 @@
 (SDEFUN |STTAYLOR;exquo;2SU;8|
         ((|x| |Stream| A) (|y| |Stream| A) ($ |Union| (|Stream| A) "failed"))
         (SPROG
-         ((|ry0| (|Union| A "failed")) (#1=#:G835 NIL) (#2=#:G836 NIL)
+         ((|ry0| (|Union| A "failed")) (#1=#:G839 NIL) (#2=#:G840 NIL)
           (|n| NIL))
          (SEQ
           (EXIT
@@ -185,7 +185,7 @@
                            (SPADCALL |y| (QREFELT $ 10)))
                        (PROGN
                         (LETT #2# (CONS 1 "failed") . #3#)
-                        (GO #4=#:G834)))
+                        (GO #4=#:G838)))
                       ((SPADCALL |x| (QREFELT $ 10))
                        (PROGN
                         (LETT #2# (CONS 0 (SPADCALL (QREFELT $ 8))) . #3#)
@@ -202,7 +202,7 @@
                         ('T
                          (PROGN (LETT #2# (CONS 1 "failed") . #3#) (GO #4#)))))
                       ('T
-                       (PROGN (LETT #1# |$NoValue| . #3#) (GO #5=#:G824))))))
+                       (PROGN (LETT #1# |$NoValue| . #3#) (GO #5=#:G828))))))
                    (LETT |n| (|inc_SI| |n|) . #3#) (GO G190) G191 (EXIT NIL)))
              #5# (EXIT #1#))
             (LETT |ry0| (SPADCALL (SPADCALL |y| (QREFELT $ 13)) (QREFELT $ 34))
@@ -384,7 +384,7 @@
            (PROGN
             (SPROG
              ((|x| NIL) (|c| NIL) (|y| NIL) (|ll| NIL) (|n| NIL) (|i| NIL)
-              (#2=#:G924 NIL) (#3=#:G923 NIL) (#4=#:G922 NIL) (|res| NIL)
+              (#2=#:G928 NIL) (#3=#:G927 NIL) (#4=#:G926 NIL) (|res| NIL)
               (|llp| NIL) (|xp| NIL))
              (SEQ
               (EXIT
@@ -397,7 +397,7 @@
                             (SPADCALL |x| (QREFELT $ 10)))
                         (PROGN
                          (LETT #3# (SPADCALL (QREFELT $ 8)) NIL)
-                         (GO #5=#:G921)))
+                         (GO #5=#:G925)))
                        ('T (LETT |x| (SPADCALL |x| (QREFELT $ 11)) NIL))))
                      ('T
                       (SEQ (LETT |c| (SPADCALL |y| (QREFELT $ 13)) NIL)
@@ -455,7 +455,7 @@
                                 ('T
                                  (PROGN
                                   (LETT #4# |$NoValue| NIL)
-                                  (GO #6=#:G917)))))
+                                  (GO #6=#:G921)))))
                               ('T
                                (SEQ
                                 (LETT |res|
@@ -623,7 +623,7 @@
           (RETURN (PROGN (|STTAYLOR;lagrangere| |x| |y| $))))) 
 
 (SDEFUN |STTAYLOR;revert;2S;28| ((|x| |Stream| A) ($ |Stream| A))
-        (SPROG ((#1=#:G967 NIL) (|y| (|Union| (|Stream| A) #2="failed")))
+        (SPROG ((#1=#:G971 NIL) (|y| (|Union| (|Stream| A) #2="failed")))
                (SEQ
                 (COND
                  ((SPADCALL |x| (QREFELT $ 10))
@@ -1000,7 +1000,7 @@
 
 (SDEFUN |STTAYLOR;multisect;2I2S;42|
         ((|b| |Integer|) (|a| |Integer|) (|x| |Stream| A) ($ |Stream| A))
-        (SPROG ((#1=#:G1083 NIL))
+        (SPROG ((#1=#:G1087 NIL))
                (|STTAYLOR;ms| (+ |a| |b|) 0
                 (SPADCALL |x|
                           (PROG1 (LETT #1# |a| |STTAYLOR;multisect;2I2S;42|)
@@ -1180,10 +1180,10 @@
 (SDEFUN |STTAYLOR;powern;F2S;54|
         ((|rn| |Fraction| (|Integer|)) (|x| |Stream| A) ($ |Stream| A))
         (SPROG
-         ((|power| (|Stream| A)) (#1=#:G1144 NIL) (#2=#:G1138 NIL)
+         ((|power| (|Stream| A)) (#1=#:G1149 NIL) (#2=#:G1143 NIL)
           (|num| (|Integer|)) (|invCo| (|Union| A "failed")) (|co| (A))
-          (|ord| (|Union| (|Integer|) "failed")) (#3=#:G1153 NIL)
-          (|order| (|Integer|)) (#4=#:G1154 NIL) (|n| NIL))
+          (|ord| (|Union| (|Integer|) "failed")) (#3=#:G1158 NIL)
+          (|order| (|Integer|)) (#4=#:G1159 NIL) (|n| NIL))
          (SEQ
           (EXIT
            (SEQ (LETT |order| 0 . #5=(|STTAYLOR;powern;F2S;54|))
@@ -1196,7 +1196,7 @@
                           ((SPADCALL |x| (QREFELT $ 10))
                            (PROGN
                             (LETT #4# (|STTAYLOR;zro| $) . #5#)
-                            (GO #6=#:G1152)))
+                            (GO #6=#:G1157)))
                           ((NULL
                             (SPADCALL (SPADCALL |x| (QREFELT $ 13))
                                       (QREFELT $ 25)))
@@ -1204,7 +1204,7 @@
                                 (EXIT
                                  (PROGN
                                   (LETT #3# |$NoValue| . #5#)
-                                  (GO #7=#:G1126)))))
+                                  (GO #7=#:G1131)))))
                           ('T
                            (SEQ (LETT |x| (SPADCALL |x| (QREFELT $ 11)) . #5#)
                                 (EXIT
@@ -1432,9 +1432,9 @@
 
 (DECLAIM (NOTINLINE |StreamTaylorSeriesOperations;|)) 
 
-(DEFUN |StreamTaylorSeriesOperations| (#1=#:G1178)
+(DEFUN |StreamTaylorSeriesOperations| (#1=#:G1183)
   (SPROG NIL
-         (PROG (#2=#:G1179)
+         (PROG (#2=#:G1184)
            (RETURN
             (COND
              ((LETT #2#
@@ -1596,10 +1596,10 @@
                                                    9 0 92 1 91 7 0 93 1 91 0 0
                                                    94 0 95 0 96 1 7 0 61 99 2
                                                    61 0 0 0 100 3 102 91 101 54
-                                                   7 103 2 6 9 0 0 108 2 39 0
-                                                   39 0 109 2 111 91 110 54 112
-                                                   1 39 9 0 114 2 7 0 0 29 115
-                                                   0 91 0 118 2 91 0 7 0 119 2
+                                                   7 103 2 6 9 0 0 108 2 39 0 0
+                                                   0 109 2 111 91 110 54 112 1
+                                                   39 9 0 114 2 7 0 0 29 115 0
+                                                   91 0 118 2 91 0 7 0 119 2
                                                    120 91 86 91 121 1 91 0 19
                                                    122 2 123 0 39 39 124 2 6 0
                                                    123 0 125 2 0 7 6 7 126 2 0

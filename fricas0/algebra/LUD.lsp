@@ -4,10 +4,10 @@
          ($ |Record| (|:| LU (|Matrix| D)) (|:| |Perm| (|Vector| (|Integer|)))
           (|:| |Pivots| (|List| D))))
         (SPROG
-         ((#1=#:G731 NIL) (|k| NIL) (|d| (D)) (|Pivs| (|List| D))
-          (|i0| (|Integer|)) (|s| (D)) (#2=#:G730 NIL) (#3=#:G729 NIL)
-          (|i| NIL) (#4=#:G728 NIL) (#5=#:G727 NIL) (#6=#:G726 NIL) (|j| NIL)
-          (|PermV| (|Vector| (|Integer|))) (#7=#:G700 NIL) (|maxC| (|Integer|))
+         ((#1=#:G735 NIL) (|k| NIL) (|d| (D)) (|Pivs| (|List| D))
+          (|i0| (|Integer|)) (|s| (D)) (#2=#:G734 NIL) (#3=#:G733 NIL)
+          (|i| NIL) (#4=#:G732 NIL) (#5=#:G731 NIL) (#6=#:G730 NIL) (|j| NIL)
+          (|PermV| (|Vector| (|Integer|))) (#7=#:G702 NIL) (|maxC| (|Integer|))
           (|minC| (|Integer|)) (|maxR| (|Integer|)) (|minR| (|Integer|))
           (A (|Matrix| D)))
          (SEQ (LETT A (SPADCALL AA (QREFELT $ 8)) . #8=(|LUD;LUDecomp;MR;1|))
@@ -125,8 +125,8 @@
         ((LU |Matrix| D) (|Perm| |Vector| (|Integer|)) (XX |Vector| D)
          ($ |Vector| D))
         (SPROG
-         ((|s| (D)) (#1=#:G745 NIL) (|j| NIL) (#2=#:G744 NIL) (|i| NIL)
-          (|ii| (|Integer|)) (#3=#:G743 NIL) (|ip| (|Integer|)) (#4=#:G742 NIL)
+         ((|s| (D)) (#1=#:G749 NIL) (|j| NIL) (#2=#:G748 NIL) (|i| NIL)
+          (|ii| (|Integer|)) (#3=#:G747 NIL) (|ip| (|Integer|)) (#4=#:G746 NIL)
           (|maxR| (|Integer|)) (|minR| (|Integer|)) (X (|Vector| D)))
          (SEQ (LETT X (SPADCALL XX (QREFELT $ 24)) . #5=(|LUD;LUSolve;MV2V;2|))
               (LETT |minR| 1 . #5#)
@@ -198,7 +198,7 @@
         ((A |Matrix| D)
          ($ |Record| (|:| |Inv| (|Matrix| D)) (|:| |Pivots| (|List| D))))
         (SPROG
-         ((|res| (|Matrix| D)) (|v| (|Vector| D)) (#1=#:G753 NIL) (|i| NIL)
+         ((|res| (|Matrix| D)) (|v| (|Vector| D)) (#1=#:G757 NIL) (|i| NIL)
           (|n| (|NonNegativeInteger|))
           (|Alu|
            (|Record| (|:| LU (|Matrix| D)) (|:| |Perm| (|Vector| (|Integer|)))
@@ -223,9 +223,9 @@
 
 (DECLAIM (NOTINLINE |LUDecomposition;|)) 
 
-(DEFUN |LUDecomposition| (#1=#:G754)
+(DEFUN |LUDecomposition| (#1=#:G758)
   (SPROG NIL
-         (PROG (#2=#:G755)
+         (PROG (#2=#:G759)
            (RETURN
             (COND
              ((LETT #2#

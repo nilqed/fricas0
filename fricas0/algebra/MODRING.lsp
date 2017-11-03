@@ -101,9 +101,9 @@
 
 (DECLAIM (NOTINLINE |ModularRing;|)) 
 
-(DEFUN |ModularRing| (&REST #1=#:G750)
+(DEFUN |ModularRing| (&REST #1=#:G754)
   (SPROG NIL
-         (PROG (#2=#:G751)
+         (PROG (#2=#:G755)
            (RETURN
             (COND
              ((LETT #2#
@@ -166,38 +166,49 @@
               |MODRING;=;2$B;13| (43 . +) |MODRING;+;3$;14| (49 . -) (55 . -)
               |MODRING;-;2$;16| (60 . *) (66 . ~=) (|Union| $ '"failed")
               |MODRING;exQuo;2$U;18| |MODRING;recip;$U;19| |MODRING;inv;2$;20|
-              (|PositiveInteger|) (|HashState|) (|String|) (|SingleInteger|))
-           '#(~= 72 |zero?| 78 |subtractIfCan| 83 |sample| 89 |reduce| 93
-              |recip| 99 |opposite?| 104 |one?| 110 |modulus| 115 |latex| 120
-              |inv| 125 |hashUpdate!| 130 |hash| 136 |exQuo| 141 |coerce| 147
-              |characteristic| 162 |annihilate?| 166 ^ 172 |Zero| 184 |One| 188
-              = 192 - 198 + 209 * 215)
+              (|PositiveInteger|) (|String|) (|SingleInteger|) (|HashState|))
+           '#(~= 72 |zero?| 78 |subtractIfCan| 83 |sample| 89 |rightRecip| 93
+              |rightPower| 98 |reduce| 110 |recip| 116 |opposite?| 121 |one?|
+              127 |modulus| 132 |leftRecip| 137 |leftPower| 142 |latex| 154
+              |inv| 159 |hashUpdate!| 164 |hash| 170 |exQuo| 175 |commutator|
+              181 |coerce| 187 |characteristic| 202 |associator| 206
+              |antiCommutator| 213 |annihilate?| 219 ^ 225 |Zero| 237 |One| 241
+              = 245 - 251 + 262 * 268)
            'NIL
-           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0))
-                 (CONS
-                  '#(|Ring&| |Rng&| NIL |AbelianGroup&| NIL NIL
-                     |AbelianMonoid&| |Monoid&| NIL |SemiGroup&|
-                     |AbelianSemiGroup&| |SetCategory&| NIL |BasicType&| NIL)
-                  (CONS
-                   '#((|Ring|) (|Rng|) (|LeftModule| $$) (|AbelianGroup|)
-                      (|CancellationAbelianMonoid|) (|SemiRing|)
-                      (|AbelianMonoid|) (|Monoid|) (|SemiRng|) (|SemiGroup|)
-                      (|AbelianSemiGroup|) (|SetCategory|) (|unitsKnown|)
-                      (|BasicType|) (|CoercibleTo| 22))
-                   (|makeByteWordVec2| 53
-                                       '(1 6 0 14 15 0 6 0 17 0 7 0 18 1 6 22 0
-                                         23 0 6 26 27 0 6 0 29 1 6 31 0 32 2 6
-                                         31 0 0 34 2 7 31 0 0 36 2 6 0 0 0 39 2
-                                         6 0 0 0 41 1 6 0 0 42 2 6 0 0 0 44 2 7
-                                         31 0 0 45 2 0 31 0 0 1 1 0 31 0 33 2 0
-                                         46 0 0 1 0 0 0 1 2 0 0 6 7 25 1 0 46 0
-                                         48 2 0 31 0 0 1 1 0 31 0 35 1 0 7 0 12
-                                         1 0 52 0 1 1 0 0 0 49 2 0 51 51 0 1 1
-                                         0 53 0 1 2 0 46 0 0 47 1 0 6 0 13 1 0
-                                         0 14 19 1 0 22 0 24 0 0 26 28 2 0 31 0
-                                         0 1 2 0 0 0 26 1 2 0 0 0 50 1 0 0 0 16
-                                         0 0 0 30 2 0 31 0 0 38 1 0 0 0 43 2 0
-                                         0 0 0 37 2 0 0 0 0 40 2 0 0 14 0 21 2
-                                         0 0 0 0 20 2 0 0 26 0 1 2 0 0 50 0
-                                         1)))))
+           (CONS
+            (|makeByteWordVec2| 1
+                                '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                                  0))
+            (CONS
+             '#(NIL |Rng&| NIL NIL |NonAssociativeRing&| NIL
+                |NonAssociativeRng&| NIL NIL |AbelianGroup&| NIL NIL NIL NIL
+                |MagmaWithUnit&| |NonAssociativeSemiRng&| |AbelianMonoid&|
+                |Magma&| |AbelianSemiGroup&| |SetCategory&| NIL |BasicType&|
+                NIL)
+             (CONS
+              '#((|Ring|) (|Rng|) (|SemiRing|) (|SemiRng|)
+                 (|NonAssociativeRing|) (|BiModule| $$ $$)
+                 (|NonAssociativeRng|) (|RightModule| $$) (|LeftModule| $$)
+                 (|AbelianGroup|) (|Monoid|) (|NonAssociativeSemiRing|)
+                 (|CancellationAbelianMonoid|) (|SemiGroup|) (|MagmaWithUnit|)
+                 (|NonAssociativeSemiRng|) (|AbelianMonoid|) (|Magma|)
+                 (|AbelianSemiGroup|) (|SetCategory|) (|unitsKnown|)
+                 (|BasicType|) (|CoercibleTo| 22))
+              (|makeByteWordVec2| 53
+                                  '(1 6 0 14 15 0 6 0 17 0 7 0 18 1 6 22 0 23 0
+                                    6 26 27 0 6 0 29 1 6 31 0 32 2 6 31 0 0 34
+                                    2 7 31 0 0 36 2 6 0 0 0 39 2 6 0 0 0 41 1 6
+                                    0 0 42 2 6 0 0 0 44 2 7 31 0 0 45 2 0 31 0
+                                    0 1 1 0 31 0 33 2 0 46 0 0 1 0 0 0 1 1 0 46
+                                    0 1 2 0 0 0 26 1 2 0 0 0 50 1 2 0 0 6 7 25
+                                    1 0 46 0 48 2 0 31 0 0 1 1 0 31 0 35 1 0 7
+                                    0 12 1 0 46 0 1 2 0 0 0 26 1 2 0 0 0 50 1 1
+                                    0 51 0 1 1 0 0 0 49 2 0 53 53 0 1 1 0 52 0
+                                    1 2 0 46 0 0 47 2 0 0 0 0 1 1 0 6 0 13 1 0
+                                    0 14 19 1 0 22 0 24 0 0 26 28 3 0 0 0 0 0 1
+                                    2 0 0 0 0 1 2 0 31 0 0 1 2 0 0 0 26 1 2 0 0
+                                    0 50 1 0 0 0 16 0 0 0 30 2 0 31 0 0 38 1 0
+                                    0 0 43 2 0 0 0 0 37 2 0 0 0 0 40 2 0 0 26 0
+                                    1 2 0 0 14 0 21 2 0 0 0 0 20 2 0 0 50 0
+                                    1)))))
            '|lookupComplete|)) 

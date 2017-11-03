@@ -30,7 +30,7 @@
         (SPROG
          ((|new_left| (|TheField|)) (|new_right| (|TheField|))
           (|lr| (|List| |TheField|)) (|sg| (|Integer|)) (|nbe| (|TheField|))
-          (#1=#:G730 NIL) (|ll| (|List| |TheField|)) (|middle| (|TheField|)))
+          (#1=#:G737 NIL) (|ll| (|List| |TheField|)) (|middle| (|TheField|)))
          (SEQ
           (EXIT
            (SEQ
@@ -63,7 +63,7 @@
                                              (|SCELL;separate| (REVERSE |ll|)
                                               |left| |middle| $)
                                              . #2#)
-                                       (GO #4=#:G729)))
+                                       (GO #4=#:G736)))
                                      ('T
                                       (SEQ
                                        (LETT |nbe| (|SPADfirst| |lr|) . #2#)
@@ -202,10 +202,10 @@
         ((|lp| |List| |ThePols|) (|var| |Symbol|) ($ |List| $))
         (SPROG
          ((|l1| (|List| |TheField|)) (|res| (|List| $))
-          (|l| #1=(|List| |TheField|)) (#2=#:G738 NIL) (#3=#:G737 #1#)
-          (#4=#:G739 #1#) (#5=#:G748 NIL) (|p| NIL) (|b| (|TheField|))
-          (#6=#:G735 NIL) (#7=#:G734 (|TheField|)) (#8=#:G736 (|TheField|))
-          (#9=#:G747 NIL) (|lp1| (|List| |ThePols|)))
+          (|l| #1=(|List| |TheField|)) (#2=#:G745 NIL) (#3=#:G744 #1#)
+          (#4=#:G746 #1#) (#5=#:G756 NIL) (|p| NIL) (|b| (|TheField|))
+          (#6=#:G742 NIL) (#7=#:G741 (|TheField|)) (#8=#:G743 (|TheField|))
+          (#9=#:G755 NIL) (|lp1| (|List| |ThePols|)))
          (SEQ
           (LETT |lp1| (SPADCALL |lp| (QREFELT $ 40))
                 . #10=(|SCELL;allSimpleCells;LSL;8|))
@@ -276,7 +276,7 @@
                     (LIST (|SCELL;pointToCell| (|SPADfirst| |l1|) 'T |var| $))
                     . #10#)
               (LETT |l1| (CDR |l1|) . #10#)
-              (SEQ G190 (COND ((NULL |l1|) (GO G191)))
+              (SEQ G190 (COND ((NULL (NULL (NULL |l1|))) (GO G191)))
                    (SEQ
                     (LETT |res|
                           (SPADCALL
@@ -302,9 +302,9 @@
 
 (DECLAIM (NOTINLINE |SimpleCell;|)) 
 
-(DEFUN |SimpleCell| (&REST #1=#:G749)
+(DEFUN |SimpleCell| (&REST #1=#:G757)
   (SPROG NIL
-         (PROG (#2=#:G750)
+         (PROG (#2=#:G758)
            (RETURN
             (COND
              ((LETT #2#

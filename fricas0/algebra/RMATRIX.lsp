@@ -6,9 +6,9 @@
 
 (SDEFUN |RMATRIX;matrix;L$;3| ((|l| |List| (|List| R)) ($ $))
         (SPROG
-         ((#1=#:G720 NIL) (|j| NIL) (#2=#:G721 NIL) (|r| NIL) (#3=#:G718 NIL)
-          (|i| NIL) (#4=#:G719 NIL) (|ll| NIL) (|ans| (|Matrix| R))
-          (#5=#:G716 NIL) (#6=#:G717 NIL))
+         ((#1=#:G723 NIL) (|j| NIL) (#2=#:G724 NIL) (|r| NIL) (#3=#:G721 NIL)
+          (|i| NIL) (#4=#:G722 NIL) (|ll| NIL) (|ans| (|Matrix| R))
+          (#5=#:G719 NIL) (#6=#:G720 NIL))
          (SEQ
           (COND
            ((SPADCALL (LENGTH |l|) (QREFELT $ 6) (QREFELT $ 17))
@@ -29,7 +29,7 @@
                         (PROGN
                          (LETT #5# (|error| "matrix: wrong number of columns")
                                . #7#)
-                         (GO #8=#:G709))))))
+                         (GO #8=#:G711))))))
                     (LETT #6# (CDR #6#) . #7#) (GO G190) G191 (EXIT NIL)))
               #8# (EXIT #5#))
              (LETT |ans|
@@ -83,7 +83,7 @@
 (SDEFUN |RMATRIX;rowEchelon;2$;8| ((|x| $) ($ $)) (SPADCALL |x| (QREFELT $ 35))) 
 
 (SDEFUN |RMATRIX;columnSpace;$L;9| ((|x| $) ($ |List| (|DirectProduct| |m| R)))
-        (SPROG ((#1=#:G733 NIL) (|c| NIL) (#2=#:G732 NIL))
+        (SPROG ((#1=#:G736 NIL) (|c| NIL) (#2=#:G735 NIL))
                (SEQ
                 (PROGN
                  (LETT #2# NIL . #3=(|RMATRIX;columnSpace;$L;9|))
@@ -106,7 +106,7 @@
         (SPADCALL |x| (QREFELT $ 43))) 
 
 (SDEFUN |RMATRIX;nullSpace;$L;12| ((|x| $) ($ |List| (|DirectProduct| |m| R)))
-        (SPROG ((#1=#:G739 NIL) (|c| NIL) (#2=#:G738 NIL))
+        (SPROG ((#1=#:G742 NIL) (|c| NIL) (#2=#:G741 NIL))
                (SEQ
                 (PROGN
                  (LETT #2# NIL . #3=(|RMATRIX;nullSpace;$L;12|))
@@ -133,9 +133,9 @@
 
 (DECLAIM (NOTINLINE |RectangularMatrix;|)) 
 
-(DEFUN |RectangularMatrix| (&REST #1=#:G755)
+(DEFUN |RectangularMatrix| (&REST #1=#:G760)
   (SPROG NIL
-         (PROG (#2=#:G756)
+         (PROG (#2=#:G761)
            (RETURN
             (COND
              ((LETT #2#
@@ -155,7 +155,7 @@
 
 (DEFUN |RectangularMatrix;| (|#1| |#2| |#3|)
   (SPROG
-   ((#1=#:G754 NIL) (|pv$| NIL) (#2=#:G750 NIL) (#3=#:G751 NIL) (#4=#:G753 NIL)
+   ((#1=#:G759 NIL) (|pv$| NIL) (#2=#:G755 NIL) (#3=#:G756 NIL) (#4=#:G758 NIL)
     ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #5=(|RectangularMatrix|))
@@ -291,20 +291,22 @@
               (|OutputForm|) (4 . |coerce|) |RMATRIX;coerce;$Of;2| (|Boolean|)
               (|NonNegativeInteger|) (9 . ~=) (|Integer|) (15 . |maxRowIndex|)
               (20 . |maxColIndex|) (|List| 59) |RMATRIX;matrix;L$;3|
-              (|Vector| 8) (25 . |row|) (|DirectProduct| 7 8)
+              (|Vector| 8) (25 . |row|)
+              (|DirectProduct| (NRTEVAL (QREFELT $ 7)) 8)
               (31 . |directProduct|) |RMATRIX;row;$IDp;4| (36 . |column|)
-              (|DirectProduct| 6 8) (42 . |directProduct|)
-              |RMATRIX;column;$IDp;5| (47 . |copy|) |RMATRIX;coerce;$M;6|
-              |RMATRIX;rectangularMatrix;M$;7| (52 . |rowEchelon|)
-              (57 . |rowEchelon|) (|List| 23) (62 . |columnSpace|) (|List| 29)
-              (67 . |columnSpace|) (72 . |rank|) (77 . |rank|) (82 . |nullity|)
-              (87 . |nullity|) (92 . |nullSpace|) (97 . |nullSpace|)
-              (|CardinalNumber|) (102 . |coerce|) (107 . |dimension|)
-              (|Symbol|) (|InputForm|) (111 . |convert|) (116 . |convert|)
-              (|List| $) (121 . |convert|) (126 . |convert|) (|List| 58)
-              (|Equation| 8) (|List| 8) (|Mapping| 15 8) (|Mapping| 8 8)
-              (|Union| $ '"failed") (|PositiveInteger|) (|Mapping| 8 8 8)
-              (|String|) (|SingleInteger|) (|HashState|))
+              (|DirectProduct| (NRTEVAL (QREFELT $ 6)) 8)
+              (42 . |directProduct|) |RMATRIX;column;$IDp;5| (47 . |copy|)
+              |RMATRIX;coerce;$M;6| |RMATRIX;rectangularMatrix;M$;7|
+              (52 . |rowEchelon|) (57 . |rowEchelon|) (|List| 23)
+              (62 . |columnSpace|) (|List| 29) (67 . |columnSpace|)
+              (72 . |rank|) (77 . |rank|) (82 . |nullity|) (87 . |nullity|)
+              (92 . |nullSpace|) (97 . |nullSpace|) (|CardinalNumber|)
+              (102 . |coerce|) (107 . |dimension|) (|Symbol|) (|InputForm|)
+              (111 . |convert|) (116 . |convert|) (|List| $) (121 . |convert|)
+              (126 . |convert|) (|List| 58) (|Equation| 8) (|List| 8)
+              (|Mapping| 15 8) (|Mapping| 8 8) (|Union| $ '"failed")
+              (|PositiveInteger|) (|Mapping| 8 8 8) (|String|)
+              (|SingleInteger|) (|HashState|))
            '#(~= 131 |zero?| 137 |symmetric?| 142 |subtractIfCan| 147 |square?|
               153 |smaller?| 158 |size?| 164 |size| 170 |sample| 174
               |rowEchelon| 178 |row| 183 |rectangularMatrix| 189 |rank| 194

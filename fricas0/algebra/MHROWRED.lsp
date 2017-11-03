@@ -12,7 +12,7 @@
                        (|:| |rw| (|Integer|)))
           "failed"))
         (SPROG
-         ((#2=#:G726 NIL) (|ans| #1#) (|allZero| (|Boolean|)) (#3=#:G727 NIL)
+         ((#2=#:G729 NIL) (|ans| #1#) (|allZero| (|Boolean|)) (#3=#:G730 NIL)
           (|i| NIL))
          (SEQ
           (EXIT
@@ -35,7 +35,7 @@
                           ('T
                            (PROGN
                             (LETT #2# (CONS 1 "failed") . #4#)
-                            (GO #5=#:G725))))))))
+                            (GO #5=#:G728))))))))
                      (LETT |i| (+ |i| 1) . #4#) (GO G190) G191 (EXIT NIL))
                 (EXIT
                  (COND (|allZero| (CONS 1 "failed")) ('T (CONS 0 |ans|))))))
@@ -44,7 +44,7 @@
 (SDEFUN |MHROWRED;mkMat|
         ((|x| |Matrix| R) (|l| |List| (|Integer|)) ($ |Matrix| R))
         (SPROG
-         ((|ll| (|List| (|List| R))) (#1=#:G754 NIL) (|i| NIL) (#2=#:G753 NIL))
+         ((|ll| (|List| (|List| R))) (#1=#:G757 NIL) (|i| NIL) (#2=#:G756 NIL))
          (SEQ
           (COND
            ((NULL
@@ -78,21 +78,21 @@
          ($ |Union| (|Record| (|:| |val| R) (|:| |mat| (|Matrix| R)))
           "failed"))
         (SPROG
-         ((#1=#:G803 NIL) (#2=#:G804 NIL) (#3=#:G815 NIL) (|r| NIL)
-          (#4=#:G814 NIL) (#5=#:G813 NIL) (|z| NIL) (#6=#:G812 NIL)
-          (#7=#:G811 NIL) (#8=#:G810 NIL) (#9=#:G807 NIL) (#10=#:G809 NIL)
-          (#11=#:G808 NIL) (|a| NIL)
+         ((#1=#:G806 NIL) (#2=#:G807 NIL) (#3=#:G818 NIL) (|r| NIL)
+          (#4=#:G817 NIL) (#5=#:G816 NIL) (|z| NIL) (#6=#:G815 NIL)
+          (#7=#:G814 NIL) (#8=#:G813 NIL) (#9=#:G810 NIL) (#10=#:G812 NIL)
+          (#11=#:G811 NIL) (|a| NIL)
           (|l|
            (|List|
             (|Record| (|:| |val| R) (|:| |cl| (|Integer|))
                       (|:| |rw| (|Integer|)))))
-          (#12=#:G761 NIL)
+          (#12=#:G764 NIL)
           (|u|
            (|Union|
             (|Record| (|:| |val| R) (|:| |cl| (|Integer|))
                       (|:| |rw| (|Integer|)))
             #13="failed"))
-          (#14=#:G806 NIL) (|i| NIL) (#15=#:G805 NIL))
+          (#14=#:G809 NIL) (|i| NIL) (#15=#:G808 NIL))
          (SEQ
           (EXIT
            (SEQ
@@ -230,9 +230,9 @@
                                                         (EXIT (NREVERSE #4#))))
                                                   $)))
                                      . #16#)
-                               (GO #17=#:G802))
+                               (GO #17=#:G805))
                               . #16#)
-                        (GO #18=#:G800))))))
+                        (GO #18=#:G803))))))
                    (LETT #9# (CDR #9#) . #16#) (GO G190) G191 (EXIT NIL)))
              #18# (EXIT #1#))
             (EXIT (CONS 1 "failed"))))
@@ -240,10 +240,10 @@
 
 (SDEFUN |MHROWRED;determinantOfMinor| ((|x| |Matrix| R) ($ R))
         (SPROG
-         ((#1=#:G824 NIL) (#2=#:G825 NIL) (|j| (|Integer|)) (|d| (R))
-          (#3=#:G830 NIL) (|n| (|Integer|)) (|i| NIL)
-          (|lr| (|List| (|Integer|))) (#4=#:G829 NIL) (#5=#:G828 NIL)
-          (|lc| (|List| (|Integer|))) (#6=#:G827 NIL) (#7=#:G826 NIL)
+         ((#1=#:G827 NIL) (#2=#:G828 NIL) (|j| (|Integer|)) (|d| (R))
+          (#3=#:G833 NIL) (|n| (|Integer|)) (|i| NIL)
+          (|lr| (|List| (|Integer|))) (#4=#:G832 NIL) (#5=#:G831 NIL)
+          (|lc| (|List| (|Integer|))) (#6=#:G830 NIL) (#7=#:G829 NIL)
           (|nc| (|NonNegativeInteger|)) (|nr| (|NonNegativeInteger|)))
          (SEQ
           (EXIT
@@ -316,9 +316,9 @@
                                                           (QREFELT $ 36))
                                                          (QREFELT $ 37))
                                                . #8#)
-                                         (GO #9=#:G823))))
+                                         (GO #9=#:G826))))
                                       . #8#)
-                                (GO #10=#:G820))))))
+                                (GO #10=#:G823))))))
                            (LETT |i| (|inc_SI| |i|) . #8#) (GO G190) G191
                            (EXIT NIL)))
                      #10# (EXIT #1#))
@@ -329,7 +329,7 @@
         ((|l| |List| (|Integer|)) (|m| |Integer|) (|i| |Integer|)
          ($ |List| (|Integer|)))
         (SPROG
-         ((#1=#:G844 NIL) (|b| (|Integer|)) (#2=#:G845 NIL) (|n| (|Integer|))
+         ((#1=#:G847 NIL) (|b| (|Integer|)) (#2=#:G848 NIL) (|n| (|Integer|))
           (|j| NIL) (|m1| (|Integer|)))
          (SEQ
           (EXIT
@@ -358,7 +358,7 @@
                                  (|MHROWRED;enumerateBinomial|
                                   (SPADCALL |l| |j| (QREFELT $ 41)) |m| |i| $))
                                 . #3#)
-                          (GO #4=#:G843)))
+                          (GO #4=#:G846)))
                         ('T (LETT |i| (- |i| |b|) . #3#)))))
                      (LETT |j| (|inc_SI| |j|) . #3#) (GO G190) G191 (EXIT NIL))
                 (EXIT (|error| "Should not happen"))))))))
@@ -398,7 +398,7 @@
           (RETURN (PROGN (SPADCALL |s| |m| (QREFELT $ 47)))))) 
 
 (SDEFUN |MHROWRED;order| ((|m| R) (|p| R) ($ |Integer|))
-        (SPROG ((#1=#:G862 NIL) (|mm| (|Union| R "failed")) (|i| NIL))
+        (SPROG ((#1=#:G865 NIL) (|mm| (|Union| R "failed")) (|i| NIL))
                (SEQ
                 (EXIT
                  (COND ((SPADCALL |m| (QREFELT $ 42)) -1)
@@ -410,7 +410,7 @@
                               (EXIT
                                (COND
                                 ((QEQCAR |mm| 1)
-                                 (PROGN (LETT #1# |i| . #2#) (GO #3=#:G861)))
+                                 (PROGN (LETT #1# |i| . #2#) (GO #3=#:G864)))
                                 ('T (LETT |m| (QCDR |mm|) . #2#)))))
                              (LETT |i| (|inc_SI| |i|) . #2#) (GO G190) G191
                              (EXIT NIL)))))
@@ -477,17 +477,17 @@
 (SDEFUN |MHROWRED;rowEchelonLocal;M2RM;13|
         ((|y| |Matrix| R) (|m| R) (|p| R) ($ |Matrix| R))
         (SPROG
-         ((|i| #1=(|Integer|)) (#2=#:G913 NIL) (|k1| NIL)
+         ((|i| #1=(|Integer|)) (#2=#:G917 NIL) (|k1| NIL)
           (|qr| (|Record| (|:| |quotient| R) (|:| |remainder| R)))
-          (#3=#:G912 NIL) (|k| NIL) (|v2| (R)) (#4=#:G911 NIL) (|q| (R))
-          (#5=#:G888 NIL) (#6=#:G910 NIL) (#7=#:G909 NIL) (|pivot| (R))
+          (#3=#:G916 NIL) (|k| NIL) (|v2| (R)) (#4=#:G915 NIL) (|q| (R))
+          (#5=#:G892 NIL) (#6=#:G914 NIL) (#7=#:G913 NIL) (|pivot| (R))
           (|d| (R)) (|b| (R)) (|a| (R))
           (|#G79|
            (|Record| (|:| |coef1| R) (|:| |coef2| R) (|:| |generator| R)))
-          (|x| (|Matrix| R)) (#8=#:G905 NIL) (|pivord| #9=(|Integer|))
-          (|rown| (|Integer|)) (|npivord| #9#) (#10=#:G908 NIL)
-          (#11=#:G906 NIL) (#12=#:G907 NIL) (|j| NIL) (|minr| #1#)
-          (|ncols| (|Integer|)) (|nrows| (|Integer|)) (#13=#:G879 NIL))
+          (|x| (|Matrix| R)) (#8=#:G909 NIL) (|pivord| #9=(|Integer|))
+          (|rown| (|Integer|)) (|npivord| #9#) (#10=#:G912 NIL)
+          (#11=#:G910 NIL) (#12=#:G911 NIL) (|j| NIL) (|minr| #1#)
+          (|ncols| (|Integer|)) (|nrows| (|Integer|)) (#13=#:G883 NIL))
          (SEQ
           (LETT |m|
                 (SPADCALL |p|
@@ -510,7 +510,7 @@
                  (SEQ
                   (COND
                    ((SPADCALL |i| |nrows| (QREFELT $ 64))
-                    (PROGN (LETT #11# |$NoValue| . #14#) (GO #15=#:G902))))
+                    (PROGN (LETT #11# |$NoValue| . #14#) (GO #15=#:G906))))
                   (LETT |rown| (- |minr| 1) . #14#)
                   (SEQ (LETT |k| |i| . #14#) (LETT #10# |nrows| . #14#) G190
                        (COND ((> |k| #10#) (GO G191)))
@@ -539,7 +539,7 @@
                                               (LETT |pivord| |npivord|
                                                     . #14#)))
                                         . #14#)
-                                  (GO #16=#:G882)))))))
+                                  (GO #16=#:G886)))))))
                             #16# (EXIT #8#))))))
                        (LETT |k| (+ |k| 1) . #14#) (GO G190) G191 (EXIT NIL))
                   (EXIT
@@ -692,18 +692,18 @@
 
 (SDEFUN |MHROWRED;rowEchelon1| ((|y| |Matrix| R) (|m| R) ($ |Matrix| R))
         (SPROG
-         ((|i| #1=(|Integer|)) (#2=#:G952 NIL) (|k1| NIL)
+         ((|i| #1=(|Integer|)) (#2=#:G956 NIL) (|k1| NIL)
           (|qr| (|Record| (|:| |quotient| R) (|:| |remainder| R)))
-          (#3=#:G951 NIL) (|k| NIL) (|xij| (R)) (#4=#:G950 NIL) (|jj| NIL)
+          (#3=#:G955 NIL) (|k| NIL) (|xij| (R)) (#4=#:G954 NIL) (|jj| NIL)
           (|un|
            (|Record| (|:| |unit| R) (|:| |canonical| R) (|:| |associate| R)))
-          (|v2| (R)) (|v1| (R)) (#5=#:G949 NIL) (|a1| (R)) (|b1| (R))
-          (|#G98| (R)) (#6=#:G925 NIL) (|#G97| (R)) (|d| (R)) (|b| (R))
+          (|v2| (R)) (|v1| (R)) (#5=#:G953 NIL) (|a1| (R)) (|b1| (R))
+          (|#G98| (R)) (#6=#:G929 NIL) (|#G97| (R)) (|d| (R)) (|b| (R))
           (|a| (R))
           (|#G96|
            (|Record| (|:| |coef1| R) (|:| |coef2| R) (|:| |generator| R)))
-          (#7=#:G948 NIL) (|x| (|Matrix| R)) (|rown| (|Integer|))
-          (#8=#:G947 NIL) (#9=#:G945 NIL) (#10=#:G946 NIL) (|j| NIL)
+          (#7=#:G952 NIL) (|x| (|Matrix| R)) (|rown| (|Integer|))
+          (#8=#:G951 NIL) (#9=#:G949 NIL) (#10=#:G950 NIL) (|j| NIL)
           (|minr| #1#) (|ncols| (|Integer|)) (|nrows| (|Integer|)))
          (SEQ
           (LETT |x| (|MHROWRED;vconc| |y| |m| $)
@@ -718,7 +718,7 @@
                  (SEQ
                   (COND
                    ((SPADCALL |i| |nrows| (QREFELT $ 64))
-                    (PROGN (LETT #9# |$NoValue| . #11#) (GO #12=#:G942))))
+                    (PROGN (LETT #9# |$NoValue| . #11#) (GO #12=#:G946))))
                   (LETT |rown| (- |minr| 1) . #11#)
                   (SEQ (LETT |k| |i| . #11#) (LETT #8# |nrows| . #11#) G190
                        (COND ((> |k| #8#) (GO G191)))
@@ -909,9 +909,9 @@
 
 (DECLAIM (NOTINLINE |ModularHermitianRowReduction;|)) 
 
-(DEFUN |ModularHermitianRowReduction| (#1=#:G953)
+(DEFUN |ModularHermitianRowReduction| (#1=#:G957)
   (SPROG NIL
-         (PROG (#2=#:G954)
+         (PROG (#2=#:G958)
            (RETURN
             (COND
              ((LETT #2#

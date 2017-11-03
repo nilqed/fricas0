@@ -11,10 +11,6 @@
  
 (DEFVAR |$ancestor_hash| NIL)
  
-; DEFVAR($ct)
- 
-(DEFVAR |$ct|)
- 
 ; compressHashTable(ht) == ht
  
 (DEFUN |compressHashTable| (|ht|) (PROG () (RETURN |ht|)))
@@ -51,20 +47,20 @@
       NIL (HKEYS |$has_category_hash|) NIL))))
  
 ; displayCategoryTable(:options) ==
-;   conList := IFCAR options
-;   $ct := MAKE_-HASHTABLE('ID)
-;   for (key := [a, :b]) in HKEYS $has_category_hash repeat
-;     HPUT($ct, a, [[b, :HGET($has_category_hash, key)], :HGET($ct, a)])
-;   for id in HKEYS $ct | null conList or MEMQ(id,conList) repeat
-;     sayMSG [:bright id,'"extends:"]
-;     PRINT HGET($ct,id)
+;     conList := IFCAR options
+;     ct := MAKE_-HASHTABLE('ID)
+;     for (key := [a, :b]) in HKEYS $has_category_hash repeat
+;         HPUT(ct, a, [[b, :HGET($has_category_hash, key)], :HGET(ct, a)])
+;     for id in HKEYS ct | null conList or MEMQ(id,conList) repeat
+;         sayMSG [:bright id, '"extends:"]
+;         PRINT HGET(ct, id)
  
 (DEFUN |displayCategoryTable| (&REST |options|)
-  (PROG (|conList| |a| |b|)
+  (PROG (|conList| |ct| |a| |b|)
     (RETURN
      (PROGN
       (SETQ |conList| (IFCAR |options|))
-      (SETQ |$ct| (MAKE-HASHTABLE 'ID))
+      (SETQ |ct| (MAKE-HASHTABLE 'ID))
       ((LAMBDA (|bfVar#3| |key|)
          (LOOP
           (COND
@@ -73,9 +69,9 @@
            (#1='T
             (AND (CONSP |key|)
                  (PROGN (SETQ |a| (CAR |key|)) (SETQ |b| (CDR |key|)) #1#)
-                 (HPUT |$ct| |a|
+                 (HPUT |ct| |a|
                        (CONS (CONS |b| (HGET |$has_category_hash| |key|))
-                             (HGET |$ct| |a|))))))
+                             (HGET |ct| |a|))))))
           (SETQ |bfVar#3| (CDR |bfVar#3|))))
        (HKEYS |$has_category_hash|) NIL)
       ((LAMBDA (|bfVar#4| |id|)
@@ -87,9 +83,9 @@
             (AND (OR (NULL |conList|) (MEMQ |id| |conList|))
                  (PROGN
                   (|sayMSG| (APPEND (|bright| |id|) (CONS "extends:" NIL)))
-                  (PRINT (HGET |$ct| |id|))))))
+                  (PRINT (HGET |ct| |id|))))))
           (SETQ |bfVar#4| (CDR |bfVar#4|))))
-       (HKEYS |$ct|) NIL)))))
+       (HKEYS |ct|) NIL)))))
  
 ; genCategoryTable() ==
 ;   $ancestors_hash := MAKE_-HASHTABLE('ID)
@@ -300,7 +296,6 @@
 ;       null r and opOf op = 'has => simp first pred
 ;       pred is '(QUOTE T) => true
 ;       op1 := LASSOC(op,'((and . AND)(or . OR)(not . NOT))) => simp [op1,:r]
-;       simp first pred   --REMOVE THIS HACK !!!!
 ;     pred in '(T etc) => pred
 ;     null pred => nil
 ;     pred
@@ -371,8 +366,7 @@
          (|simpHasPred,simp| (CAR |pred|)))
         ((EQUAL |pred| ''T) T)
         ((SETQ |op1| (LASSOC |op| '((|and| . AND) (|or| . OR) (|not| . NOT))))
-         (|simpHasPred,simp| (CONS |op1| |r|)))
-        (#1# (|simpHasPred,simp| (CAR |pred|)))))
+         (|simpHasPred,simp| (CONS |op1| |r|)))))
       ((|member| |pred| '(T |etc|)) |pred|) ((NULL |pred|) NIL) (#1# |pred|)))))
 (DEFUN |simpHasPred,simpDevaluate| (|a|)
   (PROG () (RETURN (EVAL (SUBST 'QUOTE '|devaluate| |a|)))))

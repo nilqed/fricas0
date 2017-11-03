@@ -8,7 +8,7 @@
 
 (SDEFUN |JBLF;coerce;$Of;2| ((|l| $) ($ |OutputForm|))
         (SPROG
-         ((|res| (|OutputForm|)) (#1=#:G763 NIL) (|c| NIL) (#2=#:G764 NIL)
+         ((|res| (|OutputForm|)) (#1=#:G766 NIL) (|c| NIL) (#2=#:G767 NIL)
           (|jv| NIL))
          (SEQ
           (COND ((SPADCALL |l| (QREFELT $ 19)) (SPADCALL 0 (QREFELT $ 21)))
@@ -57,7 +57,7 @@
          ((|res| (|List| $))
           (|r|
            (|Record| (|:| |Indices| (|List| JB)) (|:| |Entries| (|List| D))))
-          (#1=#:G781 NIL) (|i| NIL))
+          (#1=#:G784 NIL) (|i| NIL))
          (SEQ
           (LETT |res| (SPADCALL (QREFELT $ 35)) . #2=(|JBLF;coerce;SemL;5|))
           (SEQ (LETT |i| 1 . #2#)
@@ -76,9 +76,9 @@
 
 (SDEFUN |JBLF;coerce;LSem;6| ((|ll| |List| $) ($ |SparseEchelonMatrix| JB D))
         (SPROG
-         ((#1=#:G791 NIL) (|l| NIL) (|i| NIL)
+         ((#1=#:G794 NIL) (|l| NIL) (|i| NIL)
           (|res| (|SparseEchelonMatrix| JB D)) (|inds| (|List| JB))
-          (#2=#:G790 NIL))
+          (#2=#:G793 NIL))
          (SEQ (LETT |inds| NIL . #3=(|JBLF;coerce;LSem;6|))
               (SEQ (LETT |l| NIL . #3#) (LETT #2# |ll| . #3#) G190
                    (COND
@@ -138,8 +138,8 @@
 (SDEFUN |JBLF;retractIfCan;JbeU;12|
         ((|ex| |JetBundleExpression| JB) ($ |Union| $ "failed"))
         (SPROG
-         ((|resC| (|List| D)) (#1=#:G823 NIL) (|cd| #2=(|Union| D "failed"))
-          (#3=#:G824 NIL) (|jv| NIL) (|resJ| (|List| JB)) (|pd| #2#))
+         ((|resC| (|List| D)) (#1=#:G826 NIL) (|cd| #2=(|Union| D "failed"))
+          (#3=#:G827 NIL) (|jv| NIL) (|resJ| (|List| JB)) (|pd| #2#))
          (SEQ
           (EXIT
            (SEQ
@@ -167,7 +167,7 @@
                             ((QEQCAR |cd| 1)
                              (PROGN
                               (LETT #1# (CONS 1 "failed") . #4#)
-                              (GO #5=#:G822)))
+                              (GO #5=#:G825)))
                             ('T
                              (LETT |resC| (CONS (QCDR |cd|) |resC|) . #4#)))))
                          (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL))
@@ -196,7 +196,7 @@
         (CONS (LIST (|spadConstant| $ 29)) (LIST (|spadConstant| $ 28)))) 
 
 (SDEFUN |JBLF;-;2$;18| ((|l| $) ($ $))
-        (SPROG ((#1=#:G837 NIL) (|c| NIL) (#2=#:G836 NIL))
+        (SPROG ((#1=#:G840 NIL) (|c| NIL) (#2=#:G839 NIL))
                (SEQ
                 (CONS
                  (PROGN
@@ -216,8 +216,8 @@
 (SDEFUN |JBLF;+;3$;19| ((|l1| $) (|l2| $) ($ $))
         (SPROG
          ((|lj2| (|List| JB)) (|lc2| (|List| D)) (|resJ| (|List| JB))
-          (|resC| (|List| D)) (|sum| (D)) (#1=#:G854 NIL) (|c1| NIL)
-          (#2=#:G855 NIL) (|j1| NIL))
+          (|resC| (|List| D)) (|sum| (D)) (#1=#:G857 NIL) (|c1| NIL)
+          (#2=#:G858 NIL) (|j1| NIL))
          (SEQ
           (COND ((SPADCALL |l1| (QREFELT $ 19)) |l2|)
                 ((SPADCALL |l2| (QREFELT $ 19)) |l1|)
@@ -281,7 +281,7 @@
                                    (QREFELT $ 81)))))))))) 
 
 (SDEFUN |JBLF;*;I2$;20| ((|i| |Integer|) (|l| $) ($ $))
-        (SPROG ((#1=#:G861 NIL) (|c| NIL) (#2=#:G860 NIL))
+        (SPROG ((#1=#:G864 NIL) (|c| NIL) (#2=#:G863 NIL))
                (SEQ
                 (COND ((ZEROP |i|) (|spadConstant| $ 32)) ((EQL |i| 1) |l|)
                       ('T
@@ -305,7 +305,7 @@
                         (QCDR |l|))))))) 
 
 (SDEFUN |JBLF;*;D2$;21| ((|ex| D) (|l| $) ($ $))
-        (SPROG ((#1=#:G867 NIL) (|c| NIL) (#2=#:G866 NIL))
+        (SPROG ((#1=#:G870 NIL) (|c| NIL) (#2=#:G869 NIL))
                (SEQ
                 (COND ((SPADCALL |ex| (QREFELT $ 31)) (|spadConstant| $ 32))
                       ((SPADCALL |ex| (QREFELT $ 13)) |l|)
@@ -360,8 +360,8 @@
 
 (SDEFUN |JBLF;exquo;2$U;24| ((|l1| $) (|l2| $) ($ |Union| $ #1="failed"))
         (SPROG
-         ((|newC| (|List| D)) (#2=#:G896 NIL) (|e| (|Union| D #1#))
-          (#3=#:G897 NIL) (|c| NIL) (|d| (D)))
+         ((|newC| (|List| D)) (#2=#:G899 NIL) (|e| (|Union| D #1#))
+          (#3=#:G900 NIL) (|c| NIL) (|d| (D)))
          (SEQ
           (EXIT
            (COND
@@ -381,7 +381,7 @@
                           ((QEQCAR |e| 1)
                            (PROGN
                             (LETT #2# (CONS 1 "failed") . #4#)
-                            (GO #5=#:G895)))
+                            (GO #5=#:G898)))
                           ('T (LETT |newC| (CONS (QCDR |e|) |newC|) . #4#)))))
                    (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL))
               (EXIT (CONS 0 (CONS (NREVERSE |newC|) (QCDR |l1|))))))))
@@ -408,7 +408,7 @@
                      ('T (SPADCALL |g| (QREFELT $ 33))))))))))) 
 
 (SDEFUN |JBLF;jetVariables;$L;26| ((|l| $) ($ |List| JB))
-        (SPROG ((|res| (|List| JB)) (#1=#:G910 NIL) (|c| NIL))
+        (SPROG ((|res| (|List| JB)) (#1=#:G913 NIL) (|c| NIL))
                (SEQ
                 (COND ((SPADCALL |l| (QREFELT $ 19)) NIL)
                       (#2='T
@@ -447,8 +447,8 @@
 
 (SDEFUN |JBLF;differentiate;$S$;27| ((|l| $) (|s| |Symbol|) ($ $))
         (SPROG
-         ((|resJ| (|List| JB)) (|resC| (|List| D)) (|dc| (D)) (#1=#:G916 NIL)
-          (|c| NIL) (#2=#:G917 NIL) (|j| NIL))
+         ((|resJ| (|List| JB)) (|resC| (|List| D)) (|dc| (D)) (#1=#:G919 NIL)
+          (|c| NIL) (#2=#:G920 NIL) (|j| NIL))
          (SEQ (LETT |resC| NIL . #3=(|JBLF;differentiate;$S$;27|))
               (LETT |resJ| NIL . #3#)
               (SEQ (LETT |j| NIL . #3#) (LETT #2# (QCDR |l|) . #3#)
@@ -472,7 +472,7 @@
 (SDEFUN |JBLF;differentiate;$JB$;28| ((|l| $) (|jv| JB) ($ $))
         (SPROG
          ((|pos| (|Integer|)) (|resJ| (|List| JB)) (|resC| (|List| D))
-          (|dc| (D)) (#1=#:G925 NIL) (|c| NIL) (#2=#:G926 NIL) (|j| NIL)
+          (|dc| (D)) (#1=#:G928 NIL) (|c| NIL) (#2=#:G929 NIL) (|j| NIL)
           (|jt| (|Symbol|)))
          (SEQ
           (LETT |jt| (SPADCALL |jv| (QREFELT $ 25))
@@ -513,12 +513,12 @@
         ((|sys| |List| $) ($ |SparseEchelonMatrix| JB $))
         (SPROG
          ((|rowC| (|List| $)) (|rowJ| #1=(|List| JB)) (|dCo| (|List| D))
-          (|dJV| #1#) (|dco| (D)) (#2=#:G959 NIL) (|co| NIL) (#3=#:G960 NIL)
-          (|jv| NIL) (#4=#:G958 NIL) (|cjv| NIL) (|ents| (|List| $))
-          (#5=#:G957 NIL) (#6=#:G956 NIL) (#7=#:G955 NIL) (|eq| NIL) (|i| NIL)
-          (|res| (|SparseEchelonMatrix| JB $)) (#8=#:G954 NIL) (#9=#:G953 NIL)
-          (#10=#:G952 NIL) (|cinds| #1#) (#11=#:G951 NIL) (|inds| #1#)
-          (#12=#:G950 NIL))
+          (|dJV| #1#) (|dco| (D)) (#2=#:G962 NIL) (|co| NIL) (#3=#:G963 NIL)
+          (|jv| NIL) (#4=#:G961 NIL) (|cjv| NIL) (|ents| (|List| $))
+          (#5=#:G960 NIL) (#6=#:G959 NIL) (#7=#:G958 NIL) (|eq| NIL) (|i| NIL)
+          (|res| (|SparseEchelonMatrix| JB $)) (#8=#:G957 NIL) (#9=#:G956 NIL)
+          (#10=#:G955 NIL) (|cinds| #1#) (#11=#:G954 NIL) (|inds| #1#)
+          (#12=#:G953 NIL))
          (SEQ (LETT |inds| NIL . #13=(|JBLF;jacobiMatrix;LSem;29|))
               (LETT |cinds| NIL . #13#)
               (SEQ (LETT |eq| NIL . #13#) (LETT #12# |sys| . #13#) G190
@@ -708,12 +708,12 @@
          ($ |SparseEchelonMatrix| JB $))
         (SPROG
          ((|rowC| (|List| $)) (|rowJ| #1=(|List| JB)) (|dCo| (|List| D))
-          (|dJV| #1#) (|dco| (D)) (#2=#:G986 NIL) (|co| NIL) (#3=#:G987 NIL)
-          (|jv| NIL) (#4=#:G985 NIL) (|ijv| NIL) (|ivars| (|List| JB))
-          (|ents| (|List| $)) (#5=#:G984 NIL) (#6=#:G983 NIL) (#7=#:G981 NIL)
-          (|eq| NIL) (#8=#:G982 NIL) (|vars| NIL) (|i| NIL)
+          (|dJV| #1#) (|dco| (D)) (#2=#:G989 NIL) (|co| NIL) (#3=#:G990 NIL)
+          (|jv| NIL) (#4=#:G988 NIL) (|ijv| NIL) (|ivars| (|List| JB))
+          (|ents| (|List| $)) (#5=#:G987 NIL) (#6=#:G986 NIL) (#7=#:G984 NIL)
+          (|eq| NIL) (#8=#:G985 NIL) (|vars| NIL) (|i| NIL)
           (|res| (|SparseEchelonMatrix| JB $)) (|inds| (|List| JB))
-          (#9=#:G980 NIL))
+          (#9=#:G983 NIL))
          (SEQ
           (LETT |inds| (|SPADfirst| |varlist|)
                 . #10=(|JBLF;jacobiMatrix;LLSem;30|))
@@ -853,7 +853,7 @@
               ('T (|SPADfirst| (QCDR |l|))))) 
 
 (SDEFUN |JBLF;freeOf?;$JBB;32| ((|l| $) (|jv| JB) ($ |Boolean|))
-        (SPROG ((#1=#:G999 NIL) (|c| NIL) (#2=#:G998 NIL))
+        (SPROG ((#1=#:G1002 NIL) (|c| NIL) (#2=#:G1001 NIL))
                (SEQ
                 (COND
                  ((EQUAL (SPADCALL |jv| (QREFELT $ 25)) '|Indep|)
@@ -880,7 +880,7 @@
 
 (SDEFUN |JBLF;solveFor;$JBU;33| ((|l| $) (|jv| JB) ($ |Union| $ "failed"))
         (SPROG
-         ((#1=#:G1021 NIL) (|c| NIL) (#2=#:G1020 NIL)
+         ((#1=#:G1024 NIL) (|c| NIL) (#2=#:G1023 NIL)
           (|rc| (|Union| D "failed")) (|pos| (|Integer|)) (|jt| (|Symbol|)))
          (SEQ
           (LETT |jt| (SPADCALL |jv| (QREFELT $ 25))
@@ -936,7 +936,7 @@
 (SDEFUN |JBLF;subst;$JB2$;34| ((|l| $) (|jv| JB) (|exp| $) ($ $))
         (SPROG
          ((|nl| ($)) (|c| (D)) (|pos| (|Integer|)) (|resJ| (|List| JB))
-          (|resC| (|List| D)) (|nc| (D)) (#1=#:G1030 NIL) (#2=#:G1031 NIL)
+          (|resC| (|List| D)) (|nc| (D)) (#1=#:G1033 NIL) (#2=#:G1034 NIL)
           (|cj| NIL) (|xexp| (D)) (|jt| (|Symbol|)))
          (SEQ
           (LETT |jt| (SPADCALL |jv| (QREFELT $ 25))
@@ -993,12 +993,12 @@
                (|Union| "failed" (|List| (|List| (|NonNegativeInteger|)))))))
         (SPROG
          ((|dep| (|List| (|List| (|NonNegativeInteger|))))
-          (|depj| (|List| (|NonNegativeInteger|))) (#1=#:G1055 NIL)
-          (|kb| (|Integer|)) (#2=#:G1075 NIL) (|k| NIL) (|rowC| (|List| $))
+          (|depj| (|List| (|NonNegativeInteger|))) (#1=#:G1059 NIL)
+          (|kb| (|Integer|)) (#2=#:G1079 NIL) (|k| NIL) (|rowC| (|List| $))
           (|rowJ| #3=(|List| JB)) (|dCo| (|List| D)) (|dJV| #3#) (|dco| (D))
-          (#4=#:G1073 NIL) (|co| NIL) (#5=#:G1074 NIL) (|jv| NIL)
-          (#6=#:G1072 NIL) (|cjv| NIL) (|ents| (|List| $)) (#7=#:G1071 NIL)
-          (#8=#:G1070 NIL) (#9=#:G1069 NIL) (#10=#:G1068 NIL) (#11=#:G1067 NIL)
+          (#4=#:G1077 NIL) (|co| NIL) (#5=#:G1078 NIL) (|jv| NIL)
+          (#6=#:G1076 NIL) (|cjv| NIL) (|ents| (|List| $)) (#7=#:G1075 NIL)
+          (#8=#:G1074 NIL) (#9=#:G1073 NIL) (#10=#:G1072 NIL) (#11=#:G1071 NIL)
           (|eq| NIL) (|j| NIL) (|newJM| (|SparseEchelonMatrix| JB $))
           (|cinds| (|List| JB)) (|inds| (|List| JB)) (|maxR| (|Integer|))
           (|minR| (|Integer|)) (|Trafo| #12=(|Matrix| (|Fraction| D)))
@@ -1195,9 +1195,9 @@
 
 (DECLAIM (NOTINLINE |JetBundleLinearFunction;|)) 
 
-(DEFUN |JetBundleLinearFunction| (&REST #1=#:G1087)
+(DEFUN |JetBundleLinearFunction| (&REST #1=#:G1091)
   (SPROG NIL
-         (PROG (#2=#:G1088)
+         (PROG (#2=#:G1092)
            (RETURN
             (COND
              ((LETT #2#
@@ -1316,8 +1316,9 @@
               (424 . |minIndex|) (|Union| '"failed" (|List| 143))
               (|Record| (|:| |Sys| 43) (|:| JM 111) (|:| |Depend| 145))
               |JBLF;simplify;LSemR;35| |JBLF;simpOne;2$;36|
+              (|Record| (|:| |DPhi| $) (|:| |JVars| 47))
               (|Record| (|:| |DSys| 43) (|:| |JVars| 118))
-              (|Record| (|:| |DPhi| $) (|:| |JVars| 47)) (|Union| 6 '"failed")
+              (|Union| 6 '"failed")
               (|Record| (|:| |unit| $) (|:| |canonical| $) (|:| |associate| $))
               (|Record| (|:| |llcm_res| $) (|:| |coeff1| $) (|:| |coeff2| $))
               (|List| 24) (|SparseUnivariatePolynomial| $) (|HashState|)
@@ -1325,42 +1326,48 @@
            '#(~= 429 |zero?| 435 |unitNormal| 440 |unitCanonical| 445 |unit?|
               450 |symbol| 455 |subtractIfCan| 460 |subst| 466 |sortLD| 473
               |solveFor| 478 |simplify| 484 |simpOne| 490 |simpMod| 495
-              |setNotation| 508 |sample| 513 |retractIfCan| 517 |retract| 532
-              |reduceMod| 547 |recip| 553 |orderDim| 558 |order| 565
-              |opposite?| 570 |one?| 576 |numerator| 581 |numIndVar| 586
-              |numDepVar| 590 |leadingDer| 594 |lcmCoef| 599 |lcm| 605 |latex|
-              616 |jetVariables| 621 |jacobiMatrix| 626 |hashUpdate!| 637
-              |hash| 643 |ground?| 648 |ground| 653 |getNotation| 658
-              |gcdPolynomial| 662 |gcd| 668 |freeOf?| 679 |formalDiff2| 685
-              |formalDiff| 699 |extractSymbol| 717 |exquo| 722 |dimension| 728
-              |differentiate| 735 |denominator| 767 |dSubst| 772 |const?| 779
-              |coerce| 784 |class| 819 |characteristic| 824 |autoReduce| 828
-              |associates?| 833 |annihilate?| 839 ^ 845 |Zero| 857 X 861 U 870
-              P 879 |One| 901 = 905 - 911 + 922 * 928 |#2| 964)
+              |setNotation| 508 |sample| 513 |rightRecip| 517 |rightPower| 522
+              |retractIfCan| 534 |retract| 549 |reduceMod| 564 |recip| 570
+              |orderDim| 575 |order| 582 |opposite?| 587 |one?| 593 |numerator|
+              598 |numIndVar| 603 |numDepVar| 607 |leftRecip| 611 |leftPower|
+              616 |leadingDer| 628 |lcmCoef| 633 |lcm| 639 |latex| 650
+              |jetVariables| 655 |jacobiMatrix| 660 |hashUpdate!| 671 |hash|
+              677 |ground?| 682 |ground| 687 |getNotation| 692 |gcdPolynomial|
+              696 |gcd| 702 |freeOf?| 713 |formalDiff2| 719 |formalDiff| 733
+              |extractSymbol| 751 |exquo| 756 |dimension| 762 |differentiate|
+              769 |denominator| 801 |dSubst| 806 |const?| 813 |commutator| 818
+              |coerce| 824 |class| 859 |characteristic| 864 |autoReduce| 868
+              |associator| 873 |associates?| 880 |antiCommutator| 886
+              |annihilate?| 892 ^ 898 |Zero| 910 X 914 U 923 P 932 |One| 954 =
+              958 - 964 + 975 * 981 |#2| 1017)
            'NIL
            (CONS
             (|makeByteWordVec2| 1
                                 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-                                  0 0 0 0 0 0 0 0 0 0 0 1))
+                                  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1))
             (CONS
-             '#(|JetBundleFunctionCategory&| |GcdDomain&| NIL NIL |Algebra&|
-                |PartialDifferentialRing&| |Module&| |EntireRing&| |Module&|
-                NIL NIL NIL |Ring&| NIL NIL NIL NIL |Rng&| |AbelianGroup&| NIL
-                NIL |AbelianMonoid&| |Monoid&| NIL |SemiGroup&|
-                |AbelianSemiGroup&| |SetCategory&| |RetractableTo&|
+             '#(|JetBundleFunctionCategory&| |GcdDomain&| NIL NIL NIL
+                |PartialDifferentialRing&| |EntireRing&| |Algebra&| NIL |Rng&|
+                NIL |Module&| |Module&| NIL NIL NIL |NonAssociativeRing&| NIL
+                NIL NIL |NonAssociativeRng&| NIL |AbelianGroup&| NIL NIL NIL
+                NIL |MagmaWithUnit&| |NonAssociativeSemiRng&| |AbelianMonoid&|
+                |Magma&| |AbelianSemiGroup&| |SetCategory&| |RetractableTo&|
                 |RetractableTo&| NIL NIL NIL |BasicType&| NIL NIL)
              (CONS
               '#((|JetBundleFunctionCategory| 6) (|GcdDomain|)
-                 (|IntegralDomain|) (|LeftOreRing|) (|Algebra| $$)
-                 (|PartialDifferentialRing| 24) (|Module| 7) (|EntireRing|)
-                 (|Module| $$) (|CommutativeRing|) (|BiModule| 7 7)
-                 (|BiModule| $$ $$) (|Ring|) (|RightModule| 7) (|LeftModule| 7)
-                 (|LeftModule| $$) (|RightModule| $$) (|Rng|) (|AbelianGroup|)
-                 (|CancellationAbelianMonoid|) (|SemiRing|) (|AbelianMonoid|)
-                 (|Monoid|) (|SemiRng|) (|SemiGroup|) (|AbelianSemiGroup|)
-                 (|SetCategory|) (|RetractableTo| 7) (|RetractableTo| 6)
-                 (|noZeroDivisors|) (|CommutativeStar|) (|unitsKnown|)
-                 (|BasicType|) (|CoercibleTo| 14) (|lazyRepresentation|))
+                 (|IntegralDomain|) (|LeftOreRing|) (|CommutativeRing|)
+                 (|PartialDifferentialRing| 24) (|EntireRing|) (|Algebra| $$)
+                 (|Ring|) (|Rng|) (|SemiRing|) (|Module| 7) (|Module| $$)
+                 (|SemiRng|) (|BiModule| 7 7) (|BiModule| $$ $$)
+                 (|NonAssociativeRing|) (|RightModule| 7) (|LeftModule| 7)
+                 (|LeftModule| $$) (|NonAssociativeRng|) (|RightModule| $$)
+                 (|AbelianGroup|) (|Monoid|) (|NonAssociativeSemiRing|)
+                 (|CancellationAbelianMonoid|) (|SemiGroup|) (|MagmaWithUnit|)
+                 (|NonAssociativeSemiRng|) (|AbelianMonoid|) (|Magma|)
+                 (|AbelianSemiGroup|) (|SetCategory|) (|RetractableTo| 7)
+                 (|RetractableTo| 6) (|noZeroDivisors|) (|CommutativeStar|)
+                 (|unitsKnown|) (|BasicType|) (|CoercibleTo| 14)
+                 (|lazyRepresentation|))
               (|makeByteWordVec2| 158
                                   '(0 6 9 10 1 7 12 0 13 1 6 14 0 15 1 6 12 0
                                     16 1 7 14 0 17 2 14 0 0 0 18 1 20 14 0 21 2
@@ -1390,32 +1397,34 @@
                                     2 0 12 0 0 1 1 0 12 0 19 1 0 152 0 1 1 0 0
                                     0 1 1 0 12 0 1 1 0 111 43 1 2 0 65 0 0 1 3
                                     0 0 0 6 0 133 1 0 43 43 1 2 0 65 0 6 130 2
-                                    0 146 43 111 147 1 0 0 0 148 2 0 43 43 43 1
-                                    3 0 146 43 111 43 1 1 0 52 24 1 0 0 0 1 1 2
-                                    65 66 70 1 0 61 0 62 1 0 151 0 1 1 2 0 66
-                                    71 1 0 7 0 131 1 0 6 0 1 2 0 43 43 43 1 1 0
-                                    65 0 90 3 0 20 43 111 20 1 1 0 20 0 1 2 0
-                                    12 0 0 1 1 0 12 0 1 1 0 0 0 63 0 0 9 1 0 0
-                                    9 1 1 0 6 0 120 2 0 153 0 0 1 2 0 0 0 0 1 1
-                                    0 0 43 1 1 0 157 0 1 1 0 47 0 99 2 0 111 43
-                                    118 119 1 0 111 43 112 2 0 156 156 0 1 1 0
-                                    158 0 1 1 0 12 0 56 1 0 0 0 59 0 0 24 1 2 0
-                                    155 155 155 1 2 0 0 0 0 95 1 0 0 43 1 2 0
-                                    12 0 6 126 3 0 149 43 9 111 1 3 0 150 0 9
-                                    111 1 2 0 43 43 9 1 2 0 0 0 143 1 2 0 0 0 9
-                                    1 1 0 111 111 1 2 0 65 0 0 92 3 0 20 43 111
-                                    20 1 2 0 0 0 6 106 3 0 0 0 24 20 1 3 0 0 0
-                                    154 143 1 2 0 0 0 24 101 2 0 0 0 154 1 1 0
-                                    0 0 64 3 0 0 0 6 0 1 1 0 12 0 1 1 0 36 43
-                                    55 1 0 43 36 44 1 0 0 7 33 1 0 0 0 1 1 0 0
-                                    6 30 1 0 0 39 1 1 0 14 0 23 1 0 20 0 1 0 0
-                                    20 1 1 0 43 43 1 2 0 12 0 0 1 2 0 12 0 0 1
-                                    2 0 0 0 20 1 2 0 0 0 9 1 0 0 0 32 0 0 0 1 1
-                                    0 0 9 1 0 0 0 1 1 0 0 9 1 2 0 0 9 20 1 1 0
-                                    0 20 1 1 0 0 143 1 2 0 0 9 143 1 0 0 0 26 2
-                                    0 12 0 0 73 2 0 0 0 0 72 1 0 0 0 75 2 0 0 0
-                                    0 82 2 0 0 7 0 86 2 0 0 0 7 1 2 0 0 0 0 88
-                                    2 0 0 39 0 84 2 0 0 20 0 1 2 0 0 9 0 1 3 0
-                                    0 0 154 143 1 3 0 0 0 24 20 1 2 0 0 0 24 1
-                                    2 0 0 0 154 1)))))
+                                    0 146 43 111 147 1 0 0 0 148 3 0 146 43 111
+                                    43 1 2 0 43 43 43 1 1 0 52 24 1 0 0 0 1 1 0
+                                    65 0 1 2 0 0 0 20 1 2 0 0 0 9 1 1 2 65 66
+                                    70 1 0 61 0 62 1 0 151 0 1 1 2 0 66 71 1 0
+                                    7 0 131 1 0 6 0 1 2 0 43 43 43 1 1 0 65 0
+                                    90 3 0 20 43 111 20 1 1 0 20 0 1 2 0 12 0 0
+                                    1 1 0 12 0 1 1 0 0 0 63 0 0 9 1 0 0 9 1 1 0
+                                    65 0 1 2 0 0 0 20 1 2 0 0 0 9 1 1 0 6 0 120
+                                    2 0 153 0 0 1 1 0 0 43 1 2 0 0 0 0 1 1 0
+                                    157 0 1 1 0 47 0 99 2 0 111 43 118 119 1 0
+                                    111 43 112 2 0 156 156 0 1 1 0 158 0 1 1 0
+                                    12 0 56 1 0 0 0 59 0 0 24 1 2 0 155 155 155
+                                    1 1 0 0 43 1 2 0 0 0 0 95 2 0 12 0 6 126 3
+                                    0 149 0 9 111 1 3 0 150 43 9 111 1 2 0 43
+                                    43 9 1 2 0 0 0 9 1 2 0 0 0 143 1 1 0 111
+                                    111 1 2 0 65 0 0 92 3 0 20 43 111 20 1 2 0
+                                    0 0 6 106 3 0 0 0 24 20 1 3 0 0 0 154 143 1
+                                    2 0 0 0 24 101 2 0 0 0 154 1 1 0 0 0 64 3 0
+                                    0 0 6 0 1 1 0 12 0 1 2 0 0 0 0 1 1 0 36 43
+                                    55 1 0 43 36 44 1 0 0 7 33 1 0 0 6 30 1 0 0
+                                    0 1 1 0 0 39 1 1 0 14 0 23 1 0 20 0 1 0 0
+                                    20 1 1 0 43 43 1 3 0 0 0 0 0 1 2 0 12 0 0 1
+                                    2 0 0 0 0 1 2 0 12 0 0 1 2 0 0 0 20 1 2 0 0
+                                    0 9 1 0 0 0 32 0 0 0 1 1 0 0 9 1 0 0 0 1 1
+                                    0 0 9 1 1 0 0 20 1 1 0 0 143 1 2 0 0 9 20 1
+                                    2 0 0 9 143 1 0 0 0 26 2 0 12 0 0 73 2 0 0
+                                    0 0 72 1 0 0 0 75 2 0 0 0 0 82 2 0 0 0 7 1
+                                    2 0 0 7 0 86 2 0 0 20 0 1 2 0 0 39 0 84 2 0
+                                    0 0 0 88 2 0 0 9 0 1 3 0 0 0 154 143 1 3 0
+                                    0 0 24 20 1 2 0 0 0 24 1 2 0 0 0 154 1)))))
            '|lookupComplete|)) 

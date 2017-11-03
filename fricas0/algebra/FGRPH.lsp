@@ -41,6 +41,25 @@
                                                                 (|NonNegativeInteger|)))))
                                                         T)
                                                        ((|addArrow!|
+                                                         ($ $
+                                                          (|Record|
+                                                           (|:| |name|
+                                                                (|String|))
+                                                           (|:| |arrType|
+                                                                (|NonNegativeInteger|))
+                                                           (|:| |fromOb|
+                                                                (|NonNegativeInteger|))
+                                                           (|:| |toOb|
+                                                                (|NonNegativeInteger|))
+                                                           (|:| |xOffset|
+                                                                (|Integer|))
+                                                           (|:| |yOffset|
+                                                                (|Integer|))
+                                                           (|:| |map|
+                                                                (|List|
+                                                                 (|NonNegativeInteger|))))))
+                                                        T)
+                                                       ((|addArrow!|
                                                          ($ $ (|String|)
                                                           (|NonNegativeInteger|)
                                                           (|NonNegativeInteger|)))
@@ -309,6 +328,11 @@
                                                          ((|Void|) (|String|) $
                                                           (|Boolean|)))
                                                         T)
+                                                       ((|diagramsSvg|
+                                                         ((|Void|) (|String|)
+                                                          (|List| $)
+                                                          (|Boolean|)))
+                                                        T)
                                                        ((|deepDiagramSvg|
                                                          ((|Void|) (|String|) $
                                                           (|Boolean|)))
@@ -361,6 +385,7 @@
                                                        (|Integer|) (|Boolean|)
                                                        (|NonNegativeInteger|)
                                                        (|Void|) (|String|)
+                                                       (|List| $)
                                                        (|Scene|
                                                         (|SCartesian| 2))
                                                        (|Matrix| (|Integer|))

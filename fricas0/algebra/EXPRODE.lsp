@@ -83,7 +83,7 @@
          ('T (|error| "Improper initial value")))) 
 
 (SDEFUN |EXPRODE;findCompat| ((|yx| F) (|l| |List| (|Equation| F)) ($ F))
-        (SPROG ((#1=#:G732 NIL) (#2=#:G733 NIL) (#3=#:G734 NIL) (|eq| NIL))
+        (SPROG ((#1=#:G735 NIL) (#2=#:G736 NIL) (#3=#:G737 NIL) (|eq| NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -105,9 +105,9 @@
                                     (PROGN
                                      (LETT #2# (SPADCALL |eq| (QREFELT $ 56))
                                            . #4#)
-                                     (GO #5=#:G731))
+                                     (GO #5=#:G734))
                                     . #4#)
-                              (GO #6=#:G729))))))
+                              (GO #6=#:G732))))))
                          (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
                    #6# (EXIT #1#))
                   (EXIT (|error| "Improper initial value"))))
@@ -115,7 +115,7 @@
 
 (SDEFUN |EXPRODE;findEq|
         ((|k| |Kernel| F) (|x| |Symbol|) (|sys| |List| F) ($ F))
-        (SPROG ((#1=#:G743 NIL) (#2=#:G744 NIL) (#3=#:G745 NIL) (|eq| NIL))
+        (SPROG ((#1=#:G746 NIL) (#2=#:G747 NIL) (#3=#:G748 NIL) (|eq| NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -141,9 +141,9 @@
                               (LETT #1#
                                     (PROGN
                                      (LETT #2# |eq| . #4#)
-                                     (GO #5=#:G742))
+                                     (GO #5=#:G745))
                                     . #4#)
-                              (GO #6=#:G740))))))
+                              (GO #6=#:G743))))))
                          (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
                    #6# (EXIT #1#))
                   (EXIT (|error| "Improper differential equation"))))
@@ -165,7 +165,7 @@
          (|sy| F) (|n| |NonNegativeInteger|) ($ F))
         (SPROG
          ((|lv| (|List| F)) (|m| (F)) (|l| (|List| (|Kernel| F))) (|f| (F))
-          (#1=#:G753 NIL) (|i| NIL))
+          (#1=#:G757 NIL) (|i| NIL))
          (SEQ
           (COND ((ZEROP |n|) (|error| "No initial value(s) given"))
                 ('T
@@ -227,7 +227,7 @@
 
 (SDEFUN |EXPRODE;checkSystem|
         ((|diffeq| F) (|yx| |List| (|Kernel| F)) (|lv| |List| F) ($ F))
-        (SPROG ((#1=#:G758 NIL) (#2=#:G759 NIL) (#3=#:G760 NIL) (|k| NIL))
+        (SPROG ((#1=#:G762 NIL) (#2=#:G763 NIL) (#3=#:G764 NIL) (|k| NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -255,9 +255,9 @@
                                              |yx| |lv| (QREFELT $ 64))
                                             $)
                                            . #4#)
-                                     (GO #5=#:G757))
+                                     (GO #5=#:G761))
                                     . #4#)
-                              (GO #6=#:G755))))))
+                              (GO #6=#:G759))))))
                          (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
                    #6# (EXIT #1#))
                   (EXIT (|spadConstant| $ 70))))
@@ -266,7 +266,7 @@
 (SDEFUN |EXPRODE;seriesSolve;LLELA;13|
         ((|l| |List| (|Equation| F)) (|y| |List| (|BasicOperator|))
          (|eqx| |Equation| F) (|eqy| |List| (|Equation| F)) ($ |Any|))
-        (SPROG ((#1=#:G764 NIL) (|deq| NIL) (#2=#:G763 NIL))
+        (SPROG ((#1=#:G768 NIL) (|deq| NIL) (#2=#:G767 NIL))
                (SEQ
                 (SPADCALL
                  (PROGN
@@ -292,7 +292,7 @@
 (SDEFUN |EXPRODE;seriesSolve;LLELA;14|
         ((|l| |List| (|Equation| F)) (|y| |List| (|BasicOperator|))
          (|eqx| |Equation| F) (|y0| |List| F) ($ |Any|))
-        (SPROG ((#1=#:G769 NIL) (|deq| NIL) (#2=#:G768 NIL))
+        (SPROG ((#1=#:G773 NIL) (|deq| NIL) (#2=#:G772 NIL))
                (SEQ
                 (SPADCALL
                  (PROGN
@@ -318,7 +318,7 @@
 (SDEFUN |EXPRODE;seriesSolve;LLELA;15|
         ((|l| |List| F) (|ly| |List| (|BasicOperator|)) (|eqx| |Equation| F)
          (|eqy| |List| (|Equation| F)) ($ |Any|))
-        (SPROG ((#1=#:G773 NIL) (|y| NIL) (#2=#:G772 NIL))
+        (SPROG ((#1=#:G777 NIL) (|y| NIL) (#2=#:G776 NIL))
                (SEQ
                 (SPADCALL |l| |ly| |eqx|
                           (PROGN
@@ -379,7 +379,7 @@
          ($ |Any|))
         (SPROG
          ((|center| (F)) (|f| (F)) (|yx| (|Kernel| F)) (|sy| (|Symbol|))
-          (|x| (|Symbol|)) (#1=#:G779 NIL))
+          (|x| (|Symbol|)) (#1=#:G783 NIL))
          (SEQ
           (LETT |x|
                 (PROG2
@@ -459,7 +459,7 @@
          (|y0| |List| F) ($ |Any|))
         (SPROG
          ((|center| (F)) (|f| (F)) (|yx| (|Kernel| F)) (|sy| (|Symbol|))
-          (|x| (|Symbol|)) (#1=#:G785 NIL))
+          (|x| (|Symbol|)) (#1=#:G789 NIL))
          (SEQ
           (LETT |x|
                 (PROG2
@@ -543,13 +543,13 @@
         ((|sys| |List| F) (|ly| |List| (|BasicOperator|)) (|eqx| |Equation| F)
          (|l0| |List| F) ($ |Any|))
         (SPROG
-         ((#1=#:G817 NIL) (|f| NIL) (#2=#:G816 NIL) (|center| (F))
-          (|l| (|List| F)) (#3=#:G815 NIL) (|eq| NIL) (#4=#:G814 NIL)
-          (#5=#:G813 NIL) (|k| NIL) (#6=#:G812 NIL) (|lelt| (|List| F))
-          (|m| (F)) (#7=#:G811 NIL) (#8=#:G810 NIL)
-          (|yx| (|List| (|Kernel| F))) (#9=#:G809 NIL) (|y| NIL)
-          (#10=#:G808 NIL) (|fsy| (F)) (|sy| (|Symbol|)) (|x| (|Symbol|))
-          (#11=#:G797 NIL) (|kx| (|Kernel| F)))
+         ((#1=#:G820 NIL) (|f| NIL) (#2=#:G819 NIL) (|center| (F))
+          (|l| (|List| F)) (#3=#:G818 NIL) (|eq| NIL) (#4=#:G817 NIL)
+          (#5=#:G816 NIL) (|k| NIL) (#6=#:G815 NIL) (|lelt| (|List| F))
+          (|m| (F)) (#7=#:G814 NIL) (#8=#:G813 NIL)
+          (|yx| (|List| (|Kernel| F))) (#9=#:G812 NIL) (|y| NIL)
+          (#10=#:G811 NIL) (|fsy| (F)) (|sy| (|Symbol|)) (|x| (|Symbol|))
+          (#11=#:G800 NIL) (|kx| (|Kernel| F)))
          (SEQ
           (LETT |x|
                 (PROG2
@@ -734,9 +734,9 @@
 
 (DECLAIM (NOTINLINE |ExpressionSpaceODESolver;|)) 
 
-(DEFUN |ExpressionSpaceODESolver| (&REST #1=#:G818)
+(DEFUN |ExpressionSpaceODESolver| (&REST #1=#:G821)
   (SPROG NIL
-         (PROG (#2=#:G819)
+         (PROG (#2=#:G822)
            (RETURN
             (COND
              ((LETT #2#

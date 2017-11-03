@@ -11,9 +11,9 @@
 
 (DECLAIM (NOTINLINE |RationalRetractions;|)) 
 
-(DEFUN |RationalRetractions| (#1=#:G702)
+(DEFUN |RationalRetractions| (#1=#:G703)
   (SPROG NIL
-         (PROG (#2=#:G703)
+         (PROG (#2=#:G704)
            (RETURN
             (COND
              ((LETT #2#

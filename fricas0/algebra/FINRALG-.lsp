@@ -4,7 +4,7 @@
 
 (SDEFUN |FINRALG-;coordinates;2VM;2|
         ((|v| |Vector| S) (|b| |Vector| S) ($ |Matrix| R))
-        (SPROG ((#1=#:G709 NIL) (|i| NIL) (|j| NIL) (|m| (|Matrix| R)))
+        (SPROG ((#1=#:G712 NIL) (|i| NIL) (|j| NIL) (|m| (|Matrix| R)))
                (SEQ
                 (LETT |m|
                       (MAKE_MATRIX1 (QVSIZE |v|) (QVSIZE |b|)
@@ -28,7 +28,7 @@
 
 (SDEFUN |FINRALG-;represents;VVS;3| ((|v| |Vector| R) (|b| |Vector| S) ($ S))
         (SPROG
-         ((#1=#:G711 NIL) (#2=#:G710 (S)) (#3=#:G712 (S)) (#4=#:G715 NIL)
+         ((#1=#:G715 NIL) (#2=#:G714 (S)) (#3=#:G716 (S)) (#4=#:G719 NIL)
           (|i| NIL) (|m| (|Integer|)))
          (SEQ
           (LETT |m| (- (SPADCALL |v| (QREFELT $ 22)) 1)
@@ -54,8 +54,8 @@
 
 (SDEFUN |FINRALG-;traceMatrix;VM;4| ((|v| |Vector| S) ($ |Matrix| R))
         (SPROG
-         ((#1=#:G726 NIL) (|j| NIL) (#2=#:G725 NIL) (#3=#:G724 NIL) (|i| NIL)
-          (#4=#:G723 NIL))
+         ((#1=#:G730 NIL) (|j| NIL) (#2=#:G729 NIL) (#3=#:G728 NIL) (|i| NIL)
+          (#4=#:G727 NIL))
          (SEQ
           (SPADCALL
            (PROGN
@@ -94,7 +94,7 @@
 
 (SDEFUN |FINRALG-;regularRepresentation;SVM;5|
         ((|x| S) (|b| |Vector| S) ($ |Matrix| R))
-        (SPROG ((#1=#:G732 NIL) (|i| NIL) (#2=#:G731 NIL) (|m| (|Integer|)))
+        (SPROG ((#1=#:G736 NIL) (|i| NIL) (#2=#:G735 NIL) (|m| (|Integer|)))
                (SEQ
                 (LETT |m| (- (SPADCALL |b| (QREFELT $ 17)) 1)
                       . #3=(|FINRALG-;regularRepresentation;SVM;5|))

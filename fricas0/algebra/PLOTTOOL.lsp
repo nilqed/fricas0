@@ -37,7 +37,7 @@
          (|f| |Mapping| #1=(|DoubleFloat|) (|Point| (|DoubleFloat|)))
          (|g| |Mapping| (|DoubleFloat|) (|DoubleFloat|) (|DoubleFloat|))
          ($ |DoubleFloat|))
-        (SPROG ((|m| #1#) (#2=#:G707 NIL) (|p| NIL))
+        (SPROG ((|m| #1#) (#2=#:G709 NIL) (|p| NIL))
                (SEQ
                 (LETT |m| (SPADCALL (|SPADfirst| |l|) |f|)
                       . #3=(|PLOTTOOL;select|))
@@ -70,7 +70,7 @@
          (|f| |Mapping| #1=(|DoubleFloat|) (|List| (|Point| (|DoubleFloat|))))
          (|g| |Mapping| (|DoubleFloat|) (|DoubleFloat|) (|DoubleFloat|))
          ($ |DoubleFloat|))
-        (SPROG ((|m| #1#) (#2=#:G725 NIL) (|p| NIL))
+        (SPROG ((|m| #1#) (#2=#:G727 NIL) (|p| NIL))
                (SEQ
                 (LETT |m| (SPADCALL (|SPADfirst| |l|) |f|)
                       . #3=(|PLOTTOOL;select2|))
@@ -129,7 +129,7 @@
 
 (DEFUN |PlotTools| ()
   (SPROG NIL
-         (PROG (#1=#:G742)
+         (PROG (#1=#:G744)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|PlotTools|)
@@ -159,10 +159,10 @@
 
 (MAKEPROP '|PlotTools| '|infovec|
           (LIST
-           '#(NIL NIL NIL NIL NIL NIL (|DoubleFloat|) (|Segment| 6) (0 . |hi|)
-              (5 . |lo|) (|Boolean|) (10 . >) (16 . |segment|) (|Point| 6)
-              (|PointPackage| 6) (22 . |xCoord|) (27 . |min|) (33 . |max|)
-              (39 . SEGMENT) (45 . |yCoord|) (|GraphicsDefaults|)
+           '#(NIL NIL NIL NIL NIL NIL (|DoubleFloat|) (|Segment| 6)
+              (0 . |high|) (5 . |low|) (|Boolean|) (10 . >) (16 . |segment|)
+              (|Point| 6) (|PointPackage| 6) (22 . |xCoord|) (27 . |min|)
+              (33 . |max|) (39 . SEGMENT) (45 . |yCoord|) (|GraphicsDefaults|)
               (50 . |drawToScale|) (|List| 7) (|List| (|List| 13))
               |PLOTTOOL;calcRanges;LL;8|)
            '#(|calcRanges| 54) 'NIL

@@ -3,7 +3,7 @@
         ((|f| |Expression| (|Float|)) (|segbind| |SegmentBinding| (|Float|))
          (|filename| |String|) (|opts| |List| (|DrawOption|)) ($ |Void|))
         (SPROG
-         ((#1=#:G707 NIL) (|p| NIL) (#2=#:G706 NIL) (|p1| NIL)
+         ((#1=#:G712 NIL) (|p| NIL) (#2=#:G711 NIL) (|p1| NIL)
           (|p2| (|List| (|List| (|Point| (|DoubleFloat|)))))
           (|f1| (|TextFile|)))
          (SEQ
@@ -56,10 +56,10 @@
         ((|l1| |List| (|DoubleFloat|)) (|l2| |List| (|DoubleFloat|))
          (|filename| |String|) (|opts| |List| (|DrawOption|)) ($ |Void|))
         (SPROG
-         ((#1=#:G718 NIL) (|p| NIL) (#2=#:G717 NIL) (|p1| NIL)
+         ((#1=#:G723 NIL) (|p| NIL) (#2=#:G722 NIL) (|p1| NIL)
           (|p2| (|List| (|List| (|Point| (|DoubleFloat|)))))
-          (|lp| (|List| (|Point| (|DoubleFloat|)))) (#3=#:G715 NIL) (|x| NIL)
-          (#4=#:G716 NIL) (|y| NIL) (#5=#:G714 NIL) (|f1| (|TextFile|)))
+          (|lp| (|List| (|Point| (|DoubleFloat|)))) (#3=#:G720 NIL) (|x| NIL)
+          (#4=#:G721 NIL) (|y| NIL) (#5=#:G719 NIL) (|f1| (|TextFile|)))
          (SEQ
           (LETT |f1|
                 (SPADCALL (SPADCALL |filename| (QREFELT $ 8)) "output"
@@ -141,7 +141,7 @@
          (|segbind2| |SegmentBinding| (|Float|)) (|filename| |String|)
          (|opts| |List| (|DrawOption|)) ($ |Void|))
         (SPROG
-         ((#1=#:G727 NIL) (|p| NIL) (#2=#:G726 NIL) (|p1| NIL)
+         ((#1=#:G732 NIL) (|p| NIL) (#2=#:G731 NIL) (|p1| NIL)
           (|p2| (|List| (|List| (|Point| (|DoubleFloat|)))))
           (|f1| (|TextFile|)))
          (SEQ
@@ -206,7 +206,7 @@
 
 (DEFUN |GnuDraw| ()
   (SPROG NIL
-         (PROG (#1=#:G730)
+         (PROG (#1=#:G735)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|GnuDraw|) . #2=(|GnuDraw|))

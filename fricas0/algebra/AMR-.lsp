@@ -1,11 +1,12 @@
 
 (SDEFUN |AMR-;monomial?;SB;1| ((|x| S) ($ |Boolean|))
-        (SPADCALL (SPADCALL |x| (QREFELT $ 9)) (QREFELT $ 11))) 
+        (COND ((SPADCALL |x| (QREFELT $ 10)) NIL)
+              ('T (SPADCALL (SPADCALL |x| (QREFELT $ 11)) (QREFELT $ 10))))) 
 
 (SDEFUN |AMR-;map;M2S;2| ((|fn| |Mapping| R R) (|x| S) ($ S))
         (SPROG ((|r| (R)))
                (SEQ
-                (COND ((SPADCALL |x| (QREFELT $ 11)) (|spadConstant| $ 13))
+                (COND ((SPADCALL |x| (QREFELT $ 10)) (|spadConstant| $ 13))
                       (#1='T
                        (SEQ
                         (LETT |r| (SPADCALL (SPADCALL |x| (QREFELT $ 14)) |fn|)
@@ -13,13 +14,13 @@
                         (EXIT
                          (COND
                           ((SPADCALL |r| (QREFELT $ 15))
-                           (SPADCALL |fn| (SPADCALL |x| (QREFELT $ 9))
+                           (SPADCALL |fn| (SPADCALL |x| (QREFELT $ 11))
                                      (QREFELT $ 17)))
                           (#1#
                            (SPADCALL
                             (SPADCALL |r| (SPADCALL |x| (QREFELT $ 18))
                                       (QREFELT $ 19))
-                            (SPADCALL |fn| (SPADCALL |x| (QREFELT $ 9))
+                            (SPADCALL |fn| (SPADCALL |x| (QREFELT $ 11))
                                       (QREFELT $ 17))
                             (QREFELT $ 20))))))))))) 
 
@@ -83,7 +84,7 @@
 (MAKEPROP '|AbelianMonoidRing&| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
-              (|local| |#3|) (0 . |reductum|) (|Boolean|) (5 . |zero?|)
+              (|local| |#3|) (|Boolean|) (0 . |zero?|) (5 . |reductum|)
               |AMR-;monomial?;SB;1| (10 . |Zero|) (14 . |leadingCoefficient|)
               (19 . |zero?|) (|Mapping| 7 7) (24 . |map|) (30 . |degree|)
               (35 . |monomial|) (41 . +) |AMR-;map;M2S;2| (|Fraction| 25)
@@ -94,11 +95,11 @@
                  (CONS '#()
                        (CONS '#()
                              (|makeByteWordVec2| 24
-                                                 '(1 6 0 0 9 1 6 10 0 11 0 6 0
-                                                   13 1 6 7 0 14 1 7 10 0 15 2
-                                                   6 0 16 0 17 1 6 8 0 18 2 6 0
-                                                   7 8 19 2 6 0 0 0 20 2 7 0 22
-                                                   0 23 2 0 0 22 0 24 1 0 10 0
-                                                   12 2 0 0 16 0 21 2 0 0 22 0
+                                                 '(1 6 9 0 10 1 6 0 0 11 0 6 0
+                                                   13 1 6 7 0 14 1 7 9 0 15 2 6
+                                                   0 16 0 17 1 6 8 0 18 2 6 0 7
+                                                   8 19 2 6 0 0 0 20 2 7 0 22 0
+                                                   23 2 0 0 22 0 24 1 0 9 0 12
+                                                   2 0 0 16 0 21 2 0 0 22 0
                                                    24)))))
            '|lookupComplete|)) 

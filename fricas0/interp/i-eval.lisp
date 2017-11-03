@@ -1269,21 +1269,3 @@
         (|pp| (|unwrap| |u|))))
       (|putValue| |op| |val|)
       (LIST |tm|)))))
- 
-; failCheck x ==
-;   x = '"failed" =>
-;     stopTimingProcess peekTimedName()
-;     THROW('interpreter,objNewWrap('"failed",$String))
-;   x = $coerceFailure =>
-;     NIL
-;   x
- 
-(DEFUN |failCheck| (|x|)
-  (PROG ()
-    (RETURN
-     (COND
-      ((EQUAL |x| "failed")
-       (PROGN
-        (|stopTimingProcess| (|peekTimedName|))
-        (THROW '|interpreter| (|objNewWrap| "failed" |$String|))))
-      ((EQUAL |x| |$coerceFailure|) NIL) ('T |x|)))))

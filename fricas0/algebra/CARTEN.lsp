@@ -8,7 +8,7 @@
          ((|qr|
            (|Record| (|:| |quotient| (|Integer|))
                      (|:| |remainder| (|Integer|))))
-          (#1=#:G725 NIL) (|i| NIL) (|rnk| (|NonNegativeInteger|)))
+          (#1=#:G729 NIL) (|i| NIL) (|rnk| (|NonNegativeInteger|)))
          (SEQ
           (COND ((< |n| 0) (|error| "Index error (too small)"))
                 (#2='T
@@ -30,7 +30,7 @@
                         (#2# |indv|))))))))) 
 
 (SDEFUN |CARTEN;index2int| ((|indv| |Vector| (|Integer|)) ($ |Integer|))
-        (SPROG ((|n| (|Integer|)) (|ix| (|Integer|)) (#1=#:G731 NIL) (|i| NIL))
+        (SPROG ((|n| (|Integer|)) (|ix| (|Integer|)) (#1=#:G735 NIL) (|i| NIL))
                (SEQ (LETT |n| 0 . #2=(|CARTEN;index2int|))
                     (SEQ (LETT |i| 1 . #2#) (LETT #1# (QVSIZE |indv|) . #2#)
                          G190 (COND ((|greater_SI| |i| #1#) (GO G191)))
@@ -84,8 +84,8 @@
         ((|n| |NonNegativeInteger|) (|l| |List| (|Integer|))
          ($ |Vector| (|Integer|)))
         (SPROG
-         ((#1=#:G753 NIL) (#2=#:G756 NIL) (|e| NIL) (#3=#:G754 NIL) (|i| NIL)
-          (#4=#:G755 NIL) (|seen| (|Vector| (|Boolean|)))
+         ((#1=#:G757 NIL) (#2=#:G760 NIL) (|e| NIL) (#3=#:G758 NIL) (|i| NIL)
+          (#4=#:G759 NIL) (|seen| (|Vector| (|Boolean|)))
           (|p| (|Vector| (|Integer|))))
          (SEQ
           (COND
@@ -125,7 +125,7 @@
                              (LETT #1#
                                    (|error| "The list is not a permutation.")
                                    . #5#)
-                             (GO #6=#:G749))))))
+                             (GO #6=#:G753))))))
                         (LETT |e| (|inc_SI| |e|) . #5#) (GO G190) G191
                         (EXIT NIL)))
                   #6# (EXIT #1#))
@@ -134,7 +134,7 @@
 (SDEFUN |CARTEN;permute!|
         ((|t| |Vector| (|Integer|)) (|s| |Vector| (|Integer|))
          (|p| |Vector| (|Integer|)) ($ |Vector| (|Integer|)))
-        (SPROG ((#1=#:G760 NIL) (|i| NIL))
+        (SPROG ((#1=#:G764 NIL) (|i| NIL))
                (SEQ
                 (SEQ (LETT |i| 1 . #2=(|CARTEN;permute!|))
                      (LETT #1# (QVSIZE |p|) . #2#) G190
@@ -151,10 +151,10 @@
 
 (SDEFUN |CARTEN;permsign!| ((|v| |Vector| (|Integer|)) ($ |Integer|))
         (SPROG
-         ((#1=#:G775 NIL) (#2=#:G779 NIL) (|i| NIL) (|totTrans| (|Integer|))
-          (|e| (|Integer|)) (|nTrans| (|Integer|)) (#3=#:G777 NIL)
-          (#4=#:G778 NIL) (|j| NIL) (|n| (|Integer|)) (#5=#:G776 NIL)
-          (|psum| (|Integer|)) (#6=#:G762 NIL) (|maxix| (|Integer|)))
+         ((#1=#:G779 NIL) (#2=#:G783 NIL) (|i| NIL) (|totTrans| (|Integer|))
+          (|e| (|Integer|)) (|nTrans| (|Integer|)) (#3=#:G781 NIL)
+          (#4=#:G782 NIL) (|j| NIL) (|n| (|Integer|)) (#5=#:G780 NIL)
+          (|psum| (|Integer|)) (#6=#:G766 NIL) (|maxix| (|Integer|)))
          (SEQ
           (EXIT
            (SEQ
@@ -237,14 +237,14 @@
                                  ((SPADCALL (SPADCALL |v| |i| (QREFELT $ 23))
                                             (- (+ (QREFELT $ 6) |i|) 1)
                                             (QREFELT $ 22))
-                                  (PROGN (LETT #1# 0 . #7#) (GO #9=#:G774))))))
+                                  (PROGN (LETT #1# 0 . #7#) (GO #9=#:G778))))))
                               (LETT |i| (|inc_SI| |i|) . #7#) (GO G190) G191
                               (EXIT NIL))
                          (EXIT (COND ((ODDP |totTrans|) -1) (#8# 1)))))))))
           #9# (EXIT #1#)))) 
 
 (SDEFUN |CARTEN;ravel;$L;8| ((|x| $) ($ |List| R))
-        (SPROG ((#1=#:G783 NIL) (|i| NIL) (#2=#:G782 NIL))
+        (SPROG ((#1=#:G787 NIL) (|i| NIL) (#2=#:G786 NIL))
                (SEQ
                 (PROGN
                  (LETT #2# NIL . #3=(|CARTEN;ravel;$L;8|))
@@ -260,7 +260,7 @@
 
 (SDEFUN |CARTEN;unravel;L$;9| ((|l| |List| R) ($ $))
         (SPROG
-         ((#1=#:G787 NIL) (|i| NIL) (#2=#:G788 NIL) (|r| NIL) (|z| ($))
+         ((#1=#:G791 NIL) (|i| NIL) (#2=#:G792 NIL) (|r| NIL) (|z| ($))
           (|nz| (|NonNegativeInteger|)))
          (SEQ (LETT |nz| (LENGTH |l|) . #3=(|CARTEN;unravel;L$;9|))
               (|CARTEN;lengthRankOrElse| |nz| $)
@@ -279,7 +279,7 @@
               (EXIT |z|)))) 
 
 (SDEFUN |CARTEN;kroneckerDelta;$;10| (($ $))
-        (SPROG ((#1=#:G792 NIL) (|i| NIL) (#2=#:G793 NIL) (|zi| NIL) (|z| ($)))
+        (SPROG ((#1=#:G796 NIL) (|i| NIL) (#2=#:G797 NIL) (|zi| NIL) (|z| ($)))
                (SEQ
                 (LETT |z|
                       (SPADCALL (QREFELT $ 13) (|spadConstant| $ 36)
@@ -301,7 +301,7 @@
 
 (SDEFUN |CARTEN;leviCivitaSymbol;$;11| (($ $))
         (SPROG
-         ((#1=#:G797 NIL) (|i| NIL) (|indv| (|Vector| (|Integer|))) (|z| ($))
+         ((#1=#:G801 NIL) (|i| NIL) (|indv| (|Vector| (|Integer|))) (|z| ($))
           (|nz| (|NonNegativeInteger|)))
          (SEQ
           (LETT |nz| (EXPT (QREFELT $ 7) (QREFELT $ 7))
@@ -395,7 +395,7 @@
 
 (SDEFUN |CARTEN;elt;$LR;19| ((|x| $) (|i| |List| (|Integer|)) ($ R))
         (SPROG
-         ((|n| (|Integer|)) (|ix| (|Integer|)) (#1=#:G817 NIL) (|ii| NIL))
+         ((|n| (|Integer|)) (|ix| (|Integer|)) (#1=#:G821 NIL) (|ii| NIL))
          (SEQ
           (COND
            ((SPADCALL (LENGTH |i|) (SPADCALL |x| (QREFELT $ 43))
@@ -423,7 +423,7 @@
                  (EXIT (SPADCALL |x| |n| (QREFELT $ 33))))))))) 
 
 (SDEFUN |CARTEN;coerce;L$;20| ((|lr| |List| R) ($ $))
-        (SPROG ((#1=#:G822 NIL) (|r| NIL) (#2=#:G823 NIL) (|i| NIL) (|z| ($)))
+        (SPROG ((#1=#:G826 NIL) (|r| NIL) (#2=#:G827 NIL) (|i| NIL) (|z| ($)))
                (SEQ
                 (COND
                  ((SPADCALL (LENGTH |lr|) (QREFELT $ 7) (QREFELT $ 26))
@@ -449,9 +449,9 @@
 
 (SDEFUN |CARTEN;coerce;L$;21| ((|lx| |List| $) ($ $))
         (SPROG
-         ((#1=#:G837 NIL) (|i| NIL) (#2=#:G835 NIL) (|x| NIL) (#3=#:G836 NIL)
-          (|offz| NIL) (|z| ($)) (|nx| (|NonNegativeInteger|)) (#4=#:G833 NIL)
-          (#5=#:G834 NIL) (|rx| (|NonNegativeInteger|)))
+         ((#1=#:G841 NIL) (|i| NIL) (#2=#:G839 NIL) (|x| NIL) (#3=#:G840 NIL)
+          (|offz| NIL) (|z| ($)) (|nx| (|NonNegativeInteger|)) (#4=#:G837 NIL)
+          (#5=#:G838 NIL) (|rx| (|NonNegativeInteger|)))
          (SEQ
           (COND
            ((SPADCALL (SPADCALL |lx| (QREFELT $ 54)) (QREFELT $ 7)
@@ -475,7 +475,7 @@
                                   (QREFELT $ 26))
                         (PROGN
                          (LETT #4# (|error| "Inhomogeneous slice ranks") . #6#)
-                         (GO #7=#:G827))))))
+                         (GO #7=#:G831))))))
                     (LETT #5# (CDR #5#) . #6#) (GO G190) G191 (EXIT NIL)))
               #7# (EXIT #4#))
              (LETT |nx|
@@ -518,9 +518,9 @@
         ((|x| $) (|i0| |Integer|) (|rnk| |NonNegativeInteger|)
          ($ |OutputForm|))
         (SPROG
-         ((#1=#:G858 NIL) (|j| NIL) (#2=#:G857 NIL) (#3=#:G856 NIL) (|i| NIL)
-          (#4=#:G855 NIL) (|nskip| (|NonNegativeInteger|))
-          (|rnk1| (|NonNegativeInteger|)) (#5=#:G854 NIL) (#6=#:G853 NIL))
+         ((#1=#:G862 NIL) (|j| NIL) (#2=#:G861 NIL) (#3=#:G860 NIL) (|i| NIL)
+          (#4=#:G859 NIL) (|nskip| (|NonNegativeInteger|))
+          (|rnk1| (|NonNegativeInteger|)) (#5=#:G858 NIL) (#6=#:G857 NIL))
          (SEQ
           (COND
            ((ODDP |rnk|)
@@ -600,7 +600,7 @@
 (SDEFUN |CARTEN;coerce;R$;27| ((|r| R) ($ $)) (SPADCALL 1 |r| (QREFELT $ 37))) 
 
 (SDEFUN |CARTEN;coerce;Dp$;28| ((|v| |DirectProduct| |dim| R) ($ $))
-        (SPROG ((#1=#:G867 NIL) (|i| NIL) (#2=#:G868 NIL) (|j| NIL) (|z| ($)))
+        (SPROG ((#1=#:G871 NIL) (|i| NIL) (#2=#:G872 NIL) (|j| NIL) (|z| ($)))
                (SEQ
                 (LETT |z|
                       (SPADCALL (QREFELT $ 7) (|spadConstant| $ 36)
@@ -623,8 +623,8 @@
 
 (SDEFUN |CARTEN;coerce;Sm$;29| ((|m| |SquareMatrix| |dim| R) ($ $))
         (SPROG
-         ((|offz| (|NonNegativeInteger|)) (#1=#:G876 NIL) (|j| NIL)
-          (#2=#:G875 NIL) (|i| NIL) (|z| ($)))
+         ((|offz| (|NonNegativeInteger|)) (#1=#:G880 NIL) (|j| NIL)
+          (#2=#:G879 NIL) (|i| NIL) (|z| ($)))
          (SEQ
           (LETT |z|
                 (SPADCALL (SPADCALL (QREFELT $ 7) 2 (QREFELT $ 12))
@@ -648,7 +648,7 @@
           (EXIT |z|)))) 
 
 (SDEFUN |CARTEN;=;2$B;30| ((|x| $) (|y| $) ($ |Boolean|))
-        (SPROG ((#1=#:G882 NIL) (#2=#:G883 NIL) (|i| NIL))
+        (SPROG ((#1=#:G886 NIL) (#2=#:G887 NIL) (|i| NIL))
                (SEQ
                 (EXIT
                  (COND
@@ -666,14 +666,14 @@
                             ((SPADCALL (SPADCALL |x| |i| (QREFELT $ 33))
                                        (SPADCALL |y| |i| (QREFELT $ 33))
                                        (QREFELT $ 78))
-                             (PROGN (LETT #1# NIL . #3#) (GO #4=#:G881))))))
+                             (PROGN (LETT #1# NIL . #3#) (GO #4=#:G885))))))
                          (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191
                          (EXIT NIL))
                     (EXIT 'T)))))
                 #4# (EXIT #1#)))) 
 
 (SDEFUN |CARTEN;+;3$;31| ((|x| $) (|y| $) ($ $))
-        (SPROG ((#1=#:G888 NIL) (|i| NIL) (|z| ($)))
+        (SPROG ((#1=#:G892 NIL) (|i| NIL) (|z| ($)))
                (SEQ
                 (COND
                  ((SPADCALL (SPADCALL |x| (QREFELT $ 32))
@@ -700,7 +700,7 @@
                    (EXIT |z|))))))) 
 
 (SDEFUN |CARTEN;-;3$;32| ((|x| $) (|y| $) ($ $))
-        (SPROG ((#1=#:G893 NIL) (|i| NIL) (|z| ($)))
+        (SPROG ((#1=#:G897 NIL) (|i| NIL) (|z| ($)))
                (SEQ
                 (COND
                  ((SPADCALL (SPADCALL |x| (QREFELT $ 32))
@@ -727,7 +727,7 @@
                    (EXIT |z|))))))) 
 
 (SDEFUN |CARTEN;-;2$;33| ((|x| $) ($ $))
-        (SPROG ((#1=#:G897 NIL) (|i| NIL) (|z| ($)))
+        (SPROG ((#1=#:G901 NIL) (|i| NIL) (|z| ($)))
                (SEQ
                 (LETT |z|
                       (SPADCALL (SPADCALL |x| (QREFELT $ 32))
@@ -746,7 +746,7 @@
                 (EXIT |z|)))) 
 
 (SDEFUN |CARTEN;*;I2$;34| ((|n| |Integer|) (|x| $) ($ $))
-        (SPROG ((#1=#:G901 NIL) (|i| NIL) (|z| ($)))
+        (SPROG ((#1=#:G905 NIL) (|i| NIL) (|z| ($)))
                (SEQ
                 (LETT |z|
                       (SPADCALL (SPADCALL |x| (QREFELT $ 32))
@@ -766,7 +766,7 @@
                 (EXIT |z|)))) 
 
 (SDEFUN |CARTEN;*;$I$;35| ((|x| $) (|n| |Integer|) ($ $))
-        (SPROG ((#1=#:G905 NIL) (|i| NIL) (|z| ($)))
+        (SPROG ((#1=#:G909 NIL) (|i| NIL) (|z| ($)))
                (SEQ
                 (LETT |z|
                       (SPADCALL (SPADCALL |x| (QREFELT $ 32))
@@ -786,7 +786,7 @@
                 (EXIT |z|)))) 
 
 (SDEFUN |CARTEN;*;R2$;36| ((|r| R) (|x| $) ($ $))
-        (SPROG ((#1=#:G909 NIL) (|i| NIL) (|z| ($)))
+        (SPROG ((#1=#:G913 NIL) (|i| NIL) (|z| ($)))
                (SEQ
                 (LETT |z|
                       (SPADCALL (SPADCALL |x| (QREFELT $ 32))
@@ -806,7 +806,7 @@
                 (EXIT |z|)))) 
 
 (SDEFUN |CARTEN;*;$R$;37| ((|x| $) (|r| R) ($ $))
-        (SPROG ((#1=#:G913 NIL) (|i| NIL) (|z| ($)))
+        (SPROG ((#1=#:G917 NIL) (|i| NIL) (|z| ($)))
                (SEQ
                 (LETT |z|
                       (SPADCALL (SPADCALL |x| (QREFELT $ 32))
@@ -827,7 +827,7 @@
 
 (SDEFUN |CARTEN;product;3$;38| ((|x| $) (|y| $) ($ $))
         (SPROG
-         ((#1=#:G920 NIL) (|j| NIL) (#2=#:G918 NIL) (|i| NIL) (#3=#:G919 NIL)
+         ((#1=#:G924 NIL) (|j| NIL) (#2=#:G922 NIL) (|i| NIL) (#3=#:G923 NIL)
           (|ioff| NIL) (|z| ($)) (|ny| #4=(|NonNegativeInteger|)) (|nx| #4#))
          (SEQ
           (LETT |nx| (SPADCALL |x| (QREFELT $ 32))
@@ -878,11 +878,11 @@
 (SDEFUN |CARTEN;contract;$2I$;40|
         ((|x| $) (|i| . #1=(|Integer|)) (|j| . #2=(|Integer|)) ($ $))
         (SPROG
-         ((#3=#:G939 NIL) (|k| NIL) (#4=#:G940 NIL) (|xk| NIL) (#5=#:G936 NIL)
-          (|l| NIL) (#6=#:G937 NIL) (|xl| NIL) (#7=#:G938 NIL) (|zl| NIL)
-          (#8=#:G933 NIL) (|m| NIL) (#9=#:G934 NIL) (|xm| NIL) (#10=#:G935 NIL)
-          (|zm| NIL) (#11=#:G930 NIL) (|h| NIL) (#12=#:G931 NIL) (|xh| NIL)
-          (#13=#:G932 NIL) (|zh| NIL) (|z| ($))
+         ((#3=#:G943 NIL) (|k| NIL) (#4=#:G944 NIL) (|xk| NIL) (#5=#:G940 NIL)
+          (|l| NIL) (#6=#:G941 NIL) (|xl| NIL) (#7=#:G942 NIL) (|zl| NIL)
+          (#8=#:G937 NIL) (|m| NIL) (#9=#:G938 NIL) (|xm| NIL) (#10=#:G939 NIL)
+          (|zm| NIL) (#11=#:G934 NIL) (|h| NIL) (#12=#:G935 NIL) (|xh| NIL)
+          (#13=#:G936 NIL) (|zh| NIL) (|z| ($))
           (|xok| #14=(|NonNegativeInteger|)) (|xoh| #14#) (|zoh| #14#)
           (|nh| #15=(|NonNegativeInteger|)) (|rh| (|NonNegativeInteger|))
           (|xom| #14#) (|zom| #15#) (|nm| #15#) (|rm| (|NonNegativeInteger|))
@@ -989,13 +989,13 @@
 (SDEFUN |CARTEN;contract;$I$I$;41|
         ((|x| $) (|i| |Integer|) (|y| $) (|j| |Integer|) ($ $))
         (SPROG
-         ((#1=#:G961 NIL) (|k| NIL) (#2=#:G962 NIL) (|xk| NIL) (#3=#:G963 NIL)
-          (|yk| NIL) (#4=#:G958 NIL) (|dyl| NIL) (#5=#:G959 NIL) (|yl| NIL)
-          (#6=#:G960 NIL) (|zly| NIL) (#7=#:G955 NIL) (|dyh| NIL)
-          (#8=#:G956 NIL) (|yh| NIL) (#9=#:G957 NIL) (|zhy| NIL)
-          (#10=#:G952 NIL) (|dxl| NIL) (#11=#:G953 NIL) (|xl| NIL)
-          (#12=#:G954 NIL) (|zlx| NIL) (#13=#:G949 NIL) (|dxh| NIL)
-          (#14=#:G950 NIL) (|xh| NIL) (#15=#:G951 NIL) (|zhx| NIL) (|z| ($))
+         ((#1=#:G965 NIL) (|k| NIL) (#2=#:G966 NIL) (|xk| NIL) (#3=#:G967 NIL)
+          (|yk| NIL) (#4=#:G962 NIL) (|dyl| NIL) (#5=#:G963 NIL) (|yl| NIL)
+          (#6=#:G964 NIL) (|zly| NIL) (#7=#:G959 NIL) (|dyh| NIL)
+          (#8=#:G960 NIL) (|yh| NIL) (#9=#:G961 NIL) (|zhy| NIL)
+          (#10=#:G956 NIL) (|dxl| NIL) (#11=#:G957 NIL) (|xl| NIL)
+          (#12=#:G958 NIL) (|zlx| NIL) (#13=#:G953 NIL) (|dxh| NIL)
+          (#14=#:G954 NIL) (|xh| NIL) (#15=#:G955 NIL) (|zhx| NIL) (|z| ($))
           (|zohx| #16=(|NonNegativeInteger|)) (|ohx| #16#)
           (|nhx| #17=(|NonNegativeInteger|)) (|rhx| (|NonNegativeInteger|))
           (|zolx| #16#) (|olx| #18=(|PositiveInteger|)) (|nlx| #17#)
@@ -1134,11 +1134,11 @@
 (SDEFUN |CARTEN;transpose;$2I$;43|
         ((|x| $) (|i| . #1=(|Integer|)) (|j| . #2=(|Integer|)) ($ $))
         (SPROG
-         ((#3=#:G981 NIL) (|q| NIL) (#4=#:G982 NIL) (|zq| NIL) (#5=#:G983 NIL)
-          (|xq| NIL) (#6=#:G978 NIL) (|p| NIL) (#7=#:G979 NIL) (|zp| NIL)
-          (#8=#:G980 NIL) (|xp| NIL) (#9=#:G976 NIL) (|l| NIL) (#10=#:G977 NIL)
-          (|zl| NIL) (#11=#:G974 NIL) (|m| NIL) (#12=#:G975 NIL) (|zm| NIL)
-          (#13=#:G972 NIL) (|h| NIL) (#14=#:G973 NIL) (|zh| NIL) (|z| ($))
+         ((#3=#:G985 NIL) (|q| NIL) (#4=#:G986 NIL) (|zq| NIL) (#5=#:G987 NIL)
+          (|xq| NIL) (#6=#:G982 NIL) (|p| NIL) (#7=#:G983 NIL) (|zp| NIL)
+          (#8=#:G984 NIL) (|xp| NIL) (#9=#:G980 NIL) (|l| NIL) (#10=#:G981 NIL)
+          (|zl| NIL) (#11=#:G978 NIL) (|m| NIL) (#12=#:G979 NIL) (|zm| NIL)
+          (#13=#:G976 NIL) (|h| NIL) (#14=#:G977 NIL) (|zh| NIL) (|z| ($))
           (|zoh| #15=(|NonNegativeInteger|)) (|nh| #16=(|NonNegativeInteger|))
           (|rh| (|NonNegativeInteger|)) (|zoj| #15#) (|zom| #15#) (|nm| #16#)
           (|rm| (|NonNegativeInteger|)) (|zoi| (|NonNegativeInteger|))
@@ -1252,7 +1252,7 @@
 
 (SDEFUN |CARTEN;reindex;$L$;44| ((|x| $) (|l| |List| (|Integer|)) ($ $))
         (SPROG
-         ((|pi| (|Integer|)) (#1=#:G988 NIL) (|i| NIL)
+         ((|pi| (|Integer|)) (#1=#:G992 NIL) (|i| NIL)
           (|ziv| #2=(|Vector| (|Integer|))) (|xiv| #2#)
           (|p| (|Vector| (|Integer|))) (|rx| (|NonNegativeInteger|)) (|z| ($))
           (|nx| (|NonNegativeInteger|)))
@@ -1282,9 +1282,9 @@
 
 (DECLAIM (NOTINLINE |CartesianTensor;|)) 
 
-(DEFUN |CartesianTensor| (&REST #1=#:G989)
+(DEFUN |CartesianTensor| (&REST #1=#:G993)
   (SPROG NIL
-         (PROG (#2=#:G990)
+         (PROG (#2=#:G994)
            (RETURN
             (COND
              ((LETT #2#
@@ -1348,10 +1348,11 @@
                     (FUNCALL (|dispatchFunction| |CARTEN;Zero;$;25|) $))
               (CONS IDENTITY
                     (FUNCALL (|dispatchFunction| |CARTEN;One;$;26|) $))
-              (|DirectProduct| 7 8) (124 . |minIndex|) (129 . |maxIndex|)
-              (134 . |elt|) |CARTEN;coerce;Dp$;28| (|SquareMatrix| 7 8)
-              (140 . |elt|) |CARTEN;coerce;Sm$;29| (147 . ~=) |CARTEN;=;2$B;30|
-              (153 . +) |CARTEN;+;3$;31| (159 . -) |CARTEN;-;3$;32| (165 . -)
+              (|DirectProduct| (NRTEVAL (QREFELT $ 7)) 8) (124 . |minIndex|)
+              (129 . |maxIndex|) (134 . |elt|) |CARTEN;coerce;Dp$;28|
+              (|SquareMatrix| (NRTEVAL (QREFELT $ 7)) 8) (140 . |elt|)
+              |CARTEN;coerce;Sm$;29| (147 . ~=) |CARTEN;=;2$B;30| (153 . +)
+              |CARTEN;+;3$;31| (159 . -) |CARTEN;-;3$;32| (165 . -)
               |CARTEN;-;2$;33| (170 . *) |CARTEN;*;I2$;34| |CARTEN;*;$I$;35|
               (176 . *) |CARTEN;*;R2$;36| |CARTEN;*;$R$;37|
               |CARTEN;product;3$;38| |CARTEN;contract;$I$I$;41|

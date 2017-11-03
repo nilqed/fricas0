@@ -1,12 +1,12 @@
 
 (SDEFUN |MPCPF;factor;PPRF;1| ((|p| PPR) ($ |Factored| PPR))
         (SPROG
-         ((#1=#:G722 NIL) (#2=#:G721 #3=(|Factored| PPR)) (#4=#:G723 #3#)
-          (#5=#:G729 NIL) (|ff| NIL) (|fcont| (PPR))
+         ((#1=#:G724 NIL) (#2=#:G723 #3=(|Factored| PPR)) (#4=#:G725 #3#)
+          (#5=#:G731 NIL) (|ff| NIL) (|fcont| (PPR))
           (|ffact| (|List| (|Record| (|:| |irr| PPR) (|:| |pow| (|Integer|)))))
-          (#6=#:G728 NIL) (|u| NIL) (#7=#:G727 NIL)
+          (#6=#:G730 NIL) (|u| NIL) (#7=#:G729 NIL)
           (|flist| (|Factored| (|Polynomial| R))) (|g| (|Polynomial| R))
-          (|vars| (|List| OV)) (#8=#:G706 NIL) (|c| (|Polynomial| R)))
+          (|vars| (|List| OV)) (#8=#:G707 NIL) (|c| (|Polynomial| R)))
          (SEQ
           (COND ((SPADCALL |p| (QREFELT $ 11)) (SPADCALL |p| 1 (QREFELT $ 16)))
                 (#9='T
@@ -89,9 +89,9 @@
 
 (DECLAIM (NOTINLINE |MPolyCatPolyFactorizer;|)) 
 
-(DEFUN |MPolyCatPolyFactorizer| (&REST #1=#:G730)
+(DEFUN |MPolyCatPolyFactorizer| (&REST #1=#:G732)
   (SPROG NIL
-         (PROG (#2=#:G731)
+         (PROG (#2=#:G733)
            (RETURN
             (COND
              ((LETT #2#

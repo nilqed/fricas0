@@ -12,13 +12,13 @@
         (SPROG
          ((|res3|
            (|List| (|Record| (|:| |ratpart| F) (|:| |coeffs| (|Vector| F)))))
-          (|bv| #1=(|Vector| F)) (|rp| (F)) (|c| (F)) (#2=#:G734 NIL)
+          (|bv| #1=(|Vector| F)) (|rp| (F)) (|c| (F)) (#2=#:G738 NIL)
           (|be| NIL) (|ppv| #1#) (|ppa| (F)) (|c1inv| (F))
           (|found| (|Boolean|))
           (|be1| (|Record| (|:| |ratpart| F) (|:| |coeffs| (|Vector| F))))
           (|res2|
            (|List| (|Record| (|:| |ratpart| F) (|:| |coeffs| (|Vector| F)))))
-          (#3=#:G733 NIL) (|nn| (|NonNegativeInteger|)))
+          (#3=#:G737 NIL) (|nn| (|NonNegativeInteger|)))
          (SEQ
           (COND ((NULL |ls|) (CONS (CONS 1 "failed") NIL))
                 (#4='T
@@ -100,7 +100,7 @@
 
 (SDEFUN |LINCOMB;lin_comb;VLF;2| ((|v| |Vector| F) (|lf| |List| F) ($ F))
         (SPROG
-         ((|res| (F)) (#1=#:G739 NIL) (|i| NIL) (#2=#:G740 NIL) (|f| NIL))
+         ((|res| (F)) (#1=#:G744 NIL) (|i| NIL) (#2=#:G745 NIL) (|f| NIL))
          (SEQ
           (LETT |res| (|spadConstant| $ 16) . #3=(|LINCOMB;lin_comb;VLF;2|))
           (SEQ (LETT |f| NIL . #3#) (LETT #2# |lf| . #3#) (LETT |i| 1 . #3#)
@@ -125,7 +125,7 @@
 (SDEFUN |LINCOMB;lin_comb;VLF;3|
         ((|v| |Vector| (|Fraction| (|Integer|))) (|lf| |List| F) ($ F))
         (SPROG
-         ((|res| (F)) (#1=#:G744 NIL) (|i| NIL) (#2=#:G745 NIL) (|f| NIL))
+         ((|res| (F)) (#1=#:G749 NIL) (|i| NIL) (#2=#:G750 NIL) (|f| NIL))
          (SEQ
           (LETT |res| (|spadConstant| $ 16) . #3=(|LINCOMB;lin_comb;VLF;3|))
           (SEQ (LETT |f| NIL . #3#) (LETT #2# |lf| . #3#) (LETT |i| 1 . #3#)
@@ -153,8 +153,8 @@
         ((|u| |Vector| F) (|v| |Vector| F) (|lw| |List| (|Vector| F))
          ($ |Vector| F))
         (SPROG
-         ((#1=#:G753 NIL) (|j| NIL) (|c| (F)) (#2=#:G751 NIL) (|i| NIL)
-          (#3=#:G752 NIL) (|w| NIL) (|n| (|NonNegativeInteger|))
+         ((#1=#:G758 NIL) (|j| NIL) (|c| (F)) (#2=#:G756 NIL) (|i| NIL)
+          (#3=#:G757 NIL) (|w| NIL) (|n| (|NonNegativeInteger|))
           (|res| (|Vector| F)))
          (SEQ (LETT |res| |v| . #4=(|LINCOMB;lin_comb!;2VLV;4|))
               (LETT |n| (QVSIZE |res|) . #4#)
@@ -198,7 +198,7 @@
 (SDEFUN |LINCOMB;lin_comb;VLF;6|
         ((|v| |Vector| F) (|lf| |List| (|Fraction| UP)) ($ |Fraction| UP))
         (SPROG
-         ((|res| (|Fraction| UP)) (#1=#:G759 NIL) (|i| NIL) (#2=#:G760 NIL)
+         ((|res| (|Fraction| UP)) (#1=#:G764 NIL) (|i| NIL) (#2=#:G765 NIL)
           (|f| NIL))
          (SEQ
           (LETT |res| (|spadConstant| $ 45) . #3=(|LINCOMB;lin_comb;VLF;6|))
@@ -227,7 +227,7 @@
         ((|v| |Vector| (|Fraction| (|Integer|))) (|lg| |List| (|Fraction| UP))
          ($ |Fraction| UP))
         (SPROG
-         ((|res| (|Fraction| UP)) (#1=#:G764 NIL) (|i| NIL) (#2=#:G765 NIL)
+         ((|res| (|Fraction| UP)) (#1=#:G769 NIL) (|i| NIL) (#2=#:G770 NIL)
           (|g| NIL))
          (SEQ
           (LETT |res| (|spadConstant| $ 45) . #3=(|LINCOMB;lin_comb;VLF;7|))
@@ -260,8 +260,8 @@
         ((|v| |Vector| F) (|lf| |List| (|LaurentPolynomial| F UP))
          ($ |LaurentPolynomial| F UP))
         (SPROG
-         ((|res| (|LaurentPolynomial| F UP)) (#1=#:G771 NIL) (|i| NIL)
-          (#2=#:G772 NIL) (|f| NIL))
+         ((|res| (|LaurentPolynomial| F UP)) (#1=#:G776 NIL) (|i| NIL)
+          (#2=#:G777 NIL) (|f| NIL))
          (SEQ
           (LETT |res| (|spadConstant| $ 55) . #3=(|LINCOMB;lin_comb;VLLp;8|))
           (SEQ (LETT |f| NIL . #3#) (LETT #2# |lf| . #3#) (LETT |i| 1 . #3#)
@@ -287,7 +287,7 @@
 
 (SDEFUN |LINCOMB;lin_comb;VLUP;9| ((|v| |Vector| F) (|lf| |List| UP) ($ UP))
         (SPROG
-         ((|res| (UP)) (#1=#:G776 NIL) (|i| NIL) (#2=#:G777 NIL) (|f| NIL))
+         ((|res| (UP)) (#1=#:G781 NIL) (|i| NIL) (#2=#:G782 NIL) (|f| NIL))
          (SEQ
           (LETT |res| (|spadConstant| $ 17) . #3=(|LINCOMB;lin_comb;VLUP;9|))
           (SEQ (LETT |f| NIL . #3#) (LETT #2# |lf| . #3#) (LETT |i| 1 . #3#)
@@ -311,9 +311,9 @@
 
 (DECLAIM (NOTINLINE |LinearCombinationUtilities;|)) 
 
-(DEFUN |LinearCombinationUtilities| (&REST #1=#:G778)
+(DEFUN |LinearCombinationUtilities| (&REST #1=#:G783)
   (SPROG NIL
-         (PROG (#2=#:G779)
+         (PROG (#2=#:G784)
            (RETURN
             (COND
              ((LETT #2#

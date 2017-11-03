@@ -10,7 +10,7 @@
 
 (SDEFUN |DIRPCAT-;equation2R| ((|v| |Vector| S) ($ |Matrix| R))
         (SPROG
-         ((#1=#:G719 NIL) (|j| NIL) (#2=#:G718 NIL) (|i| NIL)
+         ((#1=#:G722 NIL) (|j| NIL) (#2=#:G721 NIL) (|i| NIL)
           (|ans| (|Matrix| R)))
          (SEQ
           (LETT |ans|
@@ -36,7 +36,7 @@
           (EXIT |ans|)))) 
 
 (SDEFUN |DIRPCAT-;reducedSystem;MM;5| ((|m| |Matrix| S) ($ |Matrix| R))
-        (SPROG ((#1=#:G734 NIL) (|i| NIL) (#2=#:G733 NIL))
+        (SPROG ((#1=#:G737 NIL) (|i| NIL) (#2=#:G736 NIL))
                (SEQ
                 (COND
                  ((SPADCALL |m| (QREFELT $ 26))
@@ -93,11 +93,11 @@
 
 (SDEFUN |DIRPCAT-;index;PiS;10| ((|n| |PositiveInteger|) ($ S))
         (SPROG
-         ((|n0| (|Integer|)) (#1=#:G745 NIL)
+         ((|n0| (|Integer|)) (#1=#:G749 NIL)
           (|d|
            (|Record| (|:| |quotient| (|Integer|))
                      (|:| |remainder| (|Integer|))))
-          (#2=#:G750 NIL) (|i| NIL) (|r| (|Vector| R))
+          (#2=#:G754 NIL) (|i| NIL) (|r| (|Vector| R))
           (|s| (|NonNegativeInteger|)))
          (SEQ
           (LETT |s| (SPADCALL (QREFELT $ 50)) . #3=(|DIRPCAT-;index;PiS;10|))
@@ -120,8 +120,8 @@
 
 (SDEFUN |DIRPCAT-;lookup;SPi;11| ((|v| S) ($ |PositiveInteger|))
         (SPROG
-         ((#1=#:G753 NIL) (|pow| (|NonNegativeInteger|)) (|res| (|Integer|))
-          (#2=#:G756 NIL) (|i| NIL) (|s| (|NonNegativeInteger|)))
+         ((#1=#:G757 NIL) (|pow| (|NonNegativeInteger|)) (|res| (|Integer|))
+          (#2=#:G760 NIL) (|i| NIL) (|s| (|NonNegativeInteger|)))
          (SEQ
           (LETT |s| (SPADCALL (QREFELT $ 50)) . #3=(|DIRPCAT-;lookup;SPi;11|))
           (LETT |pow| 1 . #3#) (LETT |res| 1 . #3#)
@@ -163,7 +163,7 @@
                                               (|HasCategory| |#3|
                                                              '(|OrderedAbelianMonoidSup|))
                                               (|HasCategory| |#3|
-                                                             '(|OrderedRing|))
+                                                             '(|OrderedSet|))
                                               (|HasCategory| |#3|
                                                              '(|unitsKnown|))
                                               (|HasCategory| |#3|
@@ -171,8 +171,6 @@
                                               (|HasCategory| |#3| '(|Finite|))
                                               (|HasCategory| |#3|
                                                              '(|SemiGroup|))
-                                              (|HasCategory| |#3|
-                                                             '(|CancellationAbelianMonoid|))
                                               (|HasCategory| |#3| '(|SemiRng|))
                                               (|HasCategory| |#3| '(|Monoid|))
                                               (|HasCategory| |#3|
@@ -187,7 +185,7 @@
           (QSETREFV $ 8 |#3|)
           (SETF |pv$| (QREFELT $ 3))
           (COND
-           ((|testBitVector| |pv$| 12)
+           ((|testBitVector| |pv$| 11)
             (PROGN
              (QSETREFV $ 12
                        (CONS (|dispatchFunction| |DIRPCAT-;coerce;IS;1|) $))
@@ -243,8 +241,8 @@
               (141 . |size|) (145 . |size|) (|PositiveInteger|) (149 . |index|)
               (154 . |setelt!|) (161 . |directProduct|) (166 . |index|)
               (171 . |elt|) (177 . |lookup|) (182 . |lookup|) (|Fraction| 9)
-              (|OutputForm|) (|Symbol|) (|List| 62) (|List| 13) (|Matrix| 9)
-              (|Record| (|:| |mat| 65) (|:| |vec| (|Vector| 9))))
+              (|OutputForm|) (|List| 64) (|List| 13) (|Symbol|)
+              (|Record| (|:| |mat| 66) (|:| |vec| (|Vector| 9))) (|Matrix| 9))
            '#(|size| 187 |reducedSystem| 191 |lookup| 202 |index| 207
               |dimension| 212 |differentiate| 216 |coerce| 222 |characteristic|
               227 / 231)
@@ -269,8 +267,8 @@
                                                    53 3 39 8 0 9 8 54 1 6 0 39
                                                    55 1 0 0 52 56 2 6 8 0 9 57
                                                    1 8 52 0 58 1 0 52 0 59 0 0
-                                                   13 51 1 0 20 34 35 2 0 41 34
-                                                   42 43 1 0 52 0 59 1 0 0 52
+                                                   13 51 2 0 41 34 42 43 1 0 20
+                                                   34 35 1 0 52 0 59 1 0 0 52
                                                    56 0 0 47 49 2 0 0 0 16 18 1
                                                    0 0 9 12 0 0 13 15 2 0 0 0 8
                                                    46)))))

@@ -158,9 +158,9 @@
 
 (DECLAIM (NOTINLINE |SplittingNode;|)) 
 
-(DEFUN |SplittingNode| (&REST #1=#:G749)
+(DEFUN |SplittingNode| (&REST #1=#:G750)
   (SPROG NIL
-         (PROG (#2=#:G750)
+         (PROG (#2=#:G751)
            (RETURN
             (COND
              ((LETT #2#

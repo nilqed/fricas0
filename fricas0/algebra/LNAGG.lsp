@@ -5,8 +5,8 @@
 
 (DEFPARAMETER |LinearAggregate;AL| 'NIL) 
 
-(DEFUN |LinearAggregate| (#1=#:G696)
-  (LET (#2=#:G697)
+(DEFUN |LinearAggregate| (#1=#:G697)
+  (LET (#2=#:G698)
     (COND
      ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |LinearAggregate;AL|)) (CDR #2#))
      (T
@@ -16,12 +16,12 @@
       #2#)))) 
 
 (DEFUN |LinearAggregate;| (|t#1|)
-  (SPROG ((#1=#:G695 NIL))
+  (SPROG ((#1=#:G696 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
                               (|sublisV|
-                               (PAIR '(#2=#:G693 #3=#:G694)
+                               (PAIR '(#2=#:G694 #3=#:G695)
                                      (LIST '(|Integer|)
                                            '(|UniversalSegment| (|Integer|))))
                                (COND (|LinearAggregate;CAT|)
@@ -52,6 +52,9 @@
                                                   ($ $
                                                    (|UniversalSegment|
                                                     (|Integer|))))
+                                                 T)
+                                                ((|first|
+                                                  ($ $ (|NonNegativeInteger|)))
                                                  T)
                                                 ((|insert|
                                                   ($ |t#1| $ (|Integer|)))
@@ -177,8 +180,8 @@
                                               '((|Integer|) (|Boolean|)
                                                 (|UniversalSegment|
                                                  (|Integer|))
-                                                (|List| $)
-                                                (|NonNegativeInteger|))
+                                                (|NonNegativeInteger|)
+                                                (|List| $))
                                               NIL))
                                             . #4=(|LinearAggregate|))))))
                    . #4#)

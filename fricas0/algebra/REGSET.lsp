@@ -35,7 +35,7 @@
 (SDEFUN |REGSET;roughUnitIdeal?;$B;11| ((|ts| $) ($ |Boolean|)) NIL) 
 
 (SDEFUN |REGSET;coerce;$Of;12| ((|ts| $) ($ |OutputForm|))
-        (SPROG ((#1=#:G762 NIL) (|p| NIL) (#2=#:G761 NIL) (|lp| (|List| P)))
+        (SPROG ((#1=#:G761 NIL) (|p| NIL) (#2=#:G760 NIL) (|lp| (|List| P)))
                (SEQ
                 (LETT |lp| (REVERSE (|REGSET;rep| |ts| $))
                       . #3=(|REGSET;coerce;$Of;12|))
@@ -171,7 +171,7 @@
 
 (SDEFUN |REGSET;removeZero;P$P;22| ((|p| P) (|ts| $) ($ P))
         (SPROG
-         ((|q| (P)) (#1=#:G832 NIL) (#2=#:G822 NIL) (|ts_v-| ($)) (|v| (V)))
+         ((|q| (P)) (#1=#:G835 NIL) (#2=#:G823 NIL) (|ts_v-| ($)) (|v| (V)))
          (SEQ
           (EXIT
            (COND
@@ -201,7 +201,7 @@
                  (EXIT
                   (COND
                    ((SPADCALL |q| (QREFELT $ 57))
-                    (PROGN (LETT #1# |q| . #3#) (GO #4=#:G831)))
+                    (PROGN (LETT #1# |q| . #3#) (GO #4=#:G834)))
                    ((SPADCALL (SPADCALL |q| |ts_v-| (QREFELT $ 58))
                               (QREFELT $ 57))
                     (PROGN
@@ -257,8 +257,8 @@
          (|prim?| |Boolean|) (|sqfr?| |Boolean|) (|extend?| |Boolean|)
          ($ |List| $))
         (SPROG
-         ((#1=#:G854 NIL) (|us| NIL) (#2=#:G853 NIL) (|lts| (|List| $))
-          (#3=#:G852 NIL) (|f| NIL) (#4=#:G851 NIL) (|lsfp| (|List| P))
+         ((#1=#:G857 NIL) (|us| NIL) (#2=#:G856 NIL) (|lts| (|List| $))
+          (#3=#:G855 NIL) (|f| NIL) (#4=#:G854 NIL) (|lsfp| (|List| P))
           (|ts_v+| ($)) (|ts_v-| ($)) (|v| (V)))
          (SEQ
           (LETT |v| (SPADCALL |p| (QREFELT $ 32))
@@ -332,7 +332,7 @@
 
 (SDEFUN |REGSET;extend;P$L;27| ((|p| P) (|ts| $) ($ |List| $))
         (SPROG
-         ((|lts| (|List| $)) (#1=#:G863 NIL) (|us| NIL) (|split| (|List| $))
+         ((|lts| (|List| $)) (#1=#:G866 NIL) (|us| NIL) (|split| (|List| $))
           (|v| (V)))
          (SEQ
           (COND
@@ -467,7 +467,7 @@
         ((|lp| |List| P) (|clos?| |Boolean|) (|info?| |Boolean|)
          (|prep?| |Boolean|) ($ |List| $))
         (SPROG
-         ((|lts| #1=(|List| $)) (#2=#:G901 NIL) (|p| NIL) (|ts| ($))
+         ((|lts| #1=(|List| $)) (#2=#:G905 NIL) (|p| NIL) (|ts| ($))
           (|pp| (|Record| (|:| |val| (|List| P)) (|:| |towers| #1#))))
          (SEQ
           (COND
@@ -541,11 +541,11 @@
         ((|lp| |List| P) (|clos?| |Boolean|) (|info?| |Boolean|)
          ($ |Record| (|:| |val| (|List| P)) (|:| |towers| (|List| $))))
         (SPROG
-         ((#1=#:G954 NIL) (|lp2| (|List| P)) (|lts| (|List| $)) (#2=#:G967 NIL)
-          (|p| NIL) (|lp3| (|List| P)) (#3=#:G966 NIL) (|lp4| (|List| P))
-          (#4=#:G965 NIL) (#5=#:G964 NIL) (#6=#:G963 NIL) (#7=#:G962 NIL)
-          (#8=#:G961 NIL) (#9=#:G960 NIL) (#10=#:G959 NIL) (#11=#:G958 NIL)
-          (#12=#:G957 NIL) (#13=#:G956 NIL) (|lp1| (|List| P)) (#14=#:G955 NIL)
+         ((#1=#:G958 NIL) (|lp2| (|List| P)) (|lts| (|List| $)) (#2=#:G971 NIL)
+          (|p| NIL) (|lp3| (|List| P)) (#3=#:G970 NIL) (|lp4| (|List| P))
+          (#4=#:G969 NIL) (#5=#:G968 NIL) (#6=#:G967 NIL) (#7=#:G966 NIL)
+          (#8=#:G965 NIL) (#9=#:G964 NIL) (#10=#:G963 NIL) (#11=#:G962 NIL)
+          (#12=#:G961 NIL) (#13=#:G960 NIL) (|lp1| (|List| P)) (#14=#:G959 NIL)
           (|ts| ($)))
          (SEQ
           (EXIT
@@ -583,7 +583,7 @@
                              ((|REGSET;largeSystem?| |lp| $)
                               (PROGN
                                (LETT #1# (CONS |lp2| |lts|) . #15#)
-                               (GO #17=#:G953)))
+                               (GO #17=#:G957)))
                              (#16#
                               (SEQ
                                (COND
@@ -850,9 +850,9 @@
 
 (DECLAIM (NOTINLINE |RegularTriangularSet;|)) 
 
-(DEFUN |RegularTriangularSet| (&REST #1=#:G986)
+(DEFUN |RegularTriangularSet| (&REST #1=#:G990)
   (SPROG NIL
-         (PROG (#2=#:G987)
+         (PROG (#2=#:G991)
            (RETURN
             (COND
              ((LETT #2#
@@ -872,7 +872,7 @@
 
 (DEFUN |RegularTriangularSet;| (|#1| |#2| |#3| |#4|)
   (SPROG
-   ((#1=#:G985 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL)
+   ((#1=#:G989 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL)
     (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #2=(|RegularTriangularSet|))
@@ -1003,9 +1003,9 @@
               897 |empty?| 903 |empty| 908 |degree| 912 |count| 917 |copy| 929
               |convert| 934 |construct| 939 |collectUpper| 944 |collectUnder|
               950 |collectQuasiMonic| 956 |collect| 961 |coerce| 967 |coHeight|
-              982 |basicSet| 987 |autoReduced?| 1000 |augment| 1006 |any?| 1030
-              |algebraicVariables| 1036 |algebraicCoefficients?| 1041
-              |algebraic?| 1047 = 1053 |#| 1059)
+              977 |basicSet| 982 |autoReduced?| 995 |augment| 1001 |any?| 1025
+              |algebraicVariables| 1031 |algebraicCoefficients?| 1036
+              |algebraic?| 1042 = 1048 |#| 1054)
            'NIL
            (CONS (|makeByteWordVec2| 2 '(0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 2))
                  (CONS
@@ -1085,11 +1085,10 @@
                                          60 0 1 2 8 60 9 0 1 2 7 60 121 0 1 1 0
                                          0 0 12 1 2 135 0 1 1 0 0 10 20 2 0 0 0
                                          8 42 2 0 0 0 8 44 1 0 0 0 1 2 0 0 0 8
-                                         1 1 0 10 0 40 1 0 10 0 40 1 0 27 0 31
-                                         1 5 60 0 1 2 0 145 10 46 1 3 0 145 10
-                                         121 46 1 2 0 14 0 142 1 2 0 29 10 0 1
-                                         2 0 29 10 29 1 2 0 29 9 0 80 2 0 29 9
-                                         29 1 2 7 14 121 0 1 1 0 139 0 1 2 0 14
-                                         9 0 1 2 0 14 8 0 54 2 0 14 0 0 1 1 7
-                                         60 0 1)))))
+                                         1 1 0 10 0 40 1 0 27 0 31 1 5 60 0 1 2
+                                         0 145 10 46 1 3 0 145 10 121 46 1 2 0
+                                         14 0 142 1 2 0 29 10 0 1 2 0 29 10 29
+                                         1 2 0 29 9 0 80 2 0 29 9 29 1 2 7 14
+                                         121 0 1 1 0 139 0 1 2 0 14 9 0 1 2 0
+                                         14 8 0 54 2 0 14 0 0 1 1 7 60 0 1)))))
            '|lookupComplete|)) 

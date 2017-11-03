@@ -27,7 +27,7 @@
                   (QREFELT $ 14))) 
 
 (SDEFUN |HYPCAT-;cosh;2S;5| ((|x| S) ($ S))
-        (SPROG ((#1=#:G719 NIL) (|e| (S)))
+        (SPROG ((#1=#:G722 NIL) (|e| (S)))
                (SEQ
                 (LETT |e| (SPADCALL |x| (QREFELT $ 18))
                       . #2=(|HYPCAT-;cosh;2S;5|))
@@ -53,7 +53,7 @@
                   (QREFELT $ 14)))))) 
 
 (SDEFUN |HYPCAT-;sinh;2S;6| ((|x| S) ($ S))
-        (SPROG ((#1=#:G724 NIL) (|e| (S)))
+        (SPROG ((#1=#:G727 NIL) (|e| (S)))
                (SEQ
                 (LETT |e| (SPADCALL |x| (QREFELT $ 18))
                       . #2=(|HYPCAT-;sinh;2S;6|))

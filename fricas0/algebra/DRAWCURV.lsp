@@ -81,7 +81,7 @@
           (|yRangeFloat| #1=(|Segment| (|Float|))) (|xRangeFloat| #1#)
           (|yRange| #2=(|Segment| (|Fraction| (|Integer|)))) (|xRange| #2#)
           (|ranges| (|List| (|Segment| (|Fraction| (|Integer|)))))
-          (#3=#:G728 NIL) (|ratRange| #4=(|Union| (|Any|) #5="failed"))
+          (#3=#:G730 NIL) (|ratRange| #4=(|Union| (|Any|) #5="failed"))
           (|floatRange| #4#) (|p| (|Polynomial| (|Integer|))))
          (SEQ
           (LETT |p| (|DRAWCURV;polyEquation| |eq| $)
@@ -180,9 +180,9 @@
 
 (DECLAIM (NOTINLINE |TopLevelDrawFunctionsForAlgebraicCurves;|)) 
 
-(DEFUN |TopLevelDrawFunctionsForAlgebraicCurves| (&REST #1=#:G746)
+(DEFUN |TopLevelDrawFunctionsForAlgebraicCurves| (&REST #1=#:G750)
   (SPROG NIL
-         (PROG (#2=#:G747)
+         (PROG (#2=#:G751)
            (RETURN
             (COND
              ((LETT #2#
@@ -228,7 +228,7 @@
 (MAKEPROP '|TopLevelDrawFunctionsForAlgebraicCurves| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|) (|Float|)
-              (|Segment| 8) (0 . |hi|) (5 . |lo|) (10 . -) (16 . |abs|)
+              (|Segment| 8) (0 . |high|) (5 . |low|) (10 . -) (16 . |abs|)
               (|Integer|) (21 . /) (|Boolean|) (27 . >) (33 . +)
               (39 . |segment|) (|Union| 14 '#1="failed") (45 . |retractIfCan|)
               (|Equation| 7) (50 . |lhs|) (55 . |rhs|) (60 . -)

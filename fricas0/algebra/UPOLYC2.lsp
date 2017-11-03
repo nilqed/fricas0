@@ -79,9 +79,9 @@
 
 (DECLAIM (NOTINLINE |UnivariatePolynomialCategoryFunctions2;|)) 
 
-(DEFUN |UnivariatePolynomialCategoryFunctions2| (&REST #1=#:G729)
+(DEFUN |UnivariatePolynomialCategoryFunctions2| (&REST #1=#:G731)
   (SPROG NIL
-         (PROG (#2=#:G730)
+         (PROG (#2=#:G732)
            (RETURN
             (COND
              ((LETT #2#

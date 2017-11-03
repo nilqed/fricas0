@@ -146,9 +146,9 @@
 
 (DECLAIM (NOTINLINE |FreeMagma;|)) 
 
-(DEFUN |FreeMagma| (#1=#:G741)
+(DEFUN |FreeMagma| (#1=#:G745)
   (SPROG NIL
-         (PROG (#2=#:G742)
+         (PROG (#2=#:G746)
            (RETURN
             (COND
              ((LETT #2#

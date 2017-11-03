@@ -76,8 +76,8 @@
          (|ls1| . #1=(|List| (|Symbol|))) (|ls2| . #1#) ($ |FakePolynomial|))
         (SPROG
          ((|res1| (|FakePolynomial|))
-          (|lm| (|List| (|Polynomial| (|Integer|)))) (#2=#:G738 NIL) (|v| NIL)
-          (#3=#:G737 NIL))
+          (|lm| (|List| (|Polynomial| (|Integer|)))) (#2=#:G741 NIL) (|v| NIL)
+          (#3=#:G740 NIL))
          (SEQ
           (LETT |lm|
                 (PROGN
@@ -121,7 +121,7 @@
          ((|q|
            (|SparseUnivariatePolynomial|
             (|Fraction| (|Polynomial| (|Integer|)))))
-          (#1=#:G743 NIL) (|s| NIL) (#2=#:G744 NIL) (|m| NIL))
+          (#1=#:G746 NIL) (|s| NIL) (#2=#:G747 NIL) (|m| NIL))
          (SEQ
           (SEQ (LETT |m| NIL . #3=(|MEVAL2;m_inverse|)) (LETT #2# |lmu| . #3#)
                (LETT |s| NIL . #3#) (LETT #1# |ls| . #3#) G190
@@ -154,13 +154,13 @@
            (|SparseUnivariatePolynomial|
             (|Fraction| (|Polynomial| (|Integer|)))))
           (|c1| (|Fraction| (|Polynomial| (|Integer|))))
-          (|lcp| #3=(|Fraction| (|Polynomial| (|Integer|)))) (#4=#:G753 NIL)
+          (|lcp| #3=(|Fraction| (|Polynomial| (|Integer|)))) (#4=#:G756 NIL)
           (|dp| #5=(|NonNegativeInteger|))
           (|lmu|
            (|List|
             (|SparseUnivariatePolynomial|
              (|Fraction| (|Polynomial| (|Integer|))))))
-          (#6=#:G762 NIL) (|m| NIL) (#7=#:G763 NIL) (|s| NIL) (#8=#:G761 NIL)
+          (#6=#:G765 NIL) (|m| NIL) (#7=#:G766 NIL) (|s| NIL) (#8=#:G764 NIL)
           (|gu|
            (|SparseUnivariatePolynomial|
             (|Fraction| (|Polynomial| (|Integer|)))))
@@ -254,7 +254,7 @@
 
 (DEFUN |ModularEvaluation2| ()
   (SPROG NIL
-         (PROG (#1=#:G767)
+         (PROG (#1=#:G770)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|ModularEvaluation2|)

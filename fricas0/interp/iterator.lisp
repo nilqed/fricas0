@@ -387,7 +387,7 @@
       (SETQ |res| (|compSeq| |form| |$Integer| |e|))
       (COND (|res| |res|) ('T NIL))))))
  
-; compIterator(it,e) ==
+; compIterator1(it, e) ==
 ;   it is ["IN",x,y] =>
 ;     --these two lines must be in this order, to get "for f in list f"
 ;     --to give  an error message if f is undefined
@@ -473,7 +473,7 @@
 ;     [["|",u.expr],u.env]
 ;   nil
  
-(DEFUN |compIterator| (|it| |e|)
+(DEFUN |compIterator1| (|it| |e|)
   (PROG (|ISTMP#1| |x| |ISTMP#2| |y| |LETTMP#1| |y'| |m| |mOver| |mUnder| |ef|
          |sf| |y''| |res| |m''| |index| |start| |ISTMP#3| |inc| |optFinal|
          |final'| |start'| |inc'| |final| |indexmode| |p| |p'| |u|)
@@ -722,6 +722,98 @@
                             '| is not Boolean value|)))))
         (LIST (LIST '|\|| (CAR |u|)) (CADDR |u|))))
       (#1# NIL)))))
+ 
+; match_segment(i, n) ==
+;     n is ['SEGMENT,a] => ['STEP,i,a,1]
+;     n is ['SEGMENT, a, b] => (b => ['STEP, i, a, 1, b]; ['STEP, i, a, 1])
+;     ['IN, i, n]
+ 
+(DEFUN |match_segment| (|i| |n|)
+  (PROG (|ISTMP#1| |a| |ISTMP#2| |b|)
+    (RETURN
+     (COND
+      ((AND (CONSP |n|) (EQ (CAR |n|) 'SEGMENT)
+            (PROGN
+             (SETQ |ISTMP#1| (CDR |n|))
+             (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
+                  (PROGN (SETQ |a| (CAR |ISTMP#1|)) #1='T))))
+       (LIST 'STEP |i| |a| 1))
+      ((AND (CONSP |n|) (EQ (CAR |n|) 'SEGMENT)
+            (PROGN
+             (SETQ |ISTMP#1| (CDR |n|))
+             (AND (CONSP |ISTMP#1|)
+                  (PROGN
+                   (SETQ |a| (CAR |ISTMP#1|))
+                   (SETQ |ISTMP#2| (CDR |ISTMP#1|))
+                   (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
+                        (PROGN (SETQ |b| (CAR |ISTMP#2|)) #1#))))))
+       (COND (|b| (LIST 'STEP |i| |a| 1 |b|)) (#1# (LIST 'STEP |i| |a| 1))))
+      (#1# (LIST 'IN |i| |n|))))))
+ 
+; compIterator(it, e) ==
+;     it is ["INBY", i, n, inc] =>
+;         u := match_segment(i, n)
+;         u isnt ['STEP, i, a, 1, :r] =>
+;             stackAndThrow ["   You cannot use", "%b", "by", "%d",
+;                       "except for an explicitly indexed sequence."]
+;         compIterator1(['STEP, i, a, inc, :r], e)
+;     it is ["IN", i, n] =>
+;         compIterator1(match_segment(i, n), e)
+;     compIterator1(it, e)
+ 
+(DEFUN |compIterator| (|it| |e|)
+  (PROG (|ISTMP#1| |i| |ISTMP#2| |n| |ISTMP#3| |inc| |u| |a| |r|)
+    (RETURN
+     (COND
+      ((AND (CONSP |it|) (EQ (CAR |it|) 'INBY)
+            (PROGN
+             (SETQ |ISTMP#1| (CDR |it|))
+             (AND (CONSP |ISTMP#1|)
+                  (PROGN
+                   (SETQ |i| (CAR |ISTMP#1|))
+                   (SETQ |ISTMP#2| (CDR |ISTMP#1|))
+                   (AND (CONSP |ISTMP#2|)
+                        (PROGN
+                         (SETQ |n| (CAR |ISTMP#2|))
+                         (SETQ |ISTMP#3| (CDR |ISTMP#2|))
+                         (AND (CONSP |ISTMP#3|) (EQ (CDR |ISTMP#3|) NIL)
+                              (PROGN (SETQ |inc| (CAR |ISTMP#3|)) #1='T))))))))
+       (PROGN
+        (SETQ |u| (|match_segment| |i| |n|))
+        (COND
+         ((NOT
+           (AND (CONSP |u|) (EQ (CAR |u|) 'STEP)
+                (PROGN
+                 (SETQ |ISTMP#1| (CDR |u|))
+                 (AND (CONSP |ISTMP#1|)
+                      (PROGN
+                       (SETQ |i| (CAR |ISTMP#1|))
+                       (SETQ |ISTMP#2| (CDR |ISTMP#1|))
+                       (AND (CONSP |ISTMP#2|)
+                            (PROGN
+                             (SETQ |a| (CAR |ISTMP#2|))
+                             (SETQ |ISTMP#3| (CDR |ISTMP#2|))
+                             (AND (CONSP |ISTMP#3|) (EQUAL (CAR |ISTMP#3|) 1)
+                                  (PROGN
+                                   (SETQ |r| (CDR |ISTMP#3|))
+                                   #1#)))))))))
+          (|stackAndThrow|
+           (LIST '|   You cannot use| '|%b| '|by| '|%d|
+                 '|except for an explicitly indexed sequence.|)))
+         (#1#
+          (|compIterator1| (CONS 'STEP (CONS |i| (CONS |a| (CONS |inc| |r|))))
+           |e|)))))
+      ((AND (CONSP |it|) (EQ (CAR |it|) 'IN)
+            (PROGN
+             (SETQ |ISTMP#1| (CDR |it|))
+             (AND (CONSP |ISTMP#1|)
+                  (PROGN
+                   (SETQ |i| (CAR |ISTMP#1|))
+                   (SETQ |ISTMP#2| (CDR |ISTMP#1|))
+                   (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
+                        (PROGN (SETQ |n| (CAR |ISTMP#2|)) #1#))))))
+       (|compIterator1| (|match_segment| |i| |n|) |e|))
+      (#1# (|compIterator1| |it| |e|))))))
  
 ; modeIsAggregateOf(ListOrVector,m,e) ==
 ;   m is [ =ListOrVector,R] => [m,R]

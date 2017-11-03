@@ -4,16 +4,16 @@
 (DEFPARAMETER |RealClosedField;AL| 'NIL) 
 
 (DEFUN |RealClosedField| ()
-  (LET (#:G706)
+  (LET (#:G708)
     (COND (|RealClosedField;AL|)
           (T (SETQ |RealClosedField;AL| (|RealClosedField;|)))))) 
 
 (DEFUN |RealClosedField;| ()
-  (SPROG ((#1=#:G704 NIL))
+  (SPROG ((#1=#:G706 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
-                    (PAIR '(#2=#:G701 #3=#:G702 #4=#:G703)
+                    (PAIR '(#2=#:G703 #3=#:G704 #4=#:G705)
                           (LIST '(|Fraction| (|Integer|)) '(|Integer|)
                                 '(|Fraction| (|Integer|))))
                     (|Join| (|CharacteristicZero|) (|OrderedRing|)

@@ -29,8 +29,8 @@
 
 (SDEFUN |QFCAT-;reducedSystem;MM;6| ((|m| |Matrix| A) ($ |Matrix| S))
         (SPROG
-         ((#1=#:G719 NIL) (|ell| (A)) (#2=#:G728 NIL) (|j| NIL) (|d| (S))
-          (#3=#:G727 NIL) (|i| NIL) (|ans| (|Matrix| S))
+         ((#1=#:G723 NIL) (|ell| (A)) (#2=#:G732 NIL) (|j| NIL) (|d| (S))
+          (#3=#:G731 NIL) (|i| NIL) (|ans| (|Matrix| S))
           (|ncm| (|NonNegativeInteger|)) (|nrm| (|NonNegativeInteger|)))
          (SEQ (LETT |nrm| (ANROWS |m|) . #4=(|QFCAT-;reducedSystem;MM;6|))
               (LETT |ncm| (ANCOLS |m|) . #4#)

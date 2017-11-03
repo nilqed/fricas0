@@ -20,9 +20,9 @@
 
 (DECLAIM (NOTINLINE |Vector;|)) 
 
-(DEFUN |Vector| (#1=#:G2748)
+(DEFUN |Vector| (#1=#:G2758)
   (SPROG NIL
-         (PROG (#2=#:G2749)
+         (PROG (#2=#:G2759)
            (RETURN
             (COND
              ((LETT #2#
@@ -38,7 +38,7 @@
 
 (DEFUN |Vector;| (|#1|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G2745 NIL) (#2=#:G2746 NIL) (#3=#:G2747 NIL) ($ NIL)
+   ((|pv$| NIL) (#1=#:G2755 NIL) (#2=#:G2756 NIL) (#3=#:G2757 NIL) ($ NIL)
     (|dv$| NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #4=(|Vector|))

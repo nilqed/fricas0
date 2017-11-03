@@ -1,8 +1,8 @@
 
 (SDEFUN |MATCAT2;map;MM1M2;1| ((|f| |Mapping| R2 R1) (|m| M1) ($ M2))
         (SPROG
-         ((#1=#:G700 NIL) (|j| NIL) (#2=#:G701 NIL) (|l| NIL) (#3=#:G698 NIL)
-          (|i| NIL) (#4=#:G699 NIL) (|k| NIL) (|ans| (M2)))
+         ((#1=#:G703 NIL) (|j| NIL) (#2=#:G704 NIL) (|l| NIL) (#3=#:G701 NIL)
+          (|i| NIL) (#4=#:G702 NIL) (|k| NIL) (|ans| (M2)))
          (SEQ
           (LETT |ans|
                 (SPADCALL (SPADCALL |m| (QREFELT $ 15))
@@ -38,9 +38,9 @@
         ((|f| |Mapping| (|Union| R2 "failed") R1) (|m| M1)
          ($ |Union| M2 "failed"))
         (SPROG
-         ((#1=#:G706 NIL) (#2=#:G720 NIL) (|r| (|Union| R2 #3="failed"))
-          (#4=#:G723 NIL) (|j| NIL) (#5=#:G724 NIL) (|l| NIL) (#6=#:G721 NIL)
-          (|i| NIL) (#7=#:G722 NIL) (|k| NIL) (|ans| (M2)))
+         ((#1=#:G709 NIL) (#2=#:G723 NIL) (|r| (|Union| R2 #3="failed"))
+          (#4=#:G726 NIL) (|j| NIL) (#5=#:G727 NIL) (|l| NIL) (#6=#:G724 NIL)
+          (|i| NIL) (#7=#:G725 NIL) (|k| NIL) (|ans| (M2)))
          (SEQ
           (EXIT
            (SEQ
@@ -71,7 +71,7 @@
                            ((SPADCALL |r| (CONS 1 "failed") (QREFELT $ 34))
                             (PROGN
                              (LETT #2# (CONS 1 "failed") . #8#)
-                             (GO #9=#:G719)))
+                             (GO #9=#:G722)))
                            ('T
                             (SPADCALL |ans| |k| |l|
                                       (PROG2 (LETT #1# |r| . #8#)
@@ -92,7 +92,7 @@
 
 (SDEFUN |MATCAT2;reduce;MM12R2;3|
         ((|f| |Mapping| R2 R1 R2) (|m| M1) (|ident| R2) ($ R2))
-        (SPROG ((|s| (R2)) (#1=#:G731 NIL) (|j| NIL) (#2=#:G730 NIL) (|i| NIL))
+        (SPROG ((|s| (R2)) (#1=#:G734 NIL) (|j| NIL) (#2=#:G733 NIL) (|i| NIL))
                (SEQ (LETT |s| |ident| . #3=(|MATCAT2;reduce;MM12R2;3|))
                     (SEQ (LETT |i| (SPADCALL |m| (QREFELT $ 20)) . #3#)
                          (LETT #2# (SPADCALL |m| (QREFELT $ 21)) . #3#) G190
@@ -116,9 +116,9 @@
 
 (DECLAIM (NOTINLINE |MatrixCategoryFunctions2;|)) 
 
-(DEFUN |MatrixCategoryFunctions2| (&REST #1=#:G732)
+(DEFUN |MatrixCategoryFunctions2| (&REST #1=#:G735)
   (SPROG NIL
-         (PROG (#2=#:G733)
+         (PROG (#2=#:G736)
            (RETURN
             (COND
              ((LETT #2#

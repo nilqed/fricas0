@@ -31,9 +31,9 @@
 
 (DECLAIM (NOTINLINE |RationalFunctionIntegration;|)) 
 
-(DEFUN |RationalFunctionIntegration| (#1=#:G707)
+(DEFUN |RationalFunctionIntegration| (#1=#:G708)
   (SPROG NIL
-         (PROG (#2=#:G708)
+         (PROG (#2=#:G709)
            (RETURN
             (COND
              ((LETT #2#

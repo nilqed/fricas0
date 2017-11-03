@@ -11,12 +11,8 @@
   (SPROG ((#1=#:G690 NIL))
          (PROG1
              (LETT #1#
-                   (|Join| (|Rng|) (|SemiRing|) (|LeftModule| '$)
-                           (|unitsKnown|)
-                           (|mkCategory|
-                            '(((|characteristic| ((|NonNegativeInteger|))) T)
-                              ((|coerce| ($ (|Integer|))) T))
-                            NIL '((|Integer|) (|NonNegativeInteger|)) NIL))
+                   (|Join| (|Rng|) (|SemiRing|) (|NonAssociativeRing|)
+                           (|unitsKnown|))
                    |Ring|)
            (SETELT #1# 0 '(|Ring|))))) 
 

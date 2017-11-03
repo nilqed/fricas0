@@ -5,7 +5,7 @@
         (SPADCALL |p| 1 (QREFELT $ 14))) 
 
 (SDEFUN |GALFACTU;norm;UPPiF;3| ((|f| UP) (|p| |PositiveInteger|) ($ F))
-        (SPROG ((|n| (F)) (#1=#:G705 NIL) (|c| NIL))
+        (SPROG ((|n| (F)) (#1=#:G708 NIL) (|c| NIL))
                (SEQ
                 (LETT |n| (|spadConstant| $ 16) . #2=(|GALFACTU;norm;UPPiF;3|))
                 (SEQ (LETT |c| NIL . #2#)
@@ -30,7 +30,7 @@
         (SPADCALL |f| 2 (QREFELT $ 14))) 
 
 (SDEFUN |GALFACTU;infinityNorm;UPF;5| ((|f| UP) ($ F))
-        (SPROG ((|n| (F)) (#1=#:G710 NIL) (|c| NIL))
+        (SPROG ((|n| (F)) (#1=#:G713 NIL) (|c| NIL))
                (SEQ
                 (LETT |n| (|spadConstant| $ 16)
                       . #2=(|GALFACTU;infinityNorm;UPF;5|))
@@ -132,7 +132,7 @@
 (SDEFUN |GALFACTU;rootBound;UPI;8| ((|p| UP) ($ |Integer|))
         (SPROG
          ((|b4| (F)) (|b3| (F)) (|b2| (F)) (|cl| (F)) (|b1| (F)) (|c| (F))
-          (#1=#:G723 NIL) (#2=#:G729 NIL) (|i| NIL) (|lc| (F))
+          (#1=#:G728 NIL) (#2=#:G734 NIL) (|i| NIL) (|lc| (F))
           (|n| (|NonNegativeInteger|)))
          (SEQ
           (LETT |n| (SPADCALL |p| (QREFELT $ 28))
@@ -248,8 +248,8 @@
 (SDEFUN |GALFACTU;bombieriNorm;UPPiF;10|
         ((|f| UP) (|p| |PositiveInteger|) ($ F))
         (SPROG
-         ((|b| (F)) (#1=#:G755 NIL) (|dd| (|Integer|)) (#2=#:G738 NIL)
-          (#3=#:G761 NIL) (|i| NIL) (#4=#:G760 NIL)
+         ((|b| (F)) (#1=#:G760 NIL) (|dd| (|Integer|)) (#2=#:G743 NIL)
+          (#3=#:G766 NIL) (|i| NIL) (#4=#:G765 NIL)
           (|d| (|NonNegativeInteger|)))
          (SEQ
           (EXIT
@@ -261,7 +261,7 @@
                    (SPADCALL (SPADCALL |f| 0 (QREFELT $ 48)) (QREFELT $ 19))
                    (QREFELT $ 20))
                   . #5#)
-            (COND ((ZEROP |d|) (PROGN (LETT #4# |b| . #5#) (GO #6=#:G759)))
+            (COND ((ZEROP |d|) (PROGN (LETT #4# |b| . #5#) (GO #6=#:G764)))
                   ('T (LETT |b| (SPADCALL |b| |p| (QREFELT $ 21)) . #5#)))
             (LETT |b|
                   (SPADCALL |b|
@@ -342,9 +342,9 @@
 
 (DECLAIM (NOTINLINE |GaloisGroupFactorizationUtilities;|)) 
 
-(DEFUN |GaloisGroupFactorizationUtilities| (&REST #1=#:G763)
+(DEFUN |GaloisGroupFactorizationUtilities| (&REST #1=#:G768)
   (SPROG NIL
-         (PROG (#2=#:G764)
+         (PROG (#2=#:G769)
            (RETURN
             (COND
              ((LETT #2#

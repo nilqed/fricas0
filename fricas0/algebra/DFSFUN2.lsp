@@ -139,7 +139,7 @@
 
 (DEFUN |DoubleFloatSpecialFunctions2| ()
   (SPROG NIL
-         (PROG (#1=#:G726)
+         (PROG (#1=#:G730)
            (RETURN
             (COND
              ((LETT #1#

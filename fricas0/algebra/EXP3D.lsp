@@ -3,7 +3,7 @@
         ((|subSp| |SubSpace| 3 (|DoubleFloat|))
          ($ |List| (|NonNegativeInteger|)))
         (SPROG
-         ((|faceIndexList| (|List| (|NonNegativeInteger|))) (#1=#:G710 NIL)
+         ((|faceIndexList| (|List| (|NonNegativeInteger|))) (#1=#:G714 NIL)
           (|poly| NIL))
          (SEQ (LETT |faceIndexList| NIL . #2=(|EXP3D;faceIndex|))
               (SEQ (LETT |poly| NIL . #2#)
@@ -24,8 +24,8 @@
         ((|f1| |TextFile|) (|curves| |List| (|SubSpace| 3 (|DoubleFloat|)))
          ($ |Void|))
         (SPROG
-         ((|s| (|String|)) (#1=#:G718 NIL) (|i| NIL)
-          (|faceIndexList| (|List| (|NonNegativeInteger|))) (#2=#:G717 NIL)
+         ((|s| (|String|)) (#1=#:G723 NIL) (|i| NIL)
+          (|faceIndexList| (|List| (|NonNegativeInteger|))) (#2=#:G722 NIL)
           (|curve| NIL))
          (SEQ (LETT |faceIndexList| NIL . #3=(|EXP3D;writePolygon|))
               (SEQ (LETT |curve| NIL . #3#) (LETT #2# |curves| . #3#) G190
@@ -54,11 +54,11 @@
         ((|f1| |TextFile|) (|curves| |List| (|SubSpace| 3 (|DoubleFloat|)))
          ($ |Void|))
         (SPROG
-         ((|s| (|String|)) (#1=#:G737 NIL) (|j| NIL) (#2=#:G736 NIL) (|i| NIL)
+         ((|s| (|String|)) (#1=#:G742 NIL) (|j| NIL) (#2=#:G741 NIL) (|i| NIL)
           (|colLength| (|NonNegativeInteger|))
           (|rowLength| (|NonNegativeInteger|))
           (|meshIndexArray| (|List| (|List| (|NonNegativeInteger|))))
-          (#3=#:G735 NIL) (|curve| NIL))
+          (#3=#:G740 NIL) (|curve| NIL))
          (SEQ (LETT |meshIndexArray| NIL . #4=(|EXP3D;writeMesh|))
               (SEQ (LETT |curve| NIL . #4#) (LETT #3# |curves| . #4#) G190
                    (COND
@@ -127,8 +127,8 @@
         ((|subSp| |SubSpace| 3 (|DoubleFloat|)) (|filename| |String|)
          ($ |Void|))
         (SPROG
-         ((|curves| (|List| (|SubSpace| 3 (|DoubleFloat|)))) (#1=#:G749 NIL)
-          (|component| NIL) (#2=#:G748 NIL) (|v| NIL)
+         ((|curves| (|List| (|SubSpace| 3 (|DoubleFloat|)))) (#1=#:G754 NIL)
+          (|component| NIL) (#2=#:G753 NIL) (|v| NIL)
           (|verts| (|List| (|Point| (|DoubleFloat|)))) (|f1| (|TextFile|)))
          (SEQ
           (LETT |f1|
@@ -169,33 +169,33 @@
                (SEQ (LETT |curves| (SPADCALL |component| (QREFELT $ 8)) . #3#)
                     (COND
                      ((< (LENGTH |curves|) 2)
-                      (|sayBrightly|
-                       "Can't write point or curve to OBJ file")))
+                      (SPADCALL "Can't write point or curve to OBJ file"
+                                (QREFELT $ 36))))
                     (EXIT
                      (COND
-                      ((SPADCALL (LENGTH |curves|) 1 (QREFELT $ 35))
+                      ((SPADCALL (LENGTH |curves|) 1 (QREFELT $ 38))
                        (SEQ
                         (COND
                          ((EQL
-                           (SPADCALL (SPADCALL |curves| 1 (QREFELT $ 37))
-                                     (QREFELT $ 38))
+                           (SPADCALL (SPADCALL |curves| 1 (QREFELT $ 40))
+                                     (QREFELT $ 41))
                            1)
                           (|EXP3D;writePolygon| |f1| |curves| $)))
                         (EXIT
                          (COND
                           ((SPADCALL
-                            (SPADCALL (SPADCALL |curves| 1 (QREFELT $ 37))
-                                      (QREFELT $ 38))
-                            1 (QREFELT $ 35))
+                            (SPADCALL (SPADCALL |curves| 1 (QREFELT $ 40))
+                                      (QREFELT $ 41))
+                            1 (QREFELT $ 38))
                            (|EXP3D;writeMesh| |f1| |curves| $)))))))))
                (LETT #1# (CDR #1#) . #3#) (GO G190) G191 (EXIT NIL))
-          (EXIT (SPADCALL |f1| (QREFELT $ 39)))))) 
+          (EXIT (SPADCALL |f1| (QREFELT $ 42)))))) 
 
 (DECLAIM (NOTINLINE |Export3D;|)) 
 
 (DEFUN |Export3D| ()
   (SPROG NIL
-         (PROG (#1=#:G751)
+         (PROG (#1=#:G756)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|Export3D|)
@@ -214,7 +214,7 @@
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
           (LETT |dv$| '(|Export3D|) . #1=(|Export3D|))
-          (LETT $ (GETREFV 42) . #1#)
+          (LETT $ (GETREFV 44) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|Export3D| NIL (CONS 1 $))
@@ -231,14 +231,15 @@
               (28 . |#|) (33 . |elt|) (39 . |concat|) (|InputForm|)
               (|DoubleFloat|) (44 . |convert|) (49 . |unparse|) (|FileName|)
               (54 . |coerce|) (59 . |open|) (|List| 31) (65 . |pointData|)
-              (|Point| 23) (70 . |#|) (75 . |elt|) (|Boolean|) (81 . >)
-              (|List| 7) (87 . |elt|) (93 . |numberOfChildren|) (98 . |close!|)
-              (|Void|) |EXP3D;writeObj;SsSV;5|)
-           '#(|writeObj| 103) 'NIL
+              (|Point| 23) (70 . |#|) (75 . |elt|) (|Void|) (|DisplayPackage|)
+              (81 . |say|) (|Boolean|) (86 . >) (|List| 7) (92 . |elt|)
+              (98 . |numberOfChildren|) (103 . |close!|)
+              |EXP3D;writeObj;SsSV;5|)
+           '#(|writeObj| 108) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
-                             (|makeByteWordVec2| 41
+                             (|makeByteWordVec2| 43
                                                  '(1 7 6 0 8 1 7 9 0 10 2 11 0
                                                    0 0 12 2 14 13 0 13 15 2 17
                                                    11 0 16 18 1 11 9 0 19 2 11
@@ -246,9 +247,10 @@
                                                    22 0 24 1 22 13 0 25 1 26 0
                                                    13 27 2 14 0 26 13 28 1 7 29
                                                    0 30 1 31 9 0 32 2 31 23 0
-                                                   16 33 2 9 34 0 0 35 2 36 7 0
-                                                   16 37 1 7 9 0 38 1 14 0 0 39
-                                                   2 0 40 7 13 41)))))
+                                                   16 33 1 35 34 13 36 2 9 37 0
+                                                   0 38 2 39 7 0 16 40 1 7 9 0
+                                                   41 1 14 0 0 42 2 0 34 7 13
+                                                   43)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|Export3D| 'NILADIC T) 

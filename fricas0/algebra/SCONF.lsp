@@ -85,7 +85,7 @@
         (SPADCALL |x| |x| (QREFELT $ 25))) 
 
 (SDEFUN |SCONF;Pnan?;$B;9| ((|p| $) ($ |Boolean|))
-        (SPROG ((#1=#:G727 NIL) (#2=#:G728 NIL) (|i| NIL))
+        (SPROG ((#1=#:G733 NIL) (#2=#:G734 NIL) (|i| NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -96,7 +96,7 @@
                         (EXIT
                          (COND
                           ((|SCONF;nan?| (QAREF1 |p| |i|) $)
-                           (PROGN (LETT #1# 'T . #3#) (GO #4=#:G726))))))
+                           (PROGN (LETT #1# 'T . #3#) (GO #4=#:G732))))))
                        (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191
                        (EXIT NIL))
                   (EXIT NIL)))
@@ -213,7 +213,7 @@
               ('T 0.0))) 
 
 (SDEFUN |SCONF;screenCoords;$L;21| ((|pt| $) ($ |List| (|DoubleFloat|)))
-        (SPROG ((#1=#:G755 NIL))
+        (SPROG ((#1=#:G761 NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -224,7 +224,7 @@
                            (LIST (QAREF1 |pt| 4) (QAREF1 |pt| 8)
                                  (QAREF1 |pt| 16))
                            |SCONF;screenCoords;$L;21|)
-                     (GO #2=#:G754))))
+                     (GO #2=#:G760))))
                   (EXIT (LIST (QAREF1 |pt| 4) (QAREF1 |pt| 8)))))
                 #2# (EXIT #1#)))) 
 
@@ -234,7 +234,7 @@
 (SDEFUN |SCONF;normalisePoint;2$;23| ((|pt| $) ($ $))
         (SPROG
          ((|infin| (|DoubleFloat|)) (|index| (|PositiveInteger|))
-          (#1=#:G767 NIL) (|x| NIL) (|pt2| ($)) (#2=#:G766 NIL)
+          (#1=#:G773 NIL) (|x| NIL) (|pt2| ($)) (#2=#:G772 NIL)
           (|scaleFactor| (|DoubleFloat|)))
          (SEQ
           (EXIT
@@ -255,8 +255,8 @@
                  (SPADCALL
                   (SPADCALL "can't apply normalisePoint to a vector"
                             (QREFELT $ 46))
-                  (QREFELT $ 47))
-                 (EXIT (PROGN (LETT #2# |pt| . #3#) (GO #4=#:G765))))))))
+                  (QREFELT $ 48))
+                 (EXIT (PROGN (LETT #2# |pt| . #3#) (GO #4=#:G771))))))))
             (COND
              ((|less_DF| |scaleFactor|
                          (|minus_DF|
@@ -293,7 +293,7 @@
           #4# (EXIT #2#)))) 
 
 (SDEFUN |SCONF;toPoint;2$;24| ((|p| $) ($ $))
-        (SPROG ((#1=#:G771 NIL) (|i| NIL) (|pt| ($)))
+        (SPROG ((#1=#:G777 NIL) (|i| NIL) (|pt| ($)))
                (SEQ
                 (LETT |pt| (MAKEARR1 (QREFELT $ 9) 0.0)
                       . #2=(|SCONF;toPoint;2$;24|))
@@ -304,7 +304,7 @@
                 (QSETAREF1 |pt| 1 (|minus_DF| 1.0)) (EXIT |pt|)))) 
 
 (SDEFUN |SCONF;toVector;2$;25| ((|p| $) ($ $))
-        (SPROG ((#1=#:G775 NIL) (|i| NIL) (|pt| ($)))
+        (SPROG ((#1=#:G781 NIL) (|i| NIL) (|pt| ($)))
                (SEQ
                 (LETT |pt| (MAKEARR1 (QREFELT $ 9) 0.0)
                       . #2=(|SCONF;toVector;2$;25|))
@@ -336,7 +336,7 @@
 (SDEFUN |SCONF;latex;$S;29| ((|s| $) ($ |String|)) "\\mbox{\\bf Unimplemented}") 
 
 (SDEFUN |SCONF;=;2$B;30| ((|x| $) (|y| $) ($ |Boolean|))
-        (SPROG ((#1=#:G784 NIL) (#2=#:G785 NIL) (|i| NIL))
+        (SPROG ((#1=#:G790 NIL) (#2=#:G791 NIL) (|i| NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -348,7 +348,7 @@
                          (COND
                           ((SPADCALL (QAREF1 |x| |i|) (QAREF1 |y| |i|)
                                      (QREFELT $ 25))
-                           (PROGN (LETT #1# NIL . #3#) (GO #4=#:G783))))))
+                           (PROGN (LETT #1# NIL . #3#) (GO #4=#:G789))))))
                        (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191
                        (EXIT NIL))
                   (EXIT 'T)))
@@ -359,8 +359,8 @@
 
 (SDEFUN |SCONF;coerce;$Of;32| ((|pt| $) ($ |OutputForm|))
         (SPROG
-         ((|eles| (|List| (|OutputForm|))) (#1=#:G791 NIL) (|i| NIL)
-          (#2=#:G790 NIL))
+         ((|eles| (|List| (|OutputForm|))) (#1=#:G797 NIL) (|i| NIL)
+          (#2=#:G796 NIL))
          (SEQ
           (LETT |eles|
                 (PROGN
@@ -380,9 +380,9 @@
 
 (DECLAIM (NOTINLINE |SConformal;|)) 
 
-(DEFUN |SConformal| (#1=#:G792)
+(DEFUN |SConformal| (#1=#:G798)
   (SPROG NIL
-         (PROG (#2=#:G793)
+         (PROG (#2=#:G799)
            (RETURN
             (COND
              ((LETT #2#
@@ -428,13 +428,14 @@
               |SCONF;screenCoordX;$Df;18| |SCONF;screenCoordY;$Df;19|
               |SCONF;screenCoordZ;$Df;20| (|List| 14)
               |SCONF;screenCoords;$L;21| (41 . |entries|)
-              |SCONF;extendedCoords;$L;22| (|Void|) (|OutputForm|)
-              (46 . |print|) (51 . |coerce|) |SCONF;normalisePoint;2$;23|
-              |SCONF;toPoint;2$;24| |SCONF;toVector;2$;25|
-              |SCONF;isPoint?;$B;26| |SCONF;isVector?;$B;27| (|SingleInteger|)
-              |SCONF;hash;$Si;28| (|String|) |SCONF;latex;$S;29|
-              |SCONF;=;2$B;30| |SCONF;~=;2$B;31| (56 . |coerce|) (|List| $)
-              (61 . |paren|) |SCONF;coerce;$Of;32| (|HashState|))
+              |SCONF;extendedCoords;$L;22| (|String|) (|OutputForm|)
+              (46 . |message|) (|Void|) (51 . |print|)
+              |SCONF;normalisePoint;2$;23| |SCONF;toPoint;2$;24|
+              |SCONF;toVector;2$;25| |SCONF;isPoint?;$B;26|
+              |SCONF;isVector?;$B;27| (|SingleInteger|) |SCONF;hash;$Si;28|
+              |SCONF;latex;$S;29| |SCONF;=;2$B;30| |SCONF;~=;2$B;31|
+              (56 . |coerce|) (|List| $) (61 . |paren|) |SCONF;coerce;$Of;32|
+              (|HashState|))
            '#(~= 66 |unitVector| 72 |toVector| 77 |toPoint| 82 |svec| 87 |spnt|
               100 |sivec| 113 |sipnt| 126 |screenCoords| 139 |screenCoordZ| 144
               |screenCoordY| 149 |screenCoordX| 154 |perpendicular| 159
@@ -453,19 +454,19 @@
                                             '(2 7 0 0 7 8 3 12 0 11 11 7 13 1
                                               12 14 0 15 2 7 17 0 0 18 2 14 17
                                               0 0 25 1 14 0 0 27 2 14 17 0 0 35
-                                              1 10 40 0 42 1 45 44 0 46 1 44 45
-                                              0 47 1 14 45 0 59 1 45 0 60 61 2
-                                              0 17 0 0 58 1 0 0 0 28 1 0 0 0 50
-                                              1 0 0 0 49 3 0 0 14 14 14 21 2 0
+                                              1 10 40 0 42 1 45 0 44 46 1 45 47
+                                              0 48 1 14 45 0 59 1 45 0 60 61 2
+                                              0 17 0 0 58 1 0 0 0 28 1 0 0 0 51
+                                              1 0 0 0 50 3 0 0 14 14 14 21 2 0
                                               0 14 14 20 3 0 0 14 14 14 19 2 0
                                               0 14 14 16 3 0 0 11 11 11 1 2 0 0
                                               11 11 1 3 0 0 11 11 11 1 2 0 0 11
                                               11 1 1 0 40 0 41 1 0 14 0 39 1 0
                                               14 0 38 1 0 14 0 37 2 0 0 0 0 31
-                                              2 0 14 0 0 30 1 0 0 0 48 2 0 0 0
-                                              0 22 2 0 0 0 0 23 1 0 55 0 56 1 0
-                                              17 0 52 1 0 17 0 51 3 0 17 0 0 0
-                                              36 2 0 63 63 0 1 1 0 53 0 54 1 0
+                                              2 0 14 0 0 30 1 0 0 0 49 2 0 0 0
+                                              0 22 2 0 0 0 0 23 1 0 44 0 56 1 0
+                                              17 0 53 1 0 17 0 52 3 0 17 0 0 0
+                                              36 2 0 63 63 0 1 1 0 54 0 55 1 0
                                               40 0 43 2 0 14 0 0 29 2 0 14 0 0
                                               1 1 0 7 0 24 2 0 14 0 0 1 1 0 45
                                               0 62 1 0 17 0 26 2 0 17 0 0 57 2

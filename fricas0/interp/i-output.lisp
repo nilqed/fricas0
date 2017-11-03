@@ -408,7 +408,6 @@
 ;   x is ['brace, :l]    =>
 ;     ['BRACE,  ['AGGLST,:[outputTran y for y in l]]]
 ;   x is ["return", l] => ["return", outputTran l]
-;   x is ["return", ., :l] => ["return", :outputTran l]
 ; 
 ;   x is [["$elt",domain,"float"], x, y, z] and (domain = $DoubleFloat or
 ;     domain is ['Float]) and INTEGERP x and INTEGERP y and INTEGERP z and
@@ -548,12 +547,6 @@
                   (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
                        (PROGN (SETQ |l| (CAR |ISTMP#1|)) #1#))))
             (LIST '|return| (|outputTran| |l|)))
-           ((AND (CONSP |x|) (EQ (CAR |x|) '|return|)
-                 (PROGN
-                  (SETQ |ISTMP#1| (CDR |x|))
-                  (AND (CONSP |ISTMP#1|)
-                       (PROGN (SETQ |l| (CDR |ISTMP#1|)) #1#))))
-            (CONS '|return| (|outputTran| |l|)))
            ((AND (CONSP |x|)
                  (PROGN
                   (SETQ |ISTMP#1| (CAR |x|))
@@ -1062,7 +1055,7 @@
 ;       d:= APP(opString,x,y,d)
 ;       x:= x + #opString
 ;     [d,x]:= appInfixArg(arg,x,y,d,rightPrec,"left",nil) --app in a right arg
-;     wasSimple:= atom arg and not NUMBERP arg or isRationalNumber arg
+;     wasSimple := atom arg and not NUMBERP arg
 ;     wasQuotient:= isQuotient op
 ;     wasNumber:= NUMBERP arg
 ;     lastOp := op
@@ -1093,9 +1086,7 @@
                      (|appInfixArg| |arg| |x| |y| |d| |rightPrec| '|left| NIL))
              (SETQ |d| (CAR |LETTMP#1|))
              (SETQ |x| (CADR |LETTMP#1|))
-             (SETQ |wasSimple|
-                     (OR (AND (ATOM |arg|) (NULL (NUMBERP |arg|)))
-                         (|isRationalNumber| |arg|)))
+             (SETQ |wasSimple| (AND (ATOM |arg|) (NULL (NUMBERP |arg|))))
              (SETQ |wasQuotient| (|isQuotient| |op|))
              (SETQ |wasNumber| (NUMBERP |arg|))
              (SETQ |lastOp| |op|)
@@ -1115,7 +1106,7 @@
 ;       w:= w + #opString
 ;     if infixArgNeedsParens(arg, rightPrec, "left") then w:= w+2
 ;     w:= w+WIDTH arg
-;     wasSimple:= atom arg and not NUMBERP arg --or isRationalNumber arg
+;     wasSimple := atom arg and not NUMBERP arg
 ;     wasQuotient:= isQuotient op
 ;     wasNumber:= NUMBERP arg
 ;     firstTime:= nil
@@ -1164,7 +1155,7 @@
 ;       d:= APP(BLANK,x,y,d)
 ;       x:= x+1
 ;     [d,x]:= appInfixArg(arg,x,y,d,rightPrec,"left",nil) --app in a right arg
-;     wasSimple:= atom arg and not NUMBERP arg or isRationalNumber arg
+;     wasSimple := atom arg and not NUMBERP arg or keyp arg = "OVERBAR"
 ;     wasQuotient:= isQuotient op
 ;     wasNumber:= NUMBERP arg
 ;     lastOp := op
@@ -1200,7 +1191,7 @@
              (SETQ |x| (CADR |LETTMP#1|))
              (SETQ |wasSimple|
                      (OR (AND (ATOM |arg|) (NULL (NUMBERP |arg|)))
-                         (|isRationalNumber| |arg|)))
+                         (EQ (|keyp| |arg|) 'OVERBAR)))
              (SETQ |wasQuotient| (|isQuotient| |op|))
              (SETQ |wasNumber| (NUMBERP |arg|))
              (SETQ |lastOp| |op|)
@@ -1532,27 +1523,20 @@
          (COND ((|exptNeedsPren| |a|) 2) ('T 0)))))))
  
 ; needStar(wasSimple,wasQuotient,wasNumber,cur,op) ==
-;   wasQuotient or isQuotient op => true
+;   wasNumber or wasQuotient or isQuotient op => true
 ;   wasSimple =>
-;     atom cur or keyp cur="SUB" or isRationalNumber cur or op="**" or op = "^" or
-;       (atom op and not NUMBERP op and not GETL(op,"APP"))
-;   wasNumber =>
-;     NUMBERP(cur) or isRationalNumber cur or
-;         ((op="**" or op ="^") and NUMBERP(CADR cur))
+;     atom cur or keyp cur="SUB" or keyp cur = "OVERBAR" or op="**" or
+;       op = "^" or (atom op and not NUMBERP op and not GETL(op,"APP"))
  
 (DEFUN |needStar| (|wasSimple| |wasQuotient| |wasNumber| |cur| |op|)
   (PROG ()
     (RETURN
-     (COND ((OR |wasQuotient| (|isQuotient| |op|)) T)
+     (COND ((OR |wasNumber| |wasQuotient| (|isQuotient| |op|)) T)
            (|wasSimple|
             (OR (ATOM |cur|) (EQ (|keyp| |cur|) 'SUB)
-                (|isRationalNumber| |cur|) (EQ |op| '**) (EQ |op| '^)
+                (EQ (|keyp| |cur|) 'OVERBAR) (EQ |op| '**) (EQ |op| '^)
                 (AND (ATOM |op|) (NULL (NUMBERP |op|))
-                     (NULL (GETL |op| 'APP)))))
-           (|wasNumber|
-            (OR (NUMBERP |cur|) (|isRationalNumber| |cur|)
-                (AND (OR (EQ |op| '**) (EQ |op| '^))
-                     (NUMBERP (CADR |cur|)))))))))
+                     (NULL (GETL |op| 'APP)))))))))
  
 ; isQuotient op ==
 ;   op="/" or op="OVER"
@@ -1565,19 +1549,22 @@
 ;   w:= 0
 ;   for arg in rest u repeat
 ;     op:= keyp arg
-;     if not firstTime and needStar(wasSimple,wasQuotient,wasNumber,arg,op) then
+;     if not firstTime and (needBlankForRoot(lastOp,op,arg) or
+;        needStar(wasSimple,wasQuotient,wasNumber,arg,op) or
+;         (wasNumber and op = 'ROOT and subspan arg = 1)) then
 ;       w:= w+1
 ;     if infixArgNeedsParens(arg, rightPrec, "left") then w:= w+2
 ;     w:= w+WIDTH arg
-;     wasSimple:= atom arg and not NUMBERP arg --or isRationalNumber arg
+;     wasSimple := atom arg and not NUMBERP arg or keyp arg = "OVERBAR"
 ;     wasQuotient:= isQuotient op
 ;     wasNumber:= NUMBERP arg
+;     lastOp := op
 ;     firstTime:= nil
 ;   w
  
 (DEFUN |timesWidth| (|u|)
-  (PROG (|rightPrec| |firstTime| |w| |op| |wasSimple| |wasQuotient|
-         |wasNumber|)
+  (PROG (|rightPrec| |firstTime| |w| |op| |wasSimple| |wasQuotient| |wasNumber|
+         |lastOp|)
     (RETURN
      (PROGN
       (SETQ |rightPrec| (|getOpBindingPower| '* '|Led| '|right|))
@@ -1593,16 +1580,22 @@
              (SETQ |op| (|keyp| |arg|))
              (COND
               ((AND (NULL |firstTime|)
-                    (|needStar| |wasSimple| |wasQuotient| |wasNumber| |arg|
-                     |op|))
+                    (OR (|needBlankForRoot| |lastOp| |op| |arg|)
+                        (|needStar| |wasSimple| |wasQuotient| |wasNumber| |arg|
+                         |op|)
+                        (AND |wasNumber| (EQ |op| 'ROOT)
+                             (EQL (|subspan| |arg|) 1))))
                (SETQ |w| (+ |w| 1))))
              (COND
               ((|infixArgNeedsParens| |arg| |rightPrec| '|left|)
                (SETQ |w| (+ |w| 2))))
              (SETQ |w| (+ |w| (WIDTH |arg|)))
-             (SETQ |wasSimple| (AND (ATOM |arg|) (NULL (NUMBERP |arg|))))
+             (SETQ |wasSimple|
+                     (OR (AND (ATOM |arg|) (NULL (NUMBERP |arg|)))
+                         (EQ (|keyp| |arg|) 'OVERBAR)))
              (SETQ |wasQuotient| (|isQuotient| |op|))
              (SETQ |wasNumber| (NUMBERP |arg|))
+             (SETQ |lastOp| |op|)
              (SETQ |firstTime| NIL))))
           (SETQ |bfVar#48| (CDR |bfVar#48|))))
        (CDR |u|) NIL)
@@ -1915,7 +1908,7 @@
       (|appChar| (|specialChar| '|rbrc|) (+ (+ |x| 1) (WIDTH |u|)) |y| |d|)))))
  
 ; aggWidth u ==
-;   rest u is [a,:l] => WIDTH a + +/[1+WIDTH x for x in l]
+;   rest u is [a,:l] => WIDTH a + +/[2+WIDTH x for x in l]
 ;   0
  
 (DEFUN |aggWidth| (|u|)
@@ -1935,7 +1928,7 @@
               (COND
                ((OR (ATOM |bfVar#52|) (PROGN (SETQ |x| (CAR |bfVar#52|)) NIL))
                 (RETURN |bfVar#53|))
-               (#1# (SETQ |bfVar#53| (+ |bfVar#53| (+ 1 (WIDTH |x|))))))
+               (#1# (SETQ |bfVar#53| (+ |bfVar#53| (+ 2 (WIDTH |x|))))))
               (SETQ |bfVar#52| (CDR |bfVar#52|))))
            0 |l| NIL)))
       (#1# 0)))))
@@ -1948,10 +1941,10 @@
  
 (DEFUN |aggSuper| (|u|) (PROG () (RETURN (|superspan| (CDR |u|)))))
  
-; aggApp(u,x,y,d) == aggregateApp(rest u,x,y,d,",")
+; aggApp(u,x,y,d) == aggregateApp(rest u,x,y,d,", ")
  
 (DEFUN |aggApp| (|u| |x| |y| |d|)
-  (PROG () (RETURN (|aggregateApp| (CDR |u|) |x| |y| |d| '|,|))))
+  (PROG () (RETURN (|aggregateApp| (CDR |u|) |x| |y| |d| '|, |))))
  
 ; aggregateApp(u,x,y,d,s) ==
 ;   if u is [a,:l] then
@@ -1959,8 +1952,8 @@
 ;     x:= x+WIDTH a
 ;     for b in l repeat
 ;       d:= APP(s,x,y,d)
-;       d:= APP(b,x+1,y,d)
-;       x:= x+1+WIDTH b
+;       d:= APP(b,x+WIDTH s,y,d)
+;       x:= x+WIDTH s+WIDTH b
 ;   d
  
 (DEFUN |aggregateApp| (|u| |x| |y| |d| |s|)
@@ -1979,8 +1972,8 @@
              (#1#
               (PROGN
                (SETQ |d| (APP |s| |x| |y| |d|))
-               (SETQ |d| (APP |b| (+ |x| 1) |y| |d|))
-               (SETQ |x| (+ (+ |x| 1) (WIDTH |b|))))))
+               (SETQ |d| (APP |b| (+ |x| (WIDTH |s|)) |y| |d|))
+               (SETQ |x| (+ (+ |x| (WIDTH |s|)) (WIDTH |b|))))))
             (SETQ |bfVar#54| (CDR |bfVar#54|))))
          |l| NIL)))
       |d|))))
@@ -2082,16 +2075,16 @@
                                   (+ (LOG10 (FLOAT |su| 1.0))
                                      (* 0.30102999566398125
                                         (FLOAT (- |k| 54) 1.0))))))
-                   (SETQ |l10i| (FLOOR (+ |l10| 1.e-9)))
+                   (SETQ |l10i| (FLOOR (+ |l10| 1.0e-9)))
                    (COND
                     ((< |l10i| 10000)
                      (COND
-                      ((< |l10i| (- |l10| 1.e-9)) (+ (+ 1 |negative|) |l10i|))
+                      ((< |l10i| (- |l10| 1.0e-9)) (+ (+ 1 |negative|) |l10i|))
                       ((< |u| (EXPT 10 |l10i|)) (+ |negative| |l10i|))
                       (#1# (+ (+ 1 |negative|) |l10i|))))
                     (#1#
                      (+ (+ 1 |negative|)
-                        (FLOOR (* |l10| (+ 1.0 1.e-12))))))))))))))
+                        (FLOOR (* |l10| (+ 1.0 1.0e-12))))))))))))))
            ((ATOM |u|) (LENGTH (|atom2String| |u|)))
            ((PROGN
              (SETQ |ISTMP#1| (|putWidth| |u|))
@@ -2220,10 +2213,11 @@
 ; opWidth(op,has2Arguments) ==
 ;   op = "EQUATNUM" => 4
 ;   NUMBERP op => 2+SIZE STRINGIMAGE op
-;   null has2Arguments =>
-;     a:= GETL(op,"PREFIXOP") => SIZE a
-;     2+SIZE PNAME op
-;   a:= GETL(op,"INFIXOP") => SIZE a
+;   if null has2Arguments then
+;     a := GETL(op, "PREFIXOP") => return SIZE a
+;   else
+;     a := GETL(op, "INFIXOP") => return SIZE a
+;   STRINGP op => 2 + # op
 ;   2+SIZE PNAME op
  
 (DEFUN |opWidth| (|op| |has2Arguments|)
@@ -2231,11 +2225,16 @@
     (RETURN
      (COND ((EQ |op| 'EQUATNUM) 4)
            ((NUMBERP |op|) (+ 2 (SIZE (STRINGIMAGE |op|))))
-           ((NULL |has2Arguments|)
-            (COND ((SETQ |a| (GETL |op| 'PREFIXOP)) (SIZE |a|))
-                  (#1='T (+ 2 (SIZE (PNAME |op|))))))
-           ((SETQ |a| (GETL |op| 'INFIXOP)) (SIZE |a|))
-           (#1# (+ 2 (SIZE (PNAME |op|))))))))
+           (#1='T
+            (PROGN
+             (COND
+              ((NULL |has2Arguments|)
+               (COND
+                ((SETQ |a| (GETL |op| 'PREFIXOP))
+                 (IDENTITY (RETURN (SIZE |a|))))))
+              ((SETQ |a| (GETL |op| 'INFIXOP)) (IDENTITY (RETURN (SIZE |a|)))))
+             (COND ((STRINGP |op|) (+ 2 (LENGTH |op|)))
+                   (#1# (+ 2 (SIZE (PNAME |op|)))))))))))
  
 ; matrixBorder(x,y1,y2,d,leftOrRight) ==
 ;   y1 = y2 =>
@@ -2289,10 +2288,6 @@
             (SETQ |y| (+ |y| 1))))
          |y1|)
         |d|))))))
- 
-; isRationalNumber x == nil
- 
-(DEFUN |isRationalNumber| (|x|) (PROG () (RETURN NIL)))
  
 ; widthSC u == 10000
  

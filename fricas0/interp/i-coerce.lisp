@@ -4060,7 +4060,7 @@
 ;       (val = $coerceFailure) => NIL
 ;       objNewWrap(val,m2)
 ;     env := fun
-;     code := ['failCheck, ['SPADCALL, x, env]]
+;     code := ['SPADCALL, x, env]
 ; --  tar is ['Union,:.] => objNew(['failCheck,code],m2)
 ;     objNew(code,m2)
 ;   NIL
@@ -4139,9 +4139,7 @@
                           (#1#
                            (PROGN
                             (SETQ |env| |fun|)
-                            (SETQ |code|
-                                    (LIST '|failCheck|
-                                          (LIST 'SPADCALL |x| |env|)))
+                            (SETQ |code| (LIST 'SPADCALL |x| |env|))
                             (|objNew| |code| |m2|))))))
                   (#1# NIL))))))))))))
  

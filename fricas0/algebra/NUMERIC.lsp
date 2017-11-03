@@ -577,9 +577,9 @@
 
 (DECLAIM (NOTINLINE |Numeric;|)) 
 
-(DEFUN |Numeric| (#1=#:G938)
+(DEFUN |Numeric| (#1=#:G943)
   (SPROG NIL
-         (PROG (#2=#:G939)
+         (PROG (#2=#:G944)
            (RETURN
             (COND
              ((LETT #2#
@@ -594,7 +594,7 @@
                 (COND ((NOT #2#) (HREM |$ConstructorCache| '|Numeric|)))))))))) 
 
 (DEFUN |Numeric;| (|#1|)
-  (SPROG ((|pv$| NIL) (#1=#:G937 NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
+  (SPROG ((|pv$| NIL) (#1=#:G942 NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
           (LETT DV$1 (|devaluate| |#1|) . #2=(|Numeric|))
           (LETT |dv$| (LIST '|Numeric| DV$1) . #2#)

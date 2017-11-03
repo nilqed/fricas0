@@ -10,7 +10,10 @@
 (DEFUN |SemiRng;| ()
   (SPROG ((#1=#:G690 NIL))
          (PROG1
-             (LETT #1# (|Join| (|AbelianSemiGroup|) (|SemiGroup|)) |SemiRng|)
+             (LETT #1#
+                   (|Join| (|NonAssociativeSemiRng|) (|BiModule| '$ '$)
+                           (|SemiGroup|))
+                   |SemiRng|)
            (SETELT #1# 0 '(|SemiRng|))))) 
 
 (MAKEPROP '|SemiRng| 'NILADIC T) 

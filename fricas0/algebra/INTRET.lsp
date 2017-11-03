@@ -10,9 +10,9 @@
 
 (DECLAIM (NOTINLINE |IntegerRetractions;|)) 
 
-(DEFUN |IntegerRetractions| (#1=#:G701)
+(DEFUN |IntegerRetractions| (#1=#:G702)
   (SPROG NIL
-         (PROG (#2=#:G702)
+         (PROG (#2=#:G703)
            (RETURN
             (COND
              ((LETT #2#

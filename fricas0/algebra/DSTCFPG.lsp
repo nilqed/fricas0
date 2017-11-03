@@ -81,9 +81,9 @@
 
 (DECLAIM (NOTINLINE |DistributionContinuedFractionPackage;|)) 
 
-(DEFUN |DistributionContinuedFractionPackage| (&REST #1=#:G711)
+(DEFUN |DistributionContinuedFractionPackage| (&REST #1=#:G714)
   (SPROG NIL
-         (PROG (#2=#:G712)
+         (PROG (#2=#:G715)
            (RETURN
             (COND
              ((LETT #2#
@@ -107,7 +107,7 @@
 
 (DEFUN |DistributionContinuedFractionPackage;| (|#1| |#2|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G710 NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
+   ((|pv$| NIL) (#1=#:G713 NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|)
           . #2=(|DistributionContinuedFractionPackage|))
@@ -149,18 +149,19 @@
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
               (|Record| (|:| |an| 20) (|:| |bn| 20)) (|Distribution| 6)
               (0 . |jacobiParameters|) (5 . |Zero|)
-              (|UnivariatePolynomial| 7 6) (9 . |Zero|) (|NonNegativeInteger|)
-              (13 . |Zero|) (17 . |monomial|) (23 . -) (|Stream| 12)
-              (|Mapping| 12 6) (|Stream| 6) (|StreamFunctions2| 6 12)
-              (29 . |map|) (35 . -) (40 . |One|) (44 . |One|) (48 . |cons|)
-              (|ContinuedFraction| 12) (54 . |continuedFraction|)
-              (61 . |JContinuedFraction|)
+              (|UnivariatePolynomial| (NRTEVAL (QREFELT $ 7)) 6) (9 . |Zero|)
+              (|NonNegativeInteger|) (13 . |Zero|) (17 . |monomial|) (23 . -)
+              (|Stream| 12) (|Mapping| 12 6) (|Stream| 6)
+              (|StreamFunctions2| 6 12) (29 . |map|) (35 . -) (40 . |One|)
+              (44 . |One|) (48 . |cons|) (|ContinuedFraction| 12)
+              (54 . |continuedFraction|) (61 . |JContinuedFraction|)
               (|Record| (|:| |an| 39) (|:| |bn| 39)) (67 . |jacobiParameters|)
-              (|UnivariatePolynomial| 7 34) (72 . |Zero|) (|Fraction| 6)
-              (76 . |monomial|) (82 . -) (|Stream| 32) (|Mapping| 32 34)
-              (|Stream| 34) (|StreamFunctions2| 34 32) (88 . |map|) (94 . -)
-              (99 . |One|) (103 . |cons|) (|ContinuedFraction| 32)
-              (109 . |continuedFraction|) (116 . |JContinuedFraction|))
+              (|UnivariatePolynomial| (NRTEVAL (QREFELT $ 7)) 34) (72 . |Zero|)
+              (|Fraction| 6) (76 . |monomial|) (82 . -) (|Stream| 32)
+              (|Mapping| 32 34) (|Stream| 34) (|StreamFunctions2| 34 32)
+              (88 . |map|) (94 . -) (99 . |One|) (103 . |cons|)
+              (|ContinuedFraction| 32) (109 . |continuedFraction|)
+              (116 . |JContinuedFraction|))
            '#(|JContinuedFraction| 122) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()

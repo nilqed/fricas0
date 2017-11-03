@@ -123,26 +123,26 @@
 
 (SDEFUN |MOEBIUS;coerce;$Of;17| ((|t| $) ($ |OutputForm|))
         (SPROG ((|den| #1=(|OutputForm|)) (|num| #1#) (|var| (|OutputForm|)))
-               (SEQ (LETT |var| "%x" . #2=(|MOEBIUS;coerce;$Of;17|))
-                    (LETT |num|
-                          (SPADCALL
-                           (SPADCALL
-                            (SPADCALL (|MOEBIUS;a| |t| $) (QREFELT $ 34)) |var|
-                            (QREFELT $ 35))
-                           (SPADCALL (|MOEBIUS;b| |t| $) (QREFELT $ 34))
-                           (QREFELT $ 36))
-                          . #2#)
-                    (LETT |den|
-                          (SPADCALL
-                           (SPADCALL
-                            (SPADCALL (|MOEBIUS;c| |t| $) (QREFELT $ 34)) |var|
-                            (QREFELT $ 35))
-                           (SPADCALL (|MOEBIUS;d| |t| $) (QREFELT $ 34))
-                           (QREFELT $ 36))
-                          . #2#)
-                    (EXIT
-                     (SPADCALL |var| (SPADCALL |num| |den| (QREFELT $ 37))
-                               (QREFELT $ 38)))))) 
+               (SEQ
+                (LETT |var| (SPADCALL "%x" (QREFELT $ 35))
+                      . #2=(|MOEBIUS;coerce;$Of;17|))
+                (LETT |num|
+                      (SPADCALL
+                       (SPADCALL (SPADCALL (|MOEBIUS;a| |t| $) (QREFELT $ 36))
+                                 |var| (QREFELT $ 37))
+                       (SPADCALL (|MOEBIUS;b| |t| $) (QREFELT $ 36))
+                       (QREFELT $ 38))
+                      . #2#)
+                (LETT |den|
+                      (SPADCALL
+                       (SPADCALL (SPADCALL (|MOEBIUS;c| |t| $) (QREFELT $ 36))
+                                 |var| (QREFELT $ 37))
+                       (SPADCALL (|MOEBIUS;d| |t| $) (QREFELT $ 36))
+                       (QREFELT $ 38))
+                      . #2#)
+                (EXIT
+                 (SPADCALL |var| (SPADCALL |num| |den| (QREFELT $ 39))
+                           (QREFELT $ 40)))))) 
 
 (SDEFUN |MOEBIUS;proportional?|
         ((|list1| |List| F) (|list2| |List| F) ($ |Boolean|))
@@ -164,11 +164,11 @@
                       (SPADCALL
                        (SPADCALL
                         (CONS #'|MOEBIUS;proportional?!0| (VECTOR $ |x1|))
-                        |list1| (QREFELT $ 42))
+                        |list1| (QREFELT $ 44))
                        (SPADCALL
                         (CONS #'|MOEBIUS;proportional?!1| (VECTOR $ |x2|))
-                        |list2| (QREFELT $ 42))
-                       (QREFELT $ 43)))))) 
+                        |list2| (QREFELT $ 44))
+                       (QREFELT $ 45)))))) 
 
 (SDEFUN |MOEBIUS;proportional?!1| ((|f1| NIL) ($$ NIL))
         (PROG (|x2| $)
@@ -197,9 +197,9 @@
 
 (DECLAIM (NOTINLINE |MoebiusTransform;|)) 
 
-(DEFUN |MoebiusTransform| (#1=#:G758)
+(DEFUN |MoebiusTransform| (#1=#:G763)
   (SPROG NIL
-         (PROG (#2=#:G759)
+         (PROG (#2=#:G764)
            (RETURN
             (COND
              ((LETT #2#
@@ -221,7 +221,7 @@
          (PROGN
           (LETT DV$1 (|devaluate| |#1|) . #1=(|MoebiusTransform|))
           (LETT |dv$| (LIST '|MoebiusTransform| DV$1) . #1#)
-          (LETT $ (GETREFV 52) . #1#)
+          (LETT $ (GETREFV 53) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|MoebiusTransform| (LIST DV$1)
@@ -247,38 +247,42 @@
               |MOEBIUS;eval;$2F;15| (|Union| 6 '"failed")
               (|OnePointCompletion| 6) (31 . |retractIfCan|) (36 . |coerce|)
               (|Boolean|) (41 . |zero?|) (46 . |infinity|)
-              |MOEBIUS;eval;$2Opc;16| (|OutputForm|) (50 . |coerce|) (55 . *)
-              (61 . +) (67 . /) (73 . |rarrow|) |MOEBIUS;coerce;$Of;17|
-              (|Mapping| 6 6) (|List| 6) (79 . |map|) (85 . =)
-              |MOEBIUS;=;2$B;19| (|Integer|) (|NonNegativeInteger|)
-              (|Union| $ '"failed") (|PositiveInteger|) (|HashState|)
-              (|String|) (|SingleInteger|))
-           '#(~= 91 |shift| 97 |scale| 108 |sample| 119 |recip| 123 |one?| 137
-              |moebius| 142 |latex| 150 |inv| 155 |hashUpdate!| 160 |hash| 166
-              |eval| 171 |conjugate| 183 |commutator| 189 |coerce| 195 ^ 200
-              |One| 218 = 222 / 228 * 234)
+              |MOEBIUS;eval;$2Opc;16| (|String|) (|OutputForm|)
+              (50 . |message|) (55 . |coerce|) (60 . *) (66 . +) (72 . /)
+              (78 . |rarrow|) |MOEBIUS;coerce;$Of;17| (|Mapping| 6 6)
+              (|List| 6) (84 . |map|) (90 . =) |MOEBIUS;=;2$B;19| (|Integer|)
+              (|NonNegativeInteger|) (|Union| $ '"failed") (|PositiveInteger|)
+              (|SingleInteger|) (|HashState|))
+           '#(~= 96 |shift| 102 |scale| 113 |sample| 124 |rightRecip| 128
+              |rightPower| 133 |recip| 145 |one?| 159 |moebius| 164 |leftRecip|
+              172 |leftPower| 177 |latex| 189 |inv| 194 |hashUpdate!| 199
+              |hash| 205 |eval| 210 |conjugate| 222 |commutator| 228 |coerce|
+              234 ^ 239 |One| 257 = 261 / 267 * 273)
            'NIL
-           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0))
+           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0))
                  (CONS
-                  '#(|Group&| |Monoid&| |SemiGroup&| |SetCategory&|
-                     |BasicType&| NIL NIL)
+                  '#(|Group&| NIL NIL |MagmaWithUnit&| |Magma&| |SetCategory&|
+                     NIL |BasicType&| NIL)
                   (CONS
-                   '#((|Group|) (|Monoid|) (|SemiGroup|) (|SetCategory|)
-                      (|BasicType|) (|unitsKnown|) (|CoercibleTo| 33))
-                   (|makeByteWordVec2| 51
+                   '#((|Group|) (|Monoid|) (|SemiGroup|) (|MagmaWithUnit|)
+                      (|Magma|) (|SetCategory|) (|unitsKnown|) (|BasicType|)
+                      (|CoercibleTo| 34))
+                   (|makeByteWordVec2| 52
                                        '(0 6 0 10 0 6 0 11 2 6 0 0 0 12 2 6 0 0
                                          0 13 1 6 0 0 15 2 6 0 0 0 23 1 26 25 0
                                          27 1 26 0 6 28 1 6 29 0 30 0 26 0 31 1
-                                         6 33 0 34 2 33 0 0 0 35 2 33 0 0 0 36
-                                         2 33 0 0 0 37 2 33 0 0 0 38 2 41 0 40
-                                         0 42 2 41 29 0 0 43 2 0 29 0 0 1 2 0 0
-                                         0 6 20 1 0 0 6 17 2 0 0 0 6 21 1 0 0 6
-                                         18 0 0 0 1 1 0 0 0 22 0 0 0 19 1 0 47
-                                         0 1 1 0 29 0 1 4 0 0 6 6 6 6 8 1 0 50
-                                         0 1 1 0 0 0 16 2 0 49 49 0 1 1 0 51 0
-                                         1 2 0 26 0 26 32 2 0 6 0 6 24 2 0 0 0
-                                         0 1 2 0 0 0 0 1 1 0 33 0 39 2 0 0 0 45
-                                         1 2 0 0 0 46 1 2 0 0 0 48 1 0 0 0 9 2
-                                         0 29 0 0 44 2 0 0 0 0 1 2 0 0 0 0
-                                         14)))))
+                                         34 0 33 35 1 6 34 0 36 2 34 0 0 0 37 2
+                                         34 0 0 0 38 2 34 0 0 0 39 2 34 0 0 0
+                                         40 2 43 0 42 0 44 2 43 29 0 0 45 2 0
+                                         29 0 0 1 2 0 0 0 6 20 1 0 0 6 17 2 0 0
+                                         0 6 21 1 0 0 6 18 0 0 0 1 1 0 49 0 1 2
+                                         0 0 0 48 1 2 0 0 0 50 1 1 0 0 0 22 0 0
+                                         0 19 1 0 49 0 1 1 0 29 0 1 4 0 0 6 6 6
+                                         6 8 1 0 49 0 1 2 0 0 0 48 1 2 0 0 0 50
+                                         1 1 0 33 0 1 1 0 0 0 16 2 0 52 52 0 1
+                                         1 0 51 0 1 2 0 6 0 6 24 2 0 26 0 26 32
+                                         2 0 0 0 0 1 2 0 0 0 0 1 1 0 34 0 41 2
+                                         0 0 0 47 1 2 0 0 0 48 1 2 0 0 0 50 1 0
+                                         0 0 9 2 0 29 0 0 46 2 0 0 0 0 1 2 0 0
+                                         0 0 14)))))
            '|lookupComplete|)) 

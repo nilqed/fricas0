@@ -8,7 +8,7 @@
         ((|g| |Vector| (|Matrix| R)) ($ |Vector| (|Matrix| (|Polynomial| R))))
         (SPROG
          ((|l| (|List| (|Matrix| (|Polynomial| R))))
-          (|m2| (|Matrix| (|Polynomial| R))) (#1=#:G714 NIL) (|m| NIL)
+          (|m2| (|Matrix| (|Polynomial| R))) (#1=#:G716 NIL) (|m| NIL)
           (|lim| (|List| (|Matrix| R))))
          (SEQ
           (LETT |lim| (SPADCALL |g| (QREFELT $ 13)) . #2=(|CVMP;coerceP;VV;3|))
@@ -31,7 +31,7 @@
          ($ |Vector| (|Matrix| (|Fraction| (|Polynomial| R)))))
         (SPROG
          ((|l| (|List| (|Matrix| (|Fraction| (|Polynomial| R)))))
-          (|m3| (|Matrix| (|Fraction| (|Polynomial| R)))) (#1=#:G720 NIL)
+          (|m3| (|Matrix| (|Fraction| (|Polynomial| R)))) (#1=#:G722 NIL)
           (|m| NIL) (|lim| (|List| (|Matrix| R))))
          (SEQ
           (LETT |lim| (SPADCALL |g| (QREFELT $ 13)) . #2=(|CVMP;coerce;VV;4|))
@@ -51,9 +51,9 @@
 
 (DECLAIM (NOTINLINE |CoerceVectorMatrixPackage;|)) 
 
-(DEFUN |CoerceVectorMatrixPackage| (#1=#:G721)
+(DEFUN |CoerceVectorMatrixPackage| (#1=#:G723)
   (SPROG NIL
-         (PROG (#2=#:G722)
+         (PROG (#2=#:G724)
            (RETURN
             (COND
              ((LETT #2#

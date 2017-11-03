@@ -5,8 +5,8 @@
 
 (DEFPARAMETER |DirectProductCategory;AL| 'NIL) 
 
-(DEFUN |DirectProductCategory| (&REST #1=#:G697)
-  (LET (#2=#:G698)
+(DEFUN |DirectProductCategory| (&REST #1=#:G699)
+  (LET (#2=#:G700)
     (COND
      ((SETQ #2# (|assoc| #3=(|devaluateList| #1#) |DirectProductCategory;AL|))
       (CDR #2#))
@@ -18,20 +18,21 @@
       #2#)))) 
 
 (DEFUN |DirectProductCategory;| (|t#1| |t#2|)
-  (SPROG ((#1=#:G696 NIL))
+  (SPROG ((#1=#:G698 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
                     (PAIR '(|t#1| |t#2|)
                           (LIST (|devaluate| |t#1|) (|devaluate| |t#2|)))
                     (|sublisV|
-                     (PAIR '(#2=#:G694 #3=#:G695)
+                     (PAIR '(#2=#:G696 #3=#:G697)
                            (LIST '(|Integer|) '(|Vector| |t#2|)))
                      (COND (|DirectProductCategory;CAT|)
                            ('T
                             (LETT |DirectProductCategory;CAT|
                                   (|Join| (|IndexedAggregate| '#2# '|t#2|)
                                           (|CoercibleTo| '#3#)
+                                          (|AbelianProductCategory| '|t#2|)
                                           (|finiteAggregate|)
                                           (|mkCategory|
                                            '(((|directProduct|
@@ -61,11 +62,6 @@
                                               (|has| |t#2| (|SemiRng|)))
                                              ((|BiModule| |t#2| |t#2|)
                                               (|has| |t#2| (|SemiRng|)))
-                                             ((|AbelianMonoid|)
-                                              (|has| |t#2| (|AbelianMonoid|)))
-                                             ((|CancellationAbelianMonoid|)
-                                              (|has| |t#2|
-                                                     (|CancellationAbelianMonoid|)))
                                              ((|Monoid|)
                                               (|has| |t#2| (|Monoid|)))
                                              ((|SemiGroup|)
@@ -80,8 +76,8 @@
                                                      (|CommutativeRing|)))
                                              ((|unitsKnown|)
                                               (|has| |t#2| (|unitsKnown|)))
-                                             ((|OrderedRing|)
-                                              (|has| |t#2| (|OrderedRing|)))
+                                             ((|OrderedSet|)
+                                              (|has| |t#2| (|OrderedSet|)))
                                              ((|OrderedAbelianMonoidSup|)
                                               (|has| |t#2|
                                                      (|OrderedAbelianMonoidSup|)))

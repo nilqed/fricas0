@@ -18,9 +18,9 @@
 
 (DECLAIM (NOTINLINE |MultipleMap;|)) 
 
-(DEFUN |MultipleMap| (&REST #1=#:G699)
+(DEFUN |MultipleMap| (&REST #1=#:G700)
   (SPROG NIL
-         (PROG (#2=#:G700)
+         (PROG (#2=#:G701)
            (RETURN
             (COND
              ((LETT #2#

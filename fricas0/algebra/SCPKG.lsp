@@ -10,13 +10,13 @@
 (SDEFUN |SCPKG;coordinates;MLV;2|
         ((|x| |Matrix| R) (|b| |List| (|Matrix| R)) ($ |Vector| R))
         (SPROG
-         ((#1=#:G732 NIL)
+         ((#1=#:G737 NIL)
           (|res|
            (|Record| (|:| |particular| (|Union| (|Vector| R) "failed"))
                      (|:| |basis| (|List| (|Vector| R)))))
-          (#2=#:G736 NIL) (|i| NIL) (|transitionMatrix| (|Matrix| R))
+          (#2=#:G741 NIL) (|i| NIL) (|transitionMatrix| (|Matrix| R))
           (|n| (|NonNegativeInteger|)) (|m| (|NonNegativeInteger|))
-          (#3=#:G716 NIL))
+          (#3=#:G720 NIL))
          (SEQ
           (LETT |m|
                 (PROG1
@@ -63,10 +63,10 @@
 (SDEFUN |SCPKG;structuralConstants;LV;3|
         ((|b| |List| (|Matrix| R)) ($ |Vector| (|Matrix| R)))
         (SPROG
-         ((#1=#:G750 NIL) (|k| NIL) (|covec| (|Vector| R)) (#2=#:G749 NIL)
-          (|j| NIL) (#3=#:G748 NIL) (|i| NIL) (|sC| (|Vector| (|Matrix| R)))
-          (#4=#:G745 NIL) (#5=#:G747 NIL) (#6=#:G746 NIL)
-          (|m| (|NonNegativeInteger|)) (#7=#:G737 NIL))
+         ((#1=#:G755 NIL) (|k| NIL) (|covec| (|Vector| R)) (#2=#:G754 NIL)
+          (|j| NIL) (#3=#:G753 NIL) (|i| NIL) (|sC| (|Vector| (|Matrix| R)))
+          (#4=#:G750 NIL) (#5=#:G752 NIL) (#6=#:G751 NIL)
+          (|m| (|NonNegativeInteger|)) (#7=#:G742 NIL))
          (SEQ
           (LETT |m|
                 (PROG1
@@ -128,7 +128,7 @@
         (SPROG
          ((|lscopy| (|List| (|Symbol|)))
           (|gamma| (|List| (|Matrix| (|Polynomial| R)))) (|c| (|Polynomial| R))
-          (|p| (|Polynomial| R)) (#1=#:G765 NIL) (|j| NIL) (#2=#:G764 NIL)
+          (|p| (|Polynomial| R)) (#1=#:G771 NIL) (|j| NIL) (#2=#:G770 NIL)
           (|i| NIL) (|s| (|Symbol|)) (|mat| (|Matrix| (|Polynomial| R)))
           (|nn| (|NonNegativeInteger|)))
          (SEQ
@@ -141,7 +141,7 @@
               "structuralConstants: size of second argument does not agree with number of generators"))))
           (LETT |gamma| NIL . #3#)
           (LETT |lscopy| (SPADCALL |ls| (QREFELT $ 38)) . #3#)
-          (SEQ G190 (COND ((NULL |lscopy|) (GO G191)))
+          (SEQ G190 (COND ((NULL (NULL (NULL |lscopy|))) (GO G191)))
                (SEQ
                 (LETT |mat| (MAKE_MATRIX1 |nn| |nn| (|spadConstant| $ 40))
                       . #3#)
@@ -181,8 +181,8 @@
          ((|lscopy| (|List| (|Symbol|)))
           (|gamma| (|List| (|Matrix| (|Fraction| (|Polynomial| R)))))
           (|c| (|Polynomial| R)) (|p| (|Polynomial| R)) (|q| (|Polynomial| R))
-          (|r| (|Fraction| (|Polynomial| R))) (#1=#:G781 NIL) (|j| NIL)
-          (#2=#:G780 NIL) (|i| NIL) (|s| (|Symbol|))
+          (|r| (|Fraction| (|Polynomial| R))) (#1=#:G789 NIL) (|j| NIL)
+          (#2=#:G788 NIL) (|i| NIL) (|s| (|Symbol|))
           (|mat| (|Matrix| (|Fraction| (|Polynomial| R))))
           (|nn| (|NonNegativeInteger|)))
          (SEQ
@@ -195,7 +195,7 @@
               "structuralConstants: size of second argument does not agree with number of generators"))))
           (LETT |gamma| NIL . #3#)
           (LETT |lscopy| (SPADCALL |ls| (QREFELT $ 38)) . #3#)
-          (SEQ G190 (COND ((NULL |lscopy|) (GO G191)))
+          (SEQ G190 (COND ((NULL (NULL (NULL |lscopy|))) (GO G191)))
                (SEQ
                 (LETT |mat| (MAKE_MATRIX1 |nn| |nn| (|spadConstant| $ 52))
                       . #3#)
@@ -246,9 +246,9 @@
 
 (DECLAIM (NOTINLINE |StructuralConstantsPackage;|)) 
 
-(DEFUN |StructuralConstantsPackage| (#1=#:G782)
+(DEFUN |StructuralConstantsPackage| (#1=#:G790)
   (SPROG NIL
-         (PROG (#2=#:G783)
+         (PROG (#2=#:G791)
            (RETURN
             (COND
              ((LETT #2#

@@ -1,7 +1,7 @@
 
 (SDEFUN |ASSOCEQ;makeMatrix|
         ((|v| |Vector| (|Matrix| R)) (|n| |NonNegativeInteger|) ($ |Matrix| R))
-        (SPROG ((#1=#:G703 NIL) (|i| NIL) (#2=#:G702 NIL))
+        (SPROG ((#1=#:G706 NIL) (|i| NIL) (#2=#:G705 NIL))
                (SEQ
                 (SPADCALL
                  (PROGN
@@ -27,11 +27,11 @@
          ($ |Record| (|:| |mat| (|Matrix| R))
           (|:| |vec| (|Vector| (|List| (|PositiveInteger|))))))
         (SPROG
-         ((|u| (|Union| S #1="failed")) (#2=#:G731 NIL) (#3=#:G726 NIL)
-          (#4=#:G746 NIL) (|j| NIL) (#5=#:G719 NIL) (#6=#:G745 NIL) (|k| NIL)
-          (|wi| (S)) (|eq| (|Vector| R)) (#7=#:G744 NIL) (|i| NIL)
-          (|a| (|Vector| R)) (#8=#:G715 NIL) (#9=#:G743 NIL) (#10=#:G742 NIL)
-          (|an| (R)) (|m1| (|PositiveInteger|)) (#11=#:G713 NIL)
+         ((|u| (|Union| S #1="failed")) (#2=#:G735 NIL) (#3=#:G730 NIL)
+          (#4=#:G750 NIL) (|j| NIL) (#5=#:G723 NIL) (#6=#:G749 NIL) (|k| NIL)
+          (|wi| (S)) (|eq| (|Vector| R)) (#7=#:G748 NIL) (|i| NIL)
+          (|a| (|Vector| R)) (#8=#:G719 NIL) (#9=#:G747 NIL) (#10=#:G746 NIL)
+          (|an| (R)) (|m1| (|PositiveInteger|)) (#11=#:G717 NIL)
           (M (|Matrix| R)) (|ww| (|Vector| (|List| (|PositiveInteger|))))
           (|s| (|NonNegativeInteger|)) (|w| (|Vector| S))
           (S
@@ -49,7 +49,7 @@
                     (SIGNATURE |delta|
                      ((|NonNegativeInteger|) $ (|PositiveInteger|)
                       (|PositiveInteger|))))))
-          (|n| (|PositiveInteger|)) (#13=#:G708 NIL))
+          (|n| (|PositiveInteger|)) (#13=#:G712 NIL))
          (SEQ
           (LETT S
                 (|SetOfMIntegersInOneToN| |m|
@@ -267,8 +267,8 @@
 (SDEFUN |ASSOCEQ;uncouplingMatrices;MV;3|
         ((|m| . #1=(|Matrix| R)) ($ |Vector| (|Matrix| R)))
         (SPROG
-         ((#2=#:G753 NIL) (#3=#:G755 NIL) (|i| NIL) (#4=#:G754 NIL) (|mi| #1#)
-          (#5=#:G752 NIL) (|v| (|Vector| (|Matrix| R)))
+         ((#2=#:G757 NIL) (#3=#:G759 NIL) (|i| NIL) (#4=#:G758 NIL) (|mi| #1#)
+          (#5=#:G756 NIL) (|v| (|Vector| (|Matrix| R)))
           (|n| (|NonNegativeInteger|)))
          (SEQ (LETT |n| (ANROWS |m|) . #6=(|ASSOCEQ;uncouplingMatrices;MV;3|))
               (LETT |v| (MAKEARR1 |n| (SPADCALL 1 0 (QREFELT $ 42))) . #6#)
@@ -317,8 +317,8 @@
           (|:| |minors| (|List| (|List| (|PositiveInteger|))))
           (|:| |ops| (|List| L))))
         (SPROG
-         ((#1=#:G763 NIL) (|j| NIL) (#2=#:G762 NIL) (#3=#:G761 NIL)
-          (#4=#:G760 NIL))
+         ((#1=#:G767 NIL) (|j| NIL) (#2=#:G766 NIL) (#3=#:G765 NIL)
+          (#4=#:G764 NIL))
          (SEQ
           (VECTOR (SPADCALL |v| |i| (QREFELT $ 50))
                   (SPADCALL
@@ -360,7 +360,7 @@
           (|:| |minors| (|List| (|List| (|PositiveInteger|))))
           (|:| |ops| (|List| L))))
         (SPROG
-         ((#1=#:G775 NIL) (|i| NIL)
+         ((#1=#:G779 NIL) (|i| NIL)
           (|ww| (|Vector| (|List| (|PositiveInteger|))))
           (|s| (|NonNegativeInteger|)) (|w| (|Vector| S))
           (S
@@ -378,7 +378,7 @@
                     (SIGNATURE |delta|
                      ((|NonNegativeInteger|) $ (|PositiveInteger|)
                       (|PositiveInteger|))))))
-          (#3=#:G768 NIL) (|v| (|Union| (|Matrix| R) "failed"))
+          (#3=#:G772 NIL) (|v| (|Union| (|Matrix| R) "failed"))
           (|u| (|Union| (|Matrix| R) "failed")))
          (SEQ
           (LETT |u| (SPADCALL |op| |m| (QREFELT $ 55))
@@ -458,8 +458,8 @@
           (|:| |minors| (|List| (|List| (|PositiveInteger|))))
           (|:| |ops| (|List| L))))
         (SPROG
-         ((#1=#:G785 NIL) (#2=#:G786 NIL) (|u| (|Union| (|Matrix| R) "failed"))
-          (#3=#:G787 NIL) (|i| NIL) (|n| (|NonNegativeInteger|))
+         ((#1=#:G789 NIL) (#2=#:G790 NIL) (|u| (|Union| (|Matrix| R) "failed"))
+          (#3=#:G791 NIL) (|i| NIL) (|n| (|NonNegativeInteger|))
           (|a| (|Vector| (|Matrix| R)))
           (|rec|
            (|Record| (|:| |mat| (|Matrix| R))
@@ -490,16 +490,16 @@
                                      (|ASSOCEQ;makeeq| (QCDR |rec|) (QCDR |u|)
                                       |i| |n| $)
                                      . #4#)
-                               (GO #5=#:G784))
+                               (GO #5=#:G788))
                               . #4#)
-                        (GO #6=#:G782))))))
+                        (GO #6=#:G786))))))
                    (LETT |i| (+ |i| 1) . #4#) (GO G190) G191 (EXIT NIL)))
              #6# (EXIT #1#))
             (EXIT (|error| "associatedEquations: full degenerate case"))))
           #5# (EXIT #2#)))) 
 
 (SDEFUN |ASSOCEQ;makeop| ((|v| |Vector| R) ($ L))
-        (SPROG ((|op| (L)) (#1=#:G791 NIL) (|i| NIL))
+        (SPROG ((|op| (L)) (#1=#:G795 NIL) (|i| NIL))
                (SEQ (LETT |op| (|spadConstant| $ 23) . #2=(|ASSOCEQ;makeop|))
                     (SEQ (LETT |i| 1 . #2#) (LETT #1# (QVSIZE |v|) . #2#) G190
                          (COND ((|greater_SI| |i| #1#) (GO G191)))
@@ -518,9 +518,9 @@
 
 (DECLAIM (NOTINLINE |AssociatedEquations;|)) 
 
-(DEFUN |AssociatedEquations| (&REST #1=#:G792)
+(DEFUN |AssociatedEquations| (&REST #1=#:G796)
   (SPROG NIL
-         (PROG (#2=#:G793)
+         (PROG (#2=#:G797)
            (RETURN
             (COND
              ((LETT #2#

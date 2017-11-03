@@ -5,8 +5,8 @@
 
 (DEFPARAMETER |UnivariateLaurentSeriesCategory;AL| 'NIL) 
 
-(DEFUN |UnivariateLaurentSeriesCategory| (#1=#:G696)
-  (LET (#2=#:G697)
+(DEFUN |UnivariateLaurentSeriesCategory| (#1=#:G697)
+  (LET (#2=#:G698)
     (COND
      ((SETQ #2#
               (|assoc| #3=(|devaluate| #1#)
@@ -20,12 +20,12 @@
       #2#)))) 
 
 (DEFUN |UnivariateLaurentSeriesCategory;| (|t#1|)
-  (SPROG ((#1=#:G695 NIL))
+  (SPROG ((#1=#:G696 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
                               (|sublisV|
-                               (PAIR '(#2=#:G694) (LIST '(|Integer|)))
+                               (PAIR '(#2=#:G695) (LIST '(|Integer|)))
                                (COND (|UnivariateLaurentSeriesCategory;CAT|)
                                      ('T
                                       (LETT

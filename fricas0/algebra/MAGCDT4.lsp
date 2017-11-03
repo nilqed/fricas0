@@ -21,8 +21,8 @@
                     (|:| |msizes| (|List| (|Integer|))) (|:| |sp| (|Integer|)))
           "failed"))
         (SPROG
-         ((|lm2| (|List| (|Polynomial| (|Integer|)))) (#1=#:G716 NIL) (|m| NIL)
-          (#2=#:G715 NIL))
+         ((|lm2| (|List| (|Polynomial| (|Integer|)))) (#1=#:G717 NIL) (|m| NIL)
+          (#2=#:G716 NIL))
          (SEQ
           (LETT |lm2|
                 (PROGN
@@ -83,7 +83,7 @@
 
 (DEFUN |ModularAlgebraicGcdTools4| ()
   (SPROG NIL
-         (PROG (#1=#:G737)
+         (PROG (#1=#:G739)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|ModularAlgebraicGcdTools4|)

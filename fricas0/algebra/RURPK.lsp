@@ -10,11 +10,11 @@
            (|List|
             (|Record| (|:| |complexRoots| (|SparseUnivariatePolynomial| R))
                       (|:| |coordinates| (|List| (|Polynomial| R))))))
-          (|lc| (|List| (|Polynomial| R))) (#1=#:G788 NIL)
+          (|lc| (|List| (|Polynomial| R))) (#1=#:G789 NIL)
           (|q|
            (|NewSparseMultivariatePolynomial| R (|OrderedVariableList| |lv|)))
-          (#2=#:G787 NIL) (|g| (|SparseUnivariatePolynomial| R))
-          (#3=#:G735 NIL) (#4=#:G786 NIL) (|us| NIL) (#5=#:G785 NIL)
+          (#2=#:G788 NIL) (|g| (|SparseUnivariatePolynomial| R))
+          (#3=#:G736 NIL) (#4=#:G787 NIL) (|us| NIL) (#5=#:G786 NIL)
           (|lus|
            (|List|
             (|SquareFreeRegularTriangularSet| R
@@ -24,7 +24,7 @@
                                               (|NewSparseMultivariatePolynomial|
                                                R
                                                (|OrderedVariableList| |lv|)))))
-          (#6=#:G784 NIL)
+          (#6=#:G785 NIL)
           (|ts|
            (|SquareFreeRegularTriangularSet| R
                                              (|IndexedExponents|
@@ -55,7 +55,7 @@
            (|List|
             (|NewSparseMultivariatePolynomial| R
                                                (|OrderedVariableList| |lv|))))
-          (#7=#:G783 NIL) (#8=#:G782 NIL)
+          (#7=#:G784 NIL) (#8=#:G783 NIL)
           (|newts|
            (|SquareFreeRegularTriangularSet| R
                                              (|IndexedExponents|
@@ -63,7 +63,7 @@
                                              (|OrderedVariableList| |lv|)
                                              (|NewSparseMultivariatePolynomial|
                                               R (|OrderedVariableList| |lv|))))
-          (#9=#:G781 NIL) (|qwt| NIL)
+          (#9=#:G782 NIL) (|qwt| NIL)
           (|lsfqwt|
            (|List|
             (|Record|
@@ -82,12 +82,12 @@
                                                      R
                                                      (|OrderedVariableList|
                                                       |lv|)))))))
-          (#10=#:G780 NIL) (#11=#:G779 NIL) (#12=#:G778 NIL) (|fq| NIL)
+          (#10=#:G781 NIL) (#11=#:G780 NIL) (#12=#:G779 NIL) (|fq| NIL)
           (|lfq|
            (|List|
             (|NewSparseMultivariatePolynomial| R
                                                (|OrderedVariableList| |lv|))))
-          (#13=#:G746 NIL)
+          (#13=#:G747 NIL)
           (|lq|
            (|List|
             (|NewSparseMultivariatePolynomial| R
@@ -122,7 +122,7 @@
            (|Union|
             (|NewSparseMultivariatePolynomial| R (|OrderedVariableList| |lv|))
             "failed"))
-          (#14=#:G777 NIL) (|p| NIL))
+          (#14=#:G778 NIL) (|p| NIL))
          (SEQ
           (LETT |lp| (SPADCALL (ELT $ 23) |lp| (QREFELT $ 26))
                 . #15=(|RURPK;rur;L2BL;1|))
@@ -473,9 +473,9 @@
 
 (DECLAIM (NOTINLINE |RationalUnivariateRepresentationPackage;|)) 
 
-(DEFUN |RationalUnivariateRepresentationPackage| (&REST #1=#:G793)
+(DEFUN |RationalUnivariateRepresentationPackage| (&REST #1=#:G794)
   (SPROG NIL
-         (PROG (#2=#:G794)
+         (PROG (#2=#:G795)
            (RETURN
             (COND
              ((LETT #2#
@@ -499,7 +499,7 @@
 
 (DEFUN |RationalUnivariateRepresentationPackage;| (|#1| |#2|)
   (SPROG
-   ((#1=#:G724 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
+   ((#1=#:G725 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|)
           . #2=(|RationalUnivariateRepresentationPackage|))
@@ -532,7 +532,8 @@
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|) (|Symbol|)
               (0 . |new|) '|news| (|List| 8) (4 . |concat|) '|lv|
-              (|Union| $ '"failed") (|OrderedVariableList| 13)
+              (|Union| $ '"failed")
+              (|OrderedVariableList| (NRTEVAL (QREFELT $ 13)))
               (10 . |variable|) '|newv|
               (|NewSparseMultivariatePolynomial| 6 15) (15 . |coerce|) '|newq|
               (|Boolean|) (|Polynomial| 6) (20 . |zero?|) (|Mapping| 21 22)

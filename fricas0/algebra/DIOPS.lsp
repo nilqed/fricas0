@@ -25,7 +25,6 @@
                                     ('T
                                      (LETT |DictionaryOperations;CAT|
                                            (|Join| (|BagAggregate| '|t#1|)
-                                                   (|Collection| '|t#1|)
                                                    (|mkCategory|
                                                     '(((|dictionary| ($)) T)
                                                       ((|dictionary|
@@ -51,15 +50,7 @@
                                                          $))
                                                        (|has| $
                                                               (|finiteAggregate|))))
-                                                    '(((|CoercibleTo|
-                                                        (|OutputForm|))
-                                                       (AND
-                                                        (|has| |t#1|
-                                                               (|CoercibleTo|
-                                                                (|OutputForm|)))
-                                                        (|has| $
-                                                               (|finiteAggregate|)))))
-                                                    '((|List| |t#1|)) NIL))
+                                                    NIL '((|List| |t#1|)) NIL))
                                            . #2=(|DictionaryOperations|)))))
                    . #2#)
            (SETELT #1# 0 (LIST '|DictionaryOperations| (|devaluate| |t#1|)))))) 

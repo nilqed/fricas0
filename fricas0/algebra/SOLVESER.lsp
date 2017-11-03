@@ -7,10 +7,10 @@
         (SPROG
          ((|polyvar|
            (|Fraction| (|SparseUnivariatePolynomial| (|Expression| R))))
-          (#1=#:G717 NIL)
+          (#1=#:G720 NIL)
           (|vecti|
            (|Fraction| (|SparseUnivariatePolynomial| (|Expression| R))))
-          (#2=#:G722 NIL) (|i| NIL) (Z (|Symbol|)))
+          (#2=#:G725 NIL) (|i| NIL) (Z (|Symbol|)))
          (SEQ
           (LETT Z (SPADCALL (QREFELT $ 8))
                 . #3=(|SOLVESER;unvectorise;VFIF;1|))
@@ -53,7 +53,7 @@
          ($ |Fraction| (|SparseUnivariatePolynomial| (|Expression| R))))
         (SPROG
          ((|newF| (|Fraction| (|SparseUnivariatePolynomial| (|Expression| R))))
-          (#1=#:G732 NIL)
+          (#1=#:G735 NIL)
           (|newF2|
            (|Union| (|SparseUnivariatePolynomial| (|Expression| R)) "failed"))
           (|newF1|
@@ -84,7 +84,7 @@
             (LETT N (SPADCALL |degF| |degG| (QREFELT $ 34)) . #5#)
             (EXIT
              (COND
-              ((QEQCAR N 1) (PROGN (LETT #1# |exprf| . #5#) (GO #6=#:G731)))
+              ((QEQCAR N 1) (PROGN (LETT #1# |exprf| . #5#) (GO #6=#:G734)))
               (#7='T
                (SEQ (LETT |m| (QCDR N) . #5#)
                     (LETT |newF1|
@@ -119,8 +119,8 @@
          ($ |Union| (|SparseUnivariatePolynomial| (|Expression| R)) "failed"))
         (SPROG
          ((|resul| (|SparseUnivariatePolynomial| (|Expression| R)))
-          (|solvevarlist| (|Vector| (|Expression| R))) (#1=#:G787 NIL)
-          (#2=#:G792 NIL)
+          (|solvevarlist| (|Vector| (|Expression| R))) (#1=#:G791 NIL)
+          (#2=#:G796 NIL)
           (|solvar|
            (|Record|
             (|:| |particular|
@@ -128,8 +128,8 @@
             (|:| |basis| (|List| (|Vector| (|Expression| R))))))
           (|coeffma| (|Matrix| (|Expression| R)))
           (|vec| (|Vector| (|Expression| R)))
-          (|coeffmat| (|Matrix| (|Expression| R))) (#4=#:G783 NIL)
-          (#5=#:G793 NIL) (|i| NIL))
+          (|coeffmat| (|Matrix| (|Expression| R))) (#4=#:G787 NIL)
+          (#5=#:G797 NIL) (|i| NIL))
          (SEQ
           (EXIT
            (SEQ
@@ -168,7 +168,7 @@
             (EXIT
              (COND
               ((QEQCAR (QCAR |solvar|) 1)
-               (PROGN (LETT #2# (CONS 1 "failed") . #6#) (GO #7=#:G791)))
+               (PROGN (LETT #2# (CONS 1 "failed") . #6#) (GO #7=#:G795)))
               ('T
                (SEQ
                 (LETT |solvevarlist|
@@ -191,9 +191,9 @@
 
 (DECLAIM (NOTINLINE |TransSolvePackageService;|)) 
 
-(DEFUN |TransSolvePackageService| (#1=#:G794)
+(DEFUN |TransSolvePackageService| (#1=#:G798)
   (SPROG NIL
-         (PROG (#2=#:G795)
+         (PROG (#2=#:G799)
            (RETURN
             (COND
              ((LETT #2#

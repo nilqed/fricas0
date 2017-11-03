@@ -1,6 +1,6 @@
 
 (SDEFUN |BTOURN;binaryTournament;L$;1| ((|u| |List| S) ($ $))
-        (SPROG ((#1=#:G707 NIL) (|x| NIL) (|tree| ($)))
+        (SPROG ((#1=#:G710 NIL) (|x| NIL) (|tree| ($)))
                (SEQ
                 (COND ((NULL |u|) (SPADCALL (QREFELT $ 8)))
                       ('T
@@ -37,9 +37,9 @@
 
 (DECLAIM (NOTINLINE |BinaryTournament;|)) 
 
-(DEFUN |BinaryTournament| (#1=#:G719)
+(DEFUN |BinaryTournament| (#1=#:G724)
   (SPROG NIL
-         (PROG (#2=#:G720)
+         (PROG (#2=#:G725)
            (RETURN
             (COND
              ((LETT #2#
@@ -58,7 +58,7 @@
 
 (DEFUN |BinaryTournament;| (|#1|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G716 NIL) (#2=#:G717 NIL) (#3=#:G718 NIL) ($ NIL)
+   ((|pv$| NIL) (#1=#:G721 NIL) (#2=#:G722 NIL) (#3=#:G723 NIL) ($ NIL)
     (|dv$| NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #4=(|BinaryTournament|))

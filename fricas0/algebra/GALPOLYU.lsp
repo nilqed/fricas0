@@ -2,7 +2,7 @@
 (SDEFUN |GALPOLYU;factorsOfDegree;PiFL;1|
         ((|d| |PositiveInteger|) (|r| |Factored| UP) ($ |List| UP))
         (SPROG
-         ((|lfact| (|List| UP)) (#1=#:G718 NIL) (|i| NIL) (#2=#:G717 NIL)
+         ((|lfact| (|List| UP)) (#1=#:G722 NIL) (|i| NIL) (#2=#:G721 NIL)
           (|fr| NIL))
          (SEQ (LETT |lfact| NIL . #3=(|GALPOLYU;factorsOfDegree;PiFL;1|))
               (SEQ (LETT |fr| NIL . #3#)
@@ -26,7 +26,7 @@
 
 (SDEFUN |GALPOLYU;factorOfDegree;PiFUP;2|
         ((|d| |PositiveInteger|) (|r| |Factored| UP) ($ UP))
-        (SPROG ((#1=#:G723 NIL) (|factor| (UP)) (#2=#:G724 NIL) (|i| NIL))
+        (SPROG ((#1=#:G727 NIL) (|factor| (UP)) (#2=#:G728 NIL) (|i| NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -40,7 +40,7 @@
                         (EXIT
                          (COND
                           ((EQL (SPADCALL |factor| (QREFELT $ 13)) |d|)
-                           (PROGN (LETT #1# |factor| . #3#) (GO #4=#:G722))))))
+                           (PROGN (LETT #1# |factor| . #3#) (GO #4=#:G726))))))
                        (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191
                        (EXIT NIL))
                   (EXIT (|error| "factorOfDegree: Bad arguments"))))
@@ -48,7 +48,7 @@
 
 (SDEFUN |GALPOLYU;degreePartition;FM;3|
         ((|r| |Factored| UP) ($ |Multiset| (|NonNegativeInteger|)))
-        (SPROG ((#1=#:G728 NIL) (|i| NIL) (#2=#:G727 NIL))
+        (SPROG ((#1=#:G732 NIL) (|i| NIL) (#2=#:G731 NIL))
                (SEQ
                 (SPADCALL
                  (PROGN
@@ -74,7 +74,7 @@
 
 (SDEFUN |GALPOLYU;reverse;2UP;5| ((|p| UP) ($ UP))
         (SPROG
-         ((|r| (UP)) (#1=#:G730 NIL) (#2=#:G734 NIL) (|i| NIL)
+         ((|r| (UP)) (#1=#:G734 NIL) (#2=#:G738 NIL) (|i| NIL)
           (|n| (|NonNegativeInteger|)))
          (SEQ (LETT |r| (|spadConstant| $ 17) . #3=(|GALPOLYU;reverse;2UP;5|))
               (LETT |n| (SPADCALL |p| (QREFELT $ 13)) . #3#)
@@ -149,9 +149,9 @@
 
 (DECLAIM (NOTINLINE |GaloisGroupPolynomialUtilities;|)) 
 
-(DEFUN |GaloisGroupPolynomialUtilities| (&REST #1=#:G754)
+(DEFUN |GaloisGroupPolynomialUtilities| (&REST #1=#:G759)
   (SPROG NIL
-         (PROG (#2=#:G755)
+         (PROG (#2=#:G760)
            (RETURN
             (COND
              ((LETT #2#

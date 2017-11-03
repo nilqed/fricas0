@@ -1,8 +1,8 @@
 
 (SDEFUN |TENSPOW;coerce;$Of;1| ((|x| $) ($ |OutputForm|))
         (SPROG
-         ((|le| (|List| (|OutputForm|))) (|ko| (|OutputForm|)) (#1=#:G719 NIL)
-          (|b| NIL) (#2=#:G718 NIL) (#3=#:G717 NIL) (|rec| NIL))
+         ((|le| (|List| (|OutputForm|))) (|ko| (|OutputForm|)) (#1=#:G721 NIL)
+          (|b| NIL) (#2=#:G720 NIL) (#3=#:G719 NIL) (|rec| NIL))
          (SEQ
           (COND
            ((SPADCALL |x| (QREFELT $ 11))
@@ -67,7 +67,7 @@
          ($ |List| (|Record| (|:| |k| (|List| B)) (|:| |c| R))))
         (SPROG
          ((|res| (|List| (|Record| (|:| |k| (|List| B)) (|:| |c| R))))
-          (#1=#:G731 NIL) (|tt| NIL) (#2=#:G730 NIL) (|s1| NIL) (#3=#:G729 NIL)
+          (#1=#:G734 NIL) (|tt| NIL) (#2=#:G733 NIL) (|s1| NIL) (#3=#:G732 NIL)
           (|xr| (|List| M)) (|x1| (M)))
          (SEQ (LETT |x1| (|SPADfirst| |xx|) . #4=(|TENSPOW;partialTensor|))
               (LETT |xr| (CDR |xx|) . #4#)
@@ -124,7 +124,7 @@
 (SDEFUN |TENSPOW;tensor;L$;4| ((|xx| |List| M) ($ $))
         (SPROG
          ((|res| (|List| (|Record| (|:| |k| (|Vector| B)) (|:| |c| R))))
-          (#1=#:G744 NIL) (|tt| NIL))
+          (#1=#:G747 NIL) (|tt| NIL))
          (SEQ
           (COND
            ((NULL (SPADCALL |xx| (QREFELT $ 6) (QREFELT $ 40)))
@@ -157,10 +157,10 @@
 (SDEFUN |TENSPOW;*;3$;5| ((|x1| $) (|x2| $) ($ $))
         (SPROG
          ((|res| (|List| (|Record| (|:| |k| (|Vector| B)) (|:| |c| R))))
-          (#1=#:G758 NIL) (|t| NIL) (|t1t2| ($)) (#2=#:G756 NIL) (|b1| NIL)
-          (#3=#:G757 NIL) (|b2| NIL) (#4=#:G755 NIL) (|t2k| #5=(|Vector| B))
-          (|t1k| #5#) (|t2c| (R)) (|t1c| (R)) (#6=#:G754 NIL) (|t2| NIL)
-          (#7=#:G753 NIL) (|t1| NIL))
+          (#1=#:G761 NIL) (|t| NIL) (|t1t2| ($)) (#2=#:G759 NIL) (|b1| NIL)
+          (#3=#:G760 NIL) (|b2| NIL) (#4=#:G758 NIL) (|t2k| #5=(|Vector| B))
+          (|t1k| #5#) (|t2c| (R)) (|t1c| (R)) (#6=#:G757 NIL) (|t2| NIL)
+          (#7=#:G756 NIL) (|t1| NIL))
          (SEQ (LETT |res| NIL . #8=(|TENSPOW;*;3$;5|))
               (SEQ (LETT |t1| NIL . #8#)
                    (LETT #7# (SPADCALL |x1| (QREFELT $ 17)) . #8#) G190
@@ -254,9 +254,9 @@
 
 (DECLAIM (NOTINLINE |TensorPower;|)) 
 
-(DEFUN |TensorPower| (&REST #1=#:G769)
+(DEFUN |TensorPower| (&REST #1=#:G773)
   (SPROG NIL
-         (PROG (#2=#:G770)
+         (PROG (#2=#:G774)
            (RETURN
             (COND
              ((LETT #2#
@@ -409,47 +409,52 @@
               |TENSPOW;tensor;L$;4| (111 . |monomial|) (117 . *) (123 . *)
               (129 . |construct|) (134 . *) (|Union| $ '"failed") (|Integer|)
               (|PositiveInteger|) (|Mapping| 7 20) (|Union| 20 '"failed")
-              (|Mapping| 7 7) (|List| 7) (|List| $) (|List| 20) (|HashState|)
-              (|String|) (|SingleInteger|))
+              (|Mapping| 7 7) (|List| 7) (|List| 20) (|List| $) (|String|)
+              (|SingleInteger|) (|HashState|))
            '#(~= 140 |zero?| 146 |tensor| 151 |support| 167 |sup| 172
-              |subtractIfCan| 178 |smaller?| 184 |sample| 190 |retractIfCan|
-              194 |retract| 199 |reductum| 204 |recip| 209 |opposite?| 214
-              |one?| 220 |numberOfMonomials| 225 |monomials| 230 |monomial?|
-              235 |monomial| 240 |min| 246 |max| 252 |map| 258 |listOfTerms|
-              264 |linearExtend| 269 |leadingTerm| 275 |leadingSupport| 280
-              |leadingMonomial| 285 |leadingCoefficient| 290 |latex| 295
-              |hashUpdate!| 300 |hash| 306 |constructOrdered| 311 |construct|
-              316 |coerce| 321 |coefficients| 341 |coefficient| 346
-              |characteristic| 352 |annihilate?| 356 ^ 362 |Zero| 374 |One| 378
-              >= 382 > 388 = 394 <= 400 < 406 - 412 + 423 * 429)
+              |subtractIfCan| 178 |smaller?| 184 |sample| 190 |rightRecip| 194
+              |rightPower| 199 |retractIfCan| 211 |retract| 216 |reductum| 221
+              |recip| 226 |opposite?| 231 |one?| 237 |numberOfMonomials| 242
+              |monomials| 247 |monomial?| 252 |monomial| 257 |min| 263 |max|
+              269 |map| 275 |listOfTerms| 281 |linearExtend| 286 |leftRecip|
+              292 |leftPower| 297 |leadingTerm| 309 |leadingSupport| 314
+              |leadingMonomial| 319 |leadingCoefficient| 324 |latex| 329
+              |hashUpdate!| 334 |hash| 340 |constructOrdered| 345 |construct|
+              350 |commutator| 355 |coerce| 361 |coefficients| 381
+              |coefficient| 386 |characteristic| 392 |associator| 396
+              |antiCommutator| 403 |annihilate?| 409 ^ 415 |Zero| 427 |One| 431
+              >= 435 > 441 = 447 <= 453 < 459 - 465 + 476 * 482)
            'NIL
            (CONS
             (|makeByteWordVec2| 8
-                                '(0 0 0 1 0 0 0 1 4 0 0 0 1 1 4 2 6 1 6 8 1 1 6
-                                  7 0 1 5 0 0 0 1 3 6))
+                                '(0 1 1 0 0 1 1 0 0 1 0 1 1 4 0 0 0 1 1 1 4 2 6
+                                  1 1 6 8 1 1 1 6 7 0 1 5 0 0 0 1 3 6))
             (CONS
-             '#(|TensorPowerCategory&| |FreeModuleCategory&| NIL |Algebra&| NIL
-                |Module&| NIL |Ring&| NIL NIL NIL NIL |Rng&| NIL NIL
-                |AbelianGroup&| NIL NIL NIL NIL NIL |Monoid&| |OrderedSet&|
-                |AbelianMonoid&| |AbelianSemiGroup&| |SemiGroup&| NIL
-                |SetCategory&| |BasicType&| NIL NIL |RetractableTo&|
-                |PartialOrder&|)
+             '#(|TensorPowerCategory&| |Algebra&| NIL |FreeModuleCategory&| NIL
+                |Rng&| NIL NIL |Module&| NIL NIL NIL |NonAssociativeRing&| NIL
+                NIL NIL NIL NIL NIL |NonAssociativeRng&| NIL |AbelianGroup&|
+                NIL NIL NIL NIL NIL |MagmaWithUnit&| NIL
+                |NonAssociativeSemiRng&| |OrderedSet&| |AbelianMonoid&|
+                |AbelianSemiGroup&| |Magma&| NIL |SetCategory&| |BasicType&|
+                NIL NIL |RetractableTo&| |PartialOrder&|)
              (CONS
-              '#((|TensorPowerCategory| 6 7 9)
+              '#((|TensorPowerCategory| 6 7 9) (|Algebra| 7) (|Ring|)
                  (|FreeModuleCategory| 7 (|Vector| 8))
-                 (|TensorProductCategory| 7 9 9) (|Algebra| 7)
+                 (|TensorProductCategory| 7 9 9) (|Rng|) (|SemiRing|)
                  (|IndexedDirectProductCategory| 7 (|Vector| 8)) (|Module| 7)
-                 (|BiModule| 7 7) (|Ring|) (|OrderedAbelianMonoidSup|)
+                 (|SemiRng|) (|BiModule| 7 7) (|BiModule| $$ $$)
+                 (|NonAssociativeRing|) (|OrderedAbelianMonoidSup|)
                  (|AbelianProductCategory| 7) (|LeftModule| 7)
-                 (|RightModule| 7) (|Rng|) (|LeftModule| $$)
-                 (|OrderedCancellationAbelianMonoid|) (|AbelianGroup|)
-                 (|OrderedAbelianMonoid|) (|SemiRing|)
+                 (|RightModule| 7) (|LeftModule| $$) (|RightModule| $$)
+                 (|NonAssociativeRng|) (|OrderedCancellationAbelianMonoid|)
+                 (|AbelianGroup|) (|OrderedAbelianMonoid|)
+                 (|NonAssociativeSemiRing|) (|Monoid|)
                  (|OrderedAbelianSemiGroup|) (|CancellationAbelianMonoid|)
-                 (|SemiRng|) (|Monoid|) (|OrderedSet|) (|AbelianMonoid|)
-                 (|AbelianSemiGroup|) (|SemiGroup|) (|Comparable|)
-                 (|SetCategory|) (|BasicType|) (|CoercibleTo| 13)
-                 (|unitsKnown|) (|RetractableTo| (|Vector| 8))
-                 (|PartialOrder|))
+                 (|MagmaWithUnit|) (|SemiGroup|) (|NonAssociativeSemiRng|)
+                 (|OrderedSet|) (|AbelianMonoid|) (|AbelianSemiGroup|)
+                 (|Magma|) (|Comparable|) (|SetCategory|) (|BasicType|)
+                 (|CoercibleTo| 13) (|unitsKnown|)
+                 (|RetractableTo| (|Vector| 8)) (|PartialOrder|))
               (|makeByteWordVec2| 63
                                   '(1 0 10 0 11 0 7 0 12 1 7 13 0 14 1 0 16 0
                                     17 2 13 0 0 0 18 1 20 19 0 21 1 8 13 0 22 2
@@ -459,21 +464,24 @@
                                     40 1 9 10 0 41 2 39 10 42 0 43 0 0 0 44 1 0
                                     0 16 45 2 9 0 7 8 47 2 9 0 0 0 48 2 0 0 7 0
                                     49 1 0 0 16 50 2 0 0 0 0 51 2 0 10 0 0 1 1
-                                    9 10 0 11 1 0 0 19 37 1 0 0 39 46 2 0 0 9 9
-                                    1 1 0 60 0 1 2 4 0 0 0 1 2 10 52 0 0 1 2 5
-                                    10 0 0 1 0 9 0 1 1 3 56 0 1 1 3 20 0 1 1 0
-                                    0 0 1 1 1 52 0 1 2 9 10 0 0 1 1 1 10 0 1 1
-                                    0 38 0 1 1 0 59 0 1 1 0 10 0 1 2 0 0 7 20
-                                    36 2 6 0 0 0 1 2 6 0 0 0 1 2 0 0 57 0 1 1 0
-                                    16 0 17 2 11 7 55 0 1 1 0 15 0 1 1 0 20 0 1
-                                    1 0 0 0 1 1 0 7 0 1 1 0 62 0 1 2 0 61 61 0
-                                    1 1 0 63 0 1 1 0 0 16 45 1 0 0 16 50 1 1 0
-                                    7 1 1 1 0 53 1 1 3 0 20 1 1 0 13 0 30 1 0
-                                    58 0 1 2 0 7 0 20 1 0 1 38 1 2 1 10 0 0 1 2
-                                    1 0 0 54 1 2 1 0 0 38 1 0 9 0 44 0 1 0 1 2
-                                    6 10 0 0 1 2 6 10 0 0 1 2 0 10 0 0 1 2 6 10
-                                    0 0 1 2 6 10 0 0 1 1 2 0 0 1 2 2 0 0 0 1 2
-                                    0 0 0 0 1 2 2 0 53 0 1 2 9 0 38 0 1 2 1 0 0
-                                    0 51 2 0 0 7 20 1 2 0 0 20 7 1 2 0 0 7 0 49
-                                    2 0 0 0 7 1 2 0 0 54 0 1)))))
+                                    9 10 0 11 1 0 0 19 37 2 0 0 9 9 1 1 0 0 39
+                                    46 1 0 59 0 1 2 4 0 0 0 1 2 10 52 0 0 1 2 5
+                                    10 0 0 1 0 9 0 1 1 1 52 0 1 2 1 0 0 54 1 2
+                                    1 0 0 38 1 1 3 56 0 1 1 3 20 0 1 1 0 0 0 1
+                                    1 1 52 0 1 2 9 10 0 0 1 1 1 10 0 1 1 0 38 0
+                                    1 1 0 60 0 1 1 0 10 0 1 2 0 0 7 20 36 2 6 0
+                                    0 0 1 2 6 0 0 0 1 2 0 0 57 0 1 1 0 16 0 17
+                                    2 11 7 55 0 1 1 1 52 0 1 2 1 0 0 54 1 2 1 0
+                                    0 38 1 1 0 15 0 1 1 0 20 0 1 1 0 0 0 1 1 0
+                                    7 0 1 1 0 61 0 1 2 0 63 63 0 1 1 0 62 0 1 1
+                                    0 0 16 45 1 0 0 16 50 2 1 0 0 0 1 1 1 0 53
+                                    1 1 1 0 7 1 1 3 0 20 1 1 0 13 0 30 1 0 58 0
+                                    1 2 0 7 0 20 1 0 1 38 1 3 1 0 0 0 0 1 2 1 0
+                                    0 0 1 2 1 10 0 0 1 2 1 0 0 54 1 2 1 0 0 38
+                                    1 0 9 0 44 0 1 0 1 2 6 10 0 0 1 2 6 10 0 0
+                                    1 2 0 10 0 0 1 2 6 10 0 0 1 2 6 10 0 0 1 2
+                                    2 0 0 0 1 1 2 0 0 1 2 0 0 0 0 1 2 2 0 53 0
+                                    1 2 9 0 38 0 1 2 1 0 0 0 51 2 0 0 7 20 1 2
+                                    0 0 20 7 1 2 0 0 0 7 1 2 0 0 54 0 1 2 0 0 7
+                                    0 49)))))
            '|lookupComplete|)) 

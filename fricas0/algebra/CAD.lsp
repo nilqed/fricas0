@@ -2,7 +2,7 @@
 (SDEFUN |CAD;cylindricalDecomposition;LL;1|
         ((|lpols| |List| (|Polynomial| |TheField|))
          ($ |List| (|Cell| |TheField|)))
-        (SPROG ((|lv| (|List| (|Symbol|))) (#1=#:G718 NIL) (|pol| NIL))
+        (SPROG ((|lv| (|List| (|Symbol|))) (#1=#:G719 NIL) (|pol| NIL))
                (SEQ (LETT |lv| NIL . #2=(|CAD;cylindricalDecomposition;LL;1|))
                     (SEQ (LETT |pol| NIL . #2#) (LETT #1# |lpols| . #2#) G190
                          (COND
@@ -28,19 +28,19 @@
         ((|lpols| |List| (|Polynomial| |TheField|)) (|lvars| |List| (|Symbol|))
          ($ |List| (|Cell| |TheField|)))
         (SPROG
-         ((|res| (|List| (|Cell| |TheField|))) (#1=#:G738 NIL) (|scell| NIL)
-          (#2=#:G737 NIL)
+         ((|res| (|List| (|Cell| |TheField|))) (#1=#:G739 NIL) (|scell| NIL)
+          (#2=#:G738 NIL)
           (|scells|
            (|List|
             (|SimpleCell| |TheField|
                           (|SparseUnivariatePolynomial| |TheField|))))
           (|lspec| (|List| (|SparseUnivariatePolynomial| |TheField|)))
-          (#3=#:G736 NIL) (|cell| NIL)
+          (#3=#:G737 NIL) (|cell| NIL)
           (|previousCad| (|List| (|Cell| |TheField|)))
-          (|lpols1| (|List| (|Polynomial| |TheField|))) (#4=#:G735 NIL)
-          (|pol| NIL) (#5=#:G734 NIL) (#6=#:G733 NIL) (#7=#:G732 NIL)
+          (|lpols1| (|List| (|Polynomial| |TheField|))) (#4=#:G736 NIL)
+          (|pol| NIL) (#5=#:G735 NIL) (#6=#:G734 NIL) (#7=#:G733 NIL)
           (|lp1| (|List| (|SparseUnivariatePolynomial| |TheField|)))
-          (#8=#:G731 NIL) (#9=#:G730 NIL) (|lv| (|List| (|Symbol|)))
+          (#8=#:G732 NIL) (#9=#:G731 NIL) (|lv| (|List| (|Symbol|)))
           (|mv| (|Symbol|)))
          (SEQ
           (COND
@@ -163,7 +163,7 @@
          ($ |List| (|SparseUnivariatePolynomial| |TheField|)))
         (SPROG
          ((|res| (|List| (|SparseUnivariatePolynomial| |TheField|)))
-          (|p1| (|SparseUnivariatePolynomial| |TheField|)) (#1=#:G743 NIL)
+          (|p1| (|SparseUnivariatePolynomial| |TheField|)) (#1=#:G745 NIL)
           (|pol| NIL) (|vl| (|List| (|Symbol|))) (|sp| (|List| |TheField|)))
          (SEQ
           (COND
@@ -194,8 +194,8 @@
         ((|pol| |SparseUnivariatePolynomial| (|Polynomial| |TheField|))
          ($ |List| (|Polynomial| |TheField|)))
         (SPROG
-         ((|res| (|List| (|Polynomial| |TheField|))) (#1=#:G748 NIL)
-          (#2=#:G749 NIL) (|c| NIL))
+         ((|res| (|List| (|Polynomial| |TheField|))) (#1=#:G750 NIL)
+          (#2=#:G751 NIL) (|c| NIL))
          (SEQ
           (EXIT
            (SEQ (LETT |res| NIL . #3=(|CAD;coefficientSet;SupL;4|))
@@ -208,7 +208,7 @@
                       (EXIT
                        (COND
                         ((SPADCALL |c| (QREFELT $ 9))
-                         (PROGN (LETT #1# |res| . #3#) (GO #4=#:G747)))
+                         (PROGN (LETT #1# |res| . #3#) (GO #4=#:G749)))
                         ('T (LETT |res| (CONS |c| |res|) . #3#)))))
                      (LETT #2# (CDR #2#) . #3#) (GO G190) G191 (EXIT NIL))
                 (EXIT |res|)))
@@ -219,12 +219,12 @@
           (|SparseUnivariatePolynomial| (|Polynomial| |TheField|)))
          ($ |List| (|Polynomial| |TheField|)))
         (SPROG
-         ((|res| (|List| (|Polynomial| |TheField|))) (#1=#:G759 NIL)
+         ((|res| (|List| (|Polynomial| |TheField|))) (#1=#:G762 NIL)
           (|d| (|Polynomial| |TheField|))
           (|v|
            (|PrimitiveArray|
             (|SparseUnivariatePolynomial| (|Polynomial| |TheField|))))
-          (#2=#:G760 NIL) (|p| NIL))
+          (#2=#:G763 NIL) (|p| NIL))
          (SEQ
           (EXIT
            (SEQ (LETT |res| NIL . #3=(|CAD;discriminantSet;LL;5|))
@@ -242,7 +242,7 @@
                         (EXIT
                          (PROGN
                           (LETT #1# (|error| "Bad discriminant") . #3#)
-                          (GO #4=#:G758)))))
+                          (GO #4=#:G761)))))
                       (LETT |d| (SPADCALL (QAREF1 |v| 0) (QREFELT $ 54)) . #3#)
                       (EXIT
                        (COND
@@ -262,7 +262,7 @@
          (|q| . #2=(|SparseUnivariatePolynomial| (|Polynomial| |TheField|)))
          ($ |List| (|Polynomial| |TheField|)))
         (SPROG
-         ((#3=#:G770 NIL) (#4=#:G765 NIL) (|i| NIL) (#5=#:G769 NIL)
+         ((#3=#:G775 NIL) (#4=#:G770 NIL) (|i| NIL) (#5=#:G774 NIL)
           (|v|
            (|PrimitiveArray|
             (|SparseUnivariatePolynomial| (|Polynomial| |TheField|))))
@@ -309,9 +309,9 @@
                 (|SparseUnivariatePolynomial| (|Polynomial| |TheField|))))
          ($ |List| (|Polynomial| |TheField|)))
         (SPROG
-         ((|res| (|List| (|Polynomial| |TheField|))) (#2=#:G778 NIL)
-          (|r| (|Polynomial| |TheField|)) (#3=#:G780 NIL) (|q| NIL)
-          (|laux| #1#) (#4=#:G779 NIL) (|p| NIL))
+         ((|res| (|List| (|Polynomial| |TheField|))) (#2=#:G783 NIL)
+          (|r| (|Polynomial| |TheField|)) (#3=#:G785 NIL) (|q| NIL)
+          (|laux| #1#) (#4=#:G784 NIL) (|p| NIL))
          (SEQ
           (EXIT
            (SEQ (LETT |res| NIL . #5=(|CAD;resultantSet;LL;7|))
@@ -341,7 +341,7 @@
                                            (|error|
                                             "Non relatively prime polynomials")
                                            . #5#)
-                                     (GO #6=#:G777)))
+                                     (GO #6=#:G782)))
                                    ((NULL (SPADCALL |r| (QREFELT $ 9)))
                                     (LETT |res| (CONS |r| |res|) . #5#)))))
                                 (LETT #3# (CDR #3#) . #5#) (GO G190) G191
@@ -355,7 +355,7 @@
           (|SparseUnivariatePolynomial| (|Polynomial| |TheField|)))
          ($ |List| (|Polynomial| |TheField|)))
         (SPROG
-         ((|res| (|List| (|Polynomial| |TheField|))) (#1=#:G795 NIL) (|p| NIL)
+         ((|res| (|List| (|Polynomial| |TheField|))) (#1=#:G800 NIL) (|p| NIL)
           (|lsqfrb|
            (|List| (|SparseUnivariatePolynomial| (|Polynomial| |TheField|))))
           (|lp1|
@@ -365,8 +365,8 @@
                       (|SparseUnivariatePolynomial| (|Polynomial| |TheField|))
                       (|SparseUnivariatePolynomial|
                        (|Polynomial| |TheField|))))
-          (#2=#:G794 NIL) (#3=#:G793 NIL) (|c| (|Polynomial| |TheField|))
-          (#4=#:G792 NIL))
+          (#2=#:G799 NIL) (#3=#:G798 NIL) (|c| (|Polynomial| |TheField|))
+          (#4=#:G797 NIL))
          (SEQ (LETT |res| NIL . #5=(|CAD;projectionSet;LL;8|))
               (SEQ (LETT |p| NIL . #5#) (LETT #4# |lpols| . #5#) G190
                    (COND
@@ -421,9 +421,9 @@
 
 (DECLAIM (NOTINLINE |CylindricalAlgebraicDecompositionPackage;|)) 
 
-(DEFUN |CylindricalAlgebraicDecompositionPackage| (#1=#:G796)
+(DEFUN |CylindricalAlgebraicDecompositionPackage| (#1=#:G801)
   (SPROG NIL
-         (PROG (#2=#:G797)
+         (PROG (#2=#:G802)
            (RETURN
             (COND
              ((LETT #2#

@@ -12,7 +12,10 @@
          (PROG1
              (LETT #1#
                    (|Join| (|BoundedDistributiveLattice|)
-                           (|mkCategory| '(((~ ($ $)) T)) NIL 'NIL NIL))
+                           (|mkCategory|
+                            '(((~ ($ $)) T) ((|true| ($) |constant|) T)
+                              ((|false| ($) |constant|) T))
+                            NIL 'NIL NIL))
                    |Logic|)
            (SETELT #1# 0 '(|Logic|))))) 
 

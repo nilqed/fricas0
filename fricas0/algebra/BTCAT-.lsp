@@ -54,9 +54,9 @@
 
 (SDEFUN |BTCAT-;distance1| ((|t1| A) (|t2| A) ($ . #1=(|Integer|)))
         (SPROG
-         ((#2=#:G738 NIL) (#3=#:G737 #1#) (#4=#:G739 #1#) (#5=#:G745 NIL)
-          (#6=#:G690 NIL) (|u| (|List| #1#)) (|n| #1#) (#7=#:G744 NIL)
-          (|t| NIL) (#8=#:G743 NIL))
+         ((#2=#:G741 NIL) (#3=#:G740 #1#) (#4=#:G742 #1#) (#5=#:G748 NIL)
+          (#6=#:G690 NIL) (|u| (|List| #1#)) (|n| #1#) (#7=#:G747 NIL)
+          (|t| NIL) (#8=#:G746 NIL))
          (SEQ
           (COND ((SPADCALL |t1| |t2| (QREFELT $ 28)) 0)
                 ((SPADCALL |t2| (QREFELT $ 9)) -1)

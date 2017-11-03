@@ -10,7 +10,7 @@
           (RETURN
            (PROGN
             (SPROG
-             ((|a| NIL) (|b| NIL) (|l| NIL) (|m| NIL) (#2=#:G702 NIL) (|w| NIL)
+             ((|a| NIL) (|b| NIL) (|l| NIL) (|m| NIL) (#2=#:G705 NIL) (|w| NIL)
               (|mqnext| NIL) (|n| NIL) (|mq| NIL))
              (SEQ (LETT |a| (SPADCALL |aTob| (QREFELT $ 8)) NIL)
                   (LETT |b| (SPADCALL |aTob| (QREFELT $ 9)) NIL)
@@ -57,7 +57,7 @@
 (SDEFUN |RIDIST;ridHack1;5I;2|
         ((|mq| |Integer|) (|n| |Integer|) (|w| |Integer|) (|l| |Integer|)
          ($ |Integer|))
-        (SPROG ((|r| (|Integer|)) (#1=#:G713 NIL) (|i| NIL))
+        (SPROG ((|r| (|Integer|)) (#1=#:G717 NIL) (|i| NIL))
                (SEQ
                 (LETT |r| (SPADCALL |mq| (QREFELT $ 33))
                       . #2=(|RIDIST;ridHack1;5I;2|))
@@ -74,7 +74,7 @@
 
 (DEFUN |RandomIntegerDistributions| ()
   (SPROG NIL
-         (PROG (#1=#:G718)
+         (PROG (#1=#:G723)
            (RETURN
             (COND
              ((LETT #1#
@@ -112,8 +112,8 @@
 
 (MAKEPROP '|RandomIntegerDistributions| '|infovec|
           (LIST
-           '#(NIL NIL NIL NIL NIL NIL (|Integer|) (|Segment| 6) (0 . |lo|)
-              (5 . |hi|) (10 . |min|) (16 . -) (22 . |abs|) (27 . |One|)
+           '#(NIL NIL NIL NIL NIL NIL (|Integer|) (|Segment| 6) (0 . |low|)
+              (5 . |high|) (10 . |min|) (16 . -) (22 . |abs|) (27 . |One|)
               (31 . +) (|RandomNumberSource|) (37 . |size|) (|IntegerBits|)
               (41 . |bitLength|) (46 . |quo|) (|NonNegativeInteger|) (52 . ^)
               (58 . |Zero|) (|Boolean|) (62 . >) (|PositiveInteger|)

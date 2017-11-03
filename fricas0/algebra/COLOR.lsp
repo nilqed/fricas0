@@ -90,15 +90,17 @@
 
 (SDEFUN |COLOR;coerce;$Of;12| ((|c| $) ($ |OutputForm|))
         (SPADCALL
-         (LIST "Hue: " (SPADCALL (QCAR |c|) (QREFELT $ 27)) "  Weight: "
-               (SPADCALL (QCDR |c|) (QREFELT $ 28)))
-         (QREFELT $ 30))) 
+         (LIST (SPADCALL "Hue: " (QREFELT $ 28))
+               (SPADCALL (QCAR |c|) (QREFELT $ 29))
+               (SPADCALL "  Weight: " (QREFELT $ 28))
+               (SPADCALL (QCDR |c|) (QREFELT $ 30)))
+         (QREFELT $ 32))) 
 
 (DECLAIM (NOTINLINE |Color;|)) 
 
 (DEFUN |Color| ()
   (SPROG NIL
-         (PROG (#1=#:G732)
+         (PROG (#1=#:G738)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|Color|) . #2=(|Color|))
@@ -116,7 +118,7 @@
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
           (LETT |dv$| '(|Color|) . #1=(|Color|))
-          (LETT $ (GETREFV 35) . #1#)
+          (LETT $ (GETREFV 36) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|Color| NIL (CONS 1 $))
@@ -134,28 +136,28 @@
               |COLOR;+;3$;2| |COLOR;=;2$B;3| |COLOR;red;$;4| |COLOR;yellow;$;5|
               |COLOR;green;$;6| |COLOR;blue;$;7| |COLOR;hue;$I;8|
               (|PositiveInteger|) |COLOR;*;Pi2$;9| |COLOR;numberOfHues;Pi;10|
-              |COLOR;color;I$;11| (|OutputForm|) (23 . |coerce|)
-              (28 . |coerce|) (|List| $) (33 . |hconcat|) |COLOR;coerce;$Of;12|
-              (|HashState|) (|String|) (|SingleInteger|))
-           '#(~= 38 |yellow| 44 |red| 48 |numberOfHues| 52 |latex| 56 |hue| 61
-              |hashUpdate!| 66 |hash| 72 |green| 77 |color| 81 |coerce| 86
-              |blue| 91 = 95 + 101 * 107)
+              |COLOR;color;I$;11| (|String|) (|OutputForm|) (23 . |message|)
+              (28 . |coerce|) (33 . |coerce|) (|List| $) (38 . |hconcat|)
+              |COLOR;coerce;$Of;12| (|HashState|) (|SingleInteger|))
+           '#(~= 43 |yellow| 49 |red| 53 |numberOfHues| 57 |latex| 61 |hue| 66
+              |hashUpdate!| 71 |hash| 77 |green| 82 |color| 86 |coerce| 91
+              |blue| 96 = 100 + 106 * 112)
            'NIL
            (CONS (|makeByteWordVec2| 1 '(0 0 0 0))
                  (CONS '#(|AbelianSemiGroup&| |SetCategory&| |BasicType&| NIL)
                        (CONS
                         '#((|AbelianSemiGroup|) (|SetCategory|) (|BasicType|)
-                           (|CoercibleTo| 26))
-                        (|makeByteWordVec2| 34
+                           (|CoercibleTo| 27))
+                        (|makeByteWordVec2| 35
                                             '(2 7 9 0 0 10 2 11 9 0 0 12 2 7 0
-                                              0 0 13 1 7 0 0 14 1 11 26 0 27 1
-                                              7 26 0 28 1 26 0 29 30 2 0 9 0 0
-                                              1 0 0 0 18 0 0 0 17 0 0 22 24 1 0
-                                              33 0 1 1 0 11 0 21 2 0 32 32 0 1
-                                              1 0 34 0 1 0 0 0 19 1 0 0 11 25 1
-                                              0 26 0 31 0 0 0 20 2 0 9 0 0 16 2
-                                              0 0 0 0 15 2 0 0 7 0 8 2 0 0 22 0
-                                              23)))))
+                                              0 0 13 1 7 0 0 14 1 27 0 26 28 1
+                                              11 27 0 29 1 7 27 0 30 1 27 0 31
+                                              32 2 0 9 0 0 1 0 0 0 18 0 0 0 17
+                                              0 0 22 24 1 0 26 0 1 1 0 11 0 21
+                                              2 0 34 34 0 1 1 0 35 0 1 0 0 0 19
+                                              1 0 0 11 25 1 0 27 0 33 0 0 0 20
+                                              2 0 9 0 0 16 2 0 0 0 0 15 2 0 0 7
+                                              0 8 2 0 0 22 0 23)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|Color| 'NILADIC T) 

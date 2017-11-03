@@ -5,7 +5,7 @@
 
 (SDEFUN |ANTISYM;coefficient;2$R;2| ((|a| $) (|u| $) ($ R))
         (SPROG
-         ((#1=#:G729 NIL) (#2=#:G730 NIL) (|t| NIL) (|x| (|ExtAlgBasis|)))
+         ((#1=#:G738 NIL) (#2=#:G739 NIL) (|t| NIL) (|x| (|ExtAlgBasis|)))
          (SEQ
           (EXIT
            (COND
@@ -22,7 +22,7 @@
                    (SEQ
                     (COND
                      ((SPADCALL (QCAR |t|) |x| (QREFELT $ 16))
-                      (PROGN (LETT #1# (QCDR |t|) . #3#) (GO #4=#:G728))))
+                      (PROGN (LETT #1# (QCDR |t|) . #3#) (GO #4=#:G737))))
                     (EXIT
                      (COND
                       ((SPADCALL (QCAR |t|) |x| (QREFELT $ 17))
@@ -54,10 +54,10 @@
 
 (SDEFUN |ANTISYM;homogeneous?;$B;6| ((|a| $) ($ |Boolean|))
         (SPROG
-         ((#1=#:G784 NIL) (#2=#:G785 NIL) (#3=#:G778 NIL)
-          (#4=#:G777 #5=(|Integer|)) (#6=#:G779 #5#) (#7=#:G788 NIL)
-          (#8=#:G691 NIL) (#9=#:G787 NIL) (|ta| NIL) (|siz| #5#)
-          (#10=#:G745 NIL) (#11=#:G744 #5#) (#12=#:G746 #5#) (#13=#:G786 NIL)
+         ((#1=#:G797 NIL) (#2=#:G798 NIL) (#3=#:G790 NIL)
+          (#4=#:G789 #5=(|Integer|)) (#6=#:G791 #5#) (#7=#:G801 NIL)
+          (#8=#:G691 NIL) (#9=#:G800 NIL) (|ta| NIL) (|siz| #5#)
+          (#10=#:G757 NIL) (#11=#:G756 #5#) (#12=#:G758 #5#) (#13=#:G799 NIL)
           (#14=#:G690 NIL))
          (SEQ
           (EXIT
@@ -134,9 +134,9 @@
                                (LETT #1#
                                      (PROGN
                                       (LETT #2# NIL . #16#)
-                                      (GO #17=#:G783))
+                                      (GO #17=#:G796))
                                      . #16#)
-                               (GO #18=#:G781))))))
+                               (GO #18=#:G793))))))
                           (LETT #9# (CDR #9#) . #16#) (GO G190) G191
                           (EXIT NIL)))
                     #18# (EXIT #1#))
@@ -145,8 +145,8 @@
 
 (SDEFUN |ANTISYM;degree;$Nni;7| ((|a| $) ($ |NonNegativeInteger|))
         (SPROG
-         ((#1=#:G796 NIL) (#2=#:G794 NIL) (#3=#:G793 #4=(|Integer|))
-          (#5=#:G795 #4#) (#6=#:G799 NIL) (#7=#:G692 NIL))
+         ((#1=#:G809 NIL) (#2=#:G807 NIL) (#3=#:G806 #4=(|Integer|))
+          (#5=#:G808 #4#) (#6=#:G813 NIL) (#7=#:G692 NIL))
          (SEQ
           (COND ((NULL |a|) 0)
                 ((SPADCALL |a| (QREFELT $ 30))
@@ -187,9 +187,9 @@
 
 (SDEFUN |ANTISYM;getsgn| ((|x| . #1=(|ExtAlgBasis|)) (|y| . #1#) ($ |Integer|))
         (SPROG
-         ((|sgn| (|Integer|)) (#2=#:G821 NIL) (#3=#:G820 #4=(|Integer|))
-          (#5=#:G822 #4#) (#6=#:G837 NIL) (#7=#:G693 NIL)
-          (|xx| #8=(|List| (|Integer|))) (#9=#:G836 NIL) (|i| NIL) (|yy| #8#))
+         ((|sgn| (|Integer|)) (#2=#:G846 NIL) (#3=#:G845 #4=(|Integer|))
+          (#5=#:G847 #4#) (#6=#:G862 NIL) (#7=#:G693 NIL)
+          (|xx| #8=(|List| (|Integer|))) (#9=#:G861 NIL) (|i| NIL) (|yy| #8#))
          (SEQ (LETT |sgn| 0 . #10=(|ANTISYM;getsgn|))
               (LETT |xx| (SPADCALL |x| (QREFELT $ 26)) . #10#)
               (LETT |yy| (SPADCALL |y| (QREFELT $ 26)) . #10#)
@@ -232,9 +232,9 @@
 (SDEFUN |ANTISYM;Nalpha|
         ((|x| . #1=(|ExtAlgBasis|)) (|y| . #1#) ($ |List| (|Integer|)))
         (SPROG
-         ((#2=#:G844 NIL) (|i| (|Integer|)) (|dum| (|List| (|Integer|)))
-          (#3=#:G847 NIL) (|j| NIL) (|dum2| (|List| (|Integer|)))
-          (#4=#:G846 NIL) (#5=#:G845 NIL))
+         ((#2=#:G869 NIL) (|i| (|Integer|)) (|dum| (|List| (|Integer|)))
+          (#3=#:G872 NIL) (|j| NIL) (|dum2| (|List| (|Integer|)))
+          (#4=#:G871 NIL) (#5=#:G870 NIL))
          (SEQ (LETT |i| 1 . #6=(|ANTISYM;Nalpha|))
               (LETT |dum2|
                     (PROGN
@@ -265,7 +265,7 @@
                       (EXIT
                        (COND
                         ((EQL |i| 0)
-                         (PROGN (LETT #2# |$NoValue| . #6#) (GO #7=#:G841)))
+                         (PROGN (LETT #2# |$NoValue| . #6#) (GO #7=#:G866)))
                         ('T
                          (SPADCALL |dum2| |j| (SPADCALL |dum| 2 (QREFELT $ 33))
                                    (QREFELT $ 35))))))
@@ -278,8 +278,8 @@
 
 (SDEFUN |ANTISYM;*;3$;11| ((|a| $) (|b| $) ($ $))
         (SPROG
-         ((|z| ($)) (|r| (R)) (|stuff| (|List| (|Integer|))) (#1=#:G859 NIL)
-          (|ta| NIL) (#2=#:G858 NIL) (|tb| NIL))
+         ((|z| ($)) (|r| (R)) (|stuff| (|List| (|Integer|))) (#1=#:G886 NIL)
+          (|ta| NIL) (#2=#:G885 NIL) (|tb| NIL))
          (SEQ
           (COND ((OR (NULL |a|) (NULL |b|)) (|spadConstant| $ 32))
                 ('T
@@ -362,8 +362,8 @@
 
 (SDEFUN |ANTISYM;generator;Nni$;15| ((|j| |NonNegativeInteger|) ($ $))
         (SPROG
-         ((|dum| (|List| (|Integer|))) (#1=#:G870 NIL) (|i| NIL)
-          (#2=#:G869 NIL))
+         ((|dum| (|List| (|Integer|))) (#1=#:G897 NIL) (|i| NIL)
+          (#2=#:G896 NIL))
          (SEQ
           (LETT |dum|
                 (PROGN
@@ -387,7 +387,7 @@
 
 (SDEFUN |ANTISYM;displayList| ((|x| |ExtAlgBasis|) ($ |OutputForm|))
         (SPROG
-         ((#1=#:G888 NIL) (|i| NIL) (#2=#:G887 NIL)
+         ((#1=#:G914 NIL) (|i| NIL) (#2=#:G913 NIL)
           (|le| (|List| (|Integer|))))
          (SEQ
           (LETT |le| (SPADCALL |x| (QREFELT $ 26))
@@ -426,9 +426,9 @@
 
 (SDEFUN |ANTISYM;coerce;$Of;20| ((|a| $) ($ |OutputForm|))
         (SPROG
-         ((#1=#:G900 NIL)
+         ((#1=#:G926 NIL)
           (|t| (|Record| (|:| |k| (|ExtAlgBasis|)) (|:| |c| R)))
-          (#2=#:G899 NIL))
+          (#2=#:G925 NIL))
          (SEQ
           (COND ((SPADCALL |a| (QREFELT $ 62)) (SPADCALL 0 (QREFELT $ 63)))
                 ((NULL (CDR |a|))
@@ -458,9 +458,9 @@
 
 (DECLAIM (NOTINLINE |AntiSymm;|)) 
 
-(DEFUN |AntiSymm| (&REST #1=#:G905)
+(DEFUN |AntiSymm| (&REST #1=#:G931)
   (SPROG NIL
-         (PROG (#2=#:G906)
+         (PROG (#2=#:G932)
            (RETURN
             (COND
              ((LETT #2#
@@ -520,51 +520,59 @@
               (|Mapping| 52 52 52) (|List| 52) (136 . |reduce|)
               (142 . |coerce|) (147 . |zero?|) (152 . |coerce|) (157 . +)
               |ANTISYM;coerce;$Of;20| (|Mapping| 6 6) (|Union| $ '"failed")
-              (|PositiveInteger|) (|String|) (|SingleInteger|) (|HashState|))
-           '#(~= 163 |zero?| 169 |subtractIfCan| 174 |sample| 180
-              |retractable?| 184 |retractIfCan| 189 |retract| 194 |reductum|
-              199 |recip| 204 |opposite?| 209 |one?| 215 |map| 220
-              |leadingCoefficient| 226 |leadingBasisTerm| 231 |latex| 236
-              |homogeneous?| 241 |hashUpdate!| 246 |hash| 252 |generator| 257
-              |exp| 262 |degree| 267 |coerce| 272 |coefficient| 287
-              |characteristic| 293 |annihilate?| 297 ^ 303 |Zero| 315 |One| 319
-              = 323 - 329 + 340 * 346)
+              (|PositiveInteger|) (|HashState|) (|String|) (|SingleInteger|))
+           '#(~= 163 |zero?| 169 |subtractIfCan| 174 |sample| 180 |rightRecip|
+              184 |rightPower| 189 |retractable?| 201 |retractIfCan| 206
+              |retract| 211 |reductum| 216 |recip| 221 |opposite?| 226 |one?|
+              232 |map| 237 |leftRecip| 243 |leftPower| 248
+              |leadingCoefficient| 260 |leadingBasisTerm| 265 |latex| 270
+              |homogeneous?| 275 |hashUpdate!| 280 |hash| 286 |generator| 291
+              |exp| 296 |degree| 301 |commutator| 306 |coerce| 312
+              |coefficient| 327 |characteristic| 333 |associator| 337
+              |antiCommutator| 344 |annihilate?| 350 ^ 356 |Zero| 368 |One| 372
+              = 376 - 382 + 393 * 399)
            'NIL
-           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0))
-                 (CONS
-                  '#(|LeftAlgebra&| |Ring&| |Rng&| NIL NIL |AbelianGroup&| NIL
-                     NIL |AbelianMonoid&| |Monoid&| NIL |SemiGroup&|
-                     |AbelianSemiGroup&| |SetCategory&| |RetractableTo&| NIL
-                     |BasicType&| NIL)
-                  (CONS
-                   '#((|LeftAlgebra| 6) (|Ring|) (|Rng|) (|LeftModule| 6)
-                      (|LeftModule| $$) (|AbelianGroup|)
-                      (|CancellationAbelianMonoid|) (|SemiRing|)
-                      (|AbelianMonoid|) (|Monoid|) (|SemiRng|) (|SemiGroup|)
-                      (|AbelianSemiGroup|) (|SetCategory|) (|RetractableTo| 6)
-                      (|unitsKnown|) (|BasicType|) (|CoercibleTo| 52))
-                   (|makeByteWordVec2| 71
-                                       '(1 11 0 10 12 0 6 0 13 2 11 15 0 0 16 2
-                                         11 15 0 0 17 0 6 0 18 1 0 6 0 21 1 11
-                                         25 0 26 1 0 0 0 27 2 28 15 0 0 29 0 0
-                                         0 32 2 25 28 0 28 33 2 28 0 10 0 34 3
-                                         25 28 0 28 28 35 2 0 0 6 0 36 2 6 0 28
-                                         0 37 2 6 0 0 0 38 2 6 15 0 0 39 1 11 0
-                                         25 40 2 0 0 0 0 41 2 6 15 0 0 43 1 6 0
-                                         28 45 0 6 10 47 2 52 0 0 0 53 2 55 54
-                                         0 28 56 1 54 52 0 57 2 59 52 58 0 60 1
-                                         6 52 0 61 1 0 15 0 62 1 28 52 0 63 2
-                                         52 0 0 0 64 2 0 15 0 0 1 1 0 15 0 62 2
-                                         0 67 0 0 1 0 0 0 1 1 0 15 0 20 1 0 22
-                                         0 23 1 0 6 0 24 1 0 0 0 27 1 0 67 0 1
-                                         2 0 15 0 0 1 1 0 15 0 1 2 0 0 66 0 1 1
-                                         0 6 0 21 1 0 0 0 51 1 0 69 0 1 1 0 15
-                                         0 30 2 0 71 71 0 1 1 0 70 0 1 1 0 0 10
-                                         49 1 0 0 25 50 1 0 10 0 31 1 0 0 6 44
-                                         1 0 0 28 46 1 0 52 0 65 2 0 6 0 0 19 0
-                                         0 10 48 2 0 15 0 0 1 2 0 0 0 10 1 2 0
-                                         0 0 68 1 0 0 0 32 0 0 0 14 2 0 15 0 0
-                                         1 2 0 0 0 0 1 1 0 0 0 1 2 0 0 0 0 41 2
-                                         0 0 6 0 36 2 0 0 0 0 42 2 0 0 28 0 1 2
-                                         0 0 10 0 1 2 0 0 68 0 1)))))
+           (CONS
+            (|makeByteWordVec2| 1
+                                '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                                  0 0 0))
+            (CONS
+             '#(|LeftAlgebra&| NIL |Rng&| NIL NIL |NonAssociativeRing&| NIL NIL
+                |NonAssociativeRng&| NIL NIL |AbelianGroup&| NIL NIL NIL NIL
+                |MagmaWithUnit&| |NonAssociativeSemiRng&| |AbelianMonoid&|
+                |Magma&| |AbelianSemiGroup&| |SetCategory&| |RetractableTo&|
+                NIL |BasicType&| NIL)
+             (CONS
+              '#((|LeftAlgebra| 6) (|Ring|) (|Rng|) (|SemiRing|) (|SemiRng|)
+                 (|NonAssociativeRing|) (|BiModule| $$ $$) (|LeftModule| 6)
+                 (|NonAssociativeRng|) (|RightModule| $$) (|LeftModule| $$)
+                 (|AbelianGroup|) (|Monoid|) (|NonAssociativeSemiRing|)
+                 (|CancellationAbelianMonoid|) (|SemiGroup|) (|MagmaWithUnit|)
+                 (|NonAssociativeSemiRng|) (|AbelianMonoid|) (|Magma|)
+                 (|AbelianSemiGroup|) (|SetCategory|) (|RetractableTo| 6)
+                 (|unitsKnown|) (|BasicType|) (|CoercibleTo| 52))
+              (|makeByteWordVec2| 71
+                                  '(1 11 0 10 12 0 6 0 13 2 11 15 0 0 16 2 11
+                                    15 0 0 17 0 6 0 18 1 0 6 0 21 1 11 25 0 26
+                                    1 0 0 0 27 2 28 15 0 0 29 0 0 0 32 2 25 28
+                                    0 28 33 2 28 0 10 0 34 3 25 28 0 28 28 35 2
+                                    0 0 6 0 36 2 6 0 28 0 37 2 6 0 0 0 38 2 6
+                                    15 0 0 39 1 11 0 25 40 2 0 0 0 0 41 2 6 15
+                                    0 0 43 1 6 0 28 45 0 6 10 47 2 52 0 0 0 53
+                                    2 55 54 0 28 56 1 54 52 0 57 2 59 52 58 0
+                                    60 1 6 52 0 61 1 0 15 0 62 1 28 52 0 63 2
+                                    52 0 0 0 64 2 0 15 0 0 1 1 0 15 0 62 2 0 67
+                                    0 0 1 0 0 0 1 1 0 67 0 1 2 0 0 0 10 1 2 0 0
+                                    0 68 1 1 0 15 0 20 1 0 22 0 23 1 0 6 0 24 1
+                                    0 0 0 27 1 0 67 0 1 2 0 15 0 0 1 1 0 15 0 1
+                                    2 0 0 66 0 1 1 0 67 0 1 2 0 0 0 10 1 2 0 0
+                                    0 68 1 1 0 6 0 21 1 0 0 0 51 1 0 70 0 1 1 0
+                                    15 0 30 2 0 69 69 0 1 1 0 71 0 1 1 0 0 10
+                                    49 1 0 0 25 50 1 0 10 0 31 2 0 0 0 0 1 1 0
+                                    0 6 44 1 0 0 28 46 1 0 52 0 65 2 0 6 0 0 19
+                                    0 0 10 48 3 0 0 0 0 0 1 2 0 0 0 0 1 2 0 15
+                                    0 0 1 2 0 0 0 10 1 2 0 0 0 68 1 0 0 0 32 0
+                                    0 0 14 2 0 15 0 0 1 1 0 0 0 1 2 0 0 0 0 1 2
+                                    0 0 0 0 41 2 0 0 6 0 36 2 0 0 10 0 1 2 0 0
+                                    28 0 1 2 0 0 0 0 42 2 0 0 68 0 1)))))
            '|lookupComplete|)) 

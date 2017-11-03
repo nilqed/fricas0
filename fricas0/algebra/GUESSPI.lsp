@@ -3,7 +3,7 @@
 
 (DEFUN |GuessPolynomialInteger| ()
   (SPROG NIL
-         (PROG (#1=#:G718)
+         (PROG (#1=#:G720)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|GuessPolynomialInteger|)

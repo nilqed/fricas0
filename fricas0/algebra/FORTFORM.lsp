@@ -44,7 +44,7 @@
 
 (DEFUN |FortranFormat| ()
   (SPROG NIL
-         (PROG (#1=#:G723)
+         (PROG (#1=#:G724)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|FortranFormat|)
@@ -81,7 +81,7 @@
               (20 . |coerce|) (25 . |coerce|) (30 . |outputForm|) (|List| $)
               (35 . |elt|) (|Integer|) |FORTFORM;convert;OfI$;2| (|List| 15)
               (|FortranCodeTools|) (41 . |expression2Fortran|)
-              (46 . |fort_clean_lines|) (|Void|) (51 . |displayLines1|)
+              (46 . |fort_clean_lines|) (|Void|) (51 . |displayLines|)
               |FORTFORM;display;$V;3|)
            '#(|display| 56 |convert| 61) 'NIL
            (CONS (|makeByteWordVec2| 1 '(0))

@@ -31,9 +31,9 @@
 
 (DECLAIM (NOTINLINE |InputFormFunctions1;|)) 
 
-(DEFUN |InputFormFunctions1| (#1=#:G705)
+(DEFUN |InputFormFunctions1| (#1=#:G707)
   (SPROG NIL
-         (PROG (#2=#:G706)
+         (PROG (#2=#:G708)
            (RETURN
             (COND
              ((LETT #2#

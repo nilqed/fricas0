@@ -8,7 +8,7 @@
          (COND
           ((SPADCALL (QCSIZE |s|) 15 (QREFELT $ 24))
            (SPADCALL
-            (SPADCALL "WARNING: string for testsuite should have less then "
+            (SPADCALL "WARNING: string for testsuite should have less than "
                       "15 characters!" (QREFELT $ 25))
             (QREFELT $ 27))))
          (SETELT $ 15 |s|)
@@ -22,7 +22,7 @@
           ((SPADCALL (QCSIZE |s|) (- (QREFELT $ 6) (QCSIZE "  Testcase: "))
                      (QREFELT $ 33))
            (SPADCALL
-            (SPADCALL "WARNING: string for testcase should have less then "
+            (SPADCALL "WARNING: string for testcase should have less than "
                       (SPADCALL
                        (STRINGIMAGE (- (QREFELT $ 6) (QCSIZE "  Testcase: ")))
                        " characters!" (QREFELT $ 25))
@@ -434,19 +434,19 @@
 
 (SDEFUN |TESTCNT;statistics;V;18| (($ |Void|))
         (SPROG
-         ((#1=#:G850 NIL) (#2=#:G846 NIL) (#3=#:G842 NIL) (#4=#:G838 NIL)
-          (#5=#:G834 NIL) (|stotalTests| #6=(|String|)) (|sfailedTests| #6#)
+         ((#1=#:G853 NIL) (#2=#:G849 NIL) (#3=#:G845 NIL) (#4=#:G841 NIL)
+          (#5=#:G837 NIL) (|stotalTests| #6=(|String|)) (|sfailedTests| #6#)
           (|stotalCases| #6#) (|sfailedCases| #6#)
           (|tsfailedTests| (|Integer|)) (|tstotalTests| (|Integer|))
           (|failedCases| (|Integer|)) (|totalCases| (|Integer|))
-          (#7=#:G866 NIL) (|tstcase| NIL) (#8=#:G865 NIL) (|tstsuite| NIL)
-          (#9=#:G864 NIL) (|f| NIL) (#10=#:G814 NIL) (#11=#:G863 NIL)
-          (#12=#:G862 NIL) (|outstring| (|String|)) (#13=#:G860 NIL) (|o| NIL)
-          (#14=#:G861 NIL) (|i| NIL) (#15=#:G859 NIL) (#16=#:G795 NIL)
-          (#17=#:G858 NIL) (|xfpassedTests| (|Integer|))
+          (#7=#:G869 NIL) (|tstcase| NIL) (#8=#:G868 NIL) (|tstsuite| NIL)
+          (#9=#:G867 NIL) (|f| NIL) (#10=#:G817 NIL) (#11=#:G866 NIL)
+          (#12=#:G865 NIL) (|outstring| (|String|)) (#13=#:G863 NIL) (|o| NIL)
+          (#14=#:G864 NIL) (|i| NIL) (#15=#:G862 NIL) (#16=#:G798 NIL)
+          (#17=#:G861 NIL) (|xfpassedTests| (|Integer|))
           (|xfailedTests| (|Integer|)) (|failedTests| (|Integer|))
           (|totalTests| (|Integer|)) (|xfpassedCases| (|Integer|))
-          (#18=#:G857 NIL) (#19=#:G856 NIL) (#20=#:G855 NIL) (|w| NIL))
+          (#18=#:G860 NIL) (#19=#:G859 NIL) (#20=#:G858 NIL) (|w| NIL))
          (SEQ
           (SPADCALL (|make_full_CVEC| (QREFELT $ 6) (|STR_to_CHAR| "="))
                     (QREFELT $ 27))
@@ -1055,7 +1055,7 @@
 
 (DEFUN |UnittestCount| ()
   (SPROG NIL
-         (PROG (#1=#:G868)
+         (PROG (#1=#:G871)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|UnittestCount|)

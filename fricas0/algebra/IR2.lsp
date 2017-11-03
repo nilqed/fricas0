@@ -116,9 +116,9 @@
 
 (DECLAIM (NOTINLINE |IntegrationResultFunctions2;|)) 
 
-(DEFUN |IntegrationResultFunctions2| (&REST #1=#:G778)
+(DEFUN |IntegrationResultFunctions2| (&REST #1=#:G779)
   (SPROG NIL
-         (PROG (#2=#:G779)
+         (PROG (#2=#:G780)
            (RETURN
             (COND
              ((LETT #2#

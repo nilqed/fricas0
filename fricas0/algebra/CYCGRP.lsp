@@ -8,7 +8,7 @@
 (SDEFUN |CYCGRP;per| ((|r| |Rep|) ($ $)) |r|) 
 
 (SDEFUN |CYCGRP;coerce;$Of;3| ((|x| $) ($ |OutputForm|))
-        (SPROG ((#1=#:G716 NIL))
+        (SPROG ((#1=#:G719 NIL))
                (SEQ
                 (EXIT
                  (COND
@@ -16,7 +16,7 @@
                    (PROGN
                     (LETT #1# (SPADCALL 1 (QREFELT $ 13))
                           . #2=(|CYCGRP;coerce;$Of;3|))
-                    (GO #3=#:G715)))
+                    (GO #3=#:G718)))
                   ((EQL (|CYCGRP;rep| |x| $) 1)
                    (PROGN
                     (LETT #1# (SPADCALL (QREFELT $ 7) (QREFELT $ 15)) . #2#)
@@ -61,7 +61,7 @@
 (SDEFUN |CYCGRP;size;Nni;13| (($ |NonNegativeInteger|)) (QREFELT $ 6)) 
 
 (SDEFUN |CYCGRP;index;Pi$;14| ((|i| |PositiveInteger|) ($ $))
-        (SPROG ((#1=#:G732 NIL) (|imodn| ($)))
+        (SPROG ((#1=#:G736 NIL) (|imodn| ($)))
                (SEQ
                 (EXIT
                  (COND
@@ -76,7 +76,7 @@
                       ((ZEROP |imodn|)
                        (PROGN
                         (LETT #1# (|spadConstant| $ 23) . #3#)
-                        (GO #4=#:G731)))
+                        (GO #4=#:G735)))
                       (#2# (|CYCGRP;per| |imodn| $))))))))
                 #4# (EXIT #1#)))) 
 
@@ -86,7 +86,7 @@
 (SDEFUN |CYCGRP;random;$;16| (($ $)) (|CYCGRP;per| (RANDOM (QREFELT $ 6)) $)) 
 
 (SDEFUN |CYCGRP;enumerate;L;17| (($ |List| $))
-        (SPROG ((#1=#:G738 NIL) (|k| NIL) (#2=#:G737 NIL))
+        (SPROG ((#1=#:G742 NIL) (|k| NIL) (#2=#:G741 NIL))
                (SEQ
                 (PROGN
                  (LETT #2# NIL . #3=(|CYCGRP;enumerate;L;17|))
@@ -106,9 +106,9 @@
 
 (DECLAIM (NOTINLINE |CyclicGroup;|)) 
 
-(DEFUN |CyclicGroup| (&REST #1=#:G745)
+(DEFUN |CyclicGroup| (&REST #1=#:G749)
   (SPROG NIL
-         (PROG (#2=#:G746)
+         (PROG (#2=#:G750)
            (RETURN
             (COND
              ((LETT #2#
@@ -159,33 +159,38 @@
               (|List| $) |CYCGRP;enumerate;L;17| |CYCGRP;generator;$;18|
               |CYCGRP;generators;L;20| (|InputForm|) (|Union| $ '"failed")
               (|String|) (|SingleInteger|))
-           '#(~= 41 |smaller?| 47 |size| 53 |sample| 57 |recip| 61 |random| 66
-              |order| 70 |one?| 75 |lookup| 80 |latex| 85 |inv| 90 |index| 95
-              |hashUpdate!| 100 |hash| 106 |generators| 111 |generator| 115
-              |exponent| 119 |enumerate| 124 |convert| 128 |conjugate| 138
-              |commutator| 144 |coerce| 150 ^ 155 |One| 173 = 177 / 183 * 189)
+           '#(~= 41 |smaller?| 47 |size| 53 |sample| 57 |rightRecip| 61
+              |rightPower| 66 |recip| 78 |random| 83 |order| 87 |one?| 92
+              |lookup| 97 |leftRecip| 102 |leftPower| 107 |latex| 119 |inv| 124
+              |index| 129 |hashUpdate!| 134 |hash| 140 |generators| 145
+              |generator| 149 |exponent| 153 |enumerate| 158 |convert| 162
+              |conjugate| 172 |commutator| 178 |coerce| 184 ^ 189 |One| 207 =
+              211 / 217 * 223)
            'NIL
-           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0))
+           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0))
                  (CONS
-                  '#(|FiniteGroup&| |Group&| |Monoid&| |Finite&| |SemiGroup&|
-                     NIL |SetCategory&| NIL NIL NIL NIL |BasicType&| NIL NIL)
+                  '#(|FiniteGroup&| |Group&| NIL NIL |Finite&| |MagmaWithUnit&|
+                     NIL |Magma&| |SetCategory&| NIL NIL NIL NIL NIL
+                     |BasicType&| NIL)
                   (CONS
-                   '#((|FiniteGroup|) (|Group|) (|Monoid|) (|Finite|)
-                      (|SemiGroup|) (|Comparable|) (|SetCategory|)
-                      (|ConvertibleTo| 20) (|CommutativeStar|)
-                      (|FinitelyGenerated|) (|ConvertibleTo| 43) (|BasicType|)
-                      (|unitsKnown|) (|CoercibleTo| 11))
+                   '#((|FiniteGroup|) (|Group|) (|Monoid|) (|SemiGroup|)
+                      (|Finite|) (|MagmaWithUnit|) (|Comparable|) (|Magma|)
+                      (|SetCategory|) (|ConvertibleTo| 20) (|CommutativeStar|)
+                      (|FinitelyGenerated|) (|ConvertibleTo| 43) (|unitsKnown|)
+                      (|BasicType|) (|CoercibleTo| 11))
                    (|makeByteWordVec2| 46
                                        '(1 12 11 0 13 1 14 11 0 15 2 11 0 0 0
                                          16 1 20 0 12 21 3 8 0 0 0 0 26 2 33 9
                                          0 0 34 3 12 0 0 0 0 35 2 0 9 0 0 1 2 0
                                          9 0 0 30 0 0 31 32 0 0 0 1 1 0 44 0 1
-                                         0 0 0 38 1 0 12 0 25 1 0 9 0 10 1 0 33
-                                         0 37 1 0 45 0 1 1 0 0 0 28 1 0 0 33 36
-                                         2 0 18 18 0 19 1 0 46 0 1 0 0 39 42 0
-                                         0 0 41 1 0 12 0 24 0 0 39 40 1 0 20 0
-                                         22 1 0 43 0 1 2 0 0 0 0 1 2 0 0 0 0 1
-                                         1 0 11 0 17 2 0 0 0 12 1 2 0 0 0 31 1
-                                         2 0 0 0 33 1 0 0 0 23 2 0 9 0 0 29 2 0
-                                         0 0 0 1 2 0 0 0 0 27)))))
+                                         2 0 0 0 31 1 2 0 0 0 33 1 1 0 44 0 1 0
+                                         0 0 38 1 0 12 0 25 1 0 9 0 10 1 0 33 0
+                                         37 1 0 44 0 1 2 0 0 0 31 1 2 0 0 0 33
+                                         1 1 0 45 0 1 1 0 0 0 28 1 0 0 33 36 2
+                                         0 18 18 0 19 1 0 46 0 1 0 0 39 42 0 0
+                                         0 41 1 0 12 0 24 0 0 39 40 1 0 20 0 22
+                                         1 0 43 0 1 2 0 0 0 0 1 2 0 0 0 0 1 1 0
+                                         11 0 17 2 0 0 0 12 1 2 0 0 0 31 1 2 0
+                                         0 0 33 1 0 0 0 23 2 0 9 0 0 29 2 0 0 0
+                                         0 1 2 0 0 0 0 27)))))
            '|lookupComplete|)) 

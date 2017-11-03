@@ -103,9 +103,9 @@
                     (|:| |msizes| (|List| (|Integer|))) (|:| |sp| (|Integer|)))
           "failed"))
         (SPROG
-         ((|sizes| (|List| (|Integer|))) (|msize| (|Integer|)) (#1=#:G763 NIL)
-          (|deg| NIL) (|ldeg| (|List| (|NonNegativeInteger|))) (#2=#:G761 NIL)
-          (|m| NIL) (#3=#:G762 NIL) (|v| NIL) (#4=#:G760 NIL)
+         ((|sizes| (|List| (|Integer|))) (|msize| (|Integer|)) (#1=#:G767 NIL)
+          (|deg| NIL) (|ldeg| (|List| (|NonNegativeInteger|))) (#2=#:G765 NIL)
+          (|m| NIL) (#3=#:G766 NIL) (|v| NIL) (#4=#:G764 NIL)
           (|nlmu| (|Union| (|List| (|Polynomial| (|Integer|))) "failed")))
          (SEQ
           (COND
@@ -167,7 +167,7 @@
         ((|exps| |SortedExponentVector|) (|sizes| |List| (|Integer|))
          (|ns| |Integer|) (|start| |Integer|) ($ |Void|))
         (SPROG
-         ((#1=#:G772 NIL) (|j| NIL) (|nstart| (|Integer|)) (#2=#:G771 NIL)
+         ((#1=#:G777 NIL) (|j| NIL) (|nstart| (|Integer|)) (#2=#:G776 NIL)
           (|i| NIL) (|deg| (|Integer|)) (|msize| (|Integer|))
           (|size1| (|Integer|)) (|do_rec| (|Boolean|))
           (|rsiz| (|List| (|Integer|))))
@@ -280,7 +280,7 @@
           (|:| |msizes| (|List| (|Integer|))) (|:| |sp| (|Integer|)))
          ($ |Void|))
         (SPROG
-         ((#1=#:G788 NIL) (|i| NIL) (|msize| (|Integer|))
+         ((#1=#:G793 NIL) (|i| NIL) (|msize| (|Integer|))
           (|sizes| (|List| (|Integer|))) (|lv| (|List| (|Symbol|))))
          (SEQ (LETT |lv| (QVELT |mu| 0) . #2=(|MAGCDT3;repack1;SupUvIRV;6|))
               (LETT |sizes| (QVELT |mu| 2) . #2#)
@@ -407,7 +407,7 @@
          (|p| |Integer|)
          ($ |List| (|SparseUnivariatePolynomial| (|Polynomial| (|Integer|)))))
         (SPROG
-         ((#1=#:G828 NIL)
+         ((#1=#:G833 NIL)
           (|t1| #2=(|SparseUnivariatePolynomial| (|Polynomial| (|Integer|))))
           (|t0| #3=(|SparseUnivariatePolynomial| (|Polynomial| (|Integer|))))
           (|#G53| #4=(|SparseUnivariatePolynomial| (|Polynomial| (|Integer|))))
@@ -518,7 +518,7 @@
             (EXIT
              (COND
               ((SPADCALL |r1| (|spadConstant| $ 45) (QREFELT $ 46))
-               (PROGN (LETT #1# (LIST |r0| |s0| |t0|) . #7#) (GO #8=#:G827)))
+               (PROGN (LETT #1# (LIST |r0| |s0| |t0|) . #7#) (GO #8=#:G832)))
               ('T (PROGN (LETT #1# (LIST |r1| |s1| |t1|) . #7#) (GO #8#)))))))
           #8# (EXIT #1#)))) 
 
@@ -724,7 +724,7 @@
 
 (DEFUN |ModularAlgebraicGcdTools3| ()
   (SPROG NIL
-         (PROG (#1=#:G865)
+         (PROG (#1=#:G870)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|ModularAlgebraicGcdTools3|)

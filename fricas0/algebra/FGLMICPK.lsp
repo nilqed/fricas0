@@ -4,9 +4,9 @@
          ($ |Boolean|))
         (SPROG
          ((|lv| (|List| (|OrderedVariableList| |ls|)))
-          (|x| (|OrderedVariableList| |ls|)) (#1=#:G709 NIL)
+          (|x| (|OrderedVariableList| |ls|)) (#1=#:G711 NIL)
           (|m| (|HomogeneousDistributedMultivariatePolynomial| |ls| R))
-          (#2=#:G722 NIL) (|q2| NIL) (#3=#:G721 NIL) (|s| NIL) (#4=#:G720 NIL))
+          (#2=#:G724 NIL) (|q2| NIL) (#3=#:G723 NIL) (|s| NIL) (#4=#:G722 NIL))
          (SEQ
           (LETT |lq2| (SPADCALL |lq2| (QREFELT $ 10))
                 . #5=(|FGLMICPK;zeroDim?|))
@@ -81,7 +81,7 @@
         (SPROG
          ((|lq2|
            (|List| (|HomogeneousDistributedMultivariatePolynomial| |ls| R)))
-          (#1=#:G730 NIL) (|q1| NIL) (#2=#:G729 NIL))
+          (#1=#:G732 NIL) (|q1| NIL) (#2=#:G731 NIL))
          (SEQ
           (LETT |lq2|
                 (PROGN
@@ -103,11 +103,11 @@
         ((|lq1| |List| (|Polynomial| R))
          ($ |Union| (|List| (|Polynomial| R)) "failed"))
         (SPROG
-         ((#1=#:G746 NIL) (|q3| NIL) (#2=#:G745 NIL)
+         ((#1=#:G748 NIL) (|q3| NIL) (#2=#:G747 NIL)
           (|lq3| (|List| (|DistributedMultivariatePolynomial| |ls| R)))
           (|lq2|
            (|List| (|HomogeneousDistributedMultivariatePolynomial| |ls| R)))
-          (#3=#:G744 NIL) (|q1| NIL) (#4=#:G743 NIL))
+          (#3=#:G746 NIL) (|q1| NIL) (#4=#:G745 NIL))
          (SEQ
           (LETT |lq2|
                 (PROGN
@@ -146,13 +146,13 @@
 (SDEFUN |FGLMICPK;groebner;2L;4|
         ((|lq1| |List| (|Polynomial| R)) ($ |List| (|Polynomial| R)))
         (SPROG
-         ((#1=#:G763 NIL) (|q3| NIL) (#2=#:G762 NIL)
+         ((#1=#:G765 NIL) (|q3| NIL) (#2=#:G764 NIL)
           (|lq3| (|List| (|DistributedMultivariatePolynomial| |ls| R)))
-          (#3=#:G761 NIL) (#4=#:G760 NIL) (#5=#:G759 NIL) (|q1| NIL)
-          (#6=#:G758 NIL)
+          (#3=#:G763 NIL) (#4=#:G762 NIL) (#5=#:G761 NIL) (|q1| NIL)
+          (#6=#:G760 NIL)
           (|lq2|
            (|List| (|HomogeneousDistributedMultivariatePolynomial| |ls| R)))
-          (#7=#:G757 NIL) (#8=#:G756 NIL))
+          (#7=#:G759 NIL) (#8=#:G758 NIL))
          (SEQ
           (LETT |lq2|
                 (PROGN
@@ -218,9 +218,9 @@
 
 (DECLAIM (NOTINLINE |FGLMIfCanPackage;|)) 
 
-(DEFUN |FGLMIfCanPackage| (&REST #1=#:G764)
+(DEFUN |FGLMIfCanPackage| (&REST #1=#:G766)
   (SPROG NIL
-         (PROG (#2=#:G765)
+         (PROG (#2=#:G767)
            (RETURN
             (COND
              ((LETT #2#
@@ -264,17 +264,20 @@
                                   (|NonNegativeInteger|))
                                  13 15)
               (0 . |groebner|) (|Union| $ '"failed") (|Symbol|)
-              (|OrderedVariableList| 7) (5 . |variable|)
-              (|HomogeneousDistributedMultivariatePolynomial| 7 6)
+              (|OrderedVariableList| (NRTEVAL (QREFELT $ 7))) (5 . |variable|)
+              (|HomogeneousDistributedMultivariatePolynomial|
+               (NRTEVAL (QREFELT $ 7)) 6)
               (10 . |leadingMonomial|) (|Union| 13 '"failed")
               (15 . |mainVariable|) (|SparseUnivariatePolynomial| $)
               (20 . |univariate|) (|SparseUnivariatePolynomial| 15)
               (26 . |leadingCoefficient|) (|Boolean|) (31 . |ground?|)
-              (|List| 13) (36 . |remove|) (|Polynomial| 6) (|PolToPol| 7 6)
-              (42 . |pToHdmp|) (|List| 27) |FGLMICPK;zeroDimensional?;LB;2|
-              (|List| 35) (|LinGroebnerPackage| 7 6) (47 . |totolex|)
-              (|DistributedMultivariatePolynomial| 7 6) (52 . |dmpToP|)
-              (|Union| 30 '"failed") |FGLMICPK;fglmIfCan;LU;3| (57 . |pToDmp|)
+              (|List| 13) (36 . |remove|) (|Polynomial| 6)
+              (|PolToPol| (NRTEVAL (QREFELT $ 7)) 6) (42 . |pToHdmp|)
+              (|List| 27) |FGLMICPK;zeroDimensional?;LB;2| (|List| 35)
+              (|LinGroebnerPackage| (NRTEVAL (QREFELT $ 7)) 6) (47 . |totolex|)
+              (|DistributedMultivariatePolynomial| (NRTEVAL (QREFELT $ 7)) 6)
+              (52 . |dmpToP|) (|Union| 30 '"failed") |FGLMICPK;fglmIfCan;LU;3|
+              (57 . |pToDmp|)
               (|GroebnerPackage| 6
                                  (|DirectProduct|
                                   (NRTEVAL (LENGTH (QREFELT $ 7)))

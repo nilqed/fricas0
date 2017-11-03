@@ -34,9 +34,9 @@
 
 (DECLAIM (NOTINLINE |IntegerLinearDependence;|)) 
 
-(DEFUN |IntegerLinearDependence| (#1=#:G717)
+(DEFUN |IntegerLinearDependence| (#1=#:G719)
   (SPROG NIL
-         (PROG (#2=#:G718)
+         (PROG (#2=#:G720)
            (RETURN
             (COND
              ((LETT #2#

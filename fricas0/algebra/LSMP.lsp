@@ -17,10 +17,10 @@
 
 (SDEFUN |LSMP;aSolution| ((|m| M) ($ |Union| |Col| "failed"))
         (SPROG
-         ((#1=#:G728 NIL) (|j| NIL) (#2=#:G727 NIL) (|i| NIL)
+         ((#1=#:G732 NIL) (|j| NIL) (#2=#:G731 NIL) (|i| NIL)
           (|v| (|PrimitiveArray| (|Integer|))) (|sol| (|Col|))
           (|ck| (|Integer|)) (|rk| (|Integer|)) (|nvar| (|NonNegativeInteger|))
-          (#3=#:G711 NIL))
+          (#3=#:G714 NIL))
          (SEQ
           (LETT |nvar|
                 (PROG1
@@ -149,7 +149,7 @@
           (|Record| (|:| |particular| (|Union| |Col| #1="failed"))
                     (|:| |basis| #2=(|List| |Col|)))))
         (SPROG
-         ((#3=#:G756 NIL) (|b| NIL) (#4=#:G755 NIL) (|nl| #2#)
+         ((#3=#:G761 NIL) (|b| NIL) (#4=#:G760 NIL) (|nl| #2#)
           (|sol0|
            (|Record| (|:| |particular| (|Union| |Col| #1#))
                      (|:| |basis| (|List| |Col|)))))
@@ -195,9 +195,9 @@
 
 (DECLAIM (NOTINLINE |LinearSystemMatrixPackage;|)) 
 
-(DEFUN |LinearSystemMatrixPackage| (&REST #1=#:G757)
+(DEFUN |LinearSystemMatrixPackage| (&REST #1=#:G762)
   (SPROG NIL
-         (PROG (#2=#:G758)
+         (PROG (#2=#:G763)
            (RETURN
             (COND
              ((LETT #2#

@@ -32,8 +32,8 @@
         ((|p| |Polynomial| (|Integer|)) (|ls1| . #1=(|List| (|Symbol|)))
          (|ls2| . #1#) ($ |Polynomial| (|Integer|)))
         (SPROG
-         ((|lm| (|List| (|Polynomial| (|Integer|)))) (#2=#:G710 NIL) (|v| NIL)
-          (#3=#:G709 NIL))
+         ((|lm| (|List| (|Polynomial| (|Integer|)))) (#2=#:G712 NIL) (|v| NIL)
+          (#3=#:G711 NIL))
          (SEQ
           (LETT |lm|
                 (PROGN
@@ -59,7 +59,7 @@
         ((|p| . #1=(|Polynomial| (|Integer|))) (|g| |Polynomial| (|Integer|))
          (|lm| |List| #1#) (|v| . #2=(|Symbol|)) (|ls| |List| #2#)
          ($ |Boolean|))
-        (SPROG ((#3=#:G717 NIL) (|m| NIL) (#4=#:G716 NIL))
+        (SPROG ((#3=#:G719 NIL) (|m| NIL) (#4=#:G718 NIL))
                (SEQ
                 (SPADCALL |p| |g|
                           (PROGN
@@ -79,7 +79,7 @@
 
 (DEFUN |ModularEvaluation1| ()
   (SPROG NIL
-         (PROG (#1=#:G719)
+         (PROG (#1=#:G721)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|ModularEvaluation1|)

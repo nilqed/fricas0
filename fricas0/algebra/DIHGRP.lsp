@@ -156,8 +156,8 @@
 
 (SDEFUN |DIHGRP;enumerate;L;19| (($ |List| $))
         (SPROG
-         ((#1=#:G779 NIL) (|k| NIL) (#2=#:G778 NIL) (#3=#:G777 NIL)
-          (#4=#:G776 NIL))
+         ((#1=#:G782 NIL) (|k| NIL) (#2=#:G781 NIL) (#3=#:G780 NIL)
+          (#4=#:G779 NIL))
          (SEQ
           (SPADCALL
            (PROGN
@@ -196,9 +196,9 @@
 
 (DECLAIM (NOTINLINE |DihedralGroup;|)) 
 
-(DEFUN |DihedralGroup| (&REST #1=#:G783)
+(DEFUN |DihedralGroup| (&REST #1=#:G786)
   (SPROG NIL
-         (PROG (#2=#:G784)
+         (PROG (#2=#:G787)
            (RETURN
             (COND
              ((LETT #2#
@@ -240,10 +240,11 @@
 (MAKEPROP '|DihedralGroup| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
-              (|local| |#3|) '|Rep| (|IntegerMod| 6) |DIHGRP;expa;$Im;3|
-              (|IntegerMod| '2) |DIHGRP;expb;$Im;4| (|Integer|) (0 . |convert|)
-              |DIHGRP;exponenta;$I;5| (5 . |convert|) |DIHGRP;exponentb;$I;6|
-              (10 . |Zero|) (14 . |Zero|)
+              (|local| |#3|) '|Rep| (|IntegerMod| (NRTEVAL (QREFELT $ 6)))
+              |DIHGRP;expa;$Im;3| (|IntegerMod| '2) |DIHGRP;expb;$Im;4|
+              (|Integer|) (0 . |convert|) |DIHGRP;exponenta;$I;5|
+              (5 . |convert|) |DIHGRP;exponentb;$I;6| (10 . |Zero|)
+              (14 . |Zero|)
               (CONS IDENTITY (FUNCALL (|dispatchFunction| |DIHGRP;One;$;7|) $))
               (|Boolean|) (18 . |zero?|) (23 . |zero?|) |DIHGRP;one?;$B;8|
               (|OutputForm|) (28 . |coerce|) (|Symbol|) (33 . |coerce|)
@@ -257,23 +258,25 @@
               (120 . |coerce|) |DIHGRP;index;Pi$;17| (125 . *)
               |DIHGRP;lookup;$Pi;18| (|List| $$) (131 . |concat|)
               |DIHGRP;enumerate;L;19| (|InputForm|) (|Union| $ '"failed")
-              (|HashState|) (|String|) (|SingleInteger|))
-           '#(~= 137 |smaller?| 143 |size| 149 |sample| 153 |recip| 157
-              |random| 162 |order| 166 |one?| 171 |lookup| 176 |latex| 181
-              |inv| 186 |index| 191 |hashUpdate!| 196 |hash| 202 |generators|
-              207 |exponentb| 211 |exponenta| 216 |expb| 221 |expa| 226
-              |enumerate| 231 |convert| 235 |conjugate| 240 |commutator| 246
-              |coerce| 252 ^ 257 |One| 275 = 279 / 285 * 291)
+              (|String|) (|SingleInteger|) (|HashState|))
+           '#(~= 137 |smaller?| 143 |size| 149 |sample| 153 |rightRecip| 157
+              |rightPower| 162 |recip| 174 |random| 179 |order| 183 |one?| 188
+              |lookup| 193 |leftRecip| 198 |leftPower| 203 |latex| 215 |inv|
+              220 |index| 225 |hashUpdate!| 230 |hash| 236 |generators| 241
+              |exponentb| 245 |exponenta| 250 |expb| 255 |expa| 260 |enumerate|
+              265 |convert| 269 |conjugate| 274 |commutator| 280 |coerce| 286 ^
+              291 |One| 309 = 313 / 319 * 325)
            'NIL
-           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0 0 0))
+           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0))
                  (CONS
-                  '#(|FiniteGroup&| |Group&| |Monoid&| |Finite&| |SemiGroup&|
-                     NIL |SetCategory&| NIL NIL |BasicType&| NIL NIL)
+                  '#(|FiniteGroup&| |Group&| NIL NIL |Finite&| |MagmaWithUnit&|
+                     NIL |Magma&| |SetCategory&| NIL NIL NIL |BasicType&| NIL)
                   (CONS
-                   '#((|FiniteGroup|) (|Group|) (|Monoid|) (|Finite|)
-                      (|SemiGroup|) (|Comparable|) (|SetCategory|)
-                      (|FinitelyGenerated|) (|ConvertibleTo| 63) (|BasicType|)
-                      (|unitsKnown|) (|CoercibleTo| 26))
+                   '#((|FiniteGroup|) (|Group|) (|Monoid|) (|SemiGroup|)
+                      (|Finite|) (|MagmaWithUnit|) (|Comparable|) (|Magma|)
+                      (|SetCategory|) (|FinitelyGenerated|)
+                      (|ConvertibleTo| 63) (|unitsKnown|) (|BasicType|)
+                      (|CoercibleTo| 26))
                    (|makeByteWordVec2| 67
                                        '(1 10 14 0 15 1 12 14 0 17 0 10 0 19 0
                                          12 0 20 1 10 22 0 23 1 12 22 0 24 1 14
@@ -285,13 +288,15 @@
                                          2 14 22 0 0 50 2 54 22 0 0 55 1 10 0
                                          14 56 2 14 0 54 0 58 2 60 0 0 0 61 2 0
                                          22 0 0 1 2 0 22 0 0 51 0 0 52 53 0 0 0
-                                         1 1 0 64 0 1 0 0 0 1 1 0 14 0 46 1 0
-                                         22 0 25 1 0 54 0 59 1 0 66 0 1 1 0 0 0
-                                         44 1 0 0 54 57 2 0 65 65 0 1 1 0 67 0
-                                         1 0 0 37 38 1 0 14 0 18 1 0 14 0 16 1
-                                         0 12 0 13 1 0 10 0 11 0 0 37 62 1 0 63
-                                         0 1 2 0 0 0 0 1 2 0 0 0 0 1 1 0 26 0
-                                         34 2 0 0 0 14 1 2 0 0 0 52 1 2 0 0 0
-                                         54 1 0 0 0 21 2 0 22 0 0 49 2 0 0 0 0
-                                         1 2 0 0 0 0 42)))))
+                                         1 1 0 64 0 1 2 0 0 0 52 1 2 0 0 0 54 1
+                                         1 0 64 0 1 0 0 0 1 1 0 14 0 46 1 0 22
+                                         0 25 1 0 54 0 59 1 0 64 0 1 2 0 0 0 52
+                                         1 2 0 0 0 54 1 1 0 65 0 1 1 0 0 0 44 1
+                                         0 0 54 57 2 0 67 67 0 1 1 0 66 0 1 0 0
+                                         37 38 1 0 14 0 18 1 0 14 0 16 1 0 12 0
+                                         13 1 0 10 0 11 0 0 37 62 1 0 63 0 1 2
+                                         0 0 0 0 1 2 0 0 0 0 1 1 0 26 0 34 2 0
+                                         0 0 14 1 2 0 0 0 52 1 2 0 0 0 54 1 0 0
+                                         0 21 2 0 22 0 0 49 2 0 0 0 0 1 2 0 0 0
+                                         0 42)))))
            '|lookupComplete|)) 

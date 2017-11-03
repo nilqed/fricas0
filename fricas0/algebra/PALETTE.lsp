@@ -32,17 +32,21 @@
 
 (SDEFUN |PALETTE;coerce;$Of;9| ((|p| $) ($ |OutputForm|))
         (SPADCALL
-         (LIST "[" (SPADCALL (QCDR |p|) (QREFELT $ 18)) "] from the "
-               (SPADCALL (LIST "Dark" "Dim" "Bright" "Pastel" "Light")
-                         (QCAR |p|) (QREFELT $ 20))
-               " palette")
-         (QREFELT $ 22))) 
+         (LIST (SPADCALL "[" (QREFELT $ 19))
+               (SPADCALL (QCDR |p|) (QREFELT $ 20))
+               (SPADCALL "] from the " (QREFELT $ 19))
+               (SPADCALL
+                (SPADCALL (LIST "Dark" "Dim" "Bright" "Pastel" "Light")
+                          (QCAR |p|) (QREFELT $ 22))
+                (QREFELT $ 19))
+               (SPADCALL " palette" (QREFELT $ 19)))
+         (QREFELT $ 24))) 
 
 (DECLAIM (NOTINLINE |Palette;|)) 
 
 (DEFUN |Palette| ()
   (SPROG NIL
-         (PROG (#1=#:G722)
+         (PROG (#1=#:G726)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|Palette|) . #2=(|Palette|))
@@ -60,7 +64,7 @@
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
           (LETT |dv$| '(|Palette|) . #1=(|Palette|))
-          (LETT $ (GETREFV 28) . #1#)
+          (LETT $ (GETREFV 29) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|Palette| NIL (CONS 1 $))
@@ -76,26 +80,26 @@
            '#(NIL NIL NIL NIL NIL NIL '|Rep| (|Color|) |PALETTE;dark;C$;1|
               |PALETTE;dim;C$;2| |PALETTE;bright;C$;3| |PALETTE;pastel;C$;4|
               |PALETTE;light;C$;5| |PALETTE;hue;$C;6| (|Integer|)
-              |PALETTE;shade;$I;7| |PALETTE;coerce;C$;8| (|OutputForm|)
-              (0 . |coerce|) (|List| 17) (5 . |elt|) (|List| $)
-              (11 . |hconcat|) |PALETTE;coerce;$Of;9| (|HashState|) (|String|)
-              (|SingleInteger|) (|Boolean|))
-           '#(~= 16 |shade| 22 |pastel| 27 |light| 32 |latex| 37 |hue| 42
-              |hashUpdate!| 47 |hash| 53 |dim| 58 |dark| 63 |coerce| 68
-              |bright| 78 = 83)
+              |PALETTE;shade;$I;7| |PALETTE;coerce;C$;8| (|String|)
+              (|OutputForm|) (0 . |message|) (5 . |coerce|) (|List| 17)
+              (10 . |elt|) (|List| $) (16 . |hconcat|) |PALETTE;coerce;$Of;9|
+              (|HashState|) (|SingleInteger|) (|Boolean|))
+           '#(~= 21 |shade| 27 |pastel| 32 |light| 37 |latex| 42 |hue| 47
+              |hashUpdate!| 52 |hash| 58 |dim| 63 |dark| 68 |coerce| 73
+              |bright| 83 = 88)
            'NIL
            (CONS (|makeByteWordVec2| 1 '(0 0 0))
                  (CONS '#(|SetCategory&| |BasicType&| NIL)
                        (CONS
-                        '#((|SetCategory|) (|BasicType|) (|CoercibleTo| 17))
-                        (|makeByteWordVec2| 27
-                                            '(1 7 17 0 18 2 19 17 0 14 20 1 17
-                                              0 21 22 2 0 27 0 0 1 1 0 14 0 15
-                                              1 0 0 7 11 1 0 0 7 12 1 0 25 0 1
-                                              1 0 7 0 13 2 0 24 24 0 1 1 0 26 0
-                                              1 1 0 0 7 9 1 0 0 7 8 1 0 0 7 16
-                                              1 0 17 0 23 1 0 0 7 10 2 0 27 0 0
-                                              1)))))
+                        '#((|SetCategory|) (|BasicType|) (|CoercibleTo| 18))
+                        (|makeByteWordVec2| 28
+                                            '(1 18 0 17 19 1 7 18 0 20 2 21 17
+                                              0 14 22 1 18 0 23 24 2 0 28 0 0 1
+                                              1 0 14 0 15 1 0 0 7 11 1 0 0 7 12
+                                              1 0 17 0 1 1 0 7 0 13 2 0 26 26 0
+                                              1 1 0 27 0 1 1 0 0 7 9 1 0 0 7 8
+                                              1 0 0 7 16 1 0 18 0 25 1 0 0 7 10
+                                              2 0 28 0 0 1)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|Palette| 'NILADIC T) 

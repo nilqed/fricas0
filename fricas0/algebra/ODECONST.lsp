@@ -30,7 +30,7 @@
 
 (SDEFUN |ODECONST;homoBasis| ((|op| L) (|x| F) ($ |List| F))
         (SPROG
-         ((|b| (|List| F)) (#1=#:G730 NIL) (|ff| NIL)
+         ((|b| (|List| F)) (#1=#:G732 NIL) (|ff| NIL)
           (|fp| (|Factored| (|SparseUnivariatePolynomial| F)))
           (|p| (|SparseUnivariatePolynomial| F)))
          (SEQ (LETT |p| (|spadConstant| $ 21) . #2=(|ODECONST;homoBasis|))
@@ -71,8 +71,8 @@
         ((|p| |SparseUnivariatePolynomial| F) (|n| |Integer|) (|x| F)
          ($ |List| F))
         (SPROG
-         ((|xn| (F)) (|l| (|List| F)) (#1=#:G740 NIL) (|f| NIL) (#2=#:G739 NIL)
-          (#3=#:G738 NIL) (|i| NIL) (|ll| (|List| F)))
+         ((|xn| (F)) (|l| (|List| F)) (#1=#:G743 NIL) (|f| NIL) (#2=#:G742 NIL)
+          (#3=#:G741 NIL) (|i| NIL) (|ll| (|List| F)))
          (SEQ
           (LETT |l| (|ODECONST;basisSqfr| |p| |x| $)
                 . #4=(|ODECONST;basisSol|))
@@ -121,7 +121,7 @@
 (SDEFUN |ODECONST;basisSqfr|
         ((|p| |SparseUnivariatePolynomial| F) (|x| F) ($ |List| F))
         (SPROG
-         ((#1=#:G745 NIL) (|a| NIL) (#2=#:G744 NIL)
+         ((#1=#:G749 NIL) (|a| NIL) (#2=#:G748 NIL)
           (|d| (|NonNegativeInteger|)))
          (SEQ
           (LETT |d| (SPADCALL |p| (QREFELT $ 42)) . #3=(|ODECONST;basisSqfr|))
@@ -159,7 +159,7 @@
 (SDEFUN |ODECONST;quadSol|
         ((|p| |SparseUnivariatePolynomial| F) (|x| F) ($ |List| F))
         (SPROG
-         ((#1=#:G757 NIL) (|a| (F)) (#2=#:G756 NIL) (#3=#:G755 NIL) (|i| (F))
+         ((#1=#:G761 NIL) (|a| (F)) (#2=#:G760 NIL) (#3=#:G759 NIL) (|i| (F))
           (|r| (F)) (|y| (F)) (|u| (|Union| (|Integer|) "failed"))
           (|delta| (F)) (|c| (F)) (|b| (F)))
          (SEQ
@@ -218,7 +218,7 @@
                                       (SPADCALL |i| (QREFELT $ 64))
                                       (QREFELT $ 41)))))
                          . #4#)
-                   (GO #5=#:G753))))))))
+                   (GO #5=#:G757))))))))
             (EXIT
              (PROGN
               (LETT #2# NIL . #4#)
@@ -241,9 +241,9 @@
 
 (DECLAIM (NOTINLINE |ConstantLODE;|)) 
 
-(DEFUN |ConstantLODE| (&REST #1=#:G758)
+(DEFUN |ConstantLODE| (&REST #1=#:G762)
   (SPROG NIL
-         (PROG (#2=#:G759)
+         (PROG (#2=#:G763)
            (RETURN
             (COND
              ((LETT #2#

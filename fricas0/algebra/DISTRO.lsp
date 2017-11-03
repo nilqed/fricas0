@@ -160,7 +160,7 @@
          (|coef| |Sequence| R) ($ $))
         (SPROG
          ((|psi| #1=(|Stream| R)) (|psi2| #1#) (|chi2| #2=(|Stream| R))
-          (|z1z| #2#) (S2 (|Sequence| R)) (#3=#:G747 NIL) (|chi| (|Stream| R)))
+          (|z1z| #2#) (S2 (|Sequence| R)) (#3=#:G751 NIL) (|chi| (|Stream| R)))
          (SEQ
           (EXIT
            (COND
@@ -188,7 +188,7 @@
                                  (QREFELT $ 13))
                        (QREFELT $ 14))
                       . #4#)
-                (GO #5=#:G746)))))
+                (GO #5=#:G750)))))
             ((SPADCALL |puiseux| (SPADCALL 1 2 (QREFELT $ 65)) (QREFELT $ 60))
              (COND
               ((SPADCALL |laurent|
@@ -230,7 +230,7 @@
 
 (SDEFUN |DISTRO;freeMultiplicativeConvolution;3$;24| ((|x| $) (|y| $) ($ $))
         (SPROG
-         ((|Sxyc| (|Stream| R)) (#1=#:G762 NIL) (|Syc| #2=(|Stream| R))
+         ((|Sxyc| (|Stream| R)) (#1=#:G766 NIL) (|Syc| #2=(|Stream| R))
           (|Sxc| #2#)
           (|Sy|
            #3=(|Record| (|:| |puiseux| (|Fraction| (|Integer|)))
@@ -266,7 +266,7 @@
                                        (SPADCALL |Sxyc| (QREFELT $ 13))
                                        (QREFELT $ 69))
                              . #4#)
-                       (GO #5=#:G761)))))
+                       (GO #5=#:G765)))))
                ((SPADCALL (QVELT |Sx| 0) (SPADCALL 1 2 (QREFELT $ 65))
                           (QREFELT $ 60))
                 (LETT |Sxyc|
@@ -458,7 +458,7 @@
           (LETT $ (QREFELT $$ 0) . #1#)
           (RETURN
            (PROGN
-            (SPROG ((|k| NIL) (#2=#:G812 NIL) (|res| NIL))
+            (SPROG ((|k| NIL) (#2=#:G817 NIL) (|res| NIL))
                    (SEQ (LETT |res| |s| NIL)
                         (SEQ (LETT |k| 2 NIL) (LETT #2# |n| NIL) G190
                              (COND ((|greater_SI| |k| #2#) (GO G191)))
@@ -487,9 +487,9 @@
 
 (DECLAIM (NOTINLINE |Distribution;|)) 
 
-(DEFUN |Distribution| (#1=#:G816)
+(DEFUN |Distribution| (#1=#:G821)
   (SPROG NIL
-         (PROG (#2=#:G817)
+         (PROG (#2=#:G822)
            (RETURN
             (COND
              ((LETT #2#

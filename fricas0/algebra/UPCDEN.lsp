@@ -1,9 +1,9 @@
 
 (DECLAIM (NOTINLINE |UnivariatePolynomialCommonDenominator;|)) 
 
-(DEFUN |UnivariatePolynomialCommonDenominator| (&REST #1=#:G691)
+(DEFUN |UnivariatePolynomialCommonDenominator| (&REST #1=#:G692)
   (SPROG NIL
-         (PROG (#2=#:G692)
+         (PROG (#2=#:G693)
            (RETURN
             (COND
              ((LETT #2#

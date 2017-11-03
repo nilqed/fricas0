@@ -903,7 +903,6 @@
 ; asyExportAlist con ==
 ; --format of 'operationAlist property of LISPLIBS (as returned from koOps):
 ; --    <sig slotNumberOrNil optPred optELT>
-; --    <sig sig'            predOrT "Subsumed">
 ; --!!! asyFile NEED: need to know if function is implemented by domain!!!
 ;   docHash := HGET($docHash,con)
 ;   [[op,:[fn(x,op) for x in rec]] for op in HKEYS docHash | rec := HGET(docHash,op)]
@@ -1185,7 +1184,7 @@
 ;     name = "%%" => 'skip       --skip over top-level properties
 ;     $docHashLocal: local := MAKE_-HASH_-TABLE()
 ;     asytranDeclaration(d,'(top),nil,false)
-;     if null name then hohohoho()
+;     if null name then BREAK()
 ;     HPUT($docHash,name,$docHashLocal)
 ;   CLOSE inStream
 ;   'done
@@ -1220,7 +1219,7 @@
                     (PROGN
                      (SETQ |$docHashLocal| (MAKE-HASH-TABLE))
                      (|asytranDeclaration| |d| '(|top|) NIL NIL)
-                     (COND ((NULL |name|) (|hohohoho|)))
+                     (COND ((NULL |name|) (BREAK)))
                      (HPUT |$docHash| |name| |$docHashLocal|)))))))
           (SETQ |bfVar#53| (CDR |bfVar#53|))))
        |u| NIL)
@@ -2027,9 +2026,7 @@
       (#1# |x|)))))
  
 ; extendConstructorDataTable() ==
-; --  tb := $constructorDataTable
 ;   for x in listSort(function GLESSEQP,HKEYS $conHash) repeat
-; --     if LASSOC(x,tb) then tb := DELLASOS(x,tb)
 ;      record := HGET($conHash,x)
 ;      [form,sig,predlist,origin,exposure,comments,typeCode,:filename] := first record
 ;      abb := asyAbbreviation(x,#(rest sig))

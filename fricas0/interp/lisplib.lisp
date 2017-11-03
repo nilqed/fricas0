@@ -782,7 +782,7 @@
 ;       implementation is [eltEtc,.,n] and eltEtc in '(CONST ELT) => eltEtc
 ;       implementation is [impOp,:.] =>
 ;         impOp = 'XLAM => implementation
-;         impOp in '(CONST Subsumed) => impOp
+;         impOp = CONST => impOp
 ;         keyedSystemError("S2IL0025",[impOp])
 ;       implementation = 'mkRecord => 'mkRecord
 ;       keyedSystemError("S2IL0025",[implementation])
@@ -792,7 +792,7 @@
 ;         condition = 'T => [sig,n]
 ;         [sig,n,condition]
 ;       [sig,n,condition,kind]
-;     itemList := [signatureItem, :QLASSQ(op, newAlist)]
+;     itemList := insert(signatureItem, QLASSQ(op, newAlist))
 ;     newAlist:= insertAlist(op,itemList,newAlist)
 ;   newAlist
  
@@ -851,8 +851,7 @@
                                   (SETQ |impOp| (CAR |implementation|))
                                   #1#))
                             (COND ((EQ |impOp| 'XLAM) |implementation|)
-                                  ((|member| |impOp| '(CONST |Subsumed|))
-                                   |impOp|)
+                                  ((EQUAL |impOp| CONST) |impOp|)
                                   (#1#
                                    (|keyedSystemError| 'S2IL0025
                                     (LIST |impOp|)))))
@@ -873,7 +872,7 @@
                                    (#1# (LIST |sig| |n| |condition|))))
                             (#1# (LIST |sig| |n| |condition| |kind|)))))
                   (SETQ |itemList|
-                          (CONS |signatureItem| (QLASSQ |op| |newAlist|)))
+                          (|insert| |signatureItem| (QLASSQ |op| |newAlist|)))
                   (SETQ |newAlist|
                           (|insertAlist| |op| |itemList| |newAlist|))))))
           (SETQ |bfVar#17| (CDR |bfVar#17|))))

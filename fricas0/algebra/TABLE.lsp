@@ -1,9 +1,9 @@
 
 (DECLAIM (NOTINLINE |Table;|)) 
 
-(DEFUN |Table| (&REST #1=#:G758)
+(DEFUN |Table| (&REST #1=#:G759)
   (SPROG NIL
-         (PROG (#2=#:G759)
+         (PROG (#2=#:G760)
            (RETURN
             (COND
              ((LETT #2#
@@ -20,7 +20,7 @@
 
 (DEFUN |Table;| (|#1| |#2|)
   (SPROG
-   ((#1=#:G757 NIL) (#2=#:G756 NIL) (|pv$| NIL) (#3=#:G754 NIL) (#4=#:G755 NIL)
+   ((#1=#:G758 NIL) (#2=#:G757 NIL) (|pv$| NIL) (#3=#:G755 NIL) (#4=#:G756 NIL)
     ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #5=(|Table|))

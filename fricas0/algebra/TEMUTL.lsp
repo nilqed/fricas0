@@ -20,7 +20,7 @@
 
 (DEFUN |TemplateUtilities| ()
   (SPROG NIL
-         (PROG (#1=#:G698)
+         (PROG (#1=#:G700)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|TemplateUtilities|)

@@ -33,7 +33,7 @@
 
 (DEFUN |GraphicsDefaults| ()
   (SPROG NIL
-         (PROG (#1=#:G705)
+         (PROG (#1=#:G706)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|GraphicsDefaults|)

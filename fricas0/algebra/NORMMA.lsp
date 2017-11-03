@@ -35,9 +35,9 @@
 
 (DECLAIM (NOTINLINE |NormInMonogenicAlgebra;|)) 
 
-(DEFUN |NormInMonogenicAlgebra| (&REST #1=#:G701)
+(DEFUN |NormInMonogenicAlgebra| (&REST #1=#:G704)
   (SPROG NIL
-         (PROG (#2=#:G702)
+         (PROG (#2=#:G705)
            (RETURN
             (COND
              ((LETT #2#

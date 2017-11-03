@@ -190,18 +190,13 @@
 ;   $interpOnly: local := NIL        --true when in interpret only mode
 ;   $whereCacheList: local := NIL    --maps compiled because of where
 ;   $timeGlobalName: local := '$compTimeSum  --see incrementTimeSum
-;   $StreamFrame: local := nil       --used in printing streams
 ;   $declaredMode: local := NIL      --Weak type propagation for symbols
 ;   $localVars:local := NIL          --list of local variables in function
 ;   $analyzingMapList:local := NIL   --names of maps currently being
 ;                                    --analyzed
-;   $lastLineInSEQ: local := true    --see evalIF and friends
 ;   $instantCoerceCount: local := 0
 ;   $instantCanCoerceCount: local := 0
 ;   $instantMmCondCount: local := 0
-;   $defaultFortVar:= 'X             --default FORTRAN variable name
-;   $fortVar : local :=              --variable name for FORTRAN output
-;      $defaultFortVar
 ;   $minivector: local := NIL
 ;   $minivectorCode: local := NIL
 ;   $minivectorNames: local := NIL
@@ -218,19 +213,18 @@
  
 (DEFUN |processInteractive| (|form| |posnForm|)
   (PROG (|$inRetract| |$domPvar| |$minivectorNames| |$minivectorCode|
-         |$minivector| |$fortVar| |$instantMmCondCount|
-         |$instantCanCoerceCount| |$instantCoerceCount| |$lastLineInSEQ|
-         |$analyzingMapList| |$localVars| |$declaredMode| |$StreamFrame|
+         |$minivector| |$instantMmCondCount| |$instantCanCoerceCount|
+         |$instantCoerceCount| |$analyzingMapList| |$localVars| |$declaredMode|
          |$timeGlobalName| |$whereCacheList| |$interpOnly| |$compilingLoop|
          |$compilingMap| |$mapList| |$freeVars| |$compErrorMessageStack|
          |$Coerce| |$op| |object| |op|)
     (DECLARE
      (SPECIAL |$inRetract| |$domPvar| |$minivectorNames| |$minivectorCode|
-      |$minivector| |$fortVar| |$instantMmCondCount| |$instantCanCoerceCount|
-      |$instantCoerceCount| |$lastLineInSEQ| |$analyzingMapList| |$localVars|
-      |$declaredMode| |$StreamFrame| |$timeGlobalName| |$whereCacheList|
-      |$interpOnly| |$compilingLoop| |$compilingMap| |$mapList| |$freeVars|
-      |$compErrorMessageStack| |$Coerce| |$op|))
+      |$minivector| |$instantMmCondCount| |$instantCanCoerceCount|
+      |$instantCoerceCount| |$analyzingMapList| |$localVars| |$declaredMode|
+      |$timeGlobalName| |$whereCacheList| |$interpOnly| |$compilingLoop|
+      |$compilingMap| |$mapList| |$freeVars| |$compErrorMessageStack| |$Coerce|
+      |$op|))
     (RETURN
      (PROGN
       (|initializeTimedNames| |$interpreterTimedNames|
@@ -249,16 +243,12 @@
       (SETQ |$interpOnly| NIL)
       (SETQ |$whereCacheList| NIL)
       (SETQ |$timeGlobalName| '|$compTimeSum|)
-      (SETQ |$StreamFrame| NIL)
       (SETQ |$declaredMode| NIL)
       (SETQ |$localVars| NIL)
       (SETQ |$analyzingMapList| NIL)
-      (SETQ |$lastLineInSEQ| T)
       (SETQ |$instantCoerceCount| 0)
       (SETQ |$instantCanCoerceCount| 0)
       (SETQ |$instantMmCondCount| 0)
-      (SETQ |$defaultFortVar| 'X)
-      (SETQ |$fortVar| |$defaultFortVar|)
       (SETQ |$minivector| NIL)
       (SETQ |$minivectorCode| NIL)
       (SETQ |$minivectorNames| NIL)

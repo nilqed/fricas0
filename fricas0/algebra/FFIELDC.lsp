@@ -14,11 +14,9 @@
              (LETT #1#
                    (|Join| (|FieldOfPrimeCharacteristic|) (|Finite|)
                            (|StepThrough|) (|DifferentialRing|)
+                           (|PolynomialFactorizationExplicit|)
                            (|mkCategory|
                             '(((|charthRoot| ($ $)) T)
-                              ((|conditionP|
-                                ((|Union| (|Vector| $) "failed") (|Matrix| $)))
-                               T)
                               ((|factorsOfCyclicGroupSize|
                                 ((|List|
                                   (|Record| (|:| |factor| (|Integer|))
@@ -46,8 +44,7 @@
                               (|Integer|)
                               (|List|
                                (|Record| (|:| |factor| (|Integer|))
-                                         (|:| |exponent| (|Integer|))))
-                              (|Matrix| $))
+                                         (|:| |exponent| (|Integer|)))))
                             NIL))
                    |FiniteFieldCategory|)
            (SETELT #1# 0 '(|FiniteFieldCategory|))))) 

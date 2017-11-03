@@ -1,7 +1,7 @@
 
 (SDEFUN |DIFEXT-;differentiate;SMNniS;1|
         ((|x| S) (|derivation| |Mapping| R R) (|n| |NonNegativeInteger|) ($ S))
-        (SPROG ((#1=#:G708 NIL) (|i| NIL))
+        (SPROG ((#1=#:G711 NIL) (|i| NIL))
                (SEQ
                 (SEQ (LETT |i| 1 . #2=(|DIFEXT-;differentiate;SMNniS;1|))
                      (LETT #1# |n| . #2#) G190

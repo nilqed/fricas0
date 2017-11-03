@@ -54,9 +54,9 @@
         ((|rlp| |List| (|Polynomial| R)) (|rlv| |List| (|Symbol|))
          ($ |List| (|List| (|Expression| R))))
         (SPROG
-         ((|res| (|List| (|List| (|Expression| R)))) (#1=#:G742 NIL) (|vv| NIL)
-          (#2=#:G743 NIL) (|p| NIL) (#3=#:G741 NIL) (#4=#:G740 NIL) (|r| NIL)
-          (#5=#:G739 NIL) (|v| (|Symbol|)) (|pp| (|Polynomial| R)))
+         ((|res| (|List| (|List| (|Expression| R)))) (#1=#:G746 NIL) (|vv| NIL)
+          (#2=#:G747 NIL) (|p| NIL) (#3=#:G745 NIL) (#4=#:G744 NIL) (|r| NIL)
+          (#5=#:G743 NIL) (|v| (|Symbol|)) (|pp| (|Polynomial| R)))
          (SEQ (LETT |pp| (|SPADfirst| |rlp|) . #6=(|SOLVERAD;findGenZeros|))
               (LETT |v| (|SPADfirst| |rlv|) . #6#)
               (LETT |rlv| (CDR |rlv|) . #6#) (LETT |res| NIL . #6#)
@@ -154,9 +154,9 @@
           (|rlv1| (|List| (|Symbol|)))
           (|lv1| (|List| (|Kernel| (|Expression| R))))
           (|p1| (|List| (|Expression| R))) (|res1| (|List| (|Expression| R)))
-          (#1=#:G754 NIL) (|par| NIL)
-          (|parRes| (|List| (|List| (|Expression| R)))) (#2=#:G752 NIL)
-          (|p| NIL) (#3=#:G753 NIL) (|v| NIL) (#4=#:G751 NIL))
+          (#1=#:G758 NIL) (|par| NIL)
+          (|parRes| (|List| (|List| (|Expression| R)))) (#2=#:G756 NIL)
+          (|p| NIL) (#3=#:G757 NIL) (|v| NIL) (#4=#:G755 NIL))
          (SEQ
           (LETT |parRes|
                 (PROGN
@@ -217,7 +217,7 @@
 (SDEFUN |SOLVERAD;radicalSolve;FSL;10|
         ((|pol| |Fraction| (|Polynomial| R)) (|v| |Symbol|)
          ($ |List| (|Equation| (|Expression| R))))
-        (SPROG ((#1=#:G758 NIL) (|r| NIL) (#2=#:G757 NIL))
+        (SPROG ((#1=#:G762 NIL) (|r| NIL) (#2=#:G761 NIL))
                (SEQ
                 (PROGN
                  (LETT #2# NIL . #3=(|SOLVERAD;radicalSolve;FSL;10|))
@@ -285,13 +285,13 @@
         ((|lp| |List| (|Fraction| (|Polynomial| R))) (|lv| |List| (|Symbol|))
          ($ |List| (|List| (|Expression| R))))
         (SPROG
-         ((#1=#:G782 NIL) (#2=#:G781 #3=(|List| (|List| (|Expression| R))))
-          (#4=#:G783 #3#) (#5=#:G792 NIL) (|res| NIL)
-          (|rpRes| (|List| #6=(|List| (|Polynomial| R)))) (#7=#:G791 NIL)
-          (|result| (|List| (|List| (|Expression| R)))) (#8=#:G776 NIL)
-          (#9=#:G775 #10=(|List| (|List| (|Expression| R)))) (#11=#:G777 #10#)
-          (#12=#:G790 NIL) (|listGen| (|List| #6#)) (#13=#:G789 NIL)
-          (#14=#:G788 NIL) (#15=#:G787 NIL) (#16=#:G786 NIL)
+         ((#1=#:G786 NIL) (#2=#:G785 #3=(|List| (|List| (|Expression| R))))
+          (#4=#:G787 #3#) (#5=#:G796 NIL) (|res| NIL)
+          (|rpRes| (|List| #6=(|List| (|Polynomial| R)))) (#7=#:G795 NIL)
+          (|result| (|List| (|List| (|Expression| R)))) (#8=#:G780 NIL)
+          (#9=#:G779 #10=(|List| (|List| (|Expression| R)))) (#11=#:G781 #10#)
+          (#12=#:G794 NIL) (|listGen| (|List| #6#)) (#13=#:G793 NIL)
+          (#14=#:G792 NIL) (#15=#:G791 NIL) (#16=#:G790 NIL)
           (|rlv| (|List| (|Symbol|)))
           (|parRes| (|List| (|List| (|Polynomial| R)))))
          (SEQ
@@ -401,7 +401,7 @@
 (SDEFUN |SOLVERAD;radicalSolve;LLL;15|
         ((|lp| |List| (|Fraction| (|Polynomial| R))) (|lv| |List| (|Symbol|))
          ($ |List| (|List| (|Equation| (|Expression| R)))))
-        (SPROG ((#1=#:G796 NIL) (|lres| NIL) (#2=#:G795 NIL))
+        (SPROG ((#1=#:G800 NIL) (|lres| NIL) (#2=#:G799 NIL))
                (SEQ
                 (PROGN
                  (LETT #2# NIL . #3=(|SOLVERAD;radicalSolve;LLL;15|))
@@ -422,9 +422,9 @@
         ((|lp| |List| (|Fraction| (|Polynomial| R)))
          ($ |List| (|List| (|Equation| (|Expression| R)))))
         (SPROG
-         ((#1=#:G805 NIL) (|lres| NIL) (#2=#:G804 NIL)
-          (|lv| #3=(|List| (|Symbol|))) (#4=#:G798 NIL) (#5=#:G797 #3#)
-          (#6=#:G799 #3#) (#7=#:G803 NIL) (|p| NIL))
+         ((#1=#:G809 NIL) (|lres| NIL) (#2=#:G808 NIL)
+          (|lv| #3=(|List| (|Symbol|))) (#4=#:G802 NIL) (#5=#:G801 #3#)
+          (#6=#:G803 #3#) (#7=#:G807 NIL) (|p| NIL))
          (SEQ
           (LETT |lv|
                 (PROGN
@@ -474,9 +474,9 @@
          (|lv| |List| (|Symbol|))
          ($ |List| (|List| (|Equation| (|Expression| R)))))
         (SPROG
-         ((#1=#:G813 NIL) (|lres| NIL) (#2=#:G812 NIL)
-          (|lp| (|List| (|Fraction| (|Polynomial| R)))) (#3=#:G811 NIL)
-          (|p| NIL) (#4=#:G810 NIL))
+         ((#1=#:G817 NIL) (|lres| NIL) (#2=#:G816 NIL)
+          (|lp| (|List| (|Fraction| (|Polynomial| R)))) (#3=#:G815 NIL)
+          (|p| NIL) (#4=#:G814 NIL))
          (SEQ
           (LETT |lp|
                 (PROGN
@@ -516,11 +516,11 @@
         ((|le| |List| (|Equation| (|Fraction| (|Polynomial| R))))
          ($ |List| (|List| (|Equation| (|Expression| R)))))
         (SPROG
-         ((#1=#:G825 NIL) (|lres| NIL) (#2=#:G824 NIL)
-          (|lv| #3=(|List| (|Symbol|))) (#4=#:G816 NIL) (#5=#:G815 #3#)
-          (#6=#:G817 #3#) (#7=#:G823 NIL) (|p| NIL)
-          (|lp| (|List| (|Fraction| (|Polynomial| R)))) (#8=#:G822 NIL)
-          (#9=#:G821 NIL))
+         ((#1=#:G829 NIL) (|lres| NIL) (#2=#:G828 NIL)
+          (|lv| #3=(|List| (|Symbol|))) (#4=#:G820 NIL) (#5=#:G819 #3#)
+          (#6=#:G821 #3#) (#7=#:G827 NIL) (|p| NIL)
+          (|lp| (|List| (|Fraction| (|Polynomial| R)))) (#8=#:G826 NIL)
+          (#9=#:G825 NIL))
          (SEQ
           (LETT |lp|
                 (PROGN
@@ -612,8 +612,8 @@
         ((|rlp| |List| (|Polynomial| R)) (|rlv| |List| (|Symbol|))
          ($ |Boolean|))
         (SPROG
-         ((#1=#:G830 NIL) (#2=#:G829 #3=(|Boolean|)) (#4=#:G831 #3#)
-          (#5=#:G833 NIL) (|f| NIL) (#6=#:G834 NIL) (|x| NIL))
+         ((#1=#:G834 NIL) (#2=#:G833 #3=(|Boolean|)) (#4=#:G835 #3#)
+          (#5=#:G837 NIL) (|f| NIL) (#6=#:G838 NIL) (|x| NIL))
          (SEQ
           (PROGN
            (LETT #1# NIL . #7=(|SOLVERAD;isGeneric?|))
@@ -638,8 +638,8 @@
         ((|lp| |List| (|List| (|Expression| R)))
          ($ . #1=(|List| (|List| (|Expression| R)))))
         (SPROG
-         ((#2=#:G836 NIL) (#3=#:G835 #1#) (#4=#:G837 #1#) (#5=#:G842 NIL)
-          (|lsel| NIL) (#6=#:G841 NIL) (#7=#:G840 NIL) (|f| NIL))
+         ((#2=#:G840 NIL) (#3=#:G839 #1#) (#4=#:G841 #1#) (#5=#:G846 NIL)
+          (|lsel| NIL) (#6=#:G845 NIL) (#7=#:G844 NIL) (|f| NIL))
          (SEQ
           (COND
            ((SPADCALL |lp| NIL (QREFELT $ 100)) (SPADCALL NIL (QREFELT $ 101)))
@@ -683,7 +683,7 @@
         ((|nres| |List| (|Expression| R)) (|lv| |List| (|Symbol|))
          ($ |List| (|Equation| (|Expression| R))))
         (SPROG
-         ((#1=#:G846 NIL) (|x| NIL) (#2=#:G847 NIL) (|r| NIL) (#3=#:G845 NIL))
+         ((#1=#:G850 NIL) (|x| NIL) (#2=#:G851 NIL) (|r| NIL) (#3=#:G849 NIL))
          (SEQ
           (PROGN
            (LETT #3# NIL . #4=(|SOLVERAD;makeEq|))
@@ -710,8 +710,8 @@
           (|List| (|Equation| (|Expression| R)))))
         (SPROG
          ((|re| (|List| (|Equation| (|Expression| R))))
-          (|solutions| (|List| (|Expression| R))) (#1=#:G871 NIL) (|i| NIL)
-          (T0 (|List| (|Expression| R))) (|s| (|Expression| R)) (#2=#:G870 NIL)
+          (|solutions| (|List| (|Expression| R))) (#1=#:G875 NIL) (|i| NIL)
+          (T0 (|List| (|Expression| R))) (|s| (|Expression| R)) (#2=#:G874 NIL)
           (|l| (|List| (|Expression| R)))
           (|unsolved| (|List| (|Polynomial| R))) (|n| (|NonNegativeInteger|))
           (|u| (|SparseUnivariatePolynomial| (|Polynomial| R)))
@@ -720,7 +720,7 @@
             (|:| |pol| (|SparseUnivariatePolynomial| (|Polynomial| R)))
             (|:| |deg| (|PositiveInteger|))))
           (|constants| (|List| (|Polynomial| R))) (|ff| #3=(|Polynomial| R))
-          (#4=#:G869 NIL) (|f| NIL)
+          (#4=#:G873 NIL) (|f| NIL)
           (|factors|
            (|List|
             (|Record| (|:| |factor| #3#) (|:| |exponent| (|Integer|))))))
@@ -788,9 +788,9 @@
 
 (DECLAIM (NOTINLINE |RadicalSolvePackage;|)) 
 
-(DEFUN |RadicalSolvePackage| (#1=#:G872)
+(DEFUN |RadicalSolvePackage| (#1=#:G876)
   (SPROG NIL
-         (PROG (#2=#:G873)
+         (PROG (#2=#:G877)
            (RETURN
             (COND
              ((LETT #2#

@@ -15,7 +15,7 @@
 (SDEFUN |XPBWPOLY;prod1|
         ((|b| |PoincareBirkhoffWittLyndonBasis| |VarSet|) (|p| $) ($ $))
         (SPROG
-         ((#1=#:G712 NIL) (#2=#:G711 ($)) (#3=#:G713 ($)) (#4=#:G717 NIL)
+         ((#1=#:G717 NIL) (#2=#:G716 ($)) (#3=#:G718 ($)) (#4=#:G725 NIL)
           (|t| NIL))
          (SEQ
           (PROGN
@@ -41,7 +41,7 @@
 (SDEFUN |XPBWPOLY;prod2|
         ((|p| $) (|b| |PoincareBirkhoffWittLyndonBasis| |VarSet|) ($ $))
         (SPROG
-         ((#1=#:G719 NIL) (#2=#:G718 ($)) (#3=#:G720 ($)) (#4=#:G722 NIL)
+         ((#1=#:G727 NIL) (#2=#:G726 ($)) (#3=#:G728 ($)) (#4=#:G730 NIL)
           (|t| NIL))
          (SEQ
           (PROGN
@@ -68,7 +68,7 @@
         ((|b| |PoincareBirkhoffWittLyndonBasis| |VarSet|) (|p| $)
          (|n| |NonNegativeInteger|) ($ $))
         (SPROG
-         ((#1=#:G724 NIL) (#2=#:G723 ($)) (#3=#:G725 ($)) (#4=#:G728 NIL)
+         ((#1=#:G732 NIL) (#2=#:G731 ($)) (#3=#:G733 ($)) (#4=#:G736 NIL)
           (|t| NIL) (|limit| (|Integer|)))
          (SEQ
           (LETT |limit| (- |n| (SPADCALL |b| (QREFELT $ 23)))
@@ -102,7 +102,7 @@
         ((|p| $) (|b| |PoincareBirkhoffWittLyndonBasis| |VarSet|)
          (|n| |NonNegativeInteger|) ($ $))
         (SPROG
-         ((#1=#:G730 NIL) (#2=#:G729 ($)) (#3=#:G731 ($)) (#4=#:G734 NIL)
+         ((#1=#:G738 NIL) (#2=#:G737 ($)) (#3=#:G739 ($)) (#4=#:G742 NIL)
           (|t| NIL) (|limit| (|Integer|)))
          (SEQ
           (LETT |limit| (- |n| (SPADCALL |b| (QREFELT $ 23)))
@@ -149,8 +149,8 @@
         ((|b| |PoincareBirkhoffWittLyndonBasis| |VarSet|)
          ($ |XDistributedPolynomial| |VarSet| R))
         (SPROG
-         ((#1=#:G741 NIL) (#2=#:G740 #3=(|XDistributedPolynomial| |VarSet| R))
-          (#4=#:G742 #3#) (#5=#:G744 NIL) (|l| NIL))
+         ((#1=#:G749 NIL) (#2=#:G748 #3=(|XDistributedPolynomial| |VarSet| R))
+          (#4=#:G750 #3#) (#5=#:G752 NIL) (|l| NIL))
          (SEQ
           (COND
            ((SPADCALL |b| (|spadConstant| $ 15) (QREFELT $ 16))
@@ -180,8 +180,8 @@
         ((|b| |PoincareBirkhoffWittLyndonBasis| |VarSet|)
          ($ |XRecursivePolynomial| |VarSet| R))
         (SPROG
-         ((#1=#:G746 NIL) (#2=#:G745 #3=(|XRecursivePolynomial| |VarSet| R))
-          (#4=#:G747 #3#) (#5=#:G749 NIL) (|l| NIL))
+         ((#1=#:G754 NIL) (#2=#:G753 #3=(|XRecursivePolynomial| |VarSet| R))
+          (#4=#:G755 #3#) (#5=#:G757 NIL) (|l| NIL))
          (SEQ
           (COND
            ((SPADCALL |b| (|spadConstant| $ 15) (QREFELT $ 16))
@@ -230,12 +230,12 @@
         ((|gauche| |List| (|LyndonWord| |VarSet|)) (|x| |LyndonWord| |VarSet|)
          (|droite| |List| (|LyndonWord| |VarSet|)) ($ $))
         (SPROG
-         ((|r2| ($)) (#1=#:G765 NIL) (#2=#:G764 ($)) (#3=#:G766 ($))
-          (#4=#:G773 NIL) (|t| NIL) (|r1| ($)) (#5=#:G762 NIL) (#6=#:G761 ($))
-          (#7=#:G763 ($)) (#8=#:G772 NIL) (#9=#:G759 NIL) (#10=#:G758 ($))
-          (#11=#:G760 ($)) (#12=#:G771 NIL) (|fd| (|LyndonWord| |VarSet|))
-          (|rd| (|List| (|LyndonWord| |VarSet|))) (#13=#:G755 NIL)
-          (#14=#:G754 ($)) (#15=#:G756 ($)) (#16=#:G770 NIL)
+         ((|r2| ($)) (#1=#:G773 NIL) (#2=#:G772 ($)) (#3=#:G774 ($))
+          (#4=#:G782 NIL) (|t| NIL) (|r1| ($)) (#5=#:G770 NIL) (#6=#:G769 ($))
+          (#7=#:G771 ($)) (#8=#:G781 NIL) (#9=#:G767 NIL) (#10=#:G766 ($))
+          (#11=#:G768 ($)) (#12=#:G780 NIL) (|fd| (|LyndonWord| |VarSet|))
+          (|rd| (|List| (|LyndonWord| |VarSet|))) (#13=#:G763 NIL)
+          (#14=#:G762 ($)) (#15=#:G764 ($)) (#16=#:G779 NIL)
           (|p| (|LiePolynomial| |VarSet| R)))
          (SEQ
           (COND
@@ -421,7 +421,7 @@
         (LIST (CONS (|spadConstant| $ 15) |r|))) 
 
 (SDEFUN |XPBWPOLY;coerce;$Of;13| ((|p| $) ($ |OutputForm|))
-        (SPROG ((|le| (|List| (|OutputForm|))) (#1=#:G781 NIL) (|rec| NIL))
+        (SPROG ((|le| (|List| (|OutputForm|))) (#1=#:G791 NIL) (|rec| NIL))
                (SEQ
                 (COND
                  ((NULL |p|) (SPADCALL (|spadConstant| $ 54) (QREFELT $ 17)))
@@ -446,7 +446,7 @@
                   (QREFELT $ 27))) 
 
 (SDEFUN |XPBWPOLY;coerce;Lp$;15| ((|p| |LiePolynomial| |VarSet| R) ($ $))
-        (SPROG ((#1=#:G787 NIL) (|t| NIL) (#2=#:G786 NIL))
+        (SPROG ((#1=#:G797 NIL) (|t| NIL) (#2=#:G796 NIL))
                (SEQ
                 (PROGN
                  (LETT #2# NIL . #3=(|XPBWPOLY;coerce;Lp$;15|))
@@ -469,8 +469,8 @@
 (SDEFUN |XPBWPOLY;coerce;$Xdp;16|
         ((|p| $) ($ |XDistributedPolynomial| |VarSet| R))
         (SPROG
-         ((#1=#:G789 NIL) (#2=#:G788 #3=(|XDistributedPolynomial| |VarSet| R))
-          (#4=#:G790 #3#) (#5=#:G792 NIL) (|t| NIL))
+         ((#1=#:G799 NIL) (#2=#:G798 #3=(|XDistributedPolynomial| |VarSet| R))
+          (#4=#:G800 #3#) (#5=#:G802 NIL) (|t| NIL))
          (SEQ
           (PROGN
            (LETT #1# NIL . #6=(|XPBWPOLY;coerce;$Xdp;16|))
@@ -494,8 +494,8 @@
 (SDEFUN |XPBWPOLY;coerce;$Xrp;17|
         ((|p| $) ($ |XRecursivePolynomial| |VarSet| R))
         (SPROG
-         ((#1=#:G794 NIL) (#2=#:G793 #3=(|XRecursivePolynomial| |VarSet| R))
-          (#4=#:G795 #3#) (#5=#:G797 NIL) (|t| NIL))
+         ((#1=#:G804 NIL) (#2=#:G803 #3=(|XRecursivePolynomial| |VarSet| R))
+          (#4=#:G805 #3#) (#5=#:G807 NIL) (|t| NIL))
          (SEQ
           (COND
            ((SPADCALL |p| (|spadConstant| $ 21) (QREFELT $ 67))
@@ -553,7 +553,7 @@
 
 (SDEFUN |XPBWPOLY;*;3$;22| ((|x| $) (|y| $) ($ $))
         (SPROG
-         ((#1=#:G815 NIL) (#2=#:G814 ($)) (#3=#:G816 ($)) (#4=#:G819 NIL)
+         ((#1=#:G827 NIL) (#2=#:G826 ($)) (#3=#:G828 ($)) (#4=#:G831 NIL)
           (|t| NIL))
          (SEQ
           (COND
@@ -582,8 +582,8 @@
 
 (SDEFUN |XPBWPOLY;varList;$L;23| ((|p| $) ($ |List| |VarSet|))
         (SPROG
-         ((|lv| #1=(|List| |VarSet|)) (#2=#:G821 NIL) (#3=#:G820 #1#)
-          (#4=#:G822 #1#) (#5=#:G825 NIL) (|b| NIL))
+         ((|lv| #1=(|List| |VarSet|)) (#2=#:G833 NIL) (#3=#:G832 #1#)
+          (#4=#:G834 #1#) (#5=#:G837 NIL) (|b| NIL))
          (SEQ
           (LETT |lv|
                 (PROGN
@@ -625,7 +625,7 @@
 (SDEFUN |XPBWPOLY;product;2$Nni$;26|
         ((|x| $) (|y| $) (|n| |NonNegativeInteger|) ($ $))
         (SPROG
-         ((#1=#:G830 NIL) (#2=#:G829 ($)) (#3=#:G831 ($)) (#4=#:G833 NIL)
+         ((#1=#:G842 NIL) (#2=#:G841 ($)) (#3=#:G843 ($)) (#4=#:G845 NIL)
           (|t| NIL))
          (SEQ
           (COND
@@ -656,7 +656,7 @@
 (SDEFUN |XPBWPOLY;exp;$Nni$;27| ((|p| $) (|n| |NonNegativeInteger|) ($ $))
         (SPROG
          ((|r| ($)) (|s| ($)) (|k2| (R)) (|k1| (|Fraction| (|Integer|)))
-          (#1=#:G843 NIL) (|i| NIL))
+          (#1=#:G857 NIL) (|i| NIL))
          (SEQ
           (COND
            ((SPADCALL |p| (|spadConstant| $ 21) (QREFELT $ 67))
@@ -687,7 +687,7 @@
 (SDEFUN |XPBWPOLY;log;$Nni$;28| ((|p| $) (|n| |NonNegativeInteger|) ($ $))
         (SPROG
          ((|r| ($)) (|s| ($)) (|k2| (R)) (|k1| (|Fraction| (|Integer|)))
-          (#1=#:G849 NIL) (|i| NIL) (|p1| ($)))
+          (#1=#:G863 NIL) (|i| NIL) (|p1| ($)))
          (SEQ
           (COND
            ((SPADCALL |p| (|spadConstant| $ 26) (QREFELT $ 67))
@@ -722,8 +722,8 @@
         (SPROG
          ((|lt|
            (|List| (|Record| (|:| |k| (|LyndonWord| |VarSet|)) (|:| |c| R))))
-          (#1=#:G866 NIL) (|t| NIL) (#2=#:G865 NIL) (#3=#:G854 NIL)
-          (#4=#:G853 #5=(|Boolean|)) (#6=#:G855 #5#) (#7=#:G864 NIL))
+          (#1=#:G880 NIL) (|t| NIL) (#2=#:G879 NIL) (#3=#:G868 NIL)
+          (#4=#:G867 #5=(|Boolean|)) (#6=#:G869 #5#) (#7=#:G878 NIL))
          (SEQ
           (COND
            ((SPADCALL |p| (|spadConstant| $ 21) (QREFELT $ 67))
@@ -770,7 +770,7 @@
 
 (SDEFUN |XPBWPOLY;mirror;2$;30| ((|p| $) ($ $))
         (SPROG
-         ((#1=#:G868 NIL) (#2=#:G867 ($)) (#3=#:G869 ($)) (#4=#:G871 NIL)
+         ((#1=#:G882 NIL) (#2=#:G881 ($)) (#3=#:G883 ($)) (#4=#:G885 NIL)
           (|t| NIL))
          (SEQ
           (PROGN
@@ -794,9 +794,9 @@
 
 (DECLAIM (NOTINLINE |XPBWPolynomial;|)) 
 
-(DEFUN |XPBWPolynomial| (&REST #1=#:G885)
+(DEFUN |XPBWPolynomial| (&REST #1=#:G899)
   (SPROG NIL
-         (PROG (#2=#:G886)
+         (PROG (#2=#:G900)
            (RETURN
             (COND
              ((LETT #2#
@@ -937,7 +937,7 @@
               (|List| 13) (|List| 7) (|List| $) (|FreeMonoid| 6)
               (|Mapping| 7 7) (|Record| (|:| |k| 112) (|:| |c| 7))
               (|Union| 112 '#1#) (|Union| $ '"failed") (|PositiveInteger|)
-              (|String|) (|SingleInteger|) (|HashState|))
+              (|HashState|) (|String|) (|SingleInteger|))
            '#(|varList| 320 |trunc| 325 |reductum| 331 |quasiRegular?| 336
               |quasiRegular| 341 |product| 346 |monomial| 353 |mirror| 359
               |log| 364 |leadingSupport| 370 |exp| 375 |degree| 381 |constant?|
@@ -946,29 +946,34 @@
            'NIL
            (CONS
             (|makeByteWordVec2| 6
-                                '(0 0 0 0 2 0 2 0 0 4 0 0 0 0 0 4 0 6 0 0 6 0 0
-                                  0 6 0 0 5 0 0 0 0 0 1 3 6))
+                                '(0 0 0 2 0 0 0 0 0 0 2 0 0 0 4 0 0 0 0 0 0 4 0
+                                  6 0 0 0 6 0 0 0 0 6 0 0 5 0 0 0 0 0 1 3 6))
             (CONS
-             '#(NIL NIL NIL |FreeModuleCategory&| |Algebra&| NIL |Module&| NIL
-                |Ring&| NIL NIL NIL NIL |Rng&| NIL NIL |AbelianGroup&| NIL NIL
-                NIL NIL |AbelianMonoid&| |Monoid&| NIL |OrderedSet&|
-                |SemiGroup&| |AbelianSemiGroup&| NIL |SetCategory&|
-                |RetractableTo&| NIL |BasicType&| NIL NIL |RetractableTo&|
-                |PartialOrder&|)
+             '#(NIL NIL NIL |Algebra&| NIL |FreeModuleCategory&| |Rng&| NIL NIL
+                NIL |Module&| NIL |NonAssociativeRing&| NIL NIL NIL NIL NIL
+                |NonAssociativeRng&| NIL NIL NIL |AbelianGroup&| NIL NIL NIL
+                NIL NIL NIL |MagmaWithUnit&| |NonAssociativeSemiRng&|
+                |AbelianMonoid&| |OrderedSet&| |Magma&| |AbelianSemiGroup&| NIL
+                |SetCategory&| |RetractableTo&| NIL |BasicType&| NIL NIL
+                |RetractableTo&| |PartialOrder&|)
              (CONS
               '#((|XPolynomialsCat| 6 7) (|XFreeAlgebra| 6 7) (|XAlgebra| 7)
+                 (|Algebra| 7) (|Ring|)
                  (|FreeModuleCategory| 7 (|PoincareBirkhoffWittLyndonBasis| 6))
-                 (|Algebra| 7)
+                 (|Rng|) (|SemiRing|)
                  (|IndexedDirectProductCategory| 7
                                                  (|PoincareBirkhoffWittLyndonBasis|
                                                   6))
-                 (|Module| 7) (|BiModule| 7 7) (|Ring|)
+                 (|SemiRng|) (|Module| 7) (|BiModule| 7 7)
+                 (|NonAssociativeRing|) (|BiModule| $$ $$)
                  (|OrderedAbelianMonoidSup|) (|AbelianProductCategory| 7)
-                 (|LeftModule| 7) (|RightModule| 7) (|Rng|) (|LeftModule| $$)
+                 (|LeftModule| 7) (|RightModule| 7) (|NonAssociativeRng|)
+                 (|RightModule| $$) (|LeftModule| $$)
                  (|OrderedCancellationAbelianMonoid|) (|AbelianGroup|)
-                 (|OrderedAbelianMonoid|) (|CancellationAbelianMonoid|)
-                 (|SemiRing|) (|OrderedAbelianSemiGroup|) (|AbelianMonoid|)
-                 (|Monoid|) (|SemiRng|) (|OrderedSet|) (|SemiGroup|)
+                 (|OrderedAbelianMonoid|) (|Monoid|) (|NonAssociativeSemiRing|)
+                 (|CancellationAbelianMonoid|) (|OrderedAbelianSemiGroup|)
+                 (|SemiGroup|) (|MagmaWithUnit|) (|NonAssociativeSemiRng|)
+                 (|AbelianMonoid|) (|OrderedSet|) (|Magma|)
                  (|AbelianSemiGroup|) (|Comparable|) (|SetCategory|)
                  (|RetractableTo| (|FreeMonoid| 6)) (|unitsKnown|)
                  (|BasicType|) (|CoercibleTo| 12) (|noZeroDivisors|)
@@ -997,9 +1002,9 @@
                                     0 10 0 79 1 0 0 0 82 3 0 0 0 0 22 92 2 0 0
                                     7 13 27 1 0 0 0 105 2 7 0 0 22 99 1 0 13 0
                                     72 2 7 0 0 22 96 1 0 22 0 88 1 0 10 0 73 1
-                                    0 7 0 77 1 0 38 0 71 1 0 32 0 66 1 0 0 34
+                                    0 7 0 77 1 0 32 0 66 1 0 38 0 71 1 0 0 34
                                     44 1 0 0 6 61 1 0 0 7 53 1 0 12 0 59 0 0 0
-                                    21 0 0 0 26 1 0 103 0 104 2 0 10 0 0 67 2 0
-                                    0 0 0 97 1 0 0 0 98 2 0 0 0 0 20 2 0 0 7 0
+                                    21 0 0 0 26 1 0 103 0 104 2 0 10 0 0 67 1 0
+                                    0 0 98 2 0 0 0 0 97 2 0 0 0 0 20 2 0 0 7 0
                                     19 2 0 0 0 0 45)))))
            '|lookupIncomplete|)) 

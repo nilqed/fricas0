@@ -22,24 +22,24 @@
          ($ |Matrix|
           (|SparseUnivariatePolynomial| (|Expression| (|Integer|)))))
         (SPROG
-         ((#1=#:G741 NIL) (|j| NIL) (|i1| #2=(|NonNegativeInteger|))
-          (#3=#:G740 NIL) (|i| NIL)
+         ((#1=#:G745 NIL) (|j| NIL) (|i1| #2=(|NonNegativeInteger|))
+          (#3=#:G744 NIL) (|i| NIL)
           (|res|
            (|Matrix|
             (|SparseUnivariatePolynomial| (|Expression| (|Integer|)))))
-          (|n1| #2#) (#4=#:G739 NIL) (|n| (|NonNegativeInteger|))
+          (|n1| #2#) (#4=#:G743 NIL) (|n| (|NonNegativeInteger|))
           (|res1|
            (|Matrix|
             (|SparseUnivariatePolynomial| (|Expression| (|Integer|)))))
-          (C (|List| (|Expression| (|Integer|)))) (#5=#:G738 NIL)
-          (#6=#:G737 NIL) (|vd| (|Vector| (|Integer|))) (#7=#:G736 NIL)
-          (|ei| NIL) (#8=#:G735 NIL)
+          (C (|List| (|Expression| (|Integer|)))) (#5=#:G742 NIL)
+          (#6=#:G741 NIL) (|vd| (|Vector| (|Integer|))) (#7=#:G740 NIL)
+          (|ei| NIL) (#8=#:G739 NIL)
           (|lpp|
            (|List| (|SparseUnivariatePolynomial| (|Expression| (|Integer|)))))
           (|pp| (|SparseUnivariatePolynomial| (|Expression| (|Integer|))))
-          (#9=#:G716 NIL)
+          (#9=#:G720 NIL)
           (|pp1| (|SparseUnivariatePolynomial| (|Expression| (|Integer|))))
-          (#10=#:G734 NIL) (#11=#:G733 NIL) (|v| NIL)
+          (#10=#:G738 NIL) (#11=#:G737 NIL) (|v| NIL)
           (|m| (|NonNegativeInteger|)))
          (SEQ
           (LETT |m| (QVSIZE (|SPADfirst| |lv|))
@@ -151,7 +151,7 @@
 
 (DEFUN |VectorHermitePadeSolver| ()
   (SPROG NIL
-         (PROG (#1=#:G743)
+         (PROG (#1=#:G747)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|VectorHermitePadeSolver|)
@@ -202,7 +202,7 @@
                  (CONS '#()
                        (CONS '#()
                              (|makeByteWordVec2| 39
-                                                 '(2 6 0 6 0 7 3 10 8 6 6 9 11
+                                                 '(2 6 0 0 0 7 3 10 8 6 6 9 11
                                                    2 6 12 0 0 13 0 9 0 14 2 16
                                                    9 0 15 17 2 9 0 0 6 18 0 9 0
                                                    19 0 8 0 20 2 9 0 8 6 21 2 9

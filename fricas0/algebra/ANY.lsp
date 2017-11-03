@@ -64,7 +64,9 @@
                     (SPADCALL |p| (QREFELT $ 28)))
                    ('T |p|))))
                 . #1#)
-          (EXIT (SPADCALL (CONS |obj1| (CONS ":" |dom1|)) (QREFELT $ 30)))))) 
+          (EXIT
+           (SPADCALL (CONS |obj1| (CONS (SPADCALL ":" (QREFELT $ 29)) |dom1|))
+                     (QREFELT $ 31)))))) 
 
 (SDEFUN |ANY;any;SeN$;8| ((|domain| |SExpression|) (|object| |None|) ($ $))
         (SEQ
@@ -81,7 +83,7 @@
 
 (DEFUN |Any| ()
   (SPROG NIL
-         (PROG (#1=#:G726)
+         (PROG (#1=#:G728)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|Any|) . #2=(|Any|))
@@ -99,7 +101,7 @@
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
           (LETT |dv$| '(|Any|) . #1=(|Any|))
-          (LETT $ (GETREFV 35) . #1#)
+          (LETT $ (GETREFV 36) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|Any| NIL (CONS 1 $))
@@ -118,26 +120,26 @@
               |ANY;domainOf;$Of;3| (5 . ~=) |ANY;=;2$B;4| (|Symbol|)
               (|List| 19) (11 . |list|) |ANY;objectOf;$Of;5| (|String|)
               |ANY;showTypeInOutput;BS;6| (16 . |deref|) (21 . |atom?|)
-              (|List| 15) (26 . |list|) (|List| $) (31 . |hconcat|)
-              |ANY;coerce;$Of;7| |ANY;any;SeN$;8| (|SingleInteger|)
-              (|HashState|))
-           '#(~= 36 |showTypeInOutput| 42 |objectOf| 47 |obj| 52 |latex| 57
-              |hashUpdate!| 62 |hash| 68 |domainOf| 73 |dom| 78 |coerce| 83
-              |any| 88 = 94)
+              (|List| 15) (26 . |list|) (31 . |message|) (|List| $)
+              (36 . |hconcat|) |ANY;coerce;$Of;7| |ANY;any;SeN$;8|
+              (|SingleInteger|) (|HashState|))
+           '#(~= 41 |showTypeInOutput| 47 |objectOf| 52 |obj| 57 |latex| 62
+              |hashUpdate!| 67 |hash| 73 |domainOf| 78 |dom| 83 |coerce| 88
+              |any| 93 = 99)
            'NIL
            (CONS (|makeByteWordVec2| 1 '(0 0 0))
                  (CONS '#(|SetCategory&| |BasicType&| NIL)
                        (CONS
                         '#((|SetCategory|) (|BasicType|) (|CoercibleTo| 15))
-                        (|makeByteWordVec2| 34
+                        (|makeByteWordVec2| 35
                                             '(1 8 0 7 9 2 13 7 0 0 17 1 20 0 19
                                               21 1 8 7 0 25 1 13 7 0 26 1 27 0
-                                              15 28 1 15 0 29 30 2 0 7 0 0 1 1
-                                              0 23 7 24 1 0 15 0 22 1 0 11 0 12
-                                              1 0 23 0 1 2 0 34 34 0 1 1 0 33 0
-                                              1 1 0 15 0 16 1 0 13 0 14 1 0 15
-                                              0 31 2 0 0 13 11 32 2 0 7 0 0
-                                              18)))))
+                                              15 28 1 15 0 23 29 1 15 0 30 31 2
+                                              0 7 0 0 1 1 0 23 7 24 1 0 15 0 22
+                                              1 0 11 0 12 1 0 23 0 1 2 0 35 35
+                                              0 1 1 0 34 0 1 1 0 15 0 16 1 0 13
+                                              0 14 1 0 15 0 32 2 0 0 13 11 33 2
+                                              0 7 0 0 18)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|Any| 'NILADIC T) 

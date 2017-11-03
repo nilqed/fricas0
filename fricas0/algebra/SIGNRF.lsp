@@ -109,8 +109,8 @@
 
 (SDEFUN |SIGNRF;psign| ((|p| |Polynomial| R) ($ |Union| (|Integer|) "failed"))
         (SPROG
-         ((|ans| (|Integer|)) (#1=#:G766 NIL)
-          (|u| (|Union| (|Integer|) "failed")) (#2=#:G767 NIL) (|term| NIL)
+         ((|ans| (|Integer|)) (#1=#:G769 NIL)
+          (|u| (|Union| (|Integer|) "failed")) (#2=#:G770 NIL) (|term| NIL)
           (|s| (|Factored| (|Polynomial| R))) (|r| (|Union| R "failed")))
          (SEQ
           (EXIT
@@ -159,7 +159,7 @@
                                                    (PROGN
                                                     (LETT #1# (CONS 1 "failed")
                                                           . #3#)
-                                                    (GO #5=#:G765)))
+                                                    (GO #5=#:G768)))
                                                   ('T
                                                    (LETT |ans|
                                                          (* |ans| (QCDR |u|))
@@ -189,8 +189,8 @@
         ((|l| |List| (|Polynomial| R)) (|s| |Integer|)
          ($ |Union| (|Integer|) #1="failed"))
         (SPROG
-         ((#2=#:G785 NIL) (#3=#:G786 NIL) (|u| (|Union| (|Integer|) #1#))
-          (#4=#:G787 NIL) (|term| NIL))
+         ((#2=#:G788 NIL) (#3=#:G789 NIL) (|u| (|Union| (|Integer|) #1#))
+          (#4=#:G790 NIL) (|term| NIL))
          (SEQ
           (EXIT
            (SEQ
@@ -205,7 +205,7 @@
                         ((QEQCAR |u| 1)
                          (PROGN
                           (LETT #3# (CONS 1 "failed") . #5#)
-                          (GO #6=#:G784)))
+                          (GO #6=#:G787)))
                         ('T
                          (SEQ
                           (EXIT
@@ -217,7 +217,7 @@
                                      (LETT #3# (CONS 1 "failed") . #5#)
                                      (GO #6#))
                                     . #5#)
-                              (GO #7=#:G780)))))
+                              (GO #7=#:G783)))))
                           #7# (EXIT #2#))))))
                  (LETT #4# (CDR #4#) . #5#) (GO G190) G191 (EXIT NIL))
             (EXIT (CONS 0 |s|))))
@@ -225,7 +225,7 @@
 
 (SDEFUN |SIGNRF;termSign|
         ((|term| |Polynomial| R) ($ |Union| (|Integer|) "failed"))
-        (SPROG ((#1=#:G795 NIL) (#2=#:G796 NIL) (#3=#:G797 NIL) (|var| NIL))
+        (SPROG ((#1=#:G798 NIL) (#2=#:G799 NIL) (#3=#:G800 NIL) (|var| NIL))
                (SEQ
                 (EXIT
                  (SEQ
@@ -245,9 +245,9 @@
                               (LETT #1#
                                     (PROGN
                                      (LETT #2# (CONS 1 "failed") . #4#)
-                                     (GO #5=#:G794))
+                                     (GO #5=#:G797))
                                     . #4#)
-                              (GO #6=#:G792))))))
+                              (GO #6=#:G795))))))
                          (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
                    #6# (EXIT #1#))
                   (EXIT
@@ -257,9 +257,9 @@
 
 (DECLAIM (NOTINLINE |RationalFunctionSign;|)) 
 
-(DEFUN |RationalFunctionSign| (#1=#:G798)
+(DEFUN |RationalFunctionSign| (#1=#:G801)
   (SPROG NIL
-         (PROG (#2=#:G799)
+         (PROG (#2=#:G802)
            (RETURN
             (COND
              ((LETT #2#

@@ -1504,21 +1504,18 @@
       NIL |options| NIL))))
  
 ; domainToGenvar x ==
-;   $doNotAddEmptyModeIfTrue: local:= true
 ;   (y:= unabbrevAndLoad x) and GETDATABASE(opOf y,'CONSTRUCTORKIND) = 'domain =>
 ;     g:= genDomainTraceName y
 ;     SET(g,evalDomain y)
 ;     g
  
 (DEFUN |domainToGenvar| (|x|)
-  (PROG (|$doNotAddEmptyModeIfTrue| |g| |y|)
-    (DECLARE (SPECIAL |$doNotAddEmptyModeIfTrue|))
+  (PROG (|y| |g|)
     (RETURN
-     (PROGN
-      (SETQ |$doNotAddEmptyModeIfTrue| T)
-      (COND
-       ((AND (SETQ |y| (|unabbrevAndLoad| |x|))
-             (EQ (GETDATABASE (|opOf| |y|) 'CONSTRUCTORKIND) '|domain|))
+     (COND
+      ((AND (SETQ |y| (|unabbrevAndLoad| |x|))
+            (EQ (GETDATABASE (|opOf| |y|) 'CONSTRUCTORKIND) '|domain|))
+       (IDENTITY
         (PROGN
          (SETQ |g| (|genDomainTraceName| |y|))
          (SET |g| (|evalDomain| |y|))
@@ -1580,7 +1577,6 @@
       (|removeTracedMapSigs| |untraceList|)))))
  
 ; transTraceItem x ==
-;   $doNotAddEmptyModeIfTrue: local:=true
 ;   atom x =>
 ;     (value:=get(x,"value",$InteractiveFrame)) and
 ;       (objMode value in '((Mode) (Type) (Category))) =>
@@ -1599,30 +1595,26 @@
 ;   throwKeyedMsg("S2IT0018",[x])
  
 (DEFUN |transTraceItem| (|x|)
-  (PROG (|$doNotAddEmptyModeIfTrue| |y| |value|)
-    (DECLARE (SPECIAL |$doNotAddEmptyModeIfTrue|))
+  (PROG (|value| |y|)
     (RETURN
-     (PROGN
-      (SETQ |$doNotAddEmptyModeIfTrue| T)
-      (COND
-       ((ATOM |x|)
-        (COND
-         ((AND (SETQ |value| (|get| |x| '|value| |$InteractiveFrame|))
-               (|member| (|objMode| |value|)
-                '((|Mode|) (|Type|) (|Category|))))
-          (PROGN
-           (SETQ |x| (|objVal| |value|))
-           (COND ((SETQ |y| (|domainToGenvar| |x|)) |y|) (#1='T |x|))))
-         ((UPPER-CASE-P (ELT (STRINGIMAGE |x|) 0))
-          (PROGN
-           (SETQ |y| (|unabbrev| |x|))
-           (COND ((|constructor?| |y|) |y|)
-                 ((AND (CONSP |y|) (|constructor?| (CAR |y|))) (CAR |y|))
-                 ((SETQ |y| (|domainToGenvar| |x|)) |y|) (#1# |x|))))
-         (#1# |x|)))
-       ((VECP (CAR |x|)) (|transTraceItem| (|devaluate| (CAR |x|))))
-       ((SETQ |y| (|domainToGenvar| |x|)) |y|)
-       (#1# (|throwKeyedMsg| 'S2IT0018 (LIST |x|))))))))
+     (COND
+      ((ATOM |x|)
+       (COND
+        ((AND (SETQ |value| (|get| |x| '|value| |$InteractiveFrame|))
+              (|member| (|objMode| |value|) '((|Mode|) (|Type|) (|Category|))))
+         (PROGN
+          (SETQ |x| (|objVal| |value|))
+          (COND ((SETQ |y| (|domainToGenvar| |x|)) |y|) (#1='T |x|))))
+        ((UPPER-CASE-P (ELT (STRINGIMAGE |x|) 0))
+         (PROGN
+          (SETQ |y| (|unabbrev| |x|))
+          (COND ((|constructor?| |y|) |y|)
+                ((AND (CONSP |y|) (|constructor?| (CAR |y|))) (CAR |y|))
+                ((SETQ |y| (|domainToGenvar| |x|)) |y|) (#1# |x|))))
+        (#1# |x|)))
+      ((VECP (CAR |x|)) (|transTraceItem| (|devaluate| (CAR |x|))))
+      ((SETQ |y| (|domainToGenvar| |x|)) |y|)
+      (#1# (|throwKeyedMsg| 'S2IT0018 (LIST |x|)))))))
  
 ; removeTracedMapSigs untraceList ==
 ;   for name in untraceList repeat

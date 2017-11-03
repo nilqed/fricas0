@@ -8,7 +8,7 @@
 
 (SDEFUN |DEQUEUE;extractBottom!;$S;3| ((|d| $) ($ S))
         (SPROG
-         ((|r| (S)) (|q| (|List| S)) (#1=#:G711 NIL) (|n| (|Integer|))
+         ((|r| (S)) (|q| (|List| S)) (#1=#:G714 NIL) (|n| (|Integer|))
           (|p| (|List| S)))
          (SEQ (COND ((SPADCALL |d| (QREFELT $ 9)) (|error| "empty dequeue")))
               (LETT |p| (SPADCALL |d| (QREFELT $ 11))
@@ -72,9 +72,9 @@
 
 (DECLAIM (NOTINLINE |Dequeue;|)) 
 
-(DEFUN |Dequeue| (#1=#:G739)
+(DEFUN |Dequeue| (#1=#:G743)
   (SPROG NIL
-         (PROG (#2=#:G740)
+         (PROG (#2=#:G744)
            (RETURN
             (COND
              ((LETT #2#
@@ -90,7 +90,7 @@
 
 (DEFUN |Dequeue;| (|#1|)
   (SPROG
-   ((#1=#:G738 NIL) (|pv$| NIL) (#2=#:G735 NIL) (#3=#:G736 NIL) (#4=#:G737 NIL)
+   ((#1=#:G742 NIL) (|pv$| NIL) (#2=#:G739 NIL) (#3=#:G740 NIL) (#4=#:G741 NIL)
     ($ NIL) (|dv$| NIL) (DV$1 NIL))
    (PROGN
     (LETT DV$1 (|devaluate| |#1|) . #5=(|Dequeue|))

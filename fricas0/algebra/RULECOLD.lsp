@@ -13,9 +13,9 @@
 
 (DECLAIM (NOTINLINE |RuleCalled;|)) 
 
-(DEFUN |RuleCalled| (#1=#:G711)
+(DEFUN |RuleCalled| (#1=#:G712)
   (SPROG NIL
-         (PROG (#2=#:G712)
+         (PROG (#2=#:G713)
            (RETURN
             (COND
              ((LETT #2#

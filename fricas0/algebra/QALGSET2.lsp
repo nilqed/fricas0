@@ -3,7 +3,7 @@
         ((|v| |OrderedVariableList| |vl|)
          ($ |DistributedMultivariatePolynomial| |newvl|
           (|Fraction| (|Integer|))))
-        (SPROG ((#1=#:G711 NIL))
+        (SPROG ((#1=#:G712 NIL))
                (SPADCALL
                 (PROG2
                     (LETT #1#
@@ -22,7 +22,7 @@
 (SDEFUN |QALGSET2;g|
         ((|v| |OrderedVariableList| |newvl|)
          ($ |DistributedMultivariatePolynomial| |vl| (|Fraction| (|Integer|))))
-        (SPROG ((#1=#:G721 NIL))
+        (SPROG ((#1=#:G723 NIL))
                (COND
                 ((SPADCALL |v| (QREFELT $ 14) (QREFELT $ 20))
                  (|spadConstant| $ 22))
@@ -116,7 +116,7 @@
            (|List|
             (|DistributedMultivariatePolynomial| |newvl|
                                                  (|Fraction| (|Integer|)))))
-          (#1=#:G746 NIL) (|g| NIL) (#2=#:G745 NIL)
+          (#1=#:G749 NIL) (|g| NIL) (#2=#:G748 NIL)
           (|tp|
            (|DistributedMultivariatePolynomial| |newvl|
                                                 (|Fraction| (|Integer|))))
@@ -193,9 +193,9 @@
 
 (DECLAIM (NOTINLINE |QuasiAlgebraicSet2;|)) 
 
-(DEFUN |QuasiAlgebraicSet2| (#1=#:G747)
+(DEFUN |QuasiAlgebraicSet2| (#1=#:G750)
   (SPROG NIL
-         (PROG (#2=#:G748)
+         (PROG (#2=#:G751)
            (RETURN
             (COND
              ((LETT #2#
@@ -213,7 +213,7 @@
                   (HREM |$ConstructorCache| '|QuasiAlgebraicSet2|)))))))))) 
 
 (DEFUN |QuasiAlgebraicSet2;| (|#1|)
-  (SPROG ((#1=#:G711 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
+  (SPROG ((#1=#:G712 NIL) (|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
           (LETT DV$1 (|devaluate| |#1|) . #2=(|QuasiAlgebraicSet2|))
           (LETT |dv$| (LIST '|QuasiAlgebraicSet2| DV$1) . #2#)
@@ -243,10 +243,13 @@
 (MAKEPROP '|QuasiAlgebraicSet2| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|Symbol|) (0 . |new|)
-              '|ts| '|newvl| (|Union| $ '"failed") (|OrderedVariableList| 10)
-              (4 . |variable|) '|tv| (|OrderedVariableList| 6) (9 . |convert|)
-              (|DistributedMultivariatePolynomial| 10 26) (14 . |coerce|)
-              (|Boolean|) (19 . =) (|DistributedMultivariatePolynomial| 6 26)
+              '|ts| '|newvl| (|Union| $ '"failed")
+              (|OrderedVariableList| (NRTEVAL (QREFELT $ 10))) (4 . |variable|)
+              '|tv| (|OrderedVariableList| (NRTEVAL (QREFELT $ 6)))
+              (9 . |convert|)
+              (|DistributedMultivariatePolynomial| (NRTEVAL (QREFELT $ 10)) 26)
+              (14 . |coerce|) (|Boolean|) (19 . =)
+              (|DistributedMultivariatePolynomial| (NRTEVAL (QREFELT $ 6)) 26)
               (25 . |Zero|) (29 . |convert|) (34 . |variable|) (39 . |coerce|)
               (|Fraction| (|Integer|)) (44 . |coerce|) (|Mapping| 17 15)
               (|Mapping| 17 26)
@@ -275,7 +278,8 @@
                                   (NRTEVAL (LENGTH (QREFELT $ 10)))
                                   (|NonNegativeInteger|))
                                  12 17)
-              (115 . |ideal|) (|IdealDecompositionPackage| 10)
+              (115 . |ideal|)
+              (|IdealDecompositionPackage| (NRTEVAL (QREFELT $ 10)))
               (120 . |radical|) (125 . |generators|) (130 . |member?|)
               (136 . |empty|)
               (|GroebnerPackage| 26

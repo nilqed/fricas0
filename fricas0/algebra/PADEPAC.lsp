@@ -39,9 +39,9 @@
 
 (DECLAIM (NOTINLINE |PadeApproximantPackage;|)) 
 
-(DEFUN |PadeApproximantPackage| (&REST #1=#:G710)
+(DEFUN |PadeApproximantPackage| (&REST #1=#:G713)
   (SPROG NIL
-         (PROG (#2=#:G711)
+         (PROG (#2=#:G714)
            (RETURN
             (COND
              ((LETT #2#
@@ -87,11 +87,14 @@
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
               (|local| |#3|) '|pa| (|Union| 18 '"failed")
-              (|NonNegativeInteger|) (|UnivariateTaylorSeries| 6 7 8)
+              (|NonNegativeInteger|)
+              (|UnivariateTaylorSeries| 6 (NRTEVAL (QREFELT $ 7))
+                                        (NRTEVAL (QREFELT $ 8)))
               (0 . |pade|) (8 . |Zero|) (|Boolean|) (12 . =)
-              (|UnivariatePolynomial| 7 6) (|Fraction| 17) (18 . |numer|)
-              (23 . |denom|) (28 . |One|) (32 . |monomial|) (38 . -)
-              (44 . |elt|) (50 . /) |PADEPAC;pade;2Nni2UtsU;1| (56 . |One|)
+              (|UnivariatePolynomial| (NRTEVAL (QREFELT $ 7)) 6)
+              (|Fraction| 17) (18 . |numer|) (23 . |denom|) (28 . |One|)
+              (32 . |monomial|) (38 . -) (44 . |elt|) (50 . /)
+              |PADEPAC;pade;2Nni2UtsU;1| (56 . |One|)
               |PADEPAC;pade;2NniUtsU;2|)
            '#(|pade| 60) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)

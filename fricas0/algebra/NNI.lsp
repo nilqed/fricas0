@@ -28,7 +28,7 @@
 
 (DEFUN |NonNegativeInteger| ()
   (SPROG NIL
-         (PROG (#1=#:G2263)
+         (PROG (#1=#:G2260)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|NonNegativeInteger|)
@@ -55,6 +55,7 @@
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|NonNegativeInteger| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
+          (AND (|HasCategory| $ '(|AbelianGroup|)) (|augmentPredVector| $ 1))
           (SETF |pv$| (QREFELT $ 3))
           $))) 
 
@@ -67,39 +68,47 @@
               (|PositiveInteger|) (|NonNegativeInteger|) (|Boolean|) (|String|)
               (|SingleInteger|) (|HashState|) (|OutputForm|))
            '#(~= 0 |zero?| 6 |sup| 11 |subtractIfCan| 17 |smaller?| 23 |shift|
-              29 |sample| 35 |rem| 39 |recip| 45 |random| 50 |quo| 55 |qcoerce|
-              61 |opposite?| 66 |one?| 72 |min| 77 |max| 83 |latex| 89
-              |hashUpdate!| 94 |hash| 100 |gcd| 105 |exquo| 111 |divide| 117
-              |convert| 123 |coerce| 128 ^ 133 |Zero| 145 |One| 149 >= 153 >
-              159 = 165 <= 171 < 177 + 183 * 189)
+              29 |sample| 35 |rightRecip| 39 |rightPower| 44 |rem| 56 |recip|
+              62 |random| 67 |quo| 72 |qcoerce| 78 |opposite?| 83 |one?| 89
+              |min| 94 |max| 100 |leftRecip| 106 |leftPower| 111 |latex| 123
+              |hashUpdate!| 128 |hash| 134 |gcd| 139 |exquo| 145 |divide| 151
+              |convert| 157 |coerce| 162 |antiCommutator| 167 ^ 173 |Zero| 185
+              |One| 189 >= 193 > 199 = 205 <= 211 < 217 - 223 + 234 * 240)
            'NIL
            (CONS
-            (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0))
+            (|makeByteWordVec2| 1
+                                '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                                  0 0 0))
             (CONS
-             '#(NIL NIL NIL NIL NIL NIL |OrderedSet&| |Monoid&| NIL
-                |AbelianMonoid&| NIL |SemiGroup&| |AbelianSemiGroup&|
-                |SetCategory&| NIL NIL |BasicType&| |PartialOrder&| NIL)
+             '#(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL |OrderedSet&|
+                NIL |MagmaWithUnit&| |NonAssociativeSemiRng&| |AbelianMonoid&|
+                NIL |Magma&| |AbelianSemiGroup&| |SetCategory&| NIL NIL
+                |BasicType&| |PartialOrder&| NIL)
              (CONS
-              '#((|OrderedAbelianMonoidSup|)
-                 (|OrderedCancellationAbelianMonoid|) (|OrderedAbelianMonoid|)
-                 (|OrderedAbelianSemiGroup|) (|SemiRing|)
-                 (|CancellationAbelianMonoid|) (|OrderedSet|) (|Monoid|)
-                 (|SemiRng|) (|AbelianMonoid|) (|Comparable|) (|SemiGroup|)
-                 (|AbelianSemiGroup|) (|SetCategory|) (|ConvertibleTo| 12)
-                 (|CommutativeStar|) (|BasicType|) (|PartialOrder|)
-                 (|CoercibleTo| 19))
+              '#((|SemiRing|) (|SemiRng|) (|OrderedAbelianMonoidSup|)
+                 (|BiModule| $$ $$) (|OrderedCancellationAbelianMonoid|)
+                 (|RightModule| $$) (|LeftModule| $$) (|OrderedAbelianMonoid|)
+                 (|OrderedAbelianSemiGroup|) (|Monoid|)
+                 (|NonAssociativeSemiRing|) (|CancellationAbelianMonoid|)
+                 (|OrderedSet|) (|SemiGroup|) (|MagmaWithUnit|)
+                 (|NonAssociativeSemiRng|) (|AbelianMonoid|) (|Comparable|)
+                 (|Magma|) (|AbelianSemiGroup|) (|SetCategory|)
+                 (|ConvertibleTo| 12) (|CommutativeStar|) (|BasicType|)
+                 (|PartialOrder|) (|CoercibleTo| 19))
               (|makeByteWordVec2| 19
                                   '(2 0 15 0 0 1 1 0 15 0 1 2 0 0 0 0 6 2 0 9 0
-                                    0 10 2 0 15 0 0 1 2 0 0 0 5 7 0 0 0 1 2 0 0
-                                    0 0 1 1 0 9 0 1 1 0 0 0 1 2 0 0 0 0 1 1 0 0
-                                    5 8 2 0 15 0 0 1 1 0 15 0 1 2 0 0 0 0 1 2 0
-                                    0 0 0 1 1 0 16 0 1 2 0 18 18 0 1 1 0 17 0 1
-                                    2 0 0 0 0 1 2 0 9 0 0 1 2 0 11 0 0 1 1 0 12
-                                    0 1 1 0 19 0 1 2 0 0 0 13 1 2 0 0 0 14 1 0
-                                    0 0 1 0 0 0 1 2 0 15 0 0 1 2 0 15 0 0 1 2 0
-                                    15 0 0 1 2 0 15 0 0 1 2 0 15 0 0 1 2 0 0 0
-                                    0 1 2 0 0 0 0 1 2 0 0 14 0 1 2 0 0 13 0
-                                    1)))))
+                                    0 10 2 0 15 0 0 1 2 0 0 0 5 7 0 0 0 1 1 0 9
+                                    0 1 2 0 0 0 13 1 2 0 0 0 14 1 2 0 0 0 0 1 1
+                                    0 9 0 1 1 0 0 0 1 2 0 0 0 0 1 1 0 0 5 8 2 0
+                                    15 0 0 1 1 0 15 0 1 2 0 0 0 0 1 2 0 0 0 0 1
+                                    1 0 9 0 1 2 0 0 0 13 1 2 0 0 0 14 1 1 0 16
+                                    0 1 2 0 18 18 0 1 1 0 17 0 1 2 0 0 0 0 1 2
+                                    0 9 0 0 1 2 0 11 0 0 1 1 0 12 0 1 1 0 19 0
+                                    1 2 0 0 0 0 1 2 0 0 0 13 1 2 0 0 0 14 1 0 0
+                                    0 1 0 0 0 1 2 0 15 0 0 1 2 0 15 0 0 1 2 0
+                                    15 0 0 1 2 0 15 0 0 1 2 0 15 0 0 1 1 1 0 0
+                                    1 2 1 0 0 0 1 2 0 0 0 0 1 2 1 0 5 0 1 2 0 0
+                                    0 0 1 2 0 0 14 0 1 2 0 0 13 0 1)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|NonNegativeInteger| 'NILADIC T) 

@@ -39,9 +39,9 @@
 
 (DECLAIM (NOTINLINE |LinearSystemMatrixPackage1;|)) 
 
-(DEFUN |LinearSystemMatrixPackage1| (#1=#:G713)
+(DEFUN |LinearSystemMatrixPackage1| (#1=#:G715)
   (SPROG NIL
-         (PROG (#2=#:G714)
+         (PROG (#2=#:G716)
            (RETURN
             (COND
              ((LETT #2#

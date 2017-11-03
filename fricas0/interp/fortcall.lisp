@@ -2102,158 +2102,21 @@
       (AND (PROBE-FILE |tmpFile2|) (DELETE-FILE |tmpFile2|))
       |results|))))
  
-; invokeNagman(objFiles,nfile,args,dummies,decls,results,actual) ==
-;   actual := [spad2lisp(u) for u in first actual]
-;   result := spadify(protectedNagCall(objFiles,nfile, _
-;                  prepareData(args,dummies,actual,decls),_
-;                  prepareResults(results,args,dummies,actual,decls)),_
-;                  results,decls,inFirstNotSecond(args,dummies),actual)
-;   -- Tidy up asps
-;   -- if objFiles then SYSTEM STRCONC("rm -f ",addSpaces objFiles)
-;   for fn in objFiles repeat PROBE_-FILE(fn) and DELETE_-FILE(fn)
-;   result
- 
-(DEFUN |invokeNagman|
-       (|objFiles| |nfile| |args| |dummies| |decls| |results| |actual|)
-  (PROG (|result|)
-    (RETURN
-     (PROGN
-      (SETQ |actual|
-              ((LAMBDA (|bfVar#104| |bfVar#103| |u|)
-                 (LOOP
-                  (COND
-                   ((OR (ATOM |bfVar#103|)
-                        (PROGN (SETQ |u| (CAR |bfVar#103|)) NIL))
-                    (RETURN (NREVERSE |bfVar#104|)))
-                   (#1='T
-                    (SETQ |bfVar#104| (CONS (|spad2lisp| |u|) |bfVar#104|))))
-                  (SETQ |bfVar#103| (CDR |bfVar#103|))))
-               NIL (CAR |actual|) NIL))
-      (SETQ |result|
-              (|spadify|
-               (|protectedNagCall| |objFiles| |nfile|
-                (|prepareData| |args| |dummies| |actual| |decls|)
-                (|prepareResults| |results| |args| |dummies| |actual| |decls|))
-               |results| |decls| (|inFirstNotSecond| |args| |dummies|)
-               |actual|))
-      ((LAMBDA (|bfVar#105| |fn|)
-         (LOOP
-          (COND
-           ((OR (ATOM |bfVar#105|) (PROGN (SETQ |fn| (CAR |bfVar#105|)) NIL))
-            (RETURN NIL))
-           (#1# (AND (PROBE-FILE |fn|) (DELETE-FILE |fn|))))
-          (SETQ |bfVar#105| (CDR |bfVar#105|))))
-       |objFiles| NIL)
-      |result|))))
- 
-; nagCall(objFiles,nfile,data,results,tmpFiled,tmpFiler) ==
-;   nagMessagesString :=
-;      $nagMessages => '"on"
-;      '"off"
-;   writeData(tmpFiled,data)
-;   toSend:=STRCONC($nagHost," ",nfile," ",tmpFiler," ",tmpFiled," ",_
-;       STRINGIMAGE($fortPersistence)," ", nagMessagesString," ",addSpaces objFiles)
-;   sockSendString(8,toSend)
-;   if sockGetInt(8)=1 then
-;     results := readData(tmpFiler,results)
-;   else
-;     error ['"An error was detected while reading data: ", _
-;            '"perhaps an incorrect array index was given ?"]
-;   results
- 
-(DEFUN |nagCall| (|objFiles| |nfile| |data| |results| |tmpFiled| |tmpFiler|)
-  (PROG (|nagMessagesString| |toSend|)
-    (RETURN
-     (PROGN
-      (SETQ |nagMessagesString| (COND (|$nagMessages| "on") (#1='T "off")))
-      (|writeData| |tmpFiled| |data|)
-      (SETQ |toSend|
-              (STRCONC |$nagHost| '| | |nfile| '| | |tmpFiler| '| | |tmpFiled|
-               '| | (STRINGIMAGE |$fortPersistence|) '| | |nagMessagesString|
-               '| | (|addSpaces| |objFiles|)))
-      (|sockSendString| 8 |toSend|)
-      (COND
-       ((EQL (|sockGetInt| 8) 1)
-        (SETQ |results| (|readData| |tmpFiler| |results|)))
-       (#1#
-        (|error|
-         (LIST "An error was detected while reading data: "
-               "perhaps an incorrect array index was given ?"))))
-      |results|))))
- 
-; protectedNagCall(objFiles,nfile,data,results) ==
-;  errors :=true
-;  val:=NIL
-;  td:=generateDataName()
-;  tr:=generateResultsName()
-;  UNWIND_-PROTECT( (val:=nagCall(objFiles,nfile,data,results,td,tr) ;errors :=NIL),
-;         errors =>( resetStackLimits(); sendNagmanErrorSignal();cleanUpAfterNagman(td,tr,objFiles)))
-;  val
- 
-(DEFUN |protectedNagCall| (|objFiles| |nfile| |data| |results|)
-  (PROG (|errors| |val| |td| |tr|)
-    (RETURN
-     (PROGN
-      (SETQ |errors| T)
-      (SETQ |val| NIL)
-      (SETQ |td| (|generateDataName|))
-      (SETQ |tr| (|generateResultsName|))
-      (UNWIND-PROTECT
-          (PROGN
-           (SETQ |val|
-                   (|nagCall| |objFiles| |nfile| |data| |results| |td| |tr|))
-           (SETQ |errors| NIL))
-        (COND
-         (|errors|
-          (IDENTITY
-           (PROGN
-            (|resetStackLimits|)
-            (|sendNagmanErrorSignal|)
-            (|cleanUpAfterNagman| |td| |tr| |objFiles|))))))
-      |val|))))
- 
-; cleanUpAfterNagman(f1,f2,listf)==
-;   PROBE_-FILE(f1) and DELETE_-FILE(f1)
-;   PROBE_-FILE(f2) and DELETE_-FILE(f2)
-;   for fn in listf repeat PROBE_-FILE(fn) and DELETE_-FILE(fn)
- 
-(DEFUN |cleanUpAfterNagman| (|f1| |f2| |listf|)
-  (PROG ()
-    (RETURN
-     (PROGN
-      (AND (PROBE-FILE |f1|) (DELETE-FILE |f1|))
-      (AND (PROBE-FILE |f2|) (DELETE-FILE |f2|))
-      ((LAMBDA (|bfVar#106| |fn|)
-         (LOOP
-          (COND
-           ((OR (ATOM |bfVar#106|) (PROGN (SETQ |fn| (CAR |bfVar#106|)) NIL))
-            (RETURN NIL))
-           ('T (AND (PROBE-FILE |fn|) (DELETE-FILE |fn|))))
-          (SETQ |bfVar#106| (CDR |bfVar#106|))))
-       |listf| NIL)))))
- 
-; sendNagmanErrorSignal()==
-; -- excite nagman's signal handler!
-;  sockSendSignal(8,15)
- 
-(DEFUN |sendNagmanErrorSignal| #1=()
-  (PROG #1# (RETURN (|sockSendSignal| 8 15))))
- 
 ; inFirstNotSecond(f,s)==
 ;  [i for i in f | not i in s]
  
 (DEFUN |inFirstNotSecond| (|f| |s|)
   (PROG ()
     (RETURN
-     ((LAMBDA (|bfVar#108| |bfVar#107| |i|)
+     ((LAMBDA (|bfVar#104| |bfVar#103| |i|)
         (LOOP
          (COND
-          ((OR (ATOM |bfVar#107|) (PROGN (SETQ |i| (CAR |bfVar#107|)) NIL))
-           (RETURN (NREVERSE |bfVar#108|)))
+          ((OR (ATOM |bfVar#103|) (PROGN (SETQ |i| (CAR |bfVar#103|)) NIL))
+           (RETURN (NREVERSE |bfVar#104|)))
           ('T
            (AND (|member| (NULL |i|) |s|)
-                (SETQ |bfVar#108| (CONS |i| |bfVar#108|)))))
-         (SETQ |bfVar#107| (CDR |bfVar#107|))))
+                (SETQ |bfVar#104| (CONS |i| |bfVar#104|)))))
+         (SETQ |bfVar#103| (CDR |bfVar#103|))))
       NIL |f| NIL))))
  
 ; multiToUnivariate f ==
@@ -2285,9 +2148,9 @@
               (#1# (SETQ |vars| (LIST (CADR |f|)))))
         (SETQ |body| (COPY-TREE (CADDR |f|)))
         (SETQ |newVariable| (GENSYM))
-        ((LAMBDA (|bfVar#109| |index|)
+        ((LAMBDA (|bfVar#105| |index|)
            (LOOP
-            (COND ((> |index| |bfVar#109|) (RETURN NIL))
+            (COND ((> |index| |bfVar#105|) (RETURN NIL))
                   (#1#
                    (SETQ |body|
                            (NSUBST (LIST '|elt| |newVariable| (+ |index| 1))
@@ -2347,34 +2210,34 @@
           (PROGN
            (SETQ |funBodies| (COPY-TREE (CDADDR |f|)))
            (SETQ |jacBodies|
-                   ((LAMBDA (|bfVar#113| |bfVar#112| |f|)
+                   ((LAMBDA (|bfVar#109| |bfVar#108| |f|)
                       (LOOP
                        (COND
-                        ((OR (ATOM |bfVar#112|)
-                             (PROGN (SETQ |f| (CAR |bfVar#112|)) NIL))
-                         (RETURN (NREVERSE |bfVar#113|)))
+                        ((OR (ATOM |bfVar#108|)
+                             (PROGN (SETQ |f| (CAR |bfVar#108|)) NIL))
+                         (RETURN (NREVERSE |bfVar#109|)))
                         (#1#
-                         (SETQ |bfVar#113|
+                         (SETQ |bfVar#109|
                                  (APPEND
                                   (REVERSE
-                                   ((LAMBDA (|bfVar#111| |bfVar#110| |v|)
+                                   ((LAMBDA (|bfVar#107| |bfVar#106| |v|)
                                       (LOOP
                                        (COND
-                                        ((OR (ATOM |bfVar#110|)
+                                        ((OR (ATOM |bfVar#106|)
                                              (PROGN
-                                              (SETQ |v| (CAR |bfVar#110|))
+                                              (SETQ |v| (CAR |bfVar#106|))
                                               NIL))
-                                         (RETURN (NREVERSE |bfVar#111|)))
+                                         (RETURN (NREVERSE |bfVar#107|)))
                                         (#1#
-                                         (SETQ |bfVar#111|
+                                         (SETQ |bfVar#107|
                                                  (CONS
                                                   (|functionAndJacobian,DF| |f|
                                                    |v|)
-                                                  |bfVar#111|))))
-                                       (SETQ |bfVar#110| (CDR |bfVar#110|))))
+                                                  |bfVar#107|))))
+                                       (SETQ |bfVar#106| (CDR |bfVar#106|))))
                                     NIL |vars| NIL))
-                                  |bfVar#113|))))
-                       (SETQ |bfVar#112| (CDR |bfVar#112|))))
+                                  |bfVar#109|))))
+                       (SETQ |bfVar#108| (CDR |bfVar#108|))))
                     NIL |funBodies| NIL))
            (SETQ |jacBodies|
                    (CDDR
@@ -2385,9 +2248,9 @@
                       |jacBodies|)
                      NIL)))
            (SETQ |newVariable| (GENSYM))
-           ((LAMBDA (|bfVar#114| |index|)
+           ((LAMBDA (|bfVar#110| |index|)
               (LOOP
-               (COND ((> |index| |bfVar#114|) (RETURN NIL))
+               (COND ((> |index| |bfVar#110|) (RETURN NIL))
                      (#1#
                       (PROGN
                        (SETQ |funBodies|
@@ -2448,9 +2311,9 @@
               (#1# (SETQ |vars| (LIST (CADR |f|)))))
         (SETQ |funBodies| (COPY-TREE (CDADDR |f|)))
         (SETQ |newVariable| (GENSYM))
-        ((LAMBDA (|bfVar#115| |index|)
+        ((LAMBDA (|bfVar#111| |index|)
            (LOOP
-            (COND ((> |index| |bfVar#115|) (RETURN NIL))
+            (COND ((> |index| |bfVar#111|) (RETURN NIL))
                   (#1#
                    (SETQ |funBodies|
                            (NSUBST (LIST '|elt| |newVariable| (+ |index| 1))

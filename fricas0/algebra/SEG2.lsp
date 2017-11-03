@@ -40,9 +40,9 @@
 
 (DECLAIM (NOTINLINE |SegmentFunctions2;|)) 
 
-(DEFUN |SegmentFunctions2| (&REST #1=#:G708)
+(DEFUN |SegmentFunctions2| (&REST #1=#:G709)
   (SPROG NIL
-         (PROG (#2=#:G709)
+         (PROG (#2=#:G710)
            (RETURN
             (COND
              ((LETT #2#
@@ -89,10 +89,10 @@
 (MAKEPROP '|SegmentFunctions2| '|infovec|
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
-              (|Segment| 6) (0 . |lo|) (5 . |hi|) (|Segment| 7) (10 . SEGMENT)
-              (|Mapping| 7 6) |SEG2;map;MSS;1| (|Integer|) (16 . |incr|)
-              (21 . |coerce|) (26 . |Zero|) (|Boolean|) (30 . >) (36 . <=)
-              (42 . +) (48 . >=) (|List| 7) (54 . |map|))
+              (|Segment| 6) (0 . |low|) (5 . |high|) (|Segment| 7)
+              (10 . SEGMENT) (|Mapping| 7 6) |SEG2;map;MSS;1| (|Integer|)
+              (16 . |incr|) (21 . |coerce|) (26 . |Zero|) (|Boolean|) (30 . >)
+              (36 . <=) (42 . +) (48 . >=) (|List| 7) (54 . |map|))
            '#(|map| 60) 'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()

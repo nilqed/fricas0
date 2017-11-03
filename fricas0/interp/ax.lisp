@@ -360,7 +360,10 @@
 ;      STRINGP typeform =>
 ;         ['Apply,'Enumeration, INTERN typeform]
 ;      INTEGERP typeform =>
-;        -- need to test for PositiveInteger vs Integer
+;         -- need to test for PositiveInteger vs Integer
+;         typeform = 0 =>
+;            axAddLiteral('integer, 'Integer, 'Literal)
+;            ['RestrictTo, ['LitInteger, '"0"], 'Integer]
 ;         axAddLiteral('integer, 'PositiveInteger, 'Literal)
 ;         ['RestrictTo, ['LitInteger, STRINGIMAGE typeform ], 'PositiveInteger]
 ;      FLOATP typeform => ['LitFloat, STRINGIMAGE typeform]
@@ -445,17 +448,23 @@
              ((STRINGP |typeform|)
               (LIST '|Apply| '|Enumeration| (INTERN |typeform|)))
              ((INTEGERP |typeform|)
-              (PROGN
-               (|axAddLiteral| '|integer| '|PositiveInteger| '|Literal|)
-               (LIST '|RestrictTo|
-                     (LIST '|LitInteger| (STRINGIMAGE |typeform|))
-                     '|PositiveInteger|)))
+              (COND
+               ((EQL |typeform| 0)
+                (PROGN
+                 (|axAddLiteral| '|integer| '|Integer| '|Literal|)
+                 (LIST '|RestrictTo| (LIST '|LitInteger| "0") '|Integer|)))
+               (#1='T
+                (PROGN
+                 (|axAddLiteral| '|integer| '|PositiveInteger| '|Literal|)
+                 (LIST '|RestrictTo|
+                       (LIST '|LitInteger| (STRINGIMAGE |typeform|))
+                       '|PositiveInteger|)))))
              ((FLOATP |typeform|) (LIST '|LitFloat| (STRINGIMAGE |typeform|)))
              ((MEMQ |typeform| |$TriangleVariableList|)
               (SUBLISLIS |$FormalMapVariableList| |$TriangleVariableList|
                |typeform|))
              ((MEMQ |typeform| |$FormalMapVariableList|) |typeform|)
-             (#1='T
+             (#1#
               (PROGN
                (|axAddLiteral| '|string| '|Symbol| '|Literal|)
                (LIST '|RestrictTo| (LIST '|LitString| (PNAME |typeform|))

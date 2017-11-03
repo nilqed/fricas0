@@ -47,8 +47,8 @@
 
 (SDEFUN |UDPO;less?;2SU;7| ((|a| S) (|b| S) ($ |Union| (|Boolean|) "failed"))
         (SPROG
-         ((|bb| #1=(|Boolean|)) (#2=#:G737 NIL) (|aa| #1#) (#3=#:G739 NIL)
-          (|x| NIL) (#4=#:G738 NIL))
+         ((|bb| #1=(|Boolean|)) (#2=#:G738 NIL) (|aa| #1#) (#3=#:G740 NIL)
+          (|x| NIL) (#4=#:G739 NIL))
          (SEQ
           (EXIT
            (SEQ
@@ -64,7 +64,7 @@
                      (PROGN
                       (LETT #2# (CONS 0 (SPADCALL |a| |b| (QREFELT $ 29)))
                             . #5#)
-                      (GO #6=#:G736)))
+                      (GO #6=#:G737)))
                     ((SPADCALL |x| |b| (QREFELT $ 28))
                      (PROGN (LETT #2# (CONS 0 NIL) . #5#) (GO #6#))))))
                  (LETT #4# (CDR #4#) . #5#) (GO G190) G191 (EXIT NIL))
@@ -103,9 +103,9 @@
 
 (DECLAIM (NOTINLINE |UserDefinedPartialOrdering;|)) 
 
-(DEFUN |UserDefinedPartialOrdering| (#1=#:G743)
+(DEFUN |UserDefinedPartialOrdering| (#1=#:G744)
   (SPROG NIL
-         (PROG (#2=#:G744)
+         (PROG (#2=#:G745)
            (RETURN
             (COND
              ((LETT #2#

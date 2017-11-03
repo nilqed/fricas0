@@ -3,14 +3,13 @@
         ((|x| |Expression| (|Integer|)) (|y| |Expression| (|Integer|))
          (|z| |Expression| (|Integer|)) ($ |Symbol|))
         (SPROG
-         ((|t2| #1=(|Symbol|)) (|t1| #1#) (#2=#:G727 NIL)
-          (|varList3| #3=(|List| (|Symbol|))) (|varList2| #3#)
-          (|varList1| #3#))
+         ((|t2| #1=(|Symbol|)) (|t1| #1#) (|varList3| #2=(|List| (|Symbol|)))
+          (|varList2| #2#) (|varList1| #2#))
          (SEQ
           (LETT |varList1| (SPADCALL |x| (QREFELT $ 8))
-                . #4=(|EXPRTUBE;getVariable|))
-          (LETT |varList2| (SPADCALL |y| (QREFELT $ 8)) . #4#)
-          (LETT |varList3| (SPADCALL |z| (QREFELT $ 8)) . #4#)
+                . #3=(|EXPRTUBE;getVariable|))
+          (LETT |varList2| (SPADCALL |y| (QREFELT $ 8)) . #3#)
+          (LETT |varList3| (SPADCALL |z| (QREFELT $ 8)) . #3#)
           (COND
            ((SPADCALL (LENGTH |varList1|) 1 (QREFELT $ 12))
             (COND
@@ -18,9 +17,9 @@
               (COND
                ((NULL (SPADCALL (LENGTH |varList3|) 1 (QREFELT $ 12)))
                 (EXIT
-                 (|error| #5="tubePlot: only one variable may be used")))))
-             (#6='T (EXIT (|error| #5#)))))
-           (#6# (EXIT (|error| #5#))))
+                 (|error| #4="tubePlot: only one variable may be used")))))
+             (#5='T (EXIT (|error| #4#)))))
+           (#5# (EXIT (|error| #4#))))
           (EXIT
            (COND
             ((NULL |varList1|)
@@ -29,25 +28,16 @@
                (COND
                 ((NULL |varList3|)
                  (|error| "tubePlot: a variable must appear in functions"))
-                (#6# (|SPADfirst| |varList3|))))
-              (#6#
-               (SEQ (LETT |t2| (|SPADfirst| |varList2|) . #4#)
+                (#5# (|SPADfirst| |varList3|))))
+              (#5#
+               (SEQ (LETT |t2| (|SPADfirst| |varList2|) . #3#)
                     (EXIT
                      (COND ((NULL |varList3|) |t2|)
-                           (#6#
-                            (SEQ
-                             (EXIT
-                              (COND
-                               ((NULL (EQUAL (|SPADfirst| |varList3|) |t2|))
-                                (PROGN
-                                 (LETT #2#
-                                       (|error|
-                                        "tubePlot: only one variable may be used")
-                                       . #4#)
-                                 (GO #7=#:G717)))))
-                             #7# (EXIT #2#)))))))))
-            (#6#
-             (SEQ (LETT |t1| (|SPADfirst| |varList1|) . #4#)
+                           ((NULL (EQUAL (|SPADfirst| |varList3|) |t2|))
+                            (|error|
+                             "tubePlot: only one variable may be used"))))))))
+            (#5#
+             (SEQ (LETT |t1| (|SPADfirst| |varList1|) . #3#)
                   (EXIT
                    (COND
                     ((NULL |varList2|)
@@ -57,16 +47,16 @@
                        |t1|)
                       ('T
                        (|error| "tubePlot: only one variable may be used"))))
-                    (#6#
-                     (SEQ (LETT |t2| (|SPADfirst| |varList2|) . #4#)
+                    (#5#
+                     (SEQ (LETT |t2| (|SPADfirst| |varList2|) . #3#)
                           (EXIT
                            (COND
                             ((NULL |varList3|)
                              (COND ((EQUAL |t1| |t2|) |t1|)
-                                   (#6#
+                                   (#5#
                                     (|error|
                                      "tubePlot: only one variable may be used"))))
-                            (#6#
+                            (#5#
                              (SEQ
                               (COND
                                ((EQUAL (|SPADfirst| |varList3|) |t1|)
@@ -74,8 +64,8 @@
                                  ((NULL (EQUAL |t2| |t1|))
                                   (EXIT
                                    (|error|
-                                    #8="tubePlot: only one variable may be used")))))
-                               (#6# (EXIT (|error| #8#))))
+                                    #6="tubePlot: only one variable may be used")))))
+                               (#5# (EXIT (|error| #6#))))
                               (EXIT |t1|)))))))))))))))) 
 
 (SDEFUN |EXPRTUBE;tubePlot;3EMSMISTp;2|
@@ -182,7 +172,7 @@
                         . #9#)
                   (LETT |cosSin| (SPADCALL |n| (QREFELT $ 34)) . #9#)
                   (LETT |loopList| NIL . #9#)
-                  (SEQ G190 (COND ((NULL |tvals|) (GO G191)))
+                  (SEQ G190 (COND ((NULL (NULL (NULL |tvals|))) (GO G191)))
                        (SEQ (LETT |tval| (|SPADfirst| |tvals|) . #9#)
                             (LETT |tvals| (CDR |tvals|) . #9#)
                             (LETT |ctr| (|SPADfirst| |curvePts|) . #9#)
@@ -265,7 +255,7 @@
 
 (DEFUN |ExpressionTubePlot| ()
   (SPROG NIL
-         (PROG (#1=#:G752)
+         (PROG (#1=#:G767)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|ExpressionTubePlot|)

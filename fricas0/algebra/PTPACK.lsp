@@ -31,9 +31,9 @@
 
 (DECLAIM (NOTINLINE |PointPackage;|)) 
 
-(DEFUN |PointPackage| (#1=#:G703)
+(DEFUN |PointPackage| (#1=#:G706)
   (SPROG NIL
-         (PROG (#2=#:G704)
+         (PROG (#2=#:G707)
            (RETURN
             (COND
              ((LETT #2#

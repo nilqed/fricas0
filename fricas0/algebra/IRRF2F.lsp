@@ -4,25 +4,25 @@
          ($ |IntegrationResult| (|Expression| R)))
         (SPADCALL (ELT $ 9) |i| (QREFELT $ 14))) 
 
-(SDEFUN |IRRF2F;expand;IrL;2|
-        ((|i| |IntegrationResult| (|Fraction| (|Polynomial| R)))
+(SDEFUN |IRRF2F;expand;IrSL;2|
+        ((|i| |IntegrationResult| (|Fraction| (|Polynomial| R))) (|x| |Symbol|)
          ($ |List| (|Expression| R)))
-        (SPADCALL (|IRRF2F;toEF| |i| $) (QREFELT $ 17))) 
+        (SPADCALL (|IRRF2F;toEF| |i| $) |x| (QREFELT $ 18))) 
 
 (SDEFUN |IRRF2F;complexExpand;IrE;3|
         ((|i| |IntegrationResult| (|Fraction| (|Polynomial| R)))
          ($ |Expression| R))
-        (SPADCALL (|IRRF2F;toEF| |i| $) (QREFELT $ 19))) 
+        (SPADCALL (|IRRF2F;toEF| |i| $) (QREFELT $ 20))) 
 
 (SDEFUN |IRRF2F;split;2Ir;4|
         ((|i| |IntegrationResult| (|Fraction| (|Polynomial| R)))
          ($ |IntegrationResult| (|Fraction| (|Polynomial| R))))
-        (SPADCALL (ELT $ 21) (SPADCALL (|IRRF2F;toEF| |i| $) (QREFELT $ 22))
-                  (QREFELT $ 25))) 
+        (SPADCALL (ELT $ 22) (SPADCALL (|IRRF2F;toEF| |i| $) (QREFELT $ 23))
+                  (QREFELT $ 26))) 
 
 (SDEFUN |IRRF2F;complexIntegrate;FSE;5|
         ((|f| |Fraction| (|Polynomial| R)) (|x| |Symbol|) ($ |Expression| R))
-        (SPADCALL (SPADCALL |f| |x| (QREFELT $ 29)) (QREFELT $ 20))) 
+        (SPADCALL (SPADCALL |f| |x| (QREFELT $ 29)) (QREFELT $ 21))) 
 
 (SDEFUN |IRRF2F;integrate;FSU;6|
         ((|f| |Fraction| (|Polynomial| R)) (|x| |Symbol|)
@@ -33,16 +33,16 @@
         ((|f| |Fraction| (|Polynomial| R)) (|x| |Symbol|)
          ($ |Union| (|Expression| R) (|List| (|Expression| R))))
         (SPROG
-         ((|l| (|List| (|Expression| R))) (#1=#:G728 NIL) (|g| NIL)
-          (#2=#:G727 NIL))
+         ((|l| (|List| (|Expression| R))) (#1=#:G730 NIL) (|g| NIL)
+          (#2=#:G729 NIL))
          (SEQ
           (LETT |l|
                 (PROGN
                  (LETT #2# NIL . #3=(|IRRF2F;integrate;FSU;7|))
                  (SEQ (LETT |g| NIL . #3#)
                       (LETT #1#
-                            (SPADCALL (SPADCALL |f| |x| (QREFELT $ 29))
-                                      (QREFELT $ 18))
+                            (SPADCALL (SPADCALL |f| |x| (QREFELT $ 29)) |x|
+                                      (QREFELT $ 19))
                             . #3#)
                       G190
                       (COND
@@ -65,9 +65,9 @@
 
 (DECLAIM (NOTINLINE |IntegrationResultRFToFunction;|)) 
 
-(DEFUN |IntegrationResultRFToFunction| (#1=#:G729)
+(DEFUN |IntegrationResultRFToFunction| (#1=#:G731)
   (SPROG NIL
-         (PROG (#2=#:G730)
+         (PROG (#2=#:G732)
            (RETURN
             (COND
              ((LETT #2#
@@ -130,29 +130,29 @@
               (|Fraction| (|Polynomial| 6)) (|Expression| 6) (0 . |coerce|)
               (|IntegrationResult| 8) (|Mapping| 8 7) (|IntegrationResult| 7)
               (|IntegrationResultFunctions2| 7 8) (5 . |map|) (|List| 8)
-              (|IntegrationResultToFunction| 6 8) (11 . |expand|)
-              |IRRF2F;expand;IrL;2| (16 . |complexExpand|)
-              |IRRF2F;complexExpand;IrE;3| (21 . |retract|) (26 . |split|)
-              (|Mapping| 7 8) (|IntegrationResultFunctions2| 8 7) (31 . |map|)
-              |IRRF2F;split;2Ir;4| (|Symbol|) (|RationalFunctionIntegration| 6)
-              (37 . |internalIntegrate|) (43 . |complexIntegrate|)
-              (|Union| 8 15) (49 . |integrate|)
-              (|TrigonometricManipulations| 6 8) (55 . |real|)
-              (|IntegrationTools| 6 8) (60 . |mkPrim|))
-           '#(|split| 66 |integrate| 71 |expand| 77 |complexIntegrate| 82
-              |complexExpand| 88)
+              (|Symbol|) (|IntegrationResultToFunction| 6 8) (11 . |expand|)
+              |IRRF2F;expand;IrSL;2| (17 . |complexExpand|)
+              |IRRF2F;complexExpand;IrE;3| (22 . |retract|) (27 . |split|)
+              (|Mapping| 7 8) (|IntegrationResultFunctions2| 8 7) (32 . |map|)
+              |IRRF2F;split;2Ir;4| (|RationalFunctionIntegration| 6)
+              (38 . |internalIntegrate|) (44 . |complexIntegrate|)
+              (|Union| 8 15) (50 . |integrate|)
+              (|TrigonometricManipulations| 6 8) (56 . |real|)
+              (|IntegrationTools| 6 8) (61 . |mkPrim|))
+           '#(|split| 67 |integrate| 72 |expand| 78 |complexIntegrate| 84
+              |complexExpand| 90)
            'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
                              (|makeByteWordVec2| 36
-                                                 '(1 8 0 7 9 2 13 10 11 12 14 1
-                                                   16 15 10 17 1 16 8 10 19 1 8
-                                                   7 0 21 1 16 10 10 22 2 24 12
-                                                   23 10 25 2 28 12 7 27 29 2 0
-                                                   8 7 27 30 2 0 31 7 27 32 1
-                                                   33 8 8 34 2 35 8 8 27 36 1 0
-                                                   12 12 26 2 1 31 7 27 32 1 0
-                                                   15 12 18 2 1 8 7 27 30 1 0 8
-                                                   12 20)))))
+                                                 '(1 8 0 7 9 2 13 10 11 12 14 2
+                                                   17 15 10 16 18 1 17 8 10 20
+                                                   1 8 7 0 22 1 17 10 10 23 2
+                                                   25 12 24 10 26 2 28 12 7 16
+                                                   29 2 0 8 7 16 30 2 0 31 7 16
+                                                   32 1 33 8 8 34 2 35 8 8 16
+                                                   36 1 0 12 12 27 2 1 31 7 16
+                                                   32 2 0 15 12 16 19 2 1 8 7
+                                                   16 30 1 0 8 12 21)))))
            '|lookupComplete|)) 

@@ -121,7 +121,7 @@
               (|DoubleFloat|) (|OutputForm|))
            '#(|truncate| 131 |round| 136 |patternMatch| 141 |norm| 148
               |fractionPart| 153 |floor| 158 |convert| 163 |coerce| 168
-              |characteristic| 178 |ceiling| 182)
+              |characteristic| 173 |ceiling| 177)
            'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
@@ -141,6 +141,6 @@
                                                    0 48 1 0 0 0 16 1 0 0 0 22 3
                                                    0 49 0 31 49 50 1 0 0 0 24 1
                                                    0 0 0 11 1 0 0 0 38 1 0 31 0
-                                                   33 1 0 0 25 28 1 0 0 25 28 0
-                                                   0 7 8 1 0 0 0 40)))))
+                                                   33 1 0 0 25 28 0 0 7 8 1 0 0
+                                                   0 40)))))
            '|lookupComplete|)) 

@@ -21,7 +21,7 @@
          ($ |Record| (|:| |ker| (|List| (|Kernel| F))) (|:| |val| (|List| F))))
         (SPROG
          ((|lv| (|List| F)) (|lk| (|List| (|Kernel| F)))
-          (|u| (|Union| F "failed")) (#1=#:G735 NIL) (|k| NIL))
+          (|u| (|Union| F "failed")) (#1=#:G740 NIL) (|k| NIL))
          (SEQ (LETT |lk| NIL . #2=(|TRIGMNIP;complexKernels|))
               (LETT |lv| NIL . #2#)
               (SEQ (LETT |k| NIL . #2#)
@@ -41,8 +41,8 @@
 
 (SDEFUN |TRIGMNIP;kcomplex| ((|k| |Kernel| F) ($ |Union| F "failed"))
         (SPROG
-         ((#1=#:G753 NIL) (|u| (|Union| (|Integer|) "failed")) (|a| (F))
-          (#2=#:G752 NIL) (|n| (F)) (|arg| (|List| F))
+         ((#1=#:G758 NIL) (|u| (|Union| (|Integer|) "failed")) (|a| (F))
+          (#2=#:G757 NIL) (|n| (F)) (|arg| (|List| F))
           (|op| (|BasicOperator|)))
          (SEQ
           (LETT |op| (SPADCALL |k| (QREFELT $ 36)) . #3=(|TRIGMNIP;kcomplex|))
@@ -84,7 +84,7 @@
                                                     |n| (QREFELT $ 50))
                                           (QREFELT $ 14)))
                                    . #3#)
-                             (GO #4=#:G746))))))))))
+                             (GO #4=#:G751))))))))))
                     (EXIT (CONS 1 "failed"))))
               #4# (EXIT #2#)))
             ('T
@@ -114,7 +114,7 @@
                                                 (QREFELT $ 51))
                                       (QREFELT $ 15) (QREFELT $ 52)))
                                . #3#)
-                         (GO #5=#:G749))))))))))
+                         (GO #5=#:G754))))))))))
                 (EXIT (CONS 1 "failed"))))
               #5# (EXIT #1#)))))))) 
 
@@ -155,7 +155,7 @@
           (RETURN (PROGN (SPADCALL |x| RTRIG (QREFELT $ 57)))))) 
 
 (SDEFUN |TRIGMNIP;complexNormalize;FSF;9| ((|f| F) (|x| |Symbol|) ($ F))
-        (SPROG ((#1=#:G767 NIL) (|g| (F)) (|k| NIL) (#2=#:G766 NIL))
+        (SPROG ((#1=#:G772 NIL) (|g| (F)) (|k| NIL) (#2=#:G771 NIL))
                (SEQ
                 (COND
                  ((SPADCALL
@@ -233,7 +233,7 @@
           (RETURN (PROGN (SPADCALL |x| RTRIG (QREFELT $ 57)))))) 
 
 (SDEFUN |TRIGMNIP;complexElementary;FSF;11| ((|f| F) (|x| |Symbol|) ($ F))
-        (SPROG ((#1=#:G780 NIL) (|g| (F)) (|k| NIL) (#2=#:G779 NIL))
+        (SPROG ((#1=#:G785 NIL) (|g| (F)) (|k| NIL) (#2=#:G784 NIL))
                (SEQ
                 (COND
                  ((SPADCALL
@@ -298,7 +298,7 @@
 
 (SDEFUN |TRIGMNIP;localexplogs|
         ((|f| F) (|g| F) ($ |Expression| (|Complex| R)))
-        (SPROG ((#1=#:G788 NIL) (|k| NIL) (#2=#:G787 NIL))
+        (SPROG ((#1=#:G793 NIL) (|k| NIL) (#2=#:G792 NIL))
                (SEQ
                 (SPADCALL (SPADCALL |g| (QREFELT $ 21))
                           (PROGN
@@ -342,9 +342,9 @@
 
 (DECLAIM (NOTINLINE |TrigonometricManipulations;|)) 
 
-(DEFUN |TrigonometricManipulations| (&REST #1=#:G792)
+(DEFUN |TrigonometricManipulations| (&REST #1=#:G797)
   (SPROG NIL
-         (PROG (#2=#:G793)
+         (PROG (#2=#:G798)
            (RETURN
             (COND
              ((LETT #2#

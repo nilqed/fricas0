@@ -13,9 +13,9 @@
 (SDEFUN |CYCLES;complete;ISp;3|
         ((|i| |Integer|) ($ |SymmetricPolynomial| (|Fraction| (|Integer|))))
         (SPROG
-         ((#1=#:G714 NIL)
-          (#2=#:G713 #3=(|SymmetricPolynomial| (|Fraction| (|Integer|))))
-          (#4=#:G715 #3#) (#5=#:G717 NIL) (|pt| NIL))
+         ((#1=#:G716 NIL)
+          (#2=#:G715 #3=(|SymmetricPolynomial| (|Fraction| (|Integer|))))
+          (#4=#:G717 #3#) (#5=#:G719 NIL) (|pt| NIL))
          (SEQ
           (COND ((EQL |i| 0) (|spadConstant| $ 19))
                 ((< |i| 0) (|spadConstant| $ 18))
@@ -48,7 +48,7 @@
                   (COND (#1# #2#) (#6# (|spadConstant| $ 18))))))))) 
 
 (SDEFUN |CYCLES;even?| ((|li| |List| (|Integer|)) ($ |Boolean|))
-        (SPROG ((#1=#:G726 NIL) (|i| NIL) (#2=#:G725 NIL))
+        (SPROG ((#1=#:G728 NIL) (|i| NIL) (#2=#:G727 NIL))
                (SEQ
                 (SPADCALL
                  (LENGTH
@@ -71,9 +71,9 @@
 (SDEFUN |CYCLES;alternating;ISp;5|
         ((|i| |Integer|) ($ |SymmetricPolynomial| (|Fraction| (|Integer|))))
         (SPROG
-         ((#1=#:G728 NIL)
-          (#2=#:G727 #3=(|SymmetricPolynomial| (|Fraction| (|Integer|))))
-          (#4=#:G729 #3#) (#5=#:G731 NIL) (|li| NIL))
+         ((#1=#:G732 NIL)
+          (#2=#:G731 #3=(|SymmetricPolynomial| (|Fraction| (|Integer|))))
+          (#4=#:G733 #3#) (#5=#:G735 NIL) (|li| NIL))
          (SEQ
           (SPADCALL 2
                     (PROGN
@@ -112,9 +112,9 @@
         ((|i| |Integer|)
          ($ . #1=(|SymmetricPolynomial| (|Fraction| (|Integer|)))))
         (SPROG
-         ((#2=#:G733 NIL) (#3=#:G732 #1#) (#4=#:G734 #1#)
+         ((#2=#:G737 NIL) (#3=#:G736 #1#) (#4=#:G738 #1#)
           (|spol| (|SymmetricPolynomial| (|Fraction| (|Integer|))))
-          (#5=#:G737 NIL) (|pt| NIL))
+          (#5=#:G741 NIL) (|pt| NIL))
          (SEQ
           (COND ((EQL |i| 0) (|spadConstant| $ 19))
                 ((< |i| 0) (|spadConstant| $ 18))
@@ -156,9 +156,9 @@
 
 (SDEFUN |CYCLES;divisors| ((|n| |Integer|) ($ |List| (|Integer|)))
         (SPROG
-         ((|c| (|List| (|Integer|))) (#1=#:G749 NIL)
-          (#2=#:G748 #3=(|List| (|Integer|))) (#4=#:G750 #3#) (#5=#:G758 NIL)
-          (|j| NIL) (#6=#:G757 NIL) (#7=#:G756 NIL) (|a| NIL)
+         ((|c| (|List| (|Integer|))) (#1=#:G753 NIL)
+          (#2=#:G752 #3=(|List| (|Integer|))) (#4=#:G754 #3#) (#5=#:G763 NIL)
+          (|j| NIL) (#6=#:G762 NIL) (#7=#:G761 NIL) (|a| NIL)
           (|b|
            (|List|
             (|Record| (|:| |factor| (|Integer|))
@@ -213,8 +213,8 @@
         ((|n| |Integer|) (|m| |Integer|)
          ($ |SymmetricPolynomial| (|Fraction| (|Integer|))))
         (SPROG
-         ((|li| (|List| (|Integer|))) (#1=#:G763 NIL) (|j| NIL)
-          (#2=#:G762 NIL))
+         ((|li| (|List| (|Integer|))) (#1=#:G768 NIL) (|j| NIL)
+          (#2=#:G767 NIL))
          (SEQ
           (LETT |li|
                 (PROGN
@@ -236,9 +236,9 @@
 (SDEFUN |CYCLES;cyclic;ISp;10|
         ((|n| |Integer|) ($ |SymmetricPolynomial| (|Fraction| (|Integer|))))
         (SPROG
-         ((#1=#:G766 NIL)
-          (#2=#:G765 #3=(|SymmetricPolynomial| (|Fraction| (|Integer|))))
-          (#4=#:G767 #3#) (#5=#:G769 NIL) (|i| NIL))
+         ((#1=#:G771 NIL)
+          (#2=#:G770 #3=(|SymmetricPolynomial| (|Fraction| (|Integer|))))
+          (#4=#:G772 #3#) (#5=#:G774 NIL) (|i| NIL))
          (SEQ
           (COND ((EQL |n| 1) (SPADCALL 1 (QREFELT $ 41)))
                 (#6='T
@@ -308,9 +308,9 @@
         (SPROG
          ((|prod| #1=(|SymmetricPolynomial| (|Fraction| (|Integer|))))
           (|prod2| #1#) (|r1| #2=(|Integer|)) (|r0| #3=(|Integer|))
-          (#4=#:G782 NIL) (|r| NIL)
+          (#4=#:G787 NIL) (|r| NIL)
           (|c| (|SymmetricPolynomial| (|Fraction| (|Integer|))))
-          (|k| (|Integer|)) (|ll1| #2#) (|ll0| #3#) (#5=#:G781 NIL) (|ll| NIL)
+          (|k| (|Integer|)) (|ll1| #2#) (|ll0| #3#) (#5=#:G786 NIL) (|ll| NIL)
           (|xx| (|Fraction| (|Integer|)))
           (|lli| (|List| (|List| (|Integer|)))))
          (SEQ (LETT |lli| (SPADCALL |li| (QREFELT $ 50)) . #6=(|CYCLES;trm2|))
@@ -384,9 +384,9 @@
 (SDEFUN |CYCLES;graphs;ISp;13|
         ((|n| |Integer|) ($ |SymmetricPolynomial| (|Fraction| (|Integer|))))
         (SPROG
-         ((#1=#:G784 NIL)
-          (#2=#:G783 #3=(|SymmetricPolynomial| (|Fraction| (|Integer|))))
-          (#4=#:G785 #3#) (#5=#:G787 NIL) (|li| NIL))
+         ((#1=#:G789 NIL)
+          (#2=#:G788 #3=(|SymmetricPolynomial| (|Fraction| (|Integer|))))
+          (#4=#:G790 #3#) (#5=#:G792 NIL) (|li| NIL))
          (SEQ
           (PROGN
            (LETT #1# NIL . #6=(|CYCLES;graphs;ISp;13|))
@@ -474,7 +474,7 @@
          (|spol| |SymmetricPolynomial| (|Fraction| (|Integer|)))
          ($ |SymmetricPolynomial| (|Fraction| (|Integer|))))
         (SPROG
-         ((|deg| (|Partition|)) (#1=#:G803 NIL) (|k| NIL) (#2=#:G802 NIL))
+         ((|deg| (|Partition|)) (#1=#:G808 NIL) (|k| NIL) (#2=#:G807 NIL))
          (SEQ
           (COND ((SPADCALL |spol| (QREFELT $ 54)) (|spadConstant| $ 18))
                 ('T
@@ -513,7 +513,7 @@
          ($ |SymmetricPolynomial| (|Fraction| (|Integer|))))
         (SPROG
          ((|prod| #1=(|SymmetricPolynomial| (|Fraction| (|Integer|))))
-          (#2=#:G805 NIL) (#3=#:G804 #1#) (#4=#:G806 #1#) (#5=#:G811 NIL)
+          (#2=#:G810 NIL) (#3=#:G809 #1#) (#4=#:G811 #1#) (#5=#:G816 NIL)
           (|i| NIL) (|lc| (|Fraction| (|Integer|))))
          (SEQ
           (COND ((SPADCALL |spol| (QREFELT $ 54)) (|spadConstant| $ 18))
@@ -582,8 +582,8 @@
          ($ |SymmetricPolynomial| (|Fraction| (|Integer|))))
         (SPROG
          ((|a| (|Matrix| (|SymmetricPolynomial| (|Fraction| (|Integer|)))))
-          (#1=#:G823 NIL) (|k| NIL) (#2=#:G824 NIL) (|j| NIL) (#3=#:G822 NIL)
-          (#4=#:G821 NIL) (|i| NIL) (#5=#:G820 NIL))
+          (#1=#:G828 NIL) (|k| NIL) (#2=#:G829 NIL) (|j| NIL) (#3=#:G827 NIL)
+          (#4=#:G826 NIL) (|i| NIL) (#5=#:G825 NIL))
          (SEQ
           (LETT |a|
                 (SPADCALL
@@ -642,8 +642,8 @@
          ($ |SymmetricPolynomial| (|Fraction| (|Integer|))))
         (SPROG
          ((|a| (|Matrix| (|SymmetricPolynomial| (|Fraction| (|Integer|)))))
-          (#1=#:G843 NIL) (|k| NIL) (#2=#:G844 NIL) (|j| NIL) (#3=#:G842 NIL)
-          (#4=#:G841 NIL) (|i| NIL) (#5=#:G840 NIL))
+          (#1=#:G848 NIL) (|k| NIL) (#2=#:G849 NIL) (|j| NIL) (#3=#:G847 NIL)
+          (#4=#:G846 NIL) (|i| NIL) (#5=#:G845 NIL))
          (SEQ
           (COND
            ((< (LENGTH |li1|) (LENGTH |li2|))
@@ -709,7 +709,7 @@
 
 (DEFUN |CycleIndicators| ()
   (SPROG NIL
-         (PROG (#1=#:G846)
+         (PROG (#1=#:G851)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|CycleIndicators|)

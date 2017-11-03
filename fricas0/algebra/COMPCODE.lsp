@@ -13,9 +13,9 @@
         ((|content| |ILogic|) (|numb| |NonNegativeInteger|)
          ($ |List| (|String|)))
         (SPROG
-         ((|resStr| (|String|)) (|notfst| (|Boolean|)) (#1=#:G717 NIL)
+         ((|resStr| (|String|)) (|notfst| (|Boolean|)) (#1=#:G720 NIL)
           (|thisTerm| NIL) (|resType| (|ILogic|))
-          (|deduct| (|List| (|ILogic|))) (#2=#:G716 NIL)
+          (|deduct| (|List| (|ILogic|))) (#2=#:G719 NIL)
           (|fac| (|List| (|ILogic|))))
          (SEQ
           (EXIT
@@ -31,7 +31,7 @@
                        (LIST "  -- error" (SPADCALL |content| (QREFELT $ 11)))
                        (QREFELT $ 8)))
                      . #3#)
-               (GO #4=#:G715))))
+               (GO #4=#:G718))))
             (LETT |deduct| (SPADCALL |fac| (QREFELT $ 12)) . #3#)
             (COND ((NULL |deduct|) (LETT |deduct| |fac| . #3#)))
             (LETT |resType| (|SPADfirst| |deduct|) . #3#)
@@ -82,7 +82,7 @@
         (SPROG
          ((|s| (|String|)) (|ch| (|List| (|Lambda| (|Typed|))))
           (|boundL2| (|List| (|String|))) (|varName| (|String|))
-          (#1=#:G741 NIL) (|i| (|NonNegativeInteger|)))
+          (#1=#:G744 NIL) (|i| (|NonNegativeInteger|)))
          (SEQ
           (EXIT
            (SEQ (LETT |s| "" . #2=(|COMPCODE;genLambdaTerm|))
@@ -96,7 +96,7 @@
                            (PROGN
                             (LETT #1# (SPADCALL |boundL| |i| (QREFELT $ 23))
                                   . #2#)
-                            (GO #3=#:G740))))))
+                            (GO #3=#:G743))))))
                        (EXIT (LETT |s| (STRINGIMAGE (- |i| 1)) . #2#)))))
                 (COND
                  ((SPADCALL |n| (QREFELT $ 24))
@@ -152,7 +152,7 @@
         ((|content| |Lambda| (|Typed|)) (|numb| |NonNegativeInteger|)
          ($ |List| (|String|)))
         (SPROG
-         ((#1=#:G746 NIL) (|lhst| (|String|)) (|lhsn| (|String|))
+         ((#1=#:G749 NIL) (|lhst| (|String|)) (|lhsn| (|String|))
           (|lhs| (|String|)) (|var| (|Typed|)) (|sl| (|List| (|String|))))
          (SEQ
           (EXIT
@@ -179,7 +179,7 @@
                                         (LIST |lhsn|) $))
                                  (QREFELT $ 8)))
                                . #2#)
-                         (GO #3=#:G745))))))
+                         (GO #3=#:G748))))))
                 (EXIT |sl|)))
           #3# (EXIT #1#)))) 
 
@@ -191,8 +191,8 @@
         ((|content| |List| (|ILogic|)) (|filename| |String|)
          (|shortName| |String|) (|longName| |String|) ($ |Void|))
         (SPROG
-         ((#1=#:G754 NIL) (|line| NIL) (|lines| (|List| (|String|)))
-          (|fnNum| (|NonNegativeInteger|)) (#2=#:G753 NIL) (|thisEq| NIL)
+         ((#1=#:G757 NIL) (|line| NIL) (|lines| (|List| (|String|)))
+          (|fnNum| (|NonNegativeInteger|)) (#2=#:G756 NIL) (|thisEq| NIL)
           (|f1| (|TextFile|)))
          (SEQ
           (LETT |f1|
@@ -230,8 +230,8 @@
          (|shortName| |String|) (|longName| |String|) (|catName| |String|)
          ($ |Void|))
         (SPROG
-         ((#1=#:G761 NIL) (|line| NIL) (|lines| (|List| (|String|)))
-          (|fnNum| (|NonNegativeInteger|)) (#2=#:G760 NIL) (|thisEq| NIL)
+         ((#1=#:G764 NIL) (|line| NIL) (|lines| (|List| (|String|)))
+          (|fnNum| (|NonNegativeInteger|)) (#2=#:G763 NIL) (|thisEq| NIL)
           (|f1| (|TextFile|)))
          (SEQ
           (LETT |f1|
@@ -271,7 +271,7 @@
 
 (DEFUN |compCode| ()
   (SPROG NIL
-         (PROG (#1=#:G763)
+         (PROG (#1=#:G766)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|compCode|)

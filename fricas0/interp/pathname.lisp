@@ -3,10 +3,6 @@
  
 (IN-PACKAGE "BOOT")
  
-; pathname? p == p=[] or PATHNAMEP p
- 
-(DEFUN |pathname?| (|p|) (PROG () (RETURN (OR (NULL |p|) (PATHNAMEP |p|)))))
- 
 ; pathname p ==
 ;   if SYMBOLP(p) then p := SYMBOL_-NAME(p)
 ;   PATHNAMEP p => p
@@ -66,7 +62,6 @@
 (DEFUN |deleteFile| (|f|) (PROG () (RETURN (DELETE-FILE |f|))))
  
 ; isExistingFile f ==
-; --  p := pathname f
 ;   if make_input_filename(f)
 ;     then
 ;       true

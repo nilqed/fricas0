@@ -2,9 +2,9 @@
 (SDEFUN |M3D;matrixConcat3D;S3$;1|
         ((|dir| |Symbol|) (|mat1| $) (|mat2| $) ($ $))
         (SPROG
-         ((|retVal| ($)) (#1=#:G735 NIL) (|j| NIL)
-          (|temp| (|PrimitiveArray| (|PrimitiveArray| R))) (#2=#:G734 NIL)
-          (|i| NIL) (#3=#:G733 NIL)
+         ((|retVal| ($)) (#1=#:G738 NIL) (|j| NIL)
+          (|temp| (|PrimitiveArray| (|PrimitiveArray| R))) (#2=#:G737 NIL)
+          (|i| NIL) (#3=#:G736 NIL)
           (|matRep2|
            #4=(|PrimitiveArray| (|PrimitiveArray| (|PrimitiveArray| R))))
           (|matRep1| #4#) (|kDim2| #5=(|NonNegativeInteger|)) (|jDim2| #5#)
@@ -219,7 +219,7 @@
 (SDEFUN |M3D;identityMatrix;Nni$;8| ((|iLength| |NonNegativeInteger|) ($ $))
         (SPROG
          ((|row2| (|PrimitiveArray| (|PrimitiveArray| R)))
-          (|row1| (|PrimitiveArray| R)) (#1=#:G749 NIL) (|count| NIL)
+          (|row1| (|PrimitiveArray| R)) (#1=#:G752 NIL) (|count| NIL)
           (|row2empty| (|PrimitiveArray| (|PrimitiveArray| R)))
           (|row1empty| (|PrimitiveArray| R))
           (|retValueRep|
@@ -249,8 +249,8 @@
 
 (SDEFUN |M3D;plus;3$;9| ((|mat1| $) (|mat2| $) ($ $))
         (SPROG
-         ((|resultMatrix| ($)) (|sum| (R)) (#1=#:G760 NIL) (|k| NIL)
-          (#2=#:G759 NIL) (|j| NIL) (#3=#:G758 NIL) (|i| NIL)
+         ((|resultMatrix| ($)) (|sum| (R)) (#1=#:G763 NIL) (|k| NIL)
+          (#2=#:G762 NIL) (|j| NIL) (#3=#:G761 NIL) (|i| NIL)
           (|row3| (|PrimitiveArray| (|PrimitiveArray| (|PrimitiveArray| R))))
           (|row2| (|PrimitiveArray| (|PrimitiveArray| R)))
           (|row1| (|PrimitiveArray| R)) (|kLength2| #4=(|NonNegativeInteger|))
@@ -311,12 +311,12 @@
 
 (SDEFUN |M3D;construct;L$;10| ((|listRep| |List| (|List| (|List| R))) ($ $))
         (SPROG
-         ((|resultMatrix| ($)) (|element| (R)) (#1=#:G790 NIL) (|k| NIL)
-          (#2=#:G789 NIL) (|j| NIL) (#3=#:G788 NIL) (|i| NIL)
+         ((|resultMatrix| ($)) (|element| (R)) (#1=#:G793 NIL) (|k| NIL)
+          (#2=#:G792 NIL) (|j| NIL) (#3=#:G791 NIL) (|i| NIL)
           (|row3| (|PrimitiveArray| (|PrimitiveArray| (|PrimitiveArray| R))))
           (|row2| (|PrimitiveArray| (|PrimitiveArray| R)))
-          (|row1| (|PrimitiveArray| R)) (#4=#:G785 NIL) (#5=#:G787 NIL)
-          (|subSubList| NIL) (#6=#:G786 NIL) (|subList| NIL)
+          (|row1| (|PrimitiveArray| R)) (#4=#:G788 NIL) (#5=#:G790 NIL)
+          (|subSubList| NIL) (#6=#:G789 NIL) (|subList| NIL)
           (|kLength| (|NonNegativeInteger|)) (|jLength| (|NonNegativeInteger|))
           (|iLength| (|NonNegativeInteger|)))
          (SEQ
@@ -369,7 +369,7 @@
                                         (|error|
                                          "can not have an irregular shaped matrix")
                                         . #7#)
-                                  (GO #8=#:G771))))))
+                                  (GO #8=#:G774))))))
                              (LETT #5# (CDR #5#) . #7#) (GO G190) G191
                              (EXIT NIL)))
                        #8# (EXIT #4#))))))
@@ -417,9 +417,9 @@
 
 (DECLAIM (NOTINLINE |ThreeDimensionalMatrix;|)) 
 
-(DEFUN |ThreeDimensionalMatrix| (#1=#:G796)
+(DEFUN |ThreeDimensionalMatrix| (#1=#:G798)
   (SPROG NIL
-         (PROG (#2=#:G797)
+         (PROG (#2=#:G799)
            (RETURN
             (COND
              ((LETT #2#
@@ -438,25 +438,18 @@
 
 (DEFUN |ThreeDimensionalMatrix;| (|#1|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G793 NIL) (#2=#:G794 NIL) (#3=#:G795 NIL) ($ NIL)
-    (|dv$| NIL) (DV$1 NIL))
+   ((|pv$| NIL) (#1=#:G796 NIL) (#2=#:G797 NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #4=(|ThreeDimensionalMatrix|))
-    (LETT |dv$| (LIST '|ThreeDimensionalMatrix| DV$1) . #4#)
-    (LETT $ (GETREFV 51) . #4#)
+    (LETT DV$1 (|devaluate| |#1|) . #3=(|ThreeDimensionalMatrix|))
+    (LETT |dv$| (LIST '|ThreeDimensionalMatrix| DV$1) . #3#)
+    (LETT $ (GETREFV 51) . #3#)
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
                     (|buildPredVector| 0 0
                                        (LIST
                                         (|HasCategory| |#1| '(|SetCategory|))
-                                        (LETT #3#
-                                              (|HasCategory| |#1|
-                                                             '(|BasicType|))
-                                              . #4#)
-                                        (OR #3#
-                                            (|HasCategory| |#1|
-                                                           '(|SetCategory|)))
+                                        (|HasCategory| |#1| '(|BasicType|))
                                         (AND
                                          (|HasCategory| |#1|
                                                         (LIST '|Evalable|
@@ -467,7 +460,7 @@
                                               (|HasCategory| |#1|
                                                              '(|CoercibleTo|
                                                                (|OutputForm|)))
-                                              . #4#)
+                                              . #3#)
                                         (OR #2#
                                             (AND
                                              (|HasCategory| |#1|
@@ -478,7 +471,7 @@
                                                             '(|SetCategory|))))
                                         (LETT #1#
                                               (|HasCategory| |#1| '(|Ring|))
-                                              . #4#)
+                                              . #3#)
                                         (OR
                                          (AND
                                           (|HasCategory| |#1|
@@ -493,22 +486,24 @@
                                                                 |#1|)))
                                           (|HasCategory| |#1|
                                                          '(|SetCategory|))))))
-                    . #4#))
+                    . #3#))
     (|haddProp| |$ConstructorCache| '|ThreeDimensionalMatrix| (LIST DV$1)
                 (CONS 1 $))
     (|stuffDomainSlots| $)
     (QSETREFV $ 6 |#1|)
-    (AND (|HasCategory| $ '(|shallowlyMutable|)) (|augmentPredVector| $ 256))
-    (AND (|HasCategory| $ '(|finiteAggregate|)) (|augmentPredVector| $ 512))
-    (AND #3# (|HasCategory| $ '(|finiteAggregate|))
-         (|augmentPredVector| $ 1024))
+    (AND (|HasCategory| $ '(|shallowlyMutable|)) (|augmentPredVector| $ 128))
+    (AND (|HasCategory| $ '(|finiteAggregate|)) (|augmentPredVector| $ 256))
+    (AND (|HasCategory| |#1| '(|BasicType|))
+         (|HasCategory| $ '(|finiteAggregate|)) (|augmentPredVector| $ 512))
     (AND
-     (OR (AND #3# (|HasCategory| $ '(|finiteAggregate|)))
-         (|HasCategory| |#1| '(|SetCategory|)))
-     (|augmentPredVector| $ 2048))
+     (OR
+      (AND (|HasCategory| |#1| '(|BasicType|))
+           (|HasCategory| $ '(|finiteAggregate|)))
+      (|HasCategory| |#1| '(|SetCategory|)))
+     (|augmentPredVector| $ 1024))
     (SETF |pv$| (QREFELT $ 3))
     (COND
-     ((|testBitVector| |pv$| 7)
+     ((|testBitVector| |pv$| 6)
       (PROGN
        (QSETREFV $ 31 (CONS (|dispatchFunction| |M3D;zeroMatrix;3Nni$;7|) $))
        (QSETREFV $ 33
@@ -540,7 +535,7 @@
               262 |elt| 266 |count| 274 |copy| 286 |construct| 291 |coerce| 296
               |any?| 311 = 317 |#| 323)
            'NIL
-           (CONS (|makeByteWordVec2| 8 '(0 0 8 1 0 8 3 6))
+           (CONS (|makeByteWordVec2| 7 '(0 0 7 1 0 7 1 5))
                  (CONS
                   '#(|HomogeneousAggregate&| |Aggregate&| |Evalable&|
                      |SetCategory&| NIL |InnerEvalable&| |BasicType&| NIL)
@@ -555,18 +550,18 @@
                                          0 0 26 1 19 0 0 28 0 6 0 30 3 0 0 9 9
                                          9 31 0 6 0 32 1 0 0 9 33 2 6 0 0 0 34
                                          2 0 0 0 0 35 2 37 36 0 10 38 2 36 39 0
-                                         10 40 2 39 6 0 10 41 2 12 25 0 0 1 3 7
+                                         10 40 2 39 6 0 10 41 2 11 25 0 0 1 3 6
                                          0 9 9 9 31 2 0 25 0 9 1 5 0 6 0 9 9 9
-                                         6 29 0 0 0 1 2 7 0 0 0 35 1 10 39 0 1
-                                         2 0 25 0 9 1 1 10 39 0 1 2 11 25 6 0 1
-                                         1 0 7 0 8 3 0 0 21 0 0 22 2 9 0 46 0 1
-                                         2 0 0 46 0 1 2 0 25 0 9 1 1 1 49 0 1 1
-                                         7 0 9 33 2 1 50 50 0 1 1 1 48 0 1 2 10
-                                         25 45 0 1 3 4 0 0 39 39 1 2 4 0 0 43 1
-                                         3 4 0 0 6 6 1 2 4 0 0 44 1 2 0 25 0 0
-                                         1 1 0 25 0 1 0 0 0 1 4 0 6 0 9 9 9 27
-                                         2 11 9 6 0 1 2 10 9 45 0 1 1 0 0 0 1 1
-                                         0 0 37 42 1 5 47 0 1 1 0 0 5 15 1 0 5
-                                         0 12 2 10 25 45 0 1 2 12 25 0 0 1 1 10
-                                         9 0 1)))))
+                                         6 29 0 0 0 1 2 6 0 0 0 35 1 9 39 0 1 2
+                                         0 25 0 9 1 1 9 39 0 1 2 10 25 6 0 1 1
+                                         0 7 0 8 3 0 0 21 0 0 22 2 8 0 46 0 1 2
+                                         0 0 46 0 1 2 0 25 0 9 1 1 1 49 0 1 1 6
+                                         0 9 33 2 1 50 50 0 1 1 1 48 0 1 2 9 25
+                                         45 0 1 3 3 0 0 39 39 1 2 3 0 0 43 1 3
+                                         3 0 0 6 6 1 2 3 0 0 44 1 2 0 25 0 0 1
+                                         1 0 25 0 1 0 0 0 1 4 0 6 0 9 9 9 27 2
+                                         10 9 6 0 1 2 9 9 45 0 1 1 0 0 0 1 1 0
+                                         0 37 42 1 4 47 0 1 1 0 0 5 15 1 0 5 0
+                                         12 2 9 25 45 0 1 2 11 25 0 0 1 1 9 9 0
+                                         1)))))
            '|lookupComplete|)) 

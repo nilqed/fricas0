@@ -118,7 +118,7 @@
         ((|listOfThings| |List| (|String|)) ($ |List| (|String|)))
         (SPROG
          ((|thingsToWrite| (|List| (|String|))) (|writeTypeInt| (|Integer|))
-          (#1=#:G742 NIL) (|aTypeOfFile| NIL))
+          (#1=#:G747 NIL) (|aTypeOfFile| NIL))
          (SEQ
           (LETT |thingsToWrite| NIL . #2=(|VIEWDEF;viewWriteDefault;2L;26|))
           (SEQ (LETT |aTypeOfFile| NIL . #2#) (LETT #1# |listOfThings| . #2#)
@@ -135,23 +135,23 @@
                 (EXIT
                  (COND
                   ((< |writeTypeInt| 0)
-                   (|sayBrightly|
-                    (LIST "  > "
-                          (STRCONC |aTypeOfFile|
-                                   " is not a valid file type for writing a viewport"))))
+                   (SPADCALL
+                    (LIST "  > " |aTypeOfFile|
+                          " is not a valid file type for writing a viewport")
+                    (QREFELT $ 94)))
                   ('T
                    (LETT |thingsToWrite|
                          (SPADCALL |thingsToWrite| (LIST |aTypeOfFile|)
-                                   (QREFELT $ 93))
+                                   (QREFELT $ 95))
                          . #2#)))))
                (LETT #1# (CDR #1#) . #2#) (GO G190) G191 (EXIT NIL))
-          (EXIT (SPADCALL (QREFELT $ 34) |thingsToWrite| (QREFELT $ 94)))))) 
+          (EXIT (SPADCALL (QREFELT $ 34) |thingsToWrite| (QREFELT $ 96)))))) 
 
 (DECLAIM (NOTINLINE |ViewDefaultsPackage;|)) 
 
 (DEFUN |ViewDefaultsPackage| ()
   (SPROG NIL
-         (PROG (#1=#:G744)
+         (PROG (#1=#:G749)
            (RETURN
             (COND
              ((LETT #1# (HGET |$ConstructorCache| '|ViewDefaultsPackage|)
@@ -173,7 +173,7 @@
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
           (LETT |dv$| '(|ViewDefaultsPackage|) . #1=(|ViewDefaultsPackage|))
-          (LETT $ (GETREFV 96) . #1#)
+          (LETT $ (GETREFV 98) . #1#)
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
           (|haddProp| |$ConstructorCache| '|ViewDefaultsPackage| NIL
@@ -249,19 +249,20 @@
               |VIEWDEF;tubeRadiusDefault;FDf;23|
               |VIEWDEF;viewWriteAvailable;L;24| (128 . |elt|)
               |VIEWDEF;viewWriteDefault;L;25| (|String|) (133 . |upperCase|)
-              (138 . |position|) (144 . |append|) (150 . |setelt!|)
+              (138 . |position|) (|DisplayPackage|) (144 . |say|)
+              (149 . |append|) (155 . |setelt!|)
               |VIEWDEF;viewWriteDefault;2L;26|)
-           '#(|viewWriteDefault| 156 |viewWriteAvailable| 165 |viewSizeDefault|
-              169 |viewPosDefault| 178 |viewDefaults| 187 |var2StepsDefault|
-              191 |var1StepsDefault| 200 |unitsColorDefault| 209
-              |tubeRadiusDefault| 218 |tubePointsDefault| 227
-              |pointSizeDefault| 236 |pointColorDefault| 245 |lineColorDefault|
-              254 |axesColorDefault| 263)
+           '#(|viewWriteDefault| 161 |viewWriteAvailable| 170 |viewSizeDefault|
+              174 |viewPosDefault| 183 |viewDefaults| 192 |var2StepsDefault|
+              196 |var1StepsDefault| 205 |unitsColorDefault| 214
+              |tubeRadiusDefault| 223 |tubePointsDefault| 232
+              |pointSizeDefault| 241 |pointColorDefault| 250 |lineColorDefault|
+              259 |axesColorDefault| 268)
            'NIL
            (CONS (|makeByteWordVec2| 1 'NIL)
                  (CONS '#()
                        (CONS '#()
-                             (|makeByteWordVec2| 95
+                             (|makeByteWordVec2| 97
                                                  '(0 6 0 7 1 8 0 6 9 1 10 0 8
                                                    11 0 6 0 13 1 8 0 6 14 1 8 0
                                                    6 16 0 6 0 18 1 21 0 20 22 1
@@ -274,18 +275,19 @@
                                                    0 61 1 10 8 0 65 2 10 8 0 8
                                                    67 1 43 41 0 83 2 43 41 0 41
                                                    85 1 32 31 0 88 1 90 0 0 91
-                                                   2 31 38 90 0 92 2 31 0 0 0
-                                                   93 2 32 31 0 31 94 0 0 31 89
-                                                   1 0 31 31 95 0 0 31 87 0 0
-                                                   58 59 1 0 58 58 62 0 0 51 52
-                                                   1 0 51 51 56 0 0 63 64 0 0
-                                                   20 79 1 0 20 20 80 0 0 20 77
-                                                   1 0 20 20 78 0 0 8 73 1 0 8
-                                                   8 74 0 0 41 84 1 0 41 39 86
-                                                   0 0 20 81 1 0 20 20 82 0 0
-                                                   20 75 1 0 20 20 76 0 0 8 66
-                                                   1 0 8 8 68 0 0 8 69 1 0 8 8
-                                                   70 1 0 8 8 72 0 0 8 71)))))
+                                                   2 31 38 90 0 92 1 93 63 31
+                                                   94 2 31 0 0 0 95 2 32 31 0
+                                                   31 96 0 0 31 89 1 0 31 31 97
+                                                   0 0 31 87 0 0 58 59 1 0 58
+                                                   58 62 0 0 51 52 1 0 51 51 56
+                                                   0 0 63 64 0 0 20 79 1 0 20
+                                                   20 80 0 0 20 77 1 0 20 20 78
+                                                   0 0 8 73 1 0 8 8 74 0 0 41
+                                                   84 1 0 41 39 86 0 0 20 81 1
+                                                   0 20 20 82 0 0 20 75 1 0 20
+                                                   20 76 0 0 8 66 1 0 8 8 68 0
+                                                   0 8 69 1 0 8 8 70 1 0 8 8 72
+                                                   0 0 8 71)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|ViewDefaultsPackage| 'NILADIC T) 

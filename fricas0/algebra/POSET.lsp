@@ -53,10 +53,10 @@
                                                           (|List|
                                                            (|Boolean|)))))
                                                        T)
-                                                      ((|addObject|
+                                                      ((|addObject!|
                                                         ($ $ |t#1|))
                                                        T)
-                                                      ((|addArrow|
+                                                      ((|addArrow!|
                                                         ($ $
                                                          (|NonNegativeInteger|)
                                                          (|NonNegativeInteger|)))

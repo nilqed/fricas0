@@ -27,8 +27,8 @@
 
 (SDEFUN |XRPOLY;rquo;3$;4| ((|p1| $) (|p2| $) ($ $))
         (SPROG
-         ((|x| (|FreeModule| $ |VarSet|)) (|a| ($)) (#1=#:G725 NIL) (|t| NIL)
-          (#2=#:G724 NIL))
+         ((|x| (|FreeModule| $ |VarSet|)) (|a| ($)) (#1=#:G729 NIL) (|t| NIL)
+          (#2=#:G728 NIL))
          (SEQ
           (COND ((QEQCAR |p2| 0) (SPADCALL |p1| (QCDR |p2|) (QREFELT $ 20)))
                 ((QEQCAR |p1| 0)
@@ -72,8 +72,8 @@
         (SPROG
          ((|x| (|FreeModule| $ |VarSet|))
           (|lt| (|List| (|Record| (|:| |k| |VarSet|) (|:| |c| $)))) (|r| ($))
-          (#1=#:G737 NIL) (|t| NIL) (#2=#:G736 NIL)
-          (|n1| (|NonNegativeInteger|)) (#3=#:G731 NIL))
+          (#1=#:G743 NIL) (|t| NIL) (#2=#:G742 NIL)
+          (|n1| (|NonNegativeInteger|)) (#3=#:G737 NIL))
          (SEQ
           (COND
            ((OR (EQL |n| 0) (QEQCAR |p| 0))
@@ -118,8 +118,8 @@
         ((|p| |XDistributedPolynomial| |VarSet| R) ($ $))
         (SPROG
          ((|x| (|FreeModule| $ |VarSet|))
-          (|r| (|XDistributedPolynomial| |VarSet| R)) (#1=#:G751 NIL) (|v| NIL)
-          (#2=#:G750 NIL) (|vl| (|List| |VarSet|)))
+          (|r| (|XDistributedPolynomial| |VarSet| R)) (#1=#:G757 NIL) (|v| NIL)
+          (#2=#:G756 NIL) (|vl| (|List| |VarSet|)))
          (SEQ
           (COND
            ((SPADCALL |p| (QREFELT $ 34))
@@ -160,8 +160,8 @@
 (SDEFUN |XRPOLY;sh;$Nni$;7| ((|p| $) (|n| |NonNegativeInteger|) ($ $))
         (SPROG
          ((|lt| (|List| (|Record| (|:| |k| |VarSet|) (|:| |c| $))))
-          (#1=#:G761 NIL) (|t| NIL) (#2=#:G760 NIL) (|p1| ($))
-          (|n1| (|NonNegativeInteger|)) (#3=#:G755 NIL))
+          (#1=#:G768 NIL) (|t| NIL) (#2=#:G767 NIL) (|p1| ($))
+          (|n1| (|NonNegativeInteger|)) (#3=#:G761 NIL))
          (SEQ
           (COND ((EQL |n| 0) (|spadConstant| $ 29))
                 ((QEQCAR |p| 0)
@@ -211,8 +211,8 @@
 
 (SDEFUN |XRPOLY;sh;3$;8| ((|p1| $) (|p2| $) ($ $))
         (SPROG
-         ((|y| #1=(|FreeModule| $ |VarSet|)) (#2=#:G770 NIL) (|t| NIL)
-          (#3=#:G769 NIL) (|x| #1#) (#4=#:G768 NIL) (#5=#:G767 NIL)
+         ((|y| #1=(|FreeModule| $ |VarSet|)) (#2=#:G777 NIL) (|t| NIL)
+          (#3=#:G776 NIL) (|x| #1#) (#4=#:G775 NIL) (#5=#:G774 NIL)
           (|lt2| #6=(|List| (|Record| (|:| |k| |VarSet|) (|:| |c| $))))
           (|lt1| #6#))
          (SEQ
@@ -297,33 +297,29 @@
 (SDEFUN |XRPOLY;lquo1|
         ((|x| |List| (|Record| (|:| |k| |VarSet|) (|:| |c| $)))
          (|y| |List| (|Record| (|:| |k| |VarSet|) (|:| |c| $))) ($ $))
-        (SPROG ((#1=#:G794 NIL))
+        (SPROG ((#1=#:G803 NIL))
                (SEQ
                 (EXIT
                  (COND ((OR (NULL |x|) (NULL |y|)) (|spadConstant| $ 14))
+                       ((SPADCALL (QCAR (SPADCALL |x| '|first| (QREFELT $ 58)))
+                                  (QCAR (SPADCALL |y| '|first| (QREFELT $ 58)))
+                                  (QREFELT $ 59))
+                        (|XRPOLY;lquo1| |x| (CDR |y|) $))
+                       ((SPADCALL (QCAR (SPADCALL |x| '|first| (QREFELT $ 58)))
+                                  (QCAR (SPADCALL |y| '|first| (QREFELT $ 58)))
+                                  (QREFELT $ 60))
+                        (SPADCALL
+                         (SPADCALL
+                          (QCDR (SPADCALL |x| '|first| (QREFELT $ 58)))
+                          (QCDR (SPADCALL |y| '|first| (QREFELT $ 58)))
+                          (QREFELT $ 56))
+                         (|XRPOLY;lquo1| (CDR |x|) (CDR |y|) $)
+                         (QREFELT $ 55)))
                        ('T
-                        (COND
-                         ((SPADCALL
-                           (QCAR (SPADCALL |x| '|first| (QREFELT $ 58)))
-                           (QCAR (SPADCALL |y| '|first| (QREFELT $ 58)))
-                           (QREFELT $ 59))
-                          (|XRPOLY;lquo1| |x| (CDR |y|) $))
-                         ((SPADCALL
-                           (QCAR (SPADCALL |x| '|first| (QREFELT $ 58)))
-                           (QCAR (SPADCALL |y| '|first| (QREFELT $ 58)))
-                           (QREFELT $ 60))
-                          (SPADCALL
-                           (SPADCALL
-                            (QCDR (SPADCALL |x| '|first| (QREFELT $ 58)))
-                            (QCDR (SPADCALL |y| '|first| (QREFELT $ 58)))
-                            (QREFELT $ 56))
-                           (|XRPOLY;lquo1| (CDR |x|) (CDR |y|) $)
-                           (QREFELT $ 55)))
-                         ('T
-                          (PROGN
-                           (LETT #1# (|XRPOLY;lquo1| (CDR |x|) |y| $)
-                                 |XRPOLY;lquo1|)
-                           (GO #2=#:G793)))))))
+                        (PROGN
+                         (LETT #1# (|XRPOLY;lquo1| (CDR |x|) |y| $)
+                               |XRPOLY;lquo1|)
+                         (GO #2=#:G802)))))
                 #2# (EXIT #1#)))) 
 
 (SDEFUN |XRPOLY;coef;2$R;12| ((|p1| $) (|p2| $) ($ R))
@@ -348,43 +344,37 @@
 (SDEFUN |XRPOLY;coef1|
         ((|x| |List| (|Record| (|:| |k| |VarSet|) (|:| |c| $)))
          (|y| |List| (|Record| (|:| |k| |VarSet|) (|:| |c| $))) ($ R))
-        (SPROG ((#1=#:G804 NIL))
+        (SPROG ((#1=#:G815 NIL))
                (SEQ
                 (EXIT
                  (COND ((OR (NULL |x|) (NULL |y|)) (|spadConstant| $ 15))
+                       ((SPADCALL (QCAR (SPADCALL |x| '|first| (QREFELT $ 58)))
+                                  (QCAR (SPADCALL |y| '|first| (QREFELT $ 58)))
+                                  (QREFELT $ 59))
+                        (|XRPOLY;coef1| |x| (CDR |y|) $))
+                       ((SPADCALL (QCAR (SPADCALL |x| '|first| (QREFELT $ 58)))
+                                  (QCAR (SPADCALL |y| '|first| (QREFELT $ 58)))
+                                  (QREFELT $ 60))
+                        (QCDR
+                         (SPADCALL
+                          (CONS 0
+                                (SPADCALL
+                                 (QCDR (SPADCALL |x| '|first| (QREFELT $ 58)))
+                                 (QCDR (SPADCALL |y| '|first| (QREFELT $ 58)))
+                                 (QREFELT $ 27)))
+                          (CONS 0 (|XRPOLY;coef1| (CDR |x|) (CDR |y|) $))
+                          (QREFELT $ 55))))
                        ('T
-                        (COND
-                         ((SPADCALL
-                           (QCAR (SPADCALL |x| '|first| (QREFELT $ 58)))
-                           (QCAR (SPADCALL |y| '|first| (QREFELT $ 58)))
-                           (QREFELT $ 59))
-                          (|XRPOLY;coef1| |x| (CDR |y|) $))
-                         ((SPADCALL
-                           (QCAR (SPADCALL |x| '|first| (QREFELT $ 58)))
-                           (QCAR (SPADCALL |y| '|first| (QREFELT $ 58)))
-                           (QREFELT $ 60))
-                          (QCDR
-                           (SPADCALL
-                            (CONS 0
-                                  (SPADCALL
-                                   (QCDR
-                                    (SPADCALL |x| '|first| (QREFELT $ 58)))
-                                   (QCDR
-                                    (SPADCALL |y| '|first| (QREFELT $ 58)))
-                                   (QREFELT $ 27)))
-                            (CONS 0 (|XRPOLY;coef1| (CDR |x|) (CDR |y|) $))
-                            (QREFELT $ 55))))
-                         ('T
-                          (PROGN
-                           (LETT #1# (|XRPOLY;coef1| (CDR |x|) |y| $)
-                                 |XRPOLY;coef1|)
-                           (GO #2=#:G803)))))))
+                        (PROGN
+                         (LETT #1# (|XRPOLY;coef1| (CDR |x|) |y| $)
+                               |XRPOLY;coef1|)
+                         (GO #2=#:G814)))))
                 #2# (EXIT #1#)))) 
 
 (SDEFUN |XRPOLY;outForm| ((|p| |FreeModule| $ |VarSet|) ($ |OutputForm|))
         (SPROG
-         ((|le| (|List| (|OutputForm|))) (#1=#:G812 NIL) (|t| NIL)
-          (#2=#:G811 NIL))
+         ((|le| (|List| (|OutputForm|))) (#1=#:G823 NIL) (|t| NIL)
+          (#2=#:G822 NIL))
          (SEQ
           (LETT |le|
                 (PROGN
@@ -459,7 +449,7 @@
 (SDEFUN |XRPOLY;expand;$Xdp;25|
         ((|p| $) ($ |XDistributedPolynomial| |VarSet| R))
         (SPROG
-         ((|ep| (|XDistributedPolynomial| |VarSet| R)) (#1=#:G835 NIL)
+         ((|ep| (|XDistributedPolynomial| |VarSet| R)) (#1=#:G846 NIL)
           (|t| NIL) (|lt| (|List| (|Record| (|:| |k| |VarSet|) (|:| |c| $)))))
          (SEQ
           (COND ((QEQCAR |p| 0) (SPADCALL (QCDR |p|) (QREFELT $ 84)))
@@ -634,8 +624,8 @@
 
 (SDEFUN |XRPOLY;rquo;$VarSet$;36| ((|p| $) (|v| |VarSet|) ($ $))
         (SPROG
-         ((|x| (|FreeModule| $ |VarSet|)) (|a| ($)) (#1=#:G858 NIL) (|t| NIL)
-          (#2=#:G857 NIL))
+         ((|x| (|FreeModule| $ |VarSet|)) (|a| ($)) (#1=#:G869 NIL) (|t| NIL)
+          (#2=#:G868 NIL))
          (SEQ
           (COND ((QEQCAR |p| 0) (|spadConstant| $ 14))
                 ('T
@@ -708,8 +698,8 @@
 
 (SDEFUN |XRPOLY;mindeg;$Fm;43| ((|p| $) ($ |FreeMonoid| |VarSet|))
         (SPROG
-         ((#1=#:G871 NIL) (#2=#:G870 #3=(|FreeMonoid| |VarSet|))
-          (#4=#:G872 #3#) (#5=#:G875 NIL) (|t| NIL))
+         ((#1=#:G882 NIL) (#2=#:G881 #3=(|FreeMonoid| |VarSet|))
+          (#4=#:G883 #3#) (#5=#:G886 NIL) (|t| NIL))
          (SEQ
           (COND
            ((QEQCAR |p| 0)
@@ -745,8 +735,8 @@
 
 (SDEFUN |XRPOLY;maxdeg;$Fm;44| ((|p| $) ($ |FreeMonoid| |VarSet|))
         (SPROG
-         ((#1=#:G878 NIL) (#2=#:G877 #3=(|FreeMonoid| |VarSet|))
-          (#4=#:G879 #3#) (#5=#:G881 NIL) (|t| NIL))
+         ((#1=#:G889 NIL) (#2=#:G888 #3=(|FreeMonoid| |VarSet|))
+          (#4=#:G890 #3#) (#5=#:G892 NIL) (|t| NIL))
          (SEQ
           (COND
            ((QEQCAR |p| 0)
@@ -785,8 +775,8 @@
 
 (SDEFUN |XRPOLY;map;M2$;46| ((|fn| |Mapping| R R) (|p| $) ($ $))
         (SPROG
-         ((|x| (|FreeModule| $ |VarSet|)) (|a| ($)) (#1=#:G889 NIL) (|t| NIL)
-          (#2=#:G888 NIL))
+         ((|x| (|FreeModule| $ |VarSet|)) (|a| ($)) (#1=#:G900 NIL) (|t| NIL)
+          (#2=#:G899 NIL))
          (SEQ
           (COND ((QEQCAR |p| 0) (CONS 0 (SPADCALL (QCDR |p|) |fn|)))
                 ('T
@@ -826,8 +816,8 @@
 
 (SDEFUN |XRPOLY;varList;$L;47| ((|p| $) ($ |List| |VarSet|))
         (SPROG
-         ((|lv| #1=(|List| |VarSet|)) (#2=#:G899 NIL) (|t| NIL) (#3=#:G898 NIL)
-          (#4=#:G892 NIL) (#5=#:G891 #1#) (#6=#:G893 #1#) (#7=#:G897 NIL))
+         ((|lv| #1=(|List| |VarSet|)) (#2=#:G910 NIL) (|t| NIL) (#3=#:G909 NIL)
+          (#4=#:G903 NIL) (#5=#:G902 #1#) (#6=#:G904 #1#) (#7=#:G908 NIL))
          (SEQ
           (COND ((QEQCAR |p| 0) NIL)
                 (#8='T
@@ -890,9 +880,9 @@
 
 (DECLAIM (NOTINLINE |XRecursivePolynomial;|)) 
 
-(DEFUN |XRecursivePolynomial| (&REST #1=#:G905)
+(DEFUN |XRecursivePolynomial| (&REST #1=#:G917)
   (SPROG NIL
-         (PROG (#2=#:G906)
+         (PROG (#2=#:G918)
            (RETURN
             (COND
              ((LETT #2#
@@ -986,33 +976,40 @@
               (299 . |length|) |XRPOLY;degree;$Nni;45| (|Mapping| 7 7)
               |XRPOLY;map;M2$;46| |XRPOLY;varList;$L;47| (304 . |setUnion|)
               (310 . |sort!|) (|Record| (|:| |k| 16) (|:| |c| 7))
-              (|Union| 16 '"failed") (|PositiveInteger|) (|HashState|)
-              (|String|) (|SingleInteger|))
+              (|Union| 16 '"failed") (|PositiveInteger|) (|String|)
+              (|SingleInteger|) (|HashState|))
            '#(~= 315 |zero?| 321 |varList| 326 |unexpand| 331 |trunc| 336
-              |subtractIfCan| 342 |sh| 348 |sample| 360 |rquo| 364
-              |retractIfCan| 382 |retract| 387 |recip| 392 |quasiRegular?| 397
-              |quasiRegular| 402 |opposite?| 407 |one?| 413 |monomial?| 418
-              |monom| 423 |mirror| 429 |mindegTerm| 434 |mindeg| 439 |maxdeg|
-              444 |map| 449 |lquo| 455 |latex| 473 |hashUpdate!| 478 |hash| 484
-              |expand| 489 |degree| 494 |constant?| 499 |constant| 504 |coerce|
-              509 |coef| 534 |characteristic| 546 |annihilate?| 550 ^ 556
-              |Zero| 568 |RemainderList| 572 |One| 577 = 581 - 587 + 598 * 604)
+              |subtractIfCan| 342 |sh| 348 |sample| 360 |rquo| 364 |rightRecip|
+              382 |rightPower| 387 |retractIfCan| 399 |retract| 404 |recip| 409
+              |quasiRegular?| 414 |quasiRegular| 419 |opposite?| 424 |one?| 430
+              |monomial?| 435 |monom| 440 |mirror| 446 |mindegTerm| 451
+              |mindeg| 456 |maxdeg| 461 |map| 466 |lquo| 472 |leftRecip| 490
+              |leftPower| 495 |latex| 507 |hashUpdate!| 512 |hash| 518 |expand|
+              523 |degree| 528 |constant?| 533 |constant| 538 |commutator| 543
+              |coerce| 549 |coef| 574 |characteristic| 586 |associator| 590
+              |antiCommutator| 597 |annihilate?| 603 ^ 609 |Zero| 621
+              |RemainderList| 625 |One| 630 = 634 - 640 + 651 * 657)
            'NIL
            (CONS
             (|makeByteWordVec2| 2
-                                '(0 0 0 2 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-                                  0 1))
+                                '(0 0 0 2 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                                  0 0 0 0 0 0 0 0 0 1))
             (CONS
-             '#(NIL NIL NIL |Algebra&| |Module&| NIL |Ring&| NIL NIL |Rng&| NIL
-                |AbelianGroup&| NIL NIL |AbelianMonoid&| |Monoid&| NIL
-                |SemiGroup&| |AbelianSemiGroup&| |SetCategory&|
-                |RetractableTo&| NIL |BasicType&| NIL NIL)
+             '#(NIL NIL NIL |Algebra&| NIL |Rng&| NIL NIL |Module&| NIL
+                |NonAssociativeRing&| NIL NIL NIL |NonAssociativeRng&| NIL NIL
+                |AbelianGroup&| NIL NIL NIL NIL |MagmaWithUnit&|
+                |NonAssociativeSemiRng&| |AbelianMonoid&| |Magma&|
+                |AbelianSemiGroup&| |SetCategory&| |RetractableTo&| NIL
+                |BasicType&| NIL NIL)
              (CONS
               '#((|XPolynomialsCat| 6 7) (|XFreeAlgebra| 6 7) (|XAlgebra| 7)
-                 (|Algebra| 7) (|Module| 7) (|BiModule| 7 7) (|Ring|)
-                 (|LeftModule| 7) (|RightModule| 7) (|Rng|) (|LeftModule| $$)
-                 (|AbelianGroup|) (|CancellationAbelianMonoid|) (|SemiRing|)
-                 (|AbelianMonoid|) (|Monoid|) (|SemiRng|) (|SemiGroup|)
+                 (|Algebra| 7) (|Ring|) (|Rng|) (|SemiRing|) (|SemiRng|)
+                 (|Module| 7) (|BiModule| 7 7) (|NonAssociativeRing|)
+                 (|BiModule| $$ $$) (|LeftModule| 7) (|RightModule| 7)
+                 (|NonAssociativeRng|) (|RightModule| $$) (|LeftModule| $$)
+                 (|AbelianGroup|) (|Monoid|) (|NonAssociativeSemiRing|)
+                 (|CancellationAbelianMonoid|) (|SemiGroup|) (|MagmaWithUnit|)
+                 (|NonAssociativeSemiRng|) (|AbelianMonoid|) (|Magma|)
                  (|AbelianSemiGroup|) (|SetCategory|)
                  (|RetractableTo| (|FreeMonoid| 6)) (|unitsKnown|)
                  (|BasicType|) (|CoercibleTo| 62) (|noZeroDivisors|))
@@ -1036,20 +1033,23 @@
                                     16 0 0 0 116 1 16 31 0 117 2 37 0 0 0 122 1
                                     37 0 0 123 2 0 9 0 0 26 1 0 9 0 1 1 0 37 0
                                     121 1 0 0 33 44 2 0 0 0 31 32 2 0 110 0 0 1
-                                    2 2 0 0 31 46 2 2 0 0 0 48 0 0 0 1 2 0 0 0
-                                    16 104 2 0 0 0 0 25 2 0 0 0 6 103 1 0 125 0
-                                    1 1 0 16 0 1 1 0 110 0 111 1 0 9 0 106 1 0
-                                    0 0 107 2 0 9 0 0 1 1 0 9 0 1 1 0 9 0 1 2 0
-                                    0 16 7 19 1 0 0 0 1 1 0 124 0 1 1 0 16 0
-                                    112 1 0 16 0 115 2 0 0 119 0 120 2 0 0 0 0
-                                    56 2 0 0 0 6 101 2 0 0 0 16 102 1 0 128 0 1
-                                    2 0 127 127 0 1 1 0 129 0 1 1 0 33 0 85 1 0
-                                    31 0 118 1 0 9 0 71 1 0 7 0 28 1 0 0 6 74 1
-                                    0 0 16 17 1 0 0 7 75 1 0 0 76 78 1 0 62 0
-                                    64 2 0 7 0 16 105 2 0 7 0 0 27 0 0 31 109 2
-                                    0 9 0 0 1 2 0 0 0 31 49 2 0 0 0 126 1 0 0 0
-                                    14 1 0 52 0 53 0 0 0 29 2 0 9 0 0 13 1 0 0
-                                    0 89 2 0 0 0 0 92 2 0 0 0 0 55 2 0 0 6 0 83
-                                    2 0 0 0 7 20 2 0 0 7 0 18 2 0 0 76 0 95 2 0
-                                    0 0 0 21 2 0 0 31 0 47 2 0 0 126 0 1)))))
+                                    2 2 0 0 0 48 2 2 0 0 31 46 0 0 0 1 2 0 0 0
+                                    0 25 2 0 0 0 6 103 2 0 0 0 16 104 1 0 110 0
+                                    1 2 0 0 0 31 1 2 0 0 0 126 1 1 0 125 0 1 1
+                                    0 16 0 1 1 0 110 0 111 1 0 9 0 106 1 0 0 0
+                                    107 2 0 9 0 0 1 1 0 9 0 1 1 0 9 0 1 2 0 0
+                                    16 7 19 1 0 0 0 1 1 0 124 0 1 1 0 16 0 112
+                                    1 0 16 0 115 2 0 0 119 0 120 2 0 0 0 16 102
+                                    2 0 0 0 0 56 2 0 0 0 6 101 1 0 110 0 1 2 0
+                                    0 0 31 1 2 0 0 0 126 1 1 0 127 0 1 2 0 129
+                                    129 0 1 1 0 128 0 1 1 0 33 0 85 1 0 31 0
+                                    118 1 0 9 0 71 1 0 7 0 28 2 0 0 0 0 1 1 0 0
+                                    6 74 1 0 0 16 17 1 0 0 7 75 1 0 0 76 78 1 0
+                                    62 0 64 2 0 7 0 16 105 2 0 7 0 0 27 0 0 31
+                                    109 3 0 0 0 0 0 1 2 0 0 0 0 1 2 0 9 0 0 1 2
+                                    0 0 0 31 49 2 0 0 0 126 1 0 0 0 14 1 0 52 0
+                                    53 0 0 0 29 2 0 9 0 0 13 2 0 0 0 0 92 1 0 0
+                                    0 89 2 0 0 0 0 55 2 0 0 6 0 83 2 0 0 0 7 20
+                                    2 0 0 7 0 18 2 0 0 31 0 47 2 0 0 76 0 95 2
+                                    0 0 0 0 21 2 0 0 126 0 1)))))
            '|lookupComplete|)) 
