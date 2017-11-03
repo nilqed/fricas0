@@ -14,9 +14,12 @@ Next time, when loading "fricas.lisp", it should work ;)
 -----
 Notes
 -----
-i)   ABCL doesn't work yet
+i)   ABCL works, however, needs special treatment. See release,
+     where you will find a fricas_abcl.zip.
 ii)  Everything still is considered experimental (e.g. init, compile, save)
+     Certain features are not yet implemented.
 iii) Tested: SBCL, ECL, CLISP (Ubuntu/Cygwin64/MingW64/Windows 7&10)
+     Newer versions of SBCL make troubles. Databases have to be rebuilt.
 iv)  fricas0 is built with mkfricas0.sh from a source tarball after
      a regular build (see below).
 
@@ -24,7 +27,7 @@ iv)  fricas0 is built with mkfricas0.sh from a source tarball after
 Make
 ----
 The bash script 'mkfricas0.sh' shows how it goes.
-Running ./mkfircas0.sh creates the folder 'fricas0' and a package
+Running ./mkfricas0.sh creates the folder 'fricas0' and a package
 'fricas0.tar.gz' as well from an official source tarball (pre-generated).
 
 **IMPORTANT**
