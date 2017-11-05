@@ -661,7 +661,10 @@
 (compile-file "algebra/LODOCAT-.lsp")
 (compile-file "algebra/LODOCAT.lsp")
 (compile-file "algebra/LODOCONV.lsp")
+
+#-:ABCL
 (compile-file "algebra/LODOF2.lsp")
+
 (compile-file "algebra/LODOF.lsp")
 (compile-file "algebra/LODO.lsp")
 (compile-file "algebra/LODOOPS.lsp")
@@ -890,7 +893,10 @@
 (compile-file "algebra/PATRES.lsp")
 (compile-file "algebra/PATTERN1.lsp")
 (compile-file "algebra/PATTERN2.lsp")
+
+#-:ABCL
 (compile-file "algebra/PATTERN.lsp")
+
 (compile-file "algebra/PBWLB.lsp")
 (compile-file "algebra/PCDEN.lsp")
 (compile-file "algebra/PDOHLP.lsp")
@@ -953,7 +959,10 @@
 (compile-file "algebra/POLYLIFT.lsp")
 (compile-file "algebra/POLY.lsp")
 (compile-file "algebra/POLYROOT.lsp")
+
+#-:ABCL
 (compile-file "algebra/POLYVEC.lsp")
+
 (compile-file "algebra/PORDER-.lsp")
 (compile-file "algebra/PORDER.lsp")
 (compile-file "algebra/POSETF.lsp")
@@ -1085,7 +1094,10 @@
 (compile-file "algebra/SCACHE.lsp")
 (compile-file "algebra/SCANUTIL.lsp")
 (compile-file "algebra/SCELL.lsp")
+
+#-:ABCL
 (compile-file "algebra/SCENE.lsp")
+
 (compile-file "algebra/SCIFS.lsp")
 (compile-file "algebra/SCNP.lsp")
 (compile-file "algebra/SCONF.lsp")

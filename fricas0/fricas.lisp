@@ -5,7 +5,13 @@
 (defvar |$defaultMsgDatabaseName| "msgs/s2-us.msgs")
 (defvar |$build_version| "COMMON-LISP")
 (defvar |$build_date| "Fri Nov 3 16:25:22 CET 2017")
- 
+
+
+#+:ABCL
+(defvar |$lisp_bin_filetype| "abcl")  ;;; abcl ~ fasl/fas
+
+(defun gcmsg (x))
+
 ;;; init      
 (|interpsysInitialization|)
 
