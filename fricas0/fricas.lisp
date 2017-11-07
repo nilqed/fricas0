@@ -3,7 +3,7 @@
 (in-package :boot)
 (defvar $spadroot ".")
 (defvar |$defaultMsgDatabaseName| "msgs/s2-us.msgs")
-(defvar |$build_version| "COMMON-LISP")
+(defvar |$build_version| "ABCL 1.5 /JVM")
 (defvar |$build_date| "Fri Nov 3 16:25:22 CET 2017")
 
 

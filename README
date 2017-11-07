@@ -16,7 +16,7 @@ Notes
 -----
 i)   ABCL works, however, needs special treatment. See release,
      where you will find a fricas_abcl.zip.
-     Update: should work now like SBCL/ECL (abcl --load fricas)
+     Update: should work now like SBCL/ECL: abcl --load fricas
 ii)  Everything still is considered experimental (e.g. init, compile, save)
      Certain features are not yet implemented.
 iii) Tested: SBCL, ECL, CLISP (Ubuntu/Cygwin64/MingW64/Windows 7&10)
