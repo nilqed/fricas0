@@ -1,0 +1,60 @@
+===================================
+FriCAS0 -- a pure Common Lisp build
+===================================
+
+Build
+-----
+
+Tested so far::
+    
+    git clone https://github.com/nilqed/fricas0.git
+    cd fricas0
+    
+    ecl -load fricas
+    sbcl --load fricas
+    java -jar abcl.jar --load fricas
+    
+The first time - when the interpreter is loaded - you have to compile
+the *algebra*::
+    
+    )lisp (load "lisp/compile-algebra.lisp")
+    
+Since each of the above mentioned Common Lisp flavours compile to a different
+format (``ecl -> .fas, sbcl -> .fasl, abcl -> .abcl``), you may use the same
+``fricas0`` folder simultaneously.
+
+Test matrix
+-----------
+
++------------------------+------------+----------+----------+
+| Platform / CL          | `SBCL`_    | `ECL`_   | `ABCL`_  |
++========================+============+==========+==========+
+| Windows 7              | 1.3.18     |          | 1.5      |
++------------------------+------------+----------+----------+
+| Windows 10             |            |          |          |
++------------------------+------------+----------+----------+
+| Cygwin64               |            | 16.1.2/3 |          |
++------------------------+------------+----------+----------+
+| Ubuntu 16.04           | 1.4.1      | 15.3.7   | 1.5      |
++------------------------+------------+----------+----------+
+
+.. _SBCL: http://www.sbcl.org/platform-table.html
+.. _ECL: https://common-lisp.net/project/ecl/
+.. _ABCL: http://abcl.org/
+
+.. NOTE::
+    
+    Everything here is still considered experimental and **not** ready for
+    production. The goal is to provide a functional version of ``FriCAS`` 
+    (i.e. no gui) with minimal build requirements, e.g. allowing usage as a
+    library in other systems as platform independent as possible.
+    
+Issues
+------
+A bug in ABCL 1.5 inhibits the compilation of some algebra files 
+(e.g. ``polyvec.lsp``). At the moment these files are exluded by
+``#+:ABCL`` pragmas in ``compile-algebra.lisp``.
+
+http://abcl.org/trac/ticket/261
+
+https://github.com/slyrus/abcl/tree/master/contrib
