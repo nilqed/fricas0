@@ -1,13 +1,17 @@
-;;; FriCAS0, Sa, 11. Nov 2017 20:30:14
-(load "interp/libfricas.fas")  ;;; interp
-(load "interp/exposed.lsp")
-;(load "load-algebra.lisp")
+;;; FriCAS0, Fri Nov 3 16:25:22 CET 2017
+(load "lisp/interp.lisp")
 (in-package :boot)
 (defvar $spadroot ".")
 (defvar |$defaultMsgDatabaseName| "msgs/s2-us.msgs")
-(defvar |$build_version| "COMMON-LISP ECL")
-(defvar |$build_date| "Sa, 11. Nov 2017 20:30:14")
- 
+(defvar |$build_version| "Common Lisp")
+(defvar |$build_date| "Fri Nov 3 16:25:22 CET 2017")
+
+
+#+:ABCL
+(defvar |$lisp_bin_filetype| "abcl")  ;;; abcl ~ fasl/fas
+
+(defun gcmsg (x))
+
 ;;; init      
 (|interpsysInitialization|)
 
