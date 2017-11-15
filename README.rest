@@ -31,13 +31,15 @@ Test matrix
 +========================+============+==========+==========+
 | Windows 7              | 1.3.18     | 16.1.2   | 1.5      |
 +------------------------+------------+----------+----------+
-| Windows 10             |            |          |          |
+| Windows 10             | 1.3.10     | 16.1.2   | 1.5      |
 +------------------------+------------+----------+----------+
 | Cygwin64               |            | 16.1.2/3 |          |
 +------------------------+------------+----------+----------+
 | Ubuntu 16.04           | 1.4.1      | 15.3.7   | 1.5      |
 +------------------------+------------+----------+----------+
 | Android 7.0 / armv8l   |            | 13.5.1   |          |
++------------------------+------------+----------+----------+
+| WSL 10(bash/ubuntu 16) |            | 13.5.1   | 1.5      |
 +------------------------+------------+----------+----------+
 
 .. _SBCL: http://www.sbcl.org/platform-table.html
@@ -66,6 +68,8 @@ On Android ECL works well under `GNURoot`_. You certainly want to install
 A bug in ABCL 1.5 inhibits the compilation of three algebra files 
 (e.g. ``polyvec.lsp``). At the moment these files are exluded by
 ``#+:ABCL`` pragmas in ``compile-algebra.lisp``.
+
+GNU CLISP 2.49+ (2010-07-17) was also (+) tested on Cygwin64. 
 
 .. warning:: **Windows users**: 
     If you encounter errors while loading the interpreter with a native
