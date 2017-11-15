@@ -63,17 +63,18 @@ On Android ECL works well under `GNURoot`_. You certainly want to install
 
 .. _GNURoot: https://play.google.com/store/apps/details?id=com.gnuroot.debian&hl=en
 
-A bug in ABCL 1.5 inhibits the compilation of some algebra files 
+A bug in ABCL 1.5 inhibits the compilation of three algebra files 
 (e.g. ``polyvec.lsp``). At the moment these files are exluded by
 ``#+:ABCL`` pragmas in ``compile-algebra.lisp``.
 
-.. warning:: Windows users
-    If you encounter errors while loading the interpreter it is
-    probably caused by wrong line endings (checkout). See
+.. warning:: **Windows users**: 
+    If you encounter errors while loading the interpreter with a native
+    CL (e.g. SBCL) it is probably caused by wrong line endings (checkout). 
+    See
     https://help.github.com/articles/dealing-with-line-endings/
     
     Ensure: git config core.autocrlf = true
     
     A ``.gitatributes`` was added to prevent the change of the ``*.daase``
-    files.
+    and ``*.msgs`` files.
     

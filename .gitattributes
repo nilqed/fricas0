@@ -2,3 +2,4 @@
 *.lsp text
 *.lisp text
 *.daase binary
+*.msgs binary
