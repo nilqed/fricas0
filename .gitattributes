@@ -1,0 +1,4 @@
+* text=auto
+*.lsp text
+*.lisp text
+*.daase binary
