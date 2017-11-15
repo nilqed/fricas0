@@ -71,6 +71,15 @@ A bug in ABCL 1.5 inhibits the compilation of three algebra files
 
 GNU CLISP 2.49+ (2010-07-17) was also (+) tested on Cygwin64. 
 
+The current version is based on the official release `FriCAS`_ tarball
+(version 1.3.2). The files in ``algebra`` are from the
+``pre-generated`` folder (**unchanged**) and the ones in ``interp`` are
+translations from the ``boot`` code (original as well). Generally, no
+original files were changed, only the new ``lisp`` files ``fricas``, 
+``fricas-abcl``, ``interp`` and ``compile-algebra`` are newly added.
+
+.. _FriCAS: http://fricas.sourceforge.net/
+
 .. warning:: **Windows users**: 
     If you encounter errors while loading the interpreter with a native
     CL (e.g. SBCL) it is probably caused by wrong line endings (checkout). 
