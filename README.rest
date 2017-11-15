@@ -37,20 +37,32 @@ Test matrix
 +------------------------+------------+----------+----------+
 | Ubuntu 16.04           | 1.4.1      | 15.3.7   | 1.5      |
 +------------------------+------------+----------+----------+
+| Android 7.0 / armv81   |            | 13.5.1   |          |
++------------------------+------------+----------+----------+
 
 .. _SBCL: http://www.sbcl.org/platform-table.html
 .. _ECL: https://common-lisp.net/project/ecl/
 .. _ABCL: http://abcl.org/
 
-.. NOTE::
+.. note::
     
     Everything here is still considered experimental and **not** ready for
     production. The goal is to provide a functional version of ``FriCAS`` 
     (i.e. no gui) with minimal build requirements, e.g. allowing usage as a
     library in other systems as platform independent as possible.
     
-Issues
-------
+Comments
+--------
+On Ubuntu ``ECL 15.3.7`` is provided via ``apt install ecl``. You will
+also need ``apt install libffi-dev``, otherwise it won't compile. This
+version is quite outdated and it might be advisable to compile the
+latest version by yourself. The same holds for Android (arm). 
+
+On Android ECL works well under `GNURoot`_. You certainly want to install
+``sshd`` in order to work from your desktop (use PuTTy on Windows).
+
+.. _GNURoot: https://play.google.com/store/apps/details?id=com.gnuroot.debian&hl=en
+
 A bug in ABCL 1.5 inhibits the compilation of some algebra files 
 (e.g. ``polyvec.lsp``). At the moment these files are exluded by
 ``#+:ABCL`` pragmas in ``compile-algebra.lisp``.
