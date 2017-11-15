@@ -90,4 +90,9 @@ original files were changed, only the new ``lisp`` files ``fricas``,
     
     A ``.gitatributes`` was added to prevent the change of the ``*.daase``
     and ``*.msgs`` files.
+ 
+    **Initfile**: It was reported by ``oldk1331`` that certain entries in 
+    ``~/.fricas.input`` may cause errors in ``SBCL``. He `suggests`_ to 
+    set ``export FRICAS_INITFILE=""``.
     
+.. _suggests: https://mail.google.com/mail/u/0/#inbox/15f39c80b15b0d54
