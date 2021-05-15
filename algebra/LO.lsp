@@ -45,10 +45,8 @@
 (SDEFUN |LO;/;$R$;11| ((|x| $) (|d| R) ($ $))
         (SPROG ((|u| (R)))
                (COND
-                ((SPADCALL
-                  (LETT |u| (SPADCALL |d| (QCDR |x|) (QREFELT $ 25))
-                        |LO;/;$R$;11|)
-                  (QREFELT $ 32))
+                ((SPADCALL (LETT |u| (SPADCALL |d| (QCDR |x|) (QREFELT $ 25)))
+                           (QREFELT $ 32))
                  (|error| "division by zero"))
                 ('T (CONS (QCAR |x|) |u|))))) 
 
@@ -58,7 +56,7 @@
 
 (SDEFUN |LO;coerce;$Of;13| ((|x| $) ($ |OutputForm|))
         (SPROG ((|xd| (R)))
-               (SEQ (LETT |xd| (QCDR |x|) |LO;coerce;$Of;13|)
+               (SEQ (LETT |xd| (QCDR |x|))
                     (EXIT
                      (COND
                       ((SPADCALL |xd| (|spadConstant| $ 11) (QREFELT $ 30))
@@ -70,7 +68,7 @@
 
 (SDEFUN |LO;latex;$S;14| ((|x| $) ($ |String|))
         (SPROG ((|dl| #1=(|String|)) (|nl| #1#) (|xd| (R)))
-               (SEQ (LETT |xd| (QCDR |x|) . #2=(|LO;latex;$S;14|))
+               (SEQ (LETT |xd| (QCDR |x|))
                     (EXIT
                      (COND
                       ((SPADCALL |xd| (|spadConstant| $ 11) (QREFELT $ 30))
@@ -81,14 +79,12 @@
                               (STRCONC "{"
                                        (STRCONC
                                         (SPADCALL (QCAR |x|) (QREFELT $ 41))
-                                        "}"))
-                              . #2#)
+                                        "}")))
                         (LETT |dl|
                               (STRCONC "{"
                                        (STRCONC
                                         (SPADCALL (QCDR |x|) (QREFELT $ 42))
-                                        "}"))
-                              . #2#)
+                                        "}")))
                         (EXIT
                          (STRCONC "{ "
                                   (STRCONC |nl|
@@ -98,31 +94,29 @@
 
 (DECLAIM (NOTINLINE |Localize;|)) 
 
-(DEFUN |Localize| (&REST #1=#:G730)
+(DEFUN |Localize| (&REST #1=#:G411)
   (SPROG NIL
-         (PROG (#2=#:G731)
+         (PROG (#2=#:G412)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|Localize|)
-                                               '|domainEqualList|)
-                    . #3=(|Localize|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (APPLY (|function| |Localize;|) #1#)
-                    (LETT #2# T . #3#))
+                  (PROG1 (APPLY (|function| |Localize;|) #1#) (LETT #2# T))
                 (COND ((NOT #2#) (HREM |$ConstructorCache| '|Localize|)))))))))) 
 
 (DEFUN |Localize;| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|Localize|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|Localize| DV$1 DV$2) . #1#)
-          (LETT $ (GETREFV 49) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|Localize| DV$1 DV$2))
+          (LETT $ (GETREFV 49))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -146,8 +140,7 @@
                                                (|HasCategory| |#1|
                                                               '(|OrderedAbelianGroup|))
                                                (|HasCategory| |#2|
-                                                              '(|AbelianMonoid|)))))
-                          . #1#))
+                                                              '(|AbelianMonoid|)))))))
           (|haddProp| |$ConstructorCache| '|Localize| (LIST DV$1 DV$2)
                       (CONS 1 $))
           (|stuffDomainSlots| $)

@@ -10,22 +10,21 @@
 
 (DECLAIM (NOTINLINE |UnivariateFormalPowerSeriesFunctions;|)) 
 
-(DEFUN |UnivariateFormalPowerSeriesFunctions| (#1=#:G691)
+(DEFUN |UnivariateFormalPowerSeriesFunctions| (#1=#:G379)
   (SPROG NIL
-         (PROG (#2=#:G692)
+         (PROG (#2=#:G380)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|UnivariateFormalPowerSeriesFunctions|)
-                                               '|domainEqualList|)
-                    . #3=(|UnivariateFormalPowerSeriesFunctions|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (|UnivariateFormalPowerSeriesFunctions;| #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -34,13 +33,11 @@
 (DEFUN |UnivariateFormalPowerSeriesFunctions;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|)
-                . #1=(|UnivariateFormalPowerSeriesFunctions|))
-          (LETT |dv$| (LIST '|UnivariateFormalPowerSeriesFunctions| DV$1)
-                . #1#)
-          (LETT $ (GETREFV 16) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|UnivariateFormalPowerSeriesFunctions| DV$1))
+          (LETT $ (GETREFV 16))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache|
                       '|UnivariateFormalPowerSeriesFunctions| (LIST DV$1)
                       (CONS 1 $))
@@ -56,11 +53,20 @@
               (|Mapping| 6 6 6) (|StreamFunctions3| 6 6 6) (11 . |map|)
               (18 . |series|) |UFPS1;hadamard;3Ufps;1|)
            '#(|hadamard| 23) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 15
-                                                 '(2 6 0 0 0 7 1 9 8 0 10 3 12
-                                                   8 11 8 8 13 1 9 0 8 14 2 0 9
-                                                   9 9 15)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|hadamard|
+                                 ((|UnivariateFormalPowerSeries| |#1|)
+                                  (|UnivariateFormalPowerSeries| |#1|)
+                                  (|UnivariateFormalPowerSeries| |#1|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 15
+                                            '(2 6 0 0 0 7 1 9 8 0 10 3 12 8 11
+                                              8 8 13 1 9 0 8 14 2 0 9 9 9
+                                              15)))))
            '|lookupComplete|)) 

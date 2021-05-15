@@ -47,21 +47,19 @@
 
 (DECLAIM (NOTINLINE |InfiniteCyclicGroup;|)) 
 
-(DEFUN |InfiniteCyclicGroup| (#1=#:G734)
+(DEFUN |InfiniteCyclicGroup| (#1=#:G399)
   (SPROG NIL
-         (PROG (#2=#:G735)
+         (PROG (#2=#:G400)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|InfiniteCyclicGroup|)
-                                               '|domainEqualList|)
-                    . #3=(|InfiniteCyclicGroup|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|InfiniteCyclicGroup;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|InfiniteCyclicGroup;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|InfiniteCyclicGroup|)))))))))) 
@@ -69,11 +67,11 @@
 (DEFUN |InfiniteCyclicGroup;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|InfiniteCyclicGroup|))
-          (LETT |dv$| (LIST '|InfiniteCyclicGroup| DV$1) . #1#)
-          (LETT $ (GETREFV 37) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|InfiniteCyclicGroup| DV$1))
+          (LETT $ (GETREFV 37))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|InfiniteCyclicGroup| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -102,18 +100,18 @@
               |commutator| 143 |coerce| 149 ^ 154 |One| 172 >= 176 > 182 = 188
               <= 194 < 200 / 206 * 212)
            'NIL
-           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0))
+           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0))
                  (CONS
                   '#(|Group&| NIL NIL NIL NIL |OrderedSet&| |MagmaWithUnit&|
-                     NIL |Magma&| |SetCategory&| NIL NIL |PartialOrder&| NIL
-                     NIL |BasicType&| NIL)
+                     NIL |Magma&| NIL |SetCategory&| NIL NIL |PartialOrder&|
+                     NIL NIL |BasicType&| NIL)
                   (CONS
                    '#((|Group|) (|OrderedMonoid|) (|Monoid|)
                       (|OrderedSemiGroup|) (|SemiGroup|) (|OrderedSet|)
                       (|MagmaWithUnit|) (|Comparable|) (|Magma|)
-                      (|SetCategory|) (|ConvertibleTo| 20) (|CommutativeStar|)
-                      (|PartialOrder|) (|FinitelyGenerated|) (|unitsKnown|)
-                      (|BasicType|) (|CoercibleTo| 10))
+                      (|CommutativeStar|) (|SetCategory|) (|ConvertibleTo| 20)
+                      (|TwoSidedRecip|) (|PartialOrder|) (|FinitelyGenerated|)
+                      (|unitsKnown|) (|BasicType|) (|CoercibleTo| 10))
                    (|makeByteWordVec2| 36
                                        '(1 11 10 0 12 1 13 10 0 14 1 7 10 0 15
                                          2 10 0 0 0 16 1 20 0 11 21 2 0 8 0 0 1

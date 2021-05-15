@@ -2,36 +2,30 @@
 (SDEFUN |FFSLPE;solveLinearPolynomialEquation;LFPPU;1|
         ((|lp| |List| FPP) (|p| FPP) ($ |Union| (|List| FPP) "failed"))
         (SPROG
-         ((|answer| (|Union| (|List| FPP) "failed")) (#1=#:G712 NIL)
-          (#2=#:G715 NIL) (|ans| (|Union| (|Vector| (|List| FPP)) #3="failed"))
-          (|deg| #4=(|NonNegativeInteger|)) (#5=#:G709 NIL) (#6=#:G708 #4#)
-          (#7=#:G710 #4#) (#8=#:G727 NIL) (|u| NIL))
+         ((|answer| (|Union| (|List| FPP) "failed")) (#1=#:G388 NIL)
+          (#2=#:G391 NIL) (|ans| (|Union| (|Vector| (|List| FPP)) #3="failed"))
+          (|deg| #4=(|NonNegativeInteger|)) (#5=#:G385 NIL) (#6=#:G384 #4#)
+          (#7=#:G386 #4#) (#8=#:G403 NIL) (|u| NIL))
          (SEQ
           (COND
            ((SPADCALL (QREFELT $ 9) |lp| (QREFELT $ 18))
             (SEQ
              (LETT |deg|
                    (PROGN
-                    (LETT #5# NIL
-                          . #9=(|FFSLPE;solveLinearPolynomialEquation;LFPPU;1|))
-                    (SEQ (LETT |u| NIL . #9#) (LETT #8# |lp| . #9#) G190
+                    (LETT #5# NIL)
+                    (SEQ (LETT |u| NIL) (LETT #8# |lp|) G190
                          (COND
-                          ((OR (ATOM #8#)
-                               (PROGN (LETT |u| (CAR #8#) . #9#) NIL))
+                          ((OR (ATOM #8#) (PROGN (LETT |u| (CAR #8#)) NIL))
                            (GO G191)))
                          (SEQ
                           (EXIT
                            (PROGN
-                            (LETT #7# (SPADCALL |u| (QREFELT $ 19)) . #9#)
-                            (COND (#5# (LETT #6# (+ #6# #7#) . #9#))
-                                  ('T
-                                   (PROGN
-                                    (LETT #6# #7# . #9#)
-                                    (LETT #5# 'T . #9#)))))))
-                         (LETT #8# (CDR #8#) . #9#) (GO G190) G191 (EXIT NIL))
-                    (COND (#5# #6#) ('T 0)))
-                   . #9#)
-             (LETT |ans| (CONS 1 "failed") . #9#)
+                            (LETT #7# (SPADCALL |u| (QREFELT $ 19)))
+                            (COND (#5# (LETT #6# (+ #6# #7#)))
+                                  ('T (PROGN (LETT #6# #7#) (LETT #5# 'T)))))))
+                         (LETT #8# (CDR #8#)) (GO G190) G191 (EXIT NIL))
+                    (COND (#5# #6#) ('T 0))))
+             (LETT |ans| (CONS 1 "failed"))
              (SETELT $ 14
                      (SPADCALL
                       (SPADCALL (|spadConstant| $ 10) 1 (QREFELT $ 13))
@@ -40,8 +34,7 @@
              (SEQ G190 (COND ((NULL (QEQCAR |ans| 1)) (GO G191)))
                   (SEQ
                    (LETT |ans|
-                         (SPADCALL |deg| (QREFELT $ 14) |lp| (QREFELT $ 23))
-                         . #9#)
+                         (SPADCALL |deg| (QREFELT $ 14) |lp| (QREFELT $ 23)))
                    (EXIT
                     (COND
                      ((QEQCAR |ans| 1)
@@ -50,23 +43,21 @@
                                (PROG2
                                    (LETT #2#
                                          (SPADCALL (QREFELT $ 14)
-                                                   (QREFELT $ 25))
-                                         . #9#)
+                                                   (QREFELT $ 25)))
                                    (QCDR #2#)
                                  (|check_union2| (QEQCAR #2# 0) (QREFELT $ 7)
                                                  (|Union| (QREFELT $ 7)
-                                                          #10="failed")
+                                                          #9="failed")
                                                  #2#)))
                        (EXIT
                         (SEQ G190
                              (COND
                               ((NULL
                                 (COND
-                                 ((SPADCALL
-                                   (SPADCALL (QREFELT $ 14) (QREFELT $ 26)) 1
-                                   (QREFELT $ 27))
+                                 ((> (SPADCALL (QREFELT $ 14) (QREFELT $ 26))
+                                     1)
                                   (NULL
-                                   (SPADCALL (QREFELT $ 14) (QREFELT $ 29))))
+                                   (SPADCALL (QREFELT $ 14) (QREFELT $ 28))))
                                  ('T NIL)))
                                (GO G191)))
                              (SEQ
@@ -75,19 +66,18 @@
                                        (PROG2
                                            (LETT #2#
                                                  (SPADCALL (QREFELT $ 14)
-                                                           (QREFELT $ 25))
-                                                 . #9#)
+                                                           (QREFELT $ 25)))
                                            (QCDR #2#)
                                          (|check_union2| (QEQCAR #2# 0)
                                                          (QREFELT $ 7)
                                                          (|Union| (QREFELT $ 7)
-                                                                  #10#)
+                                                                  #9#)
                                                          #2#)))))
                              NIL (GO G190) G191 (EXIT NIL))))))))
                   NIL (GO G190) G191 (EXIT NIL))
              (EXIT
               (SETELT $ 15
-                      (PROG2 (LETT #1# |ans| . #9#)
+                      (PROG2 (LETT #1# |ans|)
                           (QCDR #1#)
                         (|check_union2| (QEQCAR #1# 0)
                                         (|Vector| (|List| (QREFELT $ 8)))
@@ -95,23 +85,21 @@
                                          (|Vector| (|List| (QREFELT $ 8))) #3#)
                                         #1#)))))))
           (LETT |answer|
-                (SPADCALL |p| (QREFELT $ 14) (QREFELT $ 15) (QREFELT $ 32))
-                . #9#)
+                (SPADCALL |p| (QREFELT $ 14) (QREFELT $ 15) (QREFELT $ 31)))
           (EXIT |answer|)))) 
 
 (DECLAIM (NOTINLINE |FiniteFieldSolveLinearPolynomialEquation;|)) 
 
-(DEFUN |FiniteFieldSolveLinearPolynomialEquation| (&REST #1=#:G728)
+(DEFUN |FiniteFieldSolveLinearPolynomialEquation| (&REST #1=#:G404)
   (SPROG NIL
-         (PROG (#2=#:G729)
+         (PROG (#2=#:G405)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|FiniteFieldSolveLinearPolynomialEquation|)
-                                               '|domainEqualList|)
-                    . #3=(|FiniteFieldSolveLinearPolynomialEquation|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
@@ -119,7 +107,7 @@
                       (APPLY
                        (|function| |FiniteFieldSolveLinearPolynomialEquation;|)
                        #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -128,17 +116,15 @@
 (DEFUN |FiniteFieldSolveLinearPolynomialEquation;| (|#1| |#2| |#3|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|)
-                . #1=(|FiniteFieldSolveLinearPolynomialEquation|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT DV$3 (|devaluate| |#3|) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT DV$3 (|devaluate| |#3|))
           (LETT |dv$|
                 (LIST '|FiniteFieldSolveLinearPolynomialEquation| DV$1 DV$2
-                      DV$3)
-                . #1#)
-          (LETT $ (GETREFV 34) . #1#)
+                      DV$3))
+          (LETT $ (GETREFV 33))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache|
                       '|FiniteFieldSolveLinearPolynomialEquation|
                       (LIST DV$1 DV$2 DV$3) (CONS 1 $))
@@ -158,21 +144,27 @@
               (|local| |#3|) '|oldlp| (0 . |One|) (4 . |One|)
               (|NonNegativeInteger|) (8 . |monomial|) '|slpePrime| '|oldtable|
               (|Boolean|) (|List| 8) (14 . ~=) (20 . |degree|) (25 . +)
-              (|Union| 31 '"failed") (|GenExEuclid| 7 8) (31 . |tablePow|)
-              (|Union| $ '"failed") (38 . |nextItem|) (43 . |degree|) (48 . >)
-              (|DistinctDegreeFactorize| 6 7) (54 . |irreducible?|)
-              (|Union| 17 '"failed") (|Vector| 17) (59 . |solveid|)
+              (|Union| 30 '"failed") (|GenExEuclid| 7 8) (31 . |tablePow|)
+              (|Union| $ '"failed") (38 . |nextItem|) (43 . |degree|)
+              (|DistinctDegreeFactorize| 6 7) (48 . |irreducible?|)
+              (|Union| 17 '"failed") (|Vector| 17) (53 . |solveid|)
               |FFSLPE;solveLinearPolynomialEquation;LFPPU;1|)
-           '#(|solveLinearPolynomialEquation| 66) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 33
-                                                 '(0 6 0 10 0 7 0 11 2 7 0 6 12
-                                                   13 2 17 16 0 0 18 1 8 12 0
-                                                   19 2 7 0 0 0 20 3 22 21 12 7
-                                                   17 23 1 7 24 0 25 1 7 12 0
-                                                   26 2 12 16 0 0 27 1 28 16 7
-                                                   29 3 22 30 8 7 31 32 2 0 30
-                                                   17 8 33)))))
+           '#(|solveLinearPolynomialEquation| 60) 'NIL
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|solveLinearPolynomialEquation|
+                                 ((|Union| (|List| |#3|) "failed")
+                                  (|List| |#3|) |#3|))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 32
+                                            '(0 6 0 10 0 7 0 11 2 7 0 6 12 13 2
+                                              17 16 0 0 18 1 8 12 0 19 2 7 0 0
+                                              0 20 3 22 21 12 7 17 23 1 7 24 0
+                                              25 1 7 12 0 26 1 27 16 7 28 3 22
+                                              29 8 7 30 31 2 0 29 17 8 32)))))
            '|lookupComplete|)) 

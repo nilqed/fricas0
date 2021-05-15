@@ -1,24 +1,23 @@
 
 (DECLAIM (NOTINLINE |FiniteFieldNormalBasisExtension;|)) 
 
-(DEFUN |FiniteFieldNormalBasisExtension| (&REST #1=#:G760)
+(DEFUN |FiniteFieldNormalBasisExtension| (&REST #1=#:G421)
   (SPROG NIL
-         (PROG (#2=#:G761)
+         (PROG (#2=#:G422)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|FiniteFieldNormalBasisExtension|)
-                                               '|domainEqualList|)
-                    . #3=(|FiniteFieldNormalBasisExtension|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1
                       (APPLY (|function| |FiniteFieldNormalBasisExtension;|)
                              #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -26,12 +25,12 @@
 
 (DEFUN |FiniteFieldNormalBasisExtension;| (|#1| |#2|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G759 NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
+   ((|pv$| NIL) (#1=#:G420 NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #2=(|FiniteFieldNormalBasisExtension|))
-    (LETT DV$2 (|devaluate| |#2|) . #2#)
-    (LETT |dv$| (LIST '|FiniteFieldNormalBasisExtension| DV$1 DV$2) . #2#)
-    (LETT $ (GETREFV 53) . #2#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT |dv$| (LIST '|FiniteFieldNormalBasisExtension| DV$1 DV$2))
+    (LETT $ (GETREFV 53))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -40,13 +39,11 @@
                                         (|HasCategory| |#1|
                                                        '(|CharacteristicZero|))
                                         (LETT #1#
-                                              (|HasCategory| |#1| '(|Finite|))
-                                              . #2#)
+                                              (|HasCategory| |#1| '(|Finite|)))
                                         (OR
                                          (|HasCategory| |#1|
                                                         '(|CharacteristicNonZero|))
-                                         #1#)))
-                    . #2#))
+                                         #1#)))))
     (|haddProp| |$ConstructorCache| '|FiniteFieldNormalBasisExtension|
                 (LIST DV$1 DV$2) (CONS 1 $))
     (|stuffDomainSlots| $)
@@ -74,7 +71,7 @@
               (|OnePointCompletion| 10) (|NonNegativeInteger|) (|List| $)
               (|Boolean|) (|InputForm|) (|Union| 23 '#1#) (|List| 24)
               (|SparseUnivariatePolynomial| $) (|Factored| 24) (|Table| 10 18)
-              (|Integer|) (|Record| (|:| |factor| 27) (|:| |exponent| 27))
+              (|Integer|) (|Record| (|:| |factor| 27) (|:| |exponent| 18))
               (|List| 28) (|Union| 32 '"failed")
               (|Union| '"prime" '"polynomial" '"normal" '"cyclic")
               (|SparseUnivariatePolynomial| 6) (|Matrix| 6)
@@ -93,7 +90,7 @@
             (|makeByteWordVec2| 3
                                 '(0 0 2 3 0 0 2 0 0 0 0 0 0 0 0 0 0 3 1 2 0 0 0
                                   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-                                  0 2 0 0 2 2 0 0 0 0 0 0 0 0 0 2))
+                                  0 2 0 0 2 2 0 0 0 0 0 0 0 0 0 0 2))
             (CONS
              '#(|FiniteAlgebraicExtensionField&| |ExtensionField&|
                 |FiniteFieldCategory&| |FieldOfPrimeCharacteristic&| |Field&|
@@ -105,7 +102,7 @@
                 NIL NIL NIL NIL |NonAssociativeRng&| NIL |AbelianGroup&| NIL
                 NIL NIL NIL |MagmaWithUnit&| |NonAssociativeSemiRng&|
                 |AbelianMonoid&| |Finite&| |Magma&| |AbelianSemiGroup&| NIL NIL
-                |SetCategory&| |RetractableTo&| NIL NIL NIL NIL NIL
+                NIL |SetCategory&| |RetractableTo&| NIL NIL NIL NIL NIL
                 |BasicType&| NIL NIL)
              (CONS
               '#((|FiniteAlgebraicExtensionField| 6) (|ExtensionField| 6)
@@ -126,9 +123,9 @@
                  (|CancellationAbelianMonoid|) (|SemiGroup|) (|MagmaWithUnit|)
                  (|NonAssociativeSemiRng|) (|AbelianMonoid|) (|Finite|)
                  (|Magma|) (|AbelianSemiGroup|) (|Comparable|) (|StepThrough|)
-                 (|SetCategory|) (|RetractableTo| 6) (|canonicalsClosed|)
-                 (|canonicalUnitNormal|) (|noZeroDivisors|) (|CommutativeStar|)
-                 (|unitsKnown|) (|BasicType|) (|CoercibleTo| 52)
-                 (|ConvertibleTo| 21))
+                 (|CommutativeStar|) (|SetCategory|) (|RetractableTo| 6)
+                 (|canonicalsClosed|) (|canonicalUnitNormal|)
+                 (|noZeroDivisors|) (|TwoSidedRecip|) (|unitsKnown|)
+                 (|BasicType|) (|CoercibleTo| 52) (|ConvertibleTo| 21))
               (|makeByteWordVec2| 12 '(1 11 9 10 12)))))
            '|lookupIncomplete|)) 

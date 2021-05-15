@@ -4,14 +4,13 @@
 (DEFPARAMETER |PolynomialFactorizationExplicit;AL| 'NIL) 
 
 (DEFUN |PolynomialFactorizationExplicit| ()
-  (LET (#:G693)
-    (COND (|PolynomialFactorizationExplicit;AL|)
-          (T
-           (SETQ |PolynomialFactorizationExplicit;AL|
-                   (|PolynomialFactorizationExplicit;|)))))) 
+  (COND (|PolynomialFactorizationExplicit;AL|)
+        (T
+         (SETQ |PolynomialFactorizationExplicit;AL|
+                 (|PolynomialFactorizationExplicit;|))))) 
 
 (DEFUN |PolynomialFactorizationExplicit;| ()
-  (SPROG ((#1=#:G691 NIL))
+  (SPROG ((#1=#:G379 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|UniqueFactorizationDomain|)
@@ -45,13 +44,7 @@
                                (|has| $ (|CharacteristicNonZero|)))
                               ((|charthRoot| ((|Union| $ "failed") $))
                                (|has| $ (|CharacteristicNonZero|))))
-                            NIL
-                            '((|Matrix| $)
-                              (|List| (|SparseUnivariatePolynomial| $))
-                              (|SparseUnivariatePolynomial| $)
-                              (|Factored| (|SparseUnivariatePolynomial| $)))
-                            NIL))
-                   |PolynomialFactorizationExplicit|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|PolynomialFactorizationExplicit|))))) 
 
 (MAKEPROP '|PolynomialFactorizationExplicit| 'NILADIC T) 

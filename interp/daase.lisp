@@ -33,7 +33,7 @@
 #|
 \section{Database structure}
 In order to understand this program you need to understand some details
-of the structure of the databases it reads. Axiom has 5 databases,
+of the structure of the databases it reads. FriCAS has 5 databases,
 the interp.daase, operation.daase, category.daase, compress.daase, and
 browse.daase. The compress.daase is special and does not follow the
 normal database format.
@@ -301,13 +301,13 @@ database.
 (defvar |$all_constructors| nil "a list of all the constructors in the system")
 (defvar |$all_operations| nil "a list of all the operations in the system")
 
-(defvar |$asharp_flags| "-O -laxiom -Fasy -Flsp" "library compiler flags")
+(defvar |$asharp_flags| "-O -lfricas -Fasy -Flsp" "library compiler flags")
 
 (defun asharp (file &optional (flags |$asharp_flags|))
- "call the asharp compiler"
+ "call the aldor compiler"
  (#| system::system |#
    obey
-   (concatenate 'string (|getEnv| "AXIOM") "/compiler/bin/axiomxl "
+   (concatenate 'string (|getEnv| "FRICAS") "/compiler/bin/aldor "
     flags " " file)))
 
 (defun resethashtables ()
@@ -411,7 +411,7 @@ database.
   |Integer| |List| |OutputForm|))
  (dolist (con constr)
   (let ((c (concatenate 'string
-             (|getEnv| "AXIOM") "/algebra/"
+             (|getEnv| "FRICAS") "/algebra/"
              (string (getdatabase con 'abbreviation)) "." |$lisp_bin_filetype|)))
     (format t "   preloading ~a.." c)
     (if (probe-file c)
@@ -440,9 +440,8 @@ database.
 ;  )
 (defun |interpOpen| ()
  "open the interpreter database and hash the keys"
- (declare (special $spadroot))
  (let (constructors pos stamp dbstruct)
-  (setq |$interp_stream| (open (DaaseName "interp.daase" nil)))
+  (setq |$interp_stream| (open (DaaseName "interp.daase")))
   (setq stamp (read |$interp_stream|))
   (unless (equal stamp |$interp_stream_stamp|)
    (format t "   Re-reading interp.daase")
@@ -504,9 +503,8 @@ database.
 
 (defun |browseOpen| ()
  "open the constructor database and hash the keys"
- (declare (special $spadroot))
  (let (constructors pos stamp dbstruct)
-  (setq |$browse_stream| (open (DaaseName "browse.daase" nil)))
+  (setq |$browse_stream| (open (DaaseName "browse.daase")))
   (setq stamp (read |$browse_stream|))
   (unless (equal stamp |$browse_stream_stamp|)
    (format t "   Re-reading browse.daase")
@@ -533,9 +531,8 @@ database.
 
 (defun |categoryOpen| ()
  "open category.daase and hash the keys"
- (declare (special $spadroot))
  (let (pos keys stamp)
-  (setq |$category_stream| (open (DaaseName "category.daase" nil)))
+  (setq |$category_stream| (open (DaaseName "category.daase")))
   (setq stamp (read |$category_stream|))
   (unless (equal stamp |$category_stream_stamp|)
    (format t "   Re-reading category.daase")
@@ -551,9 +548,8 @@ database.
 
 (defun |operationOpen| ()
  "read operation database and hash the keys"
- (declare (special $spadroot))
  (let (operations pos stamp)
-  (setq |$operation_stream| (open (DaaseName "operation.daase" nil)))
+  (setq |$operation_stream| (open (DaaseName "operation.daase")))
   (setq stamp (read |$operation_stream|))
   (unless (equal stamp |$operation_stream_stamp|)
    (format t "   Re-reading operation.daase")
@@ -1134,16 +1130,8 @@ database.
                                                           dir)))))
                          'make-database))
 ;browse.daase
-  (|oldCompilerAutoloadOnceTrigger|)
-  (|browserAutoloadOnceTrigger|)
   (if br_data
-      (progn
-          (|buildLibdb|)
-          (|dbSplitLibdb|)
-          (|mkUsersHashTable|)
-          (|saveUsersHashTable|)
-          (|mkDependentsHashTable|)
-          (|saveDependentsHashTable|)))
+      (|save_browser_data|))
   (write-compress)
   (if br_data
       (write-browsedb))
@@ -1159,7 +1147,7 @@ database.
                  (cons nil (mapcar #'|categoryForm?|
                                    (cddar (database-constructormodemap dbstruct)))))
            (when (and (|categoryForm?| con)
-                      (= (length (setq d (|domainsOf| (list con) NIL NIL))) 1))
+                      (= (length (setq d (|domainsOf| (list con) NIL))) 1))
                  (setq d (caar d))
                  (when (= (length d) (length (|getConstructorForm| con)))
                        (format t "   ~a has a default domain of ~a~%" con (car d))
@@ -1186,7 +1174,7 @@ database.
   (rename-file "category.build"
                (final-name "category")))))
 
-(defun DaaseName (name erase?)
+(defun DaaseName (name)
  (let (daase filename)
   (declare (special $spadroot))
   (if (setq daase (|getEnv| "DAASE"))
@@ -1194,21 +1182,7 @@ database.
     (setq filename  (concatenate 'string daase "/algebra/" name))
     (format t "   Using local database ~a.." filename))
    (setq filename (concatenate 'string $spadroot "/algebra/" name)))
-  (when erase? (delete-file filename))
   filename))
-
-;; rewrite this so it works in mnt
-;;(defun DaaseName (name erase?)
-;; (let (daase filename)
-;;  (declare (special $spadroot))
-;;  (if (setq daase (|getEnv| "DAASE"))
-;;   (progn
-;;    (setq filename  (concatenate 'string daase "/algebra/" name))
-;;    (format t "   Using local database ~a.." filename))
-;;   (setq filename (concatenate 'string $spadroot "/algebra/" name)))
-;;  (when erase? (system::system (concatenate 'string "rm -f " filename)))
-;;  filename))
-
 
 ;; The compress database is special. It contains a list of symbols.
 ;; The character string name of a symbol in the other databases is
@@ -1219,9 +1193,8 @@ database.
 
 (defun |compressOpen| ()
  (let (lst stamp pos)
-  (declare (special $spadroot))
   (setq |$compress_stream|
-    (open (DaaseName "compress.daase"  nil) :direction :input))
+    (open (DaaseName "compress.daase") :direction :input))
   (setq stamp (read |$compress_stream|))
   (unless (equal stamp |$compress_stream_stamp|)
    (format t "   Re-reading compress.daase")
@@ -1274,7 +1247,7 @@ database.
 
 (defun write-interpdb ()
  "build interp.daase from hash tables"
- (declare (special $spadroot) (special |$ancestors_hash|))
+ (declare (special |$ancestors_hash|))
  (let (opalistpos modemapspos cmodemappos master masterpos obj (*print-pretty* t)
         concategory categorypos kind niladic cosig abbrev defaultdomain
         ancestors ancestorspos out)
@@ -1342,7 +1315,6 @@ database.
 
 (defun write-browsedb ()
  "make browse.daase from hash tables"
- (declare (special $spadroot))
  (let (master masterpos src formpos docpos attpos predpos (*print-pretty* t) out)
   (print "building browse.daase")
   (setq out (open "browse.build" :direction :output :if-exists :supersede))
@@ -1457,25 +1429,25 @@ database.
  |$all_operations|)
 
 ; the variable NOPfuncall is a funcall-able object that is a dummy
-; initializer for libaxiom asharp domains.
+; initializer for libfricas aldor domains.
 (defvar NOPfuncall (cons 'identity nil))
 
 (defun |createInitializers| ()
-;; since libaxiom is now built with -name=axiom following unnecessary
+;; since libfricas is now built with -name=fricas following unnecessary
 ;; (dolist (con (|allConstructors|))
 ;;   (let ((sourcefile (getdatabase con 'sourcefile)))
 ;;     (if sourcefile
 ;;       (set (foam::axiomxl-file-init-name (pathname-name sourcefile))
 ;;             NOPfuncall))))
- (set (foam::axiomxl-file-init-name "axiom") NOPfuncall)
+ (set (foam::axiomxl-file-init-name "fricas") NOPfuncall)
 ;; (set (foam::axiomxl-file-init-name "axclique") NOPfuncall)
  (set (foam::axiomxl-file-init-name "filecliq") NOPfuncall)
  (set (foam::axiomxl-file-init-name "attrib") NOPfuncall)
  (|createInitializers2|))
 
-;; following needs to happen inside restart since $AXIOM may change
+;; following needs to happen inside restart since $FRICAS may change
 (defun |createInitializers2| ()
- (let ((asharprootlib (strconc (|getEnv| "AXIOM") "/aldor/lib/")))
+ (let ((asharprootlib (strconc (|getEnv| "FRICAS") "/aldor/lib/")))
    (set-file-getter (strconc asharprootlib "runtime"))
    (set-file-getter (strconc asharprootlib "lang"))
    (set-file-getter (strconc asharprootlib "attrib"))
@@ -1626,7 +1598,7 @@ database.
          (bootname (intern stringname 'boot)))
     (declare (ignore libname))
     (if (and (eq hcode 'foam-user::|initializer|) (not (boundp asharpname)))
-        (error (format nil "AxiomXL file ~s is missing!" stringname)))
+        (error (format nil "Aldor file ~s is missing!" stringname)))
     (unless (or (not (numberp hcode)) (zerop hcode) (boundp asharpname))
           (when (|constructor?| bootname)
                 (set asharpname

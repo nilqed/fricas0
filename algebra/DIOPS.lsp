@@ -5,22 +5,20 @@
 
 (DEFPARAMETER |DictionaryOperations;AL| 'NIL) 
 
-(DEFUN |DictionaryOperations| (#1=#:G691)
-  (LET (#2=#:G692)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |DictionaryOperations;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |DictionaryOperations;AL|
-              (|cons5| (CONS #3# (SETQ #2# (|DictionaryOperations;| #1#)))
-                       |DictionaryOperations;AL|))
-      #2#)))) 
+(DEFUN |DictionaryOperations| (|t#1|)
+  (LET (#1=#:G379 (#2=#:G380 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |DictionaryOperations;AL|)) (CDR #1#))
+          (T
+           (SETQ |DictionaryOperations;AL|
+                   (|cons5| (CONS #2# (SETQ #1# (|DictionaryOperations;| #2#)))
+                            |DictionaryOperations;AL|))
+           #1#)))) 
 
 (DEFUN |DictionaryOperations;| (|t#1|)
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (COND (|DictionaryOperations;CAT|)
                                     ('T
                                      (LETT |DictionaryOperations;CAT|
@@ -50,7 +48,5 @@
                                                          $))
                                                        (|has| $
                                                               (|finiteAggregate|))))
-                                                    NIL '((|List| |t#1|)) NIL))
-                                           . #2=(|DictionaryOperations|)))))
-                   . #2#)
-           (SETELT #1# 0 (LIST '|DictionaryOperations| (|devaluate| |t#1|)))))) 
+                                                    NIL NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|DictionaryOperations| |t#1|))))) 

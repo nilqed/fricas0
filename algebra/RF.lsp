@@ -43,16 +43,15 @@
          (|l| |List| (|Equation| (|Fraction| (|Polynomial| R))))
          ($ |Fraction| (|Polynomial| R)))
         (SPROG
-         ((#1=#:G718 NIL) (|eq| NIL) (#2=#:G717 NIL) (#3=#:G716 NIL)
-          (#4=#:G715 NIL))
+         ((#1=#:G395 NIL) (|eq| NIL) (#2=#:G394 NIL) (#3=#:G393 NIL)
+          (#4=#:G392 NIL))
          (SEQ
           (SPADCALL |x|
                     (PROGN
-                     (LETT #4# NIL . #5=(|RF;eval;FLF;9|))
-                     (SEQ (LETT |eq| NIL . #5#) (LETT #3# |l| . #5#) G190
+                     (LETT #4# NIL)
+                     (SEQ (LETT |eq| NIL) (LETT #3# |l|) G190
                           (COND
-                           ((OR (ATOM #3#)
-                                (PROGN (LETT |eq| (CAR #3#) . #5#) NIL))
+                           ((OR (ATOM #3#) (PROGN (LETT |eq| (CAR #3#)) NIL))
                             (GO G191)))
                           (SEQ
                            (EXIT
@@ -60,22 +59,20 @@
                                   (CONS
                                    (SPADCALL (SPADCALL |eq| (QREFELT $ 35))
                                              (QREFELT $ 36))
-                                   #4#)
-                                  . #5#)))
-                          (LETT #3# (CDR #3#) . #5#) (GO G190) G191
+                                   #4#))))
+                          (LETT #3# (CDR #3#)) (GO G190) G191
                           (EXIT (NREVERSE #4#))))
                     (PROGN
-                     (LETT #2# NIL . #5#)
-                     (SEQ (LETT |eq| NIL . #5#) (LETT #1# |l| . #5#) G190
+                     (LETT #2# NIL)
+                     (SEQ (LETT |eq| NIL) (LETT #1# |l|) G190
                           (COND
-                           ((OR (ATOM #1#)
-                                (PROGN (LETT |eq| (CAR #1#) . #5#) NIL))
+                           ((OR (ATOM #1#) (PROGN (LETT |eq| (CAR #1#)) NIL))
                             (GO G191)))
                           (SEQ
                            (EXIT
-                            (LETT #2# (CONS (SPADCALL |eq| (QREFELT $ 37)) #2#)
-                                  . #5#)))
-                          (LETT #1# (CDR #1#) . #5#) (GO G190) G191
+                            (LETT #2#
+                                  (CONS (SPADCALL |eq| (QREFELT $ 37)) #2#))))
+                          (LETT #1# (CDR #1#)) (GO G190) G191
                           (EXIT (NREVERSE #2#))))
                     (QREFELT $ 26))))) 
 
@@ -97,28 +94,26 @@
 
 (SDEFUN |RF;peval!0| ((|z1| NIL) ($$ NIL))
         (PROG (|ls| |lv| $)
-          (LETT |ls| (QREFELT $$ 2) . #1=(|RF;peval|))
-          (LETT |lv| (QREFELT $$ 1) . #1#)
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |ls| (QREFELT $$ 2))
+          (LETT |lv| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (|RF;foo| |ls| |lv| |z1| $))))) 
 
 (DECLAIM (NOTINLINE |RationalFunction;|)) 
 
-(DEFUN |RationalFunction| (#1=#:G722)
+(DEFUN |RationalFunction| (#1=#:G399)
   (SPROG NIL
-         (PROG (#2=#:G723)
+         (PROG (#2=#:G400)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|RationalFunction|)
-                                               '|domainEqualList|)
-                    . #3=(|RationalFunction|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|RationalFunction;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|RationalFunction;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|RationalFunction|)))))))))) 
@@ -126,11 +121,11 @@
 (DEFUN |RationalFunction;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|RationalFunction|))
-          (LETT |dv$| (LIST '|RationalFunction| DV$1) . #1#)
-          (LETT $ (GETREFV 45) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|RationalFunction| DV$1))
+          (LETT $ (GETREFV 45))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|RationalFunction| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -159,20 +154,70 @@
            '#(|variables| 83 |univariate| 88 |multivariate| 94 |mainVariable|
               100 |eval| 105 |coerce| 131)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 44
-                                                 '(1 7 0 6 8 1 9 0 7 10 1 13 12
-                                                   9 14 1 13 16 9 17 2 13 19 9
-                                                   20 21 2 13 9 19 20 23 1 9 0
-                                                   20 32 4 33 9 12 25 20 9 34 1
-                                                   30 9 0 35 1 9 20 0 36 1 30 9
-                                                   0 37 1 9 7 0 38 1 9 7 0 39 2
-                                                   9 0 0 0 40 3 43 9 41 42 7 44
-                                                   1 0 12 9 15 2 0 19 9 20 22 2
-                                                   0 9 19 20 24 1 0 16 9 18 3 0
-                                                   9 9 12 25 26 3 0 9 9 20 9 27
-                                                   2 0 9 9 30 31 2 0 9 9 28 29
-                                                   1 0 9 6 11)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|variables|
+                                 ((|List| (|Symbol|))
+                                  (|Fraction| (|Polynomial| |#1|))))
+                                T)
+                              '((|mainVariable|
+                                 ((|Union| (|Symbol|) "failed")
+                                  (|Fraction| (|Polynomial| |#1|))))
+                                T)
+                              '((|univariate|
+                                 ((|Fraction|
+                                   (|SparseUnivariatePolynomial|
+                                    (|Fraction| (|Polynomial| |#1|))))
+                                  (|Fraction| (|Polynomial| |#1|)) (|Symbol|)))
+                                T)
+                              '((|multivariate|
+                                 ((|Fraction| (|Polynomial| |#1|))
+                                  (|Fraction|
+                                   (|SparseUnivariatePolynomial|
+                                    (|Fraction| (|Polynomial| |#1|))))
+                                  (|Symbol|)))
+                                T)
+                              '((|eval|
+                                 ((|Fraction| (|Polynomial| |#1|))
+                                  (|Fraction| (|Polynomial| |#1|)) (|Symbol|)
+                                  (|Fraction| (|Polynomial| |#1|))))
+                                T)
+                              '((|eval|
+                                 ((|Fraction| (|Polynomial| |#1|))
+                                  (|Fraction| (|Polynomial| |#1|))
+                                  (|List| (|Symbol|))
+                                  (|List| (|Fraction| (|Polynomial| |#1|)))))
+                                T)
+                              '((|eval|
+                                 ((|Fraction| (|Polynomial| |#1|))
+                                  (|Fraction| (|Polynomial| |#1|))
+                                  (|Equation|
+                                   (|Fraction| (|Polynomial| |#1|)))))
+                                T)
+                              '((|eval|
+                                 ((|Fraction| (|Polynomial| |#1|))
+                                  (|Fraction| (|Polynomial| |#1|))
+                                  (|List|
+                                   (|Equation|
+                                    (|Fraction| (|Polynomial| |#1|))))))
+                                T)
+                              '((|coerce|
+                                 ((|Fraction| (|Polynomial| |#1|)) |#1|))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 44
+                                            '(1 7 0 6 8 1 9 0 7 10 1 13 12 9 14
+                                              1 13 16 9 17 2 13 19 9 20 21 2 13
+                                              9 19 20 23 1 9 0 20 32 4 33 9 12
+                                              25 20 9 34 1 30 9 0 35 1 9 20 0
+                                              36 1 30 9 0 37 1 9 7 0 38 1 9 7 0
+                                              39 2 9 0 0 0 40 3 43 9 41 42 7 44
+                                              1 0 12 9 15 2 0 19 9 20 22 2 0 9
+                                              19 20 24 1 0 16 9 18 3 0 9 9 12
+                                              25 26 3 0 9 9 20 9 27 2 0 9 9 30
+                                              31 2 0 9 9 28 29 1 0 9 6 11)))))
            '|lookupComplete|)) 

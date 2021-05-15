@@ -4,12 +4,11 @@
 (DEFPARAMETER |FortranVectorCategory;AL| 'NIL) 
 
 (DEFUN |FortranVectorCategory| ()
-  (LET (#:G692)
-    (COND (|FortranVectorCategory;AL|)
-          (T (SETQ |FortranVectorCategory;AL| (|FortranVectorCategory;|)))))) 
+  (COND (|FortranVectorCategory;AL|)
+        (T (SETQ |FortranVectorCategory;AL| (|FortranVectorCategory;|))))) 
 
 (DEFUN |FortranVectorCategory;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|FortranProgramCategory|)
@@ -23,11 +22,7 @@
                                            (|:| |code|
                                                 (|List| (|FortranCode|))))))
                                T))
-                            NIL
-                            '((|FortranCode|) (|List| (|FortranCode|))
-                              (|Vector| (|MachineFloat|)))
-                            NIL))
-                   |FortranVectorCategory|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|FortranVectorCategory|))))) 
 
 (MAKEPROP '|FortranVectorCategory| 'NILADIC T) 

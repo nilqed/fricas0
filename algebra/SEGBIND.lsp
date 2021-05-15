@@ -33,21 +33,19 @@
 
 (DECLAIM (NOTINLINE |SegmentBinding;|)) 
 
-(DEFUN |SegmentBinding| (#1=#:G723)
+(DEFUN |SegmentBinding| (#1=#:G390)
   (SPROG NIL
-         (PROG (#2=#:G724)
+         (PROG (#2=#:G391)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|SegmentBinding|)
-                                               '|domainEqualList|)
-                    . #3=(|SegmentBinding|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|SegmentBinding;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|SegmentBinding;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|SegmentBinding|)))))))))) 
@@ -55,9 +53,9 @@
 (DEFUN |SegmentBinding;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|SegmentBinding|))
-          (LETT |dv$| (LIST '|SegmentBinding| DV$1) . #1#)
-          (LETT $ (GETREFV 31) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|SegmentBinding| DV$1))
+          (LETT $ (GETREFV 31))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -67,8 +65,7 @@
                                                              '(|ConvertibleTo|
                                                                (|InputForm|)))
                                               (|HasCategory| |#1|
-                                                             '(|SetCategory|))))
-                          . #1#))
+                                                             '(|SetCategory|))))))
           (|haddProp| |$ConstructorCache| '|SegmentBinding| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)

@@ -14,21 +14,19 @@
 
 (DECLAIM (NOTINLINE |ParametricSurface;|)) 
 
-(DEFUN |ParametricSurface| (#1=#:G700)
+(DEFUN |ParametricSurface| (#1=#:G383)
   (SPROG NIL
-         (PROG (#2=#:G701)
+         (PROG (#2=#:G384)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|ParametricSurface|)
-                                               '|domainEqualList|)
-                    . #3=(|ParametricSurface|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|ParametricSurface;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|ParametricSurface;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|ParametricSurface|)))))))))) 
@@ -36,11 +34,11 @@
 (DEFUN |ParametricSurface;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|ParametricSurface|))
-          (LETT |dv$| (LIST '|ParametricSurface| DV$1) . #1#)
-          (LETT $ (GETREFV 11) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|ParametricSurface| DV$1))
+          (LETT $ (GETREFV 11))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|ParametricSurface| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -57,10 +55,16 @@
               |PARSURF;surface;3ComponentFunction$;1| (|NonNegativeInteger|)
               |PARSURF;coordinate;$NniComponentFunction;2|)
            '#(|surface| 0 |coordinate| 7) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 10
-                                                 '(3 0 0 6 6 6 8 2 0 6 0 9
-                                                   10)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|surface| ($$ |#1| |#1| |#1|)) T)
+                                   '((|coordinate|
+                                      (|#1| $$ (|NonNegativeInteger|)))
+                                     T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 10
+                                            '(3 0 0 6 6 6 8 2 0 6 0 9 10)))))
            '|lookupComplete|)) 

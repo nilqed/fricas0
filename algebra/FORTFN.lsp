@@ -4,13 +4,11 @@
 (DEFPARAMETER |FortranFunctionCategory;AL| 'NIL) 
 
 (DEFUN |FortranFunctionCategory| ()
-  (LET (#:G692)
-    (COND (|FortranFunctionCategory;AL|)
-          (T
-           (SETQ |FortranFunctionCategory;AL| (|FortranFunctionCategory;|)))))) 
+  (COND (|FortranFunctionCategory;AL|)
+        (T (SETQ |FortranFunctionCategory;AL| (|FortranFunctionCategory;|))))) 
 
 (DEFUN |FortranFunctionCategory;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|FortranProgramCategory|)
@@ -57,16 +55,7 @@
                                 ((|Union| $ "failed")
                                  (|Fraction| (|Polynomial| (|Integer|)))))
                                T))
-                            NIL
-                            '((|Fraction| (|Polynomial| (|Integer|)))
-                              (|Fraction| (|Polynomial| (|Float|)))
-                              (|Polynomial| (|Integer|))
-                              (|Polynomial| (|Float|))
-                              (|Expression| (|Integer|))
-                              (|Expression| (|Float|)) (|FortranCode|)
-                              (|List| (|FortranCode|)))
-                            NIL))
-                   |FortranFunctionCategory|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|FortranFunctionCategory|))))) 
 
 (MAKEPROP '|FortranFunctionCategory| 'NILADIC T) 

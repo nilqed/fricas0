@@ -10,8 +10,8 @@
 
 (SDEFUN |MKUCFUNC;unaryFunction;SM;2!0| ((|d1| NIL) ($$ NIL))
         (PROG (|name| $)
-          (LETT |name| (QREFELT $$ 1) . #1=(|MKUCFUNC;unaryFunction;SM;2|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |name| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (|MKUCFUNC;func| |name| |d1| $))))) 
 
 (SDEFUN |MKUCFUNC;compiledFunction;SSM;3|
@@ -22,8 +22,7 @@
                       (LIST
                        (SPADCALL
                         (SPADCALL (|devaluate| (QREFELT $ 7)) (QREFELT $ 13))
-                        (QREFELT $ 16)))
-                      |MKUCFUNC;compiledFunction;SSM;3|)
+                        (QREFELT $ 16))))
                 (EXIT
                  (SPADCALL
                   (SPADCALL
@@ -38,22 +37,21 @@
 
 (DECLAIM (NOTINLINE |MakeUnaryCompiledFunction;|)) 
 
-(DEFUN |MakeUnaryCompiledFunction| (&REST #1=#:G708)
+(DEFUN |MakeUnaryCompiledFunction| (&REST #1=#:G386)
   (SPROG NIL
-         (PROG (#2=#:G709)
+         (PROG (#2=#:G387)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|MakeUnaryCompiledFunction|)
-                                               '|domainEqualList|)
-                    . #3=(|MakeUnaryCompiledFunction|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |MakeUnaryCompiledFunction;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -62,13 +60,13 @@
 (DEFUN |MakeUnaryCompiledFunction;| (|#1| |#2| |#3|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|MakeUnaryCompiledFunction|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT DV$3 (|devaluate| |#3|) . #1#)
-          (LETT |dv$| (LIST '|MakeUnaryCompiledFunction| DV$1 DV$2 DV$3) . #1#)
-          (LETT $ (GETREFV 22) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT DV$3 (|devaluate| |#3|))
+          (LETT |dv$| (LIST '|MakeUnaryCompiledFunction| DV$1 DV$2 DV$3))
+          (LETT $ (GETREFV 22))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|MakeUnaryCompiledFunction|
                       (LIST DV$1 DV$2 DV$3) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -87,12 +85,22 @@
               (|MakeFunction| 6) (15 . |function|) (22 . |compile|)
               |MKUCFUNC;compiledFunction;SSM;3|)
            '#(|unaryFunction| 28 |compiledFunction| 33) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 21
-                                                 '(1 12 0 12 13 1 15 0 14 16 1
-                                                   15 10 14 17 3 18 10 6 10 10
-                                                   19 2 15 10 10 14 20 1 0 9 10
-                                                   11 2 0 9 6 10 21)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|unaryFunction|
+                                 ((|Mapping| |#3| |#2|) (|Symbol|)))
+                                T)
+                              '((|compiledFunction|
+                                 ((|Mapping| |#3| |#2|) |#1| (|Symbol|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 21
+                                            '(1 12 0 12 13 1 15 0 14 16 1 15 10
+                                              14 17 3 18 10 6 10 10 19 2 15 10
+                                              10 14 20 1 0 9 10 11 2 0 9 6 10
+                                              21)))))
            '|lookupComplete|)) 

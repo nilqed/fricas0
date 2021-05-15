@@ -5,19 +5,19 @@
 
 (DEFPARAMETER |Poset;AL| 'NIL) 
 
-(DEFUN |Poset| (#1=#:G723)
-  (LET (#2=#:G724)
-    (COND ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |Poset;AL|)) (CDR #2#))
+(DEFUN |Poset| (|t#1|)
+  (LET (#1=#:G411 (#2=#:G412 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |Poset;AL|)) (CDR #1#))
           (T
            (SETQ |Poset;AL|
-                   (|cons5| (CONS #3# (SETQ #2# (|Poset;| #1#))) |Poset;AL|))
-           #2#)))) 
+                   (|cons5| (CONS #2# (SETQ #1# (|Poset;| #2#))) |Poset;AL|))
+           #1#)))) 
 
 (DEFUN |Poset;| (|t#1|)
-  (SPROG ((#1=#:G722 NIL))
+  (SPROG ((#1=#:G410 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (COND (|Poset;CAT|)
                                     ('T
                                      (LETT |Poset;CAT|
@@ -158,18 +158,5 @@
                                                           (|Integer|) |t#1|)
                                                          $))
                                                        T))
-                                                    NIL
-                                                    '((|IncidenceAlgebra|
-                                                       (|Integer|) |t#1|)
-                                                      (|Boolean|)
-                                                      (|NonNegativeInteger|)
-                                                      (|List|
-                                                       (|NonNegativeInteger|))
-                                                      (|Void|)
-                                                      (|List|
-                                                       (|List| (|Boolean|)))
-                                                      (|List| |t#1|))
-                                                    NIL))
-                                           . #2=(|Poset|)))))
-                   . #2#)
-           (SETELT #1# 0 (LIST '|Poset| (|devaluate| |t#1|)))))) 
+                                                    NIL NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|Poset| |t#1|))))) 

@@ -11,25 +11,24 @@
 
 (SDEFUN |ARRAY1;oneDimensionalArray;L$;3| ((|u| |List| S) ($ $))
         (SPROG
-         ((#1=#:G2830 NIL) (|i| NIL) (#2=#:G2831 NIL) (|x| NIL) (|a| ($))
+         ((#1=#:G2502 NIL) (|i| NIL) (#2=#:G2503 NIL) (|x| NIL) (|a| ($))
           (|n| (|NonNegativeInteger|)))
-         (SEQ (LETT |n| (LENGTH |u|) . #3=(|ARRAY1;oneDimensionalArray;L$;3|))
+         (SEQ (LETT |n| (LENGTH |u|))
               (EXIT
                (COND ((EQL |n| 0) (MAKE-ARRAY 0))
                      ('T
-                      (SEQ (LETT |a| (MAKEARR1 |n| (|SPADfirst| |u|)) . #3#)
-                           (SEQ (LETT |x| NIL . #3#) (LETT #2# (CDR |u|) . #3#)
-                                (LETT |i| 2 . #3#) (LETT #1# |n| . #3#) G190
+                      (SEQ (LETT |a| (MAKEARR1 |n| (|SPADfirst| |u|)))
+                           (SEQ (LETT |x| NIL) (LETT #2# (CDR |u|))
+                                (LETT |i| 2) (LETT #1# |n|) G190
                                 (COND
                                  ((OR (|greater_SI| |i| #1#) (ATOM #2#)
-                                      (PROGN (LETT |x| (CAR #2#) . #3#) NIL))
+                                      (PROGN (LETT |x| (CAR #2#)) NIL))
                                   (GO G191)))
                                 (SEQ
                                  (EXIT (SPADCALL |a| |i| |x| (QREFELT $ 10))))
                                 (LETT |i|
                                       (PROG1 (|inc_SI| |i|)
-                                        (LETT #2# (CDR #2#) . #3#))
-                                      . #3#)
+                                        (LETT #2# (CDR #2#))))
                                 (GO G190) G191 (EXIT NIL))
                            (EXIT |a|)))))))) 
 
@@ -40,33 +39,31 @@
 
 (DECLAIM (NOTINLINE |OneDimensionalArray;|)) 
 
-(DEFUN |OneDimensionalArray| (#1=#:G2843)
+(DEFUN |OneDimensionalArray| (#1=#:G2515)
   (SPROG NIL
-         (PROG (#2=#:G2844)
+         (PROG (#2=#:G2516)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|OneDimensionalArray|)
-                                               '|domainEqualList|)
-                    . #3=(|OneDimensionalArray|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|OneDimensionalArray;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|OneDimensionalArray;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|OneDimensionalArray|)))))))))) 
 
 (DEFUN |OneDimensionalArray;| (|#1|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G2840 NIL) (#2=#:G2841 NIL) (#3=#:G2842 NIL) ($ NIL)
+   ((|pv$| NIL) (#1=#:G2512 NIL) (#2=#:G2513 NIL) (#3=#:G2514 NIL) ($ NIL)
     (|dv$| NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #4=(|OneDimensionalArray|))
-    (LETT |dv$| (LIST '|OneDimensionalArray| DV$1) . #4#)
-    (LETT $ (GETREFV 32) . #4#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT |dv$| (LIST '|OneDimensionalArray| DV$1))
+    (LETT $ (GETREFV 32))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -81,15 +78,13 @@
                                         (|HasCategory| |#1| '(|BasicType|))
                                         (LETT #3#
                                               (|HasCategory| |#1|
-                                                             '(|Comparable|))
-                                              . #4#)
+                                                             '(|Comparable|)))
                                         (OR #3#
                                             (|HasCategory| |#1|
                                                            '(|OrderedSet|)))
                                         (LETT #2#
                                               (|HasCategory| |#1|
-                                                             '(|SetCategory|))
-                                              . #4#)
+                                                             '(|SetCategory|)))
                                         (AND
                                          (|HasCategory| |#1|
                                                         (LIST '|Evalable|
@@ -108,13 +103,11 @@
                                         (LETT #1#
                                               (|HasCategory| |#1|
                                                              '(|CoercibleTo|
-                                                               (|OutputForm|)))
-                                              . #4#)
+                                                               (|OutputForm|))))
                                         (OR #1# #3#
                                             (|HasCategory| |#1|
                                                            '(|OrderedSet|))
-                                            #2#)))
-                    . #4#))
+                                            #2#)))))
     (|haddProp| |$ConstructorCache| '|OneDimensionalArray| (LIST DV$1)
                 (CONS 1 $))
     (|stuffDomainSlots| $)

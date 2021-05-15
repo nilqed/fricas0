@@ -20,31 +20,30 @@
 
 (DECLAIM (NOTINLINE |MakeFunction;|)) 
 
-(DEFUN |MakeFunction| (#1=#:G699)
+(DEFUN |MakeFunction| (#1=#:G383)
   (SPROG NIL
-         (PROG (#2=#:G700)
+         (PROG (#2=#:G384)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|MakeFunction|)
-                                               '|domainEqualList|)
-                    . #3=(|MakeFunction|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|MakeFunction;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|MakeFunction;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|MakeFunction|)))))))))) 
 
 (DEFUN |MakeFunction;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|MakeFunction|))
-          (LETT |dv$| (LIST '|MakeFunction| DV$1) . #1#)
-          (LETT $ (GETREFV 18) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|MakeFunction| DV$1))
+          (LETT $ (GETREFV 18))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|MakeFunction| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -59,12 +58,28 @@
               |MKFUNC;function;S3S;2| |MKFUNC;function;S4S;3| (|InputForm|)
               (0 . |convert|) (5 . |function|) (|Any|) (12 . |interpret|))
            '#(|function| 17) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 17
-                                                 '(1 6 13 0 14 3 13 0 0 8 7 15
-                                                   1 13 16 0 17 3 0 7 6 7 7 11
-                                                   2 0 7 6 7 10 3 0 7 6 7 8 9 4
-                                                   0 7 6 7 7 7 12)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|function| ((|Symbol|) |#1| (|Symbol|))) T)
+                              '((|function|
+                                 ((|Symbol|) |#1| (|Symbol|) (|Symbol|)))
+                                T)
+                              '((|function|
+                                 ((|Symbol|) |#1| (|Symbol|) (|Symbol|)
+                                  (|Symbol|)))
+                                T)
+                              '((|function|
+                                 ((|Symbol|) |#1| (|Symbol|)
+                                  (|List| (|Symbol|))))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 17
+                                            '(1 6 13 0 14 3 13 0 0 8 7 15 1 13
+                                              16 0 17 3 0 7 6 7 7 11 2 0 7 6 7
+                                              10 3 0 7 6 7 8 9 4 0 7 6 7 7 7
+                                              12)))))
            '|lookupComplete|)) 

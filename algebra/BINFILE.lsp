@@ -30,14 +30,12 @@
 
 (SDEFUN |BINFILE;open;FnS$;2| ((|fname| |FileName|) (|mode| |String|) ($ $))
         (SPROG ((|fstream| (|SExpression|)))
-               (SEQ
-                (LETT |fstream| (|BINFILE;defstream| |fname| |mode| $)
-                      |BINFILE;open;FnS$;2|)
-                (EXIT (VECTOR |fname| |fstream| |mode|))))) 
+               (SEQ (LETT |fstream| (|BINFILE;defstream| |fname| |mode| $))
+                    (EXIT (VECTOR |fname| |fstream| |mode|))))) 
 
 (SDEFUN |BINFILE;reopen!;$S$;3| ((|f| $) (|mode| |String|) ($ $))
         (SPROG ((|fname| (|FileName|)))
-               (SEQ (LETT |fname| (QVELT |f| 0) |BINFILE;reopen!;$S$;3|)
+               (SEQ (LETT |fname| (QVELT |f| 0))
                     (QSETVELT |f| 1 (|BINFILE;defstream| |fname| |mode| $))
                     (QSETVELT |f| 2 |mode|) (EXIT |f|)))) 
 
@@ -67,7 +65,7 @@
                   (|error| "File not in read state"))
                  (#1='T
                   (SEQ (BINARY_SELECT_INPUT (QVELT |f| 1))
-                       (LETT |n| (BINARY_READBYTE) |BINFILE;readIfCan!;$U;6|)
+                       (LETT |n| (BINARY_READBYTE))
                        (EXIT
                         (COND ((|eql_SI| |n| -1) (CONS 1 "failed"))
                               (#1# (CONS 0 |n|)))))))))) 
@@ -78,7 +76,7 @@
          (COND
           ((SPADCALL (QVELT |f| 2) "output" (QREFELT $ 19))
            (|error| "File not in write state"))
-          ((OR (|less_SI| |x| 0) (SPADCALL |x| 255 (QREFELT $ 25)))
+          ((OR (|less_SI| |x| 0) (> |x| 255))
            (|error| "integer cannot be represented as a byte"))
           ('T (SEQ (BINARY_PRINBYTE |x|) (EXIT |x|)))))) 
 
@@ -100,11 +98,10 @@
 
 (DEFUN |BinaryFile| ()
   (SPROG NIL
-         (PROG (#1=#:G751)
+         (PROG (#1=#:G432)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|BinaryFile|)
-                    . #2=(|BinaryFile|))
+             ((LETT #1# (HGET |$ConstructorCache| '|BinaryFile|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -112,17 +109,17 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|BinaryFile|
                              (LIST (CONS NIL (CONS 1 (|BinaryFile;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#) (HREM |$ConstructorCache| '|BinaryFile|)))))))))) 
 
 (DEFUN |BinaryFile;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|BinaryFile|) . #1=(|BinaryFile|))
-          (LETT $ (GETREFV 31) . #1#)
+          (LETT |dv$| '(|BinaryFile|))
+          (LETT $ (GETREFV 29))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|BinaryFile| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))
@@ -140,24 +137,24 @@
               |BINFILE;open;FnS$;2| |BINFILE;reopen!;$S$;3|
               |BINFILE;close!;2$;4| (25 . ~=) (|SingleInteger|)
               |BINFILE;read!;$Si;5| (|Union| 20 '"failed")
-              |BINFILE;readIfCan!;$U;6| (|Integer|) (31 . >)
-              |BINFILE;write!;$2Si;7| |BINFILE;position;$Si;8|
-              |BINFILE;position!;$2Si;9| (|Void|) (|HashState|))
-           '#(|write!| 37 |reopen!| 43 |readIfCan!| 49 |read!| 54 |position!|
-              59 |position| 65 |open| 70 |close!| 76)
+              |BINFILE;readIfCan!;$U;6| |BINFILE;write!;$2Si;7|
+              |BINFILE;position;$Si;8| |BINFILE;position!;$2Si;9| (|Void|)
+              (|HashState|))
+           '#(|write!| 31 |reopen!| 37 |readIfCan!| 43 |read!| 48 |position!|
+              53 |position| 59 |open| 64 |close!| 70)
            'NIL
            (CONS (|makeByteWordVec2| 1 '(0 0 0 0))
                  (CONS '#(NIL |SetCategory&| |BasicType&| NIL)
                        (CONS
                         '#((|FileCategory| 8 20) (|SetCategory|) (|BasicType|)
                            (|CoercibleTo| 10))
-                        (|makeByteWordVec2| 28
+                        (|makeByteWordVec2| 26
                                             '(1 8 7 0 9 1 11 10 0 12 1 8 10 0
                                               13 1 8 11 0 14 1 8 7 0 15 2 11 7
-                                              0 0 19 2 24 7 0 0 25 2 0 20 0 20
-                                              26 2 0 0 0 11 17 1 0 22 0 23 1 0
-                                              20 0 21 2 0 20 0 20 28 1 0 20 0
-                                              27 2 0 0 8 11 16 1 0 0 0 18)))))
+                                              0 0 19 2 0 20 0 20 24 2 0 0 0 11
+                                              17 1 0 22 0 23 1 0 20 0 21 2 0 20
+                                              0 20 26 1 0 20 0 25 2 0 0 8 11 16
+                                              1 0 0 0 18)))))
            '|lookupIncomplete|)) 
 
 (MAKEPROP '|BinaryFile| 'NILADIC T) 

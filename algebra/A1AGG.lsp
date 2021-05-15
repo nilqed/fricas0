@@ -5,32 +5,26 @@
 
 (DEFPARAMETER |OneDimensionalArrayAggregate;AL| 'NIL) 
 
-(DEFUN |OneDimensionalArrayAggregate| (#1=#:G722)
-  (LET (#2=#:G723)
+(DEFUN |OneDimensionalArrayAggregate| (|t#1|)
+  (LET (#1=#:G410 (#2=#:G411 (|devaluate| |t#1|)))
     (COND
-     ((SETQ #2#
-              (|assoc| #3=(|devaluate| #1#) |OneDimensionalArrayAggregate;AL|))
-      (CDR #2#))
+     ((SETQ #1# (|assoc| #2# |OneDimensionalArrayAggregate;AL|)) (CDR #1#))
      (T
       (SETQ |OneDimensionalArrayAggregate;AL|
               (|cons5|
-               (CONS #3# (SETQ #2# (|OneDimensionalArrayAggregate;| #1#)))
+               (CONS #2# (SETQ #1# (|OneDimensionalArrayAggregate;| #2#)))
                |OneDimensionalArrayAggregate;AL|))
-      #2#)))) 
+      #1#)))) 
 
 (DEFUN |OneDimensionalArrayAggregate;| (|t#1|)
-  (SPROG ((#1=#:G721 NIL))
+  (SPROG ((#1=#:G409 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (COND (|OneDimensionalArrayAggregate;CAT|)
                                     ('T
                                      (LETT |OneDimensionalArrayAggregate;CAT|
                                            (|Join|
                                             (|FiniteLinearAggregate| '|t#1|)
-                                            (|shallowlyMutable|))
-                                           . #2=(|OneDimensionalArrayAggregate|)))))
-                   . #2#)
-           (SETELT #1# 0
-                   (LIST '|OneDimensionalArrayAggregate|
-                         (|devaluate| |t#1|)))))) 
+                                            (|shallowlyMutable|)))))))
+           (SETELT #1# 0 (LIST '|OneDimensionalArrayAggregate| |t#1|))))) 

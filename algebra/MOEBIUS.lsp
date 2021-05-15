@@ -92,75 +92,68 @@
 (SDEFUN |MOEBIUS;eval;$2Opc;16|
         ((|t| $) (|f| |OnePointCompletion| F) ($ |OnePointCompletion| F))
         (SPROG ((|den| (F)) (|fff| (F)) (|ff| (|Union| F "failed")))
-               (SEQ
-                (LETT |ff| (SPADCALL |f| (QREFELT $ 27))
-                      . #1=(|MOEBIUS;eval;$2Opc;16|))
-                (EXIT
-                 (COND
-                  ((QEQCAR |ff| 1)
-                   (SPADCALL
-                    (SPADCALL (|MOEBIUS;a| |t| $) (|MOEBIUS;c| |t| $)
-                              (QREFELT $ 23))
-                    (QREFELT $ 28)))
-                  ((SPADCALL
-                    (LETT |den|
-                          (SPADCALL
-                           (SPADCALL (|MOEBIUS;c| |t| $)
-                                     (LETT |fff| (QCDR |ff|) . #1#)
-                                     (QREFELT $ 12))
-                           (|MOEBIUS;d| |t| $) (QREFELT $ 13))
-                          . #1#)
-                    (QREFELT $ 30))
-                   (SPADCALL (QREFELT $ 31)))
-                  ('T
-                   (SPADCALL
-                    (SPADCALL
-                     (SPADCALL
-                      (SPADCALL (|MOEBIUS;a| |t| $) |fff| (QREFELT $ 12))
-                      (|MOEBIUS;b| |t| $) (QREFELT $ 13))
-                     |den| (QREFELT $ 23))
-                    (QREFELT $ 28)))))))) 
+               (SEQ (LETT |ff| (SPADCALL |f| (QREFELT $ 27)))
+                    (EXIT
+                     (COND
+                      ((QEQCAR |ff| 1)
+                       (SPADCALL
+                        (SPADCALL (|MOEBIUS;a| |t| $) (|MOEBIUS;c| |t| $)
+                                  (QREFELT $ 23))
+                        (QREFELT $ 28)))
+                      ((SPADCALL
+                        (LETT |den|
+                              (SPADCALL
+                               (SPADCALL (|MOEBIUS;c| |t| $)
+                                         (LETT |fff| (QCDR |ff|))
+                                         (QREFELT $ 12))
+                               (|MOEBIUS;d| |t| $) (QREFELT $ 13)))
+                        (QREFELT $ 30))
+                       (SPADCALL (QREFELT $ 31)))
+                      ('T
+                       (SPADCALL
+                        (SPADCALL
+                         (SPADCALL
+                          (SPADCALL (|MOEBIUS;a| |t| $) |fff| (QREFELT $ 12))
+                          (|MOEBIUS;b| |t| $) (QREFELT $ 13))
+                         |den| (QREFELT $ 23))
+                        (QREFELT $ 28)))))))) 
 
 (SDEFUN |MOEBIUS;coerce;$Of;17| ((|t| $) ($ |OutputForm|))
         (SPROG ((|den| #1=(|OutputForm|)) (|num| #1#) (|var| (|OutputForm|)))
-               (SEQ
-                (LETT |var| (SPADCALL "%x" (QREFELT $ 35))
-                      . #2=(|MOEBIUS;coerce;$Of;17|))
-                (LETT |num|
-                      (SPADCALL
-                       (SPADCALL (SPADCALL (|MOEBIUS;a| |t| $) (QREFELT $ 36))
-                                 |var| (QREFELT $ 37))
-                       (SPADCALL (|MOEBIUS;b| |t| $) (QREFELT $ 36))
-                       (QREFELT $ 38))
-                      . #2#)
-                (LETT |den|
-                      (SPADCALL
-                       (SPADCALL (SPADCALL (|MOEBIUS;c| |t| $) (QREFELT $ 36))
-                                 |var| (QREFELT $ 37))
-                       (SPADCALL (|MOEBIUS;d| |t| $) (QREFELT $ 36))
-                       (QREFELT $ 38))
-                      . #2#)
-                (EXIT
-                 (SPADCALL |var| (SPADCALL |num| |den| (QREFELT $ 39))
-                           (QREFELT $ 40)))))) 
+               (SEQ (LETT |var| (SPADCALL "%x" (QREFELT $ 35)))
+                    (LETT |num|
+                          (SPADCALL
+                           (SPADCALL
+                            (SPADCALL (|MOEBIUS;a| |t| $) (QREFELT $ 36)) |var|
+                            (QREFELT $ 37))
+                           (SPADCALL (|MOEBIUS;b| |t| $) (QREFELT $ 36))
+                           (QREFELT $ 38)))
+                    (LETT |den|
+                          (SPADCALL
+                           (SPADCALL
+                            (SPADCALL (|MOEBIUS;c| |t| $) (QREFELT $ 36)) |var|
+                            (QREFELT $ 37))
+                           (SPADCALL (|MOEBIUS;d| |t| $) (QREFELT $ 36))
+                           (QREFELT $ 38)))
+                    (EXIT
+                     (SPADCALL |var| (SPADCALL |num| |den| (QREFELT $ 39))
+                               (QREFELT $ 40)))))) 
 
 (SDEFUN |MOEBIUS;proportional?|
         ((|list1| |List| F) (|list2| |List| F) ($ |Boolean|))
         (SPROG ((|x2| (F)) (|x1| (F)))
                (COND ((NULL |list1|) (NULL |list2|)) ((NULL |list2|) NIL)
-                     ((SPADCALL
-                       (LETT |x1| (|SPADfirst| |list1|)
-                             . #1=(|MOEBIUS;proportional?|))
-                       (QREFELT $ 30))
+                     ((SPADCALL (LETT |x1| (|SPADfirst| |list1|))
+                                (QREFELT $ 30))
                       (COND
                        ((SPADCALL (|SPADfirst| |list2|) (QREFELT $ 30))
                         (|MOEBIUS;proportional?| (CDR |list1|) (CDR |list2|)
                          $))
-                       (#2='T NIL)))
-                     ((SPADCALL (LETT |x2| (|SPADfirst| |list2|) . #1#)
+                       (#1='T NIL)))
+                     ((SPADCALL (LETT |x2| (|SPADfirst| |list2|))
                                 (QREFELT $ 30))
                       NIL)
-                     (#2#
+                     (#1#
                       (SPADCALL
                        (SPADCALL
                         (CONS #'|MOEBIUS;proportional?!0| (VECTOR $ |x1|))
@@ -172,14 +165,14 @@
 
 (SDEFUN |MOEBIUS;proportional?!1| ((|f1| NIL) ($$ NIL))
         (PROG (|x2| $)
-          (LETT |x2| (QREFELT $$ 1) . #1=(|MOEBIUS;proportional?|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |x2| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL |f1| |x2| (QREFELT $ 23)))))) 
 
 (SDEFUN |MOEBIUS;proportional?!0| ((|f1| NIL) ($$ NIL))
         (PROG (|x1| $)
-          (LETT |x1| (QREFELT $$ 1) . #1=(|MOEBIUS;proportional?|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |x1| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL |f1| |x1| (QREFELT $ 23)))))) 
 
 (SDEFUN |MOEBIUS;=;2$B;19| ((|t| $) (|s| $) ($ |Boolean|))
@@ -187,31 +180,27 @@
                (SEQ
                 (LETT |list1|
                       (LIST (|MOEBIUS;a| |t| $) (|MOEBIUS;b| |t| $)
-                            (|MOEBIUS;c| |t| $) (|MOEBIUS;d| |t| $))
-                      . #1=(|MOEBIUS;=;2$B;19|))
+                            (|MOEBIUS;c| |t| $) (|MOEBIUS;d| |t| $)))
                 (LETT |list2|
                       (LIST (|MOEBIUS;a| |s| $) (|MOEBIUS;b| |s| $)
-                            (|MOEBIUS;c| |s| $) (|MOEBIUS;d| |s| $))
-                      . #1#)
+                            (|MOEBIUS;c| |s| $) (|MOEBIUS;d| |s| $)))
                 (EXIT (|MOEBIUS;proportional?| |list1| |list2| $))))) 
 
 (DECLAIM (NOTINLINE |MoebiusTransform;|)) 
 
-(DEFUN |MoebiusTransform| (#1=#:G763)
+(DEFUN |MoebiusTransform| (#1=#:G431)
   (SPROG NIL
-         (PROG (#2=#:G764)
+         (PROG (#2=#:G432)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|MoebiusTransform|)
-                                               '|domainEqualList|)
-                    . #3=(|MoebiusTransform|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|MoebiusTransform;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|MoebiusTransform;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|MoebiusTransform|)))))))))) 
@@ -219,11 +208,11 @@
 (DEFUN |MoebiusTransform;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|MoebiusTransform|))
-          (LETT |dv$| (LIST '|MoebiusTransform| DV$1) . #1#)
-          (LETT $ (GETREFV 53) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|MoebiusTransform| DV$1))
+          (LETT $ (GETREFV 53))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|MoebiusTransform| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -259,14 +248,14 @@
               |hash| 205 |eval| 210 |conjugate| 222 |commutator| 228 |coerce|
               234 ^ 239 |One| 257 = 261 / 267 * 273)
            'NIL
-           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0))
+           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0 0))
                  (CONS
                   '#(|Group&| NIL NIL |MagmaWithUnit&| |Magma&| |SetCategory&|
-                     NIL |BasicType&| NIL)
+                     NIL NIL |BasicType&| NIL)
                   (CONS
                    '#((|Group|) (|Monoid|) (|SemiGroup|) (|MagmaWithUnit|)
-                      (|Magma|) (|SetCategory|) (|unitsKnown|) (|BasicType|)
-                      (|CoercibleTo| 34))
+                      (|Magma|) (|SetCategory|) (|unitsKnown|)
+                      (|TwoSidedRecip|) (|BasicType|) (|CoercibleTo| 34))
                    (|makeByteWordVec2| 52
                                        '(0 6 0 10 0 6 0 11 2 6 0 0 0 12 2 6 0 0
                                          0 13 1 6 0 0 15 2 6 0 0 0 23 1 26 25 0

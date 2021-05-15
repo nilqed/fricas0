@@ -8,44 +8,37 @@
          ((|answer|
            (|Union| (|List| (|SparseUnivariatePolynomial| (|Integer|)))
                     "failed"))
-          (#1=#:G711 NIL)
+          (#1=#:G386 NIL)
           (|ans|
            (|Union|
             (|Vector| (|List| (|SparseUnivariatePolynomial| (|Integer|))))
             #2="failed"))
-          (|deg| #3=(|NonNegativeInteger|)) (#4=#:G707 NIL) (#5=#:G706 #3#)
-          (#6=#:G708 #3#) (#7=#:G719 NIL) (|u| NIL))
+          (|deg| #3=(|NonNegativeInteger|)) (#4=#:G383 NIL) (#5=#:G382 #3#)
+          (#6=#:G384 #3#) (#7=#:G394 NIL) (|u| NIL))
          (SEQ
           (COND
            ((SPADCALL (QREFELT $ 6) |lp| (QREFELT $ 11))
             (SEQ
              (LETT |deg|
                    (PROGN
-                    (LETT #4# NIL
-                          . #8=(|INTSLPE;solveLinearPolynomialEquation;LSupU;1|))
-                    (SEQ (LETT |u| NIL . #8#) (LETT #7# |lp| . #8#) G190
+                    (LETT #4# NIL)
+                    (SEQ (LETT |u| NIL) (LETT #7# |lp|) G190
                          (COND
-                          ((OR (ATOM #7#)
-                               (PROGN (LETT |u| (CAR #7#) . #8#) NIL))
+                          ((OR (ATOM #7#) (PROGN (LETT |u| (CAR #7#)) NIL))
                            (GO G191)))
                          (SEQ
                           (EXIT
                            (PROGN
-                            (LETT #6# (SPADCALL |u| (QREFELT $ 14)) . #8#)
-                            (COND (#4# (LETT #5# (+ #5# #6#) . #8#))
-                                  ('T
-                                   (PROGN
-                                    (LETT #5# #6# . #8#)
-                                    (LETT #4# 'T . #8#)))))))
-                         (LETT #7# (CDR #7#) . #8#) (GO G190) G191 (EXIT NIL))
-                    (COND (#4# #5#) ('T 0)))
-                   . #8#)
-             (LETT |ans| (CONS 1 "failed") . #8#) (SETELT $ 7 2147483647)
+                            (LETT #6# (SPADCALL |u| (QREFELT $ 14)))
+                            (COND (#4# (LETT #5# (+ #5# #6#)))
+                                  ('T (PROGN (LETT #5# #6#) (LETT #4# 'T)))))))
+                         (LETT #7# (CDR #7#)) (GO G190) G191 (EXIT NIL))
+                    (COND (#4# #5#) ('T 0))))
+             (LETT |ans| (CONS 1 "failed")) (SETELT $ 7 2147483647)
              (SEQ G190 (COND ((NULL (QEQCAR |ans| 1)) (GO G191)))
                   (SEQ
                    (LETT |ans|
-                         (SPADCALL |deg| (QREFELT $ 7) |lp| (QREFELT $ 18))
-                         . #8#)
+                         (SPADCALL |deg| (QREFELT $ 7) |lp| (QREFELT $ 18)))
                    (EXIT
                     (COND
                      ((QEQCAR |ans| 1)
@@ -53,7 +46,7 @@
                   NIL (GO G190) G191 (EXIT NIL))
              (EXIT
               (SETELT $ 8
-                      (PROG2 (LETT #1# |ans| . #8#)
+                      (PROG2 (LETT #1# |ans|)
                           (QCDR #1#)
                         (|check_union2| (QEQCAR #1# 0)
                                         (|Vector|
@@ -68,21 +61,19 @@
                                          #2#)
                                         #1#)))))))
           (LETT |answer|
-                (SPADCALL |p| (QREFELT $ 7) (QREFELT $ 8) (QREFELT $ 23))
-                . #8#)
+                (SPADCALL |p| (QREFELT $ 7) (QREFELT $ 8) (QREFELT $ 23)))
           (EXIT |answer|)))) 
 
 (DECLAIM (NOTINLINE |IntegerSolveLinearPolynomialEquation;|)) 
 
 (DEFUN |IntegerSolveLinearPolynomialEquation| ()
   (SPROG NIL
-         (PROG (#1=#:G721)
+         (PROG (#1=#:G396)
            (RETURN
             (COND
              ((LETT #1#
                     (HGET |$ConstructorCache|
-                          '|IntegerSolveLinearPolynomialEquation|)
-                    . #2=(|IntegerSolveLinearPolynomialEquation|))
+                          '|IntegerSolveLinearPolynomialEquation|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -94,7 +85,7 @@
                               (CONS NIL
                                     (CONS 1
                                           (|IntegerSolveLinearPolynomialEquation;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache|
@@ -103,11 +94,10 @@
 (DEFUN |IntegerSolveLinearPolynomialEquation;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|IntegerSolveLinearPolynomialEquation|)
-                . #1=(|IntegerSolveLinearPolynomialEquation|))
-          (LETT $ (GETREFV 25) . #1#)
+          (LETT |dv$| '(|IntegerSolveLinearPolynomialEquation|))
+          (LETT $ (GETREFV 25))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache|
                       '|IntegerSolveLinearPolynomialEquation| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -127,14 +117,27 @@
               (|Union| 10 '"failed") (|Vector| 10) (23 . |solveid|)
               |INTSLPE;solveLinearPolynomialEquation;LSupU;1|)
            '#(|solveLinearPolynomialEquation| 30) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 24
-                                                 '(2 10 9 0 0 11 1 13 12 0 14 3
-                                                   17 15 12 16 10 18 1 19 16 16
-                                                   20 3 17 21 13 16 22 23 2 0
-                                                   21 10 13 24)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|solveLinearPolynomialEquation|
+                                 ((|Union|
+                                   (|List|
+                                    (|SparseUnivariatePolynomial| (|Integer|)))
+                                   "failed")
+                                  (|List|
+                                   (|SparseUnivariatePolynomial| (|Integer|)))
+                                  (|SparseUnivariatePolynomial| (|Integer|))))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 24
+                                            '(2 10 9 0 0 11 1 13 12 0 14 3 17
+                                              15 12 16 10 18 1 19 16 16 20 3 17
+                                              21 13 16 22 23 2 0 21 10 13
+                                              24)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|IntegerSolveLinearPolynomialEquation| 'NILADIC T) 

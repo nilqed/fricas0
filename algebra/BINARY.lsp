@@ -10,11 +10,10 @@
 
 (DEFUN |BinaryExpansion| ()
   (SPROG NIL
-         (PROG (#1=#:G760)
+         (PROG (#1=#:G414)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|BinaryExpansion|)
-                    . #2=(|BinaryExpansion|))
+             ((LETT #1# (HGET |$ConstructorCache| '|BinaryExpansion|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -22,16 +21,16 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|BinaryExpansion|
                              (LIST (CONS NIL (CONS 1 (|BinaryExpansion;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache| '|BinaryExpansion|)))))))))) 
 
 (DEFUN |BinaryExpansion;| ()
-  (SPROG ((|dv$| NIL) ($ NIL) (#1=#:G758 NIL) (|pv$| NIL))
+  (SPROG ((|dv$| NIL) ($ NIL) (#1=#:G412 NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|BinaryExpansion|) . #2=(|BinaryExpansion|))
-          (LETT $ (GETREFV 55) . #2#)
+          (LETT |dv$| '(|BinaryExpansion|))
+          (LETT $ (GETREFV 55))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -104,14 +103,12 @@
                                                              '(|IntegerNumberSystem|))
                                               (LETT #1#
                                                     (|HasCategory| (|Integer|)
-                                                                   '(|Comparable|))
-                                                    . #2#)
+                                                                   '(|Comparable|)))
                                               (OR #1#
                                                   (|HasCategory| (|Integer|)
                                                                  '(|OrderedIntegralDomain|))
                                                   (|HasCategory| (|Integer|)
-                                                                 '(|OrderedSet|)))))
-                          . #2#))
+                                                                 '(|OrderedSet|)))))))
           (|haddProp| |$ConstructorCache| '|BinaryExpansion| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (AND (|HasCategory| $ '(|CharacteristicNonZero|))
@@ -177,8 +174,8 @@
                                 '(0 0 0 1 0 0 0 7 0 0 0 0 0 0 7 0 0 0 0 0 3 4
                                   15 16 0 0 0 0 0 0 0 0 0 0 0 7 0 0 0 0 0 0 0 7
                                   0 7 0 0 0 7 0 0 0 0 0 9 0 0 0 25 11 19 20 0 0
-                                  6 13 0 0 0 0 0 0 0 0 0 2 5 6 6 8 10 12 13 14
-                                  17 18))
+                                  0 6 13 0 0 0 0 0 0 0 0 0 2 5 6 6 8 10 12 13
+                                  14 17 18))
             (CONS
              '#(|QuotientFieldCategory&| |Field&| |EuclideanDomain&|
                 |PolynomialFactorizationExplicit&| NIL
@@ -192,7 +189,7 @@
                 |NonAssociativeRng&| NIL NIL |AbelianGroup&| NIL NIL NIL NIL
                 NIL NIL NIL |MagmaWithUnit&| |NonAssociativeSemiRng&|
                 |AbelianMonoid&| |OrderedSet&| |FullyEvalableOver&| |Magma&|
-                |AbelianSemiGroup&| NIL NIL NIL NIL NIL |SetCategory&| NIL
+                |AbelianSemiGroup&| NIL NIL NIL NIL NIL NIL |SetCategory&| NIL
                 |Evalable&| NIL |RetractableTo&| NIL NIL NIL NIL NIL
                 |BasicType&| NIL |RetractableTo&| NIL NIL NIL |PartialOrder&|
                 |RetractableTo&| |InnerEvalable&| |InnerEvalable&| NIL NIL NIL)
@@ -220,15 +217,15 @@
                  (|NonAssociativeSemiRng|) (|AbelianMonoid|) (|OrderedSet|)
                  (|FullyEvalableOver| 18) (|Magma|) (|AbelianSemiGroup|)
                  (|Comparable|) (|StepThrough|) (|PatternMatchable| 35)
-                 (|PatternMatchable| 18) (|Patternable| 18) (|SetCategory|)
-                 (|RealConstant|) (|Evalable| 18) (|Type|) (|RetractableTo| 18)
-                 (|canonicalsClosed|) (|canonicalUnitNormal|)
-                 (|noZeroDivisors|) (|CommutativeStar|) (|unitsKnown|)
-                 (|BasicType|) (|CoercibleTo| 54) (|RetractableTo| 22)
-                 (|ConvertibleTo| 14) (|ConvertibleTo| 34) (|ConvertibleTo| 35)
-                 (|PartialOrder|) (|RetractableTo| 6) (|InnerEvalable| 22 18)
-                 (|InnerEvalable| 18 18) (|Eltable| 18 $$) (|ConvertibleTo| 15)
-                 (|ConvertibleTo| 16))
+                 (|PatternMatchable| 18) (|Patternable| 18) (|CommutativeStar|)
+                 (|SetCategory|) (|RealConstant|) (|Evalable| 18) (|Type|)
+                 (|RetractableTo| 18) (|canonicalsClosed|)
+                 (|canonicalUnitNormal|) (|noZeroDivisors|) (|TwoSidedRecip|)
+                 (|unitsKnown|) (|BasicType|) (|CoercibleTo| 54)
+                 (|RetractableTo| 22) (|ConvertibleTo| 14) (|ConvertibleTo| 34)
+                 (|ConvertibleTo| 35) (|PartialOrder|) (|RetractableTo| 6)
+                 (|InnerEvalable| 22 18) (|InnerEvalable| 18 18)
+                 (|Eltable| 18 $$) (|ConvertibleTo| 15) (|ConvertibleTo| 16))
               (|makeByteWordVec2| 54
                                   '(1 0 0 6 7 2 0 13 0 0 1 1 0 13 0 1 1 22 18 0
                                     1 1 0 49 0 1 1 0 0 0 1 1 0 13 0 1 2 0 12 0

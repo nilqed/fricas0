@@ -4,19 +4,17 @@
 (DEFPARAMETER |PartialOrder;AL| 'NIL) 
 
 (DEFUN |PartialOrder| ()
-  (LET (#:G692)
-    (COND (|PartialOrder;AL|) (T (SETQ |PartialOrder;AL| (|PartialOrder;|)))))) 
+  (COND (|PartialOrder;AL|) (T (SETQ |PartialOrder;AL| (|PartialOrder;|))))) 
 
 (DEFUN |PartialOrder;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|Join|
                     (|mkCategory|
                      '(((< ((|Boolean|) $ $)) T) ((> ((|Boolean|) $ $)) T)
                        ((>= ((|Boolean|) $ $)) T) ((<= ((|Boolean|) $ $)) T))
-                     NIL '((|Boolean|)) NIL))
-                   |PartialOrder|)
+                     NIL NIL NIL)))
            (SETELT #1# 0 '(|PartialOrder|))))) 
 
 (MAKEPROP '|PartialOrder| 'NILADIC T) 

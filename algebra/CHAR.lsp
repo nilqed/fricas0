@@ -15,10 +15,8 @@
         (SPADCALL (- |n| 1) (QREFELT $ 13))) 
 
 (SDEFUN |CHAR;lookup;$Pi;5| ((|c| $) ($ |PositiveInteger|))
-        (SPROG ((#1=#:G983 NIL))
-               (PROG1
-                   (LETT #1# (+ 1 (SPADCALL |c| (QREFELT $ 16)))
-                         |CHAR;lookup;$Pi;5|)
+        (SPROG ((#1=#:G647 NIL))
+               (PROG1 (LETT #1# (+ 1 (SPADCALL |c| (QREFELT $ 16))))
                  (|check_subtype2| (> #1# 0) '(|PositiveInteger|) '(|Integer|)
                                    #1#)))) 
 
@@ -30,17 +28,11 @@
 
 (SDEFUN |CHAR;random;$;8| (($ $)) (SPADCALL (RANDOM 128) (QREFELT $ 13))) 
 
-(PUT '|CHAR;space;$;9| '|SPADreplace| '(XLAM NIL (STR_ELT "   " 0))) 
+(SDEFUN |CHAR;space;$;9| (($ $)) (SPADCALL 32 (QREFELT $ 13))) 
 
-(SDEFUN |CHAR;space;$;9| (($ $)) (STR_ELT "   " 0)) 
+(SDEFUN |CHAR;quote;$;10| (($ $)) (SPADCALL 34 (QREFELT $ 13))) 
 
-(PUT '|CHAR;quote;$;10| '|SPADreplace| '(XLAM NIL (STR_ELT "\" " 0))) 
-
-(SDEFUN |CHAR;quote;$;10| (($ $)) (STR_ELT "\" " 0)) 
-
-(PUT '|CHAR;escape;$;11| '|SPADreplace| '(XLAM NIL (STR_ELT "_ " 0))) 
-
-(SDEFUN |CHAR;escape;$;11| (($ $)) (STR_ELT "_ " 0)) 
+(SDEFUN |CHAR;escape;$;11| (($ $)) (SPADCALL 95 (QREFELT $ 13))) 
 
 (SDEFUN |CHAR;newline;$;12| (($ $)) (SPADCALL 10 (QREFELT $ 13))) 
 
@@ -87,11 +79,10 @@
 
 (DEFUN |Character| ()
   (SPROG NIL
-         (PROG (#1=#:G1006)
+         (PROG (#1=#:G670)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|Character|)
-                    . #2=(|Character|))
+             ((LETT #1# (HGET |$ConstructorCache| '|Character|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -99,17 +90,17 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|Character|
                              (LIST (CONS NIL (CONS 1 (|Character;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#) (HREM |$ConstructorCache| '|Character|)))))))))) 
 
 (DEFUN |Character;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|Character|) . #1=(|Character|))
-          (LETT $ (GETREFV 51) . #1#)
+          (LETT |dv$| '(|Character|))
+          (LETT $ (GETREFV 51))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|Character| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

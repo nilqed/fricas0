@@ -5,26 +5,27 @@
 
 (DEFPARAMETER |TriangularSetCategory;AL| 'NIL) 
 
-(DEFUN |TriangularSetCategory| (&REST #1=#:G755)
-  (LET (#2=#:G756)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluateList| #1#) |TriangularSetCategory;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |TriangularSetCategory;AL|
-              (|cons5|
-               (CONS #3# (SETQ #2# (APPLY #'|TriangularSetCategory;| #1#)))
-               |TriangularSetCategory;AL|))
-      #2#)))) 
+(DEFUN |TriangularSetCategory| (|t#1| |t#2| |t#3| |t#4|)
+  (LET (#1=#:G443
+        (#2=#:G444
+         (LIST (|devaluate| |t#1|) (|devaluate| |t#2|) (|devaluate| |t#3|)
+               (|devaluate| |t#4|))))
+    (COND ((SETQ #1# (|assoc| #2# |TriangularSetCategory;AL|)) (CDR #1#))
+          (T
+           (SETQ |TriangularSetCategory;AL|
+                   (|cons5|
+                    (CONS #2#
+                          (SETQ #1# (APPLY #'|TriangularSetCategory;| #2#)))
+                    |TriangularSetCategory;AL|))
+           #1#)))) 
 
 (DEFUN |TriangularSetCategory;| (|t#1| |t#2| |t#3| |t#4|)
-  (SPROG ((#1=#:G754 NIL))
+  (SPROG ((#1=#:G442 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
-                    (PAIR '(|t#1| |t#2| |t#3| |t#4|)
-                          (LIST (|devaluate| |t#1|) (|devaluate| |t#2|)
-                                (|devaluate| |t#3|) (|devaluate| |t#4|)))
+                    (MAKE_PAIRS '(|t#1| |t#2| |t#3| |t#4|)
+                                (LIST |t#1| |t#2| |t#3| |t#4|))
                     (COND (|TriangularSetCategory;CAT|)
                           ('T
                            (LETT |TriangularSetCategory;CAT|
@@ -120,17 +121,6 @@
                                      ((|extend| ($ $ |t#4|)) T)
                                      ((|coHeight| ((|NonNegativeInteger|) $))
                                       (|has| |t#3| (|Finite|))))
-                                   NIL
-                                   '((|NonNegativeInteger|) (|Boolean|)
-                                     (|List| |t#3|)
-                                     (|List|
-                                      (|Record| (|:| |close| $)
-                                                (|:| |open| (|List| |t#4|))))
-                                     (|List| |t#4|) (|List| $))
-                                   NIL))
-                                 . #2=(|TriangularSetCategory|)))))
-                   . #2#)
+                                   NIL NIL NIL)))))))
            (SETELT #1# 0
-                   (LIST '|TriangularSetCategory| (|devaluate| |t#1|)
-                         (|devaluate| |t#2|) (|devaluate| |t#3|)
-                         (|devaluate| |t#4|)))))) 
+                   (LIST '|TriangularSetCategory| |t#1| |t#2| |t#3| |t#4|))))) 

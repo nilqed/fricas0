@@ -117,12 +117,10 @@
 
 (SDEFUN |SYMS;printHeader;S$V;24| ((|u| |Symbol|) (|symbols| $) ($ |Void|))
         (SPROG ((|entry| (|Entry|)))
-               (SEQ
-                (LETT |entry| (SPADCALL |symbols| |u| (QREFELT $ 19))
-                      |SYMS;printHeader;S$V;24|)
-                (SPADCALL |u| (QVELT |entry| 1) (QVELT |entry| 2)
-                          (QREFELT $ 51))
-                (EXIT (SPADCALL (QVELT |entry| 0) (QREFELT $ 52)))))) 
+               (SEQ (LETT |entry| (SPADCALL |symbols| |u| (QREFELT $ 19)))
+                    (SPADCALL |u| (QVELT |entry| 1) (QVELT |entry| 2)
+                              (QREFELT $ 51))
+                    (EXIT (SPADCALL (QVELT |entry| 0) (QREFELT $ 52)))))) 
 
 (SDEFUN |SYMS;printHeader;SV;25| ((|u| |Symbol|) ($ |Void|))
         (SPADCALL |u| (QREFELT $ 9) (QREFELT $ 53))) 
@@ -138,11 +136,10 @@
 
 (DEFUN |TheSymbolTable| ()
   (SPROG NIL
-         (PROG (#1=#:G754)
+         (PROG (#1=#:G436)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|TheSymbolTable|)
-                    . #2=(|TheSymbolTable|))
+             ((LETT #1# (HGET |$ConstructorCache| '|TheSymbolTable|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -150,7 +147,7 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|TheSymbolTable|
                              (LIST (CONS NIL (CONS 1 (|TheSymbolTable;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache| '|TheSymbolTable|)))))))))) 
@@ -158,10 +155,10 @@
 (DEFUN |TheSymbolTable;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|TheSymbolTable|) . #1=(|TheSymbolTable|))
-          (LETT $ (GETREFV 57) . #1#)
+          (LETT |dv$| '(|TheSymbolTable|))
+          (LETT $ (GETREFV 57))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|TheSymbolTable| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

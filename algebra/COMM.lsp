@@ -12,8 +12,7 @@
                   (COND
                    ((QEQCAR |y| 1)
                     (EXIT
-                     (SEQ (LETT |xx| (QCDR |x|) . #1=(|COMM;=;2$B;1|))
-                          (LETT |yy| (QCDR |y|) . #1#)
+                     (SEQ (LETT |xx| (QCDR |x|)) (LETT |yy| (QCDR |y|))
                           (EXIT
                            (COND
                             ((SPADCALL (QCDR |xx|) (QCDR |yy|) (QREFELT $ 11))
@@ -31,7 +30,7 @@
                (SEQ
                 (COND ((QEQCAR |x| 0) (SPADCALL (QCDR |x|) (QREFELT $ 17)))
                       ('T
-                       (SEQ (LETT |xx| (QCDR |x|) |COMM;coerce;$Of;4|)
+                       (SEQ (LETT |xx| (QCDR |x|))
                             (EXIT
                              (SPADCALL
                               (LIST (SPADCALL (QCAR |xx|) (QREFELT $ 18))
@@ -42,11 +41,10 @@
 
 (DEFUN |Commutator| ()
   (SPROG NIL
-         (PROG (#1=#:G716)
+         (PROG (#1=#:G395)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|Commutator|)
-                    . #2=(|Commutator|))
+             ((LETT #1# (HGET |$ConstructorCache| '|Commutator|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -54,17 +52,17 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|Commutator|
                              (LIST (CONS NIL (CONS 1 (|Commutator;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#) (HREM |$ConstructorCache| '|Commutator|)))))))))) 
 
 (DEFUN |Commutator;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|Commutator|) . #1=(|Commutator|))
-          (LETT $ (GETREFV 24) . #1#)
+          (LETT |dv$| '(|Commutator|))
+          (LETT $ (GETREFV 24))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|Commutator| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

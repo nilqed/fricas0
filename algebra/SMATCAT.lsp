@@ -5,31 +5,32 @@
 
 (DEFPARAMETER |SquareMatrixCategory;AL| 'NIL) 
 
-(DEFUN |SquareMatrixCategory| (&REST #1=#:G703)
-  (LET (#2=#:G704)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluateList| #1#) |SquareMatrixCategory;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |SquareMatrixCategory;AL|
-              (|cons5|
-               (CONS #3# (SETQ #2# (APPLY #'|SquareMatrixCategory;| #1#)))
-               |SquareMatrixCategory;AL|))
-      #2#)))) 
+(DEFUN |SquareMatrixCategory| (|t#1| |t#2| |t#3| |t#4|)
+  (LET (#1=#:G387
+        (#2=#:G388
+         (LIST (|devaluate| |t#1|) (|devaluate| |t#2|) (|devaluate| |t#3|)
+               (|devaluate| |t#4|))))
+    (COND ((SETQ #1# (|assoc| #2# |SquareMatrixCategory;AL|)) (CDR #1#))
+          (T
+           (SETQ |SquareMatrixCategory;AL|
+                   (|cons5|
+                    (CONS #2# (SETQ #1# (APPLY #'|SquareMatrixCategory;| #2#)))
+                    |SquareMatrixCategory;AL|))
+           #1#)))) 
 
 (DEFUN |SquareMatrixCategory;| (|t#1| |t#2| |t#3| |t#4|)
-  (SPROG ((#1=#:G702 NIL))
+  (SPROG ((#1=#:G386 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
-                    (PAIR '(|t#1| |t#2| |t#3| |t#4|)
-                          (LIST (|devaluate| |t#1|) (|devaluate| |t#2|)
-                                (|devaluate| |t#3|) (|devaluate| |t#4|)))
+                    (MAKE_PAIRS '(|t#1| |t#2| |t#3| |t#4|)
+                                (LIST |t#1| |t#2| |t#3| |t#4|))
                     (COND (|SquareMatrixCategory;CAT|)
                           ('T
                            (LETT |SquareMatrixCategory;CAT|
                                  (|Join| (|SemiRng|) (|AbelianMonoid|)
                                          (|BiModule| '|t#2| '|t#2|)
+                                         (|TwoSidedRecip|)
                                          (|RectangularMatrixCategory| |t#1|
                                                                       |t#1|
                                                                       '|t#2|
@@ -67,10 +68,6 @@
                                             ((|Algebra| |t#2|)
                                              (|has| |t#2|
                                                     (|CommutativeRing|))))
-                                          '((|Integer|) (|List| |t#2|)) NIL))
-                                 . #2=(|SquareMatrixCategory|)))))
-                   . #2#)
+                                          NIL NIL)))))))
            (SETELT #1# 0
-                   (LIST '|SquareMatrixCategory| (|devaluate| |t#1|)
-                         (|devaluate| |t#2|) (|devaluate| |t#3|)
-                         (|devaluate| |t#4|)))))) 
+                   (LIST '|SquareMatrixCategory| |t#1| |t#2| |t#3| |t#4|))))) 

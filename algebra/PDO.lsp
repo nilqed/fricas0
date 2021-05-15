@@ -2,36 +2,32 @@
 (SDEFUN |PDO;adjoint;2$;1| ((|x| $) ($ $))
         (SPROG
          ((|xu| (|Sup|)) (|res| ($)) (|sign| ($)) (|d| (|NonNegativeInteger|))
-          (|v| (|Var|)) (#1=#:G701 NIL))
+          (|v| (|Var|)) (#1=#:G387 NIL))
          (SEQ
           (COND ((SPADCALL |x| (QREFELT $ 15)) |x|)
                 ('T
                  (SEQ
                   (LETT |v|
-                        (PROG2
-                            (LETT #1# (SPADCALL |x| (QREFELT $ 17))
-                                  . #2=(|PDO;adjoint;2$;1|))
+                        (PROG2 (LETT #1# (SPADCALL |x| (QREFELT $ 17)))
                             (QCDR #1#)
                           (|check_union2| (QEQCAR #1# 0) (QREFELT $ 7)
                                           (|Union| (QREFELT $ 7) "failed")
-                                          #1#))
-                        . #2#)
-                  (LETT |xu| (SPADCALL |x| |v| (QREFELT $ 20)) . #2#)
-                  (LETT |res| (|spadConstant| $ 21) . #2#)
-                  (LETT |xu| (SPADCALL (ELT $ 22) |xu| (QREFELT $ 24)) . #2#)
+                                          #1#)))
+                  (LETT |xu| (SPADCALL |x| |v| (QREFELT $ 20)))
+                  (LETT |res| (|spadConstant| $ 21))
+                  (LETT |xu| (SPADCALL (ELT $ 22) |xu| (QREFELT $ 24)))
                   (SEQ G190
                        (COND
                         ((NULL
                           (SPADCALL |xu| (|spadConstant| $ 26) (QREFELT $ 27)))
                          (GO G191)))
-                       (SEQ (LETT |d| (SPADCALL |xu| (QREFELT $ 29)) . #2#)
+                       (SEQ (LETT |d| (SPADCALL |xu| (QREFELT $ 29)))
                             (LETT |sign|
                                   (COND
                                    ((ODDP |d|)
                                     (SPADCALL (|spadConstant| $ 30)
                                               (QREFELT $ 32)))
-                                   ('T (|spadConstant| $ 30)))
-                                  . #2#)
+                                   ('T (|spadConstant| $ 30))))
                             (LETT |res|
                                   (SPADCALL |res|
                                             (SPADCALL
@@ -42,32 +38,29 @@
                                                        (QREFELT $ 34))
                                              (SPADCALL |xu| (QREFELT $ 35))
                                              (QREFELT $ 34))
-                                            (QREFELT $ 36))
-                                  . #2#)
-                            (EXIT
-                             (LETT |xu| (SPADCALL |xu| (QREFELT $ 37)) . #2#)))
+                                            (QREFELT $ 36)))
+                            (EXIT (LETT |xu| (SPADCALL |xu| (QREFELT $ 37)))))
                        NIL (GO G190) G191 (EXIT NIL))
                   (EXIT |res|))))))) 
 
 (DECLAIM (NOTINLINE |PartialDifferentialOperator;|)) 
 
-(DEFUN |PartialDifferentialOperator| (&REST #1=#:G748)
+(DEFUN |PartialDifferentialOperator| (&REST #1=#:G415)
   (SPROG NIL
-         (PROG (#2=#:G749)
+         (PROG (#2=#:G416)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|PartialDifferentialOperator|)
-                                               '|domainEqualList|)
-                    . #3=(|PartialDifferentialOperator|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1
                       (APPLY (|function| |PartialDifferentialOperator;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -75,13 +68,13 @@
 
 (DEFUN |PartialDifferentialOperator;| (|#1| |#2|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G745 NIL) (#2=#:G746 NIL) (#3=#:G747 NIL) ($ NIL)
+   ((|pv$| NIL) (#1=#:G412 NIL) (#2=#:G413 NIL) (#3=#:G414 NIL) ($ NIL)
     (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #4=(|PartialDifferentialOperator|))
-    (LETT DV$2 (|devaluate| |#2|) . #4#)
-    (LETT |dv$| (LIST '|PartialDifferentialOperator| DV$1 DV$2) . #4#)
-    (LETT $ (GETREFV 62) . #4#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT |dv$| (LIST '|PartialDifferentialOperator| DV$1 DV$2))
+    (LETT $ (GETREFV 62))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -112,8 +105,7 @@
                                                          (|Integer|)))
                                         (LETT #3#
                                               (|HasCategory| |#1|
-                                                             '(|LeftOreRing|))
-                                              . #4#)
+                                                             '(|LeftOreRing|)))
                                         (OR
                                          (|HasCategory| |#1|
                                                         '(|Algebra|
@@ -152,15 +144,13 @@
                                          (|HasCategory| |#1| '(|Ring|)))
                                         (LETT #2#
                                               (|HasCategory| |#1|
-                                                             '(|CancellationAbelianMonoid|))
-                                              . #4#)
+                                                             '(|CancellationAbelianMonoid|)))
                                         (OR
                                          (|HasCategory| |#1| '(|AbelianGroup|))
                                          #2#)
                                         (LETT #1#
                                               (|HasCategory| |#1|
-                                                             '(|AbelianMonoid|))
-                                              . #4#)
+                                                             '(|AbelianMonoid|)))
                                         (OR
                                          (AND
                                           (|HasCategory| |#1|
@@ -171,8 +161,7 @@
                                            (|Fraction| (|Integer|))
                                            '(|AbelianMonoid|)))
                                          (|HasCategory| |#1| '(|AbelianGroup|))
-                                         #1# #2#)))
-                    . #4#))
+                                         #1# #2#)))))
     (|haddProp| |$ConstructorCache| '|PartialDifferentialOperator|
                 (LIST DV$1 DV$2) (CONS 1 $))
     (|stuffDomainSlots| $)
@@ -311,7 +300,7 @@
                  (|CharacteristicNonZero|) (|CharacteristicZero|)
                  (|EntireRing|) (|LinearlyExplicitOver| 6)
                  (|LinearlyExplicitOver| 42)
-                 (|SolvableSkewPolynomialCategory| 6 (|IndexedExponents| 7) 7)
+                 (|SolvableSkewPolynomialCategory| 6 (|IndexedExponents| 7))
                  (|Ring|) (|Rng|) (|SemiRing|) (|SemiRng|) (|Module| 45)
                  (|BiModule| 6 6) (|BiModule| $$ $$) (|BiModule| 45 45)
                  (|NonAssociativeRing|) (|LeftModule| 6) (|RightModule| 6)

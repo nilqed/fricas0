@@ -14,23 +14,22 @@
 
 (DECLAIM (NOTINLINE |FiniteSetAggregateFunctions2;|)) 
 
-(DEFUN |FiniteSetAggregateFunctions2| (&REST #1=#:G702)
+(DEFUN |FiniteSetAggregateFunctions2| (&REST #1=#:G386)
   (SPROG NIL
-         (PROG (#2=#:G703)
+         (PROG (#2=#:G387)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|FiniteSetAggregateFunctions2|)
-                                               '|domainEqualList|)
-                    . #3=(|FiniteSetAggregateFunctions2|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1
                       (APPLY (|function| |FiniteSetAggregateFunctions2;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -41,15 +40,14 @@
    ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL) (DV$2 NIL)
     (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #1=(|FiniteSetAggregateFunctions2|))
-    (LETT DV$2 (|devaluate| |#2|) . #1#)
-    (LETT DV$3 (|devaluate| |#3|) . #1#)
-    (LETT DV$4 (|devaluate| |#4|) . #1#)
-    (LETT |dv$| (LIST '|FiniteSetAggregateFunctions2| DV$1 DV$2 DV$3 DV$4)
-          . #1#)
-    (LETT $ (GETREFV 23) . #1#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT DV$4 (|devaluate| |#4|))
+    (LETT |dv$| (LIST '|FiniteSetAggregateFunctions2| DV$1 DV$2 DV$3 DV$4))
+    (LETT $ (GETREFV 23))
     (QSETREFV $ 0 |dv$|)
-    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
     (|haddProp| |$ConstructorCache| '|FiniteSetAggregateFunctions2|
                 (LIST DV$1 DV$2 DV$3 DV$4) (CONS 1 $))
     (|stuffDomainSlots| $)
@@ -68,13 +66,23 @@
               |FSAGG2;map;MAB;1| (|Mapping| 8 6 8) (16 . |reduce|)
               |FSAGG2;reduce;MA2R;2| (23 . |scan|) |FSAGG2;scan;MARB;3|)
            '#(|scan| 30 |reduce| 37 |map| 44) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 22
-                                                 '(1 7 10 0 11 2 14 12 13 10 15
-                                                   1 9 0 12 16 3 14 8 18 10 8
-                                                   19 3 14 12 18 10 8 21 3 0 9
-                                                   18 7 8 22 3 0 8 18 7 8 20 2
-                                                   0 9 13 7 17)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|map| (|#4| (|Mapping| |#3| |#1|) |#2|)) T)
+                              '((|reduce|
+                                 (|#3| (|Mapping| |#3| |#1| |#3|) |#2| |#3|))
+                                T)
+                              '((|scan|
+                                 (|#4| (|Mapping| |#3| |#1| |#3|) |#2| |#3|))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 22
+                                            '(1 7 10 0 11 2 14 12 13 10 15 1 9
+                                              0 12 16 3 14 8 18 10 8 19 3 14 12
+                                              18 10 8 21 3 0 9 18 7 8 22 3 0 8
+                                              18 7 8 20 2 0 9 13 7 17)))))
            '|lookupComplete|)) 

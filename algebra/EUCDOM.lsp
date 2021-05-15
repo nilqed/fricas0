@@ -4,12 +4,11 @@
 (DEFPARAMETER |EuclideanDomain;AL| 'NIL) 
 
 (DEFUN |EuclideanDomain| ()
-  (LET (#:G709)
-    (COND (|EuclideanDomain;AL|)
-          (T (SETQ |EuclideanDomain;AL| (|EuclideanDomain;|)))))) 
+  (COND (|EuclideanDomain;AL|)
+        (T (SETQ |EuclideanDomain;AL| (|EuclideanDomain;|))))) 
 
 (DEFUN |EuclideanDomain;| ()
-  (SPROG ((#1=#:G707 NIL))
+  (SPROG ((#1=#:G395 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|PrincipalIdealDomain|)
@@ -36,10 +35,7 @@
                               ((|multiEuclidean|
                                 ((|Union| (|List| $) "failed") (|List| $) $))
                                T))
-                            NIL
-                            '((|List| $) (|NonNegativeInteger|) (|Boolean|))
-                            NIL))
-                   |EuclideanDomain|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|EuclideanDomain|))))) 
 
 (MAKEPROP '|EuclideanDomain| 'NILADIC T) 

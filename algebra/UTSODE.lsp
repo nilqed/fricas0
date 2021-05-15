@@ -6,8 +6,8 @@
 
 (SDEFUN |UTSODE;stFunc1;MM;1!0| ((|s| NIL) ($$ NIL))
         (PROG ($ |f|)
-          (LETT $ (QREFELT $$ 1) . #1=(|UTSODE;stFunc1;MM;1|))
-          (LETT |f| (QREFELT $$ 0) . #1#)
+          (LETT $ (QREFELT $$ 1))
+          (LETT |f| (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL (SPADCALL (SPADCALL |s| (QREFELT $ 9)) |f|)
@@ -20,8 +20,8 @@
 
 (SDEFUN |UTSODE;stFunc2;MM;2!0| ((|s1| NIL) (|s2| NIL) ($$ NIL))
         (PROG ($ |f|)
-          (LETT $ (QREFELT $$ 1) . #1=(|UTSODE;stFunc2;MM;2|))
-          (LETT |f| (QREFELT $$ 0) . #1#)
+          (LETT $ (QREFELT $$ 1))
+          (LETT |f| (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL
@@ -36,8 +36,8 @@
 
 (SDEFUN |UTSODE;stFuncN;MM;3!0| ((|ls| NIL) ($$ NIL))
         (PROG ($ |f|)
-          (LETT $ (QREFELT $$ 1) . #1=(|UTSODE;stFuncN;MM;3|))
-          (LETT |f| (QREFELT $$ 0) . #1#)
+          (LETT $ (QREFELT $$ 1))
+          (LETT |f| (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL (SPADCALL (SPADCALL (ELT $ 9) |ls| (QREFELT $ 21)) |f|)
@@ -54,12 +54,12 @@
 
 (SDEFUN |UTSODE;divloopre!0| (($$ NIL))
         (PROG (|hx| |hy| $ |tx| |ty| |c|)
-          (LETT |hx| (QREFELT $$ 5) . #1=(|UTSODE;divloopre|))
-          (LETT |hy| (QREFELT $$ 4) . #1#)
-          (LETT $ (QREFELT $$ 3) . #1#)
-          (LETT |tx| (QREFELT $$ 2) . #1#)
-          (LETT |ty| (QREFELT $$ 1) . #1#)
-          (LETT |c| (QREFELT $$ 0) . #1#)
+          (LETT |hx| (QREFELT $$ 5))
+          (LETT |hy| (QREFELT $$ 4))
+          (LETT $ (QREFELT $$ 3))
+          (LETT |tx| (QREFELT $$ 2))
+          (LETT |ty| (QREFELT $$ 1))
+          (LETT |c| (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL (SPADCALL |hx| |hy| (QREFELT $ 25))
@@ -80,11 +80,11 @@
 
 (SDEFUN |UTSODE;divloop!0| ((|s| NIL) ($$ NIL))
         (PROG (|hx| |tx| |hy| |ty| $)
-          (LETT |hx| (QREFELT $$ 4) . #1=(|UTSODE;divloop|))
-          (LETT |tx| (QREFELT $$ 3) . #1#)
-          (LETT |hy| (QREFELT $$ 2) . #1#)
-          (LETT |ty| (QREFELT $$ 1) . #1#)
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |hx| (QREFELT $$ 4))
+          (LETT |tx| (QREFELT $$ 3))
+          (LETT |hy| (QREFELT $$ 2))
+          (LETT |ty| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (|UTSODE;divloopre| |hx| |tx| |hy| |ty| |s| $))))) 
 
 (SDEFUN |UTSODE;sdiv|
@@ -96,9 +96,9 @@
 
 (SDEFUN |UTSODE;sdiv!0| (($$ NIL))
         (PROG (|x| $ |y|)
-          (LETT |x| (QREFELT $$ 2) . #1=(|UTSODE;sdiv|))
-          (LETT $ (QREFELT $$ 1) . #1#)
-          (LETT |y| (QREFELT $$ 0) . #1#)
+          (LETT |x| (QREFELT $$ 2))
+          (LETT $ (QREFELT $$ 1))
+          (LETT |y| (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPROG ((|hx| NIL) (|tx| NIL) (|hy| NIL) (|ty| NIL) (|rhy| NIL))
@@ -108,10 +108,10 @@
                      ((SPADCALL |y| (QREFELT $ 36))
                       (|error| "stream division by zero"))
                      ('T
-                      (SEQ (LETT |hx| (SPADCALL |x| (QREFELT $ 38)) NIL)
-                           (LETT |tx| (SPADCALL |x| (QREFELT $ 39)) NIL)
-                           (LETT |hy| (SPADCALL |y| (QREFELT $ 38)) NIL)
-                           (LETT |ty| (SPADCALL |y| (QREFELT $ 39)) NIL)
+                      (SEQ (LETT |hx| (SPADCALL |x| (QREFELT $ 38)))
+                           (LETT |tx| (SPADCALL |x| (QREFELT $ 39)))
+                           (LETT |hy| (SPADCALL |y| (QREFELT $ 38)))
+                           (LETT |ty| (SPADCALL |y| (QREFELT $ 39)))
                            (EXIT
                             (COND
                              ((SPADCALL |hy| (QREFELT $ 40))
@@ -120,15 +120,15 @@
                                 (|UTSODE;sdiv| |tx| |ty| $))
                                ('T (|error| "stream division by zero"))))
                              ('T
-                              (SEQ
-                               (LETT |rhy| (SPADCALL |hy| (QREFELT $ 42)) NIL)
-                               (EXIT
-                                (COND
-                                 ((QEQCAR |rhy| 1)
-                                  (|error| "stream division:no reciprocal"))
-                                 ('T
-                                  (|UTSODE;divloop| |hx| |tx| (QCDR |rhy|) |ty|
-                                   $))))))))))))))))) 
+                              (SEQ (LETT |rhy| (SPADCALL |hy| (QREFELT $ 42)))
+                                   (EXIT
+                                    (COND
+                                     ((QEQCAR |rhy| 1)
+                                      (|error|
+                                       "stream division:no reciprocal"))
+                                     ('T
+                                      (|UTSODE;divloop| |hx| |tx| (QCDR |rhy|)
+                                       |ty| $))))))))))))))))) 
 
 (SDEFUN |UTSODE;fixedPointExquo;3UTS;7| ((|f| UTS) (|g| UTS) ($ UTS))
         (SPADCALL
@@ -145,8 +145,8 @@
 
 (SDEFUN |UTSODE;ode1re!0| (($$ NIL))
         (PROG (|y| |f|)
-          (LETT |y| (QREFELT $$ 1) . #1=(|UTSODE;ode1re|))
-          (LETT |f| (QREFELT $$ 0) . #1#)
+          (LETT |y| (QREFELT $$ 1))
+          (LETT |f| (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL |y| |f|))))) 
 
 (SDEFUN |UTSODE;iOde1|
@@ -158,9 +158,9 @@
 
 (SDEFUN |UTSODE;iOde1!0| ((|s| NIL) ($$ NIL))
         (PROG (|f| |c| $)
-          (LETT |f| (QREFELT $$ 2) . #1=(|UTSODE;iOde1|))
-          (LETT |c| (QREFELT $$ 1) . #1#)
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |f| (QREFELT $$ 2))
+          (LETT |c| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (|UTSODE;ode1re| |f| |c| |s| $))))) 
 
 (SDEFUN |UTSODE;ode1;MCoefUTS;10|
@@ -176,8 +176,7 @@
                 (LETT |yi|
                       (SPADCALL |c1|
                                 (CONS #'|UTSODE;ode2re!0| (VECTOR |f| $ |y|))
-                                (QREFELT $ 45))
-                      |UTSODE;ode2re|)
+                                (QREFELT $ 45)))
                 (EXIT
                  (SPADCALL |c0| (CONS #'|UTSODE;ode2re!1| |yi|)
                            (QREFELT $ 45)))))) 
@@ -186,9 +185,9 @@
 
 (SDEFUN |UTSODE;ode2re!0| (($$ NIL))
         (PROG (|y| $ |f|)
-          (LETT |y| (QREFELT $$ 2) . #1=(|UTSODE;ode2re|))
-          (LETT $ (QREFELT $$ 1) . #1#)
-          (LETT |f| (QREFELT $$ 0) . #1#)
+          (LETT |y| (QREFELT $$ 2))
+          (LETT $ (QREFELT $$ 1))
+          (LETT |f| (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL |y| (SPADCALL |y| (QREFELT $ 47)) |f|))))) 
 
 (SDEFUN |UTSODE;iOde2|
@@ -200,10 +199,10 @@
 
 (SDEFUN |UTSODE;iOde2!0| ((|s| NIL) ($$ NIL))
         (PROG (|f| |c0| |c1| $)
-          (LETT |f| (QREFELT $$ 3) . #1=(|UTSODE;iOde2|))
-          (LETT |c0| (QREFELT $$ 2) . #1#)
-          (LETT |c1| (QREFELT $$ 1) . #1#)
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |f| (QREFELT $$ 3))
+          (LETT |c0| (QREFELT $$ 2))
+          (LETT |c1| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (|UTSODE;ode2re| |f| |c0| |c1| |s| $))))) 
 
 (SDEFUN |UTSODE;ode2;M2CoefUTS;13|
@@ -216,17 +215,17 @@
          (|cl| |List| |Coef|) (|yl| |List| (|Stream| |Coef|))
          ($ |List| (|Stream| |Coef|)))
         (SPROG
-         ((|yil| (|List| (|Stream| |Coef|))) (#1=#:G798 NIL) (|c| NIL)
-          (#2=#:G799 NIL) (|y| NIL) (#3=#:G797 NIL))
+         ((|yil| (|List| (|Stream| |Coef|))) (#1=#:G467 NIL) (|c| NIL)
+          (#2=#:G468 NIL) (|y| NIL) (#3=#:G466 NIL))
          (SEQ
           (LETT |yil|
                 (PROGN
-                 (LETT #3# NIL . #4=(|UTSODE;odeNre|))
-                 (SEQ (LETT |y| NIL . #4#) (LETT #2# (CDR |yl|) . #4#)
-                      (LETT |c| NIL . #4#) (LETT #1# |cl| . #4#) G190
+                 (LETT #3# NIL)
+                 (SEQ (LETT |y| NIL) (LETT #2# (CDR |yl|)) (LETT |c| NIL)
+                      (LETT #1# |cl|) G190
                       (COND
-                       ((OR (ATOM #1#) (PROGN (LETT |c| (CAR #1#) . #4#) NIL)
-                            (ATOM #2#) (PROGN (LETT |y| (CAR #2#) . #4#) NIL))
+                       ((OR (ATOM #1#) (PROGN (LETT |c| (CAR #1#)) NIL)
+                            (ATOM #2#) (PROGN (LETT |y| (CAR #2#)) NIL))
                         (GO G191)))
                       (SEQ
                        (EXIT
@@ -234,12 +233,9 @@
                               (CONS
                                (SPADCALL |c| (CONS #'|UTSODE;odeNre!0| |y|)
                                          (QREFELT $ 45))
-                               #3#)
-                              . #4#)))
-                      (LETT #1# (PROG1 (CDR #1#) (LETT #2# (CDR #2#) . #4#))
-                            . #4#)
-                      (GO G190) G191 (EXIT (NREVERSE #3#))))
-                . #4#)
+                               #3#))))
+                      (LETT #1# (PROG1 (CDR #1#) (LETT #2# (CDR #2#))))
+                      (GO G190) G191 (EXIT (NREVERSE #3#)))))
           (EXIT (SPADCALL |yil| (LIST (SPADCALL |yil| |f|)) (QREFELT $ 49)))))) 
 
 (SDEFUN |UTSODE;odeNre!0| ((|y| NIL)) |y|) 
@@ -254,9 +250,9 @@
 
 (SDEFUN |UTSODE;iOde!0| ((|ls| NIL) ($$ NIL))
         (PROG (|f| |cl| $)
-          (LETT |f| (QREFELT $$ 2) . #1=(|UTSODE;iOde|))
-          (LETT |cl| (QREFELT $$ 1) . #1#)
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |f| (QREFELT $$ 2))
+          (LETT |cl| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (|UTSODE;odeNre| |f| |cl| |ls| $))))) 
 
 (SDEFUN |UTSODE;ode;MLUTS;16|
@@ -270,16 +266,16 @@
           (|Mapping| (|Stream| |Coef|) (|List| (|Stream| |Coef|))))
          (|c| |List| (|Stream| |Coef|)) ($ |List| (|Stream| |Coef|)))
         (SPROG
-         ((#1=#:G819 NIL) (|csti| NIL) (#2=#:G820 NIL) (|lsfi| NIL)
-          (#3=#:G818 NIL))
+         ((#1=#:G488 NIL) (|csti| NIL) (#2=#:G489 NIL) (|lsfi| NIL)
+          (#3=#:G487 NIL))
          (SEQ
           (PROGN
-           (LETT #3# NIL . #4=(|UTSODE;simulre|))
-           (SEQ (LETT |lsfi| NIL . #4#) (LETT #2# |lsf| . #4#)
-                (LETT |csti| NIL . #4#) (LETT #1# |cst| . #4#) G190
+           (LETT #3# NIL)
+           (SEQ (LETT |lsfi| NIL) (LETT #2# |lsf|) (LETT |csti| NIL)
+                (LETT #1# |cst|) G190
                 (COND
-                 ((OR (ATOM #1#) (PROGN (LETT |csti| (CAR #1#) . #4#) NIL)
-                      (ATOM #2#) (PROGN (LETT |lsfi| (CAR #2#) . #4#) NIL))
+                 ((OR (ATOM #1#) (PROGN (LETT |csti| (CAR #1#)) NIL) (ATOM #2#)
+                      (PROGN (LETT |lsfi| (CAR #2#)) NIL))
                   (GO G191)))
                 (SEQ
                  (EXIT
@@ -289,16 +285,15 @@
                                    (CONS #'|UTSODE;simulre!0|
                                          (VECTOR |lsfi| |c| $))
                                    (QREFELT $ 45))
-                         #3#)
-                        . #4#)))
-                (LETT #1# (PROG1 (CDR #1#) (LETT #2# (CDR #2#) . #4#)) . #4#)
-                (GO G190) G191 (EXIT (NREVERSE #3#))))))) 
+                         #3#))))
+                (LETT #1# (PROG1 (CDR #1#) (LETT #2# (CDR #2#)))) (GO G190)
+                G191 (EXIT (NREVERSE #3#))))))) 
 
 (SDEFUN |UTSODE;simulre!0| (($$ NIL))
         (PROG ($ |c| |lsfi|)
-          (LETT $ (QREFELT $$ 2) . #1=(|UTSODE;simulre|))
-          (LETT |c| (QREFELT $$ 1) . #1#)
-          (LETT |lsfi| (QREFELT $$ 0) . #1#)
+          (LETT $ (QREFELT $$ 2))
+          (LETT |c| (QREFELT $$ 1))
+          (LETT |lsfi| (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL
@@ -319,57 +314,54 @@
 
 (SDEFUN |UTSODE;iMpsode!0| ((|ls| NIL) ($$ NIL))
         (PROG (|cs| |lsts| $)
-          (LETT |cs| (QREFELT $$ 2) . #1=(|UTSODE;iMpsode|))
-          (LETT |lsts| (QREFELT $$ 1) . #1#)
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |cs| (QREFELT $$ 2))
+          (LETT |lsts| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (|UTSODE;simulre| |cs| |lsts| |ls| $))))) 
 
 (SDEFUN |UTSODE;mpsode;LLL;19|
         ((|cs| |List| |Coef|) (|lsts| |List| (|Mapping| UTS (|List| UTS)))
          ($ |List| UTS))
         (SPROG
-         ((|stSol| (|List| (|Stream| |Coef|))) (#1=#:G831 NIL) (|lst| NIL)
-          (#2=#:G830 NIL))
+         ((|stSol| (|List| (|Stream| |Coef|))) (#1=#:G500 NIL) (|lst| NIL)
+          (#2=#:G499 NIL))
          (SEQ
           (LETT |stSol|
                 (|UTSODE;iMpsode| |cs|
                  (PROGN
-                  (LETT #2# NIL . #3=(|UTSODE;mpsode;LLL;19|))
-                  (SEQ (LETT |lst| NIL . #3#) (LETT #1# |lsts| . #3#) G190
+                  (LETT #2# NIL)
+                  (SEQ (LETT |lst| NIL) (LETT #1# |lsts|) G190
                        (COND
-                        ((OR (ATOM #1#)
-                             (PROGN (LETT |lst| (CAR #1#) . #3#) NIL))
+                        ((OR (ATOM #1#) (PROGN (LETT |lst| (CAR #1#)) NIL))
                          (GO G191)))
                        (SEQ
                         (EXIT
-                         (LETT #2# (CONS (SPADCALL |lst| (QREFELT $ 24)) #2#)
-                               . #3#)))
-                       (LETT #1# (CDR #1#) . #3#) (GO G190) G191
+                         (LETT #2#
+                               (CONS (SPADCALL |lst| (QREFELT $ 24)) #2#))))
+                       (LETT #1# (CDR #1#)) (GO G190) G191
                        (EXIT (NREVERSE #2#))))
-                 $)
-                . #3#)
+                 $))
           (EXIT (SPADCALL (ELT $ 9) |stSol| (QREFELT $ 21)))))) 
 
 (DECLAIM (NOTINLINE |UnivariateTaylorSeriesODESolver;|)) 
 
-(DEFUN |UnivariateTaylorSeriesODESolver| (&REST #1=#:G832)
+(DEFUN |UnivariateTaylorSeriesODESolver| (&REST #1=#:G501)
   (SPROG NIL
-         (PROG (#2=#:G833)
+         (PROG (#2=#:G502)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|UnivariateTaylorSeriesODESolver|)
-                                               '|domainEqualList|)
-                    . #3=(|UnivariateTaylorSeriesODESolver|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1
                       (APPLY (|function| |UnivariateTaylorSeriesODESolver;|)
                              #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -378,14 +370,12 @@
 (DEFUN |UnivariateTaylorSeriesODESolver;| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|)
-                . #1=(|UnivariateTaylorSeriesODESolver|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|UnivariateTaylorSeriesODESolver| DV$1 DV$2)
-                . #1#)
-          (LETT $ (GETREFV 62) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|UnivariateTaylorSeriesODESolver| DV$1 DV$2))
+          (LETT $ (GETREFV 62))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|UnivariateTaylorSeriesODESolver|
                       (LIST DV$1 DV$2) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -416,24 +406,52 @@
            '#(|stFuncN| 132 |stFunc2| 137 |stFunc1| 142 |ode2| 147 |ode1| 154
               |ode| 160 |mpsode| 166 |fixedPointExquo| 172)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 61
-                                                 '(1 7 0 8 9 1 7 8 0 10 2 20 17
-                                                   18 19 21 2 6 0 0 0 25 2 26 8
-                                                   8 8 27 2 26 8 8 8 28 2 26 8
-                                                   6 8 29 2 8 0 6 0 30 1 8 0 31
-                                                   32 1 33 8 11 34 1 8 35 0 36
-                                                   0 8 0 37 1 8 6 0 38 1 8 0 0
-                                                   39 1 6 35 0 40 1 6 41 0 42 2
-                                                   26 8 6 44 45 1 26 8 8 47 2
-                                                   19 0 0 0 49 2 33 19 50 51 52
-                                                   0 6 0 55 0 7 0 56 0 51 0 57
-                                                   2 26 8 6 51 58 2 19 0 8 0 59
-                                                   1 0 22 23 24 1 0 14 15 16 1
-                                                   0 11 12 13 3 0 7 15 6 6 48 2
-                                                   0 7 12 6 46 2 0 7 23 53 54 2
-                                                   0 17 53 60 61 2 0 7 7 7
-                                                   43)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|stFunc1|
+                                 ((|Mapping| (|Stream| |#1|) (|Stream| |#1|))
+                                  (|Mapping| |#2| |#2|)))
+                                T)
+                              '((|stFunc2|
+                                 ((|Mapping| (|Stream| |#1|) (|Stream| |#1|)
+                                             (|Stream| |#1|))
+                                  (|Mapping| |#2| |#2| |#2|)))
+                                T)
+                              '((|stFuncN|
+                                 ((|Mapping| (|Stream| |#1|)
+                                             (|List| (|Stream| |#1|)))
+                                  (|Mapping| |#2| (|List| |#2|))))
+                                T)
+                              '((|fixedPointExquo| (|#2| |#2| |#2|)) T)
+                              '((|ode1| (|#2| (|Mapping| |#2| |#2|) |#1|)) T)
+                              '((|ode2|
+                                 (|#2| (|Mapping| |#2| |#2| |#2|) |#1| |#1|))
+                                T)
+                              '((|ode|
+                                 (|#2| (|Mapping| |#2| (|List| |#2|))
+                                  (|List| |#1|)))
+                                T)
+                              '((|mpsode|
+                                 ((|List| |#2|) (|List| |#1|)
+                                  (|List| (|Mapping| |#2| (|List| |#2|)))))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 61
+                                            '(1 7 0 8 9 1 7 8 0 10 2 20 17 18
+                                              19 21 2 6 0 0 0 25 2 26 8 8 8 27
+                                              2 26 8 8 8 28 2 26 8 6 8 29 2 8 0
+                                              6 0 30 1 8 0 31 32 1 33 8 11 34 1
+                                              8 35 0 36 0 8 0 37 1 8 6 0 38 1 8
+                                              0 0 39 1 6 35 0 40 1 6 41 0 42 2
+                                              26 8 6 44 45 1 26 8 8 47 2 19 0 0
+                                              0 49 2 33 19 50 51 52 0 6 0 55 0
+                                              7 0 56 0 51 0 57 2 26 8 6 51 58 2
+                                              19 0 8 0 59 1 0 22 23 24 1 0 14
+                                              15 16 1 0 11 12 13 3 0 7 15 6 6
+                                              48 2 0 7 12 6 46 2 0 7 23 53 54 2
+                                              0 17 53 60 61 2 0 7 7 7 43)))))
            '|lookupComplete|)) 

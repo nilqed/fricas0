@@ -42,22 +42,21 @@
 
 (DECLAIM (NOTINLINE |GeneralModulePolynomial;|)) 
 
-(DEFUN |GeneralModulePolynomial| (&REST #1=#:G733)
+(DEFUN |GeneralModulePolynomial| (&REST #1=#:G412)
   (SPROG NIL
-         (PROG (#2=#:G734)
+         (PROG (#2=#:G413)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|GeneralModulePolynomial|)
-                                               '|domainEqualList|)
-                    . #3=(|GeneralModulePolynomial|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |GeneralModulePolynomial;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|GeneralModulePolynomial|)))))))))) 
@@ -67,15 +66,15 @@
    ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$6 NIL) (DV$5 NIL) (DV$4 NIL) (DV$3 NIL)
     (DV$2 NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #1=(|GeneralModulePolynomial|))
-    (LETT DV$2 (|devaluate| |#2|) . #1#)
-    (LETT DV$3 (|devaluate| |#3|) . #1#)
-    (LETT DV$4 (|devaluate| |#4|) . #1#)
-    (LETT DV$5 (|devaluate| |#5|) . #1#)
-    (LETT DV$6 (|devaluate| |#6|) . #1#)
-    (LETT |dv$| (LIST '|GeneralModulePolynomial| DV$1 DV$2 DV$3 DV$4 DV$5 DV$6)
-          . #1#)
-    (LETT $ (GETREFV 49) . #1#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT DV$4 (|devaluate| |#4|))
+    (LETT DV$5 (|devaluate| |#5|))
+    (LETT DV$6 (|devaluate| |#6|))
+    (LETT |dv$|
+          (LIST '|GeneralModulePolynomial| DV$1 DV$2 DV$3 DV$4 DV$5 DV$6))
+    (LETT $ (GETREFV 49))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -96,8 +95,7 @@
                                          (|HasCategory| |#2|
                                                         '(|AbelianMonoid|))
                                          (|HasCategory| |#6|
-                                                        '(|AbelianMonoid|)))))
-                    . #1#))
+                                                        '(|AbelianMonoid|)))))))
     (|haddProp| |$ConstructorCache| '|GeneralModulePolynomial|
                 (LIST DV$1 DV$2 DV$3 DV$4 DV$5 DV$6) (CONS 1 $))
     (|stuffDomainSlots| $)

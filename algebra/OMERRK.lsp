@@ -36,11 +36,10 @@
 
 (DEFUN |OpenMathErrorKind| ()
   (SPROG NIL
-         (PROG (#1=#:G732)
+         (PROG (#1=#:G402)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|OpenMathErrorKind|)
-                    . #2=(|OpenMathErrorKind|))
+             ((LETT #1# (HGET |$ConstructorCache| '|OpenMathErrorKind|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -49,7 +48,7 @@
                        (HPUT |$ConstructorCache| '|OpenMathErrorKind|
                              (LIST
                               (CONS NIL (CONS 1 (|OpenMathErrorKind;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache| '|OpenMathErrorKind|)))))))))) 
@@ -57,10 +56,10 @@
 (DEFUN |OpenMathErrorKind;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|OpenMathErrorKind|) . #1=(|OpenMathErrorKind|))
-          (LETT $ (GETREFV 23) . #1#)
+          (LETT |dv$| '(|OpenMathErrorKind|))
+          (LETT $ (GETREFV 23))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|OpenMathErrorKind| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

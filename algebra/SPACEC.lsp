@@ -5,22 +5,20 @@
 
 (DEFPARAMETER |ThreeSpaceCategory;AL| 'NIL) 
 
-(DEFUN |ThreeSpaceCategory| (#1=#:G691)
-  (LET (#2=#:G692)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |ThreeSpaceCategory;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |ThreeSpaceCategory;AL|
-              (|cons5| (CONS #3# (SETQ #2# (|ThreeSpaceCategory;| #1#)))
-                       |ThreeSpaceCategory;AL|))
-      #2#)))) 
+(DEFUN |ThreeSpaceCategory| (|t#1|)
+  (LET (#1=#:G379 (#2=#:G380 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |ThreeSpaceCategory;AL|)) (CDR #1#))
+          (T
+           (SETQ |ThreeSpaceCategory;AL|
+                   (|cons5| (CONS #2# (SETQ #1# (|ThreeSpaceCategory;| #2#)))
+                            |ThreeSpaceCategory;AL|))
+           #1#)))) 
 
 (DEFUN |ThreeSpaceCategory;| (|t#1|)
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (COND (|ThreeSpaceCategory;CAT|)
                                     ('T
                                      (LETT |ThreeSpaceCategory;CAT|
@@ -258,36 +256,5 @@
                                                       ((|coerce|
                                                         ((|OutputForm|) $))
                                                        T))
-                                                    NIL
-                                                    '((|OutputForm|)
-                                                      (|SubSpace| 3 |t#1|)
-                                                      (|List|
-                                                       (|SubSpaceComponentProperty|))
-                                                      (|List|
-                                                       (|List|
-                                                        (|SubSpaceComponentProperty|)))
-                                                      (|List|
-                                                       (|List|
-                                                        (|List|
-                                                         (|Point| |t#1|))))
-                                                      (|List|
-                                                       (|List|
-                                                        (|List|
-                                                         (|NonNegativeInteger|))))
-                                                      (|List| (|Point| |t#1|))
-                                                      (|Boolean|)
-                                                      (|List|
-                                                       (|List|
-                                                        (|Point| |t#1|)))
-                                                      (|List|
-                                                       (|List| (|List| |t#1|)))
-                                                      (|SubSpaceComponentProperty|)
-                                                      (|List| (|List| |t#1|))
-                                                      (|Point| |t#1|)
-                                                      (|NonNegativeInteger|)
-                                                      (|List| |t#1|)
-                                                      (|List| $))
-                                                    NIL))
-                                           . #2=(|ThreeSpaceCategory|)))))
-                   . #2#)
-           (SETELT #1# 0 (LIST '|ThreeSpaceCategory| (|devaluate| |t#1|)))))) 
+                                                    NIL NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|ThreeSpaceCategory| |t#1|))))) 

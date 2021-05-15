@@ -1,23 +1,22 @@
 
 (DECLAIM (NOTINLINE |OrdinaryWeightedPolynomials;|)) 
 
-(DEFUN |OrdinaryWeightedPolynomials| (&REST #1=#:G707)
+(DEFUN |OrdinaryWeightedPolynomials| (&REST #1=#:G381)
   (SPROG NIL
-         (PROG (#2=#:G708)
+         (PROG (#2=#:G382)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|OrdinaryWeightedPolynomials|)
-                                               '|domainEqualList|)
-                    . #3=(|OrdinaryWeightedPolynomials|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1
                       (APPLY (|function| |OrdinaryWeightedPolynomials;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -28,13 +27,12 @@
    ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL) (DV$2 NIL)
     (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #1=(|OrdinaryWeightedPolynomials|))
-    (LETT DV$2 (|devaluate| |#2|) . #1#)
-    (LETT DV$3 (|devaluate| |#3|) . #1#)
-    (LETT DV$4 (|devaluate| |#4|) . #1#)
-    (LETT |dv$| (LIST '|OrdinaryWeightedPolynomials| DV$1 DV$2 DV$3 DV$4)
-          . #1#)
-    (LETT $ (GETREFV 21) . #1#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT DV$4 (|devaluate| |#4|))
+    (LETT |dv$| (LIST '|OrdinaryWeightedPolynomials| DV$1 DV$2 DV$3 DV$4))
+    (LETT $ (GETREFV 21))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -42,8 +40,7 @@
                                        (LIST
                                         (|HasCategory| |#1|
                                                        '(|CommutativeRing|))
-                                        (|HasCategory| |#1| '(|Field|))))
-                    . #1#))
+                                        (|HasCategory| |#1| '(|Field|))))))
     (|haddProp| |$ConstructorCache| '|OrdinaryWeightedPolynomials|
                 (LIST DV$1 DV$2 DV$3 DV$4) (CONS 1 $))
     (|stuffDomainSlots| $)
@@ -58,14 +55,15 @@
           (LIST
            '#(NIL NIL NIL NIL NIL
               (|WeightedPolynomials| 6 (|Symbol|)
-                                     (|IndexedExponents| (|Symbol|)) 13
+                                     (|IndexedExponents| (|Symbol|)) 11
                                      (NRTEVAL (QREFELT $ 7))
                                      (NRTEVAL (QREFELT $ 8))
                                      (NRTEVAL (QREFELT $ 9)))
               (|local| |#1|) (|local| |#2|) (|local| |#3|) (|local| |#4|)
-              (|Union| $ '"failed") (|Void|) (|NonNegativeInteger|)
-              (|Polynomial| 6) (|Integer|) (|Boolean|) (|PositiveInteger|)
-              (|String|) (|SingleInteger|) (|HashState|) (|OutputForm|))
+              (|Union| $ '"failed") (|Polynomial| 6) (|Void|)
+              (|NonNegativeInteger|) (|Integer|) (|Boolean|)
+              (|PositiveInteger|) (|String|) (|SingleInteger|) (|HashState|)
+              (|OutputForm|))
            '#() 'NIL
            (CONS
             (|makeByteWordVec2| 1

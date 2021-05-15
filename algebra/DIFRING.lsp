@@ -4,12 +4,11 @@
 (DEFPARAMETER |DifferentialRing;AL| 'NIL) 
 
 (DEFUN |DifferentialRing| ()
-  (LET (#:G692)
-    (COND (|DifferentialRing;AL|)
-          (T (SETQ |DifferentialRing;AL| (|DifferentialRing;|)))))) 
+  (COND (|DifferentialRing;AL|)
+        (T (SETQ |DifferentialRing;AL| (|DifferentialRing;|))))) 
 
 (DEFUN |DifferentialRing;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|Ring|)
@@ -18,8 +17,7 @@
                               ((|differentiate| ($ $ (|NonNegativeInteger|)))
                                T)
                               ((D ($ $ (|NonNegativeInteger|))) T))
-                            NIL '((|NonNegativeInteger|)) NIL))
-                   |DifferentialRing|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|DifferentialRing|))))) 
 
 (MAKEPROP '|DifferentialRing| 'NILADIC T) 

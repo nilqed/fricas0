@@ -4,16 +4,16 @@
 (DEFPARAMETER |JetBundleCategory;AL| 'NIL) 
 
 (DEFUN |JetBundleCategory| ()
-  (LET (#:G719)
-    (COND (|JetBundleCategory;AL|)
-          (T (SETQ |JetBundleCategory;AL| (|JetBundleCategory;|)))))) 
+  (COND (|JetBundleCategory;AL|)
+        (T (SETQ |JetBundleCategory;AL| (|JetBundleCategory;|))))) 
 
 (DEFUN |JetBundleCategory;| ()
-  (SPROG ((#1=#:G717 NIL))
+  (SPROG ((#1=#:G401 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
-                    (PAIR '(#2=#:G716) (LIST '(|Expression| (|Integer|))))
+                    (MAKE_PAIRS '(#2=#:G400)
+                                (LIST '(|Expression| (|Integer|))))
                     (|Join| (|OrderedSet|) (|CoercibleTo| '#2#)
                             (|mkCategory|
                              '(((|setNotation| ((|Symbol|) (|Symbol|))) T)
@@ -97,14 +97,7 @@
                                 T)
                                ((|numIndVar| ((|PositiveInteger|))) T)
                                ((|numDepVar| ((|PositiveInteger|))) T))
-                             NIL
-                             '((|PositiveInteger|) (|NonNegativeInteger|)
-                               (|List| $) (|List| (|NonNegativeInteger|))
-                               (|Boolean|) (|List| (|PositiveInteger|))
-                               (|Symbol|)
-                               (|List| (|List| (|PositiveInteger|))))
-                             NIL)))
-                   |JetBundleCategory|)
+                             NIL NIL NIL))))
            (SETELT #1# 0 '(|JetBundleCategory|))))) 
 
 (MAKEPROP '|JetBundleCategory| 'NILADIC T) 

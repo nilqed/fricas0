@@ -31,21 +31,19 @@
 
 (DECLAIM (NOTINLINE |InputFormFunctions1;|)) 
 
-(DEFUN |InputFormFunctions1| (#1=#:G707)
+(DEFUN |InputFormFunctions1| (#1=#:G385)
   (SPROG NIL
-         (PROG (#2=#:G708)
+         (PROG (#2=#:G386)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|InputFormFunctions1|)
-                                               '|domainEqualList|)
-                    . #3=(|InputFormFunctions1|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|InputFormFunctions1;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|InputFormFunctions1;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|InputFormFunctions1|)))))))))) 
@@ -53,11 +51,11 @@
 (DEFUN |InputFormFunctions1;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|InputFormFunctions1|))
-          (LETT |dv$| (LIST '|InputFormFunctions1| DV$1) . #1#)
-          (LETT $ (GETREFV 25) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|InputFormFunctions1| DV$1))
+          (LETT $ (GETREFV 25))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|InputFormFunctions1| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -78,13 +76,28 @@
            '#(|pretendOfType| 20 |packageCall| 25 |interpret| 36 |getType| 41
               |coerceToType| 45 |atType| 50)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 24
-                                                 '(1 8 0 10 11 1 8 0 12 13 1 8
-                                                   20 0 21 1 22 6 20 23 1 0 8 8
-                                                   19 1 0 8 10 14 2 0 8 10 15
-                                                   16 1 0 6 8 24 0 0 8 9 1 0 8
-                                                   8 17 1 0 8 8 18)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|packageCall| ((|InputForm|) (|Symbol|))) T)
+                              '((|packageCall|
+                                 ((|InputForm|) (|Symbol|)
+                                  (|List| (|InputForm|))))
+                                T)
+                              '((|coerceToType| ((|InputForm|) (|InputForm|)))
+                                T)
+                              '((|atType| ((|InputForm|) (|InputForm|))) T)
+                              '((|pretendOfType| ((|InputForm|) (|InputForm|)))
+                                T)
+                              '((|getType| ((|InputForm|))) T)
+                              '((|interpret| (|#1| (|InputForm|))) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 24
+                                            '(1 8 0 10 11 1 8 0 12 13 1 8 20 0
+                                              21 1 22 6 20 23 1 0 8 8 19 1 0 8
+                                              10 14 2 0 8 10 15 16 1 0 6 8 24 0
+                                              0 8 9 1 0 8 8 17 1 0 8 8 18)))))
            '|lookupComplete|)) 

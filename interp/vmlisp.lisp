@@ -34,7 +34,6 @@
 ;      Lars Ericson, Barry Trager, Martial Schor, tim daly, LVMCL, et al
 ;      IBM Thomas J. Watson Research Center
 ;      Summer, 1986
-;  see /spad/daly.changes
 
 ; This emulation package version is written for Symbolics Common Lisp.
 ; Emulation commentary refers to LISP/VM, IBM Program Number 5798-DQZ,
@@ -84,7 +83,7 @@
 ; 9.13 Streams
 
 #+GCL
-(defun IS-CONSOLE (stream)
+(defun IS_CONSOLE (stream)
   (and (streamp stream) (output-stream-p stream)
        (eq (system:fp-output-stream stream)
            (system:fp-output-stream *terminal-io*))))
@@ -299,7 +298,7 @@
 
 ; 16.1 Creation
 
-(defun MAKE-VEC (n) (make-array n :initial-element nil))
+(defun MAKE_VEC (n) (make-array n :initial-element nil))
 
 (defun GETREFV (n) (make-array n :initial-element nil))
 
@@ -610,13 +609,13 @@
 
 ; 27.1 Creation
 
-(defun MAKE-INSTREAM (filespec)
+(defun MAKE_INSTREAM (filespec)
    (cond ((numberp filespec) (make-synonym-stream '*standard-input*))
          ((null filespec) (error "not handled yet"))
          (t (open (|make_input_filename| filespec)
                   :direction :input :if-does-not-exist nil))))
 
-(defun MAKE-OUTSTREAM (filespec)
+(defun MAKE_OUTSTREAM (filespec)
    (cond ((numberp filespec) (make-synonym-stream '*standard-output*))
          ((null filespec) (error "not handled yet"))
          (t (open (|make_filename| filespec) :direction :output
@@ -624,18 +623,18 @@
                #+(or :cmucl :sbcl) :supersede
                #+:openmcl :ignored))))
 
-(defun MAKE-APPENDSTREAM (filespec)
+(defun MAKE_APPENDSTREAM (filespec)
  "fortran support"
  (cond
   ((numberp filespec) (make-synonym-stream '*standard-output*))
-  ((null filespec) (error "make-appendstream: not handled yet"))
+  ((null filespec) (error "MAKE_APPENDSTREAM: not handled yet"))
   ('else (open (|make_filename| filespec) :direction :output
           :if-exists :append :if-does-not-exist :create))))
 
 (defun |mkOutputConsoleStream| ()
      (make-synonym-stream '*standard-output*))
 
-(defun SHUT (st) (if #+:GCL(is-console st)
+(defun SHUT (st) (if #+:GCL(IS_CONSOLE st)
                      #-:GCL(typep st 'synonym-stream)
                      st
                    (if (streamp st) (close st) -1)))
@@ -648,10 +647,6 @@
   (multiple-value-bind (sec min hour day month year) (get-decoded-time)
     (format nil "~2,'0D/~2,'0D/~2,'0D~2,'0D:~2,'0D:~2,'0D"
             month day (rem year 100) hour min sec)))
-
-; 97.0 Stuff In The Manual But Wierdly Documented
-
-(defun EBCDIC (x) (int-char x))
 
 ; 99.0 Ancient Stuff We Decided To Keep
 
@@ -788,14 +783,14 @@
 
 ;17.1 Creation
 
-(defun MAKE-HASHTABLE (id1)
+(defun MAKE_HASHTABLE (id1)
    (let ((test (case id1
                      ((EQ ID) #'eq)
                      (CVEC #'equal)
                      (EQL #'eql)
                      #+Lucid ((UEQUAL EQUALP) #'EQUALP)
                      #-Lucid ((UEQUAL EQUAL) #'equal)
-                     (otherwise (error "bad arg to make-hashtable")))))
+                     (otherwise (error "bad arg to MAKE_HASHTABLE")))))
       (make-hash-table :test test)))
 
 ;17.2 Accessing
@@ -806,7 +801,7 @@
         #'(lambda (key val) (declare (ignore val)) (push key keys)) table)
         keys))
 
-(define-function 'HASHTABLE-CLASS #'hash-table-test)
+(define-function 'HASHTABLE_CLASS #'hash-table-test)
 
 (define-function 'HCOUNT #'hash-table-count)
 
@@ -840,7 +835,7 @@
     (/ (cos a) (sin a))
     (/ 1.0 (tan a))))
 
-;;; moved from unlisp.lisp.pamphlet
+;;; moved from unlisp.lisp
 (defun |AlistAssocQ| (key l)
   (assoc key l :test #'eq) )
 

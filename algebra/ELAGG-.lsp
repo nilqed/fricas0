@@ -39,8 +39,8 @@
 
 (SDEFUN |ELAGG-;remove!;S2A;11!0| ((|y| NIL) ($$ NIL))
         (PROG (|s| $)
-          (LETT |s| (QREFELT $$ 1) . #1=(|ELAGG-;remove!;S2A;11|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |s| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL |y| |s| (QREFELT $ 33)))))) 
 
 (SDEFUN |ELAGG-;removeDuplicates;2A;12| ((|x| A) ($ A))
@@ -54,10 +54,10 @@
 (DEFUN |ExtensibleLinearAggregate&| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|ExtensibleLinearAggregate&|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|ExtensibleLinearAggregate&| DV$1 DV$2) . #1#)
-          (LETT $ (GETREFV 42) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|ExtensibleLinearAggregate&| DV$1 DV$2))
+          (LETT $ (GETREFV 42))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -66,8 +66,7 @@
                                               (|HasCategory| |#2|
                                                              '(|OrderedSet|))
                                               (|HasCategory| |#2|
-                                                             '(|BasicType|))))
-                          . #1#))
+                                                             '(|BasicType|))))))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)
           (QSETREFV $ 7 |#2|)
@@ -107,23 +106,54 @@
               |merge!| 137 |insert| 143 |delete| 157 |concat!| 169 |concat|
               175)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 40
-                                                 '(1 6 0 0 8 2 6 0 0 9 10 2 6 0
-                                                   0 12 13 2 6 0 15 0 16 3 6 0
-                                                   7 0 9 18 3 6 0 0 0 9 20 2 6
-                                                   0 15 0 22 2 6 0 0 0 24 2 6 0
-                                                   26 7 27 2 6 0 7 0 30 2 0 0 7
-                                                   0 31 2 7 32 0 0 33 2 0 0 7 0
-                                                   34 1 6 0 0 35 1 0 0 0 36 2 7
-                                                   32 0 0 37 3 6 0 38 0 0 39 2
-                                                   0 0 0 0 40 2 0 0 15 0 23 1 0
-                                                   0 0 36 2 0 0 7 0 34 2 0 0 15
-                                                   0 17 2 0 0 7 0 31 2 0 0 0 0
-                                                   40 3 0 0 0 0 9 21 3 0 0 7 0
-                                                   9 19 2 0 0 0 12 14 2 0 0 0 9
-                                                   11 2 0 0 0 7 29 2 0 0 0 0 25
-                                                   2 0 0 0 7 28)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|merge!| (|#1| |#1| |#1|)) T)
+                                   '((|remove!| (|#1| |#2| |#1|)) T)
+                                   '((|merge!|
+                                      (|#1| (|Mapping| (|Boolean|) |#2| |#2|)
+                                       |#1| |#1|))
+                                     T)
+                                   '((|remove!|
+                                      (|#1| (|Mapping| (|Boolean|) |#2|) |#1|))
+                                     T)
+                                   '((|concat!| (|#1| |#1| |#1|)) T)
+                                   '((|concat!| (|#1| |#1| |#2|)) T)
+                                   '((|insert| (|#1| |#1| |#1| (|Integer|))) T)
+                                   '((|insert| (|#1| |#2| |#1| (|Integer|))) T)
+                                   '((|delete|
+                                      (|#1| |#1|
+                                       (|UniversalSegment| (|Integer|))))
+                                     T)
+                                   '((|delete| (|#1| |#1| (|Integer|))) T)
+                                   '((|concat| (|#1| (|List| |#1|))) T)
+                                   '((|concat| (|#1| |#1| |#1|)) T)
+                                   '((|concat| (|#1| |#2| |#1|)) T)
+                                   '((|concat| (|#1| |#1| |#2|)) T)
+                                   '((|remove|
+                                      (|#1| (|Mapping| (|Boolean|) |#2|) |#1|))
+                                     T)
+                                   '((|select|
+                                      (|#1| (|Mapping| (|Boolean|) |#2|) |#1|))
+                                     T)
+                                   '((|remove| (|#1| |#2| |#1|)) T)
+                                   '((|removeDuplicates| (|#1| |#1|)) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 40
+                                            '(1 6 0 0 8 2 6 0 0 9 10 2 6 0 0 12
+                                              13 2 6 0 15 0 16 3 6 0 7 0 9 18 3
+                                              6 0 0 0 9 20 2 6 0 15 0 22 2 6 0
+                                              0 0 24 2 6 0 26 7 27 2 6 0 7 0 30
+                                              2 0 0 7 0 31 2 7 32 0 0 33 2 0 0
+                                              7 0 34 1 6 0 0 35 1 0 0 0 36 2 7
+                                              32 0 0 37 3 6 0 38 0 0 39 2 0 0 0
+                                              0 40 2 0 0 15 0 23 1 0 0 0 36 2 0
+                                              0 7 0 34 2 0 0 15 0 17 2 0 0 7 0
+                                              31 2 0 0 0 0 40 3 0 0 0 0 9 21 3
+                                              0 0 7 0 9 19 2 0 0 0 12 14 2 0 0
+                                              0 9 11 2 0 0 0 7 29 2 0 0 0 0 25
+                                              2 0 0 0 7 28)))))
            '|lookupComplete|)) 

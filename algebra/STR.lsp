@@ -1,9 +1,9 @@
 
 (SDEFUN |STR;qelt| ((|m| $) (|i| |Integer|) (|j| |Integer|) ($ |DoubleFloat|))
-        (SPROG ((#1=#:G694 NIL))
+        (SPROG ((#1=#:G382 NIL))
                (QAREF1
                 (QAREF1
-                 (PROG2 (LETT #1# |m| |STR;qelt|)
+                 (PROG2 (LETT #1# |m|)
                      (QCDR #1#)
                    (|check_union2| (QEQCAR #1# 0)
                                    (|PrimitiveArray|
@@ -29,33 +29,29 @@
          (SEQ
           (COND
            ((EQUAL (QREFELT $ 6) (|SCartesian| 2))
-            (SEQ
-             (LETT |arr| (MAKEARR1 3 (MAKE-ARRAY 0))
-                   . #1=(|STR;stransform;L$;2|))
-             (SEQ (LETT |i| 0 . #1#) G190
-                  (COND ((|greater_SI| |i| 2) (GO G191)))
-                  (SEQ (QSETAREF1 |arr| |i| (MAKEARR1 3 0.0))
-                       (EXIT
-                        (SEQ (LETT |j| 0 . #1#) G190
-                             (COND ((|greater_SI| |j| 2) (GO G191)))
-                             (SEQ
-                              (EXIT
-                               (QSETAREF1 (QAREF1 |arr| |i|) |j|
-                                          (SPADCALL
-                                           (SPADCALL |m| (+ |i| 1)
-                                                     (QREFELT $ 11))
-                                           (+ |j| 1) (QREFELT $ 13)))))
-                             (LETT |j| (|inc_SI| |j|) . #1#) (GO G190) G191
-                             (EXIT NIL))))
-                  (LETT |i| (|inc_SI| |i|) . #1#) (GO G190) G191 (EXIT NIL))
-             (EXIT (CONS 0 |arr|))))
+            (SEQ (LETT |arr| (MAKEARR1 3 (MAKE-ARRAY 0)))
+                 (SEQ (LETT |i| 0) G190 (COND ((|greater_SI| |i| 2) (GO G191)))
+                      (SEQ (QSETAREF1 |arr| |i| (MAKEARR1 3 0.0))
+                           (EXIT
+                            (SEQ (LETT |j| 0) G190
+                                 (COND ((|greater_SI| |j| 2) (GO G191)))
+                                 (SEQ
+                                  (EXIT
+                                   (QSETAREF1 (QAREF1 |arr| |i|) |j|
+                                              (SPADCALL
+                                               (SPADCALL |m| (+ |i| 1)
+                                                         (QREFELT $ 11))
+                                               (+ |j| 1) (QREFELT $ 13)))))
+                                 (LETT |j| (|inc_SI| |j|)) (GO G190) G191
+                                 (EXIT NIL))))
+                      (LETT |i| (|inc_SI| |i|)) (GO G190) G191 (EXIT NIL))
+                 (EXIT (CONS 0 |arr|))))
            ((EQUAL (QREFELT $ 6) (|SCartesian| 3))
-            (SEQ (LETT |arr| (MAKEARR1 4 (MAKE-ARRAY 0)) . #1#)
-                 (SEQ (LETT |i| 0 . #1#) G190
-                      (COND ((|greater_SI| |i| 3) (GO G191)))
+            (SEQ (LETT |arr| (MAKEARR1 4 (MAKE-ARRAY 0)))
+                 (SEQ (LETT |i| 0) G190 (COND ((|greater_SI| |i| 3) (GO G191)))
                       (SEQ (QSETAREF1 |arr| |i| (MAKEARR1 4 0.0))
                            (EXIT
-                            (SEQ (LETT |j| 0 . #1#) G190
+                            (SEQ (LETT |j| 0) G190
                                  (COND ((|greater_SI| |j| 3) (GO G191)))
                                  (SEQ
                                   (EXIT
@@ -64,10 +60,9 @@
                                                (SPADCALL |m| (+ |i| 1)
                                                          (QREFELT $ 11))
                                                (+ |j| 1) (QREFELT $ 13)))))
-                                 (LETT |j| (|inc_SI| |j|) . #1#) (GO G190) G191
+                                 (LETT |j| (|inc_SI| |j|)) (GO G190) G191
                                  (EXIT NIL))))
-                      (LETT |i| (|inc_SI| |i|) . #1#) (GO G190) G191
-                      (EXIT NIL))
+                      (LETT |i| (|inc_SI| |i|)) (GO G190) G191 (EXIT NIL))
                  (EXIT (CONS 0 |arr|))))
            ('T
             (SEQ (|error| "invalid point type in transform constructor")
@@ -83,14 +78,13 @@
          ($ $))
         (SPROG ((|pp| (|Mapping| PT PT)))
                (SEQ
-                (LETT |pp| (CONS #'|STR;stransform;M$;4!0| (VECTOR |cpx| $))
-                      |STR;stransform;M$;4|)
+                (LETT |pp| (CONS #'|STR;stransform;M$;4!0| (VECTOR |cpx| $)))
                 (EXIT (CONS 1 |pp|))))) 
 
 (SDEFUN |STR;stransform;M$;4!0| ((|x| NIL) ($$ NIL))
         (PROG ($ |cpx|)
-          (LETT $ (QREFELT $$ 1) . #1=(|STR;stransform;M$;4|))
-          (LETT |cpx| (QREFELT $$ 0) . #1#)
+          (LETT $ (QREFELT $$ 1))
+          (LETT |cpx| (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL (SPADCALL (SPADCALL |x| (QREFELT $ 20)) |cpx|)
@@ -104,7 +98,7 @@
          (|offsetz| |DoubleFloat|) (|scalex| |DoubleFloat|)
          (|scaley| |DoubleFloat|) (|scalez| |DoubleFloat|) ($ $))
         (SPROG
-         ((#1=#:G770 NIL) (|pp| (|Mapping| PT PT)) (|trConf| (CA))
+         ((#1=#:G420 NIL) (|pp| (|Mapping| PT PT)) (|trConf| (CA))
           (CA
            (|Join| (|Ring|) (|Algebra| #2=(|DoubleFloat|))
                    (CATEGORY |domain| (SIGNATURE |e| ($ (|PositiveInteger|)))
@@ -136,9 +130,8 @@
                      (SPADCALL
                       (LIST (LIST |scalex| 0.0 |offsetx|)
                             (LIST 0.0 |scaley| |offsety|) (LIST 0.0 0.0 1.0))
-                      (QREFELT $ 15))
-                     . #3=(|STR;stranslate;6Df$;6|))
-               (GO #4=#:G769))))
+                      (QREFELT $ 15)))
+               (GO #3=#:G419))))
             (COND
              ((EQUAL (QREFELT $ 6) (|SCartesian| 3))
               (PROGN
@@ -148,9 +141,8 @@
                             (LIST 0.0 |scaley| 0.0 |offsety|)
                             (LIST 0.0 0.0 |scalez| |offsetz|)
                             (LIST 0.0 0.0 0.0 1.0))
-                      (QREFELT $ 15))
-                     . #3#)
-               (GO #4#))))
+                      (QREFELT $ 15)))
+               (GO #3#))))
             (COND
              ((EQUAL (QREFELT $ 6) (|SConformal| 2))
               (SEQ
@@ -158,12 +150,10 @@
                      (SPADCALL
                       (LIST (LIST 0.0 1.0 0.0 0.0) (LIST 1.0 0.0 0.0 0.0)
                             (LIST 0.0 0.0 1.0 0.0) (LIST 0.0 0.0 0.0 1.0))
-                      (QREFELT $ 30))
-                     . #3#)
+                      (QREFELT $ 30)))
                (LETT CA
                      (|CliffordAlgebra| 4 (|DoubleFloat|)
-                                        (SPADCALL |m| (QREFELT $ 32)))
-                     . #3#)
+                                        (SPADCALL |m| (QREFELT $ 32))))
                (LETT |trConf|
                      (SPADCALL
                       (LIST 1.0 0.0 0.0 0.0 0.0 0.0
@@ -182,25 +172,23 @@
                                                    (LIST '|List|
                                                          (LIST
                                                           '|DoubleFloat|)))
-                                             CA))
-                     . #3#)
-               (EXIT (PROGN (LETT #1# (CONS 2 |trConf|) . #3#) (GO #4#))))))
+                                             CA)))
+               (EXIT (PROGN (LETT #1# (CONS 2 |trConf|)) (GO #3#))))))
             (COND
              ((EQUAL (QREFELT $ 6) (|SArgand|))
               (SEQ
                (LETT |pp|
                      (CONS #'|STR;stranslate;6Df$;6!0|
-                           (VECTOR |offsety| |offsetx| $))
-                     . #3#)
-               (EXIT (PROGN (LETT #1# (CONS 1 |pp|) . #3#) (GO #4#))))))
+                           (VECTOR |offsety| |offsetx| $)))
+               (EXIT (PROGN (LETT #1# (CONS 1 |pp|)) (GO #3#))))))
             (EXIT (SPADCALL (QREFELT $ 14)))))
-          #4# (EXIT #1#)))) 
+          #3# (EXIT #1#)))) 
 
 (SDEFUN |STR;stranslate;6Df$;6!0| ((|x| NIL) ($$ NIL))
         (PROG ($ |offsetx| |offsety|)
-          (LETT $ (QREFELT $$ 2) . #1=(|STR;stranslate;6Df$;6|))
-          (LETT |offsetx| (QREFELT $$ 1) . #1#)
-          (LETT |offsety| (QREFELT $$ 0) . #1#)
+          (LETT $ (QREFELT $$ 2))
+          (LETT |offsetx| (QREFELT $$ 1))
+          (LETT |offsety| (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL
@@ -216,16 +204,12 @@
 (SDEFUN |STR;applyTransPt2|
         ((|tr| $) (|inpt| |SCartesian| 2) ($ |SCartesian| 2))
         (SPROG
-         ((|b| #1=(|DoubleFloat|)) (#2=#:G694 NIL) (|a| #1#)
-          (|vin| (|List| (|DoubleFloat|))) (#3=#:G779 NIL))
+         ((|b| #1=(|DoubleFloat|)) (#2=#:G382 NIL) (|a| #1#)
+          (|vin| (|List| (|DoubleFloat|))) (#3=#:G429 NIL))
          (SEQ
           (EXIT
            (SEQ
-            (COND
-             ((QEQCAR |tr| 3)
-              (PROGN
-               (LETT #3# |inpt| . #4=(|STR;applyTransPt2|))
-               (GO #5=#:G778))))
+            (COND ((QEQCAR |tr| 3) (PROGN (LETT #3# |inpt|) (GO #4=#:G428))))
             (COND
              ((QEQCAR |tr| 1)
               (SEQ
@@ -234,15 +218,15 @@
                  "can't transform Euclidean point using general function"
                  (QREFELT $ 42))
                 (QREFELT $ 44))
-               (EXIT (PROGN (LETT #3# |inpt| . #4#) (GO #5#))))))
-            (LETT |vin| (SPADCALL |inpt| (QREFELT $ 46)) . #4#)
+               (EXIT (PROGN (LETT #3# |inpt|) (GO #4#))))))
+            (LETT |vin| (SPADCALL |inpt| (QREFELT $ 46)))
             (LETT |a|
                   (|add_DF|
                    (|add_DF|
                     (|mul_DF|
                      (QAREF1
                       (QAREF1
-                       (PROG2 (LETT #2# |tr| . #4#)
+                       (PROG2 (LETT #2# |tr|)
                            (QCDR #2#)
                          (|check_union2| (QEQCAR #2# 0)
                                          (|PrimitiveArray|
@@ -258,7 +242,7 @@
                                           (|:| |multiv|
                                                (|PrimitiveArray|
                                                 (|DoubleFloat|)))
-                                          (|:| |iden| #6="iden"))
+                                          (|:| |iden| #5="iden"))
                                          #2#))
                        0)
                       0)
@@ -266,7 +250,7 @@
                     (|mul_DF|
                      (QAREF1
                       (QAREF1
-                       (PROG2 (LETT #2# |tr| . #4#)
+                       (PROG2 (LETT #2# |tr|)
                            (QCDR #2#)
                          (|check_union2| (QEQCAR #2# 0)
                                          (|PrimitiveArray|
@@ -282,7 +266,7 @@
                                           (|:| |multiv|
                                                (|PrimitiveArray|
                                                 (|DoubleFloat|)))
-                                          (|:| |iden| #6#))
+                                          (|:| |iden| #5#))
                                          #2#))
                        0)
                       1)
@@ -290,7 +274,7 @@
                    (|mul_DF|
                     (QAREF1
                      (QAREF1
-                      (PROG2 (LETT #2# |tr| . #4#)
+                      (PROG2 (LETT #2# |tr|)
                           (QCDR #2#)
                         (|check_union2| (QEQCAR #2# 0)
                                         (|PrimitiveArray|
@@ -306,19 +290,18 @@
                                          (|:| |multiv|
                                               (|PrimitiveArray|
                                                (|DoubleFloat|)))
-                                         (|:| |iden| #6#))
+                                         (|:| |iden| #5#))
                                         #2#))
                       0)
                      2)
-                    (SPADCALL |vin| 3 (QREFELT $ 13))))
-                  . #4#)
+                    (SPADCALL |vin| 3 (QREFELT $ 13)))))
             (LETT |b|
                   (|add_DF|
                    (|add_DF|
                     (|mul_DF|
                      (QAREF1
                       (QAREF1
-                       (PROG2 (LETT #2# |tr| . #4#)
+                       (PROG2 (LETT #2# |tr|)
                            (QCDR #2#)
                          (|check_union2| (QEQCAR #2# 0)
                                          (|PrimitiveArray|
@@ -334,7 +317,7 @@
                                           (|:| |multiv|
                                                (|PrimitiveArray|
                                                 (|DoubleFloat|)))
-                                          (|:| |iden| #6#))
+                                          (|:| |iden| #5#))
                                          #2#))
                        1)
                       0)
@@ -342,7 +325,7 @@
                     (|mul_DF|
                      (QAREF1
                       (QAREF1
-                       (PROG2 (LETT #2# |tr| . #4#)
+                       (PROG2 (LETT #2# |tr|)
                            (QCDR #2#)
                          (|check_union2| (QEQCAR #2# 0)
                                          (|PrimitiveArray|
@@ -358,7 +341,7 @@
                                           (|:| |multiv|
                                                (|PrimitiveArray|
                                                 (|DoubleFloat|)))
-                                          (|:| |iden| #6#))
+                                          (|:| |iden| #5#))
                                          #2#))
                        1)
                       1)
@@ -366,7 +349,7 @@
                    (|mul_DF|
                     (QAREF1
                      (QAREF1
-                      (PROG2 (LETT #2# |tr| . #4#)
+                      (PROG2 (LETT #2# |tr|)
                           (QCDR #2#)
                         (|check_union2| (QEQCAR #2# 0)
                                         (|PrimitiveArray|
@@ -382,28 +365,23 @@
                                          (|:| |multiv|
                                               (|PrimitiveArray|
                                                (|DoubleFloat|)))
-                                         (|:| |iden| #6#))
+                                         (|:| |iden| #5#))
                                         #2#))
                       1)
                      2)
-                    (SPADCALL |vin| 3 (QREFELT $ 13))))
-                  . #4#)
+                    (SPADCALL |vin| 3 (QREFELT $ 13)))))
             (EXIT (SPADCALL |a| |b| (QREFELT $ 47)))))
-          #5# (EXIT #3#)))) 
+          #4# (EXIT #3#)))) 
 
 (SDEFUN |STR;applyTransPt3|
         ((|tr| $) (|inpt| |SCartesian| 3) ($ |SCartesian| 3))
         (SPROG
-         ((|c| #1=(|DoubleFloat|)) (#2=#:G694 NIL) (|b| #1#) (|a| #1#)
-          (|vin| (|List| (|DoubleFloat|))) (#3=#:G787 NIL))
+         ((|c| #1=(|DoubleFloat|)) (#2=#:G382 NIL) (|b| #1#) (|a| #1#)
+          (|vin| (|List| (|DoubleFloat|))) (#3=#:G437 NIL))
          (SEQ
           (EXIT
            (SEQ
-            (COND
-             ((QEQCAR |tr| 3)
-              (PROGN
-               (LETT #3# |inpt| . #4=(|STR;applyTransPt3|))
-               (GO #5=#:G786))))
+            (COND ((QEQCAR |tr| 3) (PROGN (LETT #3# |inpt|) (GO #4=#:G436))))
             (COND
              ((QEQCAR |tr| 1)
               (SEQ
@@ -412,8 +390,8 @@
                  "can't transform Euclidean point using general function"
                  (QREFELT $ 42))
                 (QREFELT $ 44))
-               (EXIT (PROGN (LETT #3# |inpt| . #4#) (GO #5#))))))
-            (LETT |vin| (SPADCALL |inpt| (QREFELT $ 49)) . #4#)
+               (EXIT (PROGN (LETT #3# |inpt|) (GO #4#))))))
+            (LETT |vin| (SPADCALL |inpt| (QREFELT $ 49)))
             (LETT |a|
                   (|add_DF|
                    (|add_DF|
@@ -421,7 +399,7 @@
                      (|mul_DF|
                       (QAREF1
                        (QAREF1
-                        (PROG2 (LETT #2# |tr| . #4#)
+                        (PROG2 (LETT #2# |tr|)
                             (QCDR #2#)
                           (|check_union2| (QEQCAR #2# 0)
                                           (|PrimitiveArray|
@@ -437,7 +415,7 @@
                                            (|:| |multiv|
                                                 (|PrimitiveArray|
                                                  (|DoubleFloat|)))
-                                           (|:| |iden| #6="iden"))
+                                           (|:| |iden| #5="iden"))
                                           #2#))
                         0)
                        0)
@@ -445,7 +423,7 @@
                      (|mul_DF|
                       (QAREF1
                        (QAREF1
-                        (PROG2 (LETT #2# |tr| . #4#)
+                        (PROG2 (LETT #2# |tr|)
                             (QCDR #2#)
                           (|check_union2| (QEQCAR #2# 0)
                                           (|PrimitiveArray|
@@ -461,7 +439,7 @@
                                            (|:| |multiv|
                                                 (|PrimitiveArray|
                                                  (|DoubleFloat|)))
-                                           (|:| |iden| #6#))
+                                           (|:| |iden| #5#))
                                           #2#))
                         0)
                        1)
@@ -469,7 +447,7 @@
                     (|mul_DF|
                      (QAREF1
                       (QAREF1
-                       (PROG2 (LETT #2# |tr| . #4#)
+                       (PROG2 (LETT #2# |tr|)
                            (QCDR #2#)
                          (|check_union2| (QEQCAR #2# 0)
                                          (|PrimitiveArray|
@@ -485,7 +463,7 @@
                                           (|:| |multiv|
                                                (|PrimitiveArray|
                                                 (|DoubleFloat|)))
-                                          (|:| |iden| #6#))
+                                          (|:| |iden| #5#))
                                          #2#))
                        0)
                       2)
@@ -493,7 +471,7 @@
                    (|mul_DF|
                     (QAREF1
                      (QAREF1
-                      (PROG2 (LETT #2# |tr| . #4#)
+                      (PROG2 (LETT #2# |tr|)
                           (QCDR #2#)
                         (|check_union2| (QEQCAR #2# 0)
                                         (|PrimitiveArray|
@@ -509,12 +487,11 @@
                                          (|:| |multiv|
                                               (|PrimitiveArray|
                                                (|DoubleFloat|)))
-                                         (|:| |iden| #6#))
+                                         (|:| |iden| #5#))
                                         #2#))
                       0)
                      3)
-                    (SPADCALL |vin| 4 (QREFELT $ 13))))
-                  . #4#)
+                    (SPADCALL |vin| 4 (QREFELT $ 13)))))
             (LETT |b|
                   (|add_DF|
                    (|add_DF|
@@ -522,7 +499,7 @@
                      (|mul_DF|
                       (QAREF1
                        (QAREF1
-                        (PROG2 (LETT #2# |tr| . #4#)
+                        (PROG2 (LETT #2# |tr|)
                             (QCDR #2#)
                           (|check_union2| (QEQCAR #2# 0)
                                           (|PrimitiveArray|
@@ -538,7 +515,7 @@
                                            (|:| |multiv|
                                                 (|PrimitiveArray|
                                                  (|DoubleFloat|)))
-                                           (|:| |iden| #6#))
+                                           (|:| |iden| #5#))
                                           #2#))
                         1)
                        0)
@@ -546,7 +523,7 @@
                      (|mul_DF|
                       (QAREF1
                        (QAREF1
-                        (PROG2 (LETT #2# |tr| . #4#)
+                        (PROG2 (LETT #2# |tr|)
                             (QCDR #2#)
                           (|check_union2| (QEQCAR #2# 0)
                                           (|PrimitiveArray|
@@ -562,7 +539,7 @@
                                            (|:| |multiv|
                                                 (|PrimitiveArray|
                                                  (|DoubleFloat|)))
-                                           (|:| |iden| #6#))
+                                           (|:| |iden| #5#))
                                           #2#))
                         1)
                        1)
@@ -570,7 +547,7 @@
                     (|mul_DF|
                      (QAREF1
                       (QAREF1
-                       (PROG2 (LETT #2# |tr| . #4#)
+                       (PROG2 (LETT #2# |tr|)
                            (QCDR #2#)
                          (|check_union2| (QEQCAR #2# 0)
                                          (|PrimitiveArray|
@@ -586,7 +563,7 @@
                                           (|:| |multiv|
                                                (|PrimitiveArray|
                                                 (|DoubleFloat|)))
-                                          (|:| |iden| #6#))
+                                          (|:| |iden| #5#))
                                          #2#))
                        1)
                       2)
@@ -594,7 +571,7 @@
                    (|mul_DF|
                     (QAREF1
                      (QAREF1
-                      (PROG2 (LETT #2# |tr| . #4#)
+                      (PROG2 (LETT #2# |tr|)
                           (QCDR #2#)
                         (|check_union2| (QEQCAR #2# 0)
                                         (|PrimitiveArray|
@@ -610,12 +587,11 @@
                                          (|:| |multiv|
                                               (|PrimitiveArray|
                                                (|DoubleFloat|)))
-                                         (|:| |iden| #6#))
+                                         (|:| |iden| #5#))
                                         #2#))
                       1)
                      3)
-                    (SPADCALL |vin| 4 (QREFELT $ 13))))
-                  . #4#)
+                    (SPADCALL |vin| 4 (QREFELT $ 13)))))
             (LETT |c|
                   (|add_DF|
                    (|add_DF|
@@ -623,7 +599,7 @@
                      (|mul_DF|
                       (QAREF1
                        (QAREF1
-                        (PROG2 (LETT #2# |tr| . #4#)
+                        (PROG2 (LETT #2# |tr|)
                             (QCDR #2#)
                           (|check_union2| (QEQCAR #2# 0)
                                           (|PrimitiveArray|
@@ -639,7 +615,7 @@
                                            (|:| |multiv|
                                                 (|PrimitiveArray|
                                                  (|DoubleFloat|)))
-                                           (|:| |iden| #6#))
+                                           (|:| |iden| #5#))
                                           #2#))
                         2)
                        0)
@@ -647,7 +623,7 @@
                      (|mul_DF|
                       (QAREF1
                        (QAREF1
-                        (PROG2 (LETT #2# |tr| . #4#)
+                        (PROG2 (LETT #2# |tr|)
                             (QCDR #2#)
                           (|check_union2| (QEQCAR #2# 0)
                                           (|PrimitiveArray|
@@ -663,7 +639,7 @@
                                            (|:| |multiv|
                                                 (|PrimitiveArray|
                                                  (|DoubleFloat|)))
-                                           (|:| |iden| #6#))
+                                           (|:| |iden| #5#))
                                           #2#))
                         2)
                        1)
@@ -671,7 +647,7 @@
                     (|mul_DF|
                      (QAREF1
                       (QAREF1
-                       (PROG2 (LETT #2# |tr| . #4#)
+                       (PROG2 (LETT #2# |tr|)
                            (QCDR #2#)
                          (|check_union2| (QEQCAR #2# 0)
                                          (|PrimitiveArray|
@@ -687,7 +663,7 @@
                                           (|:| |multiv|
                                                (|PrimitiveArray|
                                                 (|DoubleFloat|)))
-                                          (|:| |iden| #6#))
+                                          (|:| |iden| #5#))
                                          #2#))
                        2)
                       2)
@@ -695,7 +671,7 @@
                    (|mul_DF|
                     (QAREF1
                      (QAREF1
-                      (PROG2 (LETT #2# |tr| . #4#)
+                      (PROG2 (LETT #2# |tr|)
                           (QCDR #2#)
                         (|check_union2| (QEQCAR #2# 0)
                                         (|PrimitiveArray|
@@ -711,26 +687,21 @@
                                          (|:| |multiv|
                                               (|PrimitiveArray|
                                                (|DoubleFloat|)))
-                                         (|:| |iden| #6#))
+                                         (|:| |iden| #5#))
                                         #2#))
                       2)
                      3)
-                    (SPADCALL |vin| 4 (QREFELT $ 13))))
-                  . #4#)
+                    (SPADCALL |vin| 4 (QREFELT $ 13)))))
             (EXIT (SPADCALL |a| |b| |c| (QREFELT $ 50)))))
-          #5# (EXIT #3#)))) 
+          #4# (EXIT #3#)))) 
 
 (SDEFUN |STR;applyTransCx| ((|tr| $) (|inpt| |SArgand|) ($ |SArgand|))
         (SPROG
-         ((|res| (PT)) (|f| (|Mapping| PT PT)) (#1=#:G695 NIL) (#2=#:G791 NIL))
+         ((|res| (PT)) (|f| (|Mapping| PT PT)) (#1=#:G383 NIL) (#2=#:G441 NIL))
          (SEQ
           (EXIT
            (SEQ
-            (COND
-             ((QEQCAR |tr| 3)
-              (PROGN
-               (LETT #2# |inpt| . #3=(|STR;applyTransCx|))
-               (GO #4=#:G790))))
+            (COND ((QEQCAR |tr| 3) (PROGN (LETT #2# |inpt|) (GO #3=#:G440))))
             (COND
              ((QEQCAR |tr| 0)
               (SEQ
@@ -739,9 +710,9 @@
                           (QREFELT $ 42))
                 (QREFELT $ 44))
                (SPADCALL (SPADCALL |tr| (QREFELT $ 51)) (QREFELT $ 44))
-               (EXIT (PROGN (LETT #2# |inpt| . #3#) (GO #4#))))))
+               (EXIT (PROGN (LETT #2# |inpt|) (GO #3#))))))
             (LETT |f|
-                  (PROG2 (LETT #1# |tr| . #3#)
+                  (PROG2 (LETT #1# |tr|)
                       (QCDR #1#)
                     (|check_union2| (QEQCAR #1# 1)
                                     (|Mapping| (QREFELT $ 6) (QREFELT $ 6))
@@ -755,16 +726,15 @@
                                      (|:| |multiv|
                                           (|PrimitiveArray| (|DoubleFloat|)))
                                      (|:| |iden| "iden"))
-                                    #1#))
-                  . #3#)
-            (LETT |res| (SPADCALL |inpt| |f|) . #3#) (EXIT |res|)))
-          #4# (EXIT #2#)))) 
+                                    #1#)))
+            (LETT |res| (SPADCALL |inpt| |f|)) (EXIT |res|)))
+          #3# (EXIT #2#)))) 
 
 (SDEFUN |STR;applyTransConf2|
         ((|tr| $) (|inpt| |SConformal| 2) ($ |SConformal| 2))
         (SPROG
          ((|res| (|SConformal| 2)) (|conjugation| (CA)) (|trConf| (CA))
-          (#1=#:G696 NIL) (|ptConf| (CA))
+          (#1=#:G384 NIL) (|ptConf| (CA))
           (CA
            (|Join| (|Ring|) (|Algebra| #2=(|DoubleFloat|))
                    (CATEGORY |domain| (SIGNATURE |e| ($ (|PositiveInteger|)))
@@ -785,15 +755,11 @@
                     (SIGNATURE |reverse| ($ $)) (SIGNATURE |conj| ($ $))
                     (SIGNATURE |setMode|
                      ((|Boolean|) (|String|) (|Boolean|))))))
-          (|m| (|Matrix| (|DoubleFloat|))) (#3=#:G796 NIL))
+          (|m| (|Matrix| (|DoubleFloat|))) (#3=#:G445 NIL))
          (SEQ
           (EXIT
            (SEQ
-            (COND
-             ((QEQCAR |tr| 3)
-              (PROGN
-               (LETT #3# |inpt| . #4=(|STR;applyTransConf2|))
-               (GO #5=#:G795))))
+            (COND ((QEQCAR |tr| 3) (PROGN (LETT #3# |inpt|) (GO #4=#:G444))))
             (COND
              ((NULL (QEQCAR |tr| 2))
               (SEQ
@@ -802,20 +768,18 @@
                           (QREFELT $ 42))
                 (QREFELT $ 44))
                (SPADCALL (SPADCALL |tr| (QREFELT $ 51)) (QREFELT $ 44))
-               (EXIT (PROGN (LETT #3# |inpt| . #4#) (GO #5#))))))
+               (EXIT (PROGN (LETT #3# |inpt|) (GO #4#))))))
             (LETT |m|
                   (SPADCALL
                    (LIST (LIST 0.0 1.0 0.0 0.0) (LIST 1.0 0.0 0.0 0.0)
                          (LIST 0.0 0.0 1.0 0.0) (LIST 0.0 0.0 0.0 1.0))
-                   (QREFELT $ 30))
-                  . #4#)
+                   (QREFELT $ 30)))
             (LETT CA
                   (|CliffordAlgebra| 4 (|DoubleFloat|)
-                                     (SPADCALL |m| (QREFELT $ 32)))
-                  . #4#)
-            (LETT |ptConf| |inpt| . #4#)
+                                     (SPADCALL |m| (QREFELT $ 32))))
+            (LETT |ptConf| |inpt|)
             (LETT |trConf|
-                  (PROG2 (LETT #1# |tr| . #4#)
+                  (PROG2 (LETT #1# |tr|)
                       (QCDR #1#)
                     (|check_union2| (QEQCAR #1# 2)
                                     (|PrimitiveArray| (|DoubleFloat|))
@@ -829,8 +793,7 @@
                                      (|:| |multiv|
                                           (|PrimitiveArray| (|DoubleFloat|)))
                                      (|:| |iden| "iden"))
-                                    #1#))
-                  . #4#)
+                                    #1#)))
             (LETT |conjugation|
                   (SPADCALL
                    (SPADCALL |trConf| |ptConf|
@@ -838,11 +801,9 @@
                    (SPADCALL |trConf|
                              (|compiledLookupCheck| '|reverse| (LIST '$ '$)
                                                     CA))
-                   (|compiledLookupCheck| '* (LIST '$ '$ '$) CA))
-                  . #4#)
-            (LETT |res| |conjugation| . #4#)
-            (EXIT (SPADCALL |res| (QREFELT $ 53)))))
-          #5# (EXIT #3#)))) 
+                   (|compiledLookupCheck| '* (LIST '$ '$ '$) CA)))
+            (LETT |res| |conjugation|) (EXIT (SPADCALL |res| (QREFELT $ 53)))))
+          #4# (EXIT #3#)))) 
 
 (SDEFUN |STR;xform;$2PT;12| ((|tr| $) (|inpt| PT) ($ PT))
         (SEQ
@@ -861,16 +822,15 @@
 
 (SDEFUN |STR;compound2| ((|tr| $) (|inpt| $) ($ $))
         (SPROG
-         ((#1=#:G808 NIL) (#2=#:G694 NIL) (|j| NIL) (|i| NIL)
+         ((#1=#:G457 NIL) (#2=#:G382 NIL) (|j| NIL) (|i| NIL)
           (|arr| (|PrimitiveArray| (|PrimitiveArray| (|DoubleFloat|)))))
          (SEQ
           (EXIT
-           (SEQ (LETT |arr| (MAKEARR1 3 (MAKE-ARRAY 0)) . #3=(|STR;compound2|))
-                (SEQ (LETT |i| 0 . #3#) G190
-                     (COND ((|greater_SI| |i| 2) (GO G191)))
+           (SEQ (LETT |arr| (MAKEARR1 3 (MAKE-ARRAY 0)))
+                (SEQ (LETT |i| 0) G190 (COND ((|greater_SI| |i| 2) (GO G191)))
                      (SEQ (QSETAREF1 |arr| |i| (MAKEARR1 3 0.0))
                           (EXIT
-                           (SEQ (LETT |j| 0 . #3#) G190
+                           (SEQ (LETT |j| 0) G190
                                 (COND ((|greater_SI| |j| 2) (GO G191)))
                                 (SEQ
                                  (EXIT
@@ -880,7 +840,7 @@
                                                (|mul_DF|
                                                 (QAREF1
                                                  (QAREF1
-                                                  (PROG2 (LETT #2# |tr| . #3#)
+                                                  (PROG2 (LETT #2# |tr|)
                                                       (QCDR #2#)
                                                     (|check_union2|
                                                      (QEQCAR #2# 0)
@@ -899,14 +859,13 @@
                                                       (|:| |multiv|
                                                            (|PrimitiveArray|
                                                             (|DoubleFloat|)))
-                                                      (|:| |iden| #4="iden"))
+                                                      (|:| |iden| #3="iden"))
                                                      #2#))
                                                   0)
                                                  |j|)
                                                 (QAREF1
                                                  (QAREF1
-                                                  (PROG2
-                                                      (LETT #2# |inpt| . #3#)
+                                                  (PROG2 (LETT #2# |inpt|)
                                                       (QCDR #2#)
                                                     (|check_union2|
                                                      (QEQCAR #2# 0)
@@ -925,14 +884,14 @@
                                                       (|:| |multiv|
                                                            (|PrimitiveArray|
                                                             (|DoubleFloat|)))
-                                                      (|:| |iden| #4#))
+                                                      (|:| |iden| #3#))
                                                      #2#))
                                                   |i|)
                                                  0))
                                                (|mul_DF|
                                                 (QAREF1
                                                  (QAREF1
-                                                  (PROG2 (LETT #2# |tr| . #3#)
+                                                  (PROG2 (LETT #2# |tr|)
                                                       (QCDR #2#)
                                                     (|check_union2|
                                                      (QEQCAR #2# 0)
@@ -951,14 +910,13 @@
                                                       (|:| |multiv|
                                                            (|PrimitiveArray|
                                                             (|DoubleFloat|)))
-                                                      (|:| |iden| #4#))
+                                                      (|:| |iden| #3#))
                                                      #2#))
                                                   1)
                                                  |j|)
                                                 (QAREF1
                                                  (QAREF1
-                                                  (PROG2
-                                                      (LETT #2# |inpt| . #3#)
+                                                  (PROG2 (LETT #2# |inpt|)
                                                       (QCDR #2#)
                                                     (|check_union2|
                                                      (QEQCAR #2# 0)
@@ -977,14 +935,14 @@
                                                       (|:| |multiv|
                                                            (|PrimitiveArray|
                                                             (|DoubleFloat|)))
-                                                      (|:| |iden| #4#))
+                                                      (|:| |iden| #3#))
                                                      #2#))
                                                   |i|)
                                                  1)))
                                               (|mul_DF|
                                                (QAREF1
                                                 (QAREF1
-                                                 (PROG2 (LETT #2# |tr| . #3#)
+                                                 (PROG2 (LETT #2# |tr|)
                                                      (QCDR #2#)
                                                    (|check_union2|
                                                     (QEQCAR #2# 0)
@@ -1003,13 +961,13 @@
                                                      (|:| |multiv|
                                                           (|PrimitiveArray|
                                                            (|DoubleFloat|)))
-                                                     (|:| |iden| #4#))
+                                                     (|:| |iden| #3#))
                                                     #2#))
                                                  2)
                                                 |j|)
                                                (QAREF1
                                                 (QAREF1
-                                                 (PROG2 (LETT #2# |inpt| . #3#)
+                                                 (PROG2 (LETT #2# |inpt|)
                                                      (QCDR #2#)
                                                    (|check_union2|
                                                     (QEQCAR #2# 0)
@@ -1028,28 +986,27 @@
                                                      (|:| |multiv|
                                                           (|PrimitiveArray|
                                                            (|DoubleFloat|)))
-                                                     (|:| |iden| #4#))
+                                                     (|:| |iden| #3#))
                                                     #2#))
                                                  |i|)
                                                 2))))))
-                                (LETT |j| (|inc_SI| |j|) . #3#) (GO G190) G191
+                                (LETT |j| (|inc_SI| |j|)) (GO G190) G191
                                 (EXIT NIL))))
-                     (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191 (EXIT NIL))
-                (EXIT (PROGN (LETT #1# (CONS 0 |arr|) . #3#) (GO #5=#:G807)))))
-          #5# (EXIT #1#)))) 
+                     (LETT |i| (|inc_SI| |i|)) (GO G190) G191 (EXIT NIL))
+                (EXIT (PROGN (LETT #1# (CONS 0 |arr|)) (GO #4=#:G456)))))
+          #4# (EXIT #1#)))) 
 
 (SDEFUN |STR;compound3| ((|tr| $) (|inpt| $) ($ $))
         (SPROG
-         ((#1=#:G818 NIL) (#2=#:G694 NIL) (|j| NIL) (|i| NIL)
+         ((#1=#:G467 NIL) (#2=#:G382 NIL) (|j| NIL) (|i| NIL)
           (|arr| (|PrimitiveArray| (|PrimitiveArray| (|DoubleFloat|)))))
          (SEQ
           (EXIT
-           (SEQ (LETT |arr| (MAKEARR1 4 (MAKE-ARRAY 0)) . #3=(|STR;compound3|))
-                (SEQ (LETT |i| 0 . #3#) G190
-                     (COND ((|greater_SI| |i| 3) (GO G191)))
+           (SEQ (LETT |arr| (MAKEARR1 4 (MAKE-ARRAY 0)))
+                (SEQ (LETT |i| 0) G190 (COND ((|greater_SI| |i| 3) (GO G191)))
                      (SEQ (QSETAREF1 |arr| |i| (MAKEARR1 4 0.0))
                           (EXIT
-                           (SEQ (LETT |j| 0 . #3#) G190
+                           (SEQ (LETT |j| 0) G190
                                 (COND ((|greater_SI| |j| 3) (GO G191)))
                                 (SEQ
                                  (EXIT
@@ -1060,7 +1017,7 @@
                                                 (|mul_DF|
                                                  (QAREF1
                                                   (QAREF1
-                                                   (PROG2 (LETT #2# |tr| . #3#)
+                                                   (PROG2 (LETT #2# |tr|)
                                                        (QCDR #2#)
                                                      (|check_union2|
                                                       (QEQCAR #2# 0)
@@ -1079,14 +1036,13 @@
                                                        (|:| |multiv|
                                                             (|PrimitiveArray|
                                                              (|DoubleFloat|)))
-                                                       (|:| |iden| #4="iden"))
+                                                       (|:| |iden| #3="iden"))
                                                       #2#))
                                                    0)
                                                   |j|)
                                                  (QAREF1
                                                   (QAREF1
-                                                   (PROG2
-                                                       (LETT #2# |inpt| . #3#)
+                                                   (PROG2 (LETT #2# |inpt|)
                                                        (QCDR #2#)
                                                      (|check_union2|
                                                       (QEQCAR #2# 0)
@@ -1105,14 +1061,14 @@
                                                        (|:| |multiv|
                                                             (|PrimitiveArray|
                                                              (|DoubleFloat|)))
-                                                       (|:| |iden| #4#))
+                                                       (|:| |iden| #3#))
                                                       #2#))
                                                    |i|)
                                                   0))
                                                 (|mul_DF|
                                                  (QAREF1
                                                   (QAREF1
-                                                   (PROG2 (LETT #2# |tr| . #3#)
+                                                   (PROG2 (LETT #2# |tr|)
                                                        (QCDR #2#)
                                                      (|check_union2|
                                                       (QEQCAR #2# 0)
@@ -1131,14 +1087,13 @@
                                                        (|:| |multiv|
                                                             (|PrimitiveArray|
                                                              (|DoubleFloat|)))
-                                                       (|:| |iden| #4#))
+                                                       (|:| |iden| #3#))
                                                       #2#))
                                                    1)
                                                   |j|)
                                                  (QAREF1
                                                   (QAREF1
-                                                   (PROG2
-                                                       (LETT #2# |inpt| . #3#)
+                                                   (PROG2 (LETT #2# |inpt|)
                                                        (QCDR #2#)
                                                      (|check_union2|
                                                       (QEQCAR #2# 0)
@@ -1157,14 +1112,14 @@
                                                        (|:| |multiv|
                                                             (|PrimitiveArray|
                                                              (|DoubleFloat|)))
-                                                       (|:| |iden| #4#))
+                                                       (|:| |iden| #3#))
                                                       #2#))
                                                    |i|)
                                                   1)))
                                                (|mul_DF|
                                                 (QAREF1
                                                  (QAREF1
-                                                  (PROG2 (LETT #2# |tr| . #3#)
+                                                  (PROG2 (LETT #2# |tr|)
                                                       (QCDR #2#)
                                                     (|check_union2|
                                                      (QEQCAR #2# 0)
@@ -1183,14 +1138,13 @@
                                                       (|:| |multiv|
                                                            (|PrimitiveArray|
                                                             (|DoubleFloat|)))
-                                                      (|:| |iden| #4#))
+                                                      (|:| |iden| #3#))
                                                      #2#))
                                                   2)
                                                  |j|)
                                                 (QAREF1
                                                  (QAREF1
-                                                  (PROG2
-                                                      (LETT #2# |inpt| . #3#)
+                                                  (PROG2 (LETT #2# |inpt|)
                                                       (QCDR #2#)
                                                     (|check_union2|
                                                      (QEQCAR #2# 0)
@@ -1209,14 +1163,14 @@
                                                       (|:| |multiv|
                                                            (|PrimitiveArray|
                                                             (|DoubleFloat|)))
-                                                      (|:| |iden| #4#))
+                                                      (|:| |iden| #3#))
                                                      #2#))
                                                   |i|)
                                                  2)))
                                               (|mul_DF|
                                                (QAREF1
                                                 (QAREF1
-                                                 (PROG2 (LETT #2# |tr| . #3#)
+                                                 (PROG2 (LETT #2# |tr|)
                                                      (QCDR #2#)
                                                    (|check_union2|
                                                     (QEQCAR #2# 0)
@@ -1235,13 +1189,13 @@
                                                      (|:| |multiv|
                                                           (|PrimitiveArray|
                                                            (|DoubleFloat|)))
-                                                     (|:| |iden| #4#))
+                                                     (|:| |iden| #3#))
                                                     #2#))
                                                  3)
                                                 |j|)
                                                (QAREF1
                                                 (QAREF1
-                                                 (PROG2 (LETT #2# |inpt| . #3#)
+                                                 (PROG2 (LETT #2# |inpt|)
                                                      (QCDR #2#)
                                                    (|check_union2|
                                                     (QEQCAR #2# 0)
@@ -1260,19 +1214,19 @@
                                                      (|:| |multiv|
                                                           (|PrimitiveArray|
                                                            (|DoubleFloat|)))
-                                                     (|:| |iden| #4#))
+                                                     (|:| |iden| #3#))
                                                     #2#))
                                                  |i|)
                                                 3))))))
-                                (LETT |j| (|inc_SI| |j|) . #3#) (GO G190) G191
+                                (LETT |j| (|inc_SI| |j|)) (GO G190) G191
                                 (EXIT NIL))))
-                     (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191 (EXIT NIL))
-                (EXIT (PROGN (LETT #1# (CONS 0 |arr|) . #3#) (GO #5=#:G817)))))
-          #5# (EXIT #1#)))) 
+                     (LETT |i| (|inc_SI| |i|)) (GO G190) G191 (EXIT NIL))
+                (EXIT (PROGN (LETT #1# (CONS 0 |arr|)) (GO #4=#:G466)))))
+          #4# (EXIT #1#)))) 
 
 (SDEFUN |STR;compoundConf2| ((|tr| $) (|inpt| $) ($ $))
         (SPROG
-         ((#1=#:G821 NIL) (|resConf| (CA)) (|inptConf| (CA)) (#2=#:G696 NIL)
+         ((#1=#:G470 NIL) (|resConf| (CA)) (|inptConf| (CA)) (#2=#:G384 NIL)
           (|trConf| (CA))
           (CA
            (|Join| (|Ring|) (|Algebra| #3=(|DoubleFloat|))
@@ -1302,14 +1256,12 @@
                   (SPADCALL
                    (LIST (LIST 0.0 1.0 0.0 0.0) (LIST 1.0 0.0 0.0 0.0)
                          (LIST 0.0 0.0 1.0 0.0) (LIST 0.0 0.0 0.0 1.0))
-                   (QREFELT $ 30))
-                  . #4=(|STR;compoundConf2|))
+                   (QREFELT $ 30)))
             (LETT CA
                   (|CliffordAlgebra| 4 (|DoubleFloat|)
-                                     (SPADCALL |m| (QREFELT $ 32)))
-                  . #4#)
+                                     (SPADCALL |m| (QREFELT $ 32))))
             (LETT |trConf|
-                  (PROG2 (LETT #2# |tr| . #4#)
+                  (PROG2 (LETT #2# |tr|)
                       (QCDR #2#)
                     (|check_union2| (QEQCAR #2# 2)
                                     (|PrimitiveArray| (|DoubleFloat|))
@@ -1322,11 +1274,10 @@
                                                      (QREFELT $ 6)))
                                      (|:| |multiv|
                                           (|PrimitiveArray| (|DoubleFloat|)))
-                                     (|:| |iden| #5="iden"))
-                                    #2#))
-                  . #4#)
+                                     (|:| |iden| #4="iden"))
+                                    #2#)))
             (LETT |inptConf|
-                  (PROG2 (LETT #2# |inpt| . #4#)
+                  (PROG2 (LETT #2# |inpt|)
                       (QCDR #2#)
                     (|check_union2| (QEQCAR #2# 2)
                                     (|PrimitiveArray| (|DoubleFloat|))
@@ -1339,29 +1290,23 @@
                                                      (QREFELT $ 6)))
                                      (|:| |multiv|
                                           (|PrimitiveArray| (|DoubleFloat|)))
-                                     (|:| |iden| #5#))
-                                    #2#))
-                  . #4#)
+                                     (|:| |iden| #4#))
+                                    #2#)))
             (LETT |resConf|
                   (SPADCALL |trConf| |inptConf|
-                            (|compiledLookupCheck| '* (LIST '$ '$ '$) CA))
-                  . #4#)
-            (EXIT (PROGN (LETT #1# (CONS 2 |resConf|) . #4#) (GO #6=#:G820)))))
-          #6# (EXIT #1#)))) 
+                            (|compiledLookupCheck| '* (LIST '$ '$ '$) CA)))
+            (EXIT (PROGN (LETT #1# (CONS 2 |resConf|)) (GO #5=#:G469)))))
+          #5# (EXIT #1#)))) 
 
 (SDEFUN |STR;compound;3$;16| ((|tr| $) (|inpt| $) ($ $))
         (SPROG
-         ((#1=#:G832 NIL) (|fn| (|Mapping| PT PT)) (|in2| (|Mapping| PT PT))
+         ((#1=#:G481 NIL) (|fn| (|Mapping| PT PT)) (|in2| (|Mapping| PT PT))
           (|in1| (|Mapping| PT PT)))
          (SEQ
           (EXIT
            (SEQ
-            (COND
-             ((QEQCAR |tr| 3)
-              (PROGN
-               (LETT #1# |inpt| . #2=(|STR;compound;3$;16|))
-               (GO #3=#:G831))))
-            (COND ((QEQCAR |inpt| 3) (PROGN (LETT #1# |tr| . #2#) (GO #3#))))
+            (COND ((QEQCAR |tr| 3) (PROGN (LETT #1# |inpt|) (GO #2=#:G480))))
+            (COND ((QEQCAR |inpt| 3) (PROGN (LETT #1# |tr|) (GO #2#))))
             (COND
              ((QEQCAR |tr| 0)
               (COND
@@ -1370,52 +1315,49 @@
                  (COND
                   ((EQUAL (QREFELT $ 6) (|SCartesian| 2))
                    (PROGN
-                    (LETT #1# (|STR;compound2| |tr| |inpt| $) . #2#)
-                    (GO #3#))))
+                    (LETT #1# (|STR;compound2| |tr| |inpt| $))
+                    (GO #2#))))
                  (EXIT
                   (COND
                    ((EQUAL (QREFELT $ 6) (|SCartesian| 3))
                     (PROGN
-                     (LETT #1# (|STR;compound3| |tr| |inpt| $) . #2#)
-                     (GO #3#))))))))))
+                     (LETT #1# (|STR;compound3| |tr| |inpt| $))
+                     (GO #2#))))))))))
             (COND
              ((QEQCAR |tr| 1)
               (COND
                ((QEQCAR |inpt| 1)
-                (SEQ (LETT |in1| (CDR |tr|) . #2#)
-                     (LETT |in2| (CDR |inpt|) . #2#)
-                     (LETT |fn| (SPADCALL |in1| |in2| (QREFELT $ 56)) . #2#)
-                     (EXIT
-                      (PROGN (LETT #1# (CONS 1 |fn|) . #2#) (GO #3#))))))))
+                (SEQ (LETT |in1| (CDR |tr|)) (LETT |in2| (CDR |inpt|))
+                     (LETT |fn| (SPADCALL |in1| |in2| (QREFELT $ 56)))
+                     (EXIT (PROGN (LETT #1# (CONS 1 |fn|)) (GO #2#))))))))
             (COND
              ((QEQCAR |tr| 2)
               (COND
                ((QEQCAR |inpt| 2)
                 (PROGN
-                 (LETT #1# (|STR;compoundConf2| |tr| |inpt| $) . #2#)
-                 (GO #3#))))))
+                 (LETT #1# (|STR;compoundConf2| |tr| |inpt| $))
+                 (GO #2#))))))
             (EXIT (SPADCALL (QREFELT $ 14)))))
-          #3# (EXIT #1#)))) 
+          #2# (EXIT #1#)))) 
 
 (SDEFUN |STR;outputArray|
         ((|x| |PrimitiveArray| (|DoubleFloat|)) ($ |OutputForm|))
         (SPROG
-         ((#1=#:G841 NIL) (|i| NIL) (#2=#:G840 NIL)
+         ((#1=#:G490 NIL) (|i| NIL) (#2=#:G489 NIL)
           (|m| (|NonNegativeInteger|)))
-         (SEQ (LETT |m| (QVSIZE |x|) . #3=(|STR;outputArray|))
+         (SEQ (LETT |m| (QVSIZE |x|))
               (EXIT
                (SPADCALL
                 (PROGN
-                 (LETT #2# NIL . #3#)
-                 (SEQ (LETT |i| 0 . #3#) (LETT #1# (- |m| 1) . #3#) G190
+                 (LETT #2# NIL)
+                 (SEQ (LETT |i| 0) (LETT #1# (- |m| 1)) G190
                       (COND ((|greater_SI| |i| #1#) (GO G191)))
                       (SEQ
                        (EXIT
                         (LETT #2#
                               (CONS (SPADCALL (QAREF1 |x| |i|) (QREFELT $ 58))
-                                    #2#)
-                              . #3#)))
-                      (LETT |i| (|inc_SI| |i|) . #3#) (GO G190) G191
+                                    #2#))))
+                      (LETT |i| (|inc_SI| |i|)) (GO G190) G191
                       (EXIT (NREVERSE #2#))))
                 (QREFELT $ 60)))))) 
 
@@ -1423,23 +1365,22 @@
         ((|x| |PrimitiveArray| (|PrimitiveArray| (|DoubleFloat|)))
          ($ |OutputForm|))
         (SPROG
-         ((|l| (|List| (|List| (|OutputForm|)))) (#1=#:G853 NIL) (|j| NIL)
-          (#2=#:G852 NIL) (#3=#:G851 NIL) (|i| NIL) (#4=#:G850 NIL)
+         ((|l| (|List| (|List| (|OutputForm|)))) (#1=#:G502 NIL) (|j| NIL)
+          (#2=#:G501 NIL) (#3=#:G500 NIL) (|i| NIL) (#4=#:G499 NIL)
           (|m| (|NonNegativeInteger|)))
-         (SEQ (LETT |m| (QVSIZE |x|) . #5=(|STR;outputMatrix|))
+         (SEQ (LETT |m| (QVSIZE |x|))
               (LETT |l|
                     (PROGN
-                     (LETT #4# NIL . #5#)
-                     (SEQ (LETT |i| 0 . #5#) (LETT #3# (- |m| 1) . #5#) G190
+                     (LETT #4# NIL)
+                     (SEQ (LETT |i| 0) (LETT #3# (- |m| 1)) G190
                           (COND ((|greater_SI| |i| #3#) (GO G191)))
                           (SEQ
                            (EXIT
                             (LETT #4#
                                   (CONS
                                    (PROGN
-                                    (LETT #2# NIL . #5#)
-                                    (SEQ (LETT |j| 0 . #5#)
-                                         (LETT #1# (- |m| 1) . #5#) G190
+                                    (LETT #2# NIL)
+                                    (SEQ (LETT |j| 0) (LETT #1# (- |m| 1)) G190
                                          (COND
                                           ((|greater_SI| |j| #1#) (GO G191)))
                                          (SEQ
@@ -1450,42 +1391,37 @@
                                                    (QAREF1 (QAREF1 |x| |i|)
                                                            |j|)
                                                    (QREFELT $ 58))
-                                                  #2#)
-                                                 . #5#)))
-                                         (LETT |j| (|inc_SI| |j|) . #5#)
-                                         (GO G190) G191 (EXIT (NREVERSE #2#))))
-                                   #4#)
-                                  . #5#)))
-                          (LETT |i| (|inc_SI| |i|) . #5#) (GO G190) G191
-                          (EXIT (NREVERSE #4#))))
-                    . #5#)
+                                                  #2#))))
+                                         (LETT |j| (|inc_SI| |j|)) (GO G190)
+                                         G191 (EXIT (NREVERSE #2#))))
+                                   #4#))))
+                          (LETT |i| (|inc_SI| |i|)) (GO G190) G191
+                          (EXIT (NREVERSE #4#)))))
               (EXIT (SPADCALL |l| (QREFELT $ 62)))))) 
 
 (SDEFUN |STR;coerce;$Of;19| ((|tr| $) ($ |OutputForm|))
-        (SPROG ((#1=#:G696 NIL) (#2=#:G856 NIL) (#3=#:G694 NIL))
+        (SPROG ((#1=#:G384 NIL) (#2=#:G505 NIL) (#3=#:G382 NIL))
                (SEQ
                 (EXIT
                  (SEQ
                   (COND
                    ((QEQCAR |tr| 3)
                     (PROGN
-                     (LETT #2# (SPADCALL "iden" (QREFELT $ 42))
-                           . #4=(|STR;coerce;$Of;19|))
-                     (GO #5=#:G855))))
+                     (LETT #2# (SPADCALL "iden" (QREFELT $ 42)))
+                     (GO #4=#:G504))))
                   (COND
                    ((QEQCAR |tr| 1)
                     (PROGN
                      (LETT #2#
-                           (SPADCALL "function as transform" (QREFELT $ 42))
-                           . #4#)
-                     (GO #5#))))
+                           (SPADCALL "function as transform" (QREFELT $ 42)))
+                     (GO #4#))))
                   (COND
                    ((QEQCAR |tr| 0)
                     (PROGN
                      (LETT #2#
                            (SPADCALL (SPADCALL "mtx" (QREFELT $ 42))
                                      (|STR;outputMatrix|
-                                      (PROG2 (LETT #3# |tr| . #4#)
+                                      (PROG2 (LETT #3# |tr|)
                                           (QCDR #3#)
                                         (|check_union2| (QEQCAR #3# 0)
                                                         (|PrimitiveArray|
@@ -1504,16 +1440,15 @@
                                                               (|PrimitiveArray|
                                                                (|DoubleFloat|)))
                                                          (|:| |iden|
-                                                              #6="iden"))
+                                                              #5="iden"))
                                                         #3#))
                                       $)
-                                     (QREFELT $ 63))
-                           . #4#)
-                     (GO #5#))))
+                                     (QREFELT $ 63)))
+                     (GO #4#))))
                   (EXIT
                    (SPADCALL (SPADCALL "multiv" (QREFELT $ 42))
                              (|STR;outputArray|
-                              (PROG2 (LETT #1# |tr| . #4#)
+                              (PROG2 (LETT #1# |tr|)
                                   (QCDR #1#)
                                 (|check_union2| (QEQCAR #1# 2)
                                                 (|PrimitiveArray|
@@ -1530,39 +1465,38 @@
                                                  (|:| |multiv|
                                                       (|PrimitiveArray|
                                                        (|DoubleFloat|)))
-                                                 (|:| |iden| #6#))
+                                                 (|:| |iden| #5#))
                                                 #1#))
                               $)
                              (QREFELT $ 63)))))
-                #5# (EXIT #2#)))) 
+                #4# (EXIT #2#)))) 
 
 (DECLAIM (NOTINLINE |STransform;|)) 
 
-(DEFUN |STransform| (#1=#:G857)
+(DEFUN |STransform| (#1=#:G506)
   (SPROG NIL
-         (PROG (#2=#:G858)
+         (PROG (#2=#:G507)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|STransform|)
-                                               '|domainEqualList|)
-                    . #3=(|STransform|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|STransform;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|STransform;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|STransform|)))))))))) 
 
 (DEFUN |STransform;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|STransform|))
-          (LETT |dv$| (LIST '|STransform| DV$1) . #1#)
-          (LETT $ (GETREFV 64) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|STransform| DV$1))
+          (LETT $ (GETREFV 64))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|STransform| (LIST DV$1) (CONS 1 $))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)
@@ -1599,25 +1533,46 @@
            '#(|xform| 134 |stranslate| 140 |stransform| 150 |identity| 170
               |compound| 174 |coerce| 180)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 63
-                                                 '(2 10 8 0 9 11 2 8 12 0 9 13
-                                                   1 19 18 0 20 1 19 0 18 21 1
-                                                   24 0 8 25 0 12 0 27 0 12 0
-                                                   28 1 29 0 10 30 1 31 0 29 32
-                                                   3 34 0 9 9 33 35 1 34 12 0
-                                                   36 2 18 0 12 12 37 2 18 0 0
-                                                   0 38 1 41 0 40 42 1 41 43 0
-                                                   44 1 45 8 0 46 2 45 0 12 12
-                                                   47 1 48 8 0 49 3 48 0 12 12
-                                                   12 50 1 52 0 0 53 2 55 16 16
-                                                   16 56 1 12 41 0 58 1 41 0 59
-                                                   60 1 41 0 61 62 2 41 0 0 0
-                                                   63 2 0 6 0 6 54 6 0 0 12 12
-                                                   12 12 12 12 39 1 0 0 16 17 1
-                                                   0 0 10 15 1 0 0 8 26 1 0 0
-                                                   22 23 0 0 0 14 2 0 0 0 0 57
-                                                   1 0 41 0 51)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|stransform|
+                                 ($$ (|List| (|List| (|DoubleFloat|)))))
+                                T)
+                              '((|stransform| ($$ (|Mapping| |#1| |#1|))) T)
+                              '((|stransform|
+                                 ($$
+                                  (|Mapping| (|Complex| (|DoubleFloat|))
+                                             (|Complex| (|DoubleFloat|)))))
+                                T)
+                              '((|stransform| ($$ (|List| (|DoubleFloat|)))) T)
+                              '((|stranslate|
+                                 ($$ (|DoubleFloat|) (|DoubleFloat|)
+                                  (|DoubleFloat|) (|DoubleFloat|)
+                                  (|DoubleFloat|) (|DoubleFloat|)))
+                                T)
+                              '((|identity| ($$)) T)
+                              '((|xform| (|#1| $$ |#1|)) T)
+                              '((|compound| ($$ $$ $$)) T)
+                              '((|coerce| ((|OutputForm|) $$)) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 63
+                                            '(2 10 8 0 9 11 2 8 12 0 9 13 1 19
+                                              18 0 20 1 19 0 18 21 1 24 0 8 25
+                                              0 12 0 27 0 12 0 28 1 29 0 10 30
+                                              1 31 0 29 32 3 34 0 9 9 33 35 1
+                                              34 12 0 36 2 18 0 12 12 37 2 18 0
+                                              0 0 38 1 41 0 40 42 1 41 43 0 44
+                                              1 45 8 0 46 2 45 0 12 12 47 1 48
+                                              8 0 49 3 48 0 12 12 12 50 1 52 0
+                                              0 53 2 55 16 16 16 56 1 12 41 0
+                                              58 1 41 0 59 60 1 41 0 61 62 2 41
+                                              0 0 0 63 2 0 6 0 6 54 6 0 0 12 12
+                                              12 12 12 12 39 1 0 0 16 17 1 0 0
+                                              10 15 1 0 0 8 26 1 0 0 22 23 0 0
+                                              0 14 2 0 0 0 0 57 1 0 41 0
+                                              51)))))
            '|lookupComplete|)) 

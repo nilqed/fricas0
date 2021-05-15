@@ -6,39 +6,40 @@
                  ((SPADCALL (QCAR |e|) (QREFELT $ 9))
                   (SPADCALL "Error parsing OpenMath object" (QREFELT $ 12)))
                  (#1='T
-                  (SEQ
-                   (LETT |infoSize| (LENGTH (QCDR |e|)) |OMERR;coerce;$Of;1|)
-                   (EXIT
-                    (COND
-                     ((SPADCALL (QCAR |e|) (QREFELT $ 13))
-                      (COND
-                       ((EQL |infoSize| 1)
-                        (SPADCALL
-                         (STRCONC "Cannot handle CD "
-                                  (SPADCALL (|SPADfirst| (QCDR |e|))
-                                            (QREFELT $ 15)))
-                         (QREFELT $ 12)))
-                       (#1# (|error| "Malformed info list in OMUnknownCD"))))
-                     ((SPADCALL (QCAR |e|) (QREFELT $ 16))
-                      (COND
-                       ((EQL 2 |infoSize|)
-                        (SPADCALL
-                         (SPADCALL
-                          (LIST "Cannot handle Symbol "
-                                (SPADCALL
-                                 (SPADCALL (QCDR |e|) 2 (QREFELT $ 19))
-                                 (QREFELT $ 15))
-                                " from CD "
-                                (SPADCALL
-                                 (SPADCALL (QCDR |e|) 1 (QREFELT $ 19))
-                                 (QREFELT $ 15)))
-                          (QREFELT $ 21))
-                         (QREFELT $ 12)))
-                       (#1#
-                        (|error| "Malformed info list in OMUnknownSymbol"))))
-                     ((SPADCALL (QCAR |e|) (QREFELT $ 22))
-                      (SPADCALL "OpenMath read error" (QREFELT $ 12)))
-                     (#1# (|error| "Malformed OpenMath Error")))))))))) 
+                  (SEQ (LETT |infoSize| (LENGTH (QCDR |e|)))
+                       (EXIT
+                        (COND
+                         ((SPADCALL (QCAR |e|) (QREFELT $ 13))
+                          (COND
+                           ((EQL |infoSize| 1)
+                            (SPADCALL
+                             (STRCONC "Cannot handle CD "
+                                      (SPADCALL (|SPADfirst| (QCDR |e|))
+                                                (QREFELT $ 15)))
+                             (QREFELT $ 12)))
+                           (#1#
+                            (|error| "Malformed info list in OMUnknownCD"))))
+                         ((SPADCALL (QCAR |e|) (QREFELT $ 16))
+                          (COND
+                           ((EQL 2 |infoSize|)
+                            (SPADCALL
+                             (SPADCALL
+                              (LIST "Cannot handle Symbol "
+                                    (SPADCALL
+                                     (SPADCALL (QCDR |e|) 2 (QREFELT $ 19))
+                                     (QREFELT $ 15))
+                                    " from CD "
+                                    (SPADCALL
+                                     (SPADCALL (QCDR |e|) 1 (QREFELT $ 19))
+                                     (QREFELT $ 15)))
+                              (QREFELT $ 21))
+                             (QREFELT $ 12)))
+                           (#1#
+                            (|error|
+                             "Malformed info list in OMUnknownSymbol"))))
+                         ((SPADCALL (QCAR |e|) (QREFELT $ 22))
+                          (SPADCALL "OpenMath read error" (QREFELT $ 12)))
+                         (#1# (|error| "Malformed OpenMath Error")))))))))) 
 
 (PUT '|OMERR;omError;OmekL$;2| '|SPADreplace| 'CONS) 
 
@@ -58,11 +59,10 @@
 
 (DEFUN |OpenMathError| ()
   (SPROG NIL
-         (PROG (#1=#:G734)
+         (PROG (#1=#:G394)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|OpenMathError|)
-                    . #2=(|OpenMathError|))
+             ((LETT #1# (HGET |$ConstructorCache| '|OpenMathError|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -70,17 +70,17 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|OpenMathError|
                              (LIST (CONS NIL (CONS 1 (|OpenMathError;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#) (HREM |$ConstructorCache| '|OpenMathError|)))))))))) 
 
 (DEFUN |OpenMathError;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|OpenMathError|) . #1=(|OpenMathError|))
-          (LETT $ (GETREFV 29) . #1#)
+          (LETT |dv$| '(|OpenMathError|))
+          (LETT $ (GETREFV 29))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|OpenMathError| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

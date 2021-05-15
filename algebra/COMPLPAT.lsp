@@ -13,22 +13,21 @@
 
 (DECLAIM (NOTINLINE |ComplexPattern;|)) 
 
-(DEFUN |ComplexPattern| (&REST #1=#:G694)
+(DEFUN |ComplexPattern| (&REST #1=#:G381)
   (SPROG NIL
-         (PROG (#2=#:G695)
+         (PROG (#2=#:G382)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|ComplexPattern|)
-                                               '|domainEqualList|)
-                    . #3=(|ComplexPattern|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |ComplexPattern;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|ComplexPattern|)))))))))) 
@@ -36,13 +35,13 @@
 (DEFUN |ComplexPattern;| (|#1| |#2| |#3|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|ComplexPattern|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT DV$3 (|devaluate| |#3|) . #1#)
-          (LETT |dv$| (LIST '|ComplexPattern| DV$1 DV$2 DV$3) . #1#)
-          (LETT $ (GETREFV 21) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT DV$3 (|devaluate| |#3|))
+          (LETT |dv$| (LIST '|ComplexPattern| DV$1 DV$2 DV$3))
+          (LETT $ (GETREFV 21))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|ComplexPattern|
                       (LIST DV$1 DV$2 DV$3) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -61,12 +60,16 @@
               (18 . |real|) (23 . |convert|) (28 . *) (34 . +)
               |COMPLPAT;convert;CSP;1|)
            '#(|convert| 40) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 20
-                                                 '(4 11 0 9 10 10 10 12 1 8 7 0
-                                                   14 1 7 10 0 15 1 8 7 0 16 1
-                                                   7 11 0 17 2 11 0 0 0 18 2 11
-                                                   0 0 0 19 1 0 11 8 20)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|convert| ((|Pattern| |#1|) |#3|)) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 20
+                                            '(4 11 0 9 10 10 10 12 1 8 7 0 14 1
+                                              7 10 0 15 1 8 7 0 16 1 7 11 0 17
+                                              2 11 0 0 0 18 2 11 0 0 0 19 1 0
+                                              11 8 20)))))
            '|lookupComplete|)) 

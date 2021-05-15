@@ -4,15 +4,14 @@
 (DEFPARAMETER |StringAggregate;AL| 'NIL) 
 
 (DEFUN |StringAggregate| ()
-  (LET (#:G693)
-    (COND (|StringAggregate;AL|)
-          (T (SETQ |StringAggregate;AL| (|StringAggregate;|)))))) 
+  (COND (|StringAggregate;AL|)
+        (T (SETQ |StringAggregate;AL| (|StringAggregate;|))))) 
 
 (DEFUN |StringAggregate;| ()
-  (SPROG ((#1=#:G691 NIL))
+  (SPROG ((#1=#:G379 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(#2=#:G690) (LIST '(|Character|)))
+                   (|sublisV| (MAKE_PAIRS '(#2=#:G378) (LIST '(|Character|)))
                               (|Join| (|OneDimensionalArrayAggregate| '#2#)
                                       (|mkCategory|
                                        '(((|lowerCase| ($ $)) T)
@@ -53,13 +52,7 @@
                                            ($ $ (|CharacterClass|)))
                                           T)
                                          ((|elt| ($ $ $)) T))
-                                       NIL
-                                       '((|CharacterClass|) (|List| $)
-                                         (|Character|) (|Integer|)
-                                         (|UniversalSegment| (|Integer|))
-                                         (|Boolean|))
-                                       NIL)))
-                   |StringAggregate|)
+                                       NIL NIL NIL))))
            (SETELT #1# 0 '(|StringAggregate|))))) 
 
 (MAKEPROP '|StringAggregate| 'NILADIC T) 

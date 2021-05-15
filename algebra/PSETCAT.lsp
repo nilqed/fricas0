@@ -5,29 +5,30 @@
 
 (DEFPARAMETER |PolynomialSetCategory;AL| 'NIL) 
 
-(DEFUN |PolynomialSetCategory| (&REST #1=#:G740)
-  (LET (#2=#:G741)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluateList| #1#) |PolynomialSetCategory;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |PolynomialSetCategory;AL|
-              (|cons5|
-               (CONS #3# (SETQ #2# (APPLY #'|PolynomialSetCategory;| #1#)))
-               |PolynomialSetCategory;AL|))
-      #2#)))) 
+(DEFUN |PolynomialSetCategory| (|t#1| |t#2| |t#3| |t#4|)
+  (LET (#1=#:G424
+        (#2=#:G425
+         (LIST (|devaluate| |t#1|) (|devaluate| |t#2|) (|devaluate| |t#3|)
+               (|devaluate| |t#4|))))
+    (COND ((SETQ #1# (|assoc| #2# |PolynomialSetCategory;AL|)) (CDR #1#))
+          (T
+           (SETQ |PolynomialSetCategory;AL|
+                   (|cons5|
+                    (CONS #2#
+                          (SETQ #1# (APPLY #'|PolynomialSetCategory;| #2#)))
+                    |PolynomialSetCategory;AL|))
+           #1#)))) 
 
 (DEFUN |PolynomialSetCategory;| (|t#1| |t#2| |t#3| |t#4|)
-  (SPROG ((#1=#:G739 NIL))
+  (SPROG ((#1=#:G423 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
-                    (PAIR '(|t#1| |t#2| |t#3| |t#4|)
-                          (LIST (|devaluate| |t#1|) (|devaluate| |t#2|)
-                                (|devaluate| |t#3|) (|devaluate| |t#4|)))
+                    (MAKE_PAIRS '(|t#1| |t#2| |t#3| |t#4|)
+                                (LIST |t#1| |t#2| |t#3| |t#4|))
                     (|sublisV|
-                     (PAIR '(#2=#:G737 #3=#:G738)
-                           (LIST '(|List| |t#4|) '(|List| |t#4|)))
+                     (MAKE_PAIRS '(#2=#:G421 #3=#:G422)
+                                 (LIST '(|List| |t#4|) '(|List| |t#4|)))
                      (COND (|PolynomialSetCategory;CAT|)
                            ('T
                             (LETT |PolynomialSetCategory;CAT|
@@ -91,13 +92,6 @@
                                              ((|iexactQuo| (|t#1| |t#1| |t#1|))
                                               (|has| |t#1|
                                                      (|IntegralDomain|))))
-                                           NIL
-                                           '((|Boolean|) (|List| |t#4|)
-                                             (|List| |t#3|))
-                                           NIL))
-                                  . #4=(|PolynomialSetCategory|))))))
-                   . #4#)
+                                           NIL NIL NIL))))))))
            (SETELT #1# 0
-                   (LIST '|PolynomialSetCategory| (|devaluate| |t#1|)
-                         (|devaluate| |t#2|) (|devaluate| |t#3|)
-                         (|devaluate| |t#4|)))))) 
+                   (LIST '|PolynomialSetCategory| |t#1| |t#2| |t#3| |t#4|))))) 

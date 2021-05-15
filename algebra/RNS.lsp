@@ -4,18 +4,17 @@
 (DEFPARAMETER |RealNumberSystem;AL| 'NIL) 
 
 (DEFUN |RealNumberSystem| ()
-  (LET (#:G710)
-    (COND (|RealNumberSystem;AL|)
-          (T (SETQ |RealNumberSystem;AL| (|RealNumberSystem;|)))))) 
+  (COND (|RealNumberSystem;AL|)
+        (T (SETQ |RealNumberSystem;AL| (|RealNumberSystem;|))))) 
 
 (DEFUN |RealNumberSystem;| ()
-  (SPROG ((#1=#:G708 NIL))
+  (SPROG ((#1=#:G387 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
-                    (PAIR '(#2=#:G704 #3=#:G705 #4=#:G706 #5=#:G707)
-                          (LIST '(|Integer|) '(|Fraction| (|Integer|))
-                                '(|Pattern| (|Float|)) '(|Float|)))
+                    (MAKE_PAIRS '(#2=#:G383 #3=#:G384 #4=#:G385 #5=#:G386)
+                                (LIST '(|Integer|) '(|Fraction| (|Integer|))
+                                      '(|Pattern| (|Float|)) '(|Float|)))
                     (|Join| (|Field|) (|OrderedRing|) (|RealConstant|)
                             (|RetractableTo| '#2#) (|RetractableTo| '#3#)
                             (|RadicalCategory|) (|ConvertibleTo| '#4#)
@@ -26,8 +25,7 @@
                                ((|wholePart| ((|Integer|) $)) T)
                                ((|fractionPart| ($ $)) T)
                                ((|truncate| ($ $)) T) ((|round| ($ $)) T))
-                             NIL '((|Integer|)) NIL)))
-                   |RealNumberSystem|)
+                             NIL NIL NIL))))
            (SETELT #1# 0 '(|RealNumberSystem|))))) 
 
 (MAKEPROP '|RealNumberSystem| 'NILADIC T) 

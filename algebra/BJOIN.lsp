@@ -4,18 +4,16 @@
 (DEFPARAMETER |BoundedJoinSemilattice;AL| 'NIL) 
 
 (DEFUN |BoundedJoinSemilattice| ()
-  (LET (#:G692)
-    (COND (|BoundedJoinSemilattice;AL|)
-          (T (SETQ |BoundedJoinSemilattice;AL| (|BoundedJoinSemilattice;|)))))) 
+  (COND (|BoundedJoinSemilattice;AL|)
+        (T (SETQ |BoundedJoinSemilattice;AL| (|BoundedJoinSemilattice;|))))) 
 
 (DEFUN |BoundedJoinSemilattice;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|JoinSemilattice|)
-                           (|mkCategory| '(((|_\|_| ($) |constant|) T)) NIL
-                                         'NIL NIL))
-                   |BoundedJoinSemilattice|)
+                           (|mkCategory| '(((|_\|_| ($) |constant|) T)) NIL NIL
+                                         NIL)))
            (SETELT #1# 0 '(|BoundedJoinSemilattice|))))) 
 
 (MAKEPROP '|BoundedJoinSemilattice| 'NILADIC T) 

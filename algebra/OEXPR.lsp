@@ -13,27 +13,26 @@
 
 (SDEFUN |OEXPR;<;2$B;4| ((|x| $) (|y| $) ($ |Boolean|))
         (SPROG ((|s| (|Union| (|Integer|) "failed")) (|di| ($)))
-               (SEQ
-                (LETT |di| (SPADCALL |y| |x| (QREFELT $ 11))
-                      . #1=(|OEXPR;<;2$B;4|))
-                (EXIT
-                 (COND
-                  ((SPADCALL |di| (|spadConstant| $ 12) (QREFELT $ 15)) NIL)
-                  (#2='T
-                   (SEQ (LETT |s| (SPADCALL |di| (QREFELT $ 18)) . #1#)
-                        (EXIT
-                         (COND ((QEQCAR |s| 0) (EQL (QCDR |s|) 1))
-                               (#2# (|error| "can not determine sign"))))))))))) 
+               (SEQ (LETT |di| (SPADCALL |y| |x| (QREFELT $ 11)))
+                    (EXIT
+                     (COND
+                      ((SPADCALL |di| (|spadConstant| $ 12) (QREFELT $ 15))
+                       NIL)
+                      (#1='T
+                       (SEQ (LETT |s| (SPADCALL |di| (QREFELT $ 18)))
+                            (EXIT
+                             (COND ((QEQCAR |s| 0) (EQL (QCDR |s|) 1))
+                                   (#1#
+                                    (|error| "can not determine sign"))))))))))) 
 
 (DECLAIM (NOTINLINE |OrderedExpression;|)) 
 
 (DEFUN |OrderedExpression| ()
   (SPROG NIL
-         (PROG (#1=#:G720)
+         (PROG (#1=#:G394)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|OrderedExpression|)
-                    . #2=(|OrderedExpression|))
+             ((LETT #1# (HGET |$ConstructorCache| '|OrderedExpression|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -42,7 +41,7 @@
                        (HPUT |$ConstructorCache| '|OrderedExpression|
                              (LIST
                               (CONS NIL (CONS 1 (|OrderedExpression;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache| '|OrderedExpression|)))))))))) 
@@ -50,10 +49,10 @@
 (DEFUN |OrderedExpression;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|OrderedExpression|) . #1=(|OrderedExpression|))
-          (LETT $ (GETREFV 30) . #1#)
+          (LETT |dv$| '(|OrderedExpression|))
+          (LETT $ (GETREFV 30))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|OrderedExpression| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

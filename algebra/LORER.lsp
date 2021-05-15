@@ -4,11 +4,10 @@
 (DEFPARAMETER |LeftOreRing;AL| 'NIL) 
 
 (DEFUN |LeftOreRing| ()
-  (LET (#:G692)
-    (COND (|LeftOreRing;AL|) (T (SETQ |LeftOreRing;AL| (|LeftOreRing;|)))))) 
+  (COND (|LeftOreRing;AL|) (T (SETQ |LeftOreRing;AL| (|LeftOreRing;|))))) 
 
 (DEFUN |LeftOreRing;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|EntireRing|)
@@ -18,8 +17,7 @@
                                            (|:| |coeff2| $))
                                  $ $))
                                T))
-                            NIL 'NIL NIL))
-                   |LeftOreRing|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|LeftOreRing|))))) 
 
 (MAKEPROP '|LeftOreRing| 'NILADIC T) 

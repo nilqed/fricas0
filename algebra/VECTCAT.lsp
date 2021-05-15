@@ -5,21 +5,20 @@
 
 (DEFPARAMETER |VectorCategory;AL| 'NIL) 
 
-(DEFUN |VectorCategory| (#1=#:G696)
-  (LET (#2=#:G697)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |VectorCategory;AL|)) (CDR #2#))
-     (T
-      (SETQ |VectorCategory;AL|
-              (|cons5| (CONS #3# (SETQ #2# (|VectorCategory;| #1#)))
-                       |VectorCategory;AL|))
-      #2#)))) 
+(DEFUN |VectorCategory| (|t#1|)
+  (LET (#1=#:G384 (#2=#:G385 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |VectorCategory;AL|)) (CDR #1#))
+          (T
+           (SETQ |VectorCategory;AL|
+                   (|cons5| (CONS #2# (SETQ #1# (|VectorCategory;| #2#)))
+                            |VectorCategory;AL|))
+           #1#)))) 
 
 (DEFUN |VectorCategory;| (|t#1|)
-  (SPROG ((#1=#:G695 NIL))
+  (SPROG ((#1=#:G383 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (COND (|VectorCategory;CAT|)
                                     ('T
                                      (LETT |VectorCategory;CAT|
@@ -60,11 +59,5 @@
                                                 (AND (|has| |t#1| (|Ring|))
                                                      (|has| |t#1|
                                                             (|RadicalCategory|)))))
-                                             NIL
-                                             '((|Matrix| |t#1|) (|Integer|)
-                                               (|Boolean|)
-                                               (|NonNegativeInteger|))
-                                             NIL))
-                                           . #2=(|VectorCategory|)))))
-                   . #2#)
-           (SETELT #1# 0 (LIST '|VectorCategory| (|devaluate| |t#1|)))))) 
+                                             NIL NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|VectorCategory| |t#1|))))) 

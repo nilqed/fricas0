@@ -4,15 +4,14 @@
 (DEFPARAMETER |FloatingPointSystem;AL| 'NIL) 
 
 (DEFUN |FloatingPointSystem| ()
-  (LET (#:G693)
-    (COND (|FloatingPointSystem;AL|)
-          (T (SETQ |FloatingPointSystem;AL| (|FloatingPointSystem;|)))))) 
+  (COND (|FloatingPointSystem;AL|)
+        (T (SETQ |FloatingPointSystem;AL| (|FloatingPointSystem;|))))) 
 
 (DEFUN |FloatingPointSystem;| ()
-  (SPROG ((#1=#:G691 NIL))
+  (SPROG ((#1=#:G379 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(#2=#:G690) (LIST '(|String|)))
+                   (|sublisV| (MAKE_PAIRS '(#2=#:G378) (LIST '(|String|)))
                               (|Join| (|RealNumberSystem|) (|Approximate|)
                                       (|ConvertibleTo| '#2#)
                                       (|mkCategory|
@@ -66,11 +65,7 @@
                                             (|has| $ (|arbitraryPrecision|)))
                                            (|not|
                                             (|has| $ (|arbitraryExponent|))))))
-                                       NIL
-                                       '((|PositiveInteger|) (|Integer|)
-                                         (|String|) (|NonNegativeInteger|))
-                                       NIL)))
-                   |FloatingPointSystem|)
+                                       NIL NIL NIL))))
            (SETELT #1# 0 '(|FloatingPointSystem|))))) 
 
 (MAKEPROP '|FloatingPointSystem| 'NILADIC T) 

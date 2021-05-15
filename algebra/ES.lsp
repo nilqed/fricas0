@@ -4,17 +4,16 @@
 (DEFPARAMETER |ExpressionSpace;AL| 'NIL) 
 
 (DEFUN |ExpressionSpace| ()
-  (LET (#:G712)
-    (COND (|ExpressionSpace;AL|)
-          (T (SETQ |ExpressionSpace;AL| (|ExpressionSpace;|)))))) 
+  (COND (|ExpressionSpace;AL|)
+        (T (SETQ |ExpressionSpace;AL| (|ExpressionSpace;|))))) 
 
 (DEFUN |ExpressionSpace;| ()
-  (SPROG ((#1=#:G710 NIL))
+  (SPROG ((#1=#:G398 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
-                    (PAIR '(#2=#:G708 #3=#:G709)
-                          (LIST '(|Kernel| $) '(|Kernel| $)))
+                    (MAKE_PAIRS '(#2=#:G396 #3=#:G397)
+                                (LIST '(|Kernel| $) '(|Kernel| $)))
                     (|Join| (|Comparable|) (|RetractableTo| '#2#)
                             (|InnerEvalable| '#3# '$) (|Evalable| '$)
                             (|mkCategory|
@@ -35,8 +34,7 @@
                                ((|subst|
                                  ($ $ (|List| (|Kernel| $)) (|List| $)))
                                 T)
-                               ((|box| ($ $)) T) ((|box| ($ (|List| $))) T)
-                               ((|paren| ($ $)) T) ((|paren| ($ (|List| $))) T)
+                               ((|box| ($ $)) T) ((|paren| ($ $)) T)
                                ((|distribute| ($ $)) T)
                                ((|distribute| ($ $ $)) T)
                                ((|height| ((|NonNegativeInteger|) $)) T)
@@ -97,17 +95,7 @@
                                 (|has| $ (|RetractableTo| (|Integer|))))
                                ((|odd?| ((|Boolean|) $))
                                 (|has| $ (|RetractableTo| (|Integer|)))))
-                             NIL
-                             '((|Boolean|) (|SparseUnivariatePolynomial| $)
-                               (|Kernel| $) (|BasicOperator|)
-                               (|List| (|BasicOperator|))
-                               (|List| (|Mapping| $ (|List| $)))
-                               (|List| (|Mapping| $ $)) (|Symbol|)
-                               (|List| (|Symbol|)) (|List| $)
-                               (|List| (|Kernel| $)) (|NonNegativeInteger|)
-                               (|List| (|Equation| $)) (|Equation| $))
-                             NIL)))
-                   |ExpressionSpace|)
+                             NIL NIL NIL))))
            (SETELT #1# 0 '(|ExpressionSpace|))))) 
 
 (MAKEPROP '|ExpressionSpace| 'NILADIC T) 

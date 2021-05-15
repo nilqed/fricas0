@@ -5,25 +5,25 @@
 
 (DEFPARAMETER |ComplexCategory;AL| 'NIL) 
 
-(DEFUN |ComplexCategory| (#1=#:G736)
-  (LET (#2=#:G737)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |ComplexCategory;AL|)) (CDR #2#))
-     (T
-      (SETQ |ComplexCategory;AL|
-              (|cons5| (CONS #3# (SETQ #2# (|ComplexCategory;| #1#)))
-                       |ComplexCategory;AL|))
-      #2#)))) 
+(DEFUN |ComplexCategory| (|t#1|)
+  (LET (#1=#:G421 (#2=#:G422 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |ComplexCategory;AL|)) (CDR #1#))
+          (T
+           (SETQ |ComplexCategory;AL|
+                   (|cons5| (CONS #2# (SETQ #1# (|ComplexCategory;| #2#)))
+                            |ComplexCategory;AL|))
+           #1#)))) 
 
 (DEFUN |ComplexCategory;| (|t#1|)
-  (SPROG ((#1=#:G735 NIL))
+  (SPROG ((#1=#:G420 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (|sublisV|
-                               (PAIR '(#2=#:G734)
-                                     (LIST
-                                      '(|SparseUnivariatePolynomial| |t#1|)))
+                               (MAKE_PAIRS '(#2=#:G419)
+                                           (LIST
+                                            '(|SparseUnivariatePolynomial|
+                                              |t#1|)))
                                (COND (|ComplexCategory;CAT|)
                                      ('T
                                       (LETT |ComplexCategory;CAT|
@@ -85,13 +85,10 @@
                                                         (|IntegralDomain|)))
                                                 ((|EuclideanDomain|)
                                                  (|has| |t#1|
-                                                        (|EuclideanDomain|)))
+                                                        (|IntegerNumberSystem|)))
                                                 ((|multiplicativeValuation|)
                                                  (|has| |t#1|
-                                                        (|multiplicativeValuation|)))
-                                                ((|additiveValuation|)
-                                                 (|has| |t#1|
-                                                        (|additiveValuation|)))
+                                                        (|IntegerNumberSystem|)))
                                                 ((|Field|)
                                                  (|has| |t#1| (|Field|)))
                                                 ((|ConvertibleTo|
@@ -134,9 +131,5 @@
                                                          (|EuclideanDomain|))
                                                   (|has| |t#1|
                                                          (|PolynomialFactorizationExplicit|)))))
-                                              '((|Fraction| (|Integer|))
-                                                (|Boolean|))
-                                              NIL))
-                                            . #3=(|ComplexCategory|))))))
-                   . #3#)
-           (SETELT #1# 0 (LIST '|ComplexCategory| (|devaluate| |t#1|)))))) 
+                                              NIL NIL))))))))
+           (SETELT #1# 0 (LIST '|ComplexCategory| |t#1|))))) 

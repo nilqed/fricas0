@@ -4,21 +4,20 @@
 
 (DECLAIM (NOTINLINE |ScriptFormulaFormat1;|)) 
 
-(DEFUN |ScriptFormulaFormat1| (#1=#:G691)
+(DEFUN |ScriptFormulaFormat1| (#1=#:G379)
   (SPROG NIL
-         (PROG (#2=#:G692)
+         (PROG (#2=#:G380)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|ScriptFormulaFormat1|)
-                                               '|domainEqualList|)
-                    . #3=(|ScriptFormulaFormat1|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (|ScriptFormulaFormat1;| #1#) (LETT #2# T . #3#))
+                  (PROG1 (|ScriptFormulaFormat1;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|ScriptFormulaFormat1|)))))))))) 
@@ -26,11 +25,11 @@
 (DEFUN |ScriptFormulaFormat1;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|ScriptFormulaFormat1|))
-          (LETT |dv$| (LIST '|ScriptFormulaFormat1| DV$1) . #1#)
-          (LETT $ (GETREFV 12) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|ScriptFormulaFormat1| DV$1))
+          (LETT $ (GETREFV 12))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|ScriptFormulaFormat1| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -44,10 +43,15 @@
               (0 . |coerce|) (|ScriptFormulaFormat|) (5 . |coerce|)
               |FORMULA1;coerce;SSff;1|)
            '#(|coerce| 10) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 11
-                                                 '(1 6 7 0 8 1 9 0 7 10 1 0 9 6
-                                                   11)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|coerce| ((|ScriptFormulaFormat|) |#1|)) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 11
+                                            '(1 6 7 0 8 1 9 0 7 10 1 0 9 6
+                                              11)))))
            '|lookupComplete|)) 

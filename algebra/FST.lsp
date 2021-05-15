@@ -98,11 +98,10 @@
 
 (DEFUN |FortranScalarType| ()
   (SPROG NIL
-         (PROG (#1=#:G768)
+         (PROG (#1=#:G435)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|FortranScalarType|)
-                    . #2=(|FortranScalarType|))
+             ((LETT #1# (HGET |$ConstructorCache| '|FortranScalarType|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -111,7 +110,7 @@
                        (HPUT |$ConstructorCache| '|FortranScalarType|
                              (LIST
                               (CONS NIL (CONS 1 (|FortranScalarType;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache| '|FortranScalarType|)))))))))) 
@@ -119,10 +118,10 @@
 (DEFUN |FortranScalarType;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|FortranScalarType|) . #1=(|FortranScalarType|))
-          (LETT $ (GETREFV 36) . #1#)
+          (LETT |dv$| '(|FortranScalarType|))
+          (LETT $ (GETREFV 36))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|FortranScalarType| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

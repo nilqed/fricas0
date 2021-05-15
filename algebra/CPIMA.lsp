@@ -6,37 +6,33 @@
         (SPADCALL |x| (|spadConstant| $ 12) (QREFELT $ 13))) 
 
 (SDEFUN |CPIMA;characteristicPolynomial;EPolR;2| ((|x| E) ($ |PolR|))
-        (SPROG ((#1=#:G699 NIL) (|Qx| (|PolR|)))
+        (SPROG ((#1=#:G382 NIL) (|Qx| (|PolR|)))
                (SEQ
                 (EXIT
-                 (SEQ
-                  (LETT |Qx| (SPADCALL |x| (QREFELT $ 24))
-                        . #2=(|CPIMA;characteristicPolynomial;EPolR;2|))
-                  (EXIT
-                   (PROGN
-                    (LETT #1#
-                          (SPADCALL (QREFELT $ 19)
-                                    (SPADCALL (QREFELT $ 23)
-                                              (|CPIMA;XtoY| |Qx| $)
-                                              (QREFELT $ 25))
-                                    (QREFELT $ 26))
-                          . #2#)
-                    (GO #3=#:G698)))))
-                #3# (EXIT #1#)))) 
+                 (SEQ (LETT |Qx| (SPADCALL |x| (QREFELT $ 24)))
+                      (EXIT
+                       (PROGN
+                        (LETT #1#
+                              (SPADCALL (QREFELT $ 19)
+                                        (SPADCALL (QREFELT $ 23)
+                                                  (|CPIMA;XtoY| |Qx| $)
+                                                  (QREFELT $ 25))
+                                        (QREFELT $ 26)))
+                        (GO #2=#:G381)))))
+                #2# (EXIT #1#)))) 
 
 (DECLAIM (NOTINLINE |CharacteristicPolynomialInMonogenicalAlgebra;|)) 
 
-(DEFUN |CharacteristicPolynomialInMonogenicalAlgebra| (&REST #1=#:G700)
+(DEFUN |CharacteristicPolynomialInMonogenicalAlgebra| (&REST #1=#:G383)
   (SPROG NIL
-         (PROG (#2=#:G701)
+         (PROG (#2=#:G384)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|CharacteristicPolynomialInMonogenicalAlgebra|)
-                                               '|domainEqualList|)
-                    . #3=(|CharacteristicPolynomialInMonogenicalAlgebra|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
@@ -45,7 +41,7 @@
                        (|function|
                         |CharacteristicPolynomialInMonogenicalAlgebra;|)
                        #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -54,17 +50,15 @@
 (DEFUN |CharacteristicPolynomialInMonogenicalAlgebra;| (|#1| |#2| |#3|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|)
-                . #1=(|CharacteristicPolynomialInMonogenicalAlgebra|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT DV$3 (|devaluate| |#3|) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT DV$3 (|devaluate| |#3|))
           (LETT |dv$|
                 (LIST '|CharacteristicPolynomialInMonogenicalAlgebra| DV$1 DV$2
-                      DV$3)
-                . #1#)
-          (LETT $ (GETREFV 28) . #1#)
+                      DV$3))
+          (LETT $ (GETREFV 28))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache|
                       '|CharacteristicPolynomialInMonogenicalAlgebra|
                       (LIST DV$1 DV$2 DV$3) (CONS 1 $))
@@ -97,14 +91,18 @@
               (36 . |monomial|) 'X (42 . |lift|) (47 . -) (53 . |resultant|)
               (59 . |characteristicPolynomial|))
            '#(|characteristicPolynomial| 64) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 27
-                                                 '(0 6 0 9 0 7 0 10 0 11 0 12 2
-                                                   7 0 6 11 13 2 16 14 15 7 17
-                                                   0 8 7 18 0 6 0 20 0 7 0 21 2
-                                                   14 0 7 11 22 1 8 7 0 24 2 14
-                                                   0 0 0 25 2 14 7 0 0 26 1 0 7
-                                                   8 27 1 0 7 8 27)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|characteristicPolynomial| (|#2| |#3|)) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 27
+                                            '(0 6 0 9 0 7 0 10 0 11 0 12 2 7 0
+                                              6 11 13 2 16 14 15 7 17 0 8 7 18
+                                              0 6 0 20 0 7 0 21 2 14 0 7 11 22
+                                              1 8 7 0 24 2 14 0 0 0 25 2 14 7 0
+                                              0 26 1 0 7 8 27 1 0 7 8 27)))))
            '|lookupComplete|)) 

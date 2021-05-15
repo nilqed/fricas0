@@ -16,22 +16,21 @@
 
 (DECLAIM (NOTINLINE |AssociatedLieAlgebra;|)) 
 
-(DEFUN |AssociatedLieAlgebra| (&REST #1=#:G718)
+(DEFUN |AssociatedLieAlgebra| (&REST #1=#:G390)
   (SPROG NIL
-         (PROG (#2=#:G719)
+         (PROG (#2=#:G391)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|AssociatedLieAlgebra|)
-                                               '|domainEqualList|)
-                    . #3=(|AssociatedLieAlgebra|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |AssociatedLieAlgebra;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|AssociatedLieAlgebra|)))))))))) 
@@ -39,10 +38,10 @@
 (DEFUN |AssociatedLieAlgebra;| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|AssociatedLieAlgebra|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|AssociatedLieAlgebra| DV$1 DV$2) . #1#)
-          (LETT $ (GETREFV 38) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|AssociatedLieAlgebra| DV$1 DV$2))
+          (LETT $ (GETREFV 38))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -99,8 +98,7 @@
                                                               (LIST
                                                                '|FramedNonAssociativeAlgebra|
                                                                (|devaluate|
-                                                                |#1|))))))
-                          . #1#))
+                                                                |#1|))))))))
           (|haddProp| |$ConstructorCache| '|AssociatedLieAlgebra|
                       (LIST DV$1 DV$2) (CONS 1 $))
           (|stuffDomainSlots| $)

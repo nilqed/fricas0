@@ -159,13 +159,12 @@
                                    (SPADCALL |x| (QREFELT $ 12))
                                    (SPADCALL |x| (QREFELT $ 14))
                                    (SPADCALL |x| (QREFELT $ 15))
-                                   (QREFELT $ 16))
-                         . #1=(|QUATCAT-;coerce;SOf;18|))
+                                   (QREFELT $ 16)))
                    (EXIT
                     (COND
                      ((SPADCALL |y| (QREFELT $ 49))
                       (SPADCALL (SPADCALL |x| (QREFELT $ 11)) (QREFELT $ 51)))
-                     (#2='T
+                     (#1='T
                       (SPADCALL
                        (SPADCALL (SPADCALL |x| (QREFELT $ 11)) (QREFELT $ 51))
                        (SPADCALL |y| (QREFELT $ 52)) (QREFELT $ 53)))))))
@@ -176,25 +175,23 @@
                          (SPADCALL (|spadConstant| $ 38) (|spadConstant| $ 38)
                                    (SPADCALL |x| (QREFELT $ 14))
                                    (SPADCALL |x| (QREFELT $ 15))
-                                   (QREFELT $ 16))
-                         . #1#)
+                                   (QREFELT $ 16)))
                    (LETT |z|
-                         (SEQ
-                          (LETT |part| (SPADCALL '|i| (QREFELT $ 55)) . #1#)
-                          (EXIT
-                           (COND
-                            ((SPADCALL (SPADCALL |x| (QREFELT $ 12))
-                                       (|spadConstant| $ 42) (QREFELT $ 25))
-                             |part|)
-                            (#2#
-                             (SPADCALL
-                              (SPADCALL (SPADCALL |x| (QREFELT $ 12))
-                                        (QREFELT $ 51))
-                              |part| (QREFELT $ 56))))))
-                         . #1#)
+                         (SEQ (LETT |part| (SPADCALL '|i| (QREFELT $ 55)))
+                              (EXIT
+                               (COND
+                                ((SPADCALL (SPADCALL |x| (QREFELT $ 12))
+                                           (|spadConstant| $ 42)
+                                           (QREFELT $ 25))
+                                 |part|)
+                                (#1#
+                                 (SPADCALL
+                                  (SPADCALL (SPADCALL |x| (QREFELT $ 12))
+                                            (QREFELT $ 51))
+                                  |part| (QREFELT $ 56)))))))
                    (EXIT
                     (COND ((SPADCALL |y| (QREFELT $ 49)) |z|)
-                          (#2#
+                          (#1#
                            (SPADCALL |z| (SPADCALL |y| (QREFELT $ 52))
                                      (QREFELT $ 53)))))))
                  ((NULL
@@ -204,35 +201,33 @@
                          (SPADCALL (|spadConstant| $ 38) (|spadConstant| $ 38)
                                    (|spadConstant| $ 38)
                                    (SPADCALL |x| (QREFELT $ 15))
-                                   (QREFELT $ 16))
-                         . #1#)
+                                   (QREFELT $ 16)))
                    (LETT |z|
-                         (SEQ
-                          (LETT |part| (SPADCALL '|j| (QREFELT $ 55)) . #1#)
-                          (EXIT
-                           (COND
-                            ((SPADCALL (SPADCALL |x| (QREFELT $ 14))
-                                       (|spadConstant| $ 42) (QREFELT $ 25))
-                             |part|)
-                            (#2#
-                             (SPADCALL
-                              (SPADCALL (SPADCALL |x| (QREFELT $ 14))
-                                        (QREFELT $ 51))
-                              |part| (QREFELT $ 56))))))
-                         . #1#)
+                         (SEQ (LETT |part| (SPADCALL '|j| (QREFELT $ 55)))
+                              (EXIT
+                               (COND
+                                ((SPADCALL (SPADCALL |x| (QREFELT $ 14))
+                                           (|spadConstant| $ 42)
+                                           (QREFELT $ 25))
+                                 |part|)
+                                (#1#
+                                 (SPADCALL
+                                  (SPADCALL (SPADCALL |x| (QREFELT $ 14))
+                                            (QREFELT $ 51))
+                                  |part| (QREFELT $ 56)))))))
                    (EXIT
                     (COND ((SPADCALL |y| (QREFELT $ 49)) |z|)
-                          (#2#
+                          (#1#
                            (SPADCALL |z| (SPADCALL |y| (QREFELT $ 52))
                                      (QREFELT $ 53)))))))
                  ('T
-                  (SEQ (LETT |part| (SPADCALL '|k| (QREFELT $ 55)) . #1#)
+                  (SEQ (LETT |part| (SPADCALL '|k| (QREFELT $ 55)))
                        (EXIT
                         (COND
                          ((SPADCALL (SPADCALL |x| (QREFELT $ 15))
                                     (|spadConstant| $ 42) (QREFELT $ 25))
                           |part|)
-                         (#2#
+                         (#1#
                           (SPADCALL
                            (SPADCALL (SPADCALL |x| (QREFELT $ 15))
                                      (QREFELT $ 51))
@@ -259,8 +254,7 @@
                             (SPADCALL (SPADCALL |x| (QREFELT $ 14))
                                       (QREFELT $ 64))
                             (SPADCALL (SPADCALL |x| (QREFELT $ 15))
-                                      (QREFELT $ 64)))
-                      |QUATCAT-;convert;SIf;20|)
+                                      (QREFELT $ 64))))
                 (EXIT (SPADCALL |l| (QREFELT $ 66)))))) 
 
 (SDEFUN |QUATCAT-;<;2SB;21| ((|x| S) (|y| S) ($ |Boolean|))
@@ -315,10 +309,10 @@
 (DEFUN |QuaternionCategory&| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|QuaternionCategory&|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|QuaternionCategory&| DV$1 DV$2) . #1#)
-          (LETT $ (GETREFV 83) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|QuaternionCategory&| DV$1 DV$2))
+          (LETT $ (GETREFV 83))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -339,8 +333,7 @@
                                               (|HasCategory| |#2|
                                                              '(|OrderedSet|))
                                               (|HasCategory| |#2|
-                                                             '(|EntireRing|))))
-                          . #1#))
+                                                             '(|EntireRing|))))))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)
           (QSETREFV $ 7 |#2|)
@@ -398,46 +391,123 @@
               (|List| $) (164 . |convert|) (169 . |convert|) (174 . <)
               (180 . <) (186 . |sqrt|) (191 . |abs|) (196 . |rational?|)
               (201 . |rational?|) (|Fraction| 34) (206 . |rational|)
-              (211 . |rational|) (|Union| 74 '"failed") (216 . |rationalIfCan|)
-              (|List| 54) (|List| 8) (|Union| 34 '"failed")
-              (|PositiveInteger|))
+              (211 . |rational|) (|Union| 74 '#1="failed")
+              (216 . |rationalIfCan|) (|List| 54) (|List| 8)
+              (|Union| 34 '#2="failed") (|PositiveInteger|))
            '#(|zero?| 221 |retractIfCan| 226 |retract| 231 |rationalIfCan| 236
               |rational?| 241 |rational| 246 |one?| 251 |norm| 256 |map| 261
               |inv| 267 |differentiate| 272 |convert| 278 |conjugate| 283
               |coerce| 288 |characteristic| 303 |abs| 307 = 312 < 318 - 324 +
               335 * 341)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 78
-                                                 '(0 7 8 9 1 6 7 0 11 1 6 7 0
-                                                   12 1 7 0 0 13 1 6 7 0 14 1 6
-                                                   7 0 15 4 6 0 7 7 7 7 16 1 6
-                                                   0 0 20 2 6 0 0 0 21 1 6 7 0
-                                                   22 2 7 24 0 0 25 2 7 0 0 0
-                                                   27 2 7 0 0 0 29 2 7 0 0 0 32
-                                                   2 7 0 34 0 35 0 7 0 38 1 7 0
-                                                   34 40 0 7 0 42 1 7 24 0 43 1
-                                                   6 24 0 49 1 7 50 0 51 1 6 50
-                                                   0 52 2 50 0 0 0 53 1 54 50 0
-                                                   55 2 50 0 0 0 56 1 6 7 0 58
-                                                   1 7 0 0 59 2 6 0 7 0 60 1 0
-                                                   0 0 61 1 62 0 54 63 1 7 62 0
-                                                   64 1 62 0 65 66 1 0 62 0 67
-                                                   2 7 24 0 0 68 2 0 24 0 0 69
-                                                   1 7 0 0 70 1 0 7 0 71 1 0 24
-                                                   0 72 1 6 24 0 73 1 7 74 0 75
-                                                   1 0 74 0 76 1 0 77 0 78 1 0
-                                                   24 0 45 1 0 47 0 48 1 0 7 0
-                                                   46 1 0 77 0 78 1 0 24 0 72 1
-                                                   0 74 0 76 1 0 24 0 44 1 0 7
-                                                   0 23 2 0 0 18 0 19 1 0 0 0
-                                                   61 2 0 0 0 18 37 1 0 62 0 67
-                                                   1 0 0 0 17 1 0 0 7 39 1 0 0
-                                                   34 41 1 0 50 0 57 0 0 8 10 1
-                                                   0 7 0 71 2 0 24 0 0 26 2 0
-                                                   24 0 0 69 2 0 0 0 0 30 1 0 0
-                                                   0 31 2 0 0 0 0 28 2 0 0 7 0
-                                                   33 2 0 0 34 0 36)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((< ((|Boolean|) |#1| |#1|)) T)
+                                   '((|coerce| (|#1| (|Fraction| (|Integer|))))
+                                     T)
+                                   '((* (|#1| (|Fraction| (|Integer|)) |#1|))
+                                     T)
+                                   '((* (|#1| |#1| (|Fraction| (|Integer|))))
+                                     T)
+                                   '((|inv| (|#1| |#1|)) T)
+                                   '((|convert| ((|InputForm|) |#1|)) T)
+                                   '((|rationalIfCan|
+                                      ((|Union| (|Fraction| (|Integer|)) #1#)
+                                       |#1|))
+                                     T)
+                                   '((|rational|
+                                      ((|Fraction| (|Integer|)) |#1|))
+                                     T)
+                                   '((|rational?| ((|Boolean|) |#1|)) T)
+                                   '((|abs| (|#2| |#1|)) T)
+                                   '((|norm| (|#2| |#1|)) T)
+                                   '((|conjugate| (|#1| |#1|)) T)
+                                   '((|map| (|#1| (|Mapping| |#2| |#2|) |#1|))
+                                     T)
+                                   '((|differentiate|
+                                      (|#1| |#1| (|Mapping| |#2| |#2|)))
+                                     T)
+                                   '((|differentiate|
+                                      (|#1| |#1| (|Mapping| |#2| |#2|)
+                                       (|NonNegativeInteger|)))
+                                     T)
+                                   '((|differentiate|
+                                      (|#1| |#1| (|List| (|Symbol|))
+                                       (|List| (|NonNegativeInteger|))))
+                                     T)
+                                   '((|differentiate|
+                                      (|#1| |#1| (|Symbol|)
+                                       (|NonNegativeInteger|)))
+                                     T)
+                                   '((|differentiate|
+                                      (|#1| |#1| (|List| (|Symbol|))))
+                                     T)
+                                   '((|differentiate| (|#1| |#1| (|Symbol|)))
+                                     T)
+                                   '((|differentiate|
+                                      (|#1| |#1| (|NonNegativeInteger|)))
+                                     T)
+                                   '((|differentiate| (|#1| |#1|)) T)
+                                   '((|retract| (|#2| |#1|)) T)
+                                   '((|retractIfCan| ((|Union| |#2| #2#) |#1|))
+                                     T)
+                                   '((|retractIfCan|
+                                      ((|Union| (|Fraction| (|Integer|)) #2#)
+                                       |#1|))
+                                     T)
+                                   '((|retract|
+                                      ((|Fraction| (|Integer|)) |#1|))
+                                     T)
+                                   '((|retractIfCan|
+                                      ((|Union| (|Integer|) #2#) |#1|))
+                                     T)
+                                   '((|retract| ((|Integer|) |#1|)) T)
+                                   '((|coerce| (|#1| |#2|)) T)
+                                   '((* (|#1| |#2| |#1|)) T)
+                                   '((* (|#1| |#1| |#2|)) T)
+                                   '((|characteristic|
+                                      ((|NonNegativeInteger|)))
+                                     T)
+                                   '((|coerce| (|#1| (|Integer|))) T)
+                                   '((|one?| ((|Boolean|) |#1|)) T)
+                                   '((|zero?| ((|Boolean|) |#1|)) T)
+                                   '((* (|#1| (|NonNegativeInteger|) |#1|)) T)
+                                   '((- (|#1| |#1|)) T)
+                                   '((- (|#1| |#1| |#1|)) T)
+                                   '((* (|#1| (|Integer|) |#1|)) T)
+                                   '((* (|#1| |#1| |#1|)) T)
+                                   '((* (|#1| (|PositiveInteger|) |#1|)) T)
+                                   '((+ (|#1| |#1| |#1|)) T)
+                                   '((|coerce| ((|OutputForm|) |#1|)) T)
+                                   '((= ((|Boolean|) |#1| |#1|)) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 78
+                                            '(0 7 8 9 1 6 7 0 11 1 6 7 0 12 1 7
+                                              0 0 13 1 6 7 0 14 1 6 7 0 15 4 6
+                                              0 7 7 7 7 16 1 6 0 0 20 2 6 0 0 0
+                                              21 1 6 7 0 22 2 7 24 0 0 25 2 7 0
+                                              0 0 27 2 7 0 0 0 29 2 7 0 0 0 32
+                                              2 7 0 34 0 35 0 7 0 38 1 7 0 34
+                                              40 0 7 0 42 1 7 24 0 43 1 6 24 0
+                                              49 1 7 50 0 51 1 6 50 0 52 2 50 0
+                                              0 0 53 1 54 50 0 55 2 50 0 0 0 56
+                                              1 6 7 0 58 1 7 0 0 59 2 6 0 7 0
+                                              60 1 0 0 0 61 1 62 0 54 63 1 7 62
+                                              0 64 1 62 0 65 66 1 0 62 0 67 2 7
+                                              24 0 0 68 2 0 24 0 0 69 1 7 0 0
+                                              70 1 0 7 0 71 1 0 24 0 72 1 6 24
+                                              0 73 1 7 74 0 75 1 0 74 0 76 1 0
+                                              77 0 78 1 0 24 0 45 1 0 47 0 48 1
+                                              0 7 0 46 1 0 77 0 78 1 0 24 0 72
+                                              1 0 74 0 76 1 0 24 0 44 1 0 7 0
+                                              23 2 0 0 18 0 19 1 0 0 0 61 2 0 0
+                                              0 18 37 1 0 62 0 67 1 0 0 0 17 1
+                                              0 0 7 39 1 0 0 34 41 1 0 50 0 57
+                                              0 0 8 10 1 0 7 0 71 2 0 24 0 0 26
+                                              2 0 24 0 0 69 2 0 0 0 0 30 1 0 0
+                                              0 31 2 0 0 0 0 28 2 0 0 7 0 33 2
+                                              0 0 34 0 36)))))
            '|lookupComplete|)) 

@@ -195,11 +195,10 @@
 
 (DEFUN |OpenMathDevice| ()
   (SPROG NIL
-         (PROG (#1=#:G742)
+         (PROG (#1=#:G424)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|OpenMathDevice|)
-                    . #2=(|OpenMathDevice|))
+             ((LETT #1# (HGET |$ConstructorCache| '|OpenMathDevice|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -207,7 +206,7 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|OpenMathDevice|
                              (LIST (CONS NIL (CONS 1 (|OpenMathDevice;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache| '|OpenMathDevice|)))))))))) 
@@ -215,10 +214,10 @@
 (DEFUN |OpenMathDevice;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|OpenMathDevice|) . #1=(|OpenMathDevice|))
-          (LETT $ (GETREFV 56) . #1#)
+          (LETT |dv$| '(|OpenMathDevice|))
+          (LETT $ (GETREFV 56))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|OpenMathDevice| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))
@@ -264,29 +263,87 @@
               |OMgetEndApp| 190 |OMgetBind| 195 |OMgetBVar| 200 |OMgetAttr| 205
               |OMgetAtp| 210 |OMgetApp| 215 |OMclose| 220)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 55
-                                                 '(2 0 10 0 7 12 2 0 10 0 31 32
-                                                   3 0 10 0 6 6 34 2 0 10 0 6
-                                                   33 1 0 10 0 19 2 0 10 0 27
-                                                   28 2 0 10 0 29 30 1 0 10 0
-                                                   18 1 0 10 0 26 1 0 10 0 25 1
-                                                   0 10 0 23 1 0 10 0 24 1 0 10
-                                                   0 22 1 0 10 0 21 1 0 10 0 20
-                                                   1 0 10 0 16 1 0 10 0 17 1 0
-                                                   10 0 15 1 0 10 0 14 1 0 10 0
-                                                   13 2 0 0 6 7 9 3 0 0 6 6 7 8
-                                                   1 0 31 0 51 1 0 31 0 55 1 0
-                                                   53 0 54 1 0 6 0 52 1 0 10 0
-                                                   41 1 0 27 0 49 1 0 29 0 50 1
-                                                   0 10 0 40 1 0 10 0 48 1 0 10
-                                                   0 47 1 0 10 0 45 1 0 10 0 46
-                                                   1 0 10 0 44 1 0 10 0 43 1 0
-                                                   10 0 42 1 0 10 0 38 1 0 10 0
-                                                   39 1 0 10 0 37 1 0 10 0 36 1
-                                                   0 10 0 35 1 0 10 0 11)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|OMopenFile|
+                                 ($$ (|String|) (|String|)
+                                  (|OpenMathEncoding|)))
+                                T)
+                              '((|OMopenString|
+                                 ($$ (|String|) (|OpenMathEncoding|)))
+                                T)
+                              '((|OMclose| ((|Void|) $$)) T)
+                              '((|OMsetEncoding|
+                                 ((|Void|) $$ (|OpenMathEncoding|)))
+                                T)
+                              '((|OMputApp| ((|Void|) $$)) T)
+                              '((|OMputAtp| ((|Void|) $$)) T)
+                              '((|OMputAttr| ((|Void|) $$)) T)
+                              '((|OMputBind| ((|Void|) $$)) T)
+                              '((|OMputBVar| ((|Void|) $$)) T)
+                              '((|OMputError| ((|Void|) $$)) T)
+                              '((|OMputObject| ((|Void|) $$)) T)
+                              '((|OMputEndApp| ((|Void|) $$)) T)
+                              '((|OMputEndAtp| ((|Void|) $$)) T)
+                              '((|OMputEndAttr| ((|Void|) $$)) T)
+                              '((|OMputEndBind| ((|Void|) $$)) T)
+                              '((|OMputEndBVar| ((|Void|) $$)) T)
+                              '((|OMputEndError| ((|Void|) $$)) T)
+                              '((|OMputEndObject| ((|Void|) $$)) T)
+                              '((|OMputInteger| ((|Void|) $$ (|Integer|))) T)
+                              '((|OMputFloat| ((|Void|) $$ (|DoubleFloat|))) T)
+                              '((|OMputVariable| ((|Void|) $$ (|Symbol|))) T)
+                              '((|OMputString| ((|Void|) $$ (|String|))) T)
+                              '((|OMputSymbol|
+                                 ((|Void|) $$ (|String|) (|String|)))
+                                T)
+                              '((|OMgetApp| ((|Void|) $$)) T)
+                              '((|OMgetAtp| ((|Void|) $$)) T)
+                              '((|OMgetAttr| ((|Void|) $$)) T)
+                              '((|OMgetBind| ((|Void|) $$)) T)
+                              '((|OMgetBVar| ((|Void|) $$)) T)
+                              '((|OMgetError| ((|Void|) $$)) T)
+                              '((|OMgetObject| ((|Void|) $$)) T)
+                              '((|OMgetEndApp| ((|Void|) $$)) T)
+                              '((|OMgetEndAtp| ((|Void|) $$)) T)
+                              '((|OMgetEndAttr| ((|Void|) $$)) T)
+                              '((|OMgetEndBind| ((|Void|) $$)) T)
+                              '((|OMgetEndBVar| ((|Void|) $$)) T)
+                              '((|OMgetEndError| ((|Void|) $$)) T)
+                              '((|OMgetEndObject| ((|Void|) $$)) T)
+                              '((|OMgetInteger| ((|Integer|) $$)) T)
+                              '((|OMgetFloat| ((|DoubleFloat|) $$)) T)
+                              '((|OMgetVariable| ((|Symbol|) $$)) T)
+                              '((|OMgetString| ((|String|) $$)) T)
+                              '((|OMgetSymbol|
+                                 ((|Record| (|:| |cd| (|String|))
+                                            (|:| |name| (|String|)))
+                                  $$))
+                                T)
+                              '((|OMgetType| ((|Symbol|) $$)) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 55
+                                            '(2 0 10 0 7 12 2 0 10 0 31 32 3 0
+                                              10 0 6 6 34 2 0 10 0 6 33 1 0 10
+                                              0 19 2 0 10 0 27 28 2 0 10 0 29
+                                              30 1 0 10 0 18 1 0 10 0 26 1 0 10
+                                              0 25 1 0 10 0 23 1 0 10 0 24 1 0
+                                              10 0 22 1 0 10 0 21 1 0 10 0 20 1
+                                              0 10 0 16 1 0 10 0 17 1 0 10 0 15
+                                              1 0 10 0 14 1 0 10 0 13 2 0 0 6 7
+                                              9 3 0 0 6 6 7 8 1 0 31 0 51 1 0
+                                              31 0 55 1 0 53 0 54 1 0 6 0 52 1
+                                              0 10 0 41 1 0 27 0 49 1 0 29 0 50
+                                              1 0 10 0 40 1 0 10 0 48 1 0 10 0
+                                              47 1 0 10 0 45 1 0 10 0 46 1 0 10
+                                              0 44 1 0 10 0 43 1 0 10 0 42 1 0
+                                              10 0 38 1 0 10 0 39 1 0 10 0 37 1
+                                              0 10 0 36 1 0 10 0 35 1 0 10 0
+                                              11)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|OpenMathDevice| 'NILADIC T) 

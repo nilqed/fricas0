@@ -23,22 +23,20 @@
 
 (DECLAIM (NOTINLINE |SequentialDifferentialVariable;|)) 
 
-(DEFUN |SequentialDifferentialVariable| (#1=#:G708)
+(DEFUN |SequentialDifferentialVariable| (#1=#:G390)
   (SPROG NIL
-         (PROG (#2=#:G709)
+         (PROG (#2=#:G391)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|SequentialDifferentialVariable|)
-                                               '|domainEqualList|)
-                    . #3=(|SequentialDifferentialVariable|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (|SequentialDifferentialVariable;| #1#)
-                    (LETT #2# T . #3#))
+                  (PROG1 (|SequentialDifferentialVariable;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -47,12 +45,11 @@
 (DEFUN |SequentialDifferentialVariable;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|)
-                . #1=(|SequentialDifferentialVariable|))
-          (LETT |dv$| (LIST '|SequentialDifferentialVariable| DV$1) . #1#)
-          (LETT $ (GETREFV 21) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|SequentialDifferentialVariable| DV$1))
+          (LETT $ (GETREFV 21))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|SequentialDifferentialVariable|
                       (LIST DV$1) (CONS 1 $))
           (|stuffDomainSlots| $)

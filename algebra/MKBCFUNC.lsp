@@ -11,8 +11,8 @@
 
 (SDEFUN |MKBCFUNC;binaryFunction;SM;2!0| ((|d1| NIL) (|d2| NIL) ($$ NIL))
         (PROG (|name| $)
-          (LETT |name| (QREFELT $$ 1) . #1=(|MKBCFUNC;binaryFunction;SM;2|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |name| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (|MKBCFUNC;func| |name| |d1| |d2| $))))) 
 
 (SDEFUN |MKBCFUNC;compiledFunction;S2SM;3|
@@ -21,8 +21,7 @@
                (SEQ
                 (LETT |t|
                       (LIST (|devaluate| (QREFELT $ 7))
-                            (|devaluate| (QREFELT $ 8)))
-                      |MKBCFUNC;compiledFunction;S2SM;3|)
+                            (|devaluate| (QREFELT $ 8))))
                 (EXIT
                  (SPADCALL
                   (SPADCALL
@@ -38,22 +37,21 @@
 
 (DECLAIM (NOTINLINE |MakeBinaryCompiledFunction;|)) 
 
-(DEFUN |MakeBinaryCompiledFunction| (&REST #1=#:G703)
+(DEFUN |MakeBinaryCompiledFunction| (&REST #1=#:G387)
   (SPROG NIL
-         (PROG (#2=#:G704)
+         (PROG (#2=#:G388)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|MakeBinaryCompiledFunction|)
-                                               '|domainEqualList|)
-                    . #3=(|MakeBinaryCompiledFunction|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |MakeBinaryCompiledFunction;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -64,14 +62,14 @@
    ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL) (DV$2 NIL)
     (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #1=(|MakeBinaryCompiledFunction|))
-    (LETT DV$2 (|devaluate| |#2|) . #1#)
-    (LETT DV$3 (|devaluate| |#3|) . #1#)
-    (LETT DV$4 (|devaluate| |#4|) . #1#)
-    (LETT |dv$| (LIST '|MakeBinaryCompiledFunction| DV$1 DV$2 DV$3 DV$4) . #1#)
-    (LETT $ (GETREFV 20) . #1#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT DV$4 (|devaluate| |#4|))
+    (LETT |dv$| (LIST '|MakeBinaryCompiledFunction| DV$1 DV$2 DV$3 DV$4))
+    (LETT $ (GETREFV 20))
     (QSETREFV $ 0 |dv$|)
-    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
     (|haddProp| |$ConstructorCache| '|MakeBinaryCompiledFunction|
                 (LIST DV$1 DV$2 DV$3 DV$4) (CONS 1 $))
     (|stuffDomainSlots| $)
@@ -90,12 +88,22 @@
               (0 . |declare|) (|MakeFunction| 6) (5 . |function|)
               (13 . |compile|) |MKBCFUNC;compiledFunction;S2SM;3|)
            '#(|compiledFunction| 19 |binaryFunction| 26) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 19
-                                                 '(1 14 11 13 15 4 16 11 6 11
-                                                   11 11 17 2 14 11 11 13 18 3
-                                                   0 10 6 11 11 19 1 0 10 11
-                                                   12)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|binaryFunction|
+                                 ((|Mapping| |#4| |#2| |#3|) (|Symbol|)))
+                                T)
+                              '((|compiledFunction|
+                                 ((|Mapping| |#4| |#2| |#3|) |#1| (|Symbol|)
+                                  (|Symbol|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 19
+                                            '(1 14 11 13 15 4 16 11 6 11 11 11
+                                              17 2 14 11 11 13 18 3 0 10 6 11
+                                              11 19 1 0 10 11 12)))))
            '|lookupComplete|)) 

@@ -1,14 +1,14 @@
 
 (SDEFUN |DELTCF;circle;Dc;1| (($ |DeltaComplex| VS))
         (SPROG ((|vs1| (|List| VS)))
-               (SEQ (LETT |vs1| NIL |DELTCF;circle;Dc;1|)
+               (SEQ (LETT |vs1| NIL)
                     (EXIT
                      (SPADCALL |vs1| 1 (LIST (LIST (LIST 1 -1)))
                                (QREFELT $ 11)))))) 
 
 (SDEFUN |DELTCF;dunceHat;Dc;2| (($ |DeltaComplex| VS))
         (SPROG ((|vs1| (|List| VS)))
-               (SEQ (LETT |vs1| NIL |DELTCF;dunceHat;Dc;2|)
+               (SEQ (LETT |vs1| NIL)
                     (EXIT
                      (SPADCALL |vs1| 1
                                (LIST (LIST (LIST 1 1 -1)) (LIST (LIST 1 -1)))
@@ -16,7 +16,7 @@
 
 (SDEFUN |DELTCF;torusSurface;Dc;3| (($ |DeltaComplex| VS))
         (SPROG ((|vs1| (|List| VS)))
-               (SEQ (LETT |vs1| NIL |DELTCF;torusSurface;Dc;3|)
+               (SEQ (LETT |vs1| NIL)
                     (EXIT
                      (SPADCALL |vs1| 1
                                (LIST (LIST (LIST 1 2 -1 -2))
@@ -25,24 +25,22 @@
 
 (SDEFUN |DELTCF;projectiveSpace;IDc;4| ((|n| |Integer|) ($ |DeltaComplex| VS))
         (SPROG
-         ((|cl| (|List| (|List| (|List| (|Integer|))))) (#1=#:G712 NIL)
+         ((|cl| (|List| (|List| (|List| (|Integer|))))) (#1=#:G389 NIL)
           (|i| NIL) (|vs1| (|List| VS)))
-         (SEQ (LETT |vs1| NIL . #2=(|DELTCF;projectiveSpace;IDc;4|))
-              (LETT |cl| NIL . #2#)
-              (SEQ (LETT |i| 1 . #2#) (LETT #1# |n| . #2#) G190
+         (SEQ (LETT |vs1| NIL) (LETT |cl| NIL)
+              (SEQ (LETT |i| 1) (LETT #1# |n|) G190
                    (COND ((|greater_SI| |i| #1#) (GO G191)))
                    (SEQ
                     (EXIT
                      (LETT |cl|
                            (CONS (LIST (LIST 1 (COND ((ODDP |i|) -1) ('T 1))))
-                                 |cl|)
-                           . #2#)))
-                   (LETT |i| (|inc_SI| |i|) . #2#) (GO G190) G191 (EXIT NIL))
+                                 |cl|))))
+                   (LETT |i| (|inc_SI| |i|)) (GO G190) G191 (EXIT NIL))
               (EXIT (SPADCALL |vs1| 1 |cl| (QREFELT $ 11)))))) 
 
 (SDEFUN |DELTCF;kleinBottle;Dc;5| (($ |DeltaComplex| VS))
         (SPROG ((|vs1| (|List| VS)))
-               (SEQ (LETT |vs1| NIL |DELTCF;kleinBottle;Dc;5|)
+               (SEQ (LETT |vs1| NIL)
                     (EXIT
                      (SPADCALL |vs1| 1
                                (LIST (LIST (LIST 1 2 1 -2))
@@ -51,21 +49,19 @@
 
 (DECLAIM (NOTINLINE |DeltaComplexFactory;|)) 
 
-(DEFUN |DeltaComplexFactory| (#1=#:G715)
+(DEFUN |DeltaComplexFactory| (#1=#:G392)
   (SPROG NIL
-         (PROG (#2=#:G716)
+         (PROG (#2=#:G393)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|DeltaComplexFactory|)
-                                               '|domainEqualList|)
-                    . #3=(|DeltaComplexFactory|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|DeltaComplexFactory;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|DeltaComplexFactory;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|DeltaComplexFactory|)))))))))) 
@@ -73,11 +69,11 @@
 (DEFUN |DeltaComplexFactory;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|DeltaComplexFactory|))
-          (LETT |dv$| (LIST '|DeltaComplexFactory| DV$1) . #1#)
-          (LETT $ (GETREFV 18) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|DeltaComplexFactory| DV$1))
+          (LETT $ (GETREFV 18))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|DeltaComplexFactory| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -95,11 +91,23 @@
            '#(|torusSurface| 7 |projectiveSpace| 11 |kleinBottle| 16 |dunceHat|
               20 |circle| 24)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 17
-                                                 '(3 10 0 7 8 9 11 0 0 10 14 1
-                                                   0 10 15 16 0 0 10 17 0 0 10
-                                                   13 0 0 10 12)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|circle| ((|DeltaComplex| |#1|))) T)
+                                   '((|dunceHat| ((|DeltaComplex| |#1|))) T)
+                                   '((|torusSurface| ((|DeltaComplex| |#1|)))
+                                     T)
+                                   '((|projectiveSpace|
+                                      ((|DeltaComplex| |#1|) (|Integer|)))
+                                     T)
+                                   '((|kleinBottle| ((|DeltaComplex| |#1|)))
+                                     T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 17
+                                            '(3 10 0 7 8 9 11 0 0 10 14 1 0 10
+                                              15 16 0 0 10 17 0 0 10 13 0 0 10
+                                              12)))))
            '|lookupComplete|)) 

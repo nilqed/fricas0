@@ -5,25 +5,25 @@
 
 (DEFPARAMETER |LinearAggregate;AL| 'NIL) 
 
-(DEFUN |LinearAggregate| (#1=#:G697)
-  (LET (#2=#:G698)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |LinearAggregate;AL|)) (CDR #2#))
-     (T
-      (SETQ |LinearAggregate;AL|
-              (|cons5| (CONS #3# (SETQ #2# (|LinearAggregate;| #1#)))
-                       |LinearAggregate;AL|))
-      #2#)))) 
+(DEFUN |LinearAggregate| (|t#1|)
+  (LET (#1=#:G382 (#2=#:G383 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |LinearAggregate;AL|)) (CDR #1#))
+          (T
+           (SETQ |LinearAggregate;AL|
+                   (|cons5| (CONS #2# (SETQ #1# (|LinearAggregate;| #2#)))
+                            |LinearAggregate;AL|))
+           #1#)))) 
 
 (DEFUN |LinearAggregate;| (|t#1|)
-  (SPROG ((#1=#:G696 NIL))
+  (SPROG ((#1=#:G381 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (|sublisV|
-                               (PAIR '(#2=#:G694 #3=#:G695)
-                                     (LIST '(|Integer|)
-                                           '(|UniversalSegment| (|Integer|))))
+                               (MAKE_PAIRS '(#2=#:G379 #3=#:G380)
+                                           (LIST '(|Integer|)
+                                                 '(|UniversalSegment|
+                                                   (|Integer|))))
                                (COND (|LinearAggregate;CAT|)
                                      ('T
                                       (LETT |LinearAggregate;CAT|
@@ -177,12 +177,5 @@
                                                   (|has| |t#1| (|OrderedSet|))
                                                   (|has| $
                                                          (|finiteAggregate|)))))
-                                              '((|Integer|) (|Boolean|)
-                                                (|UniversalSegment|
-                                                 (|Integer|))
-                                                (|NonNegativeInteger|)
-                                                (|List| $))
-                                              NIL))
-                                            . #4=(|LinearAggregate|))))))
-                   . #4#)
-           (SETELT #1# 0 (LIST '|LinearAggregate| (|devaluate| |t#1|)))))) 
+                                              NIL NIL))))))))
+           (SETELT #1# 0 (LIST '|LinearAggregate| |t#1|))))) 

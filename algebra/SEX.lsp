@@ -3,11 +3,10 @@
 
 (DEFUN |SExpression| ()
   (SPROG NIL
-         (PROG (#1=#:G2459)
+         (PROG (#1=#:G2100)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|SExpression|)
-                    . #2=(|SExpression|))
+             ((LETT #1# (HGET |$ConstructorCache| '|SExpression|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -15,17 +14,17 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|SExpression|
                              (LIST (CONS NIL (CONS 1 (|SExpression;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#) (HREM |$ConstructorCache| '|SExpression|)))))))))) 
 
 (DEFUN |SExpression;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|SExpression|) . #1=(|SExpression|))
-          (LETT $ (GETREFV 16) . #1#)
+          (LETT |dv$| '(|SExpression|))
+          (LETT $ (GETREFV 16))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|SExpression| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

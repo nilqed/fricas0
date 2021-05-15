@@ -14,40 +14,39 @@
 
 (SDEFUN |STNSR;tensorMap;SMS;1!0| (($$ NIL))
         (PROG (|s| $ |f|)
-          (LETT |s| (QREFELT $$ 2) . #1=(|STNSR;tensorMap;SMS;1|))
-          (LETT $ (QREFELT $$ 1) . #1#)
-          (LETT |f| (QREFELT $$ 0) . #1#)
+          (LETT |s| (QREFELT $$ 2))
+          (LETT $ (QREFELT $$ 1))
+          (LETT |f| (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL (SPADCALL |s| (QREFELT $ 14)) |f| (QREFELT $ 16)))))) 
 
 (DECLAIM (NOTINLINE |StreamTensor;|)) 
 
-(DEFUN |StreamTensor| (#1=#:G703)
+(DEFUN |StreamTensor| (#1=#:G387)
   (SPROG NIL
-         (PROG (#2=#:G704)
+         (PROG (#2=#:G388)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|StreamTensor|)
-                                               '|domainEqualList|)
-                    . #3=(|StreamTensor|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|StreamTensor;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|StreamTensor;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|StreamTensor|)))))))))) 
 
 (DEFUN |StreamTensor;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|StreamTensor|))
-          (LETT |dv$| (LIST '|StreamTensor| DV$1) . #1#)
-          (LETT $ (GETREFV 20) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|StreamTensor| DV$1))
+          (LETT $ (GETREFV 20))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|StreamTensor| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -63,12 +62,19 @@
               |STNSR;tensorMap;SMS;1| (|Mapping| $) (24 . |delay|)
               (29 . |concat|))
            '#(|tensorMap| 35) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 19
-                                                 '(1 8 7 0 9 0 8 0 10 1 8 6 0
-                                                   11 1 8 0 12 13 1 8 0 0 14 1
-                                                   8 0 17 18 2 8 0 0 0 19 2 0 8
-                                                   8 15 16)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|tensorMap|
+                                 ((|Stream| |#1|) (|Stream| |#1|)
+                                  (|Mapping| (|List| |#1|) |#1|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 19
+                                            '(1 8 7 0 9 0 8 0 10 1 8 6 0 11 1 8
+                                              0 12 13 1 8 0 0 14 1 8 0 17 18 2
+                                              8 0 0 0 19 2 0 8 8 15 16)))))
            '|lookupComplete|)) 

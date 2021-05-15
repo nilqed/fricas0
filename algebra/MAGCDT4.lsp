@@ -5,7 +5,7 @@
          ((|p2|
            (|Record| (|:| |numer| (|Polynomial| (|Integer|)))
                      (|:| |denom| (|Polynomial| (|Integer|))))))
-         (SEQ (LETT |p2| (SPADCALL |p| (QREFELT $ 8)) |MAGCDT4;FP_to_MP|)
+         (SEQ (LETT |p2| (SPADCALL |p| (QREFELT $ 8)))
               (COND
                ((NULL
                  (SPADCALL (QCDR |p2|) (|spadConstant| $ 10) (QREFELT $ 12)))
@@ -21,23 +21,20 @@
                     (|:| |msizes| (|List| (|Integer|))) (|:| |sp| (|Integer|)))
           "failed"))
         (SPROG
-         ((|lm2| (|List| (|Polynomial| (|Integer|)))) (#1=#:G717 NIL) (|m| NIL)
-          (#2=#:G716 NIL))
+         ((|lm2| (|List| (|Polynomial| (|Integer|)))) (#1=#:G393 NIL) (|m| NIL)
+          (#2=#:G392 NIL))
          (SEQ
           (LETT |lm2|
                 (PROGN
-                 (LETT #2# NIL . #3=(|MAGCDT4;pack_modulus;LLIU;2|))
-                 (SEQ (LETT |m| NIL . #3#) (LETT #1# |lm| . #3#) G190
+                 (LETT #2# NIL)
+                 (SEQ (LETT |m| NIL) (LETT #1# |lm|) G190
                       (COND
-                       ((OR (ATOM #1#) (PROGN (LETT |m| (CAR #1#) . #3#) NIL))
+                       ((OR (ATOM #1#) (PROGN (LETT |m| (CAR #1#)) NIL))
                         (GO G191)))
                       (SEQ
-                       (EXIT
-                        (LETT #2# (CONS (|MAGCDT4;FP_to_MP| |m| $) #2#)
-                              . #3#)))
-                      (LETT #1# (CDR #1#) . #3#) (GO G190) G191
-                      (EXIT (NREVERSE #2#))))
-                . #3#)
+                       (EXIT (LETT #2# (CONS (|MAGCDT4;FP_to_MP| |m| $) #2#))))
+                      (LETT #1# (CDR #1#)) (GO G190) G191
+                      (EXIT (NREVERSE #2#)))))
           (EXIT (SPADCALL |lm2| |lvz| |p| (QREFELT $ 18)))))) 
 
 (SDEFUN |MAGCDT4;FrP_to_MP|
@@ -55,9 +52,8 @@
          (SEQ
           (LETT |p1|
                 (SPADCALL (SPADCALL (QCDR |c|) 1 (QREFELT $ 23))
-                          (SPADCALL (QCAR |c|) (QREFELT $ 24)) (QREFELT $ 25))
-                . #1=(|MAGCDT4;FrP_to_MP|))
-          (LETT |res1| (SPADCALL |p1| |mu| (QREFELT $ 27)) . #1#)
+                          (SPADCALL (QCAR |c|) (QREFELT $ 24)) (QREFELT $ 25)))
+          (LETT |res1| (SPADCALL |p1| |mu| (QREFELT $ 27)))
           (EXIT
            (COND ((QEQCAR |res1| 1) (CONS 1 "failed"))
                  ('T (CONS 0 (SPADCALL (QCDR |res1|) 0 (QREFELT $ 30))))))))) 
@@ -75,19 +71,19 @@
 
 (SDEFUN |MAGCDT4;MPtoMPT;FpSLRU;4!0| ((|c| NIL) ($$ NIL))
         (PROG (|mu| $)
-          (LETT |mu| (QREFELT $$ 1) . #1=(|MAGCDT4;MPtoMPT;FpSLRU;4|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |mu| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (|MAGCDT4;FrP_to_MP| |c| |mu| $))))) 
 
 (DECLAIM (NOTINLINE |ModularAlgebraicGcdTools4;|)) 
 
 (DEFUN |ModularAlgebraicGcdTools4| ()
   (SPROG NIL
-         (PROG (#1=#:G739)
+         (PROG (#1=#:G414)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|ModularAlgebraicGcdTools4|)
-                    . #2=(|ModularAlgebraicGcdTools4|))
+             ((LETT #1#
+                    (HGET |$ConstructorCache| '|ModularAlgebraicGcdTools4|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -97,7 +93,7 @@
                              (LIST
                               (CONS NIL
                                     (CONS 1 (|ModularAlgebraicGcdTools4;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache|
@@ -106,11 +102,10 @@
 (DEFUN |ModularAlgebraicGcdTools4;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|ModularAlgebraicGcdTools4|)
-                . #1=(|ModularAlgebraicGcdTools4|))
-          (LETT $ (GETREFV 39) . #1#)
+          (LETT |dv$| '(|ModularAlgebraicGcdTools4|))
+          (LETT $ (GETREFV 39))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|ModularAlgebraicGcdTools4| NIL
                       (CONS 1 $))
           (|stuffDomainSlots| $)

@@ -4,18 +4,18 @@
 (DEFPARAMETER |IntegerNumberSystem;AL| 'NIL) 
 
 (DEFUN |IntegerNumberSystem| ()
-  (LET (#:G713)
-    (COND (|IntegerNumberSystem;AL|)
-          (T (SETQ |IntegerNumberSystem;AL| (|IntegerNumberSystem;|)))))) 
+  (COND (|IntegerNumberSystem;AL|)
+        (T (SETQ |IntegerNumberSystem;AL| (|IntegerNumberSystem;|))))) 
 
 (DEFUN |IntegerNumberSystem;| ()
-  (SPROG ((#1=#:G711 NIL))
+  (SPROG ((#1=#:G395 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
-                    (PAIR '(#2=#:G706 #3=#:G707 #4=#:G708 #5=#:G709 #6=#:G710)
-                          (LIST '(|Integer|) '(|Integer|) '(|InputForm|)
-                                '(|Pattern| (|Integer|)) '(|Integer|)))
+                    (MAKE_PAIRS
+                     '(#2=#:G390 #3=#:G391 #4=#:G392 #5=#:G393 #6=#:G394)
+                     (LIST '(|Integer|) '(|Integer|) '(|InputForm|)
+                           '(|Pattern| (|Integer|)) '(|Integer|)))
                     (|Join| (|UniqueFactorizationDomain|) (|EuclideanDomain|)
                             (|OrderedIntegralDomain|) (|DifferentialRing|)
                             (|ConvertibleTo| '#2#) (|RetractableTo| '#3#)
@@ -43,8 +43,7 @@
                                ((|submod| ($ $ $ $)) T)
                                ((|mulmod| ($ $ $ $)) T)
                                ((|powmod| ($ $ $ $)) T) ((|invmod| ($ $ $)) T))
-                             NIL '((|Fraction| (|Integer|)) (|Boolean|)) NIL)))
-                   |IntegerNumberSystem|)
+                             NIL NIL NIL))))
            (SETELT #1# 0 '(|IntegerNumberSystem|))))) 
 
 (MAKEPROP '|IntegerNumberSystem| 'NILADIC T) 

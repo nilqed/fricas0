@@ -13,12 +13,12 @@
 
 (SDEFUN |GOPT;maxSubst;U$;4|
         ((|d| |Union| (|PositiveInteger|) "arbitrary") ($ $))
-        (SPROG ((#1=#:G720 NIL))
+        (SPROG ((#1=#:G403 NIL))
                (COND
                 ((QEQCAR |d| 0)
                  (SPADCALL
                   (CONS 0
-                        (PROG1 (LETT #1# (- (QCDR |d|) 1) |GOPT;maxSubst;U$;4|)
+                        (PROG1 (LETT #1# (- (QCDR |d|) 1))
                           (|check_subtype2| (>= #1# 0) '(|NonNegativeInteger|)
                                             '(|Integer|) #1#)))
                   (QREFELT $ 12)))
@@ -89,17 +89,15 @@
 
 (SDEFUN |GOPT;option;LSU;23|
         ((|l| |List| $) (|s| |Symbol|) ($ |Union| (|Any|) "failed"))
-        (SPROG ((#1=#:G797 NIL) (#2=#:G798 NIL) (#3=#:G799 NIL) (|x| NIL))
+        (SPROG ((#1=#:G465 NIL) (#2=#:G466 NIL) (#3=#:G467 NIL) (|x| NIL))
                (SEQ
                 (EXIT
                  (SEQ
                   (SEQ
                    (EXIT
-                    (SEQ (LETT |x| NIL . #4=(|GOPT;option;LSU;23|))
-                         (LETT #3# |l| . #4#) G190
+                    (SEQ (LETT |x| NIL) (LETT #3# |l|) G190
                          (COND
-                          ((OR (ATOM #3#)
-                               (PROGN (LETT |x| (CAR #3#) . #4#) NIL))
+                          ((OR (ATOM #3#) (PROGN (LETT |x| (CAR #3#)) NIL))
                            (GO G191)))
                          (SEQ
                           (EXIT
@@ -108,24 +106,22 @@
                              (PROGN
                               (LETT #1#
                                     (PROGN
-                                     (LETT #2# (CONS 0 (QCDR |x|)) . #4#)
-                                     (GO #5=#:G796))
-                                    . #4#)
-                              (GO #6=#:G791))))))
-                         (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
-                   #6# (EXIT #1#))
+                                     (LETT #2# (CONS 0 (QCDR |x|)))
+                                     (GO #4=#:G464)))
+                              (GO #5=#:G459))))))
+                         (LETT #3# (CDR #3#)) (GO G190) G191 (EXIT NIL)))
+                   #5# (EXIT #1#))
                   (EXIT (CONS 1 "failed"))))
-                #5# (EXIT #2#)))) 
+                #4# (EXIT #2#)))) 
 
 (DECLAIM (NOTINLINE |GuessOption;|)) 
 
 (DEFUN |GuessOption| ()
   (SPROG NIL
-         (PROG (#1=#:G801)
+         (PROG (#1=#:G469)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|GuessOption|)
-                    . #2=(|GuessOption|))
+             ((LETT #1# (HGET |$ConstructorCache| '|GuessOption|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -133,17 +129,17 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|GuessOption|
                              (LIST (CONS NIL (CONS 1 (|GuessOption;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#) (HREM |$ConstructorCache| '|GuessOption|)))))))))) 
 
 (DEFUN |GuessOption;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|GuessOption|) . #1=(|GuessOption|))
-          (LETT $ (GETREFV 65) . #1#)
+          (LETT |dv$| '(|GuessOption|))
+          (LETT $ (GETREFV 65))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|GuessOption| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

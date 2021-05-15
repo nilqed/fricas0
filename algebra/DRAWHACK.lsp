@@ -6,21 +6,19 @@
 
 (DECLAIM (NOTINLINE |DrawNumericHack;|)) 
 
-(DEFUN |DrawNumericHack| (#1=#:G694)
+(DEFUN |DrawNumericHack| (#1=#:G380)
   (SPROG NIL
-         (PROG (#2=#:G695)
+         (PROG (#2=#:G381)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|DrawNumericHack|)
-                                               '|domainEqualList|)
-                    . #3=(|DrawNumericHack|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|DrawNumericHack;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|DrawNumericHack;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|DrawNumericHack|)))))))))) 
@@ -28,11 +26,11 @@
 (DEFUN |DrawNumericHack;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|DrawNumericHack|))
-          (LETT |dv$| (LIST '|DrawNumericHack| DV$1) . #1#)
-          (LETT $ (GETREFV 17) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|DrawNumericHack| DV$1))
+          (LETT $ (GETREFV 17))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|DrawNumericHack| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -48,10 +46,18 @@
               (|SegmentBindingFunctions2| 8 7) (5 . |map|)
               |DRAWHACK;coerce;SbSb;1|)
            '#(|coerce| 11) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 16
-                                                 '(1 9 7 8 10 2 14 11 12 13 15
-                                                   1 0 11 13 16)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|coerce|
+                                 ((|SegmentBinding| (|Float|))
+                                  (|SegmentBinding| (|Expression| |#1|))))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 16
+                                            '(1 9 7 8 10 2 14 11 12 13 15 1 0
+                                              11 13 16)))))
            '|lookupComplete|)) 

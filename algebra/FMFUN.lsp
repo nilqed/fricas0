@@ -4,14 +4,13 @@
 (DEFPARAMETER |FortranMatrixFunctionCategory;AL| 'NIL) 
 
 (DEFUN |FortranMatrixFunctionCategory| ()
-  (LET (#:G692)
-    (COND (|FortranMatrixFunctionCategory;AL|)
-          (T
-           (SETQ |FortranMatrixFunctionCategory;AL|
-                   (|FortranMatrixFunctionCategory;|)))))) 
+  (COND (|FortranMatrixFunctionCategory;AL|)
+        (T
+         (SETQ |FortranMatrixFunctionCategory;AL|
+                 (|FortranMatrixFunctionCategory;|))))) 
 
 (DEFUN |FortranMatrixFunctionCategory;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|FortranProgramCategory|)
@@ -72,17 +71,7 @@
                                  (|Matrix|
                                   (|Fraction| (|Polynomial| (|Integer|))))))
                                T))
-                            NIL
-                            '((|Matrix|
-                               (|Fraction| (|Polynomial| (|Integer|))))
-                              (|Matrix| (|Fraction| (|Polynomial| (|Float|))))
-                              (|Matrix| (|Polynomial| (|Integer|)))
-                              (|Matrix| (|Polynomial| (|Float|)))
-                              (|Matrix| (|Expression| (|Integer|)))
-                              (|Matrix| (|Expression| (|Float|)))
-                              (|FortranCode|) (|List| (|FortranCode|)))
-                            NIL))
-                   |FortranMatrixFunctionCategory|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|FortranMatrixFunctionCategory|))))) 
 
 (MAKEPROP '|FortranMatrixFunctionCategory| 'NILADIC T) 

@@ -3,19 +3,16 @@
 
 (DEFPARAMETER |Rng;AL| 'NIL) 
 
-(DEFUN |Rng| ()
-  (LET (#:G692)
-    (COND (|Rng;AL|) (T (SETQ |Rng;AL| (|Rng;|)))))) 
+(DEFUN |Rng| () (COND (|Rng;AL|) (T (SETQ |Rng;AL| (|Rng;|))))) 
 
 (DEFUN |Rng;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|NonAssociativeRng|) (|SemiRng|)
                            (|mkCategory|
-                            '(((|annihilate?| ((|Boolean|) $ $)) T)) NIL
-                            '((|Boolean|)) NIL))
-                   |Rng|)
+                            '(((|annihilate?| ((|Boolean|) $ $)) T)) NIL NIL
+                            NIL)))
            (SETELT #1# 0 '(|Rng|))))) 
 
 (MAKEPROP '|Rng| 'NILADIC T) 

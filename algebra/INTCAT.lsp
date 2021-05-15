@@ -5,24 +5,22 @@
 
 (DEFPARAMETER |IntervalCategory;AL| 'NIL) 
 
-(DEFUN |IntervalCategory| (#1=#:G695)
-  (LET (#2=#:G696)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |IntervalCategory;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |IntervalCategory;AL|
-              (|cons5| (CONS #3# (SETQ #2# (|IntervalCategory;| #1#)))
-                       |IntervalCategory;AL|))
-      #2#)))) 
+(DEFUN |IntervalCategory| (|t#1|)
+  (LET (#1=#:G380 (#2=#:G381 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |IntervalCategory;AL|)) (CDR #1#))
+          (T
+           (SETQ |IntervalCategory;AL|
+                   (|cons5| (CONS #2# (SETQ #1# (|IntervalCategory;| #2#)))
+                            |IntervalCategory;AL|))
+           #1#)))) 
 
 (DEFUN |IntervalCategory;| (|t#1|)
-  (SPROG ((#1=#:G694 NIL))
+  (SPROG ((#1=#:G379 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (|sublisV|
-                               (PAIR '(#2=#:G693) (LIST '(|Integer|)))
+                               (MAKE_PAIRS '(#2=#:G378) (LIST '(|Integer|)))
                                (COND (|IntervalCategory;CAT|)
                                      ('T
                                       (LETT |IntervalCategory;CAT|
@@ -58,11 +56,5 @@
                                                        ((|contains?|
                                                          ((|Boolean|) $ |t#1|))
                                                         T))
-                                                     NIL
-                                                     '((|Boolean|)
-                                                       (|Fraction|
-                                                        (|Integer|)))
-                                                     NIL))
-                                            . #3=(|IntervalCategory|))))))
-                   . #3#)
-           (SETELT #1# 0 (LIST '|IntervalCategory| (|devaluate| |t#1|)))))) 
+                                                     NIL NIL NIL))))))))
+           (SETELT #1# 0 (LIST '|IntervalCategory| |t#1|))))) 

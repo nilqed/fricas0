@@ -4,20 +4,18 @@
 (DEFPARAMETER |DivisionRing;AL| 'NIL) 
 
 (DEFUN |DivisionRing| ()
-  (LET (#:G702)
-    (COND (|DivisionRing;AL|) (T (SETQ |DivisionRing;AL| (|DivisionRing;|)))))) 
+  (COND (|DivisionRing;AL|) (T (SETQ |DivisionRing;AL| (|DivisionRing;|))))) 
 
 (DEFUN |DivisionRing;| ()
-  (SPROG ((#1=#:G700 NIL))
+  (SPROG ((#1=#:G381 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
-                    (PAIR '(#2=#:G699) (LIST '(|Fraction| (|Integer|))))
-                    (|Join| (|EntireRing|) (|Algebra| '#2#)
+                    (MAKE_PAIRS '(#2=#:G380) (LIST '(|Fraction| (|Integer|))))
+                    (|Join| (|EntireRing|) (|Algebra| '#2#) (|TwoSidedRecip|)
                             (|mkCategory|
                              '(((^ ($ $ (|Integer|))) T) ((|inv| ($ $)) T)) NIL
-                             '((|Integer|)) NIL)))
-                   |DivisionRing|)
+                             NIL NIL))))
            (SETELT #1# 0 '(|DivisionRing|))))) 
 
 (MAKEPROP '|DivisionRing| 'NILADIC T) 

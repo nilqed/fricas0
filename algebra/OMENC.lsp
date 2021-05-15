@@ -29,11 +29,10 @@
 
 (DEFUN |OpenMathEncoding| ()
   (SPROG NIL
-         (PROG (#1=#:G708)
+         (PROG (#1=#:G389)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|OpenMathEncoding|)
-                    . #2=(|OpenMathEncoding|))
+             ((LETT #1# (HGET |$ConstructorCache| '|OpenMathEncoding|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -41,7 +40,7 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|OpenMathEncoding|
                              (LIST (CONS NIL (CONS 1 (|OpenMathEncoding;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache| '|OpenMathEncoding|)))))))))) 
@@ -49,10 +48,10 @@
 (DEFUN |OpenMathEncoding;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|OpenMathEncoding|) . #1=(|OpenMathEncoding|))
-          (LETT $ (GETREFV 21) . #1#)
+          (LETT |dv$| '(|OpenMathEncoding|))
+          (LETT $ (GETREFV 21))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|OpenMathEncoding| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

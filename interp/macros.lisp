@@ -60,7 +60,7 @@
 (def-boot-val |$quadSymbol| $boxString "displays an APL quad")
 (def-boot-val $escapeString  (string (code-char 27))
    "string for single escape character")
-(def-boot-val |$boldString| (concatenate 'string $escapeString "[12m")
+(def-boot-val |$boldString| (concatenate 'string $escapeString "[1m")
   "switch into bold font")
 (def-boot-val |$normalString| (concatenate 'string $escapeString "[0;10m")
   "switch back into normal font")
@@ -79,7 +79,6 @@
 
 (def-boot-var |$insideCapsuleFunctionIfTrue|        "???")
 (def-boot-var |$insideCategoryIfTrue|               "???")
-(def-boot-var |$insideExpressionIfTrue|             "???")
 (def-boot-var |$insideFunctorIfTrue|                "???")
 (def-boot-var |$insideWhereIfTrue|                  "???")
 
@@ -304,26 +303,8 @@
 
 (defun LEXLESSEQP (X Y) (NOT (LEXGREATERP X Y)))
 
-; 7 CONTROL STRUCTURE
-
-; 7.1 Constants and Variables
-
-; 7.1.1 Reference
-
-(DEFUN MKQ (X)
-  "Evaluates an object and returns it with QUOTE wrapped around it."
-  (if (NUMBERP X) X (LIST 'QUOTE X)))
-
-(defvar $TRACELETFLAG NIL "Also referred to in Comp.Lisp")
 
 ; 10.3 Creating Symbols
-
-(defun INTERNL(a &rest b)
-    (INTERN (APPLY #'concat (CONS a b))))
-
-(defvar $GENNO 0)
-
-(DEFUN GENVAR () (INTERNL "$" (STRINGIMAGE (SETQ $GENNO (1+ $GENNO)))))
 
 (DEFUN IS_GENVAR (X)
   (AND (IDENTP X)
@@ -387,18 +368,6 @@
         (SETQ FORM (CDR FORM))
         (GO LP)))
 
-(DEFUN SUBLISNQ (KEY E) (if (NULL KEY) E (SUBANQ KEY E)))
-
-(DEFUN SUBANQ (KEY E)
-  (COND ((ATOM E) (SUBB KEY E))
-        ((EQCAR E (QUOTE QUOTE)) E)
-        ((MAPCAR #'(LAMBDA (J) (SUBANQ KEY J)) E))))
-
-(DEFUN SUBB (X E)
-  (COND ((ATOM X) E)
-        ((EQ (CAAR X) E) (CDAR X))
-        ((SUBB (CDR X) E))))
-
 (defun SUBLISLIS (newl oldl form)
    (sublis (mapcar #'cons oldl newl) form))
 
@@ -425,13 +394,14 @@
          ((equal x y) 't)
          ('t (or (contained\,equal x (car y)) (contained\,equal x (cdr y))))))
 
-(DEFUN S+ (X Y)
+(DEFUN |set_sum| (X Y)
   (COND ((ATOM Y) X)
         ((ATOM X) Y)
-        ((MEMBER (CAR X) Y :test #'equal) (S+ (CDR X) Y))
-        ((S+ (CDR X) (CONS (CAR X) Y)))))
+        ((MEMBER (CAR X) Y :test #'equal) (|set_sum| (CDR X) Y))
+        ((|set_sum| (CDR X) (CONS (CAR X) Y)))))
 
-(defun S- (l1 l2) (set-difference l1 l2 :test #'equal))
+(defun |set_difference| (l1 l2) (set-difference l1 l2 :test #'equal))
+
 
 (DEFUN PREDECESSOR (TL L)
   "Returns the sublist of L whose CDR is EQ to TL."
@@ -488,7 +458,7 @@
 ; (defun QLASSQ (p a-list) (let ((y (assoc p a-list :test #'eq))) (if y (cdr y))))
 (defun QLASSQ (p a-list) (cdr (assq p a-list)))
 
-(defun pair (x y) (mapcar #'cons x y))
+(defun MAKE_PAIRS (x y) (mapcar #'cons x y))
 
 ;;; Operations on Association Sets (AS)
 
@@ -515,33 +485,11 @@
 
 (defvar |$sayBrightlyStream| nil "if not nil, gives stream for sayBrightly output")
 
-(defun |sayBrightly| (x) (|sayBrightly2| x *standard-output*))
+(defun |get_lisp_std_out| () *standard-output*)
 
-(defun |sayBrightly2| (x out-stream)
-  (COND ((NULL X) NIL)
-        (|$sayBrightlyStream| (|sayBrightly1| X |$sayBrightlyStream|))
-        (t (|sayBrightly1| X out-stream))))
-
-(defun |sayBrightlyI| (x)
- (let ((S *error-output*))
-    "Prints at console or output stream."
-  (if (NULL X) NIL (|sayBrightly1| X S))))
-
-(defun |sayBrightlyNT| (x) (|sayBrightlyNT2| x *standard-output*))
-
-(defun |sayBrightlyNT2| (x S)
-  (COND ((NULL X) NIL)
-        (|$sayBrightlyStream| (|sayBrightlyNT1| X |$sayBrightlyStream|))
-        (t (|sayBrightlyNT1| X S))))
+(defun |get_lisp_error_out| () *error-output*)
 
 (defparameter |$fricasOutput| (make-synonym-stream '*standard-output*))
-
-(defun |sayMSG2File| (msg)
-  (PROG (file str)
-        (SETQ file (|makePathname| '|spadmsg| '|listing|))
-        (SETQ str (MAKE-OUTSTREAM file))
-        (|sayBrightly1| msg str)
-        (SHUT str) ) )
 
 (defvar |$fortranOutputStream|)
 

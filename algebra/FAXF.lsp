@@ -5,25 +5,22 @@
 
 (DEFPARAMETER |FiniteAlgebraicExtensionField;AL| 'NIL) 
 
-(DEFUN |FiniteAlgebraicExtensionField| (#1=#:G698)
-  (LET (#2=#:G699)
+(DEFUN |FiniteAlgebraicExtensionField| (|t#1|)
+  (LET (#1=#:G386 (#2=#:G387 (|devaluate| |t#1|)))
     (COND
-     ((SETQ #2#
-              (|assoc| #3=(|devaluate| #1#)
-                       |FiniteAlgebraicExtensionField;AL|))
-      (CDR #2#))
+     ((SETQ #1# (|assoc| #2# |FiniteAlgebraicExtensionField;AL|)) (CDR #1#))
      (T
       (SETQ |FiniteAlgebraicExtensionField;AL|
               (|cons5|
-               (CONS #3# (SETQ #2# (|FiniteAlgebraicExtensionField;| #1#)))
+               (CONS #2# (SETQ #1# (|FiniteAlgebraicExtensionField;| #2#)))
                |FiniteAlgebraicExtensionField;AL|))
-      #2#)))) 
+      #1#)))) 
 
 (DEFUN |FiniteAlgebraicExtensionField;| (|t#1|)
-  (SPROG ((#1=#:G697 NIL))
+  (SPROG ((#1=#:G385 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (COND (|FiniteAlgebraicExtensionField;CAT|)
                                     ('T
                                      (LETT |FiniteAlgebraicExtensionField;CAT|
@@ -124,18 +121,5 @@
                                                     '(((|FiniteFieldCategory|)
                                                        (|has| |t#1|
                                                               (|Finite|))))
-                                                    '((|SparseUnivariatePolynomial|
-                                                       |t#1|)
-                                                      (|Boolean|)
-                                                      (|PositiveInteger|)
-                                                      (|SparseUnivariatePolynomial|
-                                                       $)
-                                                      (|Vector| |t#1|)
-                                                      (|Matrix| |t#1|)
-                                                      (|Vector| $))
-                                                    NIL))
-                                           . #2=(|FiniteAlgebraicExtensionField|)))))
-                   . #2#)
-           (SETELT #1# 0
-                   (LIST '|FiniteAlgebraicExtensionField|
-                         (|devaluate| |t#1|)))))) 
+                                                    NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|FiniteAlgebraicExtensionField| |t#1|))))) 

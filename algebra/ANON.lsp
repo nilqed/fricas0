@@ -7,11 +7,10 @@
 
 (DEFUN |AnonymousFunction| ()
   (SPROG NIL
-         (PROG (#1=#:G694)
+         (PROG (#1=#:G380)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|AnonymousFunction|)
-                    . #2=(|AnonymousFunction|))
+             ((LETT #1# (HGET |$ConstructorCache| '|AnonymousFunction|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -20,7 +19,7 @@
                        (HPUT |$ConstructorCache| '|AnonymousFunction|
                              (LIST
                               (CONS NIL (CONS 1 (|AnonymousFunction;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache| '|AnonymousFunction|)))))))))) 
@@ -28,10 +27,10 @@
 (DEFUN |AnonymousFunction;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|AnonymousFunction|) . #1=(|AnonymousFunction|))
-          (LETT $ (GETREFV 12) . #1#)
+          (LETT |dv$| '(|AnonymousFunction|))
+          (LETT $ (GETREFV 12))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|AnonymousFunction| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

@@ -5,22 +5,20 @@
 
 (DEFPARAMETER |QuaternionCategory;AL| 'NIL) 
 
-(DEFUN |QuaternionCategory| (#1=#:G724)
-  (LET (#2=#:G725)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |QuaternionCategory;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |QuaternionCategory;AL|
-              (|cons5| (CONS #3# (SETQ #2# (|QuaternionCategory;| #1#)))
-                       |QuaternionCategory;AL|))
-      #2#)))) 
+(DEFUN |QuaternionCategory| (|t#1|)
+  (LET (#1=#:G412 (#2=#:G413 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |QuaternionCategory;AL|)) (CDR #1#))
+          (T
+           (SETQ |QuaternionCategory;AL|
+                   (|cons5| (CONS #2# (SETQ #1# (|QuaternionCategory;| #2#)))
+                            |QuaternionCategory;AL|))
+           #1#)))) 
 
 (DEFUN |QuaternionCategory;| (|t#1|)
-  (SPROG ((#1=#:G723 NIL))
+  (SPROG ((#1=#:G411 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (COND (|QuaternionCategory;CAT|)
                                     ('T
                                      (LETT |QuaternionCategory;CAT|
@@ -83,9 +81,5 @@
                                                       ((|CharacteristicNonZero|)
                                                        (|has| |t#1|
                                                               (|CharacteristicNonZero|))))
-                                                    '((|Fraction| (|Integer|))
-                                                      (|Boolean|))
-                                                    NIL))
-                                           . #2=(|QuaternionCategory|)))))
-                   . #2#)
-           (SETELT #1# 0 (LIST '|QuaternionCategory| (|devaluate| |t#1|)))))) 
+                                                    NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|QuaternionCategory| |t#1|))))) 

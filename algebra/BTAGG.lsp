@@ -4,14 +4,13 @@
 (DEFPARAMETER |BitAggregate;AL| 'NIL) 
 
 (DEFUN |BitAggregate| ()
-  (LET (#:G693)
-    (COND (|BitAggregate;AL|) (T (SETQ |BitAggregate;AL| (|BitAggregate;|)))))) 
+  (COND (|BitAggregate;AL|) (T (SETQ |BitAggregate;AL| (|BitAggregate;|))))) 
 
 (DEFUN |BitAggregate;| ()
-  (SPROG ((#1=#:G691 NIL))
+  (SPROG ((#1=#:G379 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(#2=#:G690) (LIST '(|Boolean|)))
+                   (|sublisV| (MAKE_PAIRS '(#2=#:G378) (LIST '(|Boolean|)))
                               (|Join| (|OrderedSet|) (|Logic|)
                                       (|OneDimensionalArrayAggregate| '#2#)
                                       (|mkCategory|
@@ -19,8 +18,7 @@
                                          ((|nor| ($ $ $)) T)
                                          ((|and| ($ $ $)) T) ((|or| ($ $ $)) T)
                                          ((|xor| ($ $ $)) T))
-                                       NIL 'NIL NIL)))
-                   |BitAggregate|)
+                                       NIL NIL NIL))))
            (SETELT #1# 0 '(|BitAggregate|))))) 
 
 (MAKEPROP '|BitAggregate| 'NILADIC T) 

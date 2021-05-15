@@ -5,22 +5,20 @@
 
 (DEFPARAMETER |RecursiveAggregate;AL| 'NIL) 
 
-(DEFUN |RecursiveAggregate| (#1=#:G693)
-  (LET (#2=#:G694)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |RecursiveAggregate;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |RecursiveAggregate;AL|
-              (|cons5| (CONS #3# (SETQ #2# (|RecursiveAggregate;| #1#)))
-                       |RecursiveAggregate;AL|))
-      #2#)))) 
+(DEFUN |RecursiveAggregate| (|t#1|)
+  (LET (#1=#:G384 (#2=#:G385 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |RecursiveAggregate;AL|)) (CDR #1#))
+          (T
+           (SETQ |RecursiveAggregate;AL|
+                   (|cons5| (CONS #2# (SETQ #1# (|RecursiveAggregate;| #2#)))
+                            |RecursiveAggregate;AL|))
+           #1#)))) 
 
 (DEFUN |RecursiveAggregate;| (|t#1|)
-  (SPROG ((#1=#:G692 NIL))
+  (SPROG ((#1=#:G383 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (COND (|RecursiveAggregate;CAT|)
                                     ('T
                                      (LETT |RecursiveAggregate;CAT|
@@ -50,10 +48,5 @@
                                                ((|setvalue!| (|t#1| $ |t#1|))
                                                 (|has| $
                                                        (|shallowlyMutable|))))
-                                             NIL
-                                             '((|List| $) (|Boolean|)
-                                               (|Integer|) (|List| |t#1|))
-                                             NIL))
-                                           . #2=(|RecursiveAggregate|)))))
-                   . #2#)
-           (SETELT #1# 0 (LIST '|RecursiveAggregate| (|devaluate| |t#1|)))))) 
+                                             NIL NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|RecursiveAggregate| |t#1|))))) 

@@ -41,22 +41,21 @@
 
 (DECLAIM (NOTINLINE |PatternMatchListResult;|)) 
 
-(DEFUN |PatternMatchListResult| (&REST #1=#:G713)
+(DEFUN |PatternMatchListResult| (&REST #1=#:G399)
   (SPROG NIL
-         (PROG (#2=#:G714)
+         (PROG (#2=#:G400)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|PatternMatchListResult|)
-                                               '|domainEqualList|)
-                    . #3=(|PatternMatchListResult|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |PatternMatchListResult;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|PatternMatchListResult|)))))))))) 
@@ -64,13 +63,13 @@
 (DEFUN |PatternMatchListResult;| (|#1| |#2| |#3|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|PatternMatchListResult|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT DV$3 (|devaluate| |#3|) . #1#)
-          (LETT |dv$| (LIST '|PatternMatchListResult| DV$1 DV$2 DV$3) . #1#)
-          (LETT $ (GETREFV 34) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT DV$3 (|devaluate| |#3|))
+          (LETT |dv$| (LIST '|PatternMatchListResult| DV$1 DV$2 DV$3))
+          (LETT $ (GETREFV 34))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|PatternMatchListResult|
                       (LIST DV$1 DV$2 DV$3) (CONS 1 $))
           (|stuffDomainSlots| $)

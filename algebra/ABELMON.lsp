@@ -4,12 +4,10 @@
 (DEFPARAMETER |AbelianMonoid;AL| 'NIL) 
 
 (DEFUN |AbelianMonoid| ()
-  (LET (#:G693)
-    (COND (|AbelianMonoid;AL|)
-          (T (SETQ |AbelianMonoid;AL| (|AbelianMonoid;|)))))) 
+  (COND (|AbelianMonoid;AL|) (T (SETQ |AbelianMonoid;AL| (|AbelianMonoid;|))))) 
 
 (DEFUN |AbelianMonoid;| ()
-  (SPROG ((#1=#:G691 NIL))
+  (SPROG ((#1=#:G379 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|AbelianSemiGroup|)
@@ -19,8 +17,7 @@
                               ((|zero?| ((|Boolean|) $)) T)
                               ((* ($ (|NonNegativeInteger|) $)) T)
                               ((|opposite?| ((|Boolean|) $ $)) T))
-                            NIL '((|Boolean|) (|NonNegativeInteger|)) NIL))
-                   |AbelianMonoid|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|AbelianMonoid|))))) 
 
 (MAKEPROP '|AbelianMonoid| 'NILADIC T) 

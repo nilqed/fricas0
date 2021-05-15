@@ -5,21 +5,20 @@
 
 (DEFPARAMETER |StreamAggregate;AL| 'NIL) 
 
-(DEFUN |StreamAggregate| (#1=#:G701)
-  (LET (#2=#:G702)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |StreamAggregate;AL|)) (CDR #2#))
-     (T
-      (SETQ |StreamAggregate;AL|
-              (|cons5| (CONS #3# (SETQ #2# (|StreamAggregate;| #1#)))
-                       |StreamAggregate;AL|))
-      #2#)))) 
+(DEFUN |StreamAggregate| (|t#1|)
+  (LET (#1=#:G388 (#2=#:G389 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |StreamAggregate;AL|)) (CDR #1#))
+          (T
+           (SETQ |StreamAggregate;AL|
+                   (|cons5| (CONS #2# (SETQ #1# (|StreamAggregate;| #2#)))
+                            |StreamAggregate;AL|))
+           #1#)))) 
 
 (DEFUN |StreamAggregate;| (|t#1|)
-  (SPROG ((#1=#:G700 NIL))
+  (SPROG ((#1=#:G387 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (COND (|StreamAggregate;CAT|)
                                     ('T
                                      (LETT |StreamAggregate;CAT|
@@ -33,7 +32,5 @@
                                                ((|possiblyInfinite?|
                                                  ((|Boolean|) $))
                                                 T))
-                                             NIL '((|Boolean|)) NIL))
-                                           . #2=(|StreamAggregate|)))))
-                   . #2#)
-           (SETELT #1# 0 (LIST '|StreamAggregate| (|devaluate| |t#1|)))))) 
+                                             NIL NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|StreamAggregate| |t#1|))))) 

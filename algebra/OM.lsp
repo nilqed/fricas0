@@ -4,11 +4,10 @@
 (DEFPARAMETER |OpenMath;AL| 'NIL) 
 
 (DEFUN |OpenMath| ()
-  (LET (#:G692)
-    (COND (|OpenMath;AL|) (T (SETQ |OpenMath;AL| (|OpenMath;|)))))) 
+  (COND (|OpenMath;AL|) (T (SETQ |OpenMath;AL| (|OpenMath;|))))) 
 
 (DEFUN |OpenMath;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|Join|
@@ -18,9 +17,7 @@
                        ((|OMwrite| ((|Void|) (|OpenMathDevice|) $)) T)
                        ((|OMwrite| ((|Void|) (|OpenMathDevice|) $ (|Boolean|)))
                         T))
-                     NIL '((|Void|) (|OpenMathDevice|) (|Boolean|) (|String|))
-                     NIL))
-                   |OpenMath|)
+                     NIL NIL NIL)))
            (SETELT #1# 0 '(|OpenMath|))))) 
 
 (MAKEPROP '|OpenMath| 'NILADIC T) 

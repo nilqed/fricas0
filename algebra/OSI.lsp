@@ -23,11 +23,10 @@
 
 (DEFUN |OrdSetInts| ()
   (SPROG NIL
-         (PROG (#1=#:G714)
+         (PROG (#1=#:G384)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|OrdSetInts|)
-                    . #2=(|OrdSetInts|))
+             ((LETT #1# (HGET |$ConstructorCache| '|OrdSetInts|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -35,17 +34,17 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|OrdSetInts|
                              (LIST (CONS NIL (CONS 1 (|OrdSetInts;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#) (HREM |$ConstructorCache| '|OrdSetInts|)))))))))) 
 
 (DEFUN |OrdSetInts;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|OrdSetInts|) . #1=(|OrdSetInts|))
-          (LETT $ (GETREFV 22) . #1#)
+          (LETT |dv$| '(|OrdSetInts|))
+          (LETT $ (GETREFV 22))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|OrdSetInts| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

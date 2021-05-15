@@ -5,22 +5,21 @@
 
 (DEFPARAMETER |FullyPatternMatchable;AL| 'NIL) 
 
-(DEFUN |FullyPatternMatchable| (#1=#:G691)
-  (LET (#2=#:G692)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |FullyPatternMatchable;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |FullyPatternMatchable;AL|
-              (|cons5| (CONS #3# (SETQ #2# (|FullyPatternMatchable;| #1#)))
-                       |FullyPatternMatchable;AL|))
-      #2#)))) 
+(DEFUN |FullyPatternMatchable| (|t#1|)
+  (LET (#1=#:G379 (#2=#:G380 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |FullyPatternMatchable;AL|)) (CDR #1#))
+          (T
+           (SETQ |FullyPatternMatchable;AL|
+                   (|cons5|
+                    (CONS #2# (SETQ #1# (|FullyPatternMatchable;| #2#)))
+                    |FullyPatternMatchable;AL|))
+           #1#)))) 
 
 (DEFUN |FullyPatternMatchable;| (|t#1|)
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (COND (|FullyPatternMatchable;CAT|)
                                     ('T
                                      (LETT |FullyPatternMatchable;CAT|
@@ -38,7 +37,5 @@
                                                                      |t#1|
                                                                      (|PatternMatchable|
                                                                       (|Float|)))))
-                                                                 'NIL NIL))
-                                           . #2=(|FullyPatternMatchable|)))))
-                   . #2#)
-           (SETELT #1# 0 (LIST '|FullyPatternMatchable| (|devaluate| |t#1|)))))) 
+                                                                 NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|FullyPatternMatchable| |t#1|))))) 

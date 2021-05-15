@@ -9,8 +9,8 @@
                 (COND ((SPADCALL |x| (QREFELT $ 10)) (|spadConstant| $ 13))
                       (#1='T
                        (SEQ
-                        (LETT |r| (SPADCALL (SPADCALL |x| (QREFELT $ 14)) |fn|)
-                              |AMR-;map;M2S;2|)
+                        (LETT |r|
+                              (SPADCALL (SPADCALL |x| (QREFELT $ 14)) |fn|))
                         (EXIT
                          (COND
                           ((SPADCALL |r| (QREFELT $ 15))
@@ -31,8 +31,8 @@
 
 (SDEFUN |AMR-;*;F2S;3!0| ((|x1| NIL) ($$ NIL))
         (PROG (|q| $)
-          (LETT |q| (QREFELT $$ 1) . #1=(|AMR-;*;F2S;3|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |q| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL |q| |x1| (QREFELT $ 23)))))) 
 
 (DECLAIM (NOTINLINE |AbelianMonoidRing&;|)) 
@@ -40,11 +40,11 @@
 (DEFUN |AbelianMonoidRing&| (|#1| |#2| |#3|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|AbelianMonoidRing&|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT DV$3 (|devaluate| |#3|) . #1#)
-          (LETT |dv$| (LIST '|AbelianMonoidRing&| DV$1 DV$2 DV$3) . #1#)
-          (LETT $ (GETREFV 28) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT DV$3 (|devaluate| |#3|))
+          (LETT |dv$| (LIST '|AbelianMonoidRing&| DV$1 DV$2 DV$3))
+          (LETT $ (GETREFV 28))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -69,8 +69,7 @@
                                               (|HasCategory| |#2|
                                                              '(|SemiRing|))
                                               (|HasCategory| |#2|
-                                                             '(|CancellationAbelianMonoid|))))
-                          . #1#))
+                                                             '(|CancellationAbelianMonoid|))))))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)
           (QSETREFV $ 7 |#2|)
@@ -91,15 +90,30 @@
               (47 . *) (53 . *) (|Integer|) (|NonNegativeInteger|)
               (|PositiveInteger|))
            '#(|monomial?| 59 |map| 64 * 70) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 24
-                                                 '(1 6 9 0 10 1 6 0 0 11 0 6 0
-                                                   13 1 6 7 0 14 1 7 9 0 15 2 6
-                                                   0 16 0 17 1 6 8 0 18 2 6 0 7
-                                                   8 19 2 6 0 0 0 20 2 7 0 22 0
-                                                   23 2 0 0 22 0 24 1 0 9 0 12
-                                                   2 0 0 16 0 21 2 0 0 22 0
-                                                   24)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((* (|#1| (|NonNegativeInteger|) |#1|)) T)
+                                   '((* (|#1| (|Integer|) |#1|)) T)
+                                   '((* (|#1| |#1| (|Fraction| (|Integer|))))
+                                     T)
+                                   '((* (|#1| (|Fraction| (|Integer|)) |#1|))
+                                     T)
+                                   '((|monomial?| ((|Boolean|) |#1|)) T)
+                                   '((|map| (|#1| (|Mapping| |#2| |#2|) |#1|))
+                                     T)
+                                   '((* (|#1| |#2| |#1|)) T)
+                                   '((* (|#1| |#1| |#2|)) T)
+                                   '((* (|#1| |#1| |#1|)) T)
+                                   '((* (|#1| (|PositiveInteger|) |#1|)) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 24
+                                            '(1 6 9 0 10 1 6 0 0 11 0 6 0 13 1
+                                              6 7 0 14 1 7 9 0 15 2 6 0 16 0 17
+                                              1 6 8 0 18 2 6 0 7 8 19 2 6 0 0 0
+                                              20 2 7 0 22 0 23 2 0 0 22 0 24 1
+                                              0 9 0 12 2 0 0 16 0 21 2 0 0 22 0
+                                              24)))))
            '|lookupComplete|)) 

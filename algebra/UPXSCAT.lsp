@@ -5,28 +5,25 @@
 
 (DEFPARAMETER |UnivariatePuiseuxSeriesCategory;AL| 'NIL) 
 
-(DEFUN |UnivariatePuiseuxSeriesCategory| (#1=#:G699)
-  (LET (#2=#:G700)
+(DEFUN |UnivariatePuiseuxSeriesCategory| (|t#1|)
+  (LET (#1=#:G380 (#2=#:G381 (|devaluate| |t#1|)))
     (COND
-     ((SETQ #2#
-              (|assoc| #3=(|devaluate| #1#)
-                       |UnivariatePuiseuxSeriesCategory;AL|))
-      (CDR #2#))
+     ((SETQ #1# (|assoc| #2# |UnivariatePuiseuxSeriesCategory;AL|)) (CDR #1#))
      (T
       (SETQ |UnivariatePuiseuxSeriesCategory;AL|
               (|cons5|
-               (CONS #3# (SETQ #2# (|UnivariatePuiseuxSeriesCategory;| #1#)))
+               (CONS #2# (SETQ #1# (|UnivariatePuiseuxSeriesCategory;| #2#)))
                |UnivariatePuiseuxSeriesCategory;AL|))
-      #2#)))) 
+      #1#)))) 
 
 (DEFUN |UnivariatePuiseuxSeriesCategory;| (|t#1|)
-  (SPROG ((#1=#:G698 NIL))
+  (SPROG ((#1=#:G379 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (|sublisV|
-                               (PAIR '(#2=#:G697)
-                                     (LIST '(|Fraction| (|Integer|))))
+                               (MAKE_PAIRS '(#2=#:G378)
+                                           (LIST '(|Fraction| (|Integer|))))
                                (COND (|UnivariatePuiseuxSeriesCategory;CAT|)
                                      ('T
                                       (LETT
@@ -85,15 +82,5 @@
                                                    (|Algebra|
                                                     (|Fraction| (|Integer|)))))
                                            ((|Field|) (|has| |t#1| (|Field|))))
-                                         '((|Symbol|) (|Fraction| (|Integer|))
-                                           (|NonNegativeInteger|)
-                                           (|Stream|
-                                            (|Record|
-                                             (|:| |k| (|Fraction| (|Integer|)))
-                                             (|:| |c| |t#1|))))
-                                         NIL))
-                                       . #3=(|UnivariatePuiseuxSeriesCategory|))))))
-                   . #3#)
-           (SETELT #1# 0
-                   (LIST '|UnivariatePuiseuxSeriesCategory|
-                         (|devaluate| |t#1|)))))) 
+                                         NIL NIL))))))))
+           (SETELT #1# 0 (LIST '|UnivariatePuiseuxSeriesCategory| |t#1|))))) 

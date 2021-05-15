@@ -8,11 +8,8 @@
           (|v| (|Symbol|)))
          (SEQ
           (LETT |indef|
-                (|SUMRF;innersum| |f|
-                 (LETT |v| (SPADCALL |s| (QREFELT $ 9))
-                       . #1=(|SUMRF;sum;FSbU;1|))
-                 $)
-                . #1#)
+                (|SUMRF;innersum| |f| (LETT |v| (SPADCALL |s| (QREFELT $ 9)))
+                 $))
           (EXIT
            (COND
             ((QEQCAR |indef| 1)
@@ -39,7 +36,7 @@
         ((|an| |Fraction| (|Polynomial| R)) (|n| |Symbol|)
          ($ |Union| (|Fraction| (|Polynomial| R)) (|Expression| R)))
         (SPROG ((|u| (|Union| (|Fraction| (|Polynomial| R)) "failed")))
-               (SEQ (LETT |u| (|SUMRF;innersum| |an| |n| $) |SUMRF;sum;FSU;2|)
+               (SEQ (LETT |u| (|SUMRF;innersum| |an| |n| $))
                     (EXIT
                      (COND
                       ((QEQCAR |u| 1)
@@ -54,11 +51,8 @@
         (SPROG ((|f| (|Fraction| (|Polynomial| R))) (|v| (|Symbol|)))
                (SEQ
                 (LETT |f|
-                      (SPADCALL |p|
-                                (LETT |v| (SPADCALL |s| (QREFELT $ 34))
-                                      . #1=(|SUMRF;sum;PSbF;3|))
-                                (QREFELT $ 36))
-                      . #1#)
+                      (SPADCALL |p| (LETT |v| (SPADCALL |s| (QREFELT $ 34)))
+                                (QREFELT $ 36)))
                 (EXIT
                  (SPADCALL
                   (SPADCALL |f| |v|
@@ -84,7 +78,7 @@
          ((|u| (|Union| (|Fraction| (|Polynomial| R)) "failed"))
           (|an1| (|Fraction| (|Polynomial| R)))
           (|r| (|Union| (|Polynomial| R) "failed")))
-         (SEQ (LETT |r| (SPADCALL |an| (QREFELT $ 46)) . #1=(|SUMRF;innersum|))
+         (SEQ (LETT |r| (SPADCALL |an| (QREFELT $ 46)))
               (EXIT
                (COND
                 ((QEQCAR |r| 1)
@@ -96,15 +90,13 @@
                                              (QREFELT $ 47))
                                    (SPADCALL |n| (QREFELT $ 48))
                                    (QREFELT $ 24))
-                                  (QREFELT $ 26))
-                        . #1#)
+                                  (QREFELT $ 26)))
                   (LETT |u|
                         (SPADCALL (SPADCALL |an| |an1| (QREFELT $ 49)) |n|
-                                  (ELT $ 50) (QREFELT $ 54))
-                        . #1#)
+                                  (ELT $ 50) (QREFELT $ 54)))
                   (EXIT
                    (COND ((QEQCAR |u| 1) (CONS 1 "failed"))
-                         (#2='T
+                         (#1='T
                           (CONS 0
                                 (SPADCALL |an1|
                                           (SPADCALL (QCDR |u|) |n|
@@ -117,35 +109,33 @@
                                                      (QREFELT $ 24))
                                                     (QREFELT $ 26))
                                           (QREFELT $ 56))))))))
-                (#2# (CONS 0 (SPADCALL (QCDR |r|) |n| (QREFELT $ 36))))))))) 
+                (#1# (CONS 0 (SPADCALL (QCDR |r|) |n| (QREFELT $ 36))))))))) 
 
 (SDEFUN |SUMRF;sum;PSF;5|
         ((|p| |Polynomial| R) (|n| |Symbol|) ($ |Fraction| (|Polynomial| R)))
         (SPROG
          ((|rec|
            (|Record| (|:| |num| (|Polynomial| R)) (|:| |den| (|Integer|)))))
-         (SEQ (LETT |rec| (SPADCALL |p| |n| (QREFELT $ 59)) |SUMRF;sum;PSF;5|)
+         (SEQ (LETT |rec| (SPADCALL |p| |n| (QREFELT $ 59)))
               (EXIT
                (SPADCALL (QCAR |rec|) (SPADCALL (QCDR |rec|) (QREFELT $ 61))
                          (QREFELT $ 62)))))) 
 
 (DECLAIM (NOTINLINE |RationalFunctionSum;|)) 
 
-(DEFUN |RationalFunctionSum| (#1=#:G734)
+(DEFUN |RationalFunctionSum| (#1=#:G411)
   (SPROG NIL
-         (PROG (#2=#:G735)
+         (PROG (#2=#:G412)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|RationalFunctionSum|)
-                                               '|domainEqualList|)
-                    . #3=(|RationalFunctionSum|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|RationalFunctionSum;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|RationalFunctionSum;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|RationalFunctionSum|)))))))))) 
@@ -153,11 +143,11 @@
 (DEFUN |RationalFunctionSum;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|RationalFunctionSum|))
-          (LETT |dv$| (LIST '|RationalFunctionSum| DV$1) . #1#)
-          (LETT $ (GETREFV 63) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|RationalFunctionSum| DV$1))
+          (LETT $ (GETREFV 63))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|RationalFunctionSum| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -187,25 +177,48 @@
               (|InnerPolySum| (|IndexedExponents| 7) 7 6 35) (148 . |sum|)
               (|Integer|) (154 . |coerce|) (159 . /))
            '#(|sum| 165) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 62
-                                                 '(1 8 7 0 9 1 11 0 10 12 2 15
-                                                   13 14 8 16 2 11 0 0 17 18 0
-                                                   6 0 19 0 10 0 20 1 8 21 0 22
-                                                   1 21 10 0 23 2 10 0 0 0 24 3
-                                                   25 10 10 7 10 26 1 21 10 0
-                                                   27 2 10 0 0 0 28 2 11 0 0 7
-                                                   31 1 33 7 0 34 0 35 0 37 1
-                                                   33 38 0 39 1 38 35 0 40 2 35
-                                                   0 0 0 41 1 10 0 35 42 1 38
-                                                   35 0 43 1 10 45 0 46 1 10 0
-                                                   0 47 1 10 0 7 48 2 10 0 0 0
-                                                   49 0 7 0 50 3 53 51 10 7 52
-                                                   54 1 6 0 0 55 2 10 0 0 0 56
-                                                   2 58 57 35 7 59 1 35 0 60 61
-                                                   2 10 0 35 35 62 2 0 29 10 7
-                                                   32 2 0 10 35 7 36 2 0 29 10
-                                                   8 30 2 0 10 35 33 44)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|sum|
+                                 ((|Fraction| (|Polynomial| |#1|))
+                                  (|Polynomial| |#1|) (|Symbol|)))
+                                T)
+                              '((|sum|
+                                 ((|Union| (|Fraction| (|Polynomial| |#1|))
+                                           (|Expression| |#1|))
+                                  (|Fraction| (|Polynomial| |#1|)) (|Symbol|)))
+                                T)
+                              '((|sum|
+                                 ((|Fraction| (|Polynomial| |#1|))
+                                  (|Polynomial| |#1|)
+                                  (|SegmentBinding| (|Polynomial| |#1|))))
+                                T)
+                              '((|sum|
+                                 ((|Union| (|Fraction| (|Polynomial| |#1|))
+                                           (|Expression| |#1|))
+                                  (|Fraction| (|Polynomial| |#1|))
+                                  (|SegmentBinding|
+                                   (|Fraction| (|Polynomial| |#1|)))))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 62
+                                            '(1 8 7 0 9 1 11 0 10 12 2 15 13 14
+                                              8 16 2 11 0 0 17 18 0 6 0 19 0 10
+                                              0 20 1 8 21 0 22 1 21 10 0 23 2
+                                              10 0 0 0 24 3 25 10 10 7 10 26 1
+                                              21 10 0 27 2 10 0 0 0 28 2 11 0 0
+                                              7 31 1 33 7 0 34 0 35 0 37 1 33
+                                              38 0 39 1 38 35 0 40 2 35 0 0 0
+                                              41 1 10 0 35 42 1 38 35 0 43 1 10
+                                              45 0 46 1 10 0 0 47 1 10 0 7 48 2
+                                              10 0 0 0 49 0 7 0 50 3 53 51 10 7
+                                              52 54 1 6 0 0 55 2 10 0 0 0 56 2
+                                              58 57 35 7 59 1 35 0 60 61 2 10 0
+                                              35 35 62 2 0 29 10 7 32 2 0 10 35
+                                              7 36 2 0 29 10 8 30 2 0 10 35 33
+                                              44)))))
            '|lookupComplete|)) 

@@ -11,21 +11,19 @@
 
 (DECLAIM (NOTINLINE |AttachPredicates;|)) 
 
-(DEFUN |AttachPredicates| (#1=#:G701)
+(DEFUN |AttachPredicates| (#1=#:G381)
   (SPROG NIL
-         (PROG (#2=#:G702)
+         (PROG (#2=#:G382)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|AttachPredicates|)
-                                               '|domainEqualList|)
-                    . #3=(|AttachPredicates|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|AttachPredicates;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|AttachPredicates;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|AttachPredicates|)))))))))) 
@@ -33,11 +31,11 @@
 (DEFUN |AttachPredicates;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|AttachPredicates|))
-          (LETT |dv$| (LIST '|AttachPredicates| DV$1) . #1#)
-          (LETT $ (GETREFV 17) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|AttachPredicates| DV$1))
+          (LETT $ (GETREFV 17))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|AttachPredicates| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -54,11 +52,23 @@
               (5 . |suchThat|) |PMPRED;suchThat;SME;1| (|List| 10)
               (11 . |suchThat|) |PMPRED;suchThat;SLE;2|)
            '#(|suchThat| 17) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 16
-                                                 '(1 8 0 7 9 2 11 8 8 10 12 2
-                                                   11 8 8 14 15 2 0 8 7 14 16 2
-                                                   0 8 7 10 13)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|suchThat|
+                                 ((|Expression| (|Integer|)) (|Symbol|)
+                                  (|Mapping| (|Boolean|) |#1|)))
+                                T)
+                              '((|suchThat|
+                                 ((|Expression| (|Integer|)) (|Symbol|)
+                                  (|List| (|Mapping| (|Boolean|) |#1|))))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 16
+                                            '(1 8 0 7 9 2 11 8 8 10 12 2 11 8 8
+                                              14 15 2 0 8 7 14 16 2 0 8 7 10
+                                              13)))))
            '|lookupComplete|)) 

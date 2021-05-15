@@ -13,17 +13,15 @@
 (DEFUN |UnivariatePuiseuxSeriesConstructorCategory&| (|#1| |#2| |#3|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|)
-                . #1=(|UnivariatePuiseuxSeriesConstructorCategory&|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT DV$3 (|devaluate| |#3|) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT DV$3 (|devaluate| |#3|))
           (LETT |dv$|
                 (LIST '|UnivariatePuiseuxSeriesConstructorCategory&| DV$1 DV$2
-                      DV$3)
-                . #1#)
-          (LETT $ (GETREFV 18) . #1#)
+                      DV$3))
+          (LETT $ (GETREFV 18))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)
           (QSETREFV $ 7 |#2|)
@@ -39,11 +37,19 @@
               (|Union| 8 '"failed") (15 . |laurentIfCan|)
               |UPXSCCA-;retractIfCan;SU;3|)
            '#(|zero?| 20 |retractIfCan| 25 |retract| 30) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 17
-                                                 '(1 6 8 0 9 1 8 10 0 11 1 6 8
-                                                   0 13 1 6 15 0 16 1 0 10 0 12
-                                                   1 0 15 0 17 1 0 8 0 14)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|retract| (|#3| |#1|)) T)
+                                   '((|retractIfCan|
+                                      ((|Union| |#3| "failed") |#1|))
+                                     T)
+                                   '((|zero?| ((|Boolean|) |#1|)) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 17
+                                            '(1 6 8 0 9 1 8 10 0 11 1 6 8 0 13
+                                              1 6 15 0 16 1 0 10 0 12 1 0 15 0
+                                              17 1 0 8 0 14)))))
            '|lookupComplete|)) 

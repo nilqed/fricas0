@@ -1,28 +1,27 @@
 
 (DECLAIM (NOTINLINE |Operator;|)) 
 
-(DEFUN |Operator| (#1=#:G708)
+(DEFUN |Operator| (#1=#:G388)
   (SPROG NIL
-         (PROG (#2=#:G709)
+         (PROG (#2=#:G389)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|Operator|)
-                                               '|domainEqualList|)
-                    . #3=(|Operator|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|Operator;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|Operator;| #1#) (LETT #2# T))
                 (COND ((NOT #2#) (HREM |$ConstructorCache| '|Operator|)))))))))) 
 
 (DEFUN |Operator;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|Operator|))
-          (LETT |dv$| (LIST '|Operator| DV$1) . #1#)
-          (LETT $ (GETREFV 21) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|Operator| DV$1))
+          (LETT $ (GETREFV 21))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -33,8 +32,7 @@
                                               (|HasCategory| |#1|
                                                              '(|CharacteristicNonZero|))
                                               (|HasCategory| |#1|
-                                                             '(|CharacteristicZero|))))
-                          . #1#))
+                                                             '(|CharacteristicZero|))))))
           (|haddProp| |$ConstructorCache| '|Operator| (LIST DV$1) (CONS 1 $))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)

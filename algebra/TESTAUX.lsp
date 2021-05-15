@@ -64,17 +64,13 @@
 
 (SDEFUN |TESTAUX;testRelativePrecision;2R;11| ((|eps| R) ($ R))
         (SPROG ((|old| (R)))
-               (SEQ
-                (LETT |old| (QREFELT $ 30)
-                      |TESTAUX;testRelativePrecision;2R;11|)
-                (SETELT $ 30 |eps|) (EXIT |old|)))) 
+               (SEQ (LETT |old| (QREFELT $ 30)) (SETELT $ 30 |eps|)
+                    (EXIT |old|)))) 
 
 (SDEFUN |TESTAUX;testAbsolutePrecision;2R;12| ((|eps| R) ($ R))
         (SPROG ((|old| (R)))
-               (SEQ
-                (LETT |old| (QREFELT $ 31)
-                      |TESTAUX;testAbsolutePrecision;2R;12|)
-                (SETELT $ 31 |eps|) (EXIT |old|)))) 
+               (SEQ (LETT |old| (QREFELT $ 31)) (SETELT $ 31 |eps|)
+                    (EXIT |old|)))) 
 
 (SDEFUN |TESTAUX;testRealEqualsAux0|
         ((|inp| |String|) (|ex1| R) (|ex2| R)
@@ -85,19 +81,18 @@
          ((|res| (|List| (|OutputForm|))) (|relative| (R)) (|absolute| (R)))
          (SEQ
           (LETT |absolute|
-                (SPADCALL (SPADCALL |ex1| |ex2| (QREFELT $ 34)) (QREFELT $ 35))
-                . #1=(|TESTAUX;testRealEqualsAux0|))
+                (SPADCALL (SPADCALL |ex1| |ex2| (QREFELT $ 34))
+                          (QREFELT $ 35)))
           (COND
            ((SPADCALL |ex2| (QREFELT $ 36))
-            (LETT |relative| (|spadConstant| $ 37) . #1#))
-           (#2='T
+            (LETT |relative| (|spadConstant| $ 37)))
+           (#1='T
             (LETT |relative|
                   (SPADCALL
                    (SPADCALL (SPADCALL |ex1| |ex2| (QREFELT $ 38))
                              (|spadConstant| $ 39) (QREFELT $ 34))
-                   (QREFELT $ 35))
-                  . #1#)))
-          (LETT |res| NIL . #1#)
+                   (QREFELT $ 35)))))
+          (LETT |res| NIL)
           (COND
            ((SPADCALL |relative| (QREFELT $ 30) (QREFELT $ 40))
             (COND
@@ -108,11 +103,10 @@
                      (SPADCALL (SPADCALL "rel err: " (QREFELT $ 22))
                                (SPADCALL |relative| (QREFELT $ 24))
                                (QREFELT $ 41))
-                     |res|)
-                    . #1#))
-             (#2#
-              (LETT |res| (CONS (SPADCALL "rel err " (QREFELT $ 22)) |res|)
-                    . #1#)))))
+                     |res|)))
+             (#1#
+              (LETT |res|
+                    (CONS (SPADCALL "rel err " (QREFELT $ 22)) |res|))))))
           (COND
            ((SPADCALL |absolute| (QREFELT $ 31) (QREFELT $ 40))
             (COND
@@ -123,11 +117,10 @@
                      (SPADCALL (SPADCALL "abs err: " (QREFELT $ 22))
                                (SPADCALL |absolute| (QREFELT $ 24))
                                (QREFELT $ 41))
-                     |res|)
-                    . #1#))
-             (#2#
-              (LETT |res| (CONS (SPADCALL "abs err " (QREFELT $ 22)) |res|)
-                    . #1#)))))
+                     |res|)))
+             (#1#
+              (LETT |res|
+                    (CONS (SPADCALL "abs err " (QREFELT $ 22)) |res|))))))
           (EXIT
            (COND
             ((NULL |res|)
@@ -135,7 +128,7 @@
                        (LIST (SPADCALL |ex1| (QREFELT $ 24))
                              (SPADCALL |ex2| (QREFELT $ 24)))
                        |prep|))
-            (#2#
+            (#1#
              (SPADCALL |inp|
                        (SPADCALL
                         (LIST (SPADCALL |ex1| (QREFELT $ 24))
@@ -164,19 +157,18 @@
          ((|res| (|List| (|OutputForm|))) (|relative| (R)) (|absolute| (R)))
          (SEQ
           (LETT |absolute|
-                (SPADCALL (SPADCALL |ex1| |ex2| (QREFELT $ 46)) (QREFELT $ 47))
-                . #1=(|TESTAUX;testComplexEqualsAux0|))
+                (SPADCALL (SPADCALL |ex1| |ex2| (QREFELT $ 46))
+                          (QREFELT $ 47)))
           (COND
            ((SPADCALL |ex2| (QREFELT $ 48))
-            (LETT |relative| (|spadConstant| $ 37) . #1#))
-           (#2='T
+            (LETT |relative| (|spadConstant| $ 37)))
+           (#1='T
             (LETT |relative|
                   (SPADCALL
                    (SPADCALL (SPADCALL |ex1| |ex2| (QREFELT $ 49))
                              (|spadConstant| $ 50) (QREFELT $ 46))
-                   (QREFELT $ 47))
-                  . #1#)))
-          (LETT |res| NIL . #1#)
+                   (QREFELT $ 47)))))
+          (LETT |res| NIL)
           (COND
            ((SPADCALL |relative| (QREFELT $ 30) (QREFELT $ 40))
             (COND
@@ -187,11 +179,10 @@
                      (SPADCALL (SPADCALL "rel err: " (QREFELT $ 22))
                                (SPADCALL |relative| (QREFELT $ 24))
                                (QREFELT $ 41))
-                     |res|)
-                    . #1#))
-             (#2#
-              (LETT |res| (CONS (SPADCALL "rel err " (QREFELT $ 22)) |res|)
-                    . #1#)))))
+                     |res|)))
+             (#1#
+              (LETT |res|
+                    (CONS (SPADCALL "rel err " (QREFELT $ 22)) |res|))))))
           (COND
            ((SPADCALL |absolute| (QREFELT $ 31) (QREFELT $ 40))
             (COND
@@ -202,11 +193,10 @@
                      (SPADCALL (SPADCALL "abs err: " (QREFELT $ 22))
                                (SPADCALL |absolute| (QREFELT $ 24))
                                (QREFELT $ 41))
-                     |res|)
-                    . #1#))
-             (#2#
-              (LETT |res| (CONS (SPADCALL "abs err " (QREFELT $ 22)) |res|)
-                    . #1#)))))
+                     |res|)))
+             (#1#
+              (LETT |res|
+                    (CONS (SPADCALL "abs err " (QREFELT $ 22)) |res|))))))
           (EXIT
            (COND
             ((NULL |res|)
@@ -214,7 +204,7 @@
                        (LIST (SPADCALL |ex1| (QREFELT $ 51))
                              (SPADCALL |ex2| (QREFELT $ 51)))
                        |prep|))
-            (#2#
+            (#1#
              (SPADCALL |inp|
                        (SPADCALL
                         (LIST (SPADCALL |ex1| (QREFELT $ 51))
@@ -289,37 +279,35 @@
 
 (DECLAIM (NOTINLINE |UnittestAux;|)) 
 
-(DEFUN |UnittestAux| (#1=#:G794)
+(DEFUN |UnittestAux| (#1=#:G456)
   (SPROG NIL
-         (PROG (#2=#:G795)
+         (PROG (#2=#:G457)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|UnittestAux|)
-                                               '|domainEqualList|)
-                    . #3=(|UnittestAux|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|UnittestAux;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|UnittestAux;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|UnittestAux|)))))))))) 
 
 (DEFUN |UnittestAux;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|UnittestAux|))
-          (LETT |dv$| (LIST '|UnittestAux| DV$1) . #1#)
-          (LETT $ (GETREFV 63) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|UnittestAux| DV$1))
+          (LETT $ (GETREFV 63))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
                           (|buildPredVector| 0 0
                                              (LIST
                                               (|HasCategory| |#1|
-                                                             '(|RealNumberSystem|))))
-                          . #1#))
+                                                             '(|RealNumberSystem|))))))
           (|haddProp| |$ConstructorCache| '|UnittestAux| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -415,34 +403,73 @@
               |testEqualsAuxCmp| 274 |testEqualsAux| 280 |testComplexEqualsAux|
               287 |testAbsolutePrecision| 294)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 62
-                                                 '(0 8 7 9 2 8 7 10 11 12 2 8 7
-                                                   10 11 13 0 8 7 14 1 6 15 0
-                                                   16 2 15 17 0 0 18 2 0 17 6 6
-                                                   19 2 6 17 0 0 20 1 21 0 10
-                                                   22 1 8 7 21 23 1 6 21 0 24 1
-                                                   6 0 27 28 2 6 0 0 27 29 1 0
-                                                   6 6 32 1 0 6 6 33 2 6 0 0 0
-                                                   34 1 6 0 0 35 1 6 17 0 36 0
-                                                   6 0 37 2 6 0 0 0 38 0 6 0 39
-                                                   2 6 17 0 0 40 2 21 0 0 0 41
-                                                   2 11 0 0 0 42 3 0 7 10 6 6
-                                                   43 3 0 7 10 6 6 44 2 45 0 0
-                                                   0 46 1 45 6 0 47 1 45 17 0
-                                                   48 2 45 0 0 0 49 0 45 0 50 1
-                                                   45 21 0 51 3 0 7 10 45 45 52
-                                                   3 0 7 10 45 45 53 1 17 21 0
-                                                   56 2 8 7 10 11 59 2 8 7 10
-                                                   11 61 2 0 7 10 6 58 3 1 7 10
-                                                   6 6 44 3 0 7 10 6 6 55 2 0 7
-                                                   10 6 62 3 0 7 10 6 6 26 3 1
-                                                   7 10 45 45 53 2 0 7 10 6 57
-                                                   1 1 6 6 32 3 1 7 10 6 6 43 3
-                                                   0 7 10 6 6 54 2 0 7 10 6 60
-                                                   2 0 17 6 6 19 3 0 7 10 6 6
-                                                   25 3 1 7 10 45 45 52 1 1 6 6
-                                                   33)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|testEqualsAux|
+                                 ((|Void|) (|String|) |#1| |#1|))
+                                T)
+                              '((|xftestEqualsAux|
+                                 ((|Void|) (|String|) |#1| |#1|))
+                                T)
+                              '((|testNotEqualsAux|
+                                 ((|Void|) (|String|) |#1| |#1|))
+                                T)
+                              '((|xftestNotEqualsAux|
+                                 ((|Void|) (|String|) |#1| |#1|))
+                                T)
+                              '((|testTrueAux| ((|Void|) (|String|) |#1|)) T)
+                              '((|xftestTrueAux| ((|Void|) (|String|) |#1|)) T)
+                              '((|testLibraryErrorAux|
+                                 ((|Void|) (|String|) |#1|))
+                                T)
+                              '((|xftestLibraryErrorAux|
+                                 ((|Void|) (|String|) |#1|))
+                                T)
+                              '((|testEqualsAuxCmp| ((|Boolean|) |#1| |#1|)) T)
+                              '((|testRealEqualsAux|
+                                 ((|Void|) (|String|) |#1| |#1|))
+                                (|has| 6 (|RealNumberSystem|)))
+                              '((|xftestRealEqualsAux|
+                                 ((|Void|) (|String|) |#1| |#1|))
+                                (|has| 6 (|RealNumberSystem|)))
+                              '((|testComplexEqualsAux|
+                                 ((|Void|) (|String|) (|Complex| |#1|)
+                                  (|Complex| |#1|)))
+                                (|has| 6 (|RealNumberSystem|)))
+                              '((|xftestComplexEqualsAux|
+                                 ((|Void|) (|String|) (|Complex| |#1|)
+                                  (|Complex| |#1|)))
+                                (|has| 6 (|RealNumberSystem|)))
+                              '((|testAbsolutePrecision| (|#1| |#1|))
+                                (|has| 6 (|RealNumberSystem|)))
+                              '((|testRelativePrecision| (|#1| |#1|))
+                                (|has| 6 (|RealNumberSystem|))))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 62
+                                            '(0 8 7 9 2 8 7 10 11 12 2 8 7 10
+                                              11 13 0 8 7 14 1 6 15 0 16 2 15
+                                              17 0 0 18 2 0 17 6 6 19 2 6 17 0
+                                              0 20 1 21 0 10 22 1 8 7 21 23 1 6
+                                              21 0 24 1 6 0 27 28 2 6 0 0 27 29
+                                              1 0 6 6 32 1 0 6 6 33 2 6 0 0 0
+                                              34 1 6 0 0 35 1 6 17 0 36 0 6 0
+                                              37 2 6 0 0 0 38 0 6 0 39 2 6 17 0
+                                              0 40 2 21 0 0 0 41 2 11 0 0 0 42
+                                              3 0 7 10 6 6 43 3 0 7 10 6 6 44 2
+                                              45 0 0 0 46 1 45 6 0 47 1 45 17 0
+                                              48 2 45 0 0 0 49 0 45 0 50 1 45
+                                              21 0 51 3 0 7 10 45 45 52 3 0 7
+                                              10 45 45 53 1 17 21 0 56 2 8 7 10
+                                              11 59 2 8 7 10 11 61 2 0 7 10 6
+                                              58 3 1 7 10 6 6 44 3 0 7 10 6 6
+                                              55 2 0 7 10 6 62 3 0 7 10 6 6 26
+                                              3 1 7 10 45 45 53 2 0 7 10 6 57 1
+                                              1 6 6 32 3 1 7 10 6 6 43 3 0 7 10
+                                              6 6 54 2 0 7 10 6 60 2 0 17 6 6
+                                              19 3 0 7 10 6 6 25 3 1 7 10 45 45
+                                              52 1 1 6 6 33)))))
            '|lookupComplete|)) 

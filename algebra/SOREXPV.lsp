@@ -3,11 +3,10 @@
 
 (DEFUN |SortedExponentVector| ()
   (SPROG NIL
-         (PROG (#1=#:G3282)
+         (PROG (#1=#:G2952)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|SortedExponentVector|)
-                    . #2=(|SortedExponentVector|))
+             ((LETT #1# (HGET |$ConstructorCache| '|SortedExponentVector|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -16,18 +15,18 @@
                        (HPUT |$ConstructorCache| '|SortedExponentVector|
                              (LIST
                               (CONS NIL (CONS 1 (|SortedExponentVector;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache| '|SortedExponentVector|)))))))))) 
 
 (DEFUN |SortedExponentVector;| ()
   (SPROG
-   ((|dv$| NIL) ($ NIL) (#1=#:G3280 NIL) (#2=#:G3279 NIL) (#3=#:G3278 NIL)
+   ((|dv$| NIL) ($ NIL) (#1=#:G2950 NIL) (#2=#:G2949 NIL) (#3=#:G2948 NIL)
     (|pv$| NIL))
    (PROGN
-    (LETT |dv$| '(|SortedExponentVector|) . #4=(|SortedExponentVector|))
-    (LETT $ (GETREFV 25) . #4#)
+    (LETT |dv$| '(|SortedExponentVector|))
+    (LETT $ (GETREFV 25))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -42,15 +41,13 @@
                                                        '(|BasicType|))
                                         (LETT #1#
                                               (|HasCategory| (|Integer|)
-                                                             '(|Comparable|))
-                                              . #4#)
+                                                             '(|Comparable|)))
                                         (OR #1#
                                             (|HasCategory| (|Integer|)
                                                            '(|OrderedSet|)))
                                         (LETT #2#
                                               (|HasCategory| (|Integer|)
-                                                             '(|SetCategory|))
-                                              . #4#)
+                                                             '(|SetCategory|)))
                                         (AND
                                          (|HasCategory| (|Integer|)
                                                         '(|Evalable|
@@ -70,13 +67,11 @@
                                         (LETT #3#
                                               (|HasCategory| (|Integer|)
                                                              '(|CoercibleTo|
-                                                               (|OutputForm|)))
-                                              . #4#)
+                                                               (|OutputForm|))))
                                         (OR #3# #1#
                                             (|HasCategory| (|Integer|)
                                                            '(|OrderedSet|))
-                                            #2#)))
-                    . #4#))
+                                            #2#)))))
     (|haddProp| |$ConstructorCache| '|SortedExponentVector| NIL (CONS 1 $))
     (|stuffDomainSlots| $)
     (AND (|HasCategory| $ '(|shallowlyMutable|)) (|augmentPredVector| $ 2048))
@@ -124,12 +119,12 @@
 
 (MAKEPROP '|SortedExponentVector| '|infovec|
           (LIST
-           '#(NIL NIL NIL NIL NIL (|U32Vector|) (|List| 7) (|Integer|)
-              (|List| 9) (|Equation| 7) (|Mapping| 7 7 7) (|Boolean|)
-              (|NonNegativeInteger|) (|Mapping| 11 7 7) (|OutputForm|)
+           '#(NIL NIL NIL NIL NIL (|U32Vector|) (|Integer|) (|List| 6)
+              (|List| 9) (|Equation| 6) (|Mapping| 6 6 6) (|Boolean|)
+              (|NonNegativeInteger|) (|Mapping| 11 6 6) (|OutputForm|)
               (|HashState|) (|SingleInteger|) (|String|) (|InputForm|)
-              (|Mapping| 11 7) (|UniversalSegment| 7) (|Void|) (|Mapping| 7 7)
-              (|List| $) (|Union| 7 '"failed"))
+              (|Mapping| 11 6) (|UniversalSegment| 6) (|Void|) (|Mapping| 6 6)
+              (|List| $) (|Union| 6 '"failed"))
            '#() 'NIL
            (CONS
             (|makeByteWordVec2| 11
@@ -142,13 +137,13 @@
                 |Evalable&| |SetCategory&| NIL NIL NIL NIL NIL |InnerEvalable&|
                 |BasicType&| NIL |PartialOrder&| NIL)
              (CONS
-              '#((|OneDimensionalArrayAggregate| 7) (|FiniteLinearAggregate| 7)
-                 (|LinearAggregate| 7) (|IndexedAggregate| 7 7)
-                 (|Collection| 7) (|OrderedSet|) (|HomogeneousAggregate| 7)
-                 (|Comparable|) (|Aggregate|) (|EltableAggregate| 7 7)
-                 (|Evalable| 7) (|SetCategory|) (|shallowlyMutable|)
-                 (|finiteAggregate|) (|Eltable| 20 $$) (|Type|) (|Eltable| 7 7)
-                 (|InnerEvalable| 7 7) (|BasicType|) (|CoercibleTo| 14)
+              '#((|OneDimensionalArrayAggregate| 6) (|FiniteLinearAggregate| 6)
+                 (|LinearAggregate| 6) (|IndexedAggregate| 6 6)
+                 (|Collection| 6) (|OrderedSet|) (|HomogeneousAggregate| 6)
+                 (|Comparable|) (|Aggregate|) (|EltableAggregate| 6 6)
+                 (|Evalable| 6) (|SetCategory|) (|shallowlyMutable|)
+                 (|finiteAggregate|) (|Eltable| 20 $$) (|Type|) (|Eltable| 6 6)
+                 (|InnerEvalable| 6 6) (|BasicType|) (|CoercibleTo| 14)
                  (|PartialOrder|) (|ConvertibleTo| 18))
               (|makeByteWordVec2| -999999 'NIL))))
            '|lookupIncomplete|)) 

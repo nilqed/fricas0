@@ -18,8 +18,7 @@
                               (SPADCALL
                                (SPADCALL (QCAR (QCDR |x|)) (QREFELT $ 14))
                                (SPADCALL (QCDR (QCDR |x|)) (QREFELT $ 14))
-                               (QREFELT $ 15))
-                              |FMAGMA;varList;$L;2|)
+                               (QREFELT $ 15)))
                         (EXIT (SPADCALL |lv| (QREFELT $ 16))))))))) 
 
 (SDEFUN |FMAGMA;left;2$;3| ((|x| $) ($ $))
@@ -79,7 +78,7 @@
                 (COND
                  ((QEQCAR |x| 0) (|error| "rest$FreeMagma: inexistant rest"))
                  (#1='T
-                  (SEQ (LETT |lx| (QCAR (QCDR |x|)) |FMAGMA;rest;2$;14|)
+                  (SEQ (LETT |lx| (QCAR (QCDR |x|)))
                        (EXIT
                         (COND ((QEQCAR |lx| 0) (QCDR (QCDR |x|)))
                               (#1#
@@ -123,54 +122,50 @@
                             (CONS 0 (SPADCALL |y| (QREFELT $ 20)))
                             (QREFELT $ 40)))
                  (#1#
-                  (SEQ
-                   (LETT |fx| (SPADCALL |x| (QREFELT $ 35))
-                         . #2=(|FMAGMA;lexico;2$B;17|))
-                   (LETT |fy| (SPADCALL |y| (QREFELT $ 35)) . #2#)
-                   (EXIT
-                    (COND
-                     ((SPADCALL |fx| |fy| (QREFELT $ 10))
-                      (SPADCALL (SPADCALL |x| (QREFELT $ 36))
-                                (SPADCALL |y| (QREFELT $ 36)) (QREFELT $ 42)))
-                     (#1# (SPADCALL |fx| |fy| (QREFELT $ 39))))))))))) 
+                  (SEQ (LETT |fx| (SPADCALL |x| (QREFELT $ 35)))
+                       (LETT |fy| (SPADCALL |y| (QREFELT $ 35)))
+                       (EXIT
+                        (COND
+                         ((SPADCALL |fx| |fy| (QREFELT $ 10))
+                          (SPADCALL (SPADCALL |x| (QREFELT $ 36))
+                                    (SPADCALL |y| (QREFELT $ 36))
+                                    (QREFELT $ 42)))
+                         (#1# (SPADCALL |fx| |fy| (QREFELT $ 39))))))))))) 
 
 (SDEFUN |FMAGMA;<;2$B;18| ((|x| $) (|y| $) ($ |Boolean|))
         (SPROG ((|ly| #1=(|PositiveInteger|)) (|lx| #1#))
-               (SEQ
-                (LETT |lx| (SPADCALL |x| (QREFELT $ 38))
-                      . #2=(|FMAGMA;<;2$B;18|))
-                (LETT |ly| (SPADCALL |y| (QREFELT $ 38)) . #2#)
-                (EXIT
-                 (COND ((EQL |lx| |ly|) (|FMAGMA;recursif| |x| |y| $))
-                       ('T (< |lx| |ly|))))))) 
+               (SEQ (LETT |lx| (SPADCALL |x| (QREFELT $ 38)))
+                    (LETT |ly| (SPADCALL |y| (QREFELT $ 38)))
+                    (EXIT
+                     (COND ((EQL |lx| |ly|) (|FMAGMA;recursif| |x| |y| $))
+                           ('T (< |lx| |ly|))))))) 
 
 (DECLAIM (NOTINLINE |FreeMagma;|)) 
 
-(DEFUN |FreeMagma| (#1=#:G745)
+(DEFUN |FreeMagma| (#1=#:G418)
   (SPROG NIL
-         (PROG (#2=#:G746)
+         (PROG (#2=#:G419)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|FreeMagma|)
-                                               '|domainEqualList|)
-                    . #3=(|FreeMagma|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|FreeMagma;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|FreeMagma;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|FreeMagma|)))))))))) 
 
 (DEFUN |FreeMagma;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|FreeMagma|))
-          (LETT |dv$| (LIST '|FreeMagma| DV$1) . #1#)
-          (LETT $ (GETREFV 46) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|FreeMagma| DV$1))
+          (LETT $ (GETREFV 46))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|FreeMagma| (LIST DV$1) (CONS 1 $))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)

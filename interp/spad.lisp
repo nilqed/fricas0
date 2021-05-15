@@ -41,7 +41,6 @@
 (defvar |$reportInstantiations| nil)
 (defvar |$reportEachInstantiation| nil)
 (defvar |$reportCounts| nil)
-(defvar |$compileOnlyCertainItems| nil "list of functions to compile")
 (defvar |$doNotCompileJustPrint| nil "switch for compile")
 (defvar |$PrintCompilerMessageIfTrue| t)
 (defvar |$Rep| '|$Rep| "should be bound to gensym? checked in coerce")
@@ -71,7 +70,7 @@
 (defun |makeSF| (mantissa exponent)
   (FLOAT (/ mantissa (expt 2 (- exponent))) 0.0d0))
 
-;; This is used in the domain Boolean (BOOLEAN.NRLIB/code.lsp)
+;; This is used in the domain Boolean
 (defun |BooleanEquality| (x y) (if x y (null y)))
 
 (MAKEPROP 'END_UNIT 'KEY T)

@@ -6,49 +6,43 @@
                          (SPADCALL (QCDR |t|) (QREFELT $ 12)) (QREFELT $ 13))))) 
 
 (SDEFUN |INDE;coerce;$Of;2| ((|x| $) ($ |OutputForm|))
-        (SPROG ((#1=#:G718 NIL) (|t| NIL) (#2=#:G717 NIL))
+        (SPROG ((#1=#:G394 NIL) (|t| NIL) (#2=#:G393 NIL))
                (SEQ
                 (COND ((NULL |x|) (SPADCALL 1 (QREFELT $ 15)))
                       ((NULL (CDR |x|)) (|INDE;coerceOF| (|SPADfirst| |x|) $))
                       ('T
                        (SPADCALL (ELT $ 16)
                                  (PROGN
-                                  (LETT #2# NIL . #3=(|INDE;coerce;$Of;2|))
-                                  (SEQ (LETT |t| NIL . #3#)
-                                       (LETT #1# |x| . #3#) G190
+                                  (LETT #2# NIL)
+                                  (SEQ (LETT |t| NIL) (LETT #1# |x|) G190
                                        (COND
                                         ((OR (ATOM #1#)
-                                             (PROGN
-                                              (LETT |t| (CAR #1#) . #3#)
-                                              NIL))
+                                             (PROGN (LETT |t| (CAR #1#)) NIL))
                                          (GO G191)))
                                        (SEQ
                                         (EXIT
                                          (LETT #2#
                                                (CONS (|INDE;coerceOF| |t| $)
-                                                     #2#)
-                                               . #3#)))
-                                       (LETT #1# (CDR #1#) . #3#) (GO G190)
-                                       G191 (EXIT (NREVERSE #2#))))
+                                                     #2#))))
+                                       (LETT #1# (CDR #1#)) (GO G190) G191
+                                       (EXIT (NREVERSE #2#))))
                                  (QREFELT $ 19))))))) 
 
 (DECLAIM (NOTINLINE |IndexedExponents;|)) 
 
-(DEFUN |IndexedExponents| (#1=#:G728)
+(DEFUN |IndexedExponents| (#1=#:G401)
   (SPROG NIL
-         (PROG (#2=#:G729)
+         (PROG (#2=#:G402)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|IndexedExponents|)
-                                               '|domainEqualList|)
-                    . #3=(|IndexedExponents|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|IndexedExponents;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|IndexedExponents;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|IndexedExponents|)))))))))) 
@@ -56,9 +50,9 @@
 (DEFUN |IndexedExponents;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|IndexedExponents|))
-          (LETT |dv$| (LIST '|IndexedExponents| DV$1) . #1#)
-          (LETT $ (GETREFV 30) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|IndexedExponents| DV$1))
+          (LETT $ (GETREFV 30))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -66,8 +60,9 @@
                                              (LIST
                                               (|HasCategory|
                                                (|NonNegativeInteger|)
-                                               '(|AbelianGroup|))))
-                          . #1#))
+                                               '(|AbelianGroup|))
+                                              (|HasCategory| |#1|
+                                                             '(|Comparable|))))))
           (|haddProp| |$ConstructorCache| '|IndexedExponents| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -84,9 +79,9 @@
               (|local| |#1|) '|Term| '|Rep| (|OutputForm|) (0 . |coerce|)
               (|NonNegativeInteger|) (5 . |coerce|) (10 . ^) (|Integer|)
               (16 . |coerce|) (21 . *) (|Mapping| 9 9 9) (|List| 9)
-              (27 . |reduce|) |INDE;coerce;$Of;2| (|Mapping| 11 11) (|Boolean|)
-              (|Record| (|:| |k| 6) (|:| |c| 11)) (|List| 23)
-              (|Union| $ '"failed") (|PositiveInteger|) (|String|)
+              (27 . |reduce|) |INDE;coerce;$Of;2|
+              (|Record| (|:| |k| 6) (|:| |c| 11)) (|List| 21) (|Mapping| 11 11)
+              (|Boolean|) (|Union| $ '"failed") (|PositiveInteger|) (|String|)
               (|SingleInteger|) (|HashState|))
            '#(|coerce| 33) 'NIL
            (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0))

@@ -39,21 +39,19 @@
         (* (SPADCALL (QREFELT $ 32)) (SPADCALL (QREFELT $ 33)))) 
 
 (SDEFUN |PRODUCT;index;Pi$;10| ((|n| |PositiveInteger|) ($ $))
-        (SPROG ((#1=#:G716 NIL) (#2=#:G715 NIL))
+        (SPROG ((#1=#:G395 NIL) (#2=#:G394 NIL))
                (SPADCALL
                 (SPADCALL
                  (PROG1
                      (LETT #2#
                            (+ (QUOTIENT2 (- |n| 1) (SPADCALL (QREFELT $ 33)))
-                              1)
-                           . #3=(|PRODUCT;index;Pi$;10|))
+                              1))
                    (|check_subtype2| (> #2# 0) '(|PositiveInteger|)
                                      '(|Integer|) #2#))
                  (QREFELT $ 36))
                 (SPADCALL
                  (PROG1
-                     (LETT #1# (+ (REM (- |n| 1) (SPADCALL (QREFELT $ 33))) 1)
-                           . #3#)
+                     (LETT #1# (+ (REM (- |n| 1) (SPADCALL (QREFELT $ 33))) 1))
                    (|check_subtype2| (> #1# 0) '(|PositiveInteger|)
                                      '(|Integer|) #1#))
                  (QREFELT $ 37))
@@ -64,14 +62,13 @@
                   (QREFELT $ 19))) 
 
 (SDEFUN |PRODUCT;lookup;$Pi;12| ((|x| $) ($ |PositiveInteger|))
-        (SPROG ((#1=#:G720 NIL))
+        (SPROG ((#1=#:G399 NIL))
                (PROG1
                    (LETT #1#
                          (+
                           (* (- (SPADCALL (QCAR |x|) (QREFELT $ 42)) 1)
                              (SPADCALL (QREFELT $ 33)))
-                          (SPADCALL (QCDR |x|) (QREFELT $ 43)))
-                         |PRODUCT;lookup;$Pi;12|)
+                          (SPADCALL (QCDR |x|) (QREFELT $ 43))))
                  (|check_subtype2| (> #1# 0) '(|PositiveInteger|) '(|Integer|)
                                    #1#)))) 
 
@@ -98,22 +95,20 @@
 
 (SDEFUN |PRODUCT;subtractIfCan;2$U;18| ((|x| $) (|y| $) ($ |Union| $ "failed"))
         (SPROG ((|nb| (|Union| B #1="failed")) (|na| (|Union| A #1#)))
-               (SEQ
-                (LETT |na| (SPADCALL (QCAR |x|) (QCAR |y|) (QREFELT $ 62))
-                      . #2=(|PRODUCT;subtractIfCan;2$U;18|))
-                (EXIT
-                 (COND ((QEQCAR |na| 1) (CONS 1 "failed"))
-                       (#3='T
-                        (SEQ
-                         (LETT |nb|
-                               (SPADCALL (QCDR |x|) (QCDR |y|) (QREFELT $ 63))
-                               . #2#)
-                         (EXIT
-                          (COND ((QEQCAR |nb| 1) (CONS 1 "failed"))
-                                (#3#
-                                 (CONS 0
-                                       (SPADCALL (QCDR |na|) (QCDR |nb|)
-                                                 (QREFELT $ 19))))))))))))) 
+               (SEQ (LETT |na| (SPADCALL (QCAR |x|) (QCAR |y|) (QREFELT $ 62)))
+                    (EXIT
+                     (COND ((QEQCAR |na| 1) (CONS 1 "failed"))
+                           (#2='T
+                            (SEQ
+                             (LETT |nb|
+                                   (SPADCALL (QCDR |x|) (QCDR |y|)
+                                             (QREFELT $ 63)))
+                             (EXIT
+                              (COND ((QEQCAR |nb| 1) (CONS 1 "failed"))
+                                    (#2#
+                                     (CONS 0
+                                           (SPADCALL (QCDR |na|) (QCDR |nb|)
+                                                     (QREFELT $ 19))))))))))))) 
 
 (SDEFUN |PRODUCT;-;2$;19| ((|x| $) ($ $))
         (SPADCALL (SPADCALL (QCAR |x|) (QREFELT $ 65))
@@ -135,63 +130,57 @@
 
 (SDEFUN |PRODUCT;<;2$B;23| ((|x| $) (|y| $) ($ |Boolean|))
         (SPROG ((|yb| (B)) (|xb| (B)) (|ya| (A)) (|xa| (A)))
-               (SEQ (LETT |xa| (QCAR |x|) . #1=(|PRODUCT;<;2$B;23|))
-                    (LETT |ya| (QCAR |y|) . #1#)
+               (SEQ (LETT |xa| (QCAR |x|)) (LETT |ya| (QCAR |y|))
                     (EXIT
                      (COND ((SPADCALL |xa| |ya| (QREFELT $ 78)) 'T)
-                           (#2='T
-                            (SEQ (LETT |xb| (QCDR |x|) . #1#)
-                                 (LETT |yb| (QCDR |y|) . #1#)
+                           (#1='T
+                            (SEQ (LETT |xb| (QCDR |x|)) (LETT |yb| (QCDR |y|))
                                  (EXIT
                                   (COND
                                    ((SPADCALL |xa| |ya| (QREFELT $ 16))
                                     (SPADCALL |xb| |yb| (QREFELT $ 79)))
-                                   (#2# NIL)))))))))) 
+                                   (#1# NIL)))))))))) 
 
 (SDEFUN |PRODUCT;smaller?;2$B;24| ((|x| $) (|y| $) ($ |Boolean|))
         (SPROG ((|yb| (B)) (|xb| (B)) (|ya| (A)) (|xa| (A)))
-               (SEQ (LETT |xa| (QCAR |x|) . #1=(|PRODUCT;smaller?;2$B;24|))
-                    (LETT |ya| (QCAR |y|) . #1#)
+               (SEQ (LETT |xa| (QCAR |x|)) (LETT |ya| (QCAR |y|))
                     (EXIT
                      (COND ((SPADCALL |xa| |ya| (QREFELT $ 81)) 'T)
-                           (#2='T
-                            (SEQ (LETT |xb| (QCDR |x|) . #1#)
-                                 (LETT |yb| (QCDR |y|) . #1#)
+                           (#1='T
+                            (SEQ (LETT |xb| (QCDR |x|)) (LETT |yb| (QCDR |y|))
                                  (EXIT
                                   (COND
                                    ((SPADCALL |xa| |ya| (QREFELT $ 16))
                                     (SPADCALL |xb| |yb| (QREFELT $ 82)))
-                                   (#2# NIL)))))))))) 
+                                   (#1# NIL)))))))))) 
 
 (DECLAIM (NOTINLINE |Product;|)) 
 
-(DEFUN |Product| (&REST #1=#:G756)
+(DEFUN |Product| (&REST #1=#:G433)
   (SPROG NIL
-         (PROG (#2=#:G757)
+         (PROG (#2=#:G434)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|Product|)
-                                               '|domainEqualList|)
-                    . #3=(|Product|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (APPLY (|function| |Product;|) #1#)
-                    (LETT #2# T . #3#))
+                  (PROG1 (APPLY (|function| |Product;|) #1#) (LETT #2# T))
                 (COND ((NOT #2#) (HREM |$ConstructorCache| '|Product|)))))))))) 
 
 (DEFUN |Product;| (|#1| |#2|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G753 NIL) (#2=#:G754 NIL) (#3=#:G755 NIL) ($ NIL)
+   ((|pv$| NIL) (#1=#:G430 NIL) (#2=#:G431 NIL) (#3=#:G432 NIL) ($ NIL)
     (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #4=(|Product|))
-    (LETT DV$2 (|devaluate| |#2|) . #4#)
-    (LETT |dv$| (LIST '|Product| DV$1 DV$2) . #4#)
-    (LETT $ (GETREFV 87) . #4#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT |dv$| (LIST '|Product| DV$1 DV$2))
+    (LETT $ (GETREFV 87))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -202,8 +191,7 @@
                                                (|HasCategory| |#1|
                                                               '(|OrderedAbelianMonoidSup|))
                                                (|HasCategory| |#2|
-                                                              '(|OrderedAbelianMonoidSup|)))
-                                              . #4#)
+                                                              '(|OrderedAbelianMonoidSup|))))
                                         (OR #3#
                                             (AND
                                              (|HasCategory| |#1|
@@ -215,8 +203,7 @@
                                                (|HasCategory| |#1|
                                                               '(|AbelianGroup|))
                                                (|HasCategory| |#2|
-                                                              '(|AbelianGroup|)))
-                                              . #4#)
+                                                              '(|AbelianGroup|))))
                                         (OR #2#
                                             (AND
                                              (|HasCategory| |#1|
@@ -248,8 +235,7 @@
                                               (AND
                                                (|HasCategory| |#1| '(|Finite|))
                                                (|HasCategory| |#2|
-                                                              '(|Finite|)))
-                                              . #4#)
+                                                              '(|Finite|))))
                                         (OR
                                          (AND
                                           (|HasCategory| |#1| '(|Comparable|))
@@ -276,8 +262,7 @@
                                             (AND
                                              (|HasCategory| |#1| '(|Monoid|))
                                              (|HasCategory| |#2| '(|Monoid|)))
-                                            #3#)))
-                    . #4#))
+                                            #3#)))))
     (|haddProp| |$ConstructorCache| '|Product| (LIST DV$1 DV$2) (CONS 1 $))
     (|stuffDomainSlots| $)
     (QSETREFV $ 6 |#1|)
@@ -390,12 +375,13 @@
            'NIL
            (CONS
             (|makeByteWordVec2| 9
-                                '(1 1 1 3 6 1 4 7 2 5 7 7 8 9 5 7 0 0 0 2 6 8))
+                                '(1 1 1 3 6 1 4 7 2 5 7 7 8 9 5 7 0 0 0 2 6 6
+                                  8))
             (CONS
              '#(NIL NIL NIL |AbelianGroup&| |Group&| NIL NIL NIL |OrderedSet&|
                 |AbelianMonoid&| NIL |MagmaWithUnit&| |Finite&| NIL
                 |AbelianSemiGroup&| |Magma&| |SetCategory&| |BasicType&| NIL
-                |PartialOrder&| NIL NIL)
+                |PartialOrder&| NIL NIL NIL)
              (CONS
               '#((|OrderedAbelianMonoidSup|)
                  (|OrderedCancellationAbelianMonoid|) (|OrderedAbelianMonoid|)
@@ -404,7 +390,7 @@
                  (|AbelianMonoid|) (|SemiGroup|) (|MagmaWithUnit|) (|Finite|)
                  (|Comparable|) (|AbelianSemiGroup|) (|Magma|) (|SetCategory|)
                  (|BasicType|) (|CoercibleTo| 9) (|PartialOrder|)
-                 (|unitsKnown|) (|ConvertibleTo| 84))
+                 (|TwoSidedRecip|) (|unitsKnown|) (|ConvertibleTo| 84))
               (|makeByteWordVec2| 86
                                   '(1 6 9 0 10 1 7 9 0 11 1 9 0 12 13 2 6 15 0
                                     0 16 2 7 15 0 0 17 0 6 0 22 0 7 0 23 0 0 0

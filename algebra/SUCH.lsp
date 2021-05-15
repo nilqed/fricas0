@@ -18,33 +18,31 @@
 
 (DECLAIM (NOTINLINE |SuchThat;|)) 
 
-(DEFUN |SuchThat| (&REST #1=#:G715)
+(DEFUN |SuchThat| (&REST #1=#:G385)
   (SPROG NIL
-         (PROG (#2=#:G716)
+         (PROG (#2=#:G386)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|SuchThat|)
-                                               '|domainEqualList|)
-                    . #3=(|SuchThat|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (APPLY (|function| |SuchThat;|) #1#)
-                    (LETT #2# T . #3#))
+                  (PROG1 (APPLY (|function| |SuchThat;|) #1#) (LETT #2# T))
                 (COND ((NOT #2#) (HREM |$ConstructorCache| '|SuchThat|)))))))))) 
 
 (DEFUN |SuchThat;| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|SuchThat|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|SuchThat| DV$1 DV$2) . #1#)
-          (LETT $ (GETREFV 23) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|SuchThat| DV$1 DV$2))
+          (LETT $ (GETREFV 23))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|SuchThat| (LIST DV$1 DV$2)
                       (CONS 1 $))
           (|stuffDomainSlots| $)

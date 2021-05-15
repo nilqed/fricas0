@@ -1,36 +1,32 @@
 
 (SDEFUN |FINITE-;random;S;1| (($ S))
-        (SPROG ((#1=#:G705 NIL))
+        (SPROG ((#1=#:G384 NIL))
                (SPADCALL
-                (PROG1
-                    (LETT #1# (+ 1 (RANDOM (SPADCALL (QREFELT $ 9))))
-                          |FINITE-;random;S;1|)
+                (PROG1 (LETT #1# (+ 1 (RANDOM (SPADCALL (QREFELT $ 9)))))
                   (|check_subtype2| (> #1# 0) '(|PositiveInteger|)
                                     '(|NonNegativeInteger|) #1#))
                 (QREFELT $ 11)))) 
 
 (SDEFUN |FINITE-;enumerate;L;2| (($ |List| S))
-        (SPROG ((#1=#:G714 NIL) (#2=#:G718 NIL) (|i| NIL) (#3=#:G717 NIL))
+        (SPROG ((#1=#:G387 NIL) (#2=#:G391 NIL) (|i| NIL) (#3=#:G390 NIL))
                (SEQ
                 (PROGN
-                 (LETT #3# NIL . #4=(|FINITE-;enumerate;L;2|))
-                 (SEQ (LETT |i| 1 . #4#)
-                      (LETT #2# (SPADCALL (QREFELT $ 9)) . #4#) G190
+                 (LETT #3# NIL)
+                 (SEQ (LETT |i| 1) (LETT #2# (SPADCALL (QREFELT $ 9))) G190
                       (COND ((|greater_SI| |i| #2#) (GO G191)))
                       (SEQ
                        (EXIT
                         (LETT #3#
                               (CONS
                                (SPADCALL
-                                (PROG1 (LETT #1# |i| . #4#)
+                                (PROG1 (LETT #1# |i|)
                                   (|check_subtype2| (> #1# 0)
                                                     '(|PositiveInteger|)
                                                     '(|NonNegativeInteger|)
                                                     #1#))
                                 (QREFELT $ 11))
-                               #3#)
-                              . #4#)))
-                      (LETT |i| (|inc_SI| |i|) . #4#) (GO G190) G191
+                               #3#))))
+                      (LETT |i| (|inc_SI| |i|)) (GO G190) G191
                       (EXIT (NREVERSE #3#))))))) 
 
 (SDEFUN |FINITE-;convert;SIf;3| ((|x| S) ($ |InputForm|))
@@ -47,11 +43,11 @@
 (DEFUN |Finite&| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|Finite&|))
-          (LETT |dv$| (LIST '|Finite&| DV$1) . #1#)
-          (LETT $ (GETREFV 26) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|Finite&| DV$1))
+          (LETT $ (GETREFV 26))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)
           (SETF |pv$| (QREFELT $ 3))
@@ -72,13 +68,20 @@
               (23 . |packageCall|) |FINITE-;convert;SIf;3| (|Boolean|)
               (29 . |smaller?|))
            '#(|smaller?| 35 |random| 41 |enumerate| 45 |convert| 49) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 25
-                                                 '(0 6 0 7 0 6 8 9 1 6 0 10 11
-                                                   1 6 10 0 15 1 17 0 16 18 2
-                                                   21 17 19 20 22 2 0 24 0 0 25
-                                                   2 0 24 0 0 25 0 0 0 12 0 0
-                                                   13 14 1 0 17 0 23)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|enumerate| ((|List| |#1|))) T)
+                                   '((|random| (|#1|)) T)
+                                   '((|smaller?| ((|Boolean|) |#1| |#1|)) T)
+                                   '((|convert| ((|InputForm|) |#1|)) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 25
+                                            '(0 6 0 7 0 6 8 9 1 6 0 10 11 1 6
+                                              10 0 15 1 17 0 16 18 2 21 17 19
+                                              20 22 2 0 24 0 0 25 2 0 24 0 0 25
+                                              0 0 0 12 0 0 13 14 1 0 17 0
+                                              23)))))
            '|lookupComplete|)) 

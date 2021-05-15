@@ -69,117 +69,111 @@
 
 (SDEFUN |DROPT;clip;L$;17| ((|tup| |List| (|Segment| (|Float|))) ($ $))
         (COND
-         ((SPADCALL (|DROPT;length| |tup| $) 3 (QREFELT $ 46))
+         ((> (|DROPT;length| |tup| $) 3)
           (|error| "clip: at most 3 segments may be specified"))
-         ('T (CONS '|clipSegment| (SPADCALL |tup| (QREFELT $ 49)))))) 
+         ('T (CONS '|clipSegment| (SPADCALL |tup| (QREFELT $ 47)))))) 
 
 (SDEFUN |DROPT;coordinates;M$;18|
         ((|f| |Mapping| (|Point| (|DoubleFloat|)) (|Point| (|DoubleFloat|)))
          ($ $))
-        (CONS '|coordinates| (SPADCALL |f| (QREFELT $ 53)))) 
+        (CONS '|coordinates| (SPADCALL |f| (QREFELT $ 51)))) 
 
 (SDEFUN |DROPT;tubeRadius;F$;19| ((|x| |Float|) ($ $))
         (CONS '|tubeRadius| (SPADCALL |x| (QREFELT $ 25)))) 
 
 (SDEFUN |DROPT;range;L$;20| ((|tup| |List| (|Segment| (|Float|))) ($ $))
         (SPROG ((|n| (|NonNegativeInteger|)))
-               (SEQ (LETT |n| (|DROPT;length| |tup| $) |DROPT;range;L$;20|)
+               (SEQ (LETT |n| (|DROPT;length| |tup| $))
                     (EXIT
                      (COND
-                      ((SPADCALL |n| 3 (QREFELT $ 46))
+                      ((> |n| 3)
                        (|error| "range: at most 3 segments may be specified"))
                       ((< |n| 2)
                        (|error| "range: at least 2 segments may be specified"))
                       ('T
                        (CONS '|rangeFloat|
-                             (SPADCALL |tup| (QREFELT $ 49))))))))) 
+                             (SPADCALL |tup| (QREFELT $ 47))))))))) 
 
 (SDEFUN |DROPT;range;L$;21|
         ((|tup| |List| (|Segment| (|Fraction| (|Integer|)))) ($ $))
         (SPROG ((|n| (|NonNegativeInteger|)))
-               (SEQ (LETT |n| (|DROPT;lengthR| |tup| $) |DROPT;range;L$;21|)
+               (SEQ (LETT |n| (|DROPT;lengthR| |tup| $))
                     (EXIT
                      (COND
-                      ((SPADCALL |n| 3 (QREFELT $ 46))
+                      ((> |n| 3)
                        (|error| "range: at most 3 segments may be specified"))
                       ((< |n| 2)
                        (|error| "range: at least 2 segments may be specified"))
                       ('T
-                       (CONS '|rangeRat| (SPADCALL |tup| (QREFELT $ 59))))))))) 
+                       (CONS '|rangeRat| (SPADCALL |tup| (QREFELT $ 57))))))))) 
 
 (SDEFUN |DROPT;ranges;L$;22| ((|s| |List| (|Segment| (|Float|))) ($ $))
-        (CONS '|ranges| (SPADCALL |s| (QREFELT $ 49)))) 
+        (CONS '|ranges| (SPADCALL |s| (QREFELT $ 47)))) 
 
 (SDEFUN |DROPT;space;Ts$;23| ((|s| |ThreeSpace| (|DoubleFloat|)) ($ $))
-        (CONS '|space| (SPADCALL |s| (QREFELT $ 64)))) 
+        (CONS '|space| (SPADCALL |s| (QREFELT $ 62)))) 
 
 (SDEFUN |DROPT;var1Steps;Pi$;24| ((|s| |PositiveInteger|) ($ $))
-        (CONS '|var1Steps| (SPADCALL |s| (QREFELT $ 68)))) 
+        (CONS '|var1Steps| (SPADCALL |s| (QREFELT $ 66)))) 
 
 (SDEFUN |DROPT;var2Steps;Pi$;25| ((|s| |PositiveInteger|) ($ $))
-        (CONS '|var2Steps| (SPADCALL |s| (QREFELT $ 68)))) 
+        (CONS '|var2Steps| (SPADCALL |s| (QREFELT $ 66)))) 
 
 (SDEFUN |DROPT;tubePoints;Pi$;26| ((|s| |PositiveInteger|) ($ $))
-        (CONS '|tubePoints| (SPADCALL |s| (QREFELT $ 68)))) 
+        (CONS '|tubePoints| (SPADCALL |s| (QREFELT $ 66)))) 
 
 (SDEFUN |DROPT;coord;M$;27|
         ((|s| |Mapping| (|Point| (|DoubleFloat|)) (|Point| (|DoubleFloat|)))
          ($ $))
-        (CONS '|coord| (SPADCALL |s| (QREFELT $ 53)))) 
+        (CONS '|coord| (SPADCALL |s| (QREFELT $ 51)))) 
 
 (SDEFUN |DROPT;unit;L$;28| ((|s| |List| (|Float|)) ($ $))
-        (CONS '|unit| (SPADCALL |s| (QREFELT $ 75)))) 
+        (CONS '|unit| (SPADCALL |s| (QREFELT $ 73)))) 
 
 (SDEFUN |DROPT;coerce;$Of;29| ((|x| $) ($ |OutputForm|))
-        (SPADCALL (SPADCALL (QCAR |x|) (QREFELT $ 79))
-                  (SPADCALL (QCDR |x|) (QREFELT $ 80)) (QREFELT $ 81))) 
+        (SPADCALL (SPADCALL (QCAR |x|) (QREFELT $ 77))
+                  (SPADCALL (QCDR |x|) (QREFELT $ 78)) (QREFELT $ 79))) 
 
 (SDEFUN |DROPT;=;2$B;30| ((|x| $) (|y| $) ($ |Boolean|))
         (COND
          ((EQUAL (QCAR |x|) (QCAR |y|))
-          (SPADCALL (QCDR |x|) (QCDR |y|) (QREFELT $ 83)))
+          (SPADCALL (QCDR |x|) (QCDR |y|) (QREFELT $ 81)))
          ('T NIL))) 
 
 (SDEFUN |DROPT;option?;LSB;31| ((|l| |List| $) (|s| |Symbol|) ($ |Boolean|))
-        (SPROG ((#1=#:G770 NIL) (#2=#:G771 NIL) (#3=#:G772 NIL) (|x| NIL))
+        (SPROG ((#1=#:G430 NIL) (#2=#:G431 NIL) (#3=#:G432 NIL) (|x| NIL))
                (SEQ
                 (EXIT
                  (SEQ
                   (SEQ
                    (EXIT
-                    (SEQ (LETT |x| NIL . #4=(|DROPT;option?;LSB;31|))
-                         (LETT #3# |l| . #4#) G190
+                    (SEQ (LETT |x| NIL) (LETT #3# |l|) G190
                          (COND
-                          ((OR (ATOM #3#)
-                               (PROGN (LETT |x| (CAR #3#) . #4#) NIL))
+                          ((OR (ATOM #3#) (PROGN (LETT |x| (CAR #3#)) NIL))
                            (GO G191)))
                          (SEQ
                           (EXIT
                            (COND
                             ((EQUAL (QCAR |x|) |s|)
                              (PROGN
-                              (LETT #1#
-                                    (PROGN (LETT #2# 'T . #4#) (GO #5=#:G769))
-                                    . #4#)
-                              (GO #6=#:G767))))))
-                         (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
-                   #6# (EXIT #1#))
+                              (LETT #1# (PROGN (LETT #2# 'T) (GO #4=#:G429)))
+                              (GO #5=#:G427))))))
+                         (LETT #3# (CDR #3#)) (GO G190) G191 (EXIT NIL)))
+                   #5# (EXIT #1#))
                   (EXIT NIL)))
-                #5# (EXIT #2#)))) 
+                #4# (EXIT #2#)))) 
 
 (SDEFUN |DROPT;option;LSU;32|
         ((|l| |List| $) (|s| |Symbol|) ($ |Union| (|Any|) "failed"))
-        (SPROG ((#1=#:G784 NIL) (#2=#:G785 NIL) (#3=#:G786 NIL) (|x| NIL))
+        (SPROG ((#1=#:G444 NIL) (#2=#:G445 NIL) (#3=#:G446 NIL) (|x| NIL))
                (SEQ
                 (EXIT
                  (SEQ
                   (SEQ
                    (EXIT
-                    (SEQ (LETT |x| NIL . #4=(|DROPT;option;LSU;32|))
-                         (LETT #3# |l| . #4#) G190
+                    (SEQ (LETT |x| NIL) (LETT #3# |l|) G190
                          (COND
-                          ((OR (ATOM #3#)
-                               (PROGN (LETT |x| (CAR #3#) . #4#) NIL))
+                          ((OR (ATOM #3#) (PROGN (LETT |x| (CAR #3#)) NIL))
                            (GO G191)))
                          (SEQ
                           (EXIT
@@ -188,24 +182,22 @@
                              (PROGN
                               (LETT #1#
                                     (PROGN
-                                     (LETT #2# (CONS 0 (QCDR |x|)) . #4#)
-                                     (GO #5=#:G783))
-                                    . #4#)
-                              (GO #6=#:G778))))))
-                         (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
-                   #6# (EXIT #1#))
+                                     (LETT #2# (CONS 0 (QCDR |x|)))
+                                     (GO #4=#:G443)))
+                              (GO #5=#:G438))))))
+                         (LETT #3# (CDR #3#)) (GO G190) G191 (EXIT NIL)))
+                   #5# (EXIT #1#))
                   (EXIT (CONS 1 "failed"))))
-                #5# (EXIT #2#)))) 
+                #4# (EXIT #2#)))) 
 
 (DECLAIM (NOTINLINE |DrawOption;|)) 
 
 (DEFUN |DrawOption| ()
   (SPROG NIL
-         (PROG (#1=#:G788)
+         (PROG (#1=#:G448)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|DrawOption|)
-                    . #2=(|DrawOption|))
+             ((LETT #1# (HGET |$ConstructorCache| '|DrawOption|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -213,17 +205,17 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|DrawOption|
                              (LIST (CONS NIL (CONS 1 (|DrawOption;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#) (HREM |$ConstructorCache| '|DrawOption|)))))))))) 
 
 (DEFUN |DrawOption;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|DrawOption|) . #1=(|DrawOption|))
-          (LETT $ (GETREFV 91) . #1#)
+          (LETT |dv$| '(|DrawOption|))
+          (LETT $ (GETREFV 89))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|DrawOption| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))
@@ -258,55 +250,55 @@
               (|Mapping| (|DoubleFloat|) (|DoubleFloat|) (|DoubleFloat|)
                          (|DoubleFloat|))
               (|AnyFunctions1| 41) (35 . |coerce|) |DROPT;colorFunction;M$;16|
-              (|NonNegativeInteger|) (40 . >) (|List| (|Segment| 23))
-              (|AnyFunctions1| 47) (46 . |coerce|) |DROPT;clip;L$;17|
+              (|List| (|Segment| 23)) (|AnyFunctions1| 45) (40 . |coerce|)
+              |DROPT;clip;L$;17|
               (|Mapping| (|Point| (|DoubleFloat|)) (|Point| (|DoubleFloat|)))
-              (|AnyFunctions1| 51) (51 . |coerce|) |DROPT;coordinates;M$;18|
+              (|AnyFunctions1| 49) (45 . |coerce|) |DROPT;coordinates;M$;18|
               |DROPT;tubeRadius;F$;19| |DROPT;range;L$;20|
               (|List| (|Segment| (|Fraction| (|Integer|))))
-              (|AnyFunctions1| 57) (56 . |coerce|) |DROPT;range;L$;21|
+              (|AnyFunctions1| 55) (50 . |coerce|) |DROPT;range;L$;21|
               |DROPT;ranges;L$;22| (|ThreeSpace| (|DoubleFloat|))
-              (|AnyFunctions1| 62) (61 . |coerce|) |DROPT;space;Ts$;23|
-              (|PositiveInteger|) (|AnyFunctions1| 66) (66 . |coerce|)
+              (|AnyFunctions1| 60) (55 . |coerce|) |DROPT;space;Ts$;23|
+              (|PositiveInteger|) (|AnyFunctions1| 64) (60 . |coerce|)
               |DROPT;var1Steps;Pi$;24| |DROPT;var2Steps;Pi$;25|
               |DROPT;tubePoints;Pi$;26| |DROPT;coord;M$;27| (|List| 23)
-              (|AnyFunctions1| 73) (71 . |coerce|) |DROPT;unit;L$;28|
-              (|OutputForm|) (|Symbol|) (76 . |coerce|) (81 . |coerce|)
-              (86 . =) |DROPT;coerce;$Of;29| (92 . =) |DROPT;=;2$B;30|
+              (|AnyFunctions1| 71) (65 . |coerce|) |DROPT;unit;L$;28|
+              (|OutputForm|) (|Symbol|) (70 . |coerce|) (75 . |coerce|)
+              (80 . =) |DROPT;coerce;$Of;29| (86 . =) |DROPT;=;2$B;30|
               (|List| $) |DROPT;option?;LSB;31| (|Union| 7 '"failed")
               |DROPT;option;LSU;32| (|SingleInteger|) (|HashState|))
-           '#(~= 98 |viewpoint| 104 |var2Steps| 109 |var1Steps| 114 |unit| 119
-              |tubeRadius| 124 |tubePoints| 129 |toScale| 134 |title| 139
-              |style| 144 |space| 149 |ranges| 154 |range| 159 |pointColor| 169
-              |option?| 179 |option| 185 |latex| 191 |hashUpdate!| 196 |hash|
-              202 |curveColor| 207 |coordinates| 217 |coord| 222
-              |colorFunction| 227 |coerce| 242 |clip| 247 |adaptive| 257 = 262)
+           '#(~= 92 |viewpoint| 98 |var2Steps| 103 |var1Steps| 108 |unit| 113
+              |tubeRadius| 118 |tubePoints| 123 |toScale| 128 |title| 133
+              |style| 138 |space| 143 |ranges| 148 |range| 153 |pointColor| 163
+              |option?| 173 |option| 179 |latex| 185 |hashUpdate!| 190 |hash|
+              196 |curveColor| 201 |coordinates| 211 |coord| 216
+              |colorFunction| 221 |coerce| 236 |clip| 241 |adaptive| 251 = 256)
            'NIL
            (CONS (|makeByteWordVec2| 1 '(0 0 0))
                  (CONS '#(|SetCategory&| |BasicType&| NIL)
                        (CONS
-                        '#((|SetCategory|) (|BasicType|) (|CoercibleTo| 77))
-                        (|makeByteWordVec2| 90
+                        '#((|SetCategory|) (|BasicType|) (|CoercibleTo| 75))
+                        (|makeByteWordVec2| 88
                                             '(1 9 7 8 10 1 13 7 12 14 1 18 7 17
                                               19 1 24 7 23 25 1 28 7 27 29 1 34
                                               7 33 35 1 38 7 37 39 1 42 7 41 43
-                                              2 45 17 0 0 46 1 48 7 47 49 1 52
-                                              7 51 53 1 58 7 57 59 1 63 7 62 64
-                                              1 67 7 66 68 1 74 7 73 75 1 78 77
-                                              0 79 1 7 77 0 80 2 77 0 0 0 81 2
-                                              7 17 0 0 83 2 0 17 0 0 1 1 0 0 8
-                                              11 1 0 0 66 70 1 0 0 66 69 1 0 0
-                                              73 76 1 0 0 23 55 1 0 0 66 71 1 0
-                                              0 17 20 1 0 0 12 15 1 0 0 12 16 1
-                                              0 0 62 65 1 0 0 47 61 1 0 0 57 60
-                                              1 0 0 47 56 1 0 0 27 30 1 0 0 23
-                                              26 2 0 17 85 78 86 2 0 87 85 78
-                                              88 1 0 12 0 1 2 0 90 90 0 1 1 0
-                                              89 0 1 1 0 0 27 32 1 0 0 23 31 1
-                                              0 0 51 54 1 0 0 51 72 1 0 0 37 40
-                                              1 0 0 41 44 1 0 0 33 36 1 0 77 0
-                                              82 1 0 0 47 50 1 0 0 17 21 1 0 0
-                                              17 22 2 0 17 0 0 84)))))
+                                              1 46 7 45 47 1 50 7 49 51 1 56 7
+                                              55 57 1 61 7 60 62 1 65 7 64 66 1
+                                              72 7 71 73 1 76 75 0 77 1 7 75 0
+                                              78 2 75 0 0 0 79 2 7 17 0 0 81 2
+                                              0 17 0 0 1 1 0 0 8 11 1 0 0 64 68
+                                              1 0 0 64 67 1 0 0 71 74 1 0 0 23
+                                              53 1 0 0 64 69 1 0 0 17 20 1 0 0
+                                              12 15 1 0 0 12 16 1 0 0 60 63 1 0
+                                              0 45 59 1 0 0 55 58 1 0 0 45 54 1
+                                              0 0 27 30 1 0 0 23 26 2 0 17 83
+                                              76 84 2 0 85 83 76 86 1 0 12 0 1
+                                              2 0 88 88 0 1 1 0 87 0 1 1 0 0 27
+                                              32 1 0 0 23 31 1 0 0 49 52 1 0 0
+                                              49 70 1 0 0 37 40 1 0 0 41 44 1 0
+                                              0 33 36 1 0 75 0 80 1 0 0 45 48 1
+                                              0 0 17 21 1 0 0 17 22 2 0 17 0 0
+                                              82)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|DrawOption| 'NILADIC T) 

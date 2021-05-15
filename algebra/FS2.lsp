@@ -9,14 +9,14 @@
 
 (SDEFUN |FS2;smpmap!2| ((|y| NIL) ($$ NIL))
         (PROG (|fn| $)
-          (LETT |fn| (QREFELT $$ 1) . #1=(|FS2;smpmap|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |fn| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL (SPADCALL |y| |fn|) (QREFELT $ 16)))))) 
 
 (SDEFUN |FS2;smpmap!1| ((|x| NIL) ($$ NIL))
         (PROG ($ |fn|)
-          (LETT $ (QREFELT $$ 1) . #1=(|FS2;smpmap|))
-          (LETT |fn| (QREFELT $$ 0) . #1#)
+          (LETT $ (QREFELT $$ 1))
+          (LETT |fn| (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPROG NIL
@@ -25,8 +25,8 @@
 
 (SDEFUN |FS2;smpmap!0| ((|z| NIL) ($$ NIL))
         (PROG (|fn| $)
-          (LETT |fn| (QREFELT $$ 1) NIL)
-          (LETT $ (QREFELT $$ 0) NIL)
+          (LETT |fn| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL |fn| |z| (QREFELT $ 11)))))) 
 
 (SDEFUN |FS2;map;MAB;2| ((|f| |Mapping| S R) (|x| A) ($ B))
@@ -35,15 +35,14 @@
                   (QREFELT $ 25))) 
 
 (SDEFUN |FS2;map;MAB;3| ((|f| |Mapping| S R) (|x| A) ($ B))
-        (SPROG ((#1=#:G734 NIL))
+        (SPROG ((#1=#:G415 NIL))
                (SPADCALL (|FS2;smpmap| |f| (SPADCALL |x| (QREFELT $ 23)) $)
                          (PROG2
                              (LETT #1#
                                    (SPADCALL
                                     (|FS2;smpmap| |f|
                                      (SPADCALL |x| (QREFELT $ 24)) $)
-                                    (QREFELT $ 27))
-                                   |FS2;map;MAB;3|)
+                                    (QREFELT $ 27)))
                              (QCDR #1#)
                            (|check_union2| (QEQCAR #1# 0) (QREFELT $ 9)
                                            (|Union| (QREFELT $ 9) "failed")
@@ -55,22 +54,21 @@
 
 (DECLAIM (NOTINLINE |FunctionSpaceFunctions2;|)) 
 
-(DEFUN |FunctionSpaceFunctions2| (&REST #1=#:G824)
+(DEFUN |FunctionSpaceFunctions2| (&REST #1=#:G500)
   (SPROG NIL
-         (PROG (#2=#:G825)
+         (PROG (#2=#:G501)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|FunctionSpaceFunctions2|)
-                                               '|domainEqualList|)
-                    . #3=(|FunctionSpaceFunctions2|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |FunctionSpaceFunctions2;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|FunctionSpaceFunctions2|)))))))))) 
@@ -80,14 +78,14 @@
    ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL) (DV$2 NIL)
     (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #1=(|FunctionSpaceFunctions2|))
-    (LETT DV$2 (|devaluate| |#2|) . #1#)
-    (LETT DV$3 (|devaluate| |#3|) . #1#)
-    (LETT DV$4 (|devaluate| |#4|) . #1#)
-    (LETT |dv$| (LIST '|FunctionSpaceFunctions2| DV$1 DV$2 DV$3 DV$4) . #1#)
-    (LETT $ (GETREFV 29) . #1#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT DV$4 (|devaluate| |#4|))
+    (LETT |dv$| (LIST '|FunctionSpaceFunctions2| DV$1 DV$2 DV$3 DV$4))
+    (LETT $ (GETREFV 29))
     (QSETREFV $ 0 |dv$|)
-    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
     (|haddProp| |$ConstructorCache| '|FunctionSpaceFunctions2|
                 (LIST DV$1 DV$2 DV$3 DV$4) (CONS 1 $))
     (|stuffDomainSlots| $)
@@ -117,14 +115,18 @@
               (24 . |numer|) (29 . |denom|) (34 . /) (|Union| $ '"failed")
               (40 . |recip|) (45 . *))
            '#(|map| 51) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 28
-                                                 '(2 0 9 10 7 11 2 14 9 12 13
-                                                   15 1 9 0 8 16 3 20 9 17 18
-                                                   19 21 1 7 22 0 23 1 7 22 0
-                                                   24 2 9 0 0 0 25 1 9 26 0 27
-                                                   2 9 0 0 0 28 2 0 9 10 7
-                                                   11)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|map| (|#4| (|Mapping| |#3| |#1|) |#2|)) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 28
+                                            '(2 0 9 10 7 11 2 14 9 12 13 15 1 9
+                                              0 8 16 3 20 9 17 18 19 21 1 7 22
+                                              0 23 1 7 22 0 24 2 9 0 0 0 25 1 9
+                                              26 0 27 2 9 0 0 0 28 2 0 9 10 7
+                                              11)))))
            '|lookupComplete|)) 

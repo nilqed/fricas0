@@ -3,29 +3,26 @@
 
 (DEFPARAMETER |ModularAlgebraicGcdOperations;AL| 'NIL) 
 
-(DEFUN |ModularAlgebraicGcdOperations| (&REST #1=#:G691)
-  (LET (#2=#:G692)
+(DEFUN |ModularAlgebraicGcdOperations| (|t#1| |t#2| |t#3|)
+  (LET (#1=#:G379
+        (#2=#:G380
+         (LIST (|devaluate| |t#1|) (|devaluate| |t#2|) (|devaluate| |t#3|))))
     (COND
-     ((SETQ #2#
-              (|assoc| #3=(|devaluateList| #1#)
-                       |ModularAlgebraicGcdOperations;AL|))
-      (CDR #2#))
+     ((SETQ #1# (|assoc| #2# |ModularAlgebraicGcdOperations;AL|)) (CDR #1#))
      (T
       (SETQ |ModularAlgebraicGcdOperations;AL|
               (|cons5|
-               (CONS #3#
-                     (SETQ #2# (APPLY #'|ModularAlgebraicGcdOperations;| #1#)))
+               (CONS #2#
+                     (SETQ #1# (APPLY #'|ModularAlgebraicGcdOperations;| #2#)))
                |ModularAlgebraicGcdOperations;AL|))
-      #2#)))) 
+      #1#)))) 
 
 (DEFUN |ModularAlgebraicGcdOperations;| (|t#1| |t#2| |t#3|)
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
-                    (PAIR '(|t#1| |t#2| |t#3|)
-                          (LIST (|devaluate| |t#1|) (|devaluate| |t#2|)
-                                (|devaluate| |t#3|)))
+                    (MAKE_PAIRS '(|t#1| |t#2| |t#3|) (LIST |t#1| |t#2| |t#3|))
                     (|Join|
                      (|mkCategory|
                       '(((|pseudoRem| (|t#2| |t#2| |t#2| |t#3|)) T)
@@ -49,12 +46,6 @@
                         ((|repack1|
                           ((|Void|) |t#2| (|U32Vector|) (|Integer|) |t#3|))
                          T))
-                      NIL
-                      '((|Void|) (|U32Vector|) (|Integer|)
-                        (|SortedExponentVector|) (|Boolean|) (|Symbol|)
-                        (|List| (|Symbol|)) (|List| |t#1|))
-                      NIL)))
-                   |ModularAlgebraicGcdOperations|)
+                      NIL NIL NIL))))
            (SETELT #1# 0
-                   (LIST '|ModularAlgebraicGcdOperations| (|devaluate| |t#1|)
-                         (|devaluate| |t#2|) (|devaluate| |t#3|)))))) 
+                   (LIST '|ModularAlgebraicGcdOperations| |t#1| |t#2| |t#3|))))) 

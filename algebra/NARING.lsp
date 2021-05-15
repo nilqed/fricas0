@@ -4,20 +4,18 @@
 (DEFPARAMETER |NonAssociativeRing;AL| 'NIL) 
 
 (DEFUN |NonAssociativeRing| ()
-  (LET (#:G692)
-    (COND (|NonAssociativeRing;AL|)
-          (T (SETQ |NonAssociativeRing;AL| (|NonAssociativeRing;|)))))) 
+  (COND (|NonAssociativeRing;AL|)
+        (T (SETQ |NonAssociativeRing;AL| (|NonAssociativeRing;|))))) 
 
 (DEFUN |NonAssociativeRing;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|NonAssociativeRng|) (|NonAssociativeSemiRing|)
                            (|mkCategory|
                             '(((|characteristic| ((|NonNegativeInteger|))) T)
                               ((|coerce| ($ (|Integer|))) T))
-                            NIL '((|Integer|) (|NonNegativeInteger|)) NIL))
-                   |NonAssociativeRing|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|NonAssociativeRing|))))) 
 
 (MAKEPROP '|NonAssociativeRing| 'NILADIC T) 

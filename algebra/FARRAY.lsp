@@ -1,31 +1,30 @@
 
 (DECLAIM (NOTINLINE |FlexibleArray;|)) 
 
-(DEFUN |FlexibleArray| (#1=#:G710)
+(DEFUN |FlexibleArray| (#1=#:G388)
   (SPROG NIL
-         (PROG (#2=#:G711)
+         (PROG (#2=#:G389)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|FlexibleArray|)
-                                               '|domainEqualList|)
-                    . #3=(|FlexibleArray|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|FlexibleArray;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|FlexibleArray;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|FlexibleArray|)))))))))) 
 
 (DEFUN |FlexibleArray;| (|#1|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G707 NIL) (#2=#:G708 NIL) (#3=#:G709 NIL) ($ NIL)
+   ((|pv$| NIL) (#1=#:G385 NIL) (#2=#:G386 NIL) (#3=#:G387 NIL) ($ NIL)
     (|dv$| NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #4=(|FlexibleArray|))
-    (LETT |dv$| (LIST '|FlexibleArray| DV$1) . #4#)
-    (LETT $ (GETREFV 27) . #4#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT |dv$| (LIST '|FlexibleArray| DV$1))
+    (LETT $ (GETREFV 27))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -40,15 +39,13 @@
                                         (|HasCategory| |#1| '(|BasicType|))
                                         (LETT #3#
                                               (|HasCategory| |#1|
-                                                             '(|Comparable|))
-                                              . #4#)
+                                                             '(|Comparable|)))
                                         (OR #3#
                                             (|HasCategory| |#1|
                                                            '(|OrderedSet|)))
                                         (LETT #2#
                                               (|HasCategory| |#1|
-                                                             '(|SetCategory|))
-                                              . #4#)
+                                                             '(|SetCategory|)))
                                         (AND
                                          (|HasCategory| |#1|
                                                         (LIST '|Evalable|
@@ -67,13 +64,11 @@
                                         (LETT #1#
                                               (|HasCategory| |#1|
                                                              '(|CoercibleTo|
-                                                               (|OutputForm|)))
-                                              . #4#)
+                                                               (|OutputForm|))))
                                         (OR #1# #3#
                                             (|HasCategory| |#1|
                                                            '(|OrderedSet|))
-                                            #2#)))
-                    . #4#))
+                                            #2#)))))
     (|haddProp| |$ConstructorCache| '|FlexibleArray| (LIST DV$1) (CONS 1 $))
     (|stuffDomainSlots| $)
     (QSETREFV $ 6 |#1|)
@@ -121,8 +116,8 @@
            '#(NIL NIL NIL NIL NIL (|IndexedFlexibleArray| 6 (NRTEVAL 1))
               (|local| |#1|) (|Mapping| 10 6 6) (|Integer|) (|Mapping| 6 6 6)
               (|Boolean|) (|NonNegativeInteger|) (|List| 6) (|List| 14)
-              (|Equation| 6) (|OutputForm|) (|HashState|) (|SingleInteger|)
-              (|String|) (|Mapping| 10 6) (|UniversalSegment| 8) (|Void|)
+              (|Equation| 6) (|OutputForm|) (|SingleInteger|) (|String|)
+              (|HashState|) (|Mapping| 10 6) (|UniversalSegment| 8) (|Void|)
               (|Mapping| 6 6) (|InputForm|) (|List| $) (|Union| 6 '"failed")
               (|List| 8))
            '#() 'NIL

@@ -5,22 +5,21 @@
 
 (DEFPARAMETER |PriorityQueueAggregate;AL| 'NIL) 
 
-(DEFUN |PriorityQueueAggregate| (#1=#:G691)
-  (LET (#2=#:G692)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |PriorityQueueAggregate;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |PriorityQueueAggregate;AL|
-              (|cons5| (CONS #3# (SETQ #2# (|PriorityQueueAggregate;| #1#)))
-                       |PriorityQueueAggregate;AL|))
-      #2#)))) 
+(DEFUN |PriorityQueueAggregate| (|t#1|)
+  (LET (#1=#:G379 (#2=#:G380 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |PriorityQueueAggregate;AL|)) (CDR #1#))
+          (T
+           (SETQ |PriorityQueueAggregate;AL|
+                   (|cons5|
+                    (CONS #2# (SETQ #1# (|PriorityQueueAggregate;| #2#)))
+                    |PriorityQueueAggregate;AL|))
+           #1#)))) 
 
 (DEFUN |PriorityQueueAggregate;| (|t#1|)
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (COND (|PriorityQueueAggregate;CAT|)
                                     ('T
                                      (LETT |PriorityQueueAggregate;CAT|
@@ -30,8 +29,5 @@
                                                     '(((|max| (|t#1| $)) T)
                                                       ((|merge| ($ $ $)) T)
                                                       ((|merge!| ($ $ $)) T))
-                                                    NIL 'NIL NIL))
-                                           . #2=(|PriorityQueueAggregate|)))))
-                   . #2#)
-           (SETELT #1# 0
-                   (LIST '|PriorityQueueAggregate| (|devaluate| |t#1|)))))) 
+                                                    NIL NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|PriorityQueueAggregate| |t#1|))))) 

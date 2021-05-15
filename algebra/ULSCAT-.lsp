@@ -9,9 +9,9 @@
 
 (SDEFUN |ULSCAT-;laurentTerms!0| (($$ NIL))
         (PROG (|st| $ |n|)
-          (LETT |st| (QREFELT $$ 2) . #1=(|ULSCAT-;laurentTerms|))
-          (LETT $ (QREFELT $$ 1) . #1#)
-          (LETT |n| (QREFELT $$ 0) . #1#)
+          (LETT |st| (QREFELT $$ 2))
+          (LETT $ (QREFELT $$ 1))
+          (LETT |n| (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPROG ((|c| NIL))
@@ -19,7 +19,7 @@
                     (COND
                      ((SPADCALL |st| (QREFELT $ 10)) (SPADCALL (QREFELT $ 13)))
                      ('T
-                      (SEQ (LETT |c| (SPADCALL |st| (QREFELT $ 14)) NIL)
+                      (SEQ (LETT |c| (SPADCALL |st| (QREFELT $ 14)))
                            (EXIT
                             (COND
                              ((SPADCALL |c| (QREFELT $ 15))
@@ -43,12 +43,10 @@
 (DEFUN |UnivariateLaurentSeriesCategory&| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|)
-                . #1=(|UnivariateLaurentSeriesCategory&|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|UnivariateLaurentSeriesCategory&| DV$1 DV$2)
-                . #1#)
-          (LETT $ (GETREFV 27) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|UnivariateLaurentSeriesCategory&| DV$1 DV$2))
+          (LETT $ (GETREFV 27))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -84,8 +82,7 @@
                                                                (|Fraction|
                                                                 (|Integer|))))
                                               (|HasCategory| |#2|
-                                                             '(|IntegralDomain|))))
-                          . #1#))
+                                                             '(|IntegralDomain|))))))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)
           (QSETREFV $ 7 |#2|)
@@ -101,14 +98,19 @@
               (37 . |rst|) (42 . |concat|) (|Mapping| $) (48 . |delay|)
               (53 . |series|) |ULSCAT-;laurent;ISS;2|)
            '#(|laurent| 58) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 26
-                                                 '(1 9 8 0 10 0 12 0 13 1 9 7 0
-                                                   14 1 7 8 0 15 0 6 0 16 0 7 0
-                                                   17 0 18 0 19 2 18 0 0 0 20 1
-                                                   9 0 0 21 2 12 0 11 0 22 1 12
-                                                   0 23 24 1 6 0 12 25 2 0 0 18
-                                                   9 26)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|laurent| (|#1| (|Integer|) (|Stream| |#2|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 26
+                                            '(1 9 8 0 10 0 12 0 13 1 9 7 0 14 1
+                                              7 8 0 15 0 6 0 16 0 7 0 17 0 18 0
+                                              19 2 18 0 0 0 20 1 9 0 0 21 2 12
+                                              0 11 0 22 1 12 0 23 24 1 6 0 12
+                                              25 2 0 0 18 9 26)))))
            '|lookupComplete|)) 

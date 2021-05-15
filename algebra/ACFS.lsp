@@ -5,25 +5,22 @@
 
 (DEFPARAMETER |AlgebraicallyClosedFunctionSpace;AL| 'NIL) 
 
-(DEFUN |AlgebraicallyClosedFunctionSpace| (#1=#:G703)
-  (LET (#2=#:G704)
+(DEFUN |AlgebraicallyClosedFunctionSpace| (|t#1|)
+  (LET (#1=#:G391 (#2=#:G392 (|devaluate| |t#1|)))
     (COND
-     ((SETQ #2#
-              (|assoc| #3=(|devaluate| #1#)
-                       |AlgebraicallyClosedFunctionSpace;AL|))
-      (CDR #2#))
+     ((SETQ #1# (|assoc| #2# |AlgebraicallyClosedFunctionSpace;AL|)) (CDR #1#))
      (T
       (SETQ |AlgebraicallyClosedFunctionSpace;AL|
               (|cons5|
-               (CONS #3# (SETQ #2# (|AlgebraicallyClosedFunctionSpace;| #1#)))
+               (CONS #2# (SETQ #1# (|AlgebraicallyClosedFunctionSpace;| #2#)))
                |AlgebraicallyClosedFunctionSpace;AL|))
-      #2#)))) 
+      #1#)))) 
 
 (DEFUN |AlgebraicallyClosedFunctionSpace;| (|t#1|)
-  (SPROG ((#1=#:G702 NIL))
+  (SPROG ((#1=#:G390 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (COND (|AlgebraicallyClosedFunctionSpace;CAT|)
                                     ('T
                                      (LETT
@@ -56,12 +53,5 @@
                                                   (|has| |t#1|
                                                          (|RetractableTo|
                                                           (|Integer|)))))
-                                               '((|SparseUnivariatePolynomial|
-                                                  $)
-                                                 (|Symbol|) (|List| $))
-                                               NIL))
-                                      . #2=(|AlgebraicallyClosedFunctionSpace|)))))
-                   . #2#)
-           (SETELT #1# 0
-                   (LIST '|AlgebraicallyClosedFunctionSpace|
-                         (|devaluate| |t#1|)))))) 
+                                               NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|AlgebraicallyClosedFunctionSpace| |t#1|))))) 

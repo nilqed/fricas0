@@ -4,11 +4,10 @@
 (DEFPARAMETER |Aggregate;AL| 'NIL) 
 
 (DEFUN |Aggregate| ()
-  (LET (#:G692)
-    (COND (|Aggregate;AL|) (T (SETQ |Aggregate;AL| (|Aggregate;|)))))) 
+  (COND (|Aggregate;AL|) (T (SETQ |Aggregate;AL| (|Aggregate;|))))) 
 
 (DEFUN |Aggregate;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|Type|)
@@ -24,8 +23,7 @@
                               ((|sample| ($) |constant|) T)
                               ((|#| ((|NonNegativeInteger|) $))
                                (|has| $ (|finiteAggregate|))))
-                            NIL '((|NonNegativeInteger|) (|Boolean|)) NIL))
-                   |Aggregate|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|Aggregate|))))) 
 
 (MAKEPROP '|Aggregate| 'NILADIC T) 

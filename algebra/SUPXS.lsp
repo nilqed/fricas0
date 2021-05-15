@@ -31,12 +31,10 @@
          ((|uls|
            (|Union| (|SparseUnivariateLaurentSeries| |Coef| |var| |cen|)
                     "failed")))
-         (SEQ
-          (LETT |uls| (SPADCALL |upxs| (QREFELT $ 32))
-                |SUPXS;retractIfCan;$U;6|)
-          (EXIT
-           (COND ((QEQCAR |uls| 1) (CONS 1 "failed"))
-                 ('T (SPADCALL (QCDR |uls|) (QREFELT $ 34)))))))) 
+         (SEQ (LETT |uls| (SPADCALL |upxs| (QREFELT $ 32)))
+              (EXIT
+               (COND ((QEQCAR |uls| 1) (CONS 1 "failed"))
+                     ('T (SPADCALL (QCDR |uls|) (QREFELT $ 34)))))))) 
 
 (SDEFUN |SUPXS;differentiate;$V$;7| ((|upxs| $) (|v| |Variable| |var|) ($ $))
         (SPADCALL |upxs| (QREFELT $ 36))) 
@@ -51,51 +49,48 @@
           (|refer| (|Reference| (|OrderedCompletion| (|Integer|))))
           (|st| (|Stream| (|Record| (|:| |k| (|Integer|)) (|:| |c| |Coef|))))
           (|sups| (|InnerSparseUnivariatePowerSeries| |Coef|)))
-         (SEQ
-          (LETT |sups| (SPADCALL |x| (QREFELT $ 40))
-                . #1=(|SUPXS;coerce;$Of;9|))
-          (LETT |st| (SPADCALL |sups| (QREFELT $ 44)) . #1#)
-          (LETT |refer| (SPADCALL |sups| (QREFELT $ 46)) . #1#)
-          (COND
-           ((NULL (SPADCALL |st| (QREFELT $ 47)))
-            (COND
-             ((NULL (SPADCALL |st| (QREFELT $ 48)))
-              (SEQ
-               (LETT |nx|
-                     (SPADCALL (SPADCALL |refer| (QREFELT $ 50))
-                               (QREFELT $ 52))
-                     . #1#)
-               (EXIT
+         (SEQ (LETT |sups| (SPADCALL |x| (QREFELT $ 40)))
+              (LETT |st| (SPADCALL |sups| (QREFELT $ 44)))
+              (LETT |refer| (SPADCALL |sups| (QREFELT $ 46)))
+              (COND
+               ((NULL (SPADCALL |st| (QREFELT $ 47)))
                 (COND
-                 ((QEQCAR |nx| 0)
-                  (SEQ (LETT |count| |$streamCount| . #1#)
-                       (LETT |degr| (MIN |count| (+ (+ (QCDR |nx|) |count|) 1))
-                             . #1#)
-                       (EXIT (SPADCALL |sups| |degr| (QREFELT $ 54))))))))))))
-          (EXIT
-           (SPADCALL |st| |refer| (SPADCALL |x| (QREFELT $ 11))
-                     (SPADCALL |x| (QREFELT $ 12))
-                     (SPADCALL |x| (QREFELT $ 55)) (QREFELT $ 57)))))) 
+                 ((NULL (SPADCALL |st| (QREFELT $ 48)))
+                  (SEQ
+                   (LETT |nx|
+                         (SPADCALL (SPADCALL |refer| (QREFELT $ 50))
+                                   (QREFELT $ 52)))
+                   (EXIT
+                    (COND
+                     ((QEQCAR |nx| 0)
+                      (SEQ (LETT |count| |$streamCount|)
+                           (LETT |degr|
+                                 (MIN |count| (+ (+ (QCDR |nx|) |count|) 1)))
+                           (EXIT
+                            (SPADCALL |sups| |degr| (QREFELT $ 54))))))))))))
+              (EXIT
+               (SPADCALL |st| |refer| (SPADCALL |x| (QREFELT $ 11))
+                         (SPADCALL |x| (QREFELT $ 12))
+                         (SPADCALL |x| (QREFELT $ 55)) (QREFELT $ 57)))))) 
 
 (DECLAIM (NOTINLINE |SparseUnivariatePuiseuxSeries;|)) 
 
-(DEFUN |SparseUnivariatePuiseuxSeries| (&REST #1=#:G775)
+(DEFUN |SparseUnivariatePuiseuxSeries| (&REST #1=#:G435)
   (SPROG NIL
-         (PROG (#2=#:G776)
+         (PROG (#2=#:G436)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|SparseUnivariatePuiseuxSeries|)
-                                               '|domainEqualList|)
-                    . #3=(|SparseUnivariatePuiseuxSeries|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1
                       (APPLY (|function| |SparseUnivariatePuiseuxSeries;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -103,14 +98,14 @@
 
 (DEFUN |SparseUnivariatePuiseuxSeries;| (|#1| |#2| |#3|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G768 NIL) (#2=#:G769 NIL) (#3=#:G770 NIL) (#4=#:G771 NIL)
-    (#5=#:G773 NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
+   ((|pv$| NIL) (#1=#:G428 NIL) (#2=#:G429 NIL) (#3=#:G430 NIL) (#4=#:G431 NIL)
+    (#5=#:G433 NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #6=(|SparseUnivariatePuiseuxSeries|))
-    (LETT DV$2 (|devaluate| |#2|) . #6#)
-    (LETT DV$3 (|devaluate| |#3|) . #6#)
-    (LETT |dv$| (LIST '|SparseUnivariatePuiseuxSeries| DV$1 DV$2 DV$3) . #6#)
-    (LETT $ (GETREFV 85) . #6#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT |dv$| (LIST '|SparseUnivariatePuiseuxSeries| DV$1 DV$2 DV$3))
+    (LETT $ (GETREFV 82))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -151,8 +146,7 @@
                                                           (|Integer|))))
                                         (LETT #5#
                                               (|HasCategory| |#1|
-                                                             '(|CommutativeRing|))
-                                              . #6#)
+                                                             '(|CommutativeRing|)))
                                         (OR #5#
                                             (|HasCategory| |#1| '(|Field|)))
                                         (|HasSignature| |#1|
@@ -215,16 +209,14 @@
                                                                   |#1|))))))
                                         (LETT #4#
                                               (|HasCategory| |#1|
-                                                             '(|IntegralDomain|))
-                                              . #6#)
+                                                             '(|IntegralDomain|)))
                                         (OR #5# (|HasCategory| |#1| '(|Field|))
                                             #4#)
                                         (OR (|HasCategory| |#1| '(|Field|))
                                             #4#)
                                         (LETT #3#
                                               (|HasCategory| |#1|
-                                                             '(|SemiRing|))
-                                              . #6#)
+                                                             '(|SemiRing|)))
                                         (OR #3#
                                             (|HasSignature| |#1|
                                                             (LIST '*
@@ -236,8 +228,7 @@
                                                                    (|devaluate|
                                                                     |#1|)))))
                                         (LETT #2#
-                                              (|HasCategory| |#1| '(|Ring|))
-                                              . #6#)
+                                              (|HasCategory| |#1| '(|Ring|)))
                                         (OR #2#
                                             (|HasSignature| |#1|
                                                             (LIST '*
@@ -273,8 +264,7 @@
                                                        '(|CancellationAbelianMonoid|))
                                         (LETT #1#
                                               (|HasCategory| |#1|
-                                                             '(|AbelianGroup|))
-                                              . #6#)
+                                                             '(|AbelianGroup|)))
                                         (OR
                                          (AND
                                           (|HasCategory| |#1|
@@ -319,8 +309,7 @@
                                                                    '(|Fraction|
                                                                      (|Integer|))
                                                                    (|devaluate|
-                                                                    |#1|)))))))
-                    . #6#))
+                                                                    |#1|)))))))))
     (|haddProp| |$ConstructorCache| '|SparseUnivariatePuiseuxSeries|
                 (LIST DV$1 DV$2 DV$3) (CONS 1 $))
     (|stuffDomainSlots| $)
@@ -428,20 +417,17 @@
               (|OrderedCompletion| 53) (108 . |elt|) (|Union| 53 '"failed")
               (113 . |retractIfCan|) (|Integer|) (118 . |extend|)
               (124 . |rationalPower|) (|OutputForm|)
-              (129 . |seriesToOutputForm|) |SUPXS;coerce;$Of;9|
-              (|NonNegativeInteger|) (|List| 10) (|List| 59)
-              (|Union| $ '"failed")
+              (129 . |seriesToOutputForm|) |SUPXS;coerce;$Of;9| (|List| 10)
+              (|List| 61) (|NonNegativeInteger|) (|Union| $ '"failed")
               (|Record| (|:| |unit| $) (|:| |canonical| $) (|:| |associate| $))
               (|Record| (|:| |llcm_res| $) (|:| |coeff1| $) (|:| |coeff2| $))
-              (|List| $) (|SparseUnivariatePolynomial| $)
-              (|Union| 65 '"failed")
-              (|Record| (|:| |coef| 65) (|:| |generator| $))
+              (|List| $) (|Record| (|:| |coef| 65) (|:| |generator| $))
+              (|SparseUnivariatePolynomial| $) (|Union| 65 '"failed")
               (|Record| (|:| |quotient| $) (|:| |remainder| $))
               (|Record| (|:| |coef1| $) (|:| |coef2| $) (|:| |generator| $))
               (|Record| (|:| |coef1| $) (|:| |coef2| $)) (|Union| 71 '"failed")
               (|Factored| $) (|Stream| 6) (|Record| (|:| |k| 17) (|:| |c| 6))
-              (|Stream| 75) (|PositiveInteger|) (|List| 80) (|List| 17)
-              (|SingletonAsOrderedSet|) (|Mapping| 6 6) (|String|)
+              (|Stream| 75) (|PositiveInteger|) (|Mapping| 6 6) (|String|)
               (|SingleInteger|) (|HashState|))
            '#(|variable| 138 |retractIfCan| 143 |rationalPower| 153 |monomial|
               158 |laurentRep| 164 |integrate| 169 |differentiate| 180 |coerce|
@@ -451,8 +437,8 @@
             (|makeByteWordVec2| 26
                                 '(0 0 6 0 6 0 6 6 0 6 15 6 14 6 1 2 9 4 3 14 15
                                   7 20 17 20 0 9 14 7 0 0 19 7 0 0 0 0 20 7 7
-                                  26 25 17 17 0 0 24 17 0 0 0 7 0 0 0 0 0 5 19
-                                  14 15 6 6 7 7 7 7 7 7))
+                                  26 25 17 17 0 0 24 17 0 0 0 14 7 0 0 0 0 0 5
+                                  19 14 15 6 6 7 7 7 7 7 7))
             (CONS
              '#(|UnivariatePuiseuxSeriesConstructorCategory&| NIL |Field&|
                 |UnivariatePowerSeriesCategory&| |EuclideanDomain&|
@@ -464,7 +450,7 @@
                 |NonAssociativeRing&| NIL NIL NIL NIL NIL |NonAssociativeRng&|
                 NIL NIL |AbelianGroup&| NIL NIL NIL |NonAssociativeSemiRng&|
                 NIL |AbelianMonoid&| |MagmaWithUnit&| |Magma&|
-                |AbelianSemiGroup&| |SetCategory&|
+                |AbelianSemiGroup&| |SetCategory&| NIL
                 |TranscendentalFunctionCategory&| |RetractableTo&|
                 |RetractableTo&| NIL |BasicType&| NIL NIL NIL NIL NIL NIL NIL
                 |TrigonometricFunctionCategory&|
@@ -477,11 +463,11 @@
                                                                 6 7 8))
                  (|UnivariatePuiseuxSeriesCategory| 6) (|Field|)
                  (|UnivariatePowerSeriesCategory| 6 17) (|EuclideanDomain|)
-                 (|PowerSeriesCategory| 6 17 80) (|PrincipalIdealDomain|)
-                 (|UniqueFactorizationDomain|) (|AbelianMonoidRing| 6 17)
-                 (|GcdDomain|) (|IntegralDomain|) (|LeftOreRing|)
-                 (|CommutativeRing|) (|DivisionRing|) (|CharacteristicNonZero|)
-                 (|CharacteristicZero|) (|Algebra| 6)
+                 (|PowerSeriesCategory| 6 17 (|SingletonAsOrderedSet|))
+                 (|PrincipalIdealDomain|) (|UniqueFactorizationDomain|)
+                 (|AbelianMonoidRing| 6 17) (|GcdDomain|) (|IntegralDomain|)
+                 (|LeftOreRing|) (|CommutativeRing|) (|DivisionRing|)
+                 (|CharacteristicNonZero|) (|CharacteristicZero|) (|Algebra| 6)
                  (|PartialDifferentialRing| 10) (|DifferentialRing|)
                  (|Algebra| $$) (|EntireRing|) (|Algebra| 17) (|Ring|)
                  (|SemiRing|) (|Rng|) (|SemiRng|) (|Module| 6) (|Module| $$)
@@ -493,12 +479,13 @@
                  (|NonAssociativeSemiRing|) (|Monoid|)
                  (|NonAssociativeSemiRng|) (|SemiGroup|) (|AbelianMonoid|)
                  (|MagmaWithUnit|) (|Magma|) (|AbelianSemiGroup|)
-                 (|SetCategory|) (|TranscendentalFunctionCategory|)
+                 (|SetCategory|) (|CommutativeStar|)
+                 (|TranscendentalFunctionCategory|)
                  (|RetractableTo| (|SparseUnivariateTaylorSeries| 6 7 8))
                  (|RetractableTo| (|SparseUnivariateLaurentSeries| 6 7 8))
                  (|VariablesCommuteWithCoefficients|) (|BasicType|)
                  (|CoercibleTo| 56) (|Eltable| $$ $$) (|unitsKnown|)
-                 (|CommutativeStar|) (|noZeroDivisors|) (|canonicalUnitNormal|)
+                 (|TwoSidedRecip|) (|noZeroDivisors|) (|canonicalUnitNormal|)
                  (|canonicalsClosed|) (|TrigonometricFunctionCategory|)
                  (|ArcTrigonometricFunctionCategory|)
                  (|HyperbolicFunctionCategory|)

@@ -22,22 +22,21 @@
 
 (DECLAIM (NOTINLINE |OrdinaryDifferentialRing;|)) 
 
-(DEFUN |OrdinaryDifferentialRing| (&REST #1=#:G736)
+(DEFUN |OrdinaryDifferentialRing| (&REST #1=#:G399)
   (SPROG NIL
-         (PROG (#2=#:G737)
+         (PROG (#2=#:G400)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|OrdinaryDifferentialRing|)
-                                               '|domainEqualList|)
-                    . #3=(|OrdinaryDifferentialRing|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |OrdinaryDifferentialRing;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -46,18 +45,18 @@
 (DEFUN |OrdinaryDifferentialRing;| (|#1| |#2| |#3|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|OrdinaryDifferentialRing|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT DV$3 (|devaluate| |#3|) . #1#)
-          (LETT |dv$| (LIST '|OrdinaryDifferentialRing| DV$1 DV$2 DV$3) . #1#)
-          (LETT $ (GETREFV 41) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT DV$3 (|devaluate| |#3|))
+          (LETT |dv$| (LIST '|OrdinaryDifferentialRing| DV$1 DV$2 DV$3))
+          (LETT $ (GETREFV 41))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
                           (|buildPredVector| 0 0
                                              (LIST
-                                              (|HasCategory| |#2| '(|Field|))))
-                          . #1#))
+                                              (|HasCategory| |#2|
+                                                             '(|Field|))))))
           (|haddProp| |$ConstructorCache| '|OrdinaryDifferentialRing|
                       (LIST DV$1 DV$2 DV$3) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -110,7 +109,8 @@
            (CONS
             (|makeByteWordVec2| 1
                                 '(1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 0 1 1 0 0 1 0
-                                  0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1))
+                                  0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 1
+                                  1))
             (CONS
              '#(|Field&| |EuclideanDomain&| NIL |UniqueFactorizationDomain&|
                 |GcdDomain&| NIL NIL NIL |DivisionRing&| |DifferentialRing&|
@@ -118,8 +118,8 @@
                 |Module&| |Module&| NIL |NonAssociativeRing&| NIL NIL
                 |NonAssociativeRng&| NIL NIL NIL |AbelianGroup&| NIL NIL NIL
                 NIL |MagmaWithUnit&| |AbelianMonoid&| |NonAssociativeSemiRng&|
-                |Magma&| |AbelianSemiGroup&| |SetCategory&| NIL |BasicType&|
-                NIL NIL NIL NIL NIL)
+                |Magma&| |AbelianSemiGroup&| |SetCategory&| NIL NIL
+                |BasicType&| NIL NIL NIL NIL NIL)
              (CONS
               '#((|Field|) (|EuclideanDomain|) (|PrincipalIdealDomain|)
                  (|UniqueFactorizationDomain|) (|GcdDomain|) (|IntegralDomain|)
@@ -133,9 +133,10 @@
                  (|NonAssociativeSemiRing|) (|CancellationAbelianMonoid|)
                  (|SemiGroup|) (|MagmaWithUnit|) (|AbelianMonoid|)
                  (|NonAssociativeSemiRng|) (|Magma|) (|AbelianSemiGroup|)
-                 (|SetCategory|) (|unitsKnown|) (|BasicType|)
-                 (|CoercibleTo| 40) (|CommutativeStar|) (|noZeroDivisors|)
-                 (|canonicalUnitNormal|) (|canonicalsClosed|))
+                 (|SetCategory|) (|CommutativeStar|) (|unitsKnown|)
+                 (|BasicType|) (|CoercibleTo| 40) (|TwoSidedRecip|)
+                 (|noZeroDivisors|) (|canonicalUnitNormal|)
+                 (|canonicalsClosed|))
               (|makeByteWordVec2| 40
                                   '(2 9 0 0 6 12 2 5 0 0 0 14 2 0 0 0 0 15 2 5
                                     0 0 16 17 2 0 0 0 16 18 1 5 0 0 19 1 0 0 0

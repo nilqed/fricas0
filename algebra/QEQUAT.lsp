@@ -20,11 +20,10 @@
 
 (DEFUN |QueryEquation| ()
   (SPROG NIL
-         (PROG (#1=#:G715)
+         (PROG (#1=#:G385)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|QueryEquation|)
-                    . #2=(|QueryEquation|))
+             ((LETT #1# (HGET |$ConstructorCache| '|QueryEquation|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -32,17 +31,17 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|QueryEquation|
                              (LIST (CONS NIL (CONS 1 (|QueryEquation;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#) (HREM |$ConstructorCache| '|QueryEquation|)))))))))) 
 
 (DEFUN |QueryEquation;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|QueryEquation|) . #1=(|QueryEquation|))
-          (LETT $ (GETREFV 17) . #1#)
+          (LETT |dv$| '(|QueryEquation|))
+          (LETT $ (GETREFV 17))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|QueryEquation| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

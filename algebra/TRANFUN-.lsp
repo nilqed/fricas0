@@ -5,27 +5,24 @@
 
 (SDEFUN |TRANFUN-;acsch;2S;2| ((|x| S) ($ S))
         (SPROG ((|a| (|Union| S "failed")))
-               (SEQ
-                (LETT |a| (SPADCALL |x| (QREFELT $ 13)) |TRANFUN-;acsch;2S;2|)
-                (EXIT
-                 (COND ((QEQCAR |a| 1) (|error| "acsch: no reciprocal"))
-                       ('T (SPADCALL (QCDR |a|) (QREFELT $ 14)))))))) 
+               (SEQ (LETT |a| (SPADCALL |x| (QREFELT $ 13)))
+                    (EXIT
+                     (COND ((QEQCAR |a| 1) (|error| "acsch: no reciprocal"))
+                           ('T (SPADCALL (QCDR |a|) (QREFELT $ 14)))))))) 
 
 (SDEFUN |TRANFUN-;asech;2S;3| ((|x| S) ($ S))
         (SPROG ((|a| (|Union| S "failed")))
-               (SEQ
-                (LETT |a| (SPADCALL |x| (QREFELT $ 13)) |TRANFUN-;asech;2S;3|)
-                (EXIT
-                 (COND ((QEQCAR |a| 1) (|error| "asech: no reciprocal"))
-                       ('T (SPADCALL (QCDR |a|) (QREFELT $ 16)))))))) 
+               (SEQ (LETT |a| (SPADCALL |x| (QREFELT $ 13)))
+                    (EXIT
+                     (COND ((QEQCAR |a| 1) (|error| "asech: no reciprocal"))
+                           ('T (SPADCALL (QCDR |a|) (QREFELT $ 16)))))))) 
 
 (SDEFUN |TRANFUN-;acoth;2S;4| ((|x| S) ($ S))
         (SPROG ((|a| (|Union| S "failed")))
-               (SEQ
-                (LETT |a| (SPADCALL |x| (QREFELT $ 13)) |TRANFUN-;acoth;2S;4|)
-                (EXIT
-                 (COND ((QEQCAR |a| 1) (|error| "acoth: no reciprocal"))
-                       ('T (SPADCALL (QCDR |a|) (QREFELT $ 18)))))))) 
+               (SEQ (LETT |a| (SPADCALL |x| (QREFELT $ 13)))
+                    (EXIT
+                     (COND ((QEQCAR |a| 1) (|error| "acoth: no reciprocal"))
+                           ('T (SPADCALL (QCDR |a|) (QREFELT $ 18)))))))) 
 
 (SDEFUN |TRANFUN-;asin;2S;5| ((|x| S) ($ S))
         (SPADCALL
@@ -92,12 +89,11 @@
 (DEFUN |TranscendentalFunctionCategory&| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|)
-                . #1=(|TranscendentalFunctionCategory&|))
-          (LETT |dv$| (LIST '|TranscendentalFunctionCategory&| DV$1) . #1#)
-          (LETT $ (GETREFV 36) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|TranscendentalFunctionCategory&| DV$1))
+          (LETT $ (GETREFV 36))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)
           (SETF |pv$| (QREFELT $ 3))
@@ -147,23 +143,34 @@
            '#(|pi| 132 |atanh| 136 |asinh| 141 |asin| 146 |asech| 151 |acsch|
               156 |acoth| 161 |acot| 166 |acosh| 171 |acos| 176)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 35
-                                                 '(0 6 0 7 1 6 0 0 8 2 6 0 9 0
-                                                   10 0 0 0 11 1 6 12 0 13 1 6
-                                                   0 0 14 1 0 0 0 15 1 6 0 0 16
-                                                   1 0 0 0 17 1 6 0 0 18 1 0 0
-                                                   0 19 2 6 0 0 9 20 2 6 0 0 0
-                                                   21 1 6 0 0 22 2 6 0 0 0 23 1
-                                                   6 0 0 24 1 0 0 0 25 0 6 0 26
-                                                   1 6 0 27 28 1 0 0 0 29 1 0 0
-                                                   0 30 2 6 0 0 0 31 1 6 0 0 32
-                                                   1 0 0 0 33 1 0 0 0 34 1 0 0
-                                                   0 35 0 0 0 11 1 0 0 0 35 1 0
-                                                   0 0 33 1 0 0 0 25 1 0 0 0 17
-                                                   1 0 0 0 15 1 0 0 0 19 1 0 0
-                                                   0 30 1 0 0 0 34 1 0 0 0
-                                                   29)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|pi| (|#1|)) T)
+                                   '((|atanh| (|#1| |#1|)) T)
+                                   '((|asinh| (|#1| |#1|)) T)
+                                   '((|asech| (|#1| |#1|)) T)
+                                   '((|acsch| (|#1| |#1|)) T)
+                                   '((|acoth| (|#1| |#1|)) T)
+                                   '((|acosh| (|#1| |#1|)) T)
+                                   '((|asin| (|#1| |#1|)) T)
+                                   '((|acot| (|#1| |#1|)) T)
+                                   '((|acos| (|#1| |#1|)) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 35
+                                            '(0 6 0 7 1 6 0 0 8 2 6 0 9 0 10 0
+                                              0 0 11 1 6 12 0 13 1 6 0 0 14 1 0
+                                              0 0 15 1 6 0 0 16 1 0 0 0 17 1 6
+                                              0 0 18 1 0 0 0 19 2 6 0 0 9 20 2
+                                              6 0 0 0 21 1 6 0 0 22 2 6 0 0 0
+                                              23 1 6 0 0 24 1 0 0 0 25 0 6 0 26
+                                              1 6 0 27 28 1 0 0 0 29 1 0 0 0 30
+                                              2 6 0 0 0 31 1 6 0 0 32 1 0 0 0
+                                              33 1 0 0 0 34 1 0 0 0 35 0 0 0 11
+                                              1 0 0 0 35 1 0 0 0 33 1 0 0 0 25
+                                              1 0 0 0 17 1 0 0 0 15 1 0 0 0 19
+                                              1 0 0 0 30 1 0 0 0 34 1 0 0 0
+                                              29)))))
            '|lookupComplete|)) 

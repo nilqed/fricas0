@@ -4,18 +4,16 @@
 
 (SDEFUN |PCDEN;clearDenominator;2P;2| ((|p| P) ($ P))
         (SPROG ((|d| (R)))
-               (SEQ
-                (LETT |d| (SPADCALL |p| (QREFELT $ 15))
-                      |PCDEN;clearDenominator;2P;2|)
-                (EXIT
-                 (SPADCALL
-                  (CONS #'|PCDEN;clearDenominator;2P;2!0| (VECTOR $ |d|)) |p|
-                  (QREFELT $ 20)))))) 
+               (SEQ (LETT |d| (SPADCALL |p| (QREFELT $ 15)))
+                    (EXIT
+                     (SPADCALL
+                      (CONS #'|PCDEN;clearDenominator;2P;2!0| (VECTOR $ |d|))
+                      |p| (QREFELT $ 20)))))) 
 
 (SDEFUN |PCDEN;clearDenominator;2P;2!0| ((|x| NIL) ($$ NIL))
         (PROG (|d| $)
-          (LETT |d| (QREFELT $$ 1) . #1=(|PCDEN;clearDenominator;2P;2|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |d| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL
@@ -25,20 +23,18 @@
 (SDEFUN |PCDEN;splitDenominator;PR;3|
         ((|p| P) ($ |Record| (|:| |num| P) (|:| |den| R)))
         (SPROG ((|d| (R)))
-               (SEQ
-                (LETT |d| (SPADCALL |p| (QREFELT $ 15))
-                      |PCDEN;splitDenominator;PR;3|)
-                (EXIT
-                 (CONS
-                  (SPADCALL
-                   (CONS #'|PCDEN;splitDenominator;PR;3!0| (VECTOR $ |d|)) |p|
-                   (QREFELT $ 20))
-                  |d|))))) 
+               (SEQ (LETT |d| (SPADCALL |p| (QREFELT $ 15)))
+                    (EXIT
+                     (CONS
+                      (SPADCALL
+                       (CONS #'|PCDEN;splitDenominator;PR;3!0| (VECTOR $ |d|))
+                       |p| (QREFELT $ 20))
+                      |d|))))) 
 
 (SDEFUN |PCDEN;splitDenominator;PR;3!0| ((|x| NIL) ($$ NIL))
         (PROG (|d| $)
-          (LETT |d| (QREFELT $$ 1) . #1=(|PCDEN;splitDenominator;PR;3|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |d| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL
@@ -47,23 +43,22 @@
 
 (DECLAIM (NOTINLINE |PolynomialCommonDenominator;|)) 
 
-(DEFUN |PolynomialCommonDenominator| (&REST #1=#:G703)
+(DEFUN |PolynomialCommonDenominator| (&REST #1=#:G387)
   (SPROG NIL
-         (PROG (#2=#:G704)
+         (PROG (#2=#:G388)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|PolynomialCommonDenominator|)
-                                               '|domainEqualList|)
-                    . #3=(|PolynomialCommonDenominator|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1
                       (APPLY (|function| |PolynomialCommonDenominator;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -74,16 +69,15 @@
    ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$5 NIL) (DV$4 NIL) (DV$3 NIL) (DV$2 NIL)
     (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #1=(|PolynomialCommonDenominator|))
-    (LETT DV$2 (|devaluate| |#2|) . #1#)
-    (LETT DV$3 (|devaluate| |#3|) . #1#)
-    (LETT DV$4 (|devaluate| |#4|) . #1#)
-    (LETT DV$5 (|devaluate| |#5|) . #1#)
-    (LETT |dv$| (LIST '|PolynomialCommonDenominator| DV$1 DV$2 DV$3 DV$4 DV$5)
-          . #1#)
-    (LETT $ (GETREFV 24) . #1#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT DV$4 (|devaluate| |#4|))
+    (LETT DV$5 (|devaluate| |#5|))
+    (LETT |dv$| (LIST '|PolynomialCommonDenominator| DV$1 DV$2 DV$3 DV$4 DV$5))
+    (LETT $ (GETREFV 24))
     (QSETREFV $ 0 |dv$|)
-    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
     (|haddProp| |$ConstructorCache| '|PolynomialCommonDenominator|
                 (LIST DV$1 DV$2 DV$3 DV$4 DV$5) (CONS 1 $))
     (|stuffDomainSlots| $)
@@ -108,13 +102,22 @@
            '#(|splitDenominator| 32 |commonDenominator| 37 |clearDenominator|
               42)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 23
-                                                 '(1 10 11 0 12 1 13 6 11 14 2
-                                                   7 0 6 0 16 1 7 6 0 17 1 7 0
-                                                   6 18 2 10 0 19 0 20 1 0 22
-                                                   10 23 1 0 6 10 15 1 0 10 10
-                                                   21)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|commonDenominator| (|#1| |#5|)) T)
+                                   '((|clearDenominator| (|#5| |#5|)) T)
+                                   '((|splitDenominator|
+                                      ((|Record| (|:| |num| |#5|)
+                                                 (|:| |den| |#1|))
+                                       |#5|))
+                                     T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 23
+                                            '(1 10 11 0 12 1 13 6 11 14 2 7 0 6
+                                              0 16 1 7 6 0 17 1 7 0 6 18 2 10 0
+                                              19 0 20 1 0 22 10 23 1 0 6 10 15
+                                              1 0 10 10 21)))))
            '|lookupComplete|)) 

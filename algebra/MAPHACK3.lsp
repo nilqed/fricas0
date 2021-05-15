@@ -5,23 +5,22 @@
 
 (DECLAIM (NOTINLINE |MappingPackageInternalHacks3;|)) 
 
-(DEFUN |MappingPackageInternalHacks3| (&REST #1=#:G693)
+(DEFUN |MappingPackageInternalHacks3| (&REST #1=#:G381)
   (SPROG NIL
-         (PROG (#2=#:G694)
+         (PROG (#2=#:G382)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|MappingPackageInternalHacks3|)
-                                               '|domainEqualList|)
-                    . #3=(|MappingPackageInternalHacks3|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1
                       (APPLY (|function| |MappingPackageInternalHacks3;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -30,14 +29,13 @@
 (DEFUN |MappingPackageInternalHacks3;| (|#1| |#2| |#3|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|MappingPackageInternalHacks3|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT DV$3 (|devaluate| |#3|) . #1#)
-          (LETT |dv$| (LIST '|MappingPackageInternalHacks3| DV$1 DV$2 DV$3)
-                . #1#)
-          (LETT $ (GETREFV 12) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT DV$3 (|devaluate| |#3|))
+          (LETT |dv$| (LIST '|MappingPackageInternalHacks3| DV$1 DV$2 DV$3))
+          (LETT $ (GETREFV 12))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|MappingPackageInternalHacks3|
                       (LIST DV$1 DV$2 DV$3) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -53,7 +51,16 @@
               (|local| |#3|) (|Mapping| 8 7) (|Mapping| 7 6)
               |MAPHACK3;comp;MMAC;1|)
            '#(|comp| 0) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#() (|makeByteWordVec2| 11 '(3 0 8 9 10 6 11)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|comp|
+                                 (|#3| (|Mapping| |#3| |#2|)
+                                  (|Mapping| |#2| |#1|) |#1|))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 11 '(3 0 8 9 10 6 11)))))
            '|lookupComplete|)) 

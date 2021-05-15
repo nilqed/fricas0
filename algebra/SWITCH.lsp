@@ -1,31 +1,28 @@
 
 (SDEFUN |SWITCH;coerce;$Of;1| ((|s| $) ($ |OutputForm|))
         (SPROG
-         ((|ran| (|List| (|OutputForm|))) (#1=#:G721 NIL) (|u| NIL)
-          (#2=#:G720 NIL) (|rat| (|OutputForm|)))
-         (SEQ
-          (LETT |rat| (SPADCALL (QCAR |s|) (QREFELT $ 12))
-                . #3=(|SWITCH;coerce;$Of;1|))
-          (LETT |ran|
-                (PROGN
-                 (LETT #2# NIL . #3#)
-                 (SEQ (LETT |u| NIL . #3#) (LETT #1# (QCDR |s|) . #3#) G190
-                      (COND
-                       ((OR (ATOM #1#) (PROGN (LETT |u| (CAR #1#) . #3#) NIL))
-                        (GO G191)))
-                      (SEQ
-                       (EXIT
-                        (LETT #2# (CONS (SPADCALL |u| (QREFELT $ 14)) #2#)
-                              . #3#)))
-                      (LETT #1# (CDR #1#) . #3#) (GO G190) G191
-                      (EXIT (NREVERSE #2#))))
-                . #3#)
-          (EXIT
-           (COND
-            ((SPADCALL (QCAR |s|) (QREFELT $ 10) (QREFELT $ 16))
-             (|SPADfirst| |ran|))
-            ((EQL (LENGTH |ran|) 1) (SPADCALL |rat| |ran| (QREFELT $ 20)))
-            ('T (SPADCALL |rat| |ran| (QREFELT $ 21)))))))) 
+         ((|ran| (|List| (|OutputForm|))) (#1=#:G396 NIL) (|u| NIL)
+          (#2=#:G395 NIL) (|rat| (|OutputForm|)))
+         (SEQ (LETT |rat| (SPADCALL (QCAR |s|) (QREFELT $ 12)))
+              (LETT |ran|
+                    (PROGN
+                     (LETT #2# NIL)
+                     (SEQ (LETT |u| NIL) (LETT #1# (QCDR |s|)) G190
+                          (COND
+                           ((OR (ATOM #1#) (PROGN (LETT |u| (CAR #1#)) NIL))
+                            (GO G191)))
+                          (SEQ
+                           (EXIT
+                            (LETT #2#
+                                  (CONS (SPADCALL |u| (QREFELT $ 14)) #2#))))
+                          (LETT #1# (CDR #1#)) (GO G190) G191
+                          (EXIT (NREVERSE #2#)))))
+              (EXIT
+               (COND
+                ((SPADCALL (QCAR |s|) (QREFELT $ 10) (QREFELT $ 16))
+                 (|SPADfirst| |ran|))
+                ((EQL (LENGTH |ran|) 1) (SPADCALL |rat| |ran| (QREFELT $ 20)))
+                ('T (SPADCALL |rat| |ran| (QREFELT $ 21)))))))) 
 
 (SDEFUN |SWITCH;coerce;S$;2| ((|s| |Symbol|) ($ $))
         (CONS (QREFELT $ 10) (LIST (CONS 0 (SPADCALL |s| (QREFELT $ 23)))))) 
@@ -114,10 +111,10 @@
 
 (DEFUN |Switch| ()
   (SPROG NIL
-         (PROG (#1=#:G777)
+         (PROG (#1=#:G452)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|Switch|) . #2=(|Switch|))
+             ((LETT #1# (HGET |$ConstructorCache| '|Switch|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -125,16 +122,16 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|Switch|
                              (LIST (CONS NIL (CONS 1 (|Switch;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND ((NOT #1#) (HREM |$ConstructorCache| '|Switch|)))))))))) 
 
 (DEFUN |Switch;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|Switch|) . #1=(|Switch|))
-          (LETT $ (GETREFV 35) . #1#)
+          (LETT |dv$| '(|Switch|))
+          (LETT $ (GETREFV 35))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|Switch| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

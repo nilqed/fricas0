@@ -5,29 +5,26 @@
 
 (DEFPARAMETER |UnivariateSkewPolynomialCategory;AL| 'NIL) 
 
-(DEFUN |UnivariateSkewPolynomialCategory| (#1=#:G706)
-  (LET (#2=#:G707)
+(DEFUN |UnivariateSkewPolynomialCategory| (|t#1|)
+  (LET (#1=#:G393 (#2=#:G394 (|devaluate| |t#1|)))
     (COND
-     ((SETQ #2#
-              (|assoc| #3=(|devaluate| #1#)
-                       |UnivariateSkewPolynomialCategory;AL|))
-      (CDR #2#))
+     ((SETQ #1# (|assoc| #2# |UnivariateSkewPolynomialCategory;AL|)) (CDR #1#))
      (T
       (SETQ |UnivariateSkewPolynomialCategory;AL|
               (|cons5|
-               (CONS #3# (SETQ #2# (|UnivariateSkewPolynomialCategory;| #1#)))
+               (CONS #2# (SETQ #1# (|UnivariateSkewPolynomialCategory;| #2#)))
                |UnivariateSkewPolynomialCategory;AL|))
-      #2#)))) 
+      #1#)))) 
 
 (DEFUN |UnivariateSkewPolynomialCategory;| (|t#1|)
-  (SPROG ((#1=#:G705 NIL))
+  (SPROG ((#1=#:G392 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (|sublisV|
-                               (PAIR '(#2=#:G703 #3=#:G704)
-                                     (LIST '(|NonNegativeInteger|)
-                                           '(|SingletonAsOrderedSet|)))
+                               (MAKE_PAIRS '(#2=#:G390 #3=#:G391)
+                                           (LIST '(|NonNegativeInteger|)
+                                                 '(|SingletonAsOrderedSet|)))
                                (COND (|UnivariateSkewPolynomialCategory;CAT|)
                                      ('T
                                       (LETT
@@ -105,9 +102,5 @@
                                             (|has| |t#1| (|Field|))))
                                          '(((|Algebra| |t#1|)
                                             (|has| |t#1| (|CommutativeRing|))))
-                                         'NIL NIL))
-                                       . #4=(|UnivariateSkewPolynomialCategory|))))))
-                   . #4#)
-           (SETELT #1# 0
-                   (LIST '|UnivariateSkewPolynomialCategory|
-                         (|devaluate| |t#1|)))))) 
+                                         NIL NIL))))))))
+           (SETELT #1# 0 (LIST '|UnivariateSkewPolynomialCategory| |t#1|))))) 

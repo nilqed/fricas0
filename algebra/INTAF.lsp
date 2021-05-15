@@ -19,8 +19,8 @@
 
 (SDEFUN |INTAF;UPUP2F0!0| ((|x1| NIL) ($$ NIL))
         (PROG (|kx| $)
-          (LETT |kx| (QREFELT $$ 1) . #1=(|INTAF;UPUP2F0|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |kx| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL |x1| |kx| (QREFELT $ 14)))))) 
 
 (SDEFUN |INTAF;F2UPUP|
@@ -34,6 +34,7 @@
         ((|f| F) (|t| |Kernel| F) (|k| |Kernel| F)
          (|derivation| |Mapping| (|SparseUnivariatePolynomial| F)
           (|SparseUnivariatePolynomial| F))
+         (|rec_int| |Mapping| (|IntegrationResult| F) F)
          ($ |IntegrationResult| F))
         (SPROG
          ((|curve|
@@ -46,7 +47,7 @@
            (|Record|
             (|:| |radicand| (|Fraction| (|SparseUnivariatePolynomial| F)))
             (|:| |deg| (|NonNegativeInteger|))))
-          (#1=#:G719 NIL)
+          (#1=#:G395 NIL)
           (|f1|
            (|SparseUnivariatePolynomial|
             (|Fraction| (|SparseUnivariatePolynomial| F))))
@@ -64,20 +65,15 @@
                 (SPADCALL
                  (LETT |modulus|
                        (|INTAF;UP2UPUP|
-                        (LETT |p| (SPADCALL |k| (QREFELT $ 24))
-                              . #2=(|INTAF;rootintegrate|))
-                        |t| $)
-                       . #2#)
-                 (QREFELT $ 26))
-                . #2#)
+                        (LETT |p| (SPADCALL |k| (QREFELT $ 24))) |t| $))
+                 (QREFELT $ 26)))
           (LETT |f1|
                 (SPADCALL (|INTAF;F2UPUP| |f| |t| |k| |p| $)
                           (SPADCALL (SPADCALL (QCAR |r1|) (QREFELT $ 27)) 1
                                     (QREFELT $ 30))
-                          (QREFELT $ 31))
-                . #2#)
+                          (QREFELT $ 31)))
           (LETT |r|
-                (PROG2 (LETT #1# (SPADCALL (QCDR |r1|) (QREFELT $ 34)) . #2#)
+                (PROG2 (LETT #1# (SPADCALL (QCDR |r1|) (QREFELT $ 34)))
                     (QCDR #1#)
                   (|check_union2| (QEQCAR #1# 0)
                                   (|Record|
@@ -94,9 +90,8 @@
                                            (QREFELT $ 7))))
                                     (|:| |deg| (|NonNegativeInteger|)))
                                    "failed")
-                                  #1#))
-                . #2#)
-          (LETT |q| (SPADCALL (QCAR |r|) (QREFELT $ 35)) . #2#)
+                                  #1#)))
+          (LETT |q| (SPADCALL (QCAR |r|) (QREFELT $ 35)))
           (LETT |curve|
                 (|RadicalFunctionField| (QREFELT $ 7)
                                         (|SparseUnivariatePolynomial|
@@ -106,8 +101,7 @@
                                           (|SparseUnivariatePolynomial|
                                            (QREFELT $ 7))))
                                         (SPADCALL |q| (QREFELT $ 36))
-                                        (QCDR |r|))
-                . #2#)
+                                        (QCDR |r|)))
           (EXIT
            (SPADCALL
             (CONS #'|INTAF;rootintegrate!0| (VECTOR |k| |t| |r1| |curve| $))
@@ -123,7 +117,7 @@
                                                             (|devaluate|
                                                              (ELT $ 7))))))
                                               |curve|))
-             |derivation|
+             |derivation| |rec_int|
              (|compiledLookupCheck| '|algintegrate|
                                     (LIST
                                      (LIST '|IntegrationResult|
@@ -133,7 +127,11 @@
                                            (LIST '|SparseUnivariatePolynomial|
                                                  (|devaluate| (ELT $ 7)))
                                            (LIST '|SparseUnivariatePolynomial|
-                                                 (|devaluate| (ELT $ 7)))))
+                                                 (|devaluate| (ELT $ 7))))
+                                     (LIST '|Mapping|
+                                           (LIST '|IntegrationResult|
+                                                 (|devaluate| (ELT $ 7)))
+                                           (|devaluate| (ELT $ 7))))
                                     (|AlgebraicIntegrate| (ELT $ 6) (ELT $ 7)
                                                           (|SparseUnivariatePolynomial|
                                                            (ELT $ 7))
@@ -156,11 +154,11 @@
 
 (SDEFUN |INTAF;rootintegrate!0| ((|x1| NIL) ($$ NIL))
         (PROG ($ |curve| |r1| |t| |k|)
-          (LETT $ (QREFELT $$ 4) . #1=(|INTAF;rootintegrate|))
-          (LETT |curve| (QREFELT $$ 3) . #1#)
-          (LETT |r1| (QREFELT $$ 2) . #1#)
-          (LETT |t| (QREFELT $$ 1) . #1#)
-          (LETT |k| (QREFELT $$ 0) . #1#)
+          (LETT $ (QREFELT $$ 4))
+          (LETT |curve| (QREFELT $$ 3))
+          (LETT |r1| (QREFELT $$ 2))
+          (LETT |t| (QREFELT $$ 1))
+          (LETT |k| (QREFELT $$ 0))
           (RETURN
            (PROGN
             (|INTAF;UPUP2F|
@@ -182,6 +180,7 @@
         ((|f| F) (|t| |Kernel| F) (|k| |Kernel| F)
          (|derivation| |Mapping| (|SparseUnivariatePolynomial| F)
           (|SparseUnivariatePolynomial| F))
+         (|rec_int| |Mapping| (|IntegrationResult| F) F)
          ($ |IntegrationResult| F))
         (SPROG
          ((|curve|
@@ -209,22 +208,16 @@
                 (SPADCALL
                  (LETT |modulus|
                        (|INTAF;UP2UPUP|
-                        (LETT |p| (SPADCALL |k| (QREFELT $ 24))
-                              . #1=(|INTAF;algintegrate|))
-                        |t| $)
-                       . #1#)
-                 (QREFELT $ 26))
-                . #1#)
+                        (LETT |p| (SPADCALL |k| (QREFELT $ 24))) |t| $))
+                 (QREFELT $ 26)))
           (LETT |f1|
                 (SPADCALL (|INTAF;F2UPUP| |f| |t| |k| |p| $)
                           (SPADCALL (SPADCALL (QCAR |r1|) (QREFELT $ 27)) 1
                                     (QREFELT $ 30))
-                          (QREFELT $ 31))
-                . #1#)
+                          (QREFELT $ 31)))
           (LETT |modulus|
-                (|INTAF;UP2UPUP| (LETT |p| (SPADCALL |k| (QREFELT $ 24)) . #1#)
-                 |t| $)
-                . #1#)
+                (|INTAF;UP2UPUP| (LETT |p| (SPADCALL |k| (QREFELT $ 24))) |t|
+                 $))
           (LETT |curve|
                 (|AlgebraicFunctionField| (QREFELT $ 7)
                                           (|SparseUnivariatePolynomial|
@@ -233,8 +226,7 @@
                                            (|Fraction|
                                             (|SparseUnivariatePolynomial|
                                              (QREFELT $ 7))))
-                                          (QCDR |r1|))
-                . #1#)
+                                          (QCDR |r1|)))
           (EXIT
            (SPADCALL
             (CONS #'|INTAF;algintegrate!0| (VECTOR |k| |t| |r1| |curve| $))
@@ -250,7 +242,7 @@
                                                             (|devaluate|
                                                              (ELT $ 7))))))
                                               |curve|))
-             |derivation|
+             |derivation| |rec_int|
              (|compiledLookupCheck| '|algintegrate|
                                     (LIST
                                      (LIST '|IntegrationResult|
@@ -260,7 +252,11 @@
                                            (LIST '|SparseUnivariatePolynomial|
                                                  (|devaluate| (ELT $ 7)))
                                            (LIST '|SparseUnivariatePolynomial|
-                                                 (|devaluate| (ELT $ 7)))))
+                                                 (|devaluate| (ELT $ 7))))
+                                     (LIST '|Mapping|
+                                           (LIST '|IntegrationResult|
+                                                 (|devaluate| (ELT $ 7)))
+                                           (|devaluate| (ELT $ 7))))
                                     (|AlgebraicIntegrate| (ELT $ 6) (ELT $ 7)
                                                           (|SparseUnivariatePolynomial|
                                                            (ELT $ 7))
@@ -283,11 +279,11 @@
 
 (SDEFUN |INTAF;algintegrate!0| ((|x1| NIL) ($$ NIL))
         (PROG ($ |curve| |r1| |t| |k|)
-          (LETT $ (QREFELT $$ 4) . #1=(|INTAF;algintegrate|))
-          (LETT |curve| (QREFELT $$ 3) . #1#)
-          (LETT |r1| (QREFELT $$ 2) . #1#)
-          (LETT |t| (QREFELT $$ 1) . #1#)
-          (LETT |k| (QREFELT $$ 0) . #1#)
+          (LETT $ (QREFELT $$ 4))
+          (LETT |curve| (QREFELT $$ 3))
+          (LETT |r1| (QREFELT $$ 2))
+          (LETT |t| (QREFELT $$ 1))
+          (LETT |k| (QREFELT $$ 0))
           (RETURN
            (PROGN
             (|INTAF;UPUP2F|
@@ -337,12 +333,12 @@
            (|Record|
             (|:| |radicand| (|Fraction| (|SparseUnivariatePolynomial| F)))
             (|:| |deg| (|NonNegativeInteger|))))
-          (#1=#:G742 NIL)
+          (#1=#:G413 NIL)
           (|lf1|
            (|List|
             (|SparseUnivariatePolynomial|
              (|Fraction| (|SparseUnivariatePolynomial| F)))))
-          (#2=#:G747 NIL) (|f| NIL) (#3=#:G746 NIL)
+          (#2=#:G418 NIL) (|f| NIL) (#3=#:G417 NIL)
           (|mon1|
            (|SparseUnivariatePolynomial|
             (|Fraction| (|SparseUnivariatePolynomial| F))))
@@ -360,22 +356,17 @@
                 (SPADCALL
                  (LETT |modulus|
                        (|INTAF;UP2UPUP|
-                        (LETT |p| (SPADCALL |k| (QREFELT $ 24))
-                              . #4=(|INTAF;rootcurve|))
-                        |t| $)
-                       . #4#)
-                 (QREFELT $ 26))
-                . #4#)
+                        (LETT |p| (SPADCALL |k| (QREFELT $ 24))) |t| $))
+                 (QREFELT $ 26)))
           (LETT |mon1|
                 (SPADCALL (SPADCALL (QCAR |r1|) (QREFELT $ 27)) 1
-                          (QREFELT $ 30))
-                . #4#)
+                          (QREFELT $ 30)))
           (LETT |lf1|
                 (PROGN
-                 (LETT #3# NIL . #4#)
-                 (SEQ (LETT |f| NIL . #4#) (LETT #2# |lf| . #4#) G190
+                 (LETT #3# NIL)
+                 (SEQ (LETT |f| NIL) (LETT #2# |lf|) G190
                       (COND
-                       ((OR (ATOM #2#) (PROGN (LETT |f| (CAR #2#) . #4#) NIL))
+                       ((OR (ATOM #2#) (PROGN (LETT |f| (CAR #2#)) NIL))
                         (GO G191)))
                       (SEQ
                        (EXIT
@@ -383,13 +374,11 @@
                               (CONS
                                (SPADCALL (|INTAF;F2UPUP| |f| |t| |k| |p| $)
                                          |mon1| (QREFELT $ 31))
-                               #3#)
-                              . #4#)))
-                      (LETT #2# (CDR #2#) . #4#) (GO G190) G191
-                      (EXIT (NREVERSE #3#))))
-                . #4#)
+                               #3#))))
+                      (LETT #2# (CDR #2#)) (GO G190) G191
+                      (EXIT (NREVERSE #3#)))))
           (LETT |r|
-                (PROG2 (LETT #1# (SPADCALL (QCDR |r1|) (QREFELT $ 34)) . #4#)
+                (PROG2 (LETT #1# (SPADCALL (QCDR |r1|) (QREFELT $ 34)))
                     (QCDR #1#)
                   (|check_union2| (QEQCAR #1# 0)
                                   (|Record|
@@ -406,9 +395,8 @@
                                            (QREFELT $ 7))))
                                     (|:| |deg| (|NonNegativeInteger|)))
                                    "failed")
-                                  #1#))
-                . #4#)
-          (LETT |q| (SPADCALL (QCAR |r|) (QREFELT $ 35)) . #4#)
+                                  #1#)))
+          (LETT |q| (SPADCALL (QCAR |r|) (QREFELT $ 35)))
           (LETT |curve|
                 (|RadicalFunctionField| (QREFELT $ 7)
                                         (|SparseUnivariatePolynomial|
@@ -418,8 +406,7 @@
                                           (|SparseUnivariatePolynomial|
                                            (QREFELT $ 7))))
                                         (SPADCALL |q| (QREFELT $ 36))
-                                        (QCDR |r|))
-                . #4#)
+                                        (QCDR |r|)))
           (EXIT (VECTOR |lf1| |r1| |curve|))))) 
 
 (SDEFUN |INTAF;algcurve|
@@ -456,7 +443,7 @@
            (|List|
             (|SparseUnivariatePolynomial|
              (|Fraction| (|SparseUnivariatePolynomial| F)))))
-          (#1=#:G753 NIL) (|f| NIL) (#2=#:G752 NIL)
+          (#1=#:G424 NIL) (|f| NIL) (#2=#:G423 NIL)
           (|mon1|
            (|SparseUnivariatePolynomial|
             (|Fraction| (|SparseUnivariatePolynomial| F))))
@@ -474,22 +461,17 @@
                 (SPADCALL
                  (LETT |modulus|
                        (|INTAF;UP2UPUP|
-                        (LETT |p| (SPADCALL |k| (QREFELT $ 24))
-                              . #3=(|INTAF;algcurve|))
-                        |t| $)
-                       . #3#)
-                 (QREFELT $ 26))
-                . #3#)
+                        (LETT |p| (SPADCALL |k| (QREFELT $ 24))) |t| $))
+                 (QREFELT $ 26)))
           (LETT |mon1|
                 (SPADCALL (SPADCALL (QCAR |r1|) (QREFELT $ 27)) 1
-                          (QREFELT $ 30))
-                . #3#)
+                          (QREFELT $ 30)))
           (LETT |lf1|
                 (PROGN
-                 (LETT #2# NIL . #3#)
-                 (SEQ (LETT |f| NIL . #3#) (LETT #1# |lf| . #3#) G190
+                 (LETT #2# NIL)
+                 (SEQ (LETT |f| NIL) (LETT #1# |lf|) G190
                       (COND
-                       ((OR (ATOM #1#) (PROGN (LETT |f| (CAR #1#) . #3#) NIL))
+                       ((OR (ATOM #1#) (PROGN (LETT |f| (CAR #1#)) NIL))
                         (GO G191)))
                       (SEQ
                        (EXIT
@@ -497,11 +479,9 @@
                               (CONS
                                (SPADCALL (|INTAF;F2UPUP| |f| |t| |k| |p| $)
                                          |mon1| (QREFELT $ 31))
-                               #2#)
-                              . #3#)))
-                      (LETT #1# (CDR #1#) . #3#) (GO G190) G191
-                      (EXIT (NREVERSE #2#))))
-                . #3#)
+                               #2#))))
+                      (LETT #1# (CDR #1#)) (GO G190) G191
+                      (EXIT (NREVERSE #2#)))))
           (LETT |curve|
                 (|AlgebraicFunctionField| (QREFELT $ 7)
                                           (|SparseUnivariatePolynomial|
@@ -510,8 +490,7 @@
                                            (|Fraction|
                                             (|SparseUnivariatePolynomial|
                                              (QREFELT $ 7))))
-                                          (QCDR |r1|))
-                . #3#)
+                                          (QCDR |r1|)))
           (EXIT (VECTOR |lf1| |r1| |curve|))))) 
 
 (SDEFUN |INTAF;algextint;2KMMMMLL;8|
@@ -535,11 +514,11 @@
          (|lg| |List| F)
          ($ |List| (|Record| (|:| |ratpart| F) (|:| |coeffs| (|Vector| F)))))
         (SPROG
-         ((#1=#:G783 NIL) (|be| NIL) (#2=#:G782 NIL)
+         ((#1=#:G453 NIL) (|be| NIL) (#2=#:G452 NIL)
           (|res1|
            (|List|
             (|Record| (|:| |ratpart| |curve|) (|:| |coeffs| (|Vector| F)))))
-          (#3=#:G781 NIL) (|f| NIL) (#4=#:G780 NIL)
+          (#3=#:G451 NIL) (|f| NIL) (#4=#:G450 NIL)
           (|cc| (|Fraction| (|SparseUnivariatePolynomial| F)))
           (|red|
            (|Mapping| |curve|
@@ -575,9 +554,8 @@
                   (|INTAF;rootcurve| |lg| |t| |y| |der| $))
                  ((SPADCALL |y| '|rootOf| (QREFELT $ 39))
                   (|INTAF;algcurve| |lg| |t| |y| |der| $))
-                 ('T (|error| "failed - cannot handle that integrand")))
-                . #5=(|INTAF;algextint;2KMMMMLL;8|))
-          (LETT |curve| (QVELT |c_rec| 2) . #5#)
+                 ('T (|error| "failed - cannot handle that integrand"))))
+          (LETT |curve| (QVELT |c_rec| 2))
           (LETT |red|
                 (|compiledLookupCheck| '|reduce|
                                        (LIST '$
@@ -588,24 +566,22 @@
                                                      '|SparseUnivariatePolynomial|
                                                      (|devaluate|
                                                       (ELT $ 7))))))
-                                       |curve|)
-                . #5#)
-          (LETT |cc| (QCAR (QVELT |c_rec| 1)) . #5#)
+                                       |curve|))
+          (LETT |cc| (QCAR (QVELT |c_rec| 1)))
           (LETT |res1|
                 (SPADCALL |der| |ext| |rde| |csolve|
                           (PROGN
-                           (LETT #4# NIL . #5#)
-                           (SEQ (LETT |f| NIL . #5#)
-                                (LETT #3# (QVELT |c_rec| 0) . #5#) G190
+                           (LETT #4# NIL)
+                           (SEQ (LETT |f| NIL) (LETT #3# (QVELT |c_rec| 0))
+                                G190
                                 (COND
                                  ((OR (ATOM #3#)
-                                      (PROGN (LETT |f| (CAR #3#) . #5#) NIL))
+                                      (PROGN (LETT |f| (CAR #3#)) NIL))
                                   (GO G191)))
                                 (SEQ
                                  (EXIT
-                                  (LETT #4# (CONS (SPADCALL |f| |red|) #4#)
-                                        . #5#)))
-                                (LETT #3# (CDR #3#) . #5#) (GO G190) G191
+                                  (LETT #4# (CONS (SPADCALL |f| |red|) #4#))))
+                                (LETT #3# (CDR #3#)) (GO G190) G191
                                 (EXIT (NREVERSE #4#))))
                           (|compiledLookupCheck| '|algextint|
                                                  (LIST
@@ -705,14 +681,19 @@
                                                         (|devaluate| |curve|)))
                                                  (|AlgebraicIntegrate2|
                                                   (ELT $ 6) (ELT $ 7)
-                                                  |curve|)))
-                . #5#)
+                                                  (|SparseUnivariatePolynomial|
+                                                   (ELT $ 7))
+                                                  (|SparseUnivariatePolynomial|
+                                                   (|Fraction|
+                                                    (|SparseUnivariatePolynomial|
+                                                     (ELT $ 7))))
+                                                  |curve|))))
           (EXIT
            (PROGN
-            (LETT #2# NIL . #5#)
-            (SEQ (LETT |be| NIL . #5#) (LETT #1# |res1| . #5#) G190
+            (LETT #2# NIL)
+            (SEQ (LETT |be| NIL) (LETT #1# |res1|) G190
                  (COND
-                  ((OR (ATOM #1#) (PROGN (LETT |be| (CAR #1#) . #5#) NIL))
+                  ((OR (ATOM #1#) (PROGN (LETT |be| (CAR #1#)) NIL))
                    (GO G191)))
                  (SEQ
                   (EXIT
@@ -735,10 +716,8 @@
                                                              |curve|))
                             |cc| |t| |y| $)
                            (QCDR |be|))
-                          #2#)
-                         . #5#)))
-                 (LETT #1# (CDR #1#) . #5#) (GO G190) G191
-                 (EXIT (NREVERSE #2#)))))))) 
+                          #2#))))
+                 (LETT #1# (CDR #1#)) (GO G190) G191 (EXIT (NREVERSE #2#)))))))) 
 
 (SDEFUN |INTAF;algextint_base;2KMMLL;9|
         ((|x| |Kernel| F) (|y| |Kernel| F)
@@ -748,11 +727,11 @@
          (|lg| |List| F)
          ($ |List| (|Record| (|:| |ratpart| F) (|:| |coeffs| (|Vector| F)))))
         (SPROG
-         ((#1=#:G807 NIL) (|be| NIL) (#2=#:G806 NIL)
+         ((#1=#:G477 NIL) (|be| NIL) (#2=#:G476 NIL)
           (|res1|
            (|List|
             (|Record| (|:| |ratpart| |curve|) (|:| |coeffs| (|Vector| F)))))
-          (#3=#:G805 NIL) (|f| NIL) (#4=#:G804 NIL)
+          (#3=#:G475 NIL) (|f| NIL) (#4=#:G474 NIL)
           (|red|
            (|Mapping| |curve|
                       (|SparseUnivariatePolynomial|
@@ -766,7 +745,7 @@
            (|Record|
             (|:| |radicand| (|Fraction| (|SparseUnivariatePolynomial| F)))
             (|:| |deg| (|NonNegativeInteger|))))
-          (#5=#:G789 NIL)
+          (#5=#:G459 NIL)
           (|cv|
            (|Record|
             (|:| |func|
@@ -783,174 +762,179 @@
            (|List|
             (|SparseUnivariatePolynomial|
              (|Fraction| (|SparseUnivariatePolynomial| F)))))
-          (#6=#:G803 NIL) (|g| NIL) (#7=#:G802 NIL)
+          (#6=#:G473 NIL) (|g| NIL) (#7=#:G472 NIL)
           (|p| (|SparseUnivariatePolynomial| F)))
-         (SEQ
-          (LETT |p| (SPADCALL |y| (QREFELT $ 24))
-                . #8=(|INTAF;algextint_base;2KMMLL;9|))
-          (LETT |lg1|
-                (PROGN
-                 (LETT #7# NIL . #8#)
-                 (SEQ (LETT |g| NIL . #8#) (LETT #6# |lg| . #8#) G190
-                      (COND
-                       ((OR (ATOM #6#) (PROGN (LETT |g| (CAR #6#) . #8#) NIL))
-                        (GO G191)))
-                      (SEQ
-                       (EXIT
-                        (LETT #7# (CONS (|INTAF;F2UPUP| |g| |x| |y| |p| $) #7#)
-                              . #8#)))
-                      (LETT #6# (CDR #6#) . #8#) (GO G190) G191
-                      (EXIT (NREVERSE #7#))))
-                . #8#)
-          (LETT |cv|
-                (SPADCALL |lg1| (|INTAF;UP2UPUP| |p| |x| $) (QREFELT $ 51))
-                . #8#)
-          (LETT |curve|
-                (COND
-                 ((SPADCALL |y| '|rootOf| (QREFELT $ 39))
-                  (|AlgebraicFunctionField| (QREFELT $ 7)
-                                            (|SparseUnivariatePolynomial|
-                                             (QREFELT $ 7))
-                                            (|SparseUnivariatePolynomial|
-                                             (|Fraction|
-                                              (|SparseUnivariatePolynomial|
-                                               (QREFELT $ 7))))
-                                            (QVELT |cv| 1)))
-                 ((SPADCALL |y| '|nthRoot| (QREFELT $ 39))
-                  (SEQ
-                   (LETT |r|
-                         (PROG2
-                             (LETT #5# (SPADCALL (QVELT |cv| 1) (QREFELT $ 34))
-                                   . #8#)
-                             (QCDR #5#)
-                           (|check_union2| (QEQCAR #5# 0)
-                                           (|Record|
-                                            (|:| |radicand|
+         (SEQ (LETT |p| (SPADCALL |y| (QREFELT $ 24)))
+              (LETT |lg1|
+                    (PROGN
+                     (LETT #7# NIL)
+                     (SEQ (LETT |g| NIL) (LETT #6# |lg|) G190
+                          (COND
+                           ((OR (ATOM #6#) (PROGN (LETT |g| (CAR #6#)) NIL))
+                            (GO G191)))
+                          (SEQ
+                           (EXIT
+                            (LETT #7#
+                                  (CONS (|INTAF;F2UPUP| |g| |x| |y| |p| $)
+                                        #7#))))
+                          (LETT #6# (CDR #6#)) (GO G190) G191
+                          (EXIT (NREVERSE #7#)))))
+              (LETT |cv|
+                    (SPADCALL |lg1| (|INTAF;UP2UPUP| |p| |x| $)
+                              (QREFELT $ 51)))
+              (LETT |curve|
+                    (COND
+                     ((SPADCALL |y| '|rootOf| (QREFELT $ 39))
+                      (|AlgebraicFunctionField| (QREFELT $ 7)
+                                                (|SparseUnivariatePolynomial|
+                                                 (QREFELT $ 7))
+                                                (|SparseUnivariatePolynomial|
                                                  (|Fraction|
                                                   (|SparseUnivariatePolynomial|
                                                    (QREFELT $ 7))))
-                                            (|:| |deg| (|NonNegativeInteger|)))
-                                           (|Union|
-                                            (|Record|
-                                             (|:| |radicand|
-                                                  (|Fraction|
-                                                   (|SparseUnivariatePolynomial|
-                                                    (QREFELT $ 7))))
-                                             (|:| |deg|
-                                                  (|NonNegativeInteger|)))
-                                            "failed")
-                                           #5#))
-                         . #8#)
-                   (EXIT
-                    (|RadicalFunctionField| (QREFELT $ 7)
-                                            (|SparseUnivariatePolynomial|
-                                             (QREFELT $ 7))
-                                            (|SparseUnivariatePolynomial|
-                                             (|Fraction|
-                                              (|SparseUnivariatePolynomial|
-                                               (QREFELT $ 7))))
-                                            (QCAR |r|) (QCDR |r|)))))
-                 ('T (|error| "failed - cannot handle that integrand")))
-                . #8#)
-          (LETT |red|
-                (|compiledLookupCheck| '|reduce|
-                                       (LIST '$
-                                             (LIST
-                                              '|SparseUnivariatePolynomial|
-                                              (LIST '|Fraction|
-                                                    (LIST
-                                                     '|SparseUnivariatePolynomial|
-                                                     (|devaluate|
-                                                      (ELT $ 7))))))
-                                       |curve|)
-                . #8#)
-          (LETT |res1|
-                (SPADCALL |der| |csolve|
-                          (PROGN
-                           (LETT #4# NIL . #8#)
-                           (SEQ (LETT |f| NIL . #8#)
-                                (LETT #3# (QVELT |cv| 0) . #8#) G190
-                                (COND
-                                 ((OR (ATOM #3#)
-                                      (PROGN (LETT |f| (CAR #3#) . #8#) NIL))
-                                  (GO G191)))
-                                (SEQ
-                                 (EXIT
-                                  (LETT #4# (CONS (SPADCALL |f| |red|) #4#)
-                                        . #8#)))
-                                (LETT #3# (CDR #3#) . #8#) (GO G190) G191
-                                (EXIT (NREVERSE #4#))))
-                          (|compiledLookupCheck| '|algextint_base|
+                                                (QVELT |cv| 1)))
+                     ((SPADCALL |y| '|nthRoot| (QREFELT $ 39))
+                      (SEQ
+                       (LETT |r|
+                             (PROG2
+                                 (LETT #5#
+                                       (SPADCALL (QVELT |cv| 1)
+                                                 (QREFELT $ 34)))
+                                 (QCDR #5#)
+                               (|check_union2| (QEQCAR #5# 0)
+                                               (|Record|
+                                                (|:| |radicand|
+                                                     (|Fraction|
+                                                      (|SparseUnivariatePolynomial|
+                                                       (QREFELT $ 7))))
+                                                (|:| |deg|
+                                                     (|NonNegativeInteger|)))
+                                               (|Union|
+                                                (|Record|
+                                                 (|:| |radicand|
+                                                      (|Fraction|
+                                                       (|SparseUnivariatePolynomial|
+                                                        (QREFELT $ 7))))
+                                                 (|:| |deg|
+                                                      (|NonNegativeInteger|)))
+                                                "failed")
+                                               #5#)))
+                       (EXIT
+                        (|RadicalFunctionField| (QREFELT $ 7)
+                                                (|SparseUnivariatePolynomial|
+                                                 (QREFELT $ 7))
+                                                (|SparseUnivariatePolynomial|
+                                                 (|Fraction|
+                                                  (|SparseUnivariatePolynomial|
+                                                   (QREFELT $ 7))))
+                                                (QCAR |r|) (QCDR |r|)))))
+                     ('T (|error| "failed - cannot handle that integrand"))))
+              (LETT |red|
+                    (|compiledLookupCheck| '|reduce|
+                                           (LIST '$
                                                  (LIST
-                                                  (LIST '|List|
-                                                        (LIST '|Record|
-                                                              (LIST '|:|
-                                                                    '|ratpart|
-                                                                    (|devaluate|
-                                                                     |curve|))
-                                                              (LIST '|:|
-                                                                    '|coeffs|
+                                                  '|SparseUnivariatePolynomial|
+                                                  (LIST '|Fraction|
+                                                        (LIST
+                                                         '|SparseUnivariatePolynomial|
+                                                         (|devaluate|
+                                                          (ELT $ 7))))))
+                                           |curve|))
+              (LETT |res1|
+                    (SPADCALL |der| |csolve|
+                              (PROGN
+                               (LETT #4# NIL)
+                               (SEQ (LETT |f| NIL) (LETT #3# (QVELT |cv| 0))
+                                    G190
+                                    (COND
+                                     ((OR (ATOM #3#)
+                                          (PROGN (LETT |f| (CAR #3#)) NIL))
+                                      (GO G191)))
+                                    (SEQ
+                                     (EXIT
+                                      (LETT #4#
+                                            (CONS (SPADCALL |f| |red|) #4#))))
+                                    (LETT #3# (CDR #3#)) (GO G190) G191
+                                    (EXIT (NREVERSE #4#))))
+                              (|compiledLookupCheck| '|algextint_base|
+                                                     (LIST
+                                                      (LIST '|List|
+                                                            (LIST '|Record|
+                                                                  (LIST '|:|
+                                                                        '|ratpart|
+                                                                        (|devaluate|
+                                                                         |curve|))
+                                                                  (LIST '|:|
+                                                                        '|coeffs|
+                                                                        (LIST
+                                                                         '|Vector|
+                                                                         (|devaluate|
+                                                                          (ELT
+                                                                           $
+                                                                           7))))))
+                                                      (LIST '|Mapping|
+                                                            (LIST
+                                                             '|SparseUnivariatePolynomial|
+                                                             (|devaluate|
+                                                              (ELT $ 7)))
+                                                            (LIST
+                                                             '|SparseUnivariatePolynomial|
+                                                             (|devaluate|
+                                                              (ELT $ 7))))
+                                                      (LIST '|Mapping|
+                                                            (LIST '|List|
+                                                                  (LIST
+                                                                   '|Vector|
+                                                                   (|devaluate|
+                                                                    (ELT $
+                                                                         7))))
+                                                            (LIST '|Matrix|
+                                                                  (|devaluate|
+                                                                   (ELT $ 7))))
+                                                      (LIST '|List|
+                                                            (|devaluate|
+                                                             |curve|)))
+                                                     (|AlgebraicIntegrate2|
+                                                      (ELT $ 6) (ELT $ 7)
+                                                      (|SparseUnivariatePolynomial|
+                                                       (ELT $ 7))
+                                                      (|SparseUnivariatePolynomial|
+                                                       (|Fraction|
+                                                        (|SparseUnivariatePolynomial|
+                                                         (ELT $ 7))))
+                                                      |curve|))))
+              (EXIT
+               (PROGN
+                (LETT #2# NIL)
+                (SEQ (LETT |be| NIL) (LETT #1# |res1|) G190
+                     (COND
+                      ((OR (ATOM #1#) (PROGN (LETT |be| (CAR #1#)) NIL))
+                       (GO G191)))
+                     (SEQ
+                      (EXIT
+                       (LETT #2#
+                             (CONS
+                              (CONS
+                               (|INTAF;UPUP2F1|
+                                (SPADCALL (QCAR |be|)
+                                          (|compiledLookupCheck| '|lift|
+                                                                 (LIST
+                                                                  (LIST
+                                                                   '|SparseUnivariatePolynomial|
+                                                                   (LIST
+                                                                    '|Fraction|
                                                                     (LIST
-                                                                     '|Vector|
+                                                                     '|SparseUnivariatePolynomial|
                                                                      (|devaluate|
                                                                       (ELT $
-                                                                           7))))))
-                                                  (LIST '|Mapping|
-                                                        (LIST
-                                                         '|SparseUnivariatePolynomial|
-                                                         (|devaluate|
-                                                          (ELT $ 7)))
-                                                        (LIST
-                                                         '|SparseUnivariatePolynomial|
-                                                         (|devaluate|
-                                                          (ELT $ 7))))
-                                                  (LIST '|Mapping|
-                                                        (LIST '|List|
-                                                              (LIST '|Vector|
-                                                                    (|devaluate|
-                                                                     (ELT $
-                                                                          7))))
-                                                        (LIST '|Matrix|
-                                                              (|devaluate|
-                                                               (ELT $ 7))))
-                                                  (LIST '|List|
-                                                        (|devaluate| |curve|)))
-                                                 (|AlgebraicIntegrate2|
-                                                  (ELT $ 6) (ELT $ 7)
-                                                  |curve|)))
-                . #8#)
-          (EXIT
-           (PROGN
-            (LETT #2# NIL . #8#)
-            (SEQ (LETT |be| NIL . #8#) (LETT #1# |res1| . #8#) G190
-                 (COND
-                  ((OR (ATOM #1#) (PROGN (LETT |be| (CAR #1#) . #8#) NIL))
-                   (GO G191)))
-                 (SEQ
-                  (EXIT
-                   (LETT #2#
-                         (CONS
-                          (CONS
-                           (|INTAF;UPUP2F1|
-                            (SPADCALL (QCAR |be|)
-                                      (|compiledLookupCheck| '|lift|
-                                                             (LIST
-                                                              (LIST
-                                                               '|SparseUnivariatePolynomial|
-                                                               (LIST
-                                                                '|Fraction|
-                                                                (LIST
-                                                                 '|SparseUnivariatePolynomial|
-                                                                 (|devaluate|
-                                                                  (ELT $ 7)))))
-                                                              '$)
-                                                             |curve|))
-                            (QVELT |cv| 2) (QVELT |cv| 3) |x| |y| $)
-                           (QCDR |be|))
-                          #2#)
-                         . #8#)))
-                 (LETT #1# (CDR #1#) . #8#) (GO G190) G191
-                 (EXIT (NREVERSE #2#)))))))) 
+                                                                           7)))))
+                                                                  '$)
+                                                                 |curve|))
+                                (QVELT |cv| 2) (QVELT |cv| 3) |x| |y| $)
+                               (QCDR |be|))
+                              #2#))))
+                     (LETT #1# (CDR #1#)) (GO G190) G191
+                     (EXIT (NREVERSE #2#)))))))) 
 
 (SDEFUN |INTAF;UP2UPUP|
         ((|p| |SparseUnivariatePolynomial| F) (|k| |Kernel| F)
@@ -962,8 +946,8 @@
 
 (SDEFUN |INTAF;UP2UPUP!0| ((|x1| NIL) ($$ NIL))
         (PROG (|k| $)
-          (LETT |k| (QREFELT $$ 1) . #1=(|INTAF;UP2UPUP|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |k| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL |x1| |k| (QREFELT $ 54)))))) 
 
 (SDEFUN |INTAF;UPUP2F|
@@ -981,40 +965,40 @@
 
 (SDEFUN |INTAF;UPUP2F!0| ((|x1| NIL) ($$ NIL))
         (PROG (|t| $)
-          (LETT |t| (QREFELT $$ 1) . #1=(|INTAF;UPUP2F|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |t| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL |x1| |t| (QREFELT $ 14)))))) 
 
-(SDEFUN |INTAF;algint;F2KMIr;12|
+(SDEFUN |INTAF;algint;F2KMMIr;12|
         ((|f| F) (|t| |Kernel| F) (|y| |Kernel| F)
          (|derivation| |Mapping| (|SparseUnivariatePolynomial| F)
           (|SparseUnivariatePolynomial| F))
+         (|rec_int| |Mapping| (|IntegrationResult| F) F)
          ($ |IntegrationResult| F))
         (COND
          ((SPADCALL |y| '|nthRoot| (QREFELT $ 39))
-          (|INTAF;rootintegrate| |f| |t| |y| |derivation| $))
+          (|INTAF;rootintegrate| |f| |t| |y| |derivation| |rec_int| $))
          ((SPADCALL |y| '|rootOf| (QREFELT $ 39))
-          (|INTAF;algintegrate| |f| |t| |y| |derivation| $))
+          (|INTAF;algintegrate| |f| |t| |y| |derivation| |rec_int| $))
          ('T (|error| "failed - cannot handle that integrand")))) 
 
 (DECLAIM (NOTINLINE |AlgebraicIntegration;|)) 
 
-(DEFUN |AlgebraicIntegration| (&REST #1=#:G822)
+(DEFUN |AlgebraicIntegration| (&REST #1=#:G494)
   (SPROG NIL
-         (PROG (#2=#:G823)
+         (PROG (#2=#:G495)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|AlgebraicIntegration|)
-                                               '|domainEqualList|)
-                    . #3=(|AlgebraicIntegration|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |AlgebraicIntegration;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|AlgebraicIntegration|)))))))))) 
@@ -1022,12 +1006,12 @@
 (DEFUN |AlgebraicIntegration;| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|AlgebraicIntegration|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|AlgebraicIntegration| DV$1 DV$2) . #1#)
-          (LETT $ (GETREFV 61) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|AlgebraicIntegration| DV$1 DV$2))
+          (LETT $ (GETREFV 62))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|AlgebraicIntegration|
                       (LIST DV$1 DV$2) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -1068,23 +1052,82 @@
               (|List| 8) (89 . |chvar|) |INTAF;algextint_base;2KMMLL;9|
               (|Fraction| 23) (95 . |univariate|) (|Mapping| 9 7)
               (|SparseUnivariatePolynomialFunctions2| 7 9) (101 . |map|)
-              (107 . *) (|IntegrationResult| 7) |INTAF;algint;F2KMIr;12|)
-           '#(|algint| 113 |algextint_base| 121 |algextint| 130) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 60
-                                                 '(3 10 8 8 9 9 11 2 13 7 9 12
-                                                   14 2 17 15 16 8 18 1 7 0 19
-                                                   20 2 15 7 0 7 21 3 13 15 7
-                                                   12 15 22 1 7 23 19 24 1 10
-                                                   25 8 26 1 9 0 0 27 0 6 0 28
-                                                   2 8 0 9 29 30 2 8 0 0 0 31 1
-                                                   10 33 8 34 1 9 15 0 35 1 9 0
-                                                   15 36 2 12 37 0 38 39 2 10
-                                                   49 50 8 51 2 7 53 0 19 54 2
-                                                   56 8 55 15 57 2 7 0 0 0 58 4
-                                                   0 59 7 12 12 42 60 5 0 41 12
-                                                   12 42 46 47 52 7 0 41 12 12
-                                                   42 44 45 46 47 48)))))
+              (107 . *) (|IntegrationResult| 7) (|Mapping| 59 7)
+              |INTAF;algint;F2KMMIr;12|)
+           '#(|algint| 113 |algextint_base| 122 |algextint| 131) 'NIL
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|algint|
+                                 ((|IntegrationResult| |#2|) |#2|
+                                  (|Kernel| |#2|) (|Kernel| |#2|)
+                                  (|Mapping|
+                                   (|SparseUnivariatePolynomial| |#2|)
+                                   (|SparseUnivariatePolynomial| |#2|))
+                                  (|Mapping| (|IntegrationResult| |#2|) |#2|)))
+                                T)
+                              '((|algextint|
+                                 ((|List|
+                                   (|Record| (|:| |ratpart| |#2|)
+                                             (|:| |coeffs| (|Vector| |#2|))))
+                                  (|Kernel| |#2|) (|Kernel| |#2|)
+                                  (|Mapping|
+                                   (|SparseUnivariatePolynomial| |#2|)
+                                   (|SparseUnivariatePolynomial| |#2|))
+                                  (|Mapping|
+                                   (|List|
+                                    (|Record|
+                                     (|:| |ratpart|
+                                          (|Fraction|
+                                           (|SparseUnivariatePolynomial|
+                                            |#2|)))
+                                     (|:| |coeffs| (|Vector| |#2|))))
+                                   (|List|
+                                    (|Fraction|
+                                     (|SparseUnivariatePolynomial| |#2|))))
+                                  (|Mapping|
+                                   (|List|
+                                    (|Record|
+                                     (|:| |ratpart|
+                                          (|Fraction|
+                                           (|SparseUnivariatePolynomial|
+                                            |#2|)))
+                                     (|:| |coeffs| (|Vector| |#2|))))
+                                   (|Fraction|
+                                    (|SparseUnivariatePolynomial| |#2|))
+                                   (|List|
+                                    (|Fraction|
+                                     (|SparseUnivariatePolynomial| |#2|))))
+                                  (|Mapping| (|List| (|Vector| |#2|))
+                                             (|Matrix| |#2|))
+                                  (|List| |#2|)))
+                                T)
+                              '((|algextint_base|
+                                 ((|List|
+                                   (|Record| (|:| |ratpart| |#2|)
+                                             (|:| |coeffs| (|Vector| |#2|))))
+                                  (|Kernel| |#2|) (|Kernel| |#2|)
+                                  (|Mapping|
+                                   (|SparseUnivariatePolynomial| |#2|)
+                                   (|SparseUnivariatePolynomial| |#2|))
+                                  (|Mapping| (|List| (|Vector| |#2|))
+                                             (|Matrix| |#2|))
+                                  (|List| |#2|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 61
+                                            '(3 10 8 8 9 9 11 2 13 7 9 12 14 2
+                                              17 15 16 8 18 1 7 0 19 20 2 15 7
+                                              0 7 21 3 13 15 7 12 15 22 1 7 23
+                                              19 24 1 10 25 8 26 1 9 0 0 27 0 6
+                                              0 28 2 8 0 9 29 30 2 8 0 0 0 31 1
+                                              10 33 8 34 1 9 15 0 35 1 9 0 15
+                                              36 2 12 37 0 38 39 2 10 49 50 8
+                                              51 2 7 53 0 19 54 2 56 8 55 15 57
+                                              2 7 0 0 0 58 5 0 59 7 12 12 42 60
+                                              61 5 0 41 12 12 42 46 47 52 7 0
+                                              41 12 12 42 44 45 46 47 48)))))
            '|lookupComplete|)) 

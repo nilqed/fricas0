@@ -5,26 +5,24 @@
 
 (DEFPARAMETER |TensorPowerCategory;AL| 'NIL) 
 
-(DEFUN |TensorPowerCategory| (&REST #1=#:G695)
-  (LET (#2=#:G696)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluateList| #1#) |TensorPowerCategory;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |TensorPowerCategory;AL|
-              (|cons5|
-               (CONS #3# (SETQ #2# (APPLY #'|TensorPowerCategory;| #1#)))
-               |TensorPowerCategory;AL|))
-      #2#)))) 
+(DEFUN |TensorPowerCategory| (|t#1| |t#2| |t#3|)
+  (LET (#1=#:G379
+        (#2=#:G380
+         (LIST (|devaluate| |t#1|) (|devaluate| |t#2|) (|devaluate| |t#3|))))
+    (COND ((SETQ #1# (|assoc| #2# |TensorPowerCategory;AL|)) (CDR #1#))
+          (T
+           (SETQ |TensorPowerCategory;AL|
+                   (|cons5|
+                    (CONS #2# (SETQ #1# (APPLY #'|TensorPowerCategory;| #2#)))
+                    |TensorPowerCategory;AL|))
+           #1#)))) 
 
 (DEFUN |TensorPowerCategory;| (|t#1| |t#2| |t#3|)
-  (SPROG ((#1=#:G694 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
-                    (PAIR '(|t#1| |t#2| |t#3|)
-                          (LIST (|devaluate| |t#1|) (|devaluate| |t#2|)
-                                (|devaluate| |t#3|)))
+                    (MAKE_PAIRS '(|t#1| |t#2| |t#3|) (LIST |t#1| |t#2| |t#3|))
                     (COND (|TensorPowerCategory;CAT|)
                           ('T
                            (LETT |TensorPowerCategory;CAT|
@@ -37,9 +35,5 @@
                                                                       |t#3|
                                                                       |t#3|)
                                              T))
-                                          '((|List| |t#3|)) NIL))
-                                 . #2=(|TensorPowerCategory|)))))
-                   . #2#)
-           (SETELT #1# 0
-                   (LIST '|TensorPowerCategory| (|devaluate| |t#1|)
-                         (|devaluate| |t#2|) (|devaluate| |t#3|)))))) 
+                                          NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|TensorPowerCategory| |t#1| |t#2| |t#3|))))) 

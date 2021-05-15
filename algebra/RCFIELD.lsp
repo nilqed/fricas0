@@ -4,18 +4,17 @@
 (DEFPARAMETER |RealClosedField;AL| 'NIL) 
 
 (DEFUN |RealClosedField| ()
-  (LET (#:G708)
-    (COND (|RealClosedField;AL|)
-          (T (SETQ |RealClosedField;AL| (|RealClosedField;|)))))) 
+  (COND (|RealClosedField;AL|)
+        (T (SETQ |RealClosedField;AL| (|RealClosedField;|))))) 
 
 (DEFUN |RealClosedField;| ()
-  (SPROG ((#1=#:G706 NIL))
+  (SPROG ((#1=#:G387 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
-                    (PAIR '(#2=#:G703 #3=#:G704 #4=#:G705)
-                          (LIST '(|Fraction| (|Integer|)) '(|Integer|)
-                                '(|Fraction| (|Integer|))))
+                    (MAKE_PAIRS '(#2=#:G384 #3=#:G385 #4=#:G386)
+                                (LIST '(|Fraction| (|Integer|)) '(|Integer|)
+                                      '(|Fraction| (|Integer|))))
                     (|Join| (|CharacteristicZero|) (|OrderedRing|)
                             (|CommutativeRing|) (|Field|)
                             (|FullyRetractableTo| '#2#) (|Algebra| '#3#)
@@ -72,18 +71,7 @@
                                ((|rename| ($ $ (|OutputForm|))) T)
                                ((|approximate| ((|Fraction| (|Integer|)) $ $))
                                 T))
-                             NIL
-                             '((|Fraction| (|Integer|)) (|OutputForm|)
-                               (|Integer|) (|PositiveInteger|) (|List| $)
-                               (|Polynomial| (|Integer|))
-                               (|Polynomial| (|Fraction| (|Integer|)))
-                               (|Polynomial| $)
-                               (|SparseUnivariatePolynomial| (|Integer|))
-                               (|SparseUnivariatePolynomial|
-                                (|Fraction| (|Integer|)))
-                               (|SparseUnivariatePolynomial| $))
-                             NIL)))
-                   |RealClosedField|)
+                             NIL NIL NIL))))
            (SETELT #1# 0 '(|RealClosedField|))))) 
 
 (MAKEPROP '|RealClosedField| 'NILADIC T) 

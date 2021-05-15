@@ -5,25 +5,24 @@
 
 (DEFPARAMETER |MatrixCategory;AL| 'NIL) 
 
-(DEFUN |MatrixCategory| (&REST #1=#:G721)
-  (LET (#2=#:G722)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluateList| #1#) |MatrixCategory;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |MatrixCategory;AL|
-              (|cons5| (CONS #3# (SETQ #2# (APPLY #'|MatrixCategory;| #1#)))
-                       |MatrixCategory;AL|))
-      #2#)))) 
+(DEFUN |MatrixCategory| (|t#1| |t#2| |t#3|)
+  (LET (#1=#:G409
+        (#2=#:G410
+         (LIST (|devaluate| |t#1|) (|devaluate| |t#2|) (|devaluate| |t#3|))))
+    (COND ((SETQ #1# (|assoc| #2# |MatrixCategory;AL|)) (CDR #1#))
+          (T
+           (SETQ |MatrixCategory;AL|
+                   (|cons5|
+                    (CONS #2# (SETQ #1# (APPLY #'|MatrixCategory;| #2#)))
+                    |MatrixCategory;AL|))
+           #1#)))) 
 
 (DEFUN |MatrixCategory;| (|t#1| |t#2| |t#3|)
-  (SPROG ((#1=#:G720 NIL))
+  (SPROG ((#1=#:G408 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
-                    (PAIR '(|t#1| |t#2| |t#3|)
-                          (LIST (|devaluate| |t#1|) (|devaluate| |t#2|)
-                                (|devaluate| |t#3|)))
+                    (MAKE_PAIRS '(|t#1| |t#2| |t#3|) (LIST |t#1| |t#2| |t#3|))
                     (COND (|MatrixCategory;CAT|)
                           ('T
                            (LETT |MatrixCategory;CAT|
@@ -113,15 +112,5 @@
                                         (|NonNegativeInteger|)
                                         (|Union| |t#1| "one")))
                                       T))
-                                   NIL
-                                   '((|Void|) (|Integer|)
-                                     (|List| (|List| (|NonNegativeInteger|)))
-                                     (|List| $) (|NonNegativeInteger|)
-                                     (|List| |t#3|) (|List| |t#1|)
-                                     (|List| (|List| |t#1|)) (|Boolean|))
-                                   NIL))
-                                 . #2=(|MatrixCategory|)))))
-                   . #2#)
-           (SETELT #1# 0
-                   (LIST '|MatrixCategory| (|devaluate| |t#1|)
-                         (|devaluate| |t#2|) (|devaluate| |t#3|)))))) 
+                                   NIL NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|MatrixCategory| |t#1| |t#2| |t#3|))))) 

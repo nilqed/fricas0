@@ -5,35 +5,29 @@
 
 (DEFPARAMETER |GradedAlgebra;AL| 'NIL) 
 
-(DEFUN |GradedAlgebra| (&REST #1=#:G691)
-  (LET (#2=#:G692)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluateList| #1#) |GradedAlgebra;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |GradedAlgebra;AL|
-              (|cons5| (CONS #3# (SETQ #2# (APPLY #'|GradedAlgebra;| #1#)))
-                       |GradedAlgebra;AL|))
-      #2#)))) 
+(DEFUN |GradedAlgebra| (|t#1| |t#2|)
+  (LET (#1=#:G379 (#2=#:G380 (LIST (|devaluate| |t#1|) (|devaluate| |t#2|))))
+    (COND ((SETQ #1# (|assoc| #2# |GradedAlgebra;AL|)) (CDR #1#))
+          (T
+           (SETQ |GradedAlgebra;AL|
+                   (|cons5|
+                    (CONS #2# (SETQ #1# (APPLY #'|GradedAlgebra;| #2#)))
+                    |GradedAlgebra;AL|))
+           #1#)))) 
 
 (DEFUN |GradedAlgebra;| (|t#1| |t#2|)
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV|
-                    (PAIR '(|t#1| |t#2|)
-                          (LIST (|devaluate| |t#1|) (|devaluate| |t#2|)))
-                    (COND (|GradedAlgebra;CAT|)
-                          ('T
-                           (LETT |GradedAlgebra;CAT|
-                                 (|Join| (|GradedModule| '|t#1| '|t#2|)
-                                         (|RetractableTo| '|t#1|)
-                                         (|mkCategory|
-                                          '(((|One| ($) |constant|) T)
-                                            ((|product| ($ $ $)) T))
-                                          NIL 'NIL NIL))
-                                 . #2=(|GradedAlgebra|)))))
-                   . #2#)
-           (SETELT #1# 0
-                   (LIST '|GradedAlgebra| (|devaluate| |t#1|)
-                         (|devaluate| |t#2|)))))) 
+                   (|sublisV| (MAKE_PAIRS '(|t#1| |t#2|) (LIST |t#1| |t#2|))
+                              (COND (|GradedAlgebra;CAT|)
+                                    ('T
+                                     (LETT |GradedAlgebra;CAT|
+                                           (|Join|
+                                            (|GradedModule| '|t#1| '|t#2|)
+                                            (|RetractableTo| '|t#1|)
+                                            (|mkCategory|
+                                             '(((|One| ($) |constant|) T)
+                                               ((|product| ($ $ $)) T))
+                                             NIL NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|GradedAlgebra| |t#1| |t#2|))))) 

@@ -36,12 +36,10 @@
 
 (SDEFUN |MODRING;newmodulo| ((|m1| |Mod|) (|m2| |Mod|) ($ |Mod|))
         (SPROG ((|r| (|Union| |Mod| "failed")))
-               (SEQ
-                (LETT |r| (SPADCALL |m1| |m2| (QREFELT $ 9))
-                      |MODRING;newmodulo|)
-                (EXIT
-                 (COND ((QEQCAR |r| 1) (|error| "incompatible moduli"))
-                       ('T (QCDR |r|))))))) 
+               (SEQ (LETT |r| (SPADCALL |m1| |m2| (QREFELT $ 9)))
+                    (EXIT
+                     (COND ((QEQCAR |r| 1) (|error| "incompatible moduli"))
+                           ('T (QCDR |r|))))))) 
 
 (SDEFUN |MODRING;=;2$B;13| ((|x| $) (|y| $) ($ |Boolean|))
         (COND ((SPADCALL (QCAR |x|) (QCAR |y|) (QREFELT $ 34)) 'T)
@@ -68,14 +66,12 @@
 
 (SDEFUN |MODRING;exQuo;2$U;18| ((|x| $) (|y| $) ($ |Union| $ "failed"))
         (SPROG ((|r| (|Union| R "failed")) (|xm| (|Mod|)))
-               (SEQ (LETT |xm| (QCDR |x|) . #1=(|MODRING;exQuo;2$U;18|))
+               (SEQ (LETT |xm| (QCDR |x|))
                     (COND
                      ((SPADCALL |xm| (QCDR |y|) (QREFELT $ 45))
-                      (LETT |xm| (|MODRING;newmodulo| |xm| (QCDR |y|) $)
-                            . #1#)))
+                      (LETT |xm| (|MODRING;newmodulo| |xm| (QCDR |y|) $))))
                     (LETT |r|
-                          (SPADCALL (QCAR |x|) (QCAR |y|) |xm| (QREFELT $ 10))
-                          . #1#)
+                          (SPADCALL (QCAR |x|) (QCAR |y|) |xm| (QREFELT $ 10)))
                     (EXIT
                      (COND ((QEQCAR |r| 1) (CONS 1 "failed"))
                            ('T (CONS 0 (CONS (QCDR |r|) |xm|)))))))) 
@@ -85,38 +81,34 @@
                (SEQ
                 (LETT |r|
                       (SPADCALL (|spadConstant| $ 29) (QCAR |x|) (QCDR |x|)
-                                (QREFELT $ 10))
-                      |MODRING;recip;$U;19|)
+                                (QREFELT $ 10)))
                 (EXIT
                  (COND ((QEQCAR |r| 1) (CONS 1 "failed"))
                        ('T (CONS 0 (CONS (QCDR |r|) (QCDR |x|))))))))) 
 
 (SDEFUN |MODRING;inv;2$;20| ((|x| $) ($ $))
         (SPROG ((|u| (|Union| $ "failed")))
-               (SEQ
-                (LETT |u| (SPADCALL |x| (QREFELT $ 48)) |MODRING;inv;2$;20|)
-                (EXIT
-                 (COND ((QEQCAR |u| 1) (|error| "not invertible"))
-                       ('T (QCDR |u|))))))) 
+               (SEQ (LETT |u| (SPADCALL |x| (QREFELT $ 48)))
+                    (EXIT
+                     (COND ((QEQCAR |u| 1) (|error| "not invertible"))
+                           ('T (QCDR |u|))))))) 
 
 (DECLAIM (NOTINLINE |ModularRing;|)) 
 
-(DEFUN |ModularRing| (&REST #1=#:G754)
+(DEFUN |ModularRing| (&REST #1=#:G435)
   (SPROG NIL
-         (PROG (#2=#:G755)
+         (PROG (#2=#:G436)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|ModularRing|)
-                                               '|domainEqualList|)
-                    . #3=(|ModularRing|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (APPLY (|function| |ModularRing;|) #1#)
-                    (LETT #2# T . #3#))
+                  (PROG1 (APPLY (|function| |ModularRing;|) #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|ModularRing|)))))))))) 
 
@@ -125,15 +117,15 @@
    ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$5 NIL) (DV$4 NIL) (DV$3 NIL) (DV$2 NIL)
     (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #1=(|ModularRing|))
-    (LETT DV$2 (|devaluate| |#2|) . #1#)
-    (LETT DV$3 (|devaluate| |#3|) . #1#)
-    (LETT DV$4 (|devaluate| |#4|) . #1#)
-    (LETT DV$5 (|devaluate| |#5|) . #1#)
-    (LETT |dv$| (LIST '|ModularRing| DV$1 DV$2 DV$3 DV$4 DV$5) . #1#)
-    (LETT $ (GETREFV 54) . #1#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT DV$4 (|devaluate| |#4|))
+    (LETT DV$5 (|devaluate| |#5|))
+    (LETT |dv$| (LIST '|ModularRing| DV$1 DV$2 DV$3 DV$4 DV$5))
+    (LETT $ (GETREFV 54))
     (QSETREFV $ 0 |dv$|)
-    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
     (|haddProp| |$ConstructorCache| '|ModularRing|
                 (LIST DV$1 DV$2 DV$3 DV$4 DV$5) (CONS 1 $))
     (|stuffDomainSlots| $)

@@ -29,18 +29,7 @@
 ;; NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 ;; SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
-(setq copyrights '(
- "Copyright The Numerical Algorithms Group Limited 1991-94."
- "All rights reserved"
- "Certain derivative-work portions Copyright (C) 1998 by Leslie Lamport."
- "Portions (c) Copyright Taiichi Yuasa and Masami Hagiya, 1984."
- "All rights reserved"))
-
 (in-package "BOOT")
-
-(defvar |$standard| 't)
-(defvar |$saturn| nil)
 
 (setq |$printTimeIfTrue| nil)
 
@@ -78,7 +67,6 @@
 (DEFPARAMETER |$bootStrapMode| NIL) ;; if true skip functor bodies
 (SETQ |$bootstrapDomains| NIL)
 (SETQ |$compileDontDefineFunctions| 'T)
-(SETQ |$compileOnlyCertainItems| NIL)
 (SETQ |$devaluateList| NIL)
 (SETQ |$doNotCompressHashTableIfTrue| T)
 (SETQ |$mutableDomains| NIL)     ; checked in DEFINE BOOT
@@ -92,8 +80,6 @@
   (VECTOR (LIST '|basic| '|categories|) NIL NIL))
 (SETQ |$localExposureData|
   (VECTOR (LIST '|basic| '|categories|) NIL NIL))
-(SETQ |$compilingInputFile| NIL)
-(SETQ |$minivectorNames| NIL)
 (setq |$ReadingFile| NIL)
 (setq |$NonNullStream| "NonNullStream")
 (setq |$NullStream| "NullStream")
@@ -103,10 +89,7 @@
 (setq |$Newline| #\Newline)
 
 
-(DEFPARAMETER $FUNNAME NIL)   ;; this and next used in COMP,TRAN,1
-(DEFPARAMETER $FUNNAME_TAIL '(()))
 (SETQ $SPAD_ERRORS (VECTOR 0 0 0))
-(SETQ $OLDLINE NIL)  ;"used to output command lines"
 (SETQ |$edit_file| NIL)
 (DEFPARAMETER |$InteractiveMode| T)
 
@@ -135,7 +118,6 @@
 (setq *print-pretty* t)
 (setq *print-circle* nil)
 
-;; $SYSCOMMANDS is now defined at the top of i-syscmd.boot
 
 (SETQ |$systemCommands| '(
 ;;  COMMAND              USER LEVEL   - )set userlevel
@@ -144,7 +126,7 @@
    (|cd|                             . |interpreter|)
    (|clear|                          . |interpreter|)
    (|close|                          . |interpreter|)
-   (|compiler|                       . |compiler|   )
+   (|compile|                        . |compiler|   )
    (|copyright|                      . |interpreter|)
    (|credits|                        . |interpreter|)
    (|display|                        . |interpreter|)
@@ -193,7 +175,7 @@
     |cd|
     |clear|
     |close|
-    |compiler|
+    |compile|
     |depends|
     |display|
     |edit|
@@ -237,10 +219,8 @@
        (|apropos|    . "what things")
        (|cache|      . "set functions cache")
        (|cl|         . "clear")
-       (|co|         . "compiler")
+       (|co|         . "compile")
        (|d|          . "display")
-       (|dep|        . "display dependents")
-       (|dependents| . "display dependents")
        (|expose|     . "set expose add constructor")
        (|fortran|    . "set output fortran")
        (|h|          . "help")
@@ -251,7 +231,7 @@
        (|recurrence| . "set functions recurrence")
        (|restore|    . "history )restore")
        (|save|       . "history )save")
-       (|startGraphics|    .  "system $AXIOM/lib/viewman &")
+       (|startGraphics|    .  "system $FRICAS/lib/viewman &")
        (|stopGraphics|     .  "lisp (|sockSendSignal| 2 15)")
        (|time|       . "set message time")
        (|type|       . "set message type")
@@ -265,12 +245,8 @@
 
 (SETQ |$CommandSynonymAlist| (COPY |$InitialCommandSynonymAlist|))
 
-(SETQ |$spadLibFT| 'NRLIB)
-
-(SETQ |$updateCatTableIfTrue| NIL)
-
-(DEFPARAMETER |$ConstructorCache| (MAKE-HASHTABLE 'ID))
-(SETQ |$instantRecord| (MAKE-HASHTABLE 'ID))
+(DEFPARAMETER |$ConstructorCache| (MAKE_HASHTABLE 'ID))
+(SETQ |$instantRecord| (MAKE_HASHTABLE 'ID))
 (SETQ |$immediateDataSymbol| '|--immediateData--|)
 
 (SETQ |$useIntegerSubdomain| 'T)
@@ -345,7 +321,6 @@
 
 (SETQ |$printStorageIfTrue| NIL) ;; storage info disabled in common lisp
 (SETQ |$noEnv| NIL)
-(SETQ |$evalDomain| NIL)
 
 (SETQ |$SideEffectFreeFunctionList| '(
   |null| |case| |Zero| |One| \: |::| |has| |Mapping| |Record| |Union|
@@ -365,9 +340,7 @@
 
 (SETQ |$Integer| '(|Integer|))
 (SETQ |$ComplexInteger| (LIST '|Complex| |$Integer|))
-(SETQ |$NegativeInteger| '(|NegativeInteger|))
 (SETQ |$NonNegativeInteger| '(|NonNegativeInteger|))
-(SETQ |$NonPositiveInteger| '(|NonPositiveInteger|))
 (SETQ |$PositiveInteger| '(|PositiveInteger|))
 (SETQ |$RationalNumber| '(|Fraction| (|Integer|)))
 (SETQ |$String| '(|String|))
@@ -375,12 +348,6 @@
 (SETQ |$Void|  '(|Void|))
 (SETQ |$QuotientField| '|Fraction|)
 (SETQ |$FunctionalExpression| '|Expression|)
-
-;; Old names
-(SETQ |$SmallInteger| '(|SingleInteger|))
-
-;; New Names
-(SETQ |$SingleFloat| '(|SingleFloat|))
 (SETQ |$DoubleFloat| '(|DoubleFloat|))
 (SETQ |$SingleInteger| '(|SingleInteger|))
 
@@ -391,7 +358,6 @@
 (SETQ |$NoValue| '|$NoValue|)
 (SETQ |$NoValueMode| '|NoValueMode|)
 (SETQ |$DummyFunctorNames| '(|Mapping|))
-(SETQ |$form| NIL)
 (SETQ |$EmptyVector| (VECTOR))
 (SETQ |$Index| 0)
 (SETQ |$true| ''T)
@@ -470,25 +436,7 @@
 
 (SETQ |$useConvertForCoercions| NIL)
 
-;; ---- start of initial settings for variables used in test.boot
 
-(SETQ |$testOutputLineFlag| NIL)   ;; referenced by charyTop, prnd
-                                   ;; to stash lines
-(SETQ |$runTestFlag| NIL)          ;; referenced by maPrin to stash
-                                   ;; output by recordAndPrint to not
-                                   ;; print type/time
-(SETQ |$mkTestFlag| NIL)           ;; referenced by READLN to stash input
-                                   ;; by maPrin to stash output
-                                   ;; by recordAndPrint to write i/o
-                                   ;; onto $testStream
-(SETQ |$mkTestOutputStack| NIL)    ;; saves output for $testStream
-                                   ;; (see maPrin)
-
-;; ---- end of initial settings for variables used in test.boot
-
-
-;; By default, don't generate info files with old compiler.
-(setq |$profileCompiler| nil)
 
 (setq credits '(
 "An alphabetical listing of contributors to AXIOM (to October, 2006):"

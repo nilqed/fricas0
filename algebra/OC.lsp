@@ -5,22 +5,20 @@
 
 (DEFPARAMETER |OctonionCategory;AL| 'NIL) 
 
-(DEFUN |OctonionCategory| (#1=#:G757)
-  (LET (#2=#:G758)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |OctonionCategory;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |OctonionCategory;AL|
-              (|cons5| (CONS #3# (SETQ #2# (|OctonionCategory;| #1#)))
-                       |OctonionCategory;AL|))
-      #2#)))) 
+(DEFUN |OctonionCategory| (|t#1|)
+  (LET (#1=#:G445 (#2=#:G446 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |OctonionCategory;AL|)) (CDR #1#))
+          (T
+           (SETQ |OctonionCategory;AL|
+                   (|cons5| (CONS #2# (SETQ #1# (|OctonionCategory;| #2#)))
+                            |OctonionCategory;AL|))
+           #1#)))) 
 
 (DEFUN |OctonionCategory;| (|t#1|)
-  (SPROG ((#1=#:G756 NIL))
+  (SPROG ((#1=#:G444 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (COND (|OctonionCategory;CAT|)
                                     ('T
                                      (LETT |OctonionCategory;CAT|
@@ -75,9 +73,5 @@
                                                ((|CharacteristicNonZero|)
                                                 (|has| |t#1|
                                                        (|CharacteristicNonZero|))))
-                                             '((|Fraction| (|Integer|))
-                                               (|Boolean|))
-                                             NIL))
-                                           . #2=(|OctonionCategory|)))))
-                   . #2#)
-           (SETELT #1# 0 (LIST '|OctonionCategory| (|devaluate| |t#1|)))))) 
+                                             NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|OctonionCategory| |t#1|))))) 

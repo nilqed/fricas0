@@ -23,19 +23,15 @@
 
 (SDEFUN |SARGND;min;3$;5| ((|a| $) (|b| $) ($ $))
         (SPROG ((|im| #1=(|DoubleFloat|)) (|re| #1#))
-               (SEQ
-                (LETT |re| (|min_DF| (QCAR |a|) (QCAR |b|))
-                      . #2=(|SARGND;min;3$;5|))
-                (LETT |im| (|min_DF| (QCDR |a|) (QCDR |b|)) . #2#)
-                (EXIT (CONS |re| |im|))))) 
+               (SEQ (LETT |re| (|min_DF| (QCAR |a|) (QCAR |b|)))
+                    (LETT |im| (|min_DF| (QCDR |a|) (QCDR |b|)))
+                    (EXIT (CONS |re| |im|))))) 
 
 (SDEFUN |SARGND;max;3$;6| ((|a| $) (|b| $) ($ $))
         (SPROG ((|im| #1=(|DoubleFloat|)) (|re| #1#))
-               (SEQ
-                (LETT |re| (|max_DF| (QCAR |a|) (QCAR |b|))
-                      . #2=(|SARGND;max;3$;6|))
-                (LETT |im| (|max_DF| (QCDR |a|) (QCDR |b|)) . #2#)
-                (EXIT (CONS |re| |im|))))) 
+               (SEQ (LETT |re| (|max_DF| (QCAR |a|) (QCAR |b|)))
+                    (LETT |im| (|max_DF| (QCDR |a|) (QCDR |b|)))
+                    (EXIT (CONS |re| |im|))))) 
 
 (PUT '|SARGND;dimension;$Pi;7| '|SPADreplace| '(XLAM (|p|) 2)) 
 
@@ -56,8 +52,7 @@
                       (SPADCALL
                        (|add_DF| (|mul_DF| (QCAR |p|) (QCAR |p|))
                                  (|mul_DF| (QCDR |p|) (QCDR |p|)))
-                       (QREFELT $ 19))
-                      |SARGND;unitVector;2$;10|)
+                       (QREFELT $ 19)))
                 (EXIT
                  (CONS (|div_DF| (QCAR |p|) |factor|)
                        (|div_DF| (QCDR |p|) |factor|)))))) 
@@ -135,55 +130,47 @@
 
 (SDEFUN |SARGND;hash;$Si;29| ((|s| $) ($ |SingleInteger|)) 0) 
 
-(PUT '|SARGND;latex;$S;30| '|SPADreplace|
-     '(XLAM (|s|) "\\mbox{\\bf Unimplemented}")) 
-
-(SDEFUN |SARGND;latex;$S;30| ((|s| $) ($ |String|))
-        "\\mbox{\\bf Unimplemented}") 
-
-(SDEFUN |SARGND;=;2$B;31| ((|x| $) (|y| $) ($ |Boolean|))
-        (SPROG ((#1=#:G769 NIL))
+(SDEFUN |SARGND;=;2$B;30| ((|x| $) (|y| $) ($ |Boolean|))
+        (SPROG ((#1=#:G433 NIL))
                (SEQ
                 (EXIT
                  (SEQ
                   (COND
                    ((SPADCALL (QCAR |x|) (QCAR |y|) (QREFELT $ 17))
-                    (PROGN
-                     (LETT #1# NIL . #2=(|SARGND;=;2$B;31|))
-                     (GO #3=#:G768))))
+                    (PROGN (LETT #1# NIL) (GO #2=#:G432))))
                   (COND
                    ((SPADCALL (QCDR |x|) (QCDR |y|) (QREFELT $ 17))
-                    (PROGN (LETT #1# NIL . #2#) (GO #3#))))
+                    (PROGN (LETT #1# NIL) (GO #2#))))
                   (EXIT 'T)))
-                #3# (EXIT #1#)))) 
+                #2# (EXIT #1#)))) 
 
-(SDEFUN |SARGND;~=;2$B;32| ((|x| $) (|y| $) ($ |Boolean|))
-        (NULL (SPADCALL |x| |y| (QREFELT $ 49)))) 
+(SDEFUN |SARGND;~=;2$B;31| ((|x| $) (|y| $) ($ |Boolean|))
+        (NULL (SPADCALL |x| |y| (QREFELT $ 47)))) 
 
-(SDEFUN |SARGND;coerce;$Of;33| ((|pt| $) ($ |OutputForm|))
+(SDEFUN |SARGND;coerce;$Of;32| ((|pt| $) ($ |OutputForm|))
         (COND
          ((|less_DF| (QCDR |pt|) 0.0)
-          (SPADCALL (SPADCALL (QCAR |pt|) (QREFELT $ 52))
-                    (SPADCALL (SPADCALL '|%i| (QREFELT $ 54))
+          (SPADCALL (SPADCALL (QCAR |pt|) (QREFELT $ 50))
+                    (SPADCALL (SPADCALL '|%i| (QREFELT $ 52))
                               (SPADCALL (|minus_DF| (QCDR |pt|))
-                                        (QREFELT $ 52))
-                              (QREFELT $ 55))
-                    (QREFELT $ 56)))
+                                        (QREFELT $ 50))
+                              (QREFELT $ 53))
+                    (QREFELT $ 54)))
          ('T
-          (SPADCALL (SPADCALL (QCAR |pt|) (QREFELT $ 52))
-                    (SPADCALL (SPADCALL '|%i| (QREFELT $ 54))
-                              (SPADCALL (QCDR |pt|) (QREFELT $ 52))
-                              (QREFELT $ 55))
-                    (QREFELT $ 57))))) 
+          (SPADCALL (SPADCALL (QCAR |pt|) (QREFELT $ 50))
+                    (SPADCALL (SPADCALL '|%i| (QREFELT $ 52))
+                              (SPADCALL (QCDR |pt|) (QREFELT $ 50))
+                              (QREFELT $ 53))
+                    (QREFELT $ 55))))) 
 
 (DECLAIM (NOTINLINE |SArgand;|)) 
 
 (DEFUN |SArgand| ()
   (SPROG NIL
-         (PROG (#1=#:G783)
+         (PROG (#1=#:G438)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|SArgand|) . #2=(|SArgand|))
+             ((LETT #1# (HGET |$ConstructorCache| '|SArgand|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -191,16 +178,16 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|SArgand|
                              (LIST (CONS NIL (CONS 1 (|SArgand;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND ((NOT #1#) (HREM |$ConstructorCache| '|SArgand|)))))))))) 
 
 (DEFUN |SArgand;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|SArgand|) . #1=(|SArgand|))
-          (LETT $ (GETREFV 61) . #1#)
+          (LETT |dv$| '(|SArgand|))
+          (LETT $ (GETREFV 60))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|SArgand| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))
@@ -226,11 +213,10 @@
               |SARGND;isPoint?;$B;25| |SARGND;isVector?;$B;26| (|Complex| 7)
               (17 . |complex|) |SARGND;coerce;$C;27| (23 . |real|)
               (28 . |imag|) |SARGND;coerce;C$;28| (|SingleInteger|)
-              |SARGND;hash;$Si;29| (|String|) |SARGND;latex;$S;30|
-              |SARGND;=;2$B;31| |SARGND;~=;2$B;32| (|OutputForm|)
-              (33 . |coerce|) (|Symbol|) (38 . |coerce|) (43 . |hconcat|)
-              (49 . -) (55 . +) |SARGND;coerce;$Of;33| (|Integer|)
-              (|HashState|))
+              |SARGND;hash;$Si;29| |SARGND;=;2$B;30| |SARGND;~=;2$B;31|
+              (|OutputForm|) (33 . |coerce|) (|Symbol|) (38 . |coerce|)
+              (43 . |hconcat|) (49 . -) (55 . +) |SARGND;coerce;$Of;32|
+              (|Integer|) (|String|) (|HashState|))
            '#(~= 61 |unitVector| 67 |toVector| 72 |toPoint| 77 |svec| 82 |spnt|
               95 |sivec| 108 |sipnt| 121 |screenCoords| 134 |screenCoordZ| 139
               |screenCoordY| 144 |screenCoordX| 149 |perpendicular| 154
@@ -244,27 +230,27 @@
                  (CONS '#(|SPointCategory&| |SetCategory&| |BasicType&| NIL)
                        (CONS
                         '#((|SPointCategory|) (|SetCategory|) (|BasicType|)
-                           (|CoercibleTo| 51))
-                        (|makeByteWordVec2| 60
+                           (|CoercibleTo| 49))
+                        (|makeByteWordVec2| 59
                                             '(2 7 16 0 0 17 1 7 0 0 19 2 7 16 0
                                               0 27 2 39 0 7 7 40 1 39 7 0 42 1
-                                              39 7 0 43 1 7 51 0 52 1 53 51 0
-                                              54 2 51 0 0 0 55 2 51 0 0 0 56 2
-                                              51 0 0 0 57 2 0 16 0 0 50 1 0 0 0
+                                              39 7 0 43 1 7 49 0 50 1 51 49 0
+                                              52 2 49 0 0 0 53 2 49 0 0 0 54 2
+                                              49 0 0 0 55 2 0 16 0 0 48 1 0 0 0
                                               20 1 0 0 0 36 1 0 0 0 35 3 0 0 7
                                               7 7 11 2 0 0 7 7 10 3 0 0 7 7 7 9
-                                              2 0 0 7 7 8 3 0 0 59 59 59 1 2 0
-                                              0 59 59 1 3 0 0 59 59 59 1 2 0 0
-                                              59 59 1 1 0 32 0 33 1 0 7 0 31 1
+                                              2 0 0 7 7 8 3 0 0 57 57 57 1 2 0
+                                              0 57 57 1 3 0 0 57 57 57 1 2 0 0
+                                              57 57 1 1 0 32 0 33 1 0 7 0 31 1
                                               0 7 0 30 1 0 7 0 29 2 0 0 0 0 23
                                               2 0 7 0 0 22 2 0 0 0 0 12 2 0 0 0
-                                              0 13 1 0 47 0 48 1 0 16 0 38 1 0
-                                              16 0 37 3 0 16 0 0 0 28 2 0 60 60
+                                              0 13 1 0 58 0 1 1 0 16 0 38 1 0
+                                              16 0 37 3 0 16 0 0 0 28 2 0 59 59
                                               0 1 1 0 45 0 46 1 0 32 0 34 2 0 7
                                               0 0 21 2 0 7 0 0 1 1 0 14 0 15 2
                                               0 7 0 0 1 1 0 39 0 41 1 0 0 39 44
-                                              1 0 51 0 58 1 0 16 0 18 2 0 16 0
-                                              0 49 2 0 0 0 0 26 2 0 0 0 0 25 2
+                                              1 0 49 0 56 1 0 16 0 18 2 0 16 0
+                                              0 47 2 0 0 0 0 26 2 0 0 0 0 25 2
                                               0 0 7 0 24)))))
            '|lookupComplete|)) 
 

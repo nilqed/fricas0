@@ -13,34 +13,30 @@
 (SDEFUN |FMOEBF;moebiusFunction;L$;4| ((|xx| |List| P) ($ $))
         (SPROG
          ((|mf| (|Matrix| (|Integer|))) (|zf| (|Matrix| (|Integer|)))
-          (#1=#:G721 NIL) (|y| NIL) (#2=#:G720 NIL) (#3=#:G719 NIL) (|x| NIL)
-          (#4=#:G718 NIL) (|xxo| (|List| P)))
+          (#1=#:G397 NIL) (|y| NIL) (#2=#:G396 NIL) (#3=#:G395 NIL) (|x| NIL)
+          (#4=#:G394 NIL) (|xxo| (|List| P)))
          (SEQ
           (LETT |xxo|
                 (SPADCALL (SPADCALL (ELT $ 11) |xx| (QREFELT $ 14))
-                          (QREFELT $ 15))
-                . #5=(|FMOEBF;moebiusFunction;L$;4|))
+                          (QREFELT $ 15)))
           (LETT |zf|
                 (SPADCALL
                  (PROGN
-                  (LETT #4# NIL . #5#)
-                  (SEQ (LETT |x| NIL . #5#) (LETT #3# |xxo| . #5#) G190
+                  (LETT #4# NIL)
+                  (SEQ (LETT |x| NIL) (LETT #3# |xxo|) G190
                        (COND
-                        ((OR (ATOM #3#) (PROGN (LETT |x| (CAR #3#) . #5#) NIL))
+                        ((OR (ATOM #3#) (PROGN (LETT |x| (CAR #3#)) NIL))
                          (GO G191)))
                        (SEQ
                         (EXIT
                          (LETT #4#
                                (CONS
                                 (PROGN
-                                 (LETT #2# NIL . #5#)
-                                 (SEQ (LETT |y| NIL . #5#)
-                                      (LETT #1# |xxo| . #5#) G190
+                                 (LETT #2# NIL)
+                                 (SEQ (LETT |y| NIL) (LETT #1# |xxo|) G190
                                       (COND
                                        ((OR (ATOM #1#)
-                                            (PROGN
-                                             (LETT |y| (CAR #1#) . #5#)
-                                             NIL))
+                                            (PROGN (LETT |y| (CAR #1#)) NIL))
                                         (GO G191)))
                                       (SEQ
                                        (EXIT
@@ -51,77 +47,70 @@
                                                            (QREFELT $ 11))
                                                  1)
                                                 ('T 0))
-                                               #2#)
-                                              . #5#)))
-                                      (LETT #1# (CDR #1#) . #5#) (GO G190) G191
+                                               #2#))))
+                                      (LETT #1# (CDR #1#)) (GO G190) G191
                                       (EXIT (NREVERSE #2#))))
-                                #4#)
-                               . #5#)))
-                       (LETT #3# (CDR #3#) . #5#) (GO G190) G191
+                                #4#))))
+                       (LETT #3# (CDR #3#)) (GO G190) G191
                        (EXIT (NREVERSE #4#))))
-                 (QREFELT $ 18))
-                . #5#)
-          (LETT |mf| (SPADCALL |zf| 1 (QREFELT $ 21)) . #5#)
+                 (QREFELT $ 18)))
+          (LETT |mf| (SPADCALL |zf| 1 (QREFELT $ 21)))
           (EXIT (|FMOEBF;per| (CONS |mf| |xxo|) $))))) 
 
 (SDEFUN |FMOEBF;canonicalZeta| ((|pi| P) (|si| P) ($ |Integer|))
-        (SPROG ((#1=#:G724 NIL))
+        (SPROG ((#1=#:G400 NIL))
                (SEQ
                 (EXIT
                  (SEQ
                   (COND
                    ((SPADCALL |pi| |si| (QREFELT $ 11))
-                    (PROGN
-                     (LETT #1# 1 |FMOEBF;canonicalZeta|)
-                     (GO #2=#:G723))))
+                    (PROGN (LETT #1# 1) (GO #2=#:G399))))
                   (EXIT 0)))
                 #2# (EXIT #1#)))) 
 
 (SDEFUN |FMOEBF;moebiusMu;$2PI;6| ((|mf| $) (|x| P) (|y| P) ($ |Integer|))
         (SPROG
-         ((#1=#:G730 NIL) (|ky| #2=(|Integer|)) (|kx| #2#)
+         ((#1=#:G406 NIL) (|ky| #2=(|Integer|)) (|kx| #2#)
           (|mfn| (|Matrix| (|Integer|))))
          (SEQ
           (EXIT
-           (SEQ
-            (LETT |mfn| (QCAR (|FMOEBF;rep| |mf| $))
-                  . #3=(|FMOEBF;moebiusMu;$2PI;6|))
-            (LETT |kx|
-                  (SPADCALL |x| (SPADCALL |mf| (QREFELT $ 9)) (QREFELT $ 23))
-                  . #3#)
-            (LETT |ky|
-                  (SPADCALL |y| (SPADCALL |mf| (QREFELT $ 9)) (QREFELT $ 23))
-                  . #3#)
-            (COND
-             ((OR (ZEROP |kx|) (ZEROP |ky|)) (EXIT (|error| "not members"))))
-            (EXIT
-             (PROGN
-              (LETT #1# (SPADCALL |mfn| |kx| |ky| (QREFELT $ 24)) . #3#)
-              (GO #4=#:G729)))))
-          #4# (EXIT #1#)))) 
+           (SEQ (LETT |mfn| (QCAR (|FMOEBF;rep| |mf| $)))
+                (LETT |kx|
+                      (SPADCALL |x| (SPADCALL |mf| (QREFELT $ 9))
+                                (QREFELT $ 23)))
+                (LETT |ky|
+                      (SPADCALL |y| (SPADCALL |mf| (QREFELT $ 9))
+                                (QREFELT $ 23)))
+                (COND
+                 ((OR (ZEROP |kx|) (ZEROP |ky|))
+                  (EXIT (|error| "not members"))))
+                (EXIT
+                 (PROGN
+                  (LETT #1# (SPADCALL |mfn| |kx| |ky| (QREFELT $ 24)))
+                  (GO #3=#:G405)))))
+          #3# (EXIT #1#)))) 
 
 (SDEFUN |FMOEBF;apply;$2PI;7| ((|mf| $) (|x| P) (|y| P) ($ |Integer|))
         (SPROG
-         ((#1=#:G736 NIL) (|ky| #2=(|Integer|)) (|kx| #2#)
+         ((#1=#:G412 NIL) (|ky| #2=(|Integer|)) (|kx| #2#)
           (|mfn| (|Matrix| (|Integer|))))
          (SEQ
           (EXIT
-           (SEQ
-            (LETT |mfn| (QCAR (|FMOEBF;rep| |mf| $))
-                  . #3=(|FMOEBF;apply;$2PI;7|))
-            (LETT |kx|
-                  (SPADCALL |x| (SPADCALL |mf| (QREFELT $ 9)) (QREFELT $ 23))
-                  . #3#)
-            (LETT |ky|
-                  (SPADCALL |y| (SPADCALL |mf| (QREFELT $ 9)) (QREFELT $ 23))
-                  . #3#)
-            (COND
-             ((OR (ZEROP |kx|) (ZEROP |ky|)) (EXIT (|error| "not members"))))
-            (EXIT
-             (PROGN
-              (LETT #1# (SPADCALL |mfn| |kx| |ky| (QREFELT $ 24)) . #3#)
-              (GO #4=#:G735)))))
-          #4# (EXIT #1#)))) 
+           (SEQ (LETT |mfn| (QCAR (|FMOEBF;rep| |mf| $)))
+                (LETT |kx|
+                      (SPADCALL |x| (SPADCALL |mf| (QREFELT $ 9))
+                                (QREFELT $ 23)))
+                (LETT |ky|
+                      (SPADCALL |y| (SPADCALL |mf| (QREFELT $ 9))
+                                (QREFELT $ 23)))
+                (COND
+                 ((OR (ZEROP |kx|) (ZEROP |ky|))
+                  (EXIT (|error| "not members"))))
+                (EXIT
+                 (PROGN
+                  (LETT #1# (SPADCALL |mfn| |kx| |ky| (QREFELT $ 24)))
+                  (GO #3=#:G411)))))
+          #3# (EXIT #1#)))) 
 
 (SDEFUN |FMOEBF;moebiusMatrix;$M;8| ((|mf| $) ($ |Matrix| (|Integer|)))
         (QCAR (|FMOEBF;rep| |mf| $))) 
@@ -133,21 +122,20 @@
 
 (DECLAIM (NOTINLINE |FiniteMoebiusFunction;|)) 
 
-(DEFUN |FiniteMoebiusFunction| (#1=#:G743)
+(DEFUN |FiniteMoebiusFunction| (#1=#:G417)
   (SPROG NIL
-         (PROG (#2=#:G744)
+         (PROG (#2=#:G418)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|FiniteMoebiusFunction|)
-                                               '|domainEqualList|)
-                    . #3=(|FiniteMoebiusFunction|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (|FiniteMoebiusFunction;| #1#) (LETT #2# T . #3#))
+                  (PROG1 (|FiniteMoebiusFunction;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|FiniteMoebiusFunction|)))))))))) 
@@ -155,11 +143,11 @@
 (DEFUN |FiniteMoebiusFunction;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|FiniteMoebiusFunction|))
-          (LETT |dv$| (LIST '|FiniteMoebiusFunction| DV$1) . #1#)
-          (LETT $ (GETREFV 36) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|FiniteMoebiusFunction| DV$1))
+          (LETT $ (GETREFV 36))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|FiniteMoebiusFunction| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)

@@ -33,11 +33,10 @@
 
 (DEFUN |GraphicsDefaults| ()
   (SPROG NIL
-         (PROG (#1=#:G706)
+         (PROG (#1=#:G391)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|GraphicsDefaults|)
-                    . #2=(|GraphicsDefaults|))
+             ((LETT #1# (HGET |$ConstructorCache| '|GraphicsDefaults|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -45,7 +44,7 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|GraphicsDefaults|
                              (LIST (CONS NIL (CONS 1 (|GraphicsDefaults;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache| '|GraphicsDefaults|)))))))))) 
@@ -53,10 +52,10 @@
 (DEFUN |GraphicsDefaults;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|GraphicsDefaults|) . #1=(|GraphicsDefaults|))
-          (LETT $ (GETREFV 31) . #1#)
+          (LETT |dv$| '(|GraphicsDefaults|))
+          (LETT $ (GETREFV 31))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|GraphicsDefaults| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))
@@ -80,19 +79,37 @@
            '#(|screenResolution| 36 |minPoints| 45 |maxPoints| 54 |drawToScale|
               63 |clipPointsDefault| 72 |adaptive| 81)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 30
-                                                 '(0 13 8 14 0 13 16 17 0 13 16
-                                                   19 0 13 16 21 1 13 8 8 23 1
-                                                   13 16 16 25 1 13 16 16 27 1
-                                                   13 16 16 29 0 0 16 22 1 0 16
-                                                   16 30 0 0 16 18 1 0 16 16 26
-                                                   0 0 16 20 1 0 16 16 28 0 0 8
-                                                   10 1 0 8 8 12 0 0 8 9 1 0 8
-                                                   8 11 0 0 8 15 1 0 8 8
-                                                   24)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|clipPointsDefault| ((|Boolean|))) T)
+                                   '((|drawToScale| ((|Boolean|))) T)
+                                   '((|clipPointsDefault|
+                                      ((|Boolean|) (|Boolean|)))
+                                     T)
+                                   '((|drawToScale| ((|Boolean|) (|Boolean|)))
+                                     T)
+                                   '((|adaptive| ((|Boolean|))) T)
+                                   '((|maxPoints| ((|Integer|))) T)
+                                   '((|minPoints| ((|Integer|))) T)
+                                   '((|screenResolution| ((|Integer|))) T)
+                                   '((|adaptive| ((|Boolean|) (|Boolean|))) T)
+                                   '((|maxPoints| ((|Integer|) (|Integer|))) T)
+                                   '((|minPoints| ((|Integer|) (|Integer|))) T)
+                                   '((|screenResolution|
+                                      ((|Integer|) (|Integer|)))
+                                     T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 30
+                                            '(0 13 8 14 0 13 16 17 0 13 16 19 0
+                                              13 16 21 1 13 8 8 23 1 13 16 16
+                                              25 1 13 16 16 27 1 13 16 16 29 0
+                                              0 16 22 1 0 16 16 30 0 0 16 18 1
+                                              0 16 16 26 0 0 16 20 1 0 16 16 28
+                                              0 0 8 10 1 0 8 8 12 0 0 8 9 1 0 8
+                                              8 11 0 0 8 15 1 0 8 8 24)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|GraphicsDefaults| 'NILADIC T) 

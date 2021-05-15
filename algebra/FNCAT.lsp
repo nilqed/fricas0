@@ -4,12 +4,11 @@
 (DEFPARAMETER |FileNameCategory;AL| 'NIL) 
 
 (DEFUN |FileNameCategory| ()
-  (LET (#:G692)
-    (COND (|FileNameCategory;AL|)
-          (T (SETQ |FileNameCategory;AL| (|FileNameCategory;|)))))) 
+  (COND (|FileNameCategory;AL|)
+        (T (SETQ |FileNameCategory;AL| (|FileNameCategory;|))))) 
 
 (DEFUN |FileNameCategory;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|SetCategory|)
@@ -26,8 +25,7 @@
                               ((|readable?| ((|Boolean|) $)) T)
                               ((|writable?| ((|Boolean|) $)) T)
                               ((|new| ($ (|String|) (|String|) (|String|))) T))
-                            NIL '((|String|) (|Boolean|)) NIL))
-                   |FileNameCategory|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|FileNameCategory|))))) 
 
 (MAKEPROP '|FileNameCategory| 'NILADIC T) 

@@ -8,10 +8,10 @@
 
 (SDEFUN |STREAM3;mapp!0| (($$ NIL))
         (PROG (|x| $ |y| |g|)
-          (LETT |x| (QREFELT $$ 3) . #1=(|STREAM3;mapp|))
-          (LETT $ (QREFELT $$ 2) . #1#)
-          (LETT |y| (QREFELT $$ 1) . #1#)
-          (LETT |g| (QREFELT $$ 0) . #1#)
+          (LETT |x| (QREFELT $$ 3))
+          (LETT $ (QREFELT $$ 2))
+          (LETT |y| (QREFELT $$ 1))
+          (LETT |g| (QREFELT $$ 0))
           (RETURN
            (PROGN
             (COND
@@ -45,36 +45,35 @@
 
 (SDEFUN |STREAM3;map;MSSS;2!1| ((|z| NIL) ($$ NIL))
         (PROG (|y| $ |g|)
-          (LETT |y| (QREFELT $$ 2) . #1=(|STREAM3;map;MSSS;2|))
-          (LETT $ (QREFELT $$ 1) . #1#)
-          (LETT |g| (QREFELT $$ 0) . #1#)
+          (LETT |y| (QREFELT $$ 2))
+          (LETT $ (QREFELT $$ 1))
+          (LETT |g| (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL |z| (SPADCALL |y| (QREFELT $ 17)) |g|))))) 
 
 (SDEFUN |STREAM3;map;MSSS;2!0| ((|z| NIL) ($$ NIL))
         (PROG (|x| $ |g|)
-          (LETT |x| (QREFELT $$ 2) . #1=(|STREAM3;map;MSSS;2|))
-          (LETT $ (QREFELT $$ 1) . #1#)
-          (LETT |g| (QREFELT $$ 0) . #1#)
+          (LETT |x| (QREFELT $$ 2))
+          (LETT $ (QREFELT $$ 1))
+          (LETT |g| (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL (SPADCALL |x| (QREFELT $ 16)) |z| |g|))))) 
 
 (DECLAIM (NOTINLINE |StreamFunctions3;|)) 
 
-(DEFUN |StreamFunctions3| (&REST #1=#:G722)
+(DEFUN |StreamFunctions3| (&REST #1=#:G410)
   (SPROG NIL
-         (PROG (#2=#:G723)
+         (PROG (#2=#:G411)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|StreamFunctions3|)
-                                               '|domainEqualList|)
-                    . #3=(|StreamFunctions3|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |StreamFunctions3;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|StreamFunctions3|)))))))))) 
@@ -82,13 +81,13 @@
 (DEFUN |StreamFunctions3;| (|#1| |#2| |#3|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|StreamFunctions3|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT DV$3 (|devaluate| |#3|) . #1#)
-          (LETT |dv$| (LIST '|StreamFunctions3| DV$1 DV$2 DV$3) . #1#)
-          (LETT $ (GETREFV 35) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT DV$3 (|devaluate| |#3|))
+          (LETT |dv$| (LIST '|StreamFunctions3| DV$1 DV$2 DV$3))
+          (LETT $ (GETREFV 35))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|StreamFunctions3|
                       (LIST DV$1 DV$2 DV$3) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -110,16 +109,23 @@
               (56 . |map|) (62 . |explicitlyEmpty?|) (67 . |eq?|)
               (|Mapping| 8 6) (|StreamFunctions2| 6 8) (73 . |map|))
            '#(|map| 79) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 34
-                                                 '(1 10 9 0 11 0 12 0 13 1 14 9
-                                                   0 15 1 10 6 0 16 1 14 7 0 17
-                                                   1 10 0 0 18 1 14 0 0 19 2 12
-                                                   0 8 0 22 1 12 0 23 24 1 10 9
-                                                   0 25 2 10 9 0 0 26 2 28 12
-                                                   27 14 29 1 14 9 0 30 2 14 9
-                                                   0 0 31 2 33 12 32 10 34 3 0
-                                                   12 20 10 14 21)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|map|
+                                 ((|Stream| |#3|) (|Mapping| |#3| |#1| |#2|)
+                                  (|Stream| |#1|) (|Stream| |#2|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 34
+                                            '(1 10 9 0 11 0 12 0 13 1 14 9 0 15
+                                              1 10 6 0 16 1 14 7 0 17 1 10 0 0
+                                              18 1 14 0 0 19 2 12 0 8 0 22 1 12
+                                              0 23 24 1 10 9 0 25 2 10 9 0 0 26
+                                              2 28 12 27 14 29 1 14 9 0 30 2 14
+                                              9 0 0 31 2 33 12 32 10 34 3 0 12
+                                              20 10 14 21)))))
            '|lookupComplete|)) 

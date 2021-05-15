@@ -43,39 +43,38 @@
 
 (SDEFUN |SPLNODE;construct;LL;11|
         ((|lvt| |List| (|Record| (|:| |val| V) (|:| |tower| C))) ($ |List| $))
-        (SPROG ((#1=#:G720 NIL) (|vt| NIL) (#2=#:G719 NIL))
+        (SPROG ((#1=#:G404 NIL) (|vt| NIL) (#2=#:G403 NIL))
                (SEQ
                 (PROGN
-                 (LETT #2# NIL . #3=(|SPLNODE;construct;LL;11|))
-                 (SEQ (LETT |vt| NIL . #3#) (LETT #1# |lvt| . #3#) G190
+                 (LETT #2# NIL)
+                 (SEQ (LETT |vt| NIL) (LETT #1# |lvt|) G190
                       (COND
-                       ((OR (ATOM #1#) (PROGN (LETT |vt| (CAR #1#) . #3#) NIL))
+                       ((OR (ATOM #1#) (PROGN (LETT |vt| (CAR #1#)) NIL))
                         (GO G191)))
                       (SEQ
                        (EXIT
-                        (LETT #2# (CONS (SPADCALL |vt| (QREFELT $ 21)) #2#)
-                              . #3#)))
-                      (LETT #1# (CDR #1#) . #3#) (GO G190) G191
+                        (LETT #2# (CONS (SPADCALL |vt| (QREFELT $ 21)) #2#))))
+                      (LETT #1# (CDR #1#)) (GO G190) G191
                       (EXIT (NREVERSE #2#))))))) 
 
 (SDEFUN |SPLNODE;construct;VLL;12| ((|v| V) (|lt| |List| C) ($ |List| $))
-        (SPROG ((#1=#:G724 NIL) (|t| NIL) (#2=#:G723 NIL))
+        (SPROG ((#1=#:G408 NIL) (|t| NIL) (#2=#:G407 NIL))
                (SEQ
                 (PROGN
-                 (LETT #2# NIL . #3=(|SPLNODE;construct;VLL;12|))
-                 (SEQ (LETT |t| NIL . #3#) (LETT #1# |lt| . #3#) G190
+                 (LETT #2# NIL)
+                 (SEQ (LETT |t| NIL) (LETT #1# |lt|) G190
                       (COND
-                       ((OR (ATOM #1#) (PROGN (LETT |t| (CAR #1#) . #3#) NIL))
+                       ((OR (ATOM #1#) (PROGN (LETT |t| (CAR #1#)) NIL))
                         (GO G191)))
                       (SEQ
                        (EXIT
-                        (LETT #2# (CONS (SPADCALL |v| |t| (QREFELT $ 19)) #2#)
-                              . #3#)))
-                      (LETT #1# (CDR #1#) . #3#) (GO G190) G191
+                        (LETT #2#
+                              (CONS (SPADCALL |v| |t| (QREFELT $ 19)) #2#))))
+                      (LETT #1# (CDR #1#)) (GO G190) G191
                       (EXIT (NREVERSE #2#))))))) 
 
 (SDEFUN |SPLNODE;copy;2$;13| ((|n| $) ($ $))
-        (|SPLNODE;per| (MOVEVEC (MAKE-VEC 3) (|SPLNODE;rep| |n| $)) $)) 
+        (|SPLNODE;per| (MOVEVEC (MAKE_VEC 3) (|SPLNODE;rep| |n| $)) $)) 
 
 (SDEFUN |SPLNODE;setValue!;$V$;14| ((|n| $) (|v| V) ($ $))
         (SEQ (QSETVELT (|SPLNODE;rep| |n| $) 0 |v|) (EXIT |n|))) 
@@ -140,52 +139,49 @@
           (LETT |l1|
                 (LIST (SPADCALL "value == " (QREFELT $ 44))
                       (SPADCALL (QVELT (|SPLNODE;rep| |n| $) 0)
-                                (QREFELT $ 45)))
-                . #3=(|SPLNODE;coerce;$Of;22|))
-          (LETT |o1| (SPADCALL |l1| (QREFELT $ 46)) . #3#)
+                                (QREFELT $ 45))))
+          (LETT |o1| (SPADCALL |l1| (QREFELT $ 46)))
           (LETT |l2|
                 (LIST (SPADCALL " tower == " (QREFELT $ 44))
                       (SPADCALL (QVELT (|SPLNODE;rep| |n| $) 1)
-                                (QREFELT $ 47)))
-                . #3#)
-          (LETT |o2| (SPADCALL |l2| (QREFELT $ 46)) . #3#)
+                                (QREFELT $ 47))))
+          (LETT |o2| (SPADCALL |l2| (QREFELT $ 46)))
           (COND
            ((QVELT (|SPLNODE;rep| |n| $) 2)
-            (LETT |o3| (SPADCALL " closed == true" (QREFELT $ 44)) . #3#))
-           ('T (LETT |o3| (SPADCALL " closed == false" (QREFELT $ 44)) . #3#)))
-          (LETT |l| (LIST |o1| |o2| |o3|) . #3#)
+            (LETT |o3| (SPADCALL " closed == true" (QREFELT $ 44))))
+           ('T (LETT |o3| (SPADCALL " closed == false" (QREFELT $ 44)))))
+          (LETT |l| (LIST |o1| |o2| |o3|))
           (EXIT (SPADCALL |l| (QREFELT $ 48)))))) 
 
 (DECLAIM (NOTINLINE |SplittingNode;|)) 
 
-(DEFUN |SplittingNode| (&REST #1=#:G750)
+(DEFUN |SplittingNode| (&REST #1=#:G432)
   (SPROG NIL
-         (PROG (#2=#:G751)
+         (PROG (#2=#:G433)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|SplittingNode|)
-                                               '|domainEqualList|)
-                    . #3=(|SplittingNode|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |SplittingNode;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|SplittingNode|)))))))))) 
 
 (DEFUN |SplittingNode;| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|SplittingNode|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|SplittingNode| DV$1 DV$2) . #1#)
-          (LETT $ (GETREFV 52) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|SplittingNode| DV$1 DV$2))
+          (LETT $ (GETREFV 52))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|SplittingNode| (LIST DV$1 DV$2)
                       (CONS 1 $))
           (|stuffDomainSlots| $)

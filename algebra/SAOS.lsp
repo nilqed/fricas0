@@ -29,11 +29,10 @@
 
 (DEFUN |SingletonAsOrderedSet| ()
   (SPROG NIL
-         (PROG (#1=#:G716)
+         (PROG (#1=#:G386)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|SingletonAsOrderedSet|)
-                    . #2=(|SingletonAsOrderedSet|))
+             ((LETT #1# (HGET |$ConstructorCache| '|SingletonAsOrderedSet|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -42,7 +41,7 @@
                        (HPUT |$ConstructorCache| '|SingletonAsOrderedSet|
                              (LIST
                               (CONS NIL (CONS 1 (|SingletonAsOrderedSet;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache| '|SingletonAsOrderedSet|)))))))))) 
@@ -50,11 +49,10 @@
 (DEFUN |SingletonAsOrderedSet;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|SingletonAsOrderedSet|)
-                . #1=(|SingletonAsOrderedSet|))
-          (LETT $ (GETREFV 21) . #1#)
+          (LETT |dv$| '(|SingletonAsOrderedSet|))
+          (LETT $ (GETREFV 21))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|SingletonAsOrderedSet| NIL
                       (CONS 1 $))
           (|stuffDomainSlots| $)

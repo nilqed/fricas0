@@ -5,16 +5,14 @@
                (SEQ
                 (COND ((SPADCALL |a| (QREFELT $ 9)) |fcn|)
                       ('T
-                       (SEQ
-                        (LETT |xFE| (SPADCALL |x| (QREFELT $ 11))
-                              |EXPR2UPS;performSubstitution|)
-                        (EXIT
-                         (SPADCALL |fcn|
-                                   (SPADCALL |xFE|
-                                             (SPADCALL |xFE| |a|
-                                                       (QREFELT $ 12))
-                                             (QREFELT $ 14))
-                                   (QREFELT $ 16))))))))) 
+                       (SEQ (LETT |xFE| (SPADCALL |x| (QREFELT $ 11)))
+                            (EXIT
+                             (SPADCALL |fcn|
+                                       (SPADCALL |xFE|
+                                                 (SPADCALL |xFE| |a|
+                                                           (QREFELT $ 12))
+                                                 (QREFELT $ 14))
+                                       (QREFELT $ 16))))))))) 
 
 (SDEFUN |EXPR2UPS;iTaylor| ((|fcn| FE) (|x| |Symbol|) (|a| FE) ($ |Any|))
         (SPROG
@@ -26,7 +24,7 @@
             (SIGNATURE |retractable?| ((|Boolean|) (|Any|)))
             (SIGNATURE |retract| (#1# (|Any|)))))
           (|uts| (|Union| (|UnivariateTaylorSeries| FE |x| |a|) #2="failed"))
-          (|uls| (|Uls|)) (#3=#:G746 NIL)
+          (|uls| (|Uls|)) (#3=#:G414 NIL)
           (|ans|
            (|Union| (|:| |%series| |Uls|)
                     (|:| |%problem|
@@ -91,106 +89,106 @@
              (IF (|has| FE (|Algebra| (|Fraction| (|Integer|))))
                  (SIGNATURE |integrate| ($ $ (|Variable| |x|)))
                  |noBranch|)))))
-         (SEQ
-          (LETT |Uls| (|UnivariateLaurentSeries| (QREFELT $ 7) |x| |a|)
-                . #9=(|EXPR2UPS;iTaylor|))
-          (LETT |Uts| (|UnivariateTaylorSeries| (QREFELT $ 7) |x| |a|) . #9#)
-          (LETT |pack|
-                (|FunctionSpaceToUnivariatePowerSeries| (QREFELT $ 6)
-                                                        (QREFELT $ 7)
-                                                        (|Integer|) |Uls|
-                                                        (|ElementaryFunctionsUnivariateLaurentSeries|
-                                                         (QREFELT $ 7) |Uts|
-                                                         |Uls|)
-                                                        |Uts|
-                                                        (|TaylorSeriesExpansionLaurent|
-                                                         (QREFELT $ 7) |Uts|
-                                                         |Uls|)
-                                                        |x|)
-                . #9#)
-          (LETT |ans|
-                (SPADCALL |fcn| NIL (CONS 4 "just do it")
-                          (|compiledLookupCheck| '|exprToUPS|
-                                                 (LIST
-                                                  (LIST '|Union|
-                                                        (LIST '|:| '|%series|
-                                                              (|devaluate|
-                                                               |Uls|))
-                                                        (LIST '|:| '|%problem|
-                                                              (LIST '|Record|
-                                                                    (LIST '|:|
-                                                                          '|func|
-                                                                          (LIST
-                                                                           '|String|))
-                                                                    (LIST '|:|
-                                                                          '|prob|
-                                                                          (LIST
-                                                                           '|String|)))))
-                                                  (|devaluate| (ELT $ 7))
-                                                  (LIST '|Boolean|)
-                                                  (LIST '|Union| '"complex"
-                                                        '"real: two sides"
-                                                        '"real: left side"
-                                                        '"real: right side"
-                                                        '"just do it"))
-                                                 |pack|))
-                . #9#)
-          (EXIT
-           (COND
-            ((QEQCAR |ans| 1)
-             (COND
-              ((EQUAL (QCDR (CDR |ans|)) "essential singularity")
-               (|error| "No Taylor expansion: essential singularity"))
-              ((EQUAL (QCAR (CDR |ans|)) "log")
-               (|error| "No Taylor expansion: logarithmic singularity"))
-              ((EQUAL (QCAR (CDR |ans|)) "nth root")
-               (|error| "No Taylor expansion: fractional powers in expansion"))
-              (#10='T (|error| "No Taylor expansion"))))
-            (#10#
-             (SEQ
-              (LETT |uls|
-                    (PROG2 (LETT #3# |ans| . #9#)
-                        (QCDR #3#)
-                      (|check_union2| (QEQCAR #3# 0) |Uls|
-                                      (|Union| (|:| |%series| |Uls|)
-                                               (|:| |%problem|
-                                                    (|Record|
-                                                     (|:| |func| (|String|))
-                                                     (|:| |prob| (|String|)))))
-                                      #3#))
-                    . #9#)
-              (LETT |uts|
-                    (SPADCALL |uls|
-                              (|compiledLookupCheck| '|taylorIfCan|
+         (SEQ (LETT |Uls| (|UnivariateLaurentSeries| (QREFELT $ 7) |x| |a|))
+              (LETT |Uts| (|UnivariateTaylorSeries| (QREFELT $ 7) |x| |a|))
+              (LETT |pack|
+                    (|FunctionSpaceToUnivariatePowerSeries| (QREFELT $ 6)
+                                                            (QREFELT $ 7)
+                                                            (|Integer|) |Uls|
+                                                            (|ElementaryFunctionsUnivariateLaurentSeries|
+                                                             (QREFELT $ 7)
+                                                             |Uts| |Uls|)
+                                                            |Uts|
+                                                            (|TaylorSeriesExpansionLaurent|
+                                                             (QREFELT $ 7)
+                                                             |Uts| |Uls|)
+                                                            |x|))
+              (LETT |ans|
+                    (SPADCALL |fcn| NIL (CONS 4 "just do it")
+                              (|compiledLookupCheck| '|exprToUPS|
                                                      (LIST
                                                       (LIST '|Union|
-                                                            (LIST
-                                                             '|UnivariateTaylorSeries|
-                                                             (|devaluate|
-                                                              (ELT $ 7))
-                                                             |x| |a|)
-                                                            '#2#)
-                                                      '$)
-                                                     |Uls|))
-                    . #9#)
+                                                            (LIST '|:|
+                                                                  '|%series|
+                                                                  (|devaluate|
+                                                                   |Uls|))
+                                                            (LIST '|:|
+                                                                  '|%problem|
+                                                                  (LIST
+                                                                   '|Record|
+                                                                   (LIST '|:|
+                                                                         '|func|
+                                                                         (LIST
+                                                                          '|String|))
+                                                                   (LIST '|:|
+                                                                         '|prob|
+                                                                         (LIST
+                                                                          '|String|)))))
+                                                      (|devaluate| (ELT $ 7))
+                                                      (LIST '|Boolean|)
+                                                      (LIST '|Union| '"complex"
+                                                            '"real: two sides"
+                                                            '"real: left side"
+                                                            '"real: right side"
+                                                            '"just do it"))
+                                                     |pack|)))
               (EXIT
-               (COND ((QEQCAR |uts| 1) (|error| "No Taylor expansion: pole"))
-                     (#10#
-                      (SEQ
-                       (LETT |any1|
-                             (|AnyFunctions1|
-                              (|UnivariateTaylorSeries| (QREFELT $ 7) |x| |a|))
-                             . #9#)
-                       (EXIT
-                        (SPADCALL (QCDR |uts|)
-                                  (|compiledLookupCheck| '|coerce|
-                                                         (LIST (LIST '|Any|)
-                                                               (LIST
-                                                                '|UnivariateTaylorSeries|
-                                                                (|devaluate|
-                                                                 (ELT $ 7))
-                                                                |x| |a|))
-                                                         |any1|)))))))))))))) 
+               (COND
+                ((QEQCAR |ans| 1)
+                 (COND
+                  ((EQUAL (QCDR (CDR |ans|)) "essential singularity")
+                   (|error| "No Taylor expansion: essential singularity"))
+                  ((EQUAL (QCAR (CDR |ans|)) "log")
+                   (|error| "No Taylor expansion: logarithmic singularity"))
+                  ((EQUAL (QCAR (CDR |ans|)) "nth root")
+                   (|error|
+                    "No Taylor expansion: fractional powers in expansion"))
+                  (#9='T (|error| "No Taylor expansion"))))
+                (#9#
+                 (SEQ
+                  (LETT |uls|
+                        (PROG2 (LETT #3# |ans|)
+                            (QCDR #3#)
+                          (|check_union2| (QEQCAR #3# 0) |Uls|
+                                          (|Union| (|:| |%series| |Uls|)
+                                                   (|:| |%problem|
+                                                        (|Record|
+                                                         (|:| |func|
+                                                              (|String|))
+                                                         (|:| |prob|
+                                                              (|String|)))))
+                                          #3#)))
+                  (LETT |uts|
+                        (SPADCALL |uls|
+                                  (|compiledLookupCheck| '|taylorIfCan|
+                                                         (LIST
+                                                          (LIST '|Union|
+                                                                (LIST
+                                                                 '|UnivariateTaylorSeries|
+                                                                 (|devaluate|
+                                                                  (ELT $ 7))
+                                                                 |x| |a|)
+                                                                '#2#)
+                                                          '$)
+                                                         |Uls|)))
+                  (EXIT
+                   (COND
+                    ((QEQCAR |uts| 1) (|error| "No Taylor expansion: pole"))
+                    (#9#
+                     (SEQ
+                      (LETT |any1|
+                            (|AnyFunctions1|
+                             (|UnivariateTaylorSeries| (QREFELT $ 7) |x| |a|)))
+                      (EXIT
+                       (SPADCALL (QCDR |uts|)
+                                 (|compiledLookupCheck| '|coerce|
+                                                        (LIST (LIST '|Any|)
+                                                              (LIST
+                                                               '|UnivariateTaylorSeries|
+                                                               (|devaluate|
+                                                                (ELT $ 7))
+                                                               |x| |a|))
+                                                        |any1|)))))))))))))) 
 
 (SDEFUN |EXPR2UPS;taylor;SA;3| ((|x| |Symbol|) ($ |Any|))
         (SPROG
@@ -221,9 +219,8 @@
          (SEQ
           (LETT |uts|
                 (|UnivariateTaylorSeries| (QREFELT $ 7) |x|
-                                          (|spadConstant| $ 17))
-                . #1=(|EXPR2UPS;taylor;SA;3|))
-          (LETT |any1| (|AnyFunctions1| |uts|) . #1#)
+                                          (|spadConstant| $ 17)))
+          (LETT |any1| (|AnyFunctions1| |uts|))
           (EXIT
            (SPADCALL
             (SPADCALL (|spadConstant| $ 19) 1
@@ -239,9 +236,7 @@
 (SDEFUN |EXPR2UPS;taylor;FEA;4| ((|fcn| FE) ($ |Any|))
         (SPROG ((|vars| (|List| (|Symbol|))))
                (COND
-                ((NULL
-                  (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                        |EXPR2UPS;taylor;FEA;4|))
+                ((NULL (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))))
                  (|error| "taylor: expression has no variables"))
                 ((NULL (NULL (CDR |vars|)))
                  (|error| "taylor: expression has more than one variable"))
@@ -283,19 +278,16 @@
           (|x| (|Symbol|)) (|vars| (|List| (|Symbol|))))
          (SEQ
           (COND
-           ((NULL
-             (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                   . #1=(|EXPR2UPS;taylor;FENniA;5|)))
+           ((NULL (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))))
             (|error| "taylor: expression has no variables"))
            ((NULL (NULL (CDR |vars|)))
             (|error| "taylor: expression has more than one variable"))
            ('T
-            (SEQ (LETT |x| (|SPADfirst| |vars|) . #1#)
+            (SEQ (LETT |x| (|SPADfirst| |vars|))
                  (LETT |uts|
                        (|UnivariateTaylorSeries| (QREFELT $ 7) |x|
-                                                 (|spadConstant| $ 17))
-                       . #1#)
-                 (LETT |any1| (|AnyFunctions1| |uts|) . #1#)
+                                                 (|spadConstant| $ 17)))
+                 (LETT |any1| (|AnyFunctions1| |uts|))
                  (LETT |series|
                        (SPADCALL
                         (SPADCALL |fcn|
@@ -306,8 +298,7 @@
                         (|compiledLookupCheck| '|retract|
                                                (LIST (|devaluate| |uts|)
                                                      (LIST '|Any|))
-                                               |any1|))
-                       . #1#)
+                                               |any1|)))
                  (EXIT
                   (SPADCALL
                    (SPADCALL |series| |n|
@@ -325,15 +316,14 @@
         (SPROG
          ((|a| (FE)) (|x| (|Symbol|)) (|xx| (|Union| (|Symbol|) "failed")))
          (SEQ
-          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31))
-                . #1=(|EXPR2UPS;taylor;FEEA;6|))
+          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31)))
           (EXIT
            (COND
             ((QEQCAR |xx| 1)
              (|error| "taylor: left hand side must be a variable"))
             ('T
-             (SEQ (LETT |x| (QCDR |xx|) . #1#)
-                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)) . #1#)
+             (SEQ (LETT |x| (QCDR |xx|))
+                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)))
                   (EXIT
                    (|EXPR2UPS;iTaylor|
                     (|EXPR2UPS;performSubstitution| |fcn| |x| |a| $) |x| |a|
@@ -352,19 +342,17 @@
             (SIGNATURE |retract| (#1# (|Any|)))))
           (|a| (FE)) (|x| (|Symbol|)) (|xx| (|Union| (|Symbol|) "failed")))
          (SEQ
-          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31))
-                . #2=(|EXPR2UPS;taylor;FEENniA;7|))
+          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31)))
           (EXIT
            (COND
             ((QEQCAR |xx| 1)
              (|error| "taylor: left hand side must be a variable"))
             ('T
-             (SEQ (LETT |x| (QCDR |xx|) . #2#)
-                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)) . #2#)
+             (SEQ (LETT |x| (QCDR |xx|))
+                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)))
                   (LETT |any1|
                         (|AnyFunctions1|
-                         (|UnivariateTaylorSeries| (QREFELT $ 7) |x| |a|))
-                        . #2#)
+                         (|UnivariateTaylorSeries| (QREFELT $ 7) |x| |a|)))
                   (LETT |series|
                         (SPADCALL
                          (|EXPR2UPS;iTaylor|
@@ -377,8 +365,7 @@
                                                   (|devaluate| (ELT $ 7)) |x|
                                                   |a|)
                                                  (LIST '|Any|))
-                                                |any1|))
-                        . #2#)
+                                                |any1|)))
                   (EXIT
                    (SPADCALL
                     (SPADCALL |series| |n|
@@ -398,7 +385,7 @@
 
 (SDEFUN |EXPR2UPS;iLaurent| ((|fcn| FE) (|x| |Symbol|) (|a| FE) ($ |Any|))
         (SPROG
-         ((#1=#:G794 NIL)
+         ((#1=#:G455 NIL)
           (|any1|
            (CATEGORY |package|
             (SIGNATURE |coerce|
@@ -470,85 +457,84 @@
              (IF (|has| FE (|Algebra| (|Fraction| (|Integer|))))
                  (SIGNATURE |integrate| ($ $ (|Variable| |x|)))
                  |noBranch|)))))
-         (SEQ
-          (LETT |Uls| (|UnivariateLaurentSeries| (QREFELT $ 7) |x| |a|)
-                . #8=(|EXPR2UPS;iLaurent|))
-          (LETT |Uts| (|UnivariateTaylorSeries| (QREFELT $ 7) |x| |a|) . #8#)
-          (LETT |pack|
-                (|FunctionSpaceToUnivariatePowerSeries| (QREFELT $ 6)
-                                                        (QREFELT $ 7)
-                                                        (|Integer|) |Uls|
-                                                        (|ElementaryFunctionsUnivariateLaurentSeries|
-                                                         (QREFELT $ 7) |Uts|
-                                                         |Uls|)
-                                                        |Uts|
-                                                        (|TaylorSeriesExpansionLaurent|
-                                                         (QREFELT $ 7) |Uts|
-                                                         |Uls|)
-                                                        |x|)
-                . #8#)
-          (LETT |ans|
-                (SPADCALL |fcn| NIL (CONS 4 "just do it")
-                          (|compiledLookupCheck| '|exprToUPS|
-                                                 (LIST
-                                                  (LIST '|Union|
-                                                        (LIST '|:| '|%series|
-                                                              (|devaluate|
-                                                               |Uls|))
-                                                        (LIST '|:| '|%problem|
-                                                              (LIST '|Record|
-                                                                    (LIST '|:|
-                                                                          '|func|
-                                                                          (LIST
-                                                                           '|String|))
-                                                                    (LIST '|:|
-                                                                          '|prob|
-                                                                          (LIST
-                                                                           '|String|)))))
-                                                  (|devaluate| (ELT $ 7))
-                                                  (LIST '|Boolean|)
-                                                  (LIST '|Union| '"complex"
-                                                        '"real: two sides"
-                                                        '"real: left side"
-                                                        '"real: right side"
-                                                        '"just do it"))
-                                                 |pack|))
-                . #8#)
-          (EXIT
-           (COND
-            ((QEQCAR |ans| 1)
-             (COND
-              ((EQUAL (QCDR (CDR |ans|)) "essential singularity")
-               (|error| "No Laurent expansion: essential singularity"))
-              ((EQUAL (QCAR (CDR |ans|)) "log")
-               (|error| "No Laurent expansion: logarithmic singularity"))
-              ((EQUAL (QCAR (CDR |ans|)) "nth root")
-               (|error|
-                "No Laurent expansion: fractional powers in expansion"))
-              (#9='T (|error| "No Laurent expansion"))))
-            (#9#
-             (SEQ
-              (LETT |any1|
-                    (|AnyFunctions1|
-                     (|UnivariateLaurentSeries| (QREFELT $ 7) |x| |a|))
-                    . #8#)
+         (SEQ (LETT |Uls| (|UnivariateLaurentSeries| (QREFELT $ 7) |x| |a|))
+              (LETT |Uts| (|UnivariateTaylorSeries| (QREFELT $ 7) |x| |a|))
+              (LETT |pack|
+                    (|FunctionSpaceToUnivariatePowerSeries| (QREFELT $ 6)
+                                                            (QREFELT $ 7)
+                                                            (|Integer|) |Uls|
+                                                            (|ElementaryFunctionsUnivariateLaurentSeries|
+                                                             (QREFELT $ 7)
+                                                             |Uts| |Uls|)
+                                                            |Uts|
+                                                            (|TaylorSeriesExpansionLaurent|
+                                                             (QREFELT $ 7)
+                                                             |Uts| |Uls|)
+                                                            |x|))
+              (LETT |ans|
+                    (SPADCALL |fcn| NIL (CONS 4 "just do it")
+                              (|compiledLookupCheck| '|exprToUPS|
+                                                     (LIST
+                                                      (LIST '|Union|
+                                                            (LIST '|:|
+                                                                  '|%series|
+                                                                  (|devaluate|
+                                                                   |Uls|))
+                                                            (LIST '|:|
+                                                                  '|%problem|
+                                                                  (LIST
+                                                                   '|Record|
+                                                                   (LIST '|:|
+                                                                         '|func|
+                                                                         (LIST
+                                                                          '|String|))
+                                                                   (LIST '|:|
+                                                                         '|prob|
+                                                                         (LIST
+                                                                          '|String|)))))
+                                                      (|devaluate| (ELT $ 7))
+                                                      (LIST '|Boolean|)
+                                                      (LIST '|Union| '"complex"
+                                                            '"real: two sides"
+                                                            '"real: left side"
+                                                            '"real: right side"
+                                                            '"just do it"))
+                                                     |pack|)))
               (EXIT
-               (SPADCALL
-                (PROG2 (LETT #1# |ans| . #8#)
-                    (QCDR #1#)
-                  (|check_union2| (QEQCAR #1# 0) |Uls|
-                                  (|Union| (|:| |%series| |Uls|)
-                                           (|:| |%problem|
-                                                (|Record|
-                                                 (|:| |func| (|String|))
-                                                 (|:| |prob| (|String|)))))
-                                  #1#))
-                (|compiledLookupCheck| '|coerce|
-                                       (LIST (LIST '|Any|)
-                                             (LIST '|UnivariateLaurentSeries|
-                                                   (|devaluate| (ELT $ 7)) |x|
-                                                   |a|))
-                                       |any1|)))))))))) 
+               (COND
+                ((QEQCAR |ans| 1)
+                 (COND
+                  ((EQUAL (QCDR (CDR |ans|)) "essential singularity")
+                   (|error| "No Laurent expansion: essential singularity"))
+                  ((EQUAL (QCAR (CDR |ans|)) "log")
+                   (|error| "No Laurent expansion: logarithmic singularity"))
+                  ((EQUAL (QCAR (CDR |ans|)) "nth root")
+                   (|error|
+                    "No Laurent expansion: fractional powers in expansion"))
+                  (#8='T (|error| "No Laurent expansion"))))
+                (#8#
+                 (SEQ
+                  (LETT |any1|
+                        (|AnyFunctions1|
+                         (|UnivariateLaurentSeries| (QREFELT $ 7) |x| |a|)))
+                  (EXIT
+                   (SPADCALL
+                    (PROG2 (LETT #1# |ans|)
+                        (QCDR #1#)
+                      (|check_union2| (QEQCAR #1# 0) |Uls|
+                                      (|Union| (|:| |%series| |Uls|)
+                                               (|:| |%problem|
+                                                    (|Record|
+                                                     (|:| |func| (|String|))
+                                                     (|:| |prob| (|String|)))))
+                                      #1#))
+                    (|compiledLookupCheck| '|coerce|
+                                           (LIST (LIST '|Any|)
+                                                 (LIST
+                                                  '|UnivariateLaurentSeries|
+                                                  (|devaluate| (ELT $ 7)) |x|
+                                                  |a|))
+                                           |any1|)))))))))) 
 
 (SDEFUN |EXPR2UPS;laurent;SA;9| ((|x| |Symbol|) ($ |Any|))
         (SPROG
@@ -572,9 +558,8 @@
          (SEQ
           (LETT |uls|
                 (|UnivariateLaurentSeries| (QREFELT $ 7) |x|
-                                           (|spadConstant| $ 17))
-                . #1=(|EXPR2UPS;laurent;SA;9|))
-          (LETT |any1| (|AnyFunctions1| |uls|) . #1#)
+                                           (|spadConstant| $ 17)))
+          (LETT |any1| (|AnyFunctions1| |uls|))
           (EXIT
            (SPADCALL
             (SPADCALL (|spadConstant| $ 19) 1
@@ -589,9 +574,7 @@
 (SDEFUN |EXPR2UPS;laurent;FEA;10| ((|fcn| FE) ($ |Any|))
         (SPROG ((|vars| (|List| (|Symbol|))))
                (COND
-                ((NULL
-                  (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                        |EXPR2UPS;laurent;FEA;10|))
+                ((NULL (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))))
                  (|error| "laurent: expression has no variables"))
                 ((NULL (NULL (CDR |vars|)))
                  (|error| "laurent: expression has more than one variable"))
@@ -625,19 +608,16 @@
           (|x| (|Symbol|)) (|vars| (|List| (|Symbol|))))
          (SEQ
           (COND
-           ((NULL
-             (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                   . #1=(|EXPR2UPS;laurent;FEIA;11|)))
+           ((NULL (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))))
             (|error| "laurent: expression has no variables"))
            ((NULL (NULL (CDR |vars|)))
             (|error| "laurent: expression has more than one variable"))
            ('T
-            (SEQ (LETT |x| (|SPADfirst| |vars|) . #1#)
+            (SEQ (LETT |x| (|SPADfirst| |vars|))
                  (LETT |uls|
                        (|UnivariateLaurentSeries| (QREFELT $ 7) |x|
-                                                  (|spadConstant| $ 17))
-                       . #1#)
-                 (LETT |any1| (|AnyFunctions1| |uls|) . #1#)
+                                                  (|spadConstant| $ 17)))
+                 (LETT |any1| (|AnyFunctions1| |uls|))
                  (LETT |series|
                        (SPADCALL
                         (SPADCALL |fcn|
@@ -648,8 +628,7 @@
                         (|compiledLookupCheck| '|retract|
                                                (LIST (|devaluate| |uls|)
                                                      (LIST '|Any|))
-                                               |any1|))
-                       . #1#)
+                                               |any1|)))
                  (EXIT
                   (SPADCALL
                    (SPADCALL |series| |n|
@@ -666,15 +645,14 @@
         (SPROG
          ((|a| (FE)) (|x| (|Symbol|)) (|xx| (|Union| (|Symbol|) "failed")))
          (SEQ
-          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31))
-                . #1=(|EXPR2UPS;laurent;FEEA;12|))
+          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31)))
           (EXIT
            (COND
             ((QEQCAR |xx| 1)
              (|error| "taylor: left hand side must be a variable"))
             ('T
-             (SEQ (LETT |x| (QCDR |xx|) . #1#)
-                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)) . #1#)
+             (SEQ (LETT |x| (QCDR |xx|))
+                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)))
                   (EXIT
                    (|EXPR2UPS;iLaurent|
                     (|EXPR2UPS;performSubstitution| |fcn| |x| |a| $) |x| |a|
@@ -693,19 +671,17 @@
             (SIGNATURE |retract| (#1# (|Any|)))))
           (|a| (FE)) (|x| (|Symbol|)) (|xx| (|Union| (|Symbol|) "failed")))
          (SEQ
-          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31))
-                . #2=(|EXPR2UPS;laurent;FEEIA;13|))
+          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31)))
           (EXIT
            (COND
             ((QEQCAR |xx| 1)
              (|error| "taylor: left hand side must be a variable"))
             ('T
-             (SEQ (LETT |x| (QCDR |xx|) . #2#)
-                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)) . #2#)
+             (SEQ (LETT |x| (QCDR |xx|))
+                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)))
                   (LETT |any1|
                         (|AnyFunctions1|
-                         (|UnivariateLaurentSeries| (QREFELT $ 7) |x| |a|))
-                        . #2#)
+                         (|UnivariateLaurentSeries| (QREFELT $ 7) |x| |a|)))
                   (LETT |series|
                         (SPADCALL
                          (|EXPR2UPS;iLaurent|
@@ -718,8 +694,7 @@
                                                   (|devaluate| (ELT $ 7)) |x|
                                                   |a|)
                                                  (LIST '|Any|))
-                                                |any1|))
-                        . #2#)
+                                                |any1|)))
                   (EXIT
                    (SPADCALL
                     (SPADCALL |series| |n|
@@ -738,7 +713,7 @@
 
 (SDEFUN |EXPR2UPS;iPuiseux| ((|fcn| FE) (|x| |Symbol|) (|a| FE) ($ |Any|))
         (SPROG
-         ((#1=#:G837 NIL)
+         ((#1=#:G492 NIL)
           (|any1|
            (CATEGORY |package|
             (SIGNATURE |coerce|
@@ -821,88 +796,87 @@
                     (IF (|has| FE (|Algebra| (|Fraction| (|Integer|))))
                         (SIGNATURE |integrate| ($ $ (|Variable| |x|)))
                         |noBranch|)))))
-         (SEQ
-          (LETT |Uts| (|UnivariateTaylorSeries| (QREFELT $ 7) |x| |a|)
-                . #8=(|EXPR2UPS;iPuiseux|))
-          (LETT |Uls| (|UnivariateLaurentSeries| (QREFELT $ 7) |x| |a|) . #8#)
-          (LETT |Ups| (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x| |a|) . #8#)
-          (LETT |pack|
-                (|FunctionSpaceToUnivariatePowerSeries| (QREFELT $ 6)
-                                                        (QREFELT $ 7)
-                                                        (|Fraction|
-                                                         (|Integer|))
-                                                        |Ups|
-                                                        (|ElementaryFunctionsUnivariatePuiseuxSeries|
-                                                         (QREFELT $ 7) |Uls|
-                                                         |Ups|
-                                                         (|ElementaryFunctionsUnivariateLaurentSeries|
-                                                          (QREFELT $ 7) |Uts|
-                                                          |Uls|))
-                                                        |Uts|
-                                                        (|TaylorSeriesExpansionPuiseux|
-                                                         (QREFELT $ 7) |Uts|
-                                                         |Uls| |Ups|)
-                                                        |x|)
-                . #8#)
-          (LETT |ans|
-                (SPADCALL |fcn| NIL (CONS 4 "just do it")
-                          (|compiledLookupCheck| '|exprToUPS|
-                                                 (LIST
-                                                  (LIST '|Union|
-                                                        (LIST '|:| '|%series|
-                                                              (|devaluate|
-                                                               |Ups|))
-                                                        (LIST '|:| '|%problem|
-                                                              (LIST '|Record|
-                                                                    (LIST '|:|
-                                                                          '|func|
-                                                                          (LIST
-                                                                           '|String|))
-                                                                    (LIST '|:|
-                                                                          '|prob|
-                                                                          (LIST
-                                                                           '|String|)))))
-                                                  (|devaluate| (ELT $ 7))
-                                                  (LIST '|Boolean|)
-                                                  (LIST '|Union| '"complex"
-                                                        '"real: two sides"
-                                                        '"real: left side"
-                                                        '"real: right side"
-                                                        '"just do it"))
-                                                 |pack|))
-                . #8#)
-          (EXIT
-           (COND
-            ((QEQCAR |ans| 1)
-             (COND
-              ((EQUAL (QCDR (CDR |ans|)) "essential singularity")
-               (|error| "No Puiseux expansion: essential singularity"))
-              ((EQUAL (QCAR (CDR |ans|)) "log")
-               (|error| "No Puiseux expansion: logarithmic singularity"))
-              (#9='T (|error| "No Puiseux expansion"))))
-            (#9#
-             (SEQ
-              (LETT |any1|
-                    (|AnyFunctions1|
-                     (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x| |a|))
-                    . #8#)
+         (SEQ (LETT |Uts| (|UnivariateTaylorSeries| (QREFELT $ 7) |x| |a|))
+              (LETT |Uls| (|UnivariateLaurentSeries| (QREFELT $ 7) |x| |a|))
+              (LETT |Ups| (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x| |a|))
+              (LETT |pack|
+                    (|FunctionSpaceToUnivariatePowerSeries| (QREFELT $ 6)
+                                                            (QREFELT $ 7)
+                                                            (|Fraction|
+                                                             (|Integer|))
+                                                            |Ups|
+                                                            (|ElementaryFunctionsUnivariatePuiseuxSeries|
+                                                             (QREFELT $ 7)
+                                                             |Uls| |Ups|
+                                                             (|ElementaryFunctionsUnivariateLaurentSeries|
+                                                              (QREFELT $ 7)
+                                                              |Uts| |Uls|))
+                                                            |Uts|
+                                                            (|TaylorSeriesExpansionPuiseux|
+                                                             (QREFELT $ 7)
+                                                             |Uts| |Uls| |Ups|)
+                                                            |x|))
+              (LETT |ans|
+                    (SPADCALL |fcn| NIL (CONS 4 "just do it")
+                              (|compiledLookupCheck| '|exprToUPS|
+                                                     (LIST
+                                                      (LIST '|Union|
+                                                            (LIST '|:|
+                                                                  '|%series|
+                                                                  (|devaluate|
+                                                                   |Ups|))
+                                                            (LIST '|:|
+                                                                  '|%problem|
+                                                                  (LIST
+                                                                   '|Record|
+                                                                   (LIST '|:|
+                                                                         '|func|
+                                                                         (LIST
+                                                                          '|String|))
+                                                                   (LIST '|:|
+                                                                         '|prob|
+                                                                         (LIST
+                                                                          '|String|)))))
+                                                      (|devaluate| (ELT $ 7))
+                                                      (LIST '|Boolean|)
+                                                      (LIST '|Union| '"complex"
+                                                            '"real: two sides"
+                                                            '"real: left side"
+                                                            '"real: right side"
+                                                            '"just do it"))
+                                                     |pack|)))
               (EXIT
-               (SPADCALL
-                (PROG2 (LETT #1# |ans| . #8#)
-                    (QCDR #1#)
-                  (|check_union2| (QEQCAR #1# 0) |Ups|
-                                  (|Union| (|:| |%series| |Ups|)
-                                           (|:| |%problem|
-                                                (|Record|
-                                                 (|:| |func| (|String|))
-                                                 (|:| |prob| (|String|)))))
-                                  #1#))
-                (|compiledLookupCheck| '|coerce|
-                                       (LIST (LIST '|Any|)
-                                             (LIST '|UnivariatePuiseuxSeries|
-                                                   (|devaluate| (ELT $ 7)) |x|
-                                                   |a|))
-                                       |any1|)))))))))) 
+               (COND
+                ((QEQCAR |ans| 1)
+                 (COND
+                  ((EQUAL (QCDR (CDR |ans|)) "essential singularity")
+                   (|error| "No Puiseux expansion: essential singularity"))
+                  ((EQUAL (QCAR (CDR |ans|)) "log")
+                   (|error| "No Puiseux expansion: logarithmic singularity"))
+                  (#8='T (|error| "No Puiseux expansion"))))
+                (#8#
+                 (SEQ
+                  (LETT |any1|
+                        (|AnyFunctions1|
+                         (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x| |a|)))
+                  (EXIT
+                   (SPADCALL
+                    (PROG2 (LETT #1# |ans|)
+                        (QCDR #1#)
+                      (|check_union2| (QEQCAR #1# 0) |Ups|
+                                      (|Union| (|:| |%series| |Ups|)
+                                               (|:| |%problem|
+                                                    (|Record|
+                                                     (|:| |func| (|String|))
+                                                     (|:| |prob| (|String|)))))
+                                      #1#))
+                    (|compiledLookupCheck| '|coerce|
+                                           (LIST (LIST '|Any|)
+                                                 (LIST
+                                                  '|UnivariatePuiseuxSeries|
+                                                  (|devaluate| (ELT $ 7)) |x|
+                                                  |a|))
+                                           |any1|)))))))))) 
 
 (SDEFUN |EXPR2UPS;puiseux;SA;15| ((|x| |Symbol|) ($ |Any|))
         (SPROG
@@ -927,9 +901,8 @@
          (SEQ
           (LETT |upxs|
                 (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x|
-                                           (|spadConstant| $ 17))
-                . #2=(|EXPR2UPS;puiseux;SA;15|))
-          (LETT |any1| (|AnyFunctions1| |upxs|) . #2#)
+                                           (|spadConstant| $ 17)))
+          (LETT |any1| (|AnyFunctions1| |upxs|))
           (EXIT
            (SPADCALL
             (SPADCALL (|spadConstant| $ 19) (|spadConstant| $ 41)
@@ -945,9 +918,7 @@
 (SDEFUN |EXPR2UPS;puiseux;FEA;16| ((|fcn| FE) ($ |Any|))
         (SPROG ((|vars| (|List| (|Symbol|))))
                (COND
-                ((NULL
-                  (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                        |EXPR2UPS;puiseux;FEA;16|))
+                ((NULL (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))))
                  (|error| "puiseux: expression has no variables"))
                 ((NULL (NULL (CDR |vars|)))
                  (|error| "puiseux: expression has more than one variable"))
@@ -983,19 +954,16 @@
           (|x| (|Symbol|)) (|vars| (|List| (|Symbol|))))
          (SEQ
           (COND
-           ((NULL
-             (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                   . #2=(|EXPR2UPS;puiseux;FEFA;17|)))
+           ((NULL (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))))
             (|error| "puiseux: expression has no variables"))
            ((NULL (NULL (CDR |vars|)))
             (|error| "puiseux: expression has more than one variable"))
            ('T
-            (SEQ (LETT |x| (|SPADfirst| |vars|) . #2#)
+            (SEQ (LETT |x| (|SPADfirst| |vars|))
                  (LETT |upxs|
                        (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x|
-                                                  (|spadConstant| $ 17))
-                       . #2#)
-                 (LETT |any1| (|AnyFunctions1| |upxs|) . #2#)
+                                                  (|spadConstant| $ 17)))
+                 (LETT |any1| (|AnyFunctions1| |upxs|))
                  (LETT |series|
                        (SPADCALL
                         (SPADCALL |fcn|
@@ -1006,8 +974,7 @@
                         (|compiledLookupCheck| '|retract|
                                                (LIST (|devaluate| |upxs|)
                                                      (LIST '|Any|))
-                                               |any1|))
-                       . #2#)
+                                               |any1|)))
                  (EXIT
                   (SPADCALL
                    (SPADCALL |series| |n|
@@ -1026,15 +993,14 @@
         (SPROG
          ((|a| (FE)) (|x| (|Symbol|)) (|xx| (|Union| (|Symbol|) "failed")))
          (SEQ
-          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31))
-                . #1=(|EXPR2UPS;puiseux;FEEA;18|))
+          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31)))
           (EXIT
            (COND
             ((QEQCAR |xx| 1)
              (|error| "taylor: left hand side must be a variable"))
             ('T
-             (SEQ (LETT |x| (QCDR |xx|) . #1#)
-                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)) . #1#)
+             (SEQ (LETT |x| (QCDR |xx|))
+                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)))
                   (EXIT
                    (|EXPR2UPS;iPuiseux|
                     (|EXPR2UPS;performSubstitution| |fcn| |x| |a| $) |x| |a|
@@ -1054,19 +1020,17 @@
             (SIGNATURE |retract| (#1# (|Any|)))))
           (|a| (FE)) (|x| (|Symbol|)) (|xx| (|Union| (|Symbol|) "failed")))
          (SEQ
-          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31))
-                . #2=(|EXPR2UPS;puiseux;FEEFA;19|))
+          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31)))
           (EXIT
            (COND
             ((QEQCAR |xx| 1)
              (|error| "taylor: left hand side must be a variable"))
             ('T
-             (SEQ (LETT |x| (QCDR |xx|) . #2#)
-                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)) . #2#)
+             (SEQ (LETT |x| (QCDR |xx|))
+                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)))
                   (LETT |any1|
                         (|AnyFunctions1|
-                         (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x| |a|))
-                        . #2#)
+                         (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x| |a|)))
                   (LETT |series|
                         (SPADCALL
                          (|EXPR2UPS;iPuiseux|
@@ -1079,8 +1043,7 @@
                                                   (|devaluate| (ELT $ 7)) |x|
                                                   |a|)
                                                  (LIST '|Any|))
-                                                |any1|))
-                        . #2#)
+                                                |any1|)))
                   (EXIT
                    (SPADCALL
                     (SPADCALL |series| |n|
@@ -1109,7 +1072,7 @@
              ((|Union| #2# . #3=("failed")) . #4=((|Any|))))
             #5=(SIGNATURE |retractable?| ((|Boolean|) (|Any|)))
             (SIGNATURE |retract| (#2# . #6=((|Any|))))))
-          (#7=#:G873 NIL)
+          (#7=#:G528 NIL)
           (|anyone|
            (CATEGORY |package|
             (SIGNATURE |coerce|
@@ -1188,71 +1151,36 @@
                     (IF (|has| FE (|Algebra| (|Fraction| (|Integer|))))
                         (SIGNATURE |integrate| ($ $ (|Variable| |x|)))
                         |noBranch|)))))
-         (SEQ
-          (LETT |Uts| (|UnivariateTaylorSeries| (QREFELT $ 7) |x| |a|)
-                . #15=(|EXPR2UPS;iSeries|))
-          (LETT |Uls| (|UnivariateLaurentSeries| (QREFELT $ 7) |x| |a|) . #15#)
-          (LETT |pack|
-                (|FunctionSpaceToUnivariatePowerSeries| (QREFELT $ 6)
-                                                        (QREFELT $ 7)
-                                                        (|Fraction|
-                                                         (|Integer|))
-                                                        (|UnivariatePuiseuxSeries|
-                                                         (QREFELT $ 7) |x| |a|)
-                                                        (|ElementaryFunctionsUnivariatePuiseuxSeries|
-                                                         (QREFELT $ 7) |Uls|
-                                                         (|UnivariatePuiseuxSeries|
-                                                          (QREFELT $ 7) |x|
-                                                          |a|)
-                                                         (|ElementaryFunctionsUnivariateLaurentSeries|
-                                                          (QREFELT $ 7) |Uts|
-                                                          |Uls|))
-                                                        |Uts|
-                                                        (|TaylorSeriesExpansionPuiseux|
-                                                         (QREFELT $ 7) |Uts|
-                                                         |Uls|
-                                                         (|UnivariatePuiseuxSeries|
-                                                          (QREFELT $ 7) |x|
-                                                          |a|))
-                                                        |x|)
-                . #15#)
-          (LETT |ans|
-                (SPADCALL |fcn| NIL (CONS 4 "just do it")
-                          (|compiledLookupCheck| '|exprToUPS|
-                                                 (LIST
-                                                  (LIST '|Union|
-                                                        (LIST '|:| '|%series|
-                                                              (LIST
-                                                               '|UnivariatePuiseuxSeries|
-                                                               (|devaluate|
-                                                                (ELT $ 7))
-                                                               |x| |a|))
-                                                        (LIST '|:| '|%problem|
-                                                              (LIST '|Record|
-                                                                    (LIST '|:|
-                                                                          '|func|
-                                                                          (LIST
-                                                                           '|String|))
-                                                                    (LIST '|:|
-                                                                          '|prob|
-                                                                          (LIST
-                                                                           '|String|)))))
-                                                  (|devaluate| (ELT $ 7))
-                                                  (LIST '|Boolean|)
-                                                  (LIST '|Union| '#16="complex"
-                                                        '#17="real: two sides"
-                                                        '#18="real: left side"
-                                                        '#19="real: right side"
-                                                        '#20="just do it"))
-                                                 |pack|))
-                . #15#)
-          (EXIT
-           (COND
-            ((QEQCAR |ans| 1)
-             (SEQ
-              (LETT |ansG|
+         (SEQ (LETT |Uts| (|UnivariateTaylorSeries| (QREFELT $ 7) |x| |a|))
+              (LETT |Uls| (|UnivariateLaurentSeries| (QREFELT $ 7) |x| |a|))
+              (LETT |pack|
+                    (|FunctionSpaceToUnivariatePowerSeries| (QREFELT $ 6)
+                                                            (QREFELT $ 7)
+                                                            (|Fraction|
+                                                             (|Integer|))
+                                                            (|UnivariatePuiseuxSeries|
+                                                             (QREFELT $ 7) |x|
+                                                             |a|)
+                                                            (|ElementaryFunctionsUnivariatePuiseuxSeries|
+                                                             (QREFELT $ 7)
+                                                             |Uls|
+                                                             (|UnivariatePuiseuxSeries|
+                                                              (QREFELT $ 7) |x|
+                                                              |a|)
+                                                             (|ElementaryFunctionsUnivariateLaurentSeries|
+                                                              (QREFELT $ 7)
+                                                              |Uts| |Uls|))
+                                                            |Uts|
+                                                            (|TaylorSeriesExpansionPuiseux|
+                                                             (QREFELT $ 7)
+                                                             |Uts| |Uls|
+                                                             (|UnivariatePuiseuxSeries|
+                                                              (QREFELT $ 7) |x|
+                                                              |a|))
+                                                            |x|))
+              (LETT |ans|
                     (SPADCALL |fcn| NIL (CONS 4 "just do it")
-                              (|compiledLookupCheck| '|exprToGenUPS|
+                              (|compiledLookupCheck| '|exprToUPS|
                                                      (LIST
                                                       (LIST '|Union|
                                                             (LIST '|:|
@@ -1276,72 +1204,112 @@
                                                                           '|String|)))))
                                                       (|devaluate| (ELT $ 7))
                                                       (LIST '|Boolean|)
-                                                      (LIST '|Union| '#16#
-                                                            '#17# '#18# '#19#
-                                                            '#20#))
-                                                     |pack|))
-                    . #15#)
+                                                      (LIST '|Union|
+                                                            '#15="complex"
+                                                            '#16="real: two sides"
+                                                            '#17="real: left side"
+                                                            '#18="real: right side"
+                                                            '#19="just do it"))
+                                                     |pack|)))
               (EXIT
                (COND
-                ((QEQCAR |ansG| 1)
-                 (COND
-                  ((EQUAL (QCDR (CDR |ansG|)) "essential singularity")
-                   (|error| "No series expansion: essential singularity"))
-                  (#21='T (|error| "No series expansion"))))
-                (#21#
+                ((QEQCAR |ans| 1)
                  (SEQ
-                  (LETT |anyone|
-                        (|AnyFunctions1|
-                         (|GeneralUnivariatePowerSeries| (QREFELT $ 7) |x|
-                                                         |a|))
-                        . #15#)
+                  (LETT |ansG|
+                        (SPADCALL |fcn| NIL (CONS 4 "just do it")
+                                  (|compiledLookupCheck| '|exprToGenUPS|
+                                                         (LIST
+                                                          (LIST '|Union|
+                                                                (LIST '|:|
+                                                                      '|%series|
+                                                                      (LIST
+                                                                       '|UnivariatePuiseuxSeries|
+                                                                       (|devaluate|
+                                                                        (ELT $
+                                                                             7))
+                                                                       |x|
+                                                                       |a|))
+                                                                (LIST '|:|
+                                                                      '|%problem|
+                                                                      (LIST
+                                                                       '|Record|
+                                                                       (LIST
+                                                                        '|:|
+                                                                        '|func|
+                                                                        (LIST
+                                                                         '|String|))
+                                                                       (LIST
+                                                                        '|:|
+                                                                        '|prob|
+                                                                        (LIST
+                                                                         '|String|)))))
+                                                          (|devaluate|
+                                                           (ELT $ 7))
+                                                          (LIST '|Boolean|)
+                                                          (LIST '|Union| '#15#
+                                                                '#16# '#17#
+                                                                '#18# '#19#))
+                                                         |pack|)))
                   (EXIT
-                   (SPADCALL
-                    (SPADCALL
-                     (PROG2 (LETT #7# |ansG| . #15#)
-                         (QCDR #7#)
-                       (|check_union2| (QEQCAR #7# 0)
-                                       (|UnivariatePuiseuxSeries| (QREFELT $ 7)
-                                                                  |x| |a|)
-                                       (|Union|
-                                        (|:| |%series|
-                                             (|UnivariatePuiseuxSeries|
-                                              (QREFELT $ 7) |x| |a|))
-                                        (|:| |%problem|
-                                             (|Record| (|:| |func| (|String|))
-                                                       (|:| |prob|
-                                                            (|String|)))))
-                                       #7#))
-                     (|compiledLookupCheck| '|coerce|
-                                            (LIST '$
-                                                  (LIST
-                                                   '|UnivariatePuiseuxSeries|
-                                                   (|devaluate| (ELT $ 7)) |x|
-                                                   |a|))
-                                            (|GeneralUnivariatePowerSeries|
-                                             (ELT $ 7) |x| |a|)))
-                    (|compiledLookupCheck| '|coerce|
-                                           (LIST (LIST '|Any|)
-                                                 (LIST
-                                                  '|GeneralUnivariatePowerSeries|
-                                                  (|devaluate| (ELT $ 7)) |x|
-                                                  |a|))
-                                           |anyone|)))))))))
-            (#21#
-             (SEQ
-              (LETT |any1|
-                    (|AnyFunctions1|
-                     (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x| |a|))
-                    . #15#)
-              (EXIT
-               (SPADCALL (CDR |ans|)
+                   (COND
+                    ((QEQCAR |ansG| 1)
+                     (COND
+                      ((EQUAL (QCDR (CDR |ansG|)) "essential singularity")
+                       (|error| "No series expansion: essential singularity"))
+                      (#20='T (|error| "No series expansion"))))
+                    (#20#
+                     (SEQ
+                      (LETT |anyone|
+                            (|AnyFunctions1|
+                             (|GeneralUnivariatePowerSeries| (QREFELT $ 7) |x|
+                                                             |a|)))
+                      (EXIT
+                       (SPADCALL
+                        (SPADCALL
+                         (PROG2 (LETT #7# |ansG|)
+                             (QCDR #7#)
+                           (|check_union2| (QEQCAR #7# 0)
+                                           (|UnivariatePuiseuxSeries|
+                                            (QREFELT $ 7) |x| |a|)
+                                           (|Union|
+                                            (|:| |%series|
+                                                 (|UnivariatePuiseuxSeries|
+                                                  (QREFELT $ 7) |x| |a|))
+                                            (|:| |%problem|
+                                                 (|Record|
+                                                  (|:| |func| (|String|))
+                                                  (|:| |prob| (|String|)))))
+                                           #7#))
                          (|compiledLookupCheck| '|coerce|
-                                                (LIST (LIST '|Any|)
+                                                (LIST '$
                                                       (LIST
                                                        '|UnivariatePuiseuxSeries|
                                                        (|devaluate| (ELT $ 7))
                                                        |x| |a|))
-                                                |any1|)))))))))) 
+                                                (|GeneralUnivariatePowerSeries|
+                                                 (ELT $ 7) |x| |a|)))
+                        (|compiledLookupCheck| '|coerce|
+                                               (LIST (LIST '|Any|)
+                                                     (LIST
+                                                      '|GeneralUnivariatePowerSeries|
+                                                      (|devaluate| (ELT $ 7))
+                                                      |x| |a|))
+                                               |anyone|)))))))))
+                (#20#
+                 (SEQ
+                  (LETT |any1|
+                        (|AnyFunctions1|
+                         (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x| |a|)))
+                  (EXIT
+                   (SPADCALL (CDR |ans|)
+                             (|compiledLookupCheck| '|coerce|
+                                                    (LIST (LIST '|Any|)
+                                                          (LIST
+                                                           '|UnivariatePuiseuxSeries|
+                                                           (|devaluate|
+                                                            (ELT $ 7))
+                                                           |x| |a|))
+                                                    |any1|)))))))))) 
 
 (SDEFUN |EXPR2UPS;series;SA;21| ((|x| |Symbol|) ($ |Any|))
         (SPROG
@@ -1366,9 +1334,8 @@
          (SEQ
           (LETT |upxs|
                 (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x|
-                                           (|spadConstant| $ 17))
-                . #2=(|EXPR2UPS;series;SA;21|))
-          (LETT |any1| (|AnyFunctions1| |upxs|) . #2#)
+                                           (|spadConstant| $ 17)))
+          (LETT |any1| (|AnyFunctions1| |upxs|))
           (EXIT
            (SPADCALL
             (SPADCALL (|spadConstant| $ 19) (|spadConstant| $ 41)
@@ -1384,9 +1351,7 @@
 (SDEFUN |EXPR2UPS;series;FEA;22| ((|fcn| FE) ($ |Any|))
         (SPROG ((|vars| (|List| (|Symbol|))))
                (COND
-                ((NULL
-                  (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                        |EXPR2UPS;series;FEA;22|))
+                ((NULL (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))))
                  (|error| "series: expression has no variables"))
                 ((NULL (NULL (CDR |vars|)))
                  (|error| "series: expression has more than one variable"))
@@ -1422,19 +1387,16 @@
           (|x| (|Symbol|)) (|vars| (|List| (|Symbol|))))
          (SEQ
           (COND
-           ((NULL
-             (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))
-                   . #2=(|EXPR2UPS;series;FEFA;23|)))
+           ((NULL (LETT |vars| (SPADCALL |fcn| (QREFELT $ 23))))
             (|error| "series: expression has no variables"))
            ((NULL (NULL (CDR |vars|)))
             (|error| "series: expression has more than one variable"))
            ('T
-            (SEQ (LETT |x| (|SPADfirst| |vars|) . #2#)
+            (SEQ (LETT |x| (|SPADfirst| |vars|))
                  (LETT |upxs|
                        (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x|
-                                                  (|spadConstant| $ 17))
-                       . #2#)
-                 (LETT |any1| (|AnyFunctions1| |upxs|) . #2#)
+                                                  (|spadConstant| $ 17)))
+                 (LETT |any1| (|AnyFunctions1| |upxs|))
                  (LETT |series|
                        (SPADCALL
                         (SPADCALL |fcn|
@@ -1445,8 +1407,7 @@
                         (|compiledLookupCheck| '|retract|
                                                (LIST (|devaluate| |upxs|)
                                                      (LIST '|Any|))
-                                               |any1|))
-                       . #2#)
+                                               |any1|)))
                  (EXIT
                   (SPADCALL
                    (SPADCALL |series| |n|
@@ -1465,15 +1426,14 @@
         (SPROG
          ((|a| (FE)) (|x| (|Symbol|)) (|xx| (|Union| (|Symbol|) "failed")))
          (SEQ
-          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31))
-                . #1=(|EXPR2UPS;series;FEEA;24|))
+          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31)))
           (EXIT
            (COND
             ((QEQCAR |xx| 1)
              (|error| "taylor: left hand side must be a variable"))
             ('T
-             (SEQ (LETT |x| (QCDR |xx|) . #1#)
-                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)) . #1#)
+             (SEQ (LETT |x| (QCDR |xx|))
+                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)))
                   (EXIT
                    (|EXPR2UPS;iSeries|
                     (|EXPR2UPS;performSubstitution| |fcn| |x| |a| $) |x| |a|
@@ -1493,19 +1453,17 @@
             (SIGNATURE |retract| (#1# (|Any|)))))
           (|a| (FE)) (|x| (|Symbol|)) (|xx| (|Union| (|Symbol|) "failed")))
          (SEQ
-          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31))
-                . #2=(|EXPR2UPS;series;FEEFA;25|))
+          (LETT |xx| (SPADCALL (SPADCALL |eq| (QREFELT $ 29)) (QREFELT $ 31)))
           (EXIT
            (COND
             ((QEQCAR |xx| 1)
              (|error| "taylor: left hand side must be a variable"))
             ('T
-             (SEQ (LETT |x| (QCDR |xx|) . #2#)
-                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)) . #2#)
+             (SEQ (LETT |x| (QCDR |xx|))
+                  (LETT |a| (SPADCALL |eq| (QREFELT $ 32)))
                   (LETT |any1|
                         (|AnyFunctions1|
-                         (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x| |a|))
-                        . #2#)
+                         (|UnivariatePuiseuxSeries| (QREFELT $ 7) |x| |a|)))
                   (LETT |series|
                         (SPADCALL
                          (|EXPR2UPS;iSeries|
@@ -1518,8 +1476,7 @@
                                                   (|devaluate| (ELT $ 7)) |x|
                                                   |a|)
                                                  (LIST '|Any|))
-                                                |any1|))
-                        . #2#)
+                                                |any1|)))
                   (EXIT
                    (SPADCALL
                     (SPADCALL |series| |n|
@@ -1540,24 +1497,23 @@
 
 (DECLAIM (NOTINLINE |ExpressionToUnivariatePowerSeries;|)) 
 
-(DEFUN |ExpressionToUnivariatePowerSeries| (&REST #1=#:G903)
+(DEFUN |ExpressionToUnivariatePowerSeries| (&REST #1=#:G558)
   (SPROG NIL
-         (PROG (#2=#:G904)
+         (PROG (#2=#:G559)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|ExpressionToUnivariatePowerSeries|)
-                                               '|domainEqualList|)
-                    . #3=(|ExpressionToUnivariatePowerSeries|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1
                       (APPLY (|function| |ExpressionToUnivariatePowerSeries;|)
                              #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -1566,14 +1522,12 @@
 (DEFUN |ExpressionToUnivariatePowerSeries;| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|)
-                . #1=(|ExpressionToUnivariatePowerSeries|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|ExpressionToUnivariatePowerSeries| DV$1 DV$2)
-                . #1#)
-          (LETT $ (GETREFV 52) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|ExpressionToUnivariatePowerSeries| DV$1 DV$2))
+          (LETT $ (GETREFV 52))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|ExpressionToUnivariatePowerSeries|
                       (LIST DV$1 DV$2) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -1601,25 +1555,71 @@
               |EXPR2UPS;series;FEEA;24| |EXPR2UPS;series;FEA;22|
               |EXPR2UPS;series;FEFA;23| |EXPR2UPS;series;FEEFA;25|)
            '#(|taylor| 68 |series| 97 |puiseux| 126 |laurent| 155) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 51
-                                                 '(1 7 8 0 9 1 7 0 10 11 2 7 0
-                                                   0 0 12 2 13 0 7 7 14 2 7 0 0
-                                                   15 16 0 7 0 17 0 6 0 18 0 7
-                                                   0 19 1 7 22 0 23 0 6 0 26 1
-                                                   13 7 0 29 1 7 30 0 31 1 13 7
-                                                   0 32 0 40 0 41 1 0 20 7 25 1
-                                                   0 20 10 21 2 0 20 7 27 28 3
-                                                   0 20 7 13 27 33 2 0 20 7 13
-                                                   24 1 0 20 7 49 1 0 20 10 47
-                                                   2 0 20 7 40 50 3 0 20 7 13
-                                                   40 51 2 0 20 7 13 48 1 0 20
-                                                   7 44 1 0 20 10 42 2 0 20 7
-                                                   40 45 3 0 20 7 13 40 46 2 0
-                                                   20 7 13 43 1 0 20 7 36 1 0
-                                                   20 10 34 2 0 20 7 37 38 3 0
-                                                   20 7 13 37 39 2 0 20 7 13
-                                                   35)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|taylor| ((|Any|) (|Symbol|))) T)
+                                   '((|taylor| ((|Any|) |#2|)) T)
+                                   '((|taylor|
+                                      ((|Any|) |#2| (|NonNegativeInteger|)))
+                                     T)
+                                   '((|taylor|
+                                      ((|Any|) |#2| (|Equation| |#2|)))
+                                     T)
+                                   '((|taylor|
+                                      ((|Any|) |#2| (|Equation| |#2|)
+                                       (|NonNegativeInteger|)))
+                                     T)
+                                   '((|laurent| ((|Any|) (|Symbol|))) T)
+                                   '((|laurent| ((|Any|) |#2|)) T)
+                                   '((|laurent| ((|Any|) |#2| (|Integer|))) T)
+                                   '((|laurent|
+                                      ((|Any|) |#2| (|Equation| |#2|)))
+                                     T)
+                                   '((|laurent|
+                                      ((|Any|) |#2| (|Equation| |#2|)
+                                       (|Integer|)))
+                                     T)
+                                   '((|puiseux| ((|Any|) (|Symbol|))) T)
+                                   '((|puiseux| ((|Any|) |#2|)) T)
+                                   '((|puiseux|
+                                      ((|Any|) |#2| (|Fraction| (|Integer|))))
+                                     T)
+                                   '((|puiseux|
+                                      ((|Any|) |#2| (|Equation| |#2|)))
+                                     T)
+                                   '((|puiseux|
+                                      ((|Any|) |#2| (|Equation| |#2|)
+                                       (|Fraction| (|Integer|))))
+                                     T)
+                                   '((|series| ((|Any|) (|Symbol|))) T)
+                                   '((|series| ((|Any|) |#2|)) T)
+                                   '((|series|
+                                      ((|Any|) |#2| (|Fraction| (|Integer|))))
+                                     T)
+                                   '((|series|
+                                      ((|Any|) |#2| (|Equation| |#2|)))
+                                     T)
+                                   '((|series|
+                                      ((|Any|) |#2| (|Equation| |#2|)
+                                       (|Fraction| (|Integer|))))
+                                     T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 51
+                                            '(1 7 8 0 9 1 7 0 10 11 2 7 0 0 0
+                                              12 2 13 0 7 7 14 2 7 0 0 15 16 0
+                                              7 0 17 0 6 0 18 0 7 0 19 1 7 22 0
+                                              23 0 6 0 26 1 13 7 0 29 1 7 30 0
+                                              31 1 13 7 0 32 0 40 0 41 1 0 20 7
+                                              25 1 0 20 10 21 2 0 20 7 27 28 3
+                                              0 20 7 13 27 33 2 0 20 7 13 24 1
+                                              0 20 7 49 1 0 20 10 47 2 0 20 7
+                                              40 50 3 0 20 7 13 40 51 2 0 20 7
+                                              13 48 1 0 20 7 44 1 0 20 10 42 2
+                                              0 20 7 40 45 3 0 20 7 13 40 46 2
+                                              0 20 7 13 43 1 0 20 7 36 1 0 20
+                                              10 34 2 0 20 7 37 38 3 0 20 7 13
+                                              37 39 2 0 20 7 13 35)))))
            '|lookupComplete|)) 

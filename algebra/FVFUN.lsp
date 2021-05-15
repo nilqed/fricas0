@@ -4,14 +4,13 @@
 (DEFPARAMETER |FortranVectorFunctionCategory;AL| 'NIL) 
 
 (DEFUN |FortranVectorFunctionCategory| ()
-  (LET (#:G692)
-    (COND (|FortranVectorFunctionCategory;AL|)
-          (T
-           (SETQ |FortranVectorFunctionCategory;AL|
-                   (|FortranVectorFunctionCategory;|)))))) 
+  (COND (|FortranVectorFunctionCategory;AL|)
+        (T
+         (SETQ |FortranVectorFunctionCategory;AL|
+                 (|FortranVectorFunctionCategory;|))))) 
 
 (DEFUN |FortranVectorFunctionCategory;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|FortranProgramCategory|)
@@ -72,17 +71,7 @@
                                  (|Vector|
                                   (|Fraction| (|Polynomial| (|Integer|))))))
                                T))
-                            NIL
-                            '((|Vector|
-                               (|Fraction| (|Polynomial| (|Integer|))))
-                              (|Vector| (|Fraction| (|Polynomial| (|Float|))))
-                              (|Vector| (|Polynomial| (|Integer|)))
-                              (|Vector| (|Polynomial| (|Float|)))
-                              (|Vector| (|Expression| (|Integer|)))
-                              (|Vector| (|Expression| (|Float|)))
-                              (|FortranCode|) (|List| (|FortranCode|)))
-                            NIL))
-                   |FortranVectorFunctionCategory|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|FortranVectorFunctionCategory|))))) 
 
 (MAKEPROP '|FortranVectorFunctionCategory| 'NILADIC T) 

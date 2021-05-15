@@ -10,7 +10,7 @@
                    (LIST 'CONCAT
                          (SPADCALL "File is not readable" (QREFELT $ 13))
                          (SPADCALL |fn| (QREFELT $ 14))))))
-           (#1='T (MAKE-INSTREAM (SPADCALL |fn| (QREFELT $ 15))))))
+           (#1='T (MAKE_INSTREAM (SPADCALL |fn| (QREFELT $ 15))))))
          ((EQUAL |mode| "output")
           (COND
            ((NULL (SPADCALL |fn| (QREFELT $ 16)))
@@ -19,7 +19,7 @@
                    (LIST 'CONCAT
                          (SPADCALL "File is not writable" (QREFELT $ 13))
                          (SPADCALL |fn| (QREFELT $ 14))))))
-           (#1# (MAKE-OUTSTREAM (SPADCALL |fn| (QREFELT $ 15))))))
+           (#1# (MAKE_OUTSTREAM (SPADCALL |fn| (QREFELT $ 15))))))
          ('T
           (|error|
            (LIST '|mathprint|
@@ -39,10 +39,8 @@
 
 (SDEFUN |FILE;open;FnS$;5| ((|fname| |FileName|) (|mode| |String|) ($ $))
         (SPROG ((|fstream| (|SExpression|)))
-               (SEQ
-                (LETT |fstream| (|FILE;defstream| |fname| |mode| $)
-                      |FILE;open;FnS$;5|)
-                (EXIT (VECTOR |fname| |fstream| |mode|))))) 
+               (SEQ (LETT |fstream| (|FILE;defstream| |fname| |mode| $))
+                    (EXIT (VECTOR |fname| |fstream| |mode|))))) 
 
 (SDEFUN |FILE;reopen!;$S$;6| ((|f| $) (|mode| |String|) ($ $))
         (SPROG ((|fname| (|FileName|)))
@@ -50,7 +48,7 @@
                 (COND
                  ((EQUAL (QVELT |f| 2) "output")
                   (SPADCALL |f| (QREFELT $ 23))))
-                (LETT |fname| (QVELT |f| 0) |FILE;reopen!;$S$;6|)
+                (LETT |fname| (QVELT |f| 0))
                 (QSETVELT |f| 1 (|FILE;defstream| |fname| |mode| $))
                 (QSETVELT |f| 2 |mode|) (EXIT |f|)))) 
 
@@ -72,7 +70,7 @@
                  ((SPADCALL (QVELT |f| 2) "input" (QREFELT $ 28))
                   (|error| "File not in read state"))
                  (#1='T
-                  (SEQ (LETT |x| (VMREAD (QVELT |f| 1)) |FILE;read!;$S;10|)
+                  (SEQ (LETT |x| (VMREAD (QVELT |f| 1)))
                        (EXIT
                         (COND ((PLACEP |x|) (|error| "End of file"))
                               (#1# |x|))))))))) 
@@ -84,11 +82,10 @@
                  ((SPADCALL (QVELT |f| 2) "input" (QREFELT $ 28))
                   (|error| "File not in read state"))
                  (#1='T
-                  (SEQ
-                   (LETT |x| (VMREAD (QVELT |f| 1)) |FILE;readIfCan!;$U;11|)
-                   (EXIT
-                    (COND ((PLACEP |x|) (CONS 1 "failed"))
-                          (#1# (CONS 0 |x|)))))))))) 
+                  (SEQ (LETT |x| (VMREAD (QVELT |f| 1)))
+                       (EXIT
+                        (COND ((PLACEP |x|) (CONS 1 "failed"))
+                              (#1# (CONS 0 |x|)))))))))) 
 
 (SDEFUN |FILE;write!;$2S;12| ((|f| $) (|x| S) ($ S))
         (SEQ
@@ -107,30 +104,29 @@
 
 (DECLAIM (NOTINLINE |File;|)) 
 
-(DEFUN |File| (#1=#:G747)
+(DEFUN |File| (#1=#:G430)
   (SPROG NIL
-         (PROG (#2=#:G748)
+         (PROG (#2=#:G431)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|File|)
-                                               '|domainEqualList|)
-                    . #3=(|File|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|File;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|File;| #1#) (LETT #2# T))
                 (COND ((NOT #2#) (HREM |$ConstructorCache| '|File|)))))))))) 
 
 (DEFUN |File;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|File|))
-          (LETT |dv$| (LIST '|File| DV$1) . #1#)
-          (LETT $ (GETREFV 35) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|File| DV$1))
+          (LETT $ (GETREFV 35))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|File| (LIST DV$1) (CONS 1 $))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)

@@ -5,28 +5,25 @@
 
 (DEFPARAMETER |UnivariateTaylorSeriesCategory;AL| 'NIL) 
 
-(DEFUN |UnivariateTaylorSeriesCategory| (#1=#:G713)
-  (LET (#2=#:G714)
+(DEFUN |UnivariateTaylorSeriesCategory| (|t#1|)
+  (LET (#1=#:G400 (#2=#:G401 (|devaluate| |t#1|)))
     (COND
-     ((SETQ #2#
-              (|assoc| #3=(|devaluate| #1#)
-                       |UnivariateTaylorSeriesCategory;AL|))
-      (CDR #2#))
+     ((SETQ #1# (|assoc| #2# |UnivariateTaylorSeriesCategory;AL|)) (CDR #1#))
      (T
       (SETQ |UnivariateTaylorSeriesCategory;AL|
               (|cons5|
-               (CONS #3# (SETQ #2# (|UnivariateTaylorSeriesCategory;| #1#)))
+               (CONS #2# (SETQ #1# (|UnivariateTaylorSeriesCategory;| #2#)))
                |UnivariateTaylorSeriesCategory;AL|))
-      #2#)))) 
+      #1#)))) 
 
 (DEFUN |UnivariateTaylorSeriesCategory;| (|t#1|)
-  (SPROG ((#1=#:G712 NIL))
+  (SPROG ((#1=#:G399 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (|sublisV|
-                               (PAIR '(#2=#:G711)
-                                     (LIST '(|NonNegativeInteger|)))
+                               (MAKE_PAIRS '(#2=#:G398)
+                                           (LIST '(|NonNegativeInteger|)))
                                (COND (|UnivariateTaylorSeriesCategory;CAT|)
                                      ('T
                                       (LETT
@@ -102,16 +99,5 @@
                                                    (|Algebra|
                                                     (|Fraction|
                                                      (|Integer|))))))
-                                         '((|Symbol|) (|Polynomial| |t#1|)
-                                           (|NonNegativeInteger|)
-                                           (|Stream| |t#1|)
-                                           (|Stream|
-                                            (|Record|
-                                             (|:| |k| (|NonNegativeInteger|))
-                                             (|:| |c| |t#1|))))
-                                         NIL))
-                                       . #3=(|UnivariateTaylorSeriesCategory|))))))
-                   . #3#)
-           (SETELT #1# 0
-                   (LIST '|UnivariateTaylorSeriesCategory|
-                         (|devaluate| |t#1|)))))) 
+                                         NIL NIL))))))))
+           (SETELT #1# 0 (LIST '|UnivariateTaylorSeriesCategory| |t#1|))))) 

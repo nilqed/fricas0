@@ -30,30 +30,29 @@
 
 (DECLAIM (NOTINLINE |TubePlot;|)) 
 
-(DEFUN |TubePlot| (#1=#:G707)
+(DEFUN |TubePlot| (#1=#:G388)
   (SPROG NIL
-         (PROG (#2=#:G708)
+         (PROG (#2=#:G389)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|TubePlot|)
-                                               '|domainEqualList|)
-                    . #3=(|TubePlot|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|TubePlot;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|TubePlot;| #1#) (LETT #2# T))
                 (COND ((NOT #2#) (HREM |$ConstructorCache| '|TubePlot|)))))))))) 
 
 (DEFUN |TubePlot;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|TubePlot|))
-          (LETT |dv$| (LIST '|TubePlot| DV$1) . #1#)
-          (LETT $ (GETREFV 16) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|TubePlot| DV$1))
+          (LETT $ (GETREFV 16))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|TubePlot| (LIST DV$1) (CONS 1 $))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)
@@ -75,11 +74,30 @@
            '#(|tube| 0 |setClosed| 7 |open?| 13 |listLoops| 18 |getCurve| 23
               |closed?| 28)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 15
-                                                 '(3 0 0 6 9 11 15 2 0 11 0 11
-                                                   14 1 0 11 0 13 1 0 9 0 10 1
-                                                   0 6 0 8 1 0 11 0 12)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|getCurve| (|#1| $$)) T)
+                                   '((|listLoops|
+                                      ((|List|
+                                        (|List| (|Point| (|DoubleFloat|))))
+                                       $$))
+                                     T)
+                                   '((|closed?| ((|Boolean|) $$)) T)
+                                   '((|open?| ((|Boolean|) $$)) T)
+                                   '((|setClosed| ((|Boolean|) $$ (|Boolean|)))
+                                     T)
+                                   '((|tube|
+                                      ($$ |#1|
+                                       (|List|
+                                        (|List| (|Point| (|DoubleFloat|))))
+                                       (|Boolean|)))
+                                     T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 15
+                                            '(3 0 0 6 9 11 15 2 0 11 0 11 14 1
+                                              0 11 0 13 1 0 9 0 10 1 0 6 0 8 1
+                                              0 11 0 12)))))
            '|lookupComplete|)) 

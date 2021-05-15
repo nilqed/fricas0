@@ -15,40 +15,37 @@
 
 (DECLAIM (NOTINLINE |LocalAlgebra;|)) 
 
-(DEFUN |LocalAlgebra| (&REST #1=#:G703)
+(DEFUN |LocalAlgebra| (&REST #1=#:G384)
   (SPROG NIL
-         (PROG (#2=#:G704)
+         (PROG (#2=#:G385)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|LocalAlgebra|)
-                                               '|domainEqualList|)
-                    . #3=(|LocalAlgebra|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (APPLY (|function| |LocalAlgebra;|) #1#)
-                    (LETT #2# T . #3#))
+                  (PROG1 (APPLY (|function| |LocalAlgebra;|) #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|LocalAlgebra|)))))))))) 
 
 (DEFUN |LocalAlgebra;| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|LocalAlgebra|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|LocalAlgebra| DV$1 DV$2) . #1#)
-          (LETT $ (GETREFV 28) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|LocalAlgebra| DV$1 DV$2))
+          (LETT $ (GETREFV 28))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
                           (|buildPredVector| 0 0
                                              (LIST
                                               (|HasCategory| |#1|
-                                                             '(|OrderedRing|))))
-                          . #1#))
+                                                             '(|OrderedRing|))))))
           (|haddProp| |$ConstructorCache| '|LocalAlgebra| (LIST DV$1 DV$2)
                       (CONS 1 $))
           (|stuffDomainSlots| $)

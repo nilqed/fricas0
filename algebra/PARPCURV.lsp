@@ -12,21 +12,20 @@
 
 (DECLAIM (NOTINLINE |ParametricPlaneCurve;|)) 
 
-(DEFUN |ParametricPlaneCurve| (#1=#:G700)
+(DEFUN |ParametricPlaneCurve| (#1=#:G383)
   (SPROG NIL
-         (PROG (#2=#:G701)
+         (PROG (#2=#:G384)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|ParametricPlaneCurve|)
-                                               '|domainEqualList|)
-                    . #3=(|ParametricPlaneCurve|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (|ParametricPlaneCurve;| #1#) (LETT #2# T . #3#))
+                  (PROG1 (|ParametricPlaneCurve;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|ParametricPlaneCurve|)))))))))) 
@@ -34,11 +33,11 @@
 (DEFUN |ParametricPlaneCurve;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|ParametricPlaneCurve|))
-          (LETT |dv$| (LIST '|ParametricPlaneCurve| DV$1) . #1#)
-          (LETT $ (GETREFV 11) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|ParametricPlaneCurve| DV$1))
+          (LETT $ (GETREFV 11))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|ParametricPlaneCurve| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -53,10 +52,15 @@
               |PARPCURV;curve;2ComponentFunction$;1| (|NonNegativeInteger|)
               |PARPCURV;coordinate;$NniComponentFunction;2|)
            '#(|curve| 0 |coordinate| 6) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 10
-                                                 '(2 0 0 6 6 8 2 0 6 0 9
-                                                   10)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|curve| ($$ |#1| |#1|)) T)
+                                   '((|coordinate|
+                                      (|#1| $$ (|NonNegativeInteger|)))
+                                     T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 10 '(2 0 0 6 6 8 2 0 6 0 9 10)))))
            '|lookupComplete|)) 

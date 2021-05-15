@@ -46,10 +46,10 @@
 
 (DEFUN |Palette| ()
   (SPROG NIL
-         (PROG (#1=#:G726)
+         (PROG (#1=#:G391)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|Palette|) . #2=(|Palette|))
+             ((LETT #1# (HGET |$ConstructorCache| '|Palette|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -57,16 +57,16 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|Palette|
                              (LIST (CONS NIL (CONS 1 (|Palette;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND ((NOT #1#) (HREM |$ConstructorCache| '|Palette|)))))))))) 
 
 (DEFUN |Palette;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|Palette|) . #1=(|Palette|))
-          (LETT $ (GETREFV 29) . #1#)
+          (LETT |dv$| '(|Palette|))
+          (LETT $ (GETREFV 29))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|Palette| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

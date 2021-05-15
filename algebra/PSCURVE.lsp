@@ -4,17 +4,16 @@
 (DEFPARAMETER |PlottableSpaceCurveCategory;AL| 'NIL) 
 
 (DEFUN |PlottableSpaceCurveCategory| ()
-  (LET (#:G693)
-    (COND (|PlottableSpaceCurveCategory;AL|)
-          (T
-           (SETQ |PlottableSpaceCurveCategory;AL|
-                   (|PlottableSpaceCurveCategory;|)))))) 
+  (COND (|PlottableSpaceCurveCategory;AL|)
+        (T
+         (SETQ |PlottableSpaceCurveCategory;AL|
+                 (|PlottableSpaceCurveCategory;|))))) 
 
 (DEFUN |PlottableSpaceCurveCategory;| ()
-  (SPROG ((#1=#:G691 NIL))
+  (SPROG ((#1=#:G379 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(#2=#:G690) (LIST '(|OutputForm|)))
+                   (|sublisV| (MAKE_PAIRS '(#2=#:G378) (LIST '(|OutputForm|)))
                               (|Join| (|CoercibleTo| '#2#)
                                       (|mkCategory|
                                        '(((|listBranches|
@@ -32,12 +31,7 @@
                                          ((|zRange|
                                            ((|Segment| (|DoubleFloat|)) $))
                                           T))
-                                       NIL
-                                       '((|Segment| (|DoubleFloat|))
-                                         (|List|
-                                          (|List| (|Point| (|DoubleFloat|)))))
-                                       NIL)))
-                   |PlottableSpaceCurveCategory|)
+                                       NIL NIL NIL))))
            (SETELT #1# 0 '(|PlottableSpaceCurveCategory|))))) 
 
 (MAKEPROP '|PlottableSpaceCurveCategory| 'NILADIC T) 

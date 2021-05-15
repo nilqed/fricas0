@@ -5,29 +5,27 @@
 
 (DEFPARAMETER |TwoDimensionalArrayCategory;AL| 'NIL) 
 
-(DEFUN |TwoDimensionalArrayCategory| (&REST #1=#:G790)
-  (LET (#2=#:G791)
-    (COND
-     ((SETQ #2#
-              (|assoc| #3=(|devaluateList| #1#)
-                       |TwoDimensionalArrayCategory;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |TwoDimensionalArrayCategory;AL|
-              (|cons5|
-               (CONS #3#
-                     (SETQ #2# (APPLY #'|TwoDimensionalArrayCategory;| #1#)))
-               |TwoDimensionalArrayCategory;AL|))
-      #2#)))) 
+(DEFUN |TwoDimensionalArrayCategory| (|t#1| |t#2| |t#3|)
+  (LET (#1=#:G478
+        (#2=#:G479
+         (LIST (|devaluate| |t#1|) (|devaluate| |t#2|) (|devaluate| |t#3|))))
+    (COND ((SETQ #1# (|assoc| #2# |TwoDimensionalArrayCategory;AL|)) (CDR #1#))
+          (T
+           (SETQ |TwoDimensionalArrayCategory;AL|
+                   (|cons5|
+                    (CONS #2#
+                          (SETQ #1#
+                                  (APPLY #'|TwoDimensionalArrayCategory;|
+                                         #2#)))
+                    |TwoDimensionalArrayCategory;AL|))
+           #1#)))) 
 
 (DEFUN |TwoDimensionalArrayCategory;| (|t#1| |t#2| |t#3|)
-  (SPROG ((#1=#:G789 NIL))
+  (SPROG ((#1=#:G477 NIL))
          (PROG1
              (LETT #1#
                    (|sublisV|
-                    (PAIR '(|t#1| |t#2| |t#3|)
-                          (LIST (|devaluate| |t#1|) (|devaluate| |t#2|)
-                                (|devaluate| |t#3|)))
+                    (MAKE_PAIRS '(|t#1| |t#2| |t#3|) (LIST |t#1| |t#2| |t#3|))
                     (COND (|TwoDimensionalArrayCategory;CAT|)
                           ('T
                            (LETT |TwoDimensionalArrayCategory;CAT|
@@ -260,19 +258,6 @@
                                              T))
                                           '(((|Comparable|)
                                              (|has| |t#1| (|Comparable|))))
-                                          '((|List| (|List| $))
-                                            (|List| (|NonNegativeInteger|))
-                                            (|PositiveInteger|) (|List| $)
-                                            (|Integer|)
-                                            (|List| (|Segment| (|Integer|)))
-                                            (|Segment| (|Integer|))
-                                            (|List| (|Integer|))
-                                            (|List| (|List| |t#1|))
-                                            (|List| |t#1|)
-                                            (|NonNegativeInteger|))
-                                          NIL))
-                                 . #2=(|TwoDimensionalArrayCategory|)))))
-                   . #2#)
+                                          NIL NIL)))))))
            (SETELT #1# 0
-                   (LIST '|TwoDimensionalArrayCategory| (|devaluate| |t#1|)
-                         (|devaluate| |t#2|) (|devaluate| |t#3|)))))) 
+                   (LIST '|TwoDimensionalArrayCategory| |t#1| |t#2| |t#3|))))) 

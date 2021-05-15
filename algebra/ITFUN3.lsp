@@ -16,22 +16,21 @@
 
 (DECLAIM (NOTINLINE |InfiniteTupleFunctions3;|)) 
 
-(DEFUN |InfiniteTupleFunctions3| (&REST #1=#:G699)
+(DEFUN |InfiniteTupleFunctions3| (&REST #1=#:G387)
   (SPROG NIL
-         (PROG (#2=#:G700)
+         (PROG (#2=#:G388)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|InfiniteTupleFunctions3|)
-                                               '|domainEqualList|)
-                    . #3=(|InfiniteTupleFunctions3|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |InfiniteTupleFunctions3;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|InfiniteTupleFunctions3|)))))))))) 
@@ -39,13 +38,13 @@
 (DEFUN |InfiniteTupleFunctions3;| (|#1| |#2| |#3|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|InfiniteTupleFunctions3|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT DV$3 (|devaluate| |#3|) . #1#)
-          (LETT |dv$| (LIST '|InfiniteTupleFunctions3| DV$1 DV$2 DV$3) . #1#)
-          (LETT $ (GETREFV 21) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT DV$3 (|devaluate| |#3|))
+          (LETT |dv$| (LIST '|InfiniteTupleFunctions3| DV$1 DV$2 DV$3))
+          (LETT $ (GETREFV 21))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|InfiniteTupleFunctions3|
                       (LIST DV$1 DV$2 DV$3) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -63,11 +62,29 @@
               (|InfiniteTuple| 8) (|InfiniteTuple| 6) (|InfiniteTuple| 7)
               |ITFUN3;map;MItItIt;1| |ITFUN3;map;MSItS;2| |ITFUN3;map;MItSS;3|)
            '#(|map| 7) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 20
-                                                 '(3 13 9 10 11 12 14 3 0 15 10
-                                                   16 17 18 3 0 9 10 16 12 20 3
-                                                   0 9 10 11 17 19)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|map|
+                                 ((|InfiniteTuple| |#3|)
+                                  (|Mapping| |#3| |#1| |#2|)
+                                  (|InfiniteTuple| |#1|)
+                                  (|InfiniteTuple| |#2|)))
+                                T)
+                              '((|map|
+                                 ((|Stream| |#3|) (|Mapping| |#3| |#1| |#2|)
+                                  (|Stream| |#1|) (|InfiniteTuple| |#2|)))
+                                T)
+                              '((|map|
+                                 ((|Stream| |#3|) (|Mapping| |#3| |#1| |#2|)
+                                  (|InfiniteTuple| |#1|) (|Stream| |#2|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 20
+                                            '(3 13 9 10 11 12 14 3 0 15 10 16
+                                              17 18 3 0 9 10 16 12 20 3 0 9 10
+                                              11 17 19)))))
            '|lookupComplete|)) 

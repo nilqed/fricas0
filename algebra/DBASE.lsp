@@ -5,46 +5,45 @@
 
 (SDEFUN |DBASE;elt;$SDl;2|
         ((|data| $) (|s| |Symbol|) ($ |DataList| (|String|)))
-        (SPROG ((#1=#:G698 NIL) (|x| NIL) (#2=#:G697 NIL))
+        (SPROG ((#1=#:G382 NIL) (|x| NIL) (#2=#:G381 NIL))
                (SEQ
                 (SPADCALL
                  (PROGN
-                  (LETT #2# NIL . #3=(|DBASE;elt;$SDl;2|))
-                  (SEQ (LETT |x| NIL . #3#) (LETT #1# |data| . #3#) G190
+                  (LETT #2# NIL)
+                  (SEQ (LETT |x| NIL) (LETT #1# |data|) G190
                        (COND
-                        ((OR (ATOM #1#) (PROGN (LETT |x| (CAR #1#) . #3#) NIL))
+                        ((OR (ATOM #1#) (PROGN (LETT |x| (CAR #1#)) NIL))
                          (GO G191)))
                        (SEQ
                         (EXIT
-                         (LETT #2# (CONS (SPADCALL |x| |s| (QREFELT $ 11)) #2#)
-                               . #3#)))
-                       (LETT #1# (CDR #1#) . #3#) (GO G190) G191
+                         (LETT #2#
+                               (CONS (SPADCALL |x| |s| (QREFELT $ 11)) #2#))))
+                       (LETT #1# (CDR #1#)) (GO G190) G191
                        (EXIT (NREVERSE #2#))))
                  (QREFELT $ 14))))) 
 
 (SDEFUN |DBASE;elt;$Qe$;3| ((|data| $) (|eq| |QueryEquation|) ($ $))
         (SPROG
-         ((#1=#:G703 NIL) (|x| NIL) (#2=#:G702 NIL) (|val| (|String|))
+         ((#1=#:G387 NIL) (|x| NIL) (#2=#:G386 NIL) (|val| (|String|))
           (|field| (|Symbol|)))
-         (SEQ
-          (LETT |field| (SPADCALL |eq| (QREFELT $ 17))
-                . #3=(|DBASE;elt;$Qe$;3|))
-          (LETT |val| (SPADCALL |eq| (QREFELT $ 18)) . #3#)
-          (EXIT
-           (PROGN
-            (LETT #2# NIL . #3#)
-            (SEQ (LETT |x| NIL . #3#) (LETT #1# |data| . #3#) G190
-                 (COND
-                  ((OR (ATOM #1#) (PROGN (LETT |x| (CAR #1#) . #3#) NIL))
-                   (GO G191)))
-                 (SEQ
-                  (EXIT
-                   (COND
-                    ((|stringMatches?| |val|
-                                       (SPADCALL |x| |field| (QREFELT $ 11)))
-                     (LETT #2# (CONS |x| #2#) . #3#)))))
-                 (LETT #1# (CDR #1#) . #3#) (GO G190) G191
-                 (EXIT (NREVERSE #2#)))))))) 
+         (SEQ (LETT |field| (SPADCALL |eq| (QREFELT $ 17)))
+              (LETT |val| (SPADCALL |eq| (QREFELT $ 18)))
+              (EXIT
+               (PROGN
+                (LETT #2# NIL)
+                (SEQ (LETT |x| NIL) (LETT #1# |data|) G190
+                     (COND
+                      ((OR (ATOM #1#) (PROGN (LETT |x| (CAR #1#)) NIL))
+                       (GO G191)))
+                     (SEQ
+                      (EXIT
+                       (COND
+                        ((|stringMatches?| |val|
+                                           (SPADCALL |x| |field|
+                                                     (QREFELT $ 11)))
+                         (LETT #2# (CONS |x| #2#))))))
+                     (LETT #1# (CDR #1#)) (GO G190) G191
+                     (EXIT (NREVERSE #2#)))))))) 
 
 (SDEFUN |DBASE;+;3$;4| ((|x| $) (|y| $) ($ $))
         (SPADCALL (SPADCALL |x| |y| (QREFELT $ 20)) (QREFELT $ 21))) 
@@ -56,68 +55,63 @@
         (SPADCALL (LENGTH |data|) (QREFELT $ 30))) 
 
 (SDEFUN |DBASE;display;$V;7| ((|data| $) ($ |Void|))
-        (SPROG ((#1=#:G717 NIL) (|x| NIL))
-               (SEQ (LETT |x| NIL . #2=(|DBASE;display;$V;7|))
-                    (LETT #1# |data| . #2#) G190
+        (SPROG ((#1=#:G393 NIL) (|x| NIL))
+               (SEQ (LETT |x| NIL) (LETT #1# |data|) G190
                     (COND
-                     ((OR (ATOM #1#) (PROGN (LETT |x| (CAR #1#) . #2#) NIL))
+                     ((OR (ATOM #1#) (PROGN (LETT |x| (CAR #1#)) NIL))
                       (GO G191)))
                     (SEQ (EXIT (SPADCALL |x| (QREFELT $ 33))))
-                    (LETT #1# (CDR #1#) . #2#) (GO G190) G191 (EXIT NIL)))) 
+                    (LETT #1# (CDR #1#)) (GO G190) G191 (EXIT NIL)))) 
 
 (SDEFUN |DBASE;fullDisplay;$V;8| ((|data| $) ($ |Void|))
-        (SPROG ((#1=#:G720 NIL) (|x| NIL))
-               (SEQ (LETT |x| NIL . #2=(|DBASE;fullDisplay;$V;8|))
-                    (LETT #1# |data| . #2#) G190
+        (SPROG ((#1=#:G396 NIL) (|x| NIL))
+               (SEQ (LETT |x| NIL) (LETT #1# |data|) G190
                     (COND
-                     ((OR (ATOM #1#) (PROGN (LETT |x| (CAR #1#) . #2#) NIL))
+                     ((OR (ATOM #1#) (PROGN (LETT |x| (CAR #1#)) NIL))
                       (GO G191)))
                     (SEQ (EXIT (SPADCALL |x| (QREFELT $ 35))))
-                    (LETT #1# (CDR #1#) . #2#) (GO G190) G191 (EXIT NIL)))) 
+                    (LETT #1# (CDR #1#)) (GO G190) G191 (EXIT NIL)))) 
 
 (SDEFUN |DBASE;fullDisplay;$2PiV;9|
         ((|data| $) (|n| |PositiveInteger|) (|m| |PositiveInteger|) ($ |Void|))
-        (SPROG ((#1=#:G726 NIL) (|x| NIL) (#2=#:G727 NIL) (|i| NIL))
-               (SEQ (LETT |i| 1 . #3=(|DBASE;fullDisplay;$2PiV;9|))
-                    (LETT #2# |m| . #3#) (LETT |x| NIL . #3#)
-                    (LETT #1# |data| . #3#) G190
+        (SPROG ((#1=#:G399 NIL) (|x| NIL) (#2=#:G400 NIL) (|i| NIL))
+               (SEQ (LETT |i| 1) (LETT #2# |m|) (LETT |x| NIL)
+                    (LETT #1# |data|) G190
                     (COND
-                     ((OR (ATOM #1#) (PROGN (LETT |x| (CAR #1#) . #3#) NIL)
+                     ((OR (ATOM #1#) (PROGN (LETT |x| (CAR #1#)) NIL)
                           (|greater_SI| |i| #2#))
                       (GO G191)))
                     (SEQ
                      (EXIT
                       (COND ((>= |i| |n|) (SPADCALL |x| (QREFELT $ 35))))))
-                    (LETT #1# (PROG1 (CDR #1#) (LETT |i| (|inc_SI| |i|) . #3#))
-                          . #3#)
+                    (LETT #1# (PROG1 (CDR #1#) (LETT |i| (|inc_SI| |i|))))
                     (GO G190) G191 (EXIT NIL)))) 
 
 (DECLAIM (NOTINLINE |Database;|)) 
 
-(DEFUN |Database| (#1=#:G728)
+(DEFUN |Database| (#1=#:G401)
   (SPROG NIL
-         (PROG (#2=#:G729)
+         (PROG (#2=#:G402)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|Database|)
-                                               '|domainEqualList|)
-                    . #3=(|Database|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|Database;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|Database;| #1#) (LETT #2# T))
                 (COND ((NOT #2#) (HREM |$ConstructorCache| '|Database|)))))))))) 
 
 (DEFUN |Database;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|Database|))
-          (LETT |dv$| (LIST '|Database| DV$1) . #1#)
-          (LETT $ (GETREFV 42) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|Database| DV$1))
+          (LETT $ (GETREFV 42))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|Database| (LIST DV$1) (CONS 1 $))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)

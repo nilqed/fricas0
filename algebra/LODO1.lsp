@@ -1,22 +1,21 @@
 
 (DECLAIM (NOTINLINE |LinearOrdinaryDifferentialOperator1;|)) 
 
-(DEFUN |LinearOrdinaryDifferentialOperator1| (#1=#:G734)
+(DEFUN |LinearOrdinaryDifferentialOperator1| (#1=#:G405)
   (SPROG NIL
-         (PROG (#2=#:G735)
+         (PROG (#2=#:G406)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|LinearOrdinaryDifferentialOperator1|)
-                                               '|domainEqualList|)
-                    . #3=(|LinearOrdinaryDifferentialOperator1|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (|LinearOrdinaryDifferentialOperator1;| #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -24,11 +23,11 @@
 
 (DEFUN |LinearOrdinaryDifferentialOperator1;| (|#1|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G732 NIL) (#2=#:G733 NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
+   ((|pv$| NIL) (#1=#:G403 NIL) (#2=#:G404 NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #3=(|LinearOrdinaryDifferentialOperator1|))
-    (LETT |dv$| (LIST '|LinearOrdinaryDifferentialOperator1| DV$1) . #3#)
-    (LETT $ (GETREFV 39) . #3#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT |dv$| (LIST '|LinearOrdinaryDifferentialOperator1| DV$1))
+    (LETT $ (GETREFV 39))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -59,8 +58,7 @@
                                                          (|Integer|)))
                                         (LETT #2#
                                               (|HasCategory| |#1|
-                                                             '(|CommutativeRing|))
-                                              . #3#)
+                                                             '(|CommutativeRing|)))
                                         (OR
                                          (|HasCategory| |#1|
                                                         '(|Algebra|
@@ -98,8 +96,7 @@
                                         (|HasCategory| |#1| '(|AbelianMonoid|))
                                         (LETT #1#
                                               (|HasCategory| |#1|
-                                                             '(|CancellationAbelianMonoid|))
-                                              . #3#)
+                                                             '(|CancellationAbelianMonoid|)))
                                         (OR
                                          (AND
                                           (|HasCategory| |#1|
@@ -116,8 +113,7 @@
                                         (OR
                                          (|HasCategory| |#1| '(|AbelianGroup|))
                                          #1#)
-                                        (|HasCategory| |#1| '(|Field|))))
-                    . #3#))
+                                        (|HasCategory| |#1| '(|Field|))))))
     (|haddProp| |$ConstructorCache| '|LinearOrdinaryDifferentialOperator1|
                 (LIST DV$1) (CONS 1 $))
     (|stuffDomainSlots| $)

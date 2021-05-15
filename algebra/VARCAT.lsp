@@ -3,15 +3,13 @@
 
 (DEFPARAMETER |VarCat;AL| 'NIL) 
 
-(DEFUN |VarCat| ()
-  (LET (#:G693)
-    (COND (|VarCat;AL|) (T (SETQ |VarCat;AL| (|VarCat;|)))))) 
+(DEFUN |VarCat| () (COND (|VarCat;AL|) (T (SETQ |VarCat;AL| (|VarCat;|))))) 
 
 (DEFUN |VarCat;| ()
-  (SPROG ((#1=#:G691 NIL))
+  (SPROG ((#1=#:G379 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(#2=#:G690) (LIST '(|OutputForm|)))
+                   (|sublisV| (MAKE_PAIRS '(#2=#:G378) (LIST '(|OutputForm|)))
                               (|Join| (|Type|) (|CoercibleTo| '#2#)
                                       (|mkCategory|
                                        '(((|var| ($ (|String|))) T)
@@ -26,13 +24,8 @@
                                                            (|NonNegativeInteger|)))
                                             (|String|) (|NonNegativeInteger|)))
                                           T)
-                                         ((= ((|Boolean|) $ $)) T)
-                                         ((|coerce| ((|OutputForm|) $)) T))
-                                       NIL
-                                       '((|OutputForm|) (|Boolean|) (|String|)
-                                         (|NonNegativeInteger|) (|ILogic|))
-                                       NIL)))
-                   |VarCat|)
+                                         ((= ((|Boolean|) $ $)) T))
+                                       NIL NIL NIL))))
            (SETELT #1# 0 '(|VarCat|))))) 
 
 (MAKEPROP '|VarCat| 'NILADIC T) 

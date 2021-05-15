@@ -3,7 +3,7 @@
         ((|x| F) (|p| |Pattern| S) (|l| |PatternMatchResult| S F)
          ($ |PatternMatchResult| S F))
         (SPROG
-         ((#1=#:G778 NIL)
+         ((#1=#:G449 NIL)
           (|ex|
            (|Union|
             (|Record| (|:| |var| (|Kernel| F)) (|:| |exponent| (|Integer|)))
@@ -32,110 +32,62 @@
            ((SPADCALL |p| (QREFELT $ 11))
             (SPADCALL |p| |x| |l| (QREFELT $ 13)))
            (#4='T
-            (SEQ
-             (LETT |r| (SPADCALL |x| (QREFELT $ 15))
-                   . #5=(|PMFS;patternMatch;FP2Pmr;1|))
-             (EXIT
-              (COND
-               ((QEQCAR |r| 0) (SPADCALL (QCDR |r|) |p| |l| (QREFELT $ 17)))
-               (#4#
-                (SEQ (LETT |v| (SPADCALL |x| (QREFELT $ 19)) . #5#)
-                     (EXIT
-                      (COND
-                       ((QEQCAR |v| 0)
-                        (SPADCALL (QCDR |v|) |p| |l| (QREFELT $ 22)))
-                       (#4#
-                        (SEQ (LETT |q| (SPADCALL |p| (QREFELT $ 25)) . #5#)
-                             (EXIT
-                              (COND
-                               ((QEQCAR |q| 0)
-                                (SEQ (LETT |uq| (QCDR |q|) . #5#)
-                                     (EXIT
-                                      (COND
-                                       ((SPADCALL
-                                         (LETT |l|
-                                               (SPADCALL
-                                                (SPADCALL
-                                                 (SPADCALL |x| (QREFELT $ 27))
-                                                 (QREFELT $ 28))
-                                                (QCAR |uq|) |l| (QREFELT $ 29))
-                                               . #5#)
-                                         (QREFELT $ 30))
-                                        |l|)
-                                       (#4#
-                                        (SPADCALL
-                                         (SPADCALL
-                                          (SPADCALL |x| (QREFELT $ 31))
-                                          (QREFELT $ 28))
-                                         (QCDR |uq|) |l| (QREFELT $ 29)))))))
-                               (#4#
-                                (SEQ
-                                 (LETT |u| (SPADCALL |p| (QREFELT $ 33)) . #5#)
+            (SEQ (LETT |r| (SPADCALL |x| (QREFELT $ 15)))
+                 (EXIT
+                  (COND
+                   ((QEQCAR |r| 0)
+                    (SPADCALL (QCDR |r|) |p| |l| (QREFELT $ 17)))
+                   (#4#
+                    (SEQ (LETT |v| (SPADCALL |x| (QREFELT $ 19)))
+                         (EXIT
+                          (COND
+                           ((QEQCAR |v| 0)
+                            (SPADCALL (QCDR |v|) |p| |l| (QREFELT $ 22)))
+                           (#4#
+                            (SEQ (LETT |q| (SPADCALL |p| (QREFELT $ 25)))
                                  (EXIT
                                   (COND
-                                   ((QEQCAR |u| 0)
-                                    (SEQ
-                                     (LETT |lx| (SPADCALL |x| (QREFELT $ 34))
-                                           . #5#)
-                                     (EXIT
-                                      (COND
-                                       ((QEQCAR |lx| 0)
-                                        (SPADCALL (QCDR |lx|) (QCDR |u|)
-                                                  (CONS
-                                                   #'|PMFS;patternMatch;FP2Pmr;1!0|
-                                                   $)
-                                                  |l| (ELT $ 29)
-                                                  (QREFELT $ 42)))
-                                       (#4#
-                                        (SEQ
-                                         (LETT |u|
-                                               (SPADCALL (QCDR |u|)
-                                                         (QREFELT $ 44))
-                                               . #5#)
+                                   ((QEQCAR |q| 0)
+                                    (SEQ (LETT |uq| (QCDR |q|))
                                          (EXIT
                                           (COND
-                                           ((QEQCAR |u| 0)
-                                            (COND
-                                             ((SPADCALL
-                                               (LETT |l|
-                                                     (SPADCALL
-                                                      (|SPADfirst| (QCDR |u|))
-                                                      (|spadConstant| $ 36) |l|
-                                                      (QREFELT $ 13))
-                                                     . #5#)
-                                               (QREFELT $ 30))
-                                              (SPADCALL (QREFELT $ 45)))
-                                             (#4#
-                                              (SPADCALL |x|
-                                                        (SPADCALL (QCDR |u|)
-                                                                  (QREFELT $
-                                                                           46))
-                                                        |l| (QREFELT $ 29)))))
+                                           ((SPADCALL
+                                             (LETT |l|
+                                                   (SPADCALL
+                                                    (SPADCALL |x|
+                                                              (QREFELT $ 26))
+                                                    (QCAR |uq|) |l|
+                                                    (QREFELT $ 27)))
+                                             (QREFELT $ 28))
+                                            |l|)
                                            (#4#
-                                            (SPADCALL (QREFELT $ 45)))))))))))
+                                            (SPADCALL
+                                             (SPADCALL |x| (QREFELT $ 29))
+                                             (QCDR |uq|) |l|
+                                             (QREFELT $ 27)))))))
                                    (#4#
                                     (SEQ
-                                     (LETT |u| (SPADCALL |p| (QREFELT $ 47))
-                                           . #5#)
+                                     (LETT |u| (SPADCALL |p| (QREFELT $ 31)))
                                      (EXIT
                                       (COND
                                        ((QEQCAR |u| 0)
                                         (SEQ
                                          (LETT |lx|
-                                               (SPADCALL |x| (QREFELT $ 48))
-                                               . #5#)
+                                               (SPADCALL |x| (QREFELT $ 32)))
                                          (EXIT
                                           (COND
                                            ((QEQCAR |lx| 0)
                                             (SPADCALL (QCDR |lx|) (QCDR |u|)
-                                                      |l| (ELT $ 29)
-                                                      (QREFELT $ 49)))
+                                                      (CONS
+                                                       #'|PMFS;patternMatch;FP2Pmr;1!0|
+                                                       $)
+                                                      |l| (ELT $ 27)
+                                                      (QREFELT $ 40)))
                                            (#4#
                                             (SEQ
                                              (LETT |u|
                                                    (SPADCALL (QCDR |u|)
-                                                             (QREFELT $ 44))
-                                                   . #5#)
+                                                             (QREFELT $ 42)))
                                              (EXIT
                                               (COND
                                                ((QEQCAR |u| 0)
@@ -145,163 +97,220 @@
                                                          (SPADCALL
                                                           (|SPADfirst|
                                                            (QCDR |u|))
-                                                          (|spadConstant| $ 50)
-                                                          |l| (QREFELT $ 13))
-                                                         . #5#)
-                                                   (QREFELT $ 30))
-                                                  (SPADCALL (QREFELT $ 45)))
+                                                          (|spadConstant| $ 34)
+                                                          |l| (QREFELT $ 13)))
+                                                   (QREFELT $ 28))
+                                                  (SPADCALL (QREFELT $ 43)))
                                                  (#4#
                                                   (SPADCALL |x|
                                                             (SPADCALL
                                                              (QCDR |u|)
-                                                             (QREFELT $ 46))
+                                                             (QREFELT $ 44))
                                                             |l|
-                                                            (QREFELT $ 29)))))
+                                                            (QREFELT $ 27)))))
                                                (#4#
                                                 (SPADCALL
-                                                 (QREFELT $ 45)))))))))))
+                                                 (QREFELT $ 43)))))))))))
                                        (#4#
                                         (SEQ
-                                         (LETT |uu|
-                                               (SPADCALL |p| (QREFELT $ 53))
-                                               . #5#)
+                                         (LETT |u|
+                                               (SPADCALL |p| (QREFELT $ 45)))
                                          (EXIT
                                           (COND
-                                           ((QEQCAR |uu| 0)
-                                            (SEQ (LETT |uur| (QCDR |uu|) . #5#)
-                                                 (LETT |ex|
-                                                       (SPADCALL |x|
+                                           ((QEQCAR |u| 0)
+                                            (SEQ
+                                             (LETT |lx|
+                                                   (SPADCALL |x|
+                                                             (QREFELT $ 46)))
+                                             (EXIT
+                                              (COND
+                                               ((QEQCAR |lx| 0)
+                                                (SPADCALL (QCDR |lx|)
+                                                          (QCDR |u|) |l|
+                                                          (ELT $ 27)
+                                                          (QREFELT $ 47)))
+                                               (#4#
+                                                (SEQ
+                                                 (LETT |u|
+                                                       (SPADCALL (QCDR |u|)
                                                                  (QREFELT $
-                                                                          56))
-                                                       . #5#)
+                                                                          42)))
                                                  (EXIT
                                                   (COND
-                                                   ((QEQCAR |ex| 0)
+                                                   ((QEQCAR |u| 0)
                                                     (COND
                                                      ((SPADCALL
                                                        (LETT |l|
                                                              (SPADCALL
-                                                              (SPADCALL
-                                                               (QCDR
-                                                                (QCDR |ex|))
-                                                               (QREFELT $ 58))
-                                                              (QCDR |uur|) |l|
-                                                              (QREFELT $ 29))
-                                                             . #5#)
-                                                       (QREFELT $ 30))
-                                                      (SPADCALL
-                                                       (QREFELT $ 45)))
-                                                     (#4#
-                                                      (SPADCALL
-                                                       (QCAR (QCDR |ex|))
-                                                       (QCAR |uur|) |l|
-                                                       (QREFELT $ 22)))))
-                                                   ((SPADCALL (QCDR |uur|)
-                                                              (QREFELT $ 59))
-                                                    (COND
-                                                     ((SPADCALL
-                                                       (LETT |l|
-                                                             (SPADCALL
-                                                              (QCDR |uur|)
+                                                              (|SPADfirst|
+                                                               (QCDR |u|))
                                                               (|spadConstant| $
-                                                                              50)
+                                                                              48)
                                                               |l|
-                                                              (QREFELT $ 13))
-                                                             . #5#)
-                                                       (QREFELT $ 30))
+                                                              (QREFELT $ 13)))
+                                                       (QREFELT $ 28))
                                                       (SPADCALL
-                                                       (QREFELT $ 45)))
+                                                       (QREFELT $ 43)))
                                                      (#4#
                                                       (SPADCALL |x|
-                                                                (QCAR |uur|)
+                                                                (SPADCALL
+                                                                 (QCDR |u|)
+                                                                 (QREFELT $
+                                                                          44))
                                                                 |l|
                                                                 (QREFELT $
-                                                                         29)))))
+                                                                         27)))))
                                                    (#4#
                                                     (SPADCALL
-                                                     (QREFELT $ 45)))))))
+                                                     (QREFELT $ 43)))))))))))
                                            (#4#
                                             (SEQ
+                                             (LETT |uu|
+                                                   (SPADCALL |p|
+                                                             (QREFELT $ 51)))
                                              (EXIT
-                                              (SEQ
-                                               (SEQ
-                                                (LETT |ep|
-                                                      (SPADCALL |p|
-                                                                (QREFELT $ 62))
-                                                      . #5#)
-                                                (EXIT
-                                                 (COND
-                                                  ((QEQCAR |ep| 0)
-                                                   (SEQ
-                                                    (LETT |ex|
+                                              (COND
+                                               ((QEQCAR |uu| 0)
+                                                (SEQ (LETT |uur| (QCDR |uu|))
+                                                     (LETT |ex|
+                                                           (SPADCALL |x|
+                                                                     (QREFELT $
+                                                                              54)))
+                                                     (EXIT
+                                                      (COND
+                                                       ((QEQCAR |ex| 0)
+                                                        (COND
+                                                         ((SPADCALL
+                                                           (LETT |l|
+                                                                 (SPADCALL
+                                                                  (SPADCALL
+                                                                   (QCDR
+                                                                    (QCDR
+                                                                     |ex|))
+                                                                   (QREFELT $
+                                                                            56))
+                                                                  (QCDR |uur|)
+                                                                  |l|
+                                                                  (QREFELT $
+                                                                           27)))
+                                                           (QREFELT $ 28))
+                                                          (SPADCALL
+                                                           (QREFELT $ 43)))
+                                                         (#4#
+                                                          (SPADCALL
+                                                           (QCAR (QCDR |ex|))
+                                                           (QCAR |uur|) |l|
+                                                           (QREFELT $ 22)))))
+                                                       ((SPADCALL (QCDR |uur|)
+                                                                  (QREFELT $
+                                                                           57))
+                                                        (COND
+                                                         ((SPADCALL
+                                                           (LETT |l|
+                                                                 (SPADCALL
+                                                                  (QCDR |uur|)
+                                                                  (|spadConstant|
+                                                                   $ 48)
+                                                                  |l|
+                                                                  (QREFELT $
+                                                                           13)))
+                                                           (QREFELT $ 28))
+                                                          (SPADCALL
+                                                           (QREFELT $ 43)))
+                                                         (#4#
                                                           (SPADCALL |x|
+                                                                    (QCAR
+                                                                     |uur|)
+                                                                    |l|
                                                                     (QREFELT $
-                                                                             56))
-                                                          . #5#)
+                                                                             27)))))
+                                                       (#4#
+                                                        (SPADCALL
+                                                         (QREFELT $ 43)))))))
+                                               (#4#
+                                                (SEQ
+                                                 (EXIT
+                                                  (SEQ
+                                                   (SEQ
+                                                    (LETT |ep|
+                                                          (SPADCALL |p|
+                                                                    (QREFELT $
+                                                                             60)))
                                                     (EXIT
                                                      (COND
-                                                      ((QEQCAR |ex| 0)
-                                                       (COND
-                                                        ((EQL
-                                                          (QCDR (QCDR |ex|))
-                                                          (QCDR (QCDR |ep|)))
-                                                         (PROGN
-                                                          (LETT #1#
-                                                                (SPADCALL
-                                                                 (QCAR
-                                                                  (QCDR |ex|))
-                                                                 (QCAR
-                                                                  (QCDR |ep|))
-                                                                 |l|
-                                                                 (QREFELT $
-                                                                          22))
-                                                                . #5#)
-                                                          (GO
-                                                           #6=#:G769))))))))))))
-                                               (EXIT
-                                                (SPADCALL (QREFELT $ 45)))))
-                                             #6#
-                                             (EXIT
-                                              #1#))))))))))))))))))))))))))))))) 
+                                                      ((QEQCAR |ep| 0)
+                                                       (SEQ
+                                                        (LETT |ex|
+                                                              (SPADCALL |x|
+                                                                        (QREFELT
+                                                                         $
+                                                                         54)))
+                                                        (EXIT
+                                                         (COND
+                                                          ((QEQCAR |ex| 0)
+                                                           (COND
+                                                            ((EQL
+                                                              (QCDR
+                                                               (QCDR |ex|))
+                                                              (QCDR
+                                                               (QCDR |ep|)))
+                                                             (PROGN
+                                                              (LETT #1#
+                                                                    (SPADCALL
+                                                                     (QCAR
+                                                                      (QCDR
+                                                                       |ex|))
+                                                                     (QCAR
+                                                                      (QCDR
+                                                                       |ep|))
+                                                                     |l|
+                                                                     (QREFELT $
+                                                                              22)))
+                                                              (GO
+                                                               #5=#:G440))))))))))))
+                                                   (EXIT
+                                                    (SPADCALL
+                                                     (QREFELT $ 43)))))
+                                                 #5#
+                                                 (EXIT
+                                                  #1#))))))))))))))))))))))))))))))) 
 
 (SDEFUN |PMFS;patternMatch;FP2Pmr;1!0| ((|l1| NIL) ($ NIL))
         (SPROG
-         ((#1=#:G725 NIL) (#2=#:G724 NIL) (#3=#:G726 NIL) (#4=#:G728 NIL)
-          (#5=#:G690 NIL))
+         ((#1=#:G405 NIL) (#2=#:G404 NIL) (#3=#:G406 NIL) (#4=#:G408 NIL)
+          (#5=#:G378 NIL))
          (SEQ
           (PROGN
-           (LETT #1# NIL NIL)
-           (SEQ (LETT #5# NIL NIL) (LETT #4# |l1| NIL) G190
+           (LETT #1# NIL)
+           (SEQ (LETT #5# NIL) (LETT #4# |l1|) G190
                 (COND
-                 ((OR (ATOM #4#) (PROGN (LETT #5# (CAR #4#) NIL) NIL))
-                  (GO G191)))
+                 ((OR (ATOM #4#) (PROGN (LETT #5# (CAR #4#)) NIL)) (GO G191)))
                 (SEQ
                  (EXIT
                   (PROGN
-                   (LETT #3# #5# NIL)
-                   (COND (#1# (LETT #2# (SPADCALL #2# #3# (QREFELT $ 35)) NIL))
-                         ('T (PROGN (LETT #2# #3# NIL) (LETT #1# 'T NIL)))))))
-                (LETT #4# (CDR #4#) NIL) (GO G190) G191 (EXIT NIL))
-           (COND (#1# #2#) ('T (|spadConstant| $ 36))))))) 
+                   (LETT #3# #5#)
+                   (COND (#1# (LETT #2# (SPADCALL #2# #3# (QREFELT $ 33))))
+                         ('T (PROGN (LETT #2# #3#) (LETT #1# 'T)))))))
+                (LETT #4# (CDR #4#)) (GO G190) G191 (EXIT NIL))
+           (COND (#1# #2#) ('T (|spadConstant| $ 34))))))) 
 
 (DECLAIM (NOTINLINE |PatternMatchFunctionSpace;|)) 
 
-(DEFUN |PatternMatchFunctionSpace| (&REST #1=#:G779)
+(DEFUN |PatternMatchFunctionSpace| (&REST #1=#:G450)
   (SPROG NIL
-         (PROG (#2=#:G780)
+         (PROG (#2=#:G451)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|PatternMatchFunctionSpace|)
-                                               '|domainEqualList|)
-                    . #3=(|PatternMatchFunctionSpace|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |PatternMatchFunctionSpace;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -310,13 +319,13 @@
 (DEFUN |PatternMatchFunctionSpace;| (|#1| |#2| |#3|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|PatternMatchFunctionSpace|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT DV$3 (|devaluate| |#3|) . #1#)
-          (LETT |dv$| (LIST '|PatternMatchFunctionSpace| DV$1 DV$2 DV$3) . #1#)
-          (LETT $ (GETREFV 63) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT DV$3 (|devaluate| |#3|))
+          (LETT |dv$| (LIST '|PatternMatchFunctionSpace| DV$1 DV$2 DV$3))
+          (LETT $ (GETREFV 61))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|PatternMatchFunctionSpace|
                       (LIST DV$1 DV$2 DV$3) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -336,40 +345,45 @@
               (|Union| (|Kernel| $) '#1#) (24 . |retractIfCan|) (|Kernel| 8)
               (|PatternMatchKernel| 6 8) (29 . |patternMatch|)
               (|Record| (|:| |num| $) (|:| |den| $)) (|Union| 23 '"failed")
-              (36 . |isQuotient|)
-              (|SparseMultivariatePolynomial| 7 (|Kernel| $)) (41 . |numer|)
-              (46 . |coerce|) |PMFS;patternMatch;FP2Pmr;1| (51 . |failed?|)
-              (56 . |denom|) (|Union| 43 '"failed") (61 . |isPlus|)
-              (66 . |isPlus|) (71 . +) (77 . |Zero|) (|List| 8) (|List| 10)
-              (|Mapping| 8 37) (|Mapping| 12 8 10 12)
-              (|PatternMatchTools| 6 7 8) (81 . |patternMatch|) (|List| $)
-              (90 . |optpair|) (95 . |failed|) (99 . |second|)
-              (104 . |isTimes|) (109 . |isTimes|) (114 . |patternMatchTimes|)
-              (122 . |One|) (|Record| (|:| |val| $) (|:| |exponent| $))
-              (|Union| 51 '"failed") (126 . |isPower|)
-              (|Record| (|:| |var| (|Kernel| $)) (|:| |exponent| 57))
-              (|Union| 54 '"failed") (131 . |isExpt|) (|Integer|)
-              (136 . |coerce|) (141 . |optional?|)
+              (36 . |isQuotient|) (41 . |numerator|)
+              |PMFS;patternMatch;FP2Pmr;1| (46 . |failed?|)
+              (51 . |denominator|) (|Union| 41 '"failed") (56 . |isPlus|)
+              (61 . |isPlus|) (66 . +) (72 . |Zero|) (|List| 8) (|List| 10)
+              (|Mapping| 8 35) (|Mapping| 12 8 10 12)
+              (|PatternMatchTools| 6 7 8) (76 . |patternMatch|) (|List| $)
+              (85 . |optpair|) (90 . |failed|) (94 . |second|) (99 . |isTimes|)
+              (104 . |isTimes|) (109 . |patternMatchTimes|) (117 . |One|)
+              (|Record| (|:| |val| $) (|:| |exponent| $))
+              (|Union| 49 '"failed") (121 . |isPower|)
+              (|Record| (|:| |var| (|Kernel| $)) (|:| |exponent| 55))
+              (|Union| 52 '"failed") (126 . |isExpt|) (|Integer|)
+              (131 . |coerce|) (136 . |optional?|)
               (|Record| (|:| |val| $) (|:| |exponent| (|NonNegativeInteger|)))
-              (|Union| 60 '"failed") (146 . |isExpt|))
-           '#(|patternMatch| 151) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 62
-                                                 '(1 10 9 0 11 3 12 0 10 8 0 13
-                                                   1 8 14 0 15 3 16 12 7 10 12
-                                                   17 1 8 18 0 19 3 21 12 20 10
-                                                   12 22 1 10 24 0 25 1 8 26 0
-                                                   27 1 8 0 26 28 1 12 9 0 30 1
-                                                   8 26 0 31 1 10 32 0 33 1 8
-                                                   32 0 34 2 8 0 0 0 35 0 8 0
-                                                   36 5 41 12 37 38 39 12 40 42
-                                                   1 10 32 43 44 0 12 0 45 1 38
-                                                   10 0 46 1 10 32 0 47 1 8 32
-                                                   0 48 4 41 12 37 38 12 40 49
-                                                   0 8 0 50 1 10 52 0 53 1 8 55
-                                                   0 56 1 8 0 57 58 1 10 9 0 59
-                                                   1 10 61 0 62 3 0 12 8 10 12
-                                                   29)))))
+              (|Union| 58 '"failed") (141 . |isExpt|))
+           '#(|patternMatch| 146) 'NIL
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|patternMatch|
+                                 ((|PatternMatchResult| |#1| |#3|) |#3|
+                                  (|Pattern| |#1|)
+                                  (|PatternMatchResult| |#1| |#3|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 60
+                                            '(1 10 9 0 11 3 12 0 10 8 0 13 1 8
+                                              14 0 15 3 16 12 7 10 12 17 1 8 18
+                                              0 19 3 21 12 20 10 12 22 1 10 24
+                                              0 25 1 8 0 0 26 1 12 9 0 28 1 8 0
+                                              0 29 1 10 30 0 31 1 8 30 0 32 2 8
+                                              0 0 0 33 0 8 0 34 5 39 12 35 36
+                                              37 12 38 40 1 10 30 41 42 0 12 0
+                                              43 1 36 10 0 44 1 10 30 0 45 1 8
+                                              30 0 46 4 39 12 35 36 12 38 47 0
+                                              8 0 48 1 10 50 0 51 1 8 53 0 54 1
+                                              8 0 55 56 1 10 9 0 57 1 10 59 0
+                                              60 3 0 12 8 10 12 27)))))
            '|lookupComplete|)) 

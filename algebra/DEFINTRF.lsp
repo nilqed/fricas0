@@ -18,50 +18,47 @@
           (|:| |fail| #1="failed") (|:| |pole| "potentialPole")))
         (SPROG
          ((|ans| (|List| (|OrderedCompletion| (|Expression| R))))
-          (#2=#:G735 NIL)
+          (#2=#:G403 NIL)
           (|v| (|Union| (|OrderedCompletion| (|Expression| R)) "failed"))
-          (#3=#:G736 NIL) (|g| NIL)
+          (#3=#:G404 NIL) (|g| NIL)
           (|u| (|Union| (|Expression| R) (|List| (|Expression| R))))
           (|k| (|Kernel| (|Expression| R))))
          (SEQ
           (EXIT
-           (SEQ
-            (LETT |k| (SPADCALL |x| (QREFELT $ 19)) . #4=(|DEFINTRF;nopole|))
-            (LETT |u| (SPADCALL |f| |x| (QREFELT $ 22)) . #4#)
-            (EXIT
-             (COND
-              ((QEQCAR |u| 0)
-               (SEQ
-                (LETT |v| (SPADCALL |k| (QCDR |u|) |a| |b| 'T (QREFELT $ 27))
-                      . #4#)
+           (SEQ (LETT |k| (SPADCALL |x| (QREFELT $ 19)))
+                (LETT |u| (SPADCALL |f| |x| (QREFELT $ 22)))
                 (EXIT
-                 (COND ((QEQCAR |v| 1) (CONS 2 #1#))
-                       (#5='T (CONS 0 (QCDR |v|)))))))
-              (#5#
-               (SEQ (LETT |ans| NIL . #4#)
-                    (SEQ (LETT |g| NIL . #4#) (LETT #3# (QCDR |u|) . #4#) G190
-                         (COND
-                          ((OR (ATOM #3#)
-                               (PROGN (LETT |g| (CAR #3#) . #4#) NIL))
-                           (GO G191)))
-                         (SEQ
-                          (LETT |v|
-                                (SPADCALL |k| |g| |a| |b| 'T (QREFELT $ 27))
-                                . #4#)
-                          (EXIT
-                           (COND
-                            ((QEQCAR |v| 1)
-                             (PROGN
-                              (LETT #2# (CONS 2 #1#) . #4#)
-                              (GO #6=#:G734)))
-                            ('T
-                             (LETT |ans|
-                                   (SPADCALL |ans| (LIST (QCDR |v|))
-                                             (QREFELT $ 29))
-                                   . #4#)))))
-                         (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL))
-                    (EXIT (CONS 1 |ans|))))))))
-          #6# (EXIT #2#)))) 
+                 (COND
+                  ((QEQCAR |u| 0)
+                   (SEQ
+                    (LETT |v|
+                          (SPADCALL |k| (QCDR |u|) |a| |b| 'T (QREFELT $ 27)))
+                    (EXIT
+                     (COND ((QEQCAR |v| 1) (CONS 2 #1#))
+                           (#4='T (CONS 0 (QCDR |v|)))))))
+                  (#4#
+                   (SEQ (LETT |ans| NIL)
+                        (SEQ (LETT |g| NIL) (LETT #3# (QCDR |u|)) G190
+                             (COND
+                              ((OR (ATOM #3#) (PROGN (LETT |g| (CAR #3#)) NIL))
+                               (GO G191)))
+                             (SEQ
+                              (LETT |v|
+                                    (SPADCALL |k| |g| |a| |b| 'T
+                                              (QREFELT $ 27)))
+                              (EXIT
+                               (COND
+                                ((QEQCAR |v| 1)
+                                 (PROGN
+                                  (LETT #2# (CONS 2 #1#))
+                                  (GO #5=#:G402)))
+                                ('T
+                                 (LETT |ans|
+                                       (SPADCALL |ans| (LIST (QCDR |v|))
+                                                 (QREFELT $ 29)))))))
+                             (LETT #3# (CDR #3#)) (GO G190) G191 (EXIT NIL))
+                        (EXIT (CONS 1 |ans|))))))))
+          #5# (EXIT #2#)))) 
 
 (SDEFUN |DEFINTRF;integrate;FSbU;3|
         ((|f| |Fraction| (|Polynomial| R))
@@ -124,8 +121,7 @@
                   (SEQ
                    (LETT |z|
                          (SPADCALL (SPADCALL |f| (QREFELT $ 50)) |x| |a| |b| 'T
-                                   (QREFELT $ 52))
-                         |DEFINTRF;int|)
+                                   (QREFELT $ 52)))
                    (EXIT
                     (COND
                      ((QEQCAR |z| 1)
@@ -137,22 +133,21 @@
 
 (DECLAIM (NOTINLINE |RationalFunctionDefiniteIntegration;|)) 
 
-(DEFUN |RationalFunctionDefiniteIntegration| (#1=#:G761)
+(DEFUN |RationalFunctionDefiniteIntegration| (#1=#:G429)
   (SPROG NIL
-         (PROG (#2=#:G762)
+         (PROG (#2=#:G430)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|RationalFunctionDefiniteIntegration|)
-                                               '|domainEqualList|)
-                    . #3=(|RationalFunctionDefiniteIntegration|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (|RationalFunctionDefiniteIntegration;| #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -161,12 +156,11 @@
 (DEFUN |RationalFunctionDefiniteIntegration;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|)
-                . #1=(|RationalFunctionDefiniteIntegration|))
-          (LETT |dv$| (LIST '|RationalFunctionDefiniteIntegration| DV$1) . #1#)
-          (LETT $ (GETREFV 53) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|RationalFunctionDefiniteIntegration| DV$1))
+          (LETT $ (GETREFV 53))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache|
                       '|RationalFunctionDefiniteIntegration| (LIST DV$1)
                       (CONS 1 $))
@@ -181,8 +175,8 @@
               (|SegmentBinding| 12) (0 . |variable|) (|Segment| 12)
               (5 . |segment|) (|OrderedCompletion| 24) (10 . |low|)
               (15 . |high|)
-              (|Union| (|:| |f1| 12) (|:| |f2| 28) (|:| |fail| '"failed")
-                       (|:| |pole| '"potentialPole"))
+              (|Union| (|:| |f1| 12) (|:| |f2| 28) (|:| |fail| '#1="failed")
+                       (|:| |pole| '#2="potentialPole"))
               (|Fraction| 49) |DEFINTRF;integrate;FSbU;1| (|Kernel| 24)
               (20 . |kernel|) (|Union| 24 (|List| 24))
               (|IntegrationResultRFToFunction| 6) (25 . |integrate|)
@@ -197,21 +191,83 @@
               (82 . =) (88 . |Zero|) (92 . |coerce|) (|Polynomial| 6)
               (97 . |denom|) (|Union| 25 '"failed") (102 . |checkForZero|))
            '#(|integrate| 111) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 52
-                                                 '(1 8 7 0 9 1 8 10 0 11 1 10
-                                                   12 0 13 1 10 12 0 14 1 18 0
-                                                   7 19 2 21 20 16 7 22 5 26 23
-                                                   18 24 12 12 25 27 2 28 0 0 0
-                                                   29 1 30 7 0 31 1 24 0 16 32
-                                                   1 30 33 0 34 1 33 35 0 36 2
-                                                   38 12 37 35 39 1 33 35 0 40
-                                                   1 26 25 42 43 2 12 25 0 0 46
-                                                   0 24 0 47 1 12 0 24 48 1 16
-                                                   49 0 50 5 26 51 49 7 12 12
-                                                   25 52 3 0 15 16 8 42 45 2 0
-                                                   15 16 8 17 3 0 15 16 30 42
-                                                   44 2 0 15 16 30 41)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|integrate|
+                                 ((|Union|
+                                   (|:| |f1|
+                                        (|OrderedCompletion|
+                                         (|Expression| |#1|)))
+                                   (|:| |f2|
+                                        (|List|
+                                         (|OrderedCompletion|
+                                          (|Expression| |#1|))))
+                                   (|:| |fail| #1#) (|:| |pole| #2#))
+                                  (|Fraction| (|Polynomial| |#1|))
+                                  (|SegmentBinding|
+                                   (|OrderedCompletion| (|Expression| |#1|)))))
+                                T)
+                              '((|integrate|
+                                 ((|Union|
+                                   (|:| |f1|
+                                        (|OrderedCompletion|
+                                         (|Expression| |#1|)))
+                                   (|:| |f2|
+                                        (|List|
+                                         (|OrderedCompletion|
+                                          (|Expression| |#1|))))
+                                   (|:| |fail| #1#) (|:| |pole| #2#))
+                                  (|Fraction| (|Polynomial| |#1|))
+                                  (|SegmentBinding|
+                                   (|OrderedCompletion| (|Expression| |#1|)))
+                                  (|String|)))
+                                T)
+                              '((|integrate|
+                                 ((|Union|
+                                   (|:| |f1|
+                                        (|OrderedCompletion|
+                                         (|Expression| |#1|)))
+                                   (|:| |f2|
+                                        (|List|
+                                         (|OrderedCompletion|
+                                          (|Expression| |#1|))))
+                                   (|:| |fail| #1#) (|:| |pole| #2#))
+                                  (|Fraction| (|Polynomial| |#1|))
+                                  (|SegmentBinding|
+                                   (|OrderedCompletion|
+                                    (|Fraction| (|Polynomial| |#1|))))))
+                                T)
+                              '((|integrate|
+                                 ((|Union|
+                                   (|:| |f1|
+                                        (|OrderedCompletion|
+                                         (|Expression| |#1|)))
+                                   (|:| |f2|
+                                        (|List|
+                                         (|OrderedCompletion|
+                                          (|Expression| |#1|))))
+                                   (|:| |fail| #1#) (|:| |pole| #2#))
+                                  (|Fraction| (|Polynomial| |#1|))
+                                  (|SegmentBinding|
+                                   (|OrderedCompletion|
+                                    (|Fraction| (|Polynomial| |#1|))))
+                                  (|String|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 52
+                                            '(1 8 7 0 9 1 8 10 0 11 1 10 12 0
+                                              13 1 10 12 0 14 1 18 0 7 19 2 21
+                                              20 16 7 22 5 26 23 18 24 12 12 25
+                                              27 2 28 0 0 0 29 1 30 7 0 31 1 24
+                                              0 16 32 1 30 33 0 34 1 33 35 0 36
+                                              2 38 12 37 35 39 1 33 35 0 40 1
+                                              26 25 42 43 2 12 25 0 0 46 0 24 0
+                                              47 1 12 0 24 48 1 16 49 0 50 5 26
+                                              51 49 7 12 12 25 52 3 0 15 16 8
+                                              42 45 2 0 15 16 8 17 3 0 15 16 30
+                                              42 44 2 0 15 16 30 41)))))
            '|lookupComplete|)) 

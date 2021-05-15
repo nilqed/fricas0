@@ -4,12 +4,11 @@
 (DEFPARAMETER |FiniteFieldCategory;AL| 'NIL) 
 
 (DEFUN |FiniteFieldCategory| ()
-  (LET (#:G699)
-    (COND (|FiniteFieldCategory;AL|)
-          (T (SETQ |FiniteFieldCategory;AL| (|FiniteFieldCategory;|)))))) 
+  (COND (|FiniteFieldCategory;AL|)
+        (T (SETQ |FiniteFieldCategory;AL| (|FiniteFieldCategory;|))))) 
 
 (DEFUN |FiniteFieldCategory;| ()
-  (SPROG ((#1=#:G697 NIL))
+  (SPROG ((#1=#:G385 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|FieldOfPrimeCharacteristic|) (|Finite|)
@@ -20,7 +19,8 @@
                               ((|factorsOfCyclicGroupSize|
                                 ((|List|
                                   (|Record| (|:| |factor| (|Integer|))
-                                            (|:| |exponent| (|Integer|))))))
+                                            (|:| |exponent|
+                                                 (|NonNegativeInteger|))))))
                                T)
                               ((|tableForDiscreteLogarithm|
                                 ((|Table| (|PositiveInteger|)
@@ -36,17 +36,7 @@
                                 ((|Union| "prime" "polynomial" "normal"
                                           "cyclic")))
                                T))
-                            NIL
-                            '((|PositiveInteger|) (|NonNegativeInteger|)
-                              (|Boolean|)
-                              (|Table| (|PositiveInteger|)
-                                       (|NonNegativeInteger|))
-                              (|Integer|)
-                              (|List|
-                               (|Record| (|:| |factor| (|Integer|))
-                                         (|:| |exponent| (|Integer|)))))
-                            NIL))
-                   |FiniteFieldCategory|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|FiniteFieldCategory|))))) 
 
 (MAKEPROP '|FiniteFieldCategory| 'NILADIC T) 

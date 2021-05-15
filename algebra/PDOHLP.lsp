@@ -7,30 +7,29 @@
 
 (SDEFUN |PDOHLP;diff_map;VarM;2!0| ((|x| NIL) ($$ NIL))
         (PROG (|v| $)
-          (LETT |v| (QREFELT $$ 1) . #1=(|PDOHLP;diff_map;VarM;2|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |v| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL |x| |v| (QREFELT $ 11)))))) 
 
 (DECLAIM (NOTINLINE |PartialDifferentialOperatorHelper;|)) 
 
-(DEFUN |PartialDifferentialOperatorHelper| (&REST #1=#:G694)
+(DEFUN |PartialDifferentialOperatorHelper| (&REST #1=#:G382)
   (SPROG NIL
-         (PROG (#2=#:G695)
+         (PROG (#2=#:G383)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|PartialDifferentialOperatorHelper|)
-                                               '|domainEqualList|)
-                    . #3=(|PartialDifferentialOperatorHelper|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1
                       (APPLY (|function| |PartialDifferentialOperatorHelper;|)
                              #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -39,14 +38,12 @@
 (DEFUN |PartialDifferentialOperatorHelper;| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|)
-                . #1=(|PartialDifferentialOperatorHelper|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|PartialDifferentialOperatorHelper| DV$1 DV$2)
-                . #1#)
-          (LETT $ (GETREFV 14) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|PartialDifferentialOperatorHelper| DV$1 DV$2))
+          (LETT $ (GETREFV 14))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|PartialDifferentialOperatorHelper|
                       (LIST DV$1 DV$2) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -61,10 +58,16 @@
               (|Automorphism| 6) (0 . |One|) |PDOHLP;id_map;VarA;1|
               (4 . |differentiate|) (|Mapping| 6 6) |PDOHLP;diff_map;VarM;2|)
            '#(|id_map| 10 |diff_map| 15) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 13
-                                                 '(0 8 0 9 2 6 0 0 7 11 1 0 8 7
-                                                   10 1 0 12 7 13)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|id_map| ((|Automorphism| |#1|) |#2|)) T)
+                                   '((|diff_map| ((|Mapping| |#1| |#1|) |#2|))
+                                     T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 13
+                                            '(0 8 0 9 2 6 0 0 7 11 1 0 8 7 10 1
+                                              0 12 7 13)))))
            '|lookupComplete|)) 

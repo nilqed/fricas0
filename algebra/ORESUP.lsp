@@ -34,24 +34,23 @@
 
 (DECLAIM (NOTINLINE |SparseUnivariateSkewPolynomial;|)) 
 
-(DEFUN |SparseUnivariateSkewPolynomial| (&REST #1=#:G749)
+(DEFUN |SparseUnivariateSkewPolynomial| (&REST #1=#:G420)
   (SPROG NIL
-         (PROG (#2=#:G750)
+         (PROG (#2=#:G421)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|SparseUnivariateSkewPolynomial|)
-                                               '|domainEqualList|)
-                    . #3=(|SparseUnivariateSkewPolynomial|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1
                       (APPLY (|function| |SparseUnivariateSkewPolynomial;|)
                              #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -59,14 +58,14 @@
 
 (DEFUN |SparseUnivariateSkewPolynomial;| (|#1| |#2| |#3|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G747 NIL) (#2=#:G748 NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL)
+   ((|pv$| NIL) (#1=#:G418 NIL) (#2=#:G419 NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL)
     (DV$2 NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #3=(|SparseUnivariateSkewPolynomial|))
-    (LETT DV$2 (|devaluate| |#2|) . #3#)
-    (LETT DV$3 (|devaluate| |#3|) . #3#)
-    (LETT |dv$| (LIST '|SparseUnivariateSkewPolynomial| DV$1 DV$2 DV$3) . #3#)
-    (LETT $ (GETREFV 63) . #3#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT |dv$| (LIST '|SparseUnivariateSkewPolynomial| DV$1 DV$2 DV$3))
+    (LETT $ (GETREFV 63))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -97,8 +96,7 @@
                                                          (|Integer|)))
                                         (LETT #2#
                                               (|HasCategory| |#1|
-                                                             '(|CommutativeRing|))
-                                              . #3#)
+                                                             '(|CommutativeRing|)))
                                         (OR
                                          (|HasCategory| |#1|
                                                         '(|Algebra|
@@ -137,8 +135,7 @@
                                         (|HasCategory| |#1| '(|AbelianMonoid|))
                                         (LETT #1#
                                               (|HasCategory| |#1|
-                                                             '(|CancellationAbelianMonoid|))
-                                              . #3#)
+                                                             '(|CancellationAbelianMonoid|)))
                                         (OR
                                          (AND
                                           (|HasCategory| |#1|
@@ -154,8 +151,7 @@
                                          #1#)
                                         (OR
                                          (|HasCategory| |#1| '(|AbelianGroup|))
-                                         #1#)))
-                    . #3#))
+                                         #1#)))))
     (|haddProp| |$ConstructorCache| '|SparseUnivariateSkewPolynomial|
                 (LIST DV$1 DV$2 DV$3) (CONS 1 $))
     (|stuffDomainSlots| $)

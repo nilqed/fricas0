@@ -5,22 +5,21 @@
 
 (DEFPARAMETER |NonAssociativeAlgebra;AL| 'NIL) 
 
-(DEFUN |NonAssociativeAlgebra| (#1=#:G691)
-  (LET (#2=#:G692)
-    (COND
-     ((SETQ #2# (|assoc| #3=(|devaluate| #1#) |NonAssociativeAlgebra;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |NonAssociativeAlgebra;AL|
-              (|cons5| (CONS #3# (SETQ #2# (|NonAssociativeAlgebra;| #1#)))
-                       |NonAssociativeAlgebra;AL|))
-      #2#)))) 
+(DEFUN |NonAssociativeAlgebra| (|t#1|)
+  (LET (#1=#:G379 (#2=#:G380 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |NonAssociativeAlgebra;AL|)) (CDR #1#))
+          (T
+           (SETQ |NonAssociativeAlgebra;AL|
+                   (|cons5|
+                    (CONS #2# (SETQ #1# (|NonAssociativeAlgebra;| #2#)))
+                    |NonAssociativeAlgebra;AL|))
+           #1#)))) 
 
 (DEFUN |NonAssociativeAlgebra;| (|t#1|)
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (COND (|NonAssociativeAlgebra;CAT|)
                                     ('T
                                      (LETT |NonAssociativeAlgebra;CAT|
@@ -31,8 +30,5 @@
                                                         ($ $
                                                          (|PositiveInteger|)))
                                                        T))
-                                                    NIL '((|PositiveInteger|))
-                                                    NIL))
-                                           . #2=(|NonAssociativeAlgebra|)))))
-                   . #2#)
-           (SETELT #1# 0 (LIST '|NonAssociativeAlgebra| (|devaluate| |t#1|)))))) 
+                                                    NIL NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|NonAssociativeAlgebra| |t#1|))))) 

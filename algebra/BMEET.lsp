@@ -4,18 +4,16 @@
 (DEFPARAMETER |BoundedMeetSemilattice;AL| 'NIL) 
 
 (DEFUN |BoundedMeetSemilattice| ()
-  (LET (#:G692)
-    (COND (|BoundedMeetSemilattice;AL|)
-          (T (SETQ |BoundedMeetSemilattice;AL| (|BoundedMeetSemilattice;|)))))) 
+  (COND (|BoundedMeetSemilattice;AL|)
+        (T (SETQ |BoundedMeetSemilattice;AL| (|BoundedMeetSemilattice;|))))) 
 
 (DEFUN |BoundedMeetSemilattice;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G378 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|MeetSemilattice|)
-                           (|mkCategory| '(((T$ ($) |constant|) T)) NIL 'NIL
-                                         NIL))
-                   |BoundedMeetSemilattice|)
+                           (|mkCategory| '(((T$ ($) |constant|) T)) NIL NIL
+                                         NIL)))
            (SETELT #1# 0 '(|BoundedMeetSemilattice|))))) 
 
 (MAKEPROP '|BoundedMeetSemilattice| 'NILADIC T) 

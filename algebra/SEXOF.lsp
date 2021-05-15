@@ -1,46 +1,40 @@
 
 (SDEFUN |SEXOF;coerce;$Of;1| ((|b| $) ($ |OutputForm|))
         (SPROG
-         ((|l1| (|List| (|OutputForm|))) (#1=#:G737 NIL) (|l| (|List| $))
-          (|b1| NIL) (#2=#:G736 NIL) (|r| ($)))
+         ((|l1| (|List| (|OutputForm|))) (#1=#:G403 NIL) (|l| (|List| $))
+          (|b1| NIL) (#2=#:G402 NIL) (|r| ($)))
          (SEQ
           (COND ((SPADCALL |b| (QREFELT $ 12)) (SPADCALL NIL (QREFELT $ 15)))
                 ((SPADCALL |b| (QREFELT $ 16)) (SPADCALL |b| (QREFELT $ 18)))
                 ((SPADCALL |b| (QREFELT $ 19)) |b|)
                 ('T
-                 (SEQ (LETT |r| |b| . #3=(|SEXOF;coerce;$Of;1|))
+                 (SEQ (LETT |r| |b|)
                       (SEQ G190
                            (COND
                             ((NULL (NULL (SPADCALL |r| (QREFELT $ 19))))
                              (GO G191)))
                            (SEQ
-                            (EXIT
-                             (LETT |r| (SPADCALL |r| (QREFELT $ 20)) . #3#)))
+                            (EXIT (LETT |r| (SPADCALL |r| (QREFELT $ 20)))))
                            NIL (GO G190) G191 (EXIT NIL))
                       (LETT |l1|
                             (PROGN
-                             (LETT #2# NIL . #3#)
-                             (SEQ (LETT |b1| NIL . #3#)
+                             (LETT #2# NIL)
+                             (SEQ (LETT |b1| NIL)
                                   (LETT #1#
-                                        (LETT |l| (SPADCALL |b| (QREFELT $ 21))
-                                              . #3#)
-                                        . #3#)
+                                        (LETT |l|
+                                              (SPADCALL |b| (QREFELT $ 21))))
                                   G190
                                   (COND
                                    ((OR (ATOM #1#)
-                                        (PROGN
-                                         (LETT |b1| (CAR #1#) . #3#)
-                                         NIL))
+                                        (PROGN (LETT |b1| (CAR #1#)) NIL))
                                     (GO G191)))
                                   (SEQ
                                    (EXIT
                                     (LETT #2#
                                           (CONS (SPADCALL |b1| (QREFELT $ 22))
-                                                #2#)
-                                          . #3#)))
-                                  (LETT #1# (CDR #1#) . #3#) (GO G190) G191
-                                  (EXIT (NREVERSE #2#))))
-                            . #3#)
+                                                #2#))))
+                                  (LETT #1# (CDR #1#)) (GO G190) G191
+                                  (EXIT (NREVERSE #2#)))))
                       (COND
                        ((NULL (SPADCALL |r| (QREFELT $ 12)))
                         (EXIT
@@ -155,20 +149,18 @@
         (SPADCALL (SPADCALL |b| (QREFELT $ 21)) |i| (QREFELT $ 53))) 
 
 (SDEFUN |SEXOF;elt;$L$;26| ((|b| $) (|li| |List| (|Integer|)) ($ $))
-        (SPROG ((#1=#:G779 NIL) (|i| NIL))
+        (SPROG ((#1=#:G437 NIL) (|i| NIL))
                (SEQ
-                (SEQ (LETT |i| NIL . #2=(|SEXOF;elt;$L$;26|))
-                     (LETT #1# |li| . #2#) G190
+                (SEQ (LETT |i| NIL) (LETT #1# |li|) G190
                      (COND
-                      ((OR (ATOM #1#) (PROGN (LETT |i| (CAR #1#) . #2#) NIL))
+                      ((OR (ATOM #1#) (PROGN (LETT |i| (CAR #1#)) NIL))
                        (GO G191)))
                      (SEQ
                       (EXIT
                        (LETT |b|
                              (SPADCALL (SPADCALL |b| (QREFELT $ 21)) |i|
-                                       (QREFELT $ 53))
-                             . #2#)))
-                     (LETT #1# (CDR #1#) . #2#) (GO G190) G191 (EXIT NIL))
+                                       (QREFELT $ 53)))))
+                     (LETT #1# (CDR #1#)) (GO G190) G191 (EXIT NIL))
                 (EXIT |b|)))) 
 
 (SDEFUN |SEXOF;hashUpdate!;Hs$Hs;27|
@@ -177,22 +169,21 @@
 
 (DECLAIM (NOTINLINE |SExpressionOf;|)) 
 
-(DEFUN |SExpressionOf| (&REST #1=#:G781)
+(DEFUN |SExpressionOf| (&REST #1=#:G439)
   (SPROG NIL
-         (PROG (#2=#:G782)
+         (PROG (#2=#:G440)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|SExpressionOf|)
-                                               '|domainEqualList|)
-                    . #3=(|SExpressionOf|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |SExpressionOf;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|SExpressionOf|)))))))))) 
 
@@ -201,14 +192,14 @@
    ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL) (DV$2 NIL)
     (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #1=(|SExpressionOf|))
-    (LETT DV$2 (|devaluate| |#2|) . #1#)
-    (LETT DV$3 (|devaluate| |#3|) . #1#)
-    (LETT DV$4 (|devaluate| |#4|) . #1#)
-    (LETT |dv$| (LIST '|SExpressionOf| DV$1 DV$2 DV$3 DV$4) . #1#)
-    (LETT $ (GETREFV 60) . #1#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT DV$4 (|devaluate| |#4|))
+    (LETT |dv$| (LIST '|SExpressionOf| DV$1 DV$2 DV$3 DV$4))
+    (LETT $ (GETREFV 60))
     (QSETREFV $ 0 |dv$|)
-    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
     (|haddProp| |$ConstructorCache| '|SExpressionOf| (LIST DV$1 DV$2 DV$3 DV$4)
                 (CONS 1 $))
     (|stuffDomainSlots| $)

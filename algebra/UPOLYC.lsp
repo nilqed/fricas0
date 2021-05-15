@@ -5,28 +5,26 @@
 
 (DEFPARAMETER |UnivariatePolynomialCategory;AL| 'NIL) 
 
-(DEFUN |UnivariatePolynomialCategory| (#1=#:G738)
-  (LET (#2=#:G739)
+(DEFUN |UnivariatePolynomialCategory| (|t#1|)
+  (LET (#1=#:G425 (#2=#:G426 (|devaluate| |t#1|)))
     (COND
-     ((SETQ #2#
-              (|assoc| #3=(|devaluate| #1#) |UnivariatePolynomialCategory;AL|))
-      (CDR #2#))
+     ((SETQ #1# (|assoc| #2# |UnivariatePolynomialCategory;AL|)) (CDR #1#))
      (T
       (SETQ |UnivariatePolynomialCategory;AL|
               (|cons5|
-               (CONS #3# (SETQ #2# (|UnivariatePolynomialCategory;| #1#)))
+               (CONS #2# (SETQ #1# (|UnivariatePolynomialCategory;| #2#)))
                |UnivariatePolynomialCategory;AL|))
-      #2#)))) 
+      #1#)))) 
 
 (DEFUN |UnivariatePolynomialCategory;| (|t#1|)
-  (SPROG ((#1=#:G737 NIL))
+  (SPROG ((#1=#:G424 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
+                   (|sublisV| (MAKE_PAIRS '(|t#1|) (LIST |t#1|))
                               (|sublisV|
-                               (PAIR '(#2=#:G735 #3=#:G736)
-                                     (LIST '(|NonNegativeInteger|)
-                                           '(|SingletonAsOrderedSet|)))
+                               (MAKE_PAIRS '(#2=#:G422 #3=#:G423)
+                                           (LIST '(|NonNegativeInteger|)
+                                                 '(|SingletonAsOrderedSet|)))
                                (COND (|UnivariatePolynomialCategory;CAT|)
                                      ('T
                                       (LETT |UnivariatePolynomialCategory;CAT|
@@ -153,14 +151,5 @@
                                                  (|has| |t#1| (|Field|)))
                                                 ((|additiveValuation|)
                                                  (|has| |t#1| (|Field|))))
-                                              '((|Fraction| $)
-                                                (|NonNegativeInteger|)
-                                                (|SparseUnivariatePolynomial|
-                                                 |t#1|)
-                                                (|Vector| |t#1|))
-                                              NIL))
-                                            . #4=(|UnivariatePolynomialCategory|))))))
-                   . #4#)
-           (SETELT #1# 0
-                   (LIST '|UnivariatePolynomialCategory|
-                         (|devaluate| |t#1|)))))) 
+                                              NIL NIL))))))))
+           (SETELT #1# 0 (LIST '|UnivariatePolynomialCategory| |t#1|))))) 
