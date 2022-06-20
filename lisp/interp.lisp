@@ -1,3 +1,4 @@
+(load "interp/vmlisp")
 ;;;
 (load "interp/hashcode")
 (load "interp/as")
@@ -6,7 +7,6 @@
 (load "interp/util")
 (load "interp/interp-proclaims.lisp")
 ;;;
-(load "interp/vmlisp")
 (load "interp/macros")
 (load "interp/setq")
 (load "interp/buildom")
