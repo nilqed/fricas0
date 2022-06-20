@@ -1,13 +1,3 @@
-;;; Load interpreter,Fri Nov 3 16:07:26 CET 2017
-(load "lisp/fricas-package")
-
-#-:ABCL
-(load "lisp/fricas-lisp")
-
-#+:ABCL
-(load "lisp/fricas-abcl")
-
-(load "lisp/primitives")
 ;;;
 (load "interp/hashcode")
 (load "interp/as")

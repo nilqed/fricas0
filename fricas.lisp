@@ -1,4 +1,4 @@
-;;; FriCAS0, Fri Nov 3 16:25:22 CET 2017
+(load "lisp/load-lisp.lisp")
 (load "lisp/interp.lisp")
 (in-package :boot)
 (defvar $spadroot ".")
