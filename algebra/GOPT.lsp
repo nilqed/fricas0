@@ -1,105 +1,103 @@
 
 (SDEFUN |GOPT;maxLevel;U$;1|
-        ((|d| |Union| (|NonNegativeInteger|) "arbitrary") ($ $))
+        ((|d| (|Union| (|NonNegativeInteger|) "arbitrary")) ($ ($)))
         (CONS '|maxLevel| (SPADCALL |d| (QREFELT $ 10)))) 
 
 (SDEFUN |GOPT;maxDerivative;U$;2|
-        ((|d| |Union| (|NonNegativeInteger|) "arbitrary") ($ $))
+        ((|d| (|Union| (|NonNegativeInteger|) "arbitrary")) ($ ($)))
         (CONS '|maxDerivative| (SPADCALL |d| (QREFELT $ 10)))) 
 
 (SDEFUN |GOPT;maxShift;U$;3|
-        ((|d| |Union| (|NonNegativeInteger|) "arbitrary") ($ $))
+        ((|d| (|Union| (|NonNegativeInteger|) "arbitrary")) ($ ($)))
         (SPADCALL |d| (QREFELT $ 12))) 
 
 (SDEFUN |GOPT;maxSubst;U$;4|
-        ((|d| |Union| (|PositiveInteger|) "arbitrary") ($ $))
-        (SPROG ((#1=#:G720 NIL))
+        ((|d| (|Union| (|PositiveInteger|) "arbitrary")) ($ ($)))
+        (SPROG ((#1=#:G719 NIL))
                (COND
                 ((QEQCAR |d| 0)
                  (SPADCALL
                   (CONS 0
-                        (PROG1 (LETT #1# (- (QCDR |d|) 1) |GOPT;maxSubst;U$;4|)
+                        (PROG1 (LETT #1# (- (QCDR |d|) 1))
                           (|check_subtype2| (>= #1# 0) '(|NonNegativeInteger|)
                                             '(|Integer|) #1#)))
                   (QREFELT $ 12)))
                 ('T (SPADCALL (CONS 1 (QCDR |d|)) (QREFELT $ 12)))))) 
 
 (SDEFUN |GOPT;maxDegree;U$;5|
-        ((|d| |Union| (|NonNegativeInteger|) "arbitrary") ($ $))
+        ((|d| (|Union| (|NonNegativeInteger|) "arbitrary")) ($ ($)))
         (CONS '|maxDegree| (SPADCALL |d| (QREFELT $ 10)))) 
 
-(SDEFUN |GOPT;maxMixedDegree;Nni$;6| ((|d| |NonNegativeInteger|) ($ $))
+(SDEFUN |GOPT;maxMixedDegree;Nni$;6| ((|d| (|NonNegativeInteger|)) ($ ($)))
         (CONS '|maxMixedDegree| (SPADCALL |d| (QREFELT $ 19)))) 
 
-(SDEFUN |GOPT;allDegrees;B$;7| ((|d| |Boolean|) ($ $))
+(SDEFUN |GOPT;allDegrees;B$;7| ((|d| (|Boolean|)) ($ ($)))
         (CONS '|allDegrees| (SPADCALL |d| (QREFELT $ 23)))) 
 
 (SDEFUN |GOPT;maxPower;U$;8|
-        ((|d| |Union| (|PositiveInteger|) "arbitrary") ($ $))
+        ((|d| (|Union| (|PositiveInteger|) "arbitrary")) ($ ($)))
         (CONS '|maxPower| (SPADCALL |d| (QREFELT $ 26)))) 
 
-(SDEFUN |GOPT;safety;Nni$;9| ((|d| |NonNegativeInteger|) ($ $))
+(SDEFUN |GOPT;safety;Nni$;9| ((|d| (|NonNegativeInteger|)) ($ ($)))
         (CONS '|safety| (SPADCALL |d| (QREFELT $ 19)))) 
 
 (SDEFUN |GOPT;homogeneous;U$;10|
-        ((|d| |Union| (|PositiveInteger|) (|Boolean|)) ($ $))
+        ((|d| (|Union| (|PositiveInteger|) (|Boolean|))) ($ ($)))
         (CONS '|homogeneous| (SPADCALL |d| (QREFELT $ 31)))) 
 
 (SDEFUN |GOPT;Somos;U$;11|
-        ((|d| |Union| (|PositiveInteger|) (|Boolean|)) ($ $))
+        ((|d| (|Union| (|PositiveInteger|) (|Boolean|))) ($ ($)))
         (CONS '|Somos| (SPADCALL |d| (QREFELT $ 31)))) 
 
-(SDEFUN |GOPT;debug;B$;12| ((|d| |Boolean|) ($ $))
+(SDEFUN |GOPT;debug;B$;12| ((|d| (|Boolean|)) ($ ($)))
         (CONS '|debug| (SPADCALL |d| (QREFELT $ 23)))) 
 
 (SDEFUN |GOPT;check;U$;13|
-        ((|d| |Union| "skip" "MonteCarlo" "deterministic") ($ $))
+        ((|d| (|Union| "skip" "MonteCarlo" "deterministic")) ($ ($)))
         (CONS '|check| (SPADCALL |d| (QREFELT $ 37)))) 
 
-(SDEFUN |GOPT;checkExtraValues;B$;14| ((|d| |Boolean|) ($ $))
+(SDEFUN |GOPT;checkExtraValues;B$;14| ((|d| (|Boolean|)) ($ ($)))
         (CONS '|checkExtraValues| (SPADCALL |d| (QREFELT $ 23)))) 
 
-(SDEFUN |GOPT;one;B$;15| ((|d| |Boolean|) ($ $))
+(SDEFUN |GOPT;one;B$;15| ((|d| (|Boolean|)) ($ ($)))
         (CONS '|one| (SPADCALL |d| (QREFELT $ 23)))) 
 
-(SDEFUN |GOPT;functionName;S$;16| ((|d| |Symbol|) ($ $))
+(SDEFUN |GOPT;functionName;S$;16| ((|d| (|Symbol|)) ($ ($)))
         (CONS '|functionName| (SPADCALL |d| (QREFELT $ 43)))) 
 
-(SDEFUN |GOPT;functionNames;L$;17| ((|d| |List| (|Symbol|)) ($ $))
+(SDEFUN |GOPT;functionNames;L$;17| ((|d| (|List| (|Symbol|))) ($ ($)))
         (CONS '|functionNames| (SPADCALL |d| (QREFELT $ 47)))) 
 
-(SDEFUN |GOPT;variableName;S$;18| ((|d| |Symbol|) ($ $))
+(SDEFUN |GOPT;variableName;S$;18| ((|d| (|Symbol|)) ($ ($)))
         (CONS '|variableName| (SPADCALL |d| (QREFELT $ 43)))) 
 
-(SDEFUN |GOPT;indexName;S$;19| ((|d| |Symbol|) ($ $))
+(SDEFUN |GOPT;indexName;S$;19| ((|d| (|Symbol|)) ($ ($)))
         (CONS '|indexName| (SPADCALL |d| (QREFELT $ 43)))) 
 
-(SDEFUN |GOPT;displayKind;S$;20| ((|d| |Symbol|) ($ $))
+(SDEFUN |GOPT;displayKind;S$;20| ((|d| (|Symbol|)) ($ ($)))
         (CONS '|displayKind| (SPADCALL |d| (QREFELT $ 43)))) 
 
-(SDEFUN |GOPT;coerce;$Of;21| ((|x| $) ($ |OutputForm|))
+(SDEFUN |GOPT;coerce;$Of;21| ((|x| ($)) ($ (|OutputForm|)))
         (SPADCALL (SPADCALL (QCAR |x|) (QREFELT $ 53))
                   (SPADCALL (QCDR |x|) (QREFELT $ 54)) (QREFELT $ 55))) 
 
-(SDEFUN |GOPT;=;2$B;22| ((|x| $) (|y| $) ($ |Boolean|))
+(SDEFUN |GOPT;=;2$B;22| ((|x| ($)) (|y| ($)) ($ (|Boolean|)))
         (COND
          ((EQUAL (QCAR |x|) (QCAR |y|))
           (SPADCALL (QCDR |x|) (QCDR |y|) (QREFELT $ 57)))
          ('T NIL))) 
 
 (SDEFUN |GOPT;option;LSU;23|
-        ((|l| |List| $) (|s| |Symbol|) ($ |Union| (|Any|) "failed"))
-        (SPROG ((#1=#:G797 NIL) (#2=#:G798 NIL) (#3=#:G799 NIL) (|x| NIL))
+        ((|l| (|List| $)) (|s| (|Symbol|)) ($ (|Union| (|Any|) "failed")))
+        (SPROG ((#1=#:G793 NIL) (#2=#:G794 NIL) (#3=#:G795 NIL) (|x| NIL))
                (SEQ
                 (EXIT
                  (SEQ
                   (SEQ
                    (EXIT
-                    (SEQ (LETT |x| NIL . #4=(|GOPT;option;LSU;23|))
-                         (LETT #3# |l| . #4#) G190
+                    (SEQ (LETT |x| NIL) (LETT #3# |l|) G190
                          (COND
-                          ((OR (ATOM #3#)
-                               (PROGN (LETT |x| (CAR #3#) . #4#) NIL))
+                          ((OR (ATOM #3#) (PROGN (LETT |x| (CAR #3#)) NIL))
                            (GO G191)))
                          (SEQ
                           (EXIT
@@ -108,24 +106,22 @@
                              (PROGN
                               (LETT #1#
                                     (PROGN
-                                     (LETT #2# (CONS 0 (QCDR |x|)) . #4#)
-                                     (GO #5=#:G796))
-                                    . #4#)
-                              (GO #6=#:G791))))))
-                         (LETT #3# (CDR #3#) . #4#) (GO G190) G191 (EXIT NIL)))
-                   #6# (EXIT #1#))
+                                     (LETT #2# (CONS 0 (QCDR |x|)))
+                                     (GO #4=#:G792)))
+                              (GO #5=#:G787))))))
+                         (LETT #3# (CDR #3#)) (GO G190) G191 (EXIT NIL)))
+                   #5# (EXIT #1#))
                   (EXIT (CONS 1 "failed"))))
-                #5# (EXIT #2#)))) 
+                #4# (EXIT #2#)))) 
 
 (DECLAIM (NOTINLINE |GuessOption;|)) 
 
 (DEFUN |GuessOption| ()
   (SPROG NIL
-         (PROG (#1=#:G801)
+         (PROG (#1=#:G797)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|GuessOption|)
-                    . #2=(|GuessOption|))
+             ((LETT #1# (HGET |$ConstructorCache| '|GuessOption|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -133,17 +129,17 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|GuessOption|
                              (LIST (CONS NIL (CONS 1 (|GuessOption;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#) (HREM |$ConstructorCache| '|GuessOption|)))))))))) 
 
 (DEFUN |GuessOption;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|GuessOption|) . #1=(|GuessOption|))
-          (LETT $ (GETREFV 65) . #1#)
+          (LETT |dv$| '(|GuessOption|))
+          (LETT $ (GETREFV 65))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|GuessOption| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

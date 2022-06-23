@@ -4,13 +4,11 @@
 (DEFPARAMETER |SpecialFunctionCategory;AL| 'NIL) 
 
 (DEFUN |SpecialFunctionCategory| ()
-  (LET (#:G692)
-    (COND (|SpecialFunctionCategory;AL|)
-          (T
-           (SETQ |SpecialFunctionCategory;AL| (|SpecialFunctionCategory;|)))))) 
+  (COND (|SpecialFunctionCategory;AL|)
+        (T (SETQ |SpecialFunctionCategory;AL| (|SpecialFunctionCategory;|))))) 
 
 (DEFUN |SpecialFunctionCategory;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G689 NIL))
          (PROG1
              (LETT #1#
                    (|Join|
@@ -51,8 +49,7 @@
                        ((|meijerG|
                          ($ (|List| $) (|List| $) (|List| $) (|List| $) $))
                         (|has| $ (|RetractableTo| (|Integer|)))))
-                     NIL '((|List| $)) NIL))
-                   |SpecialFunctionCategory|)
+                     NIL NIL NIL)))
            (SETELT #1# 0 '(|SpecialFunctionCategory|))))) 
 
 (MAKEPROP '|SpecialFunctionCategory| 'NILADIC T) 

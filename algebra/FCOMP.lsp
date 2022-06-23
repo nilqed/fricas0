@@ -1,26 +1,26 @@
 
-(SDEFUN |FCOMP;sin;E$;1| ((|e| E) ($ $)) (CONS 'T |e|)) 
+(SDEFUN |FCOMP;sin;E$;1| ((|e| (E)) ($ ($))) (CONS 'T |e|)) 
 
 (PUT '|FCOMP;cos;E$;2| '|SPADreplace| '(XLAM (|e|) (CONS NIL |e|))) 
 
-(SDEFUN |FCOMP;cos;E$;2| ((|e| E) ($ $)) (CONS NIL |e|)) 
+(SDEFUN |FCOMP;cos;E$;2| ((|e| (E)) ($ ($))) (CONS NIL |e|)) 
 
 (PUT '|FCOMP;sin?;$B;3| '|SPADreplace| 'QCAR) 
 
-(SDEFUN |FCOMP;sin?;$B;3| ((|x| $) ($ |Boolean|)) (QCAR |x|)) 
+(SDEFUN |FCOMP;sin?;$B;3| ((|x| ($)) ($ (|Boolean|))) (QCAR |x|)) 
 
 (PUT '|FCOMP;argument;$E;4| '|SPADreplace| 'QCDR) 
 
-(SDEFUN |FCOMP;argument;$E;4| ((|x| $) ($ E)) (QCDR |x|)) 
+(SDEFUN |FCOMP;argument;$E;4| ((|x| ($)) ($ (E))) (QCDR |x|)) 
 
-(SDEFUN |FCOMP;coerce;$Of;5| ((|x| $) ($ |OutputForm|))
+(SDEFUN |FCOMP;coerce;$Of;5| ((|x| ($)) ($ (|OutputForm|)))
         (SPADCALL
          (COND ((QCAR |x|) (SPADCALL "sin" (QREFELT $ 15)))
                ('T (SPADCALL "cos" (QREFELT $ 15))))
          (SPADCALL (SPADCALL (QCDR |x|) (QREFELT $ 16)) (QREFELT $ 17))
          (QREFELT $ 18))) 
 
-(SDEFUN |FCOMP;<;2$B;6| ((|x| $) (|y| $) ($ |Boolean|))
+(SDEFUN |FCOMP;<;2$B;6| ((|x| ($)) (|y| ($)) ($ (|Boolean|)))
         (COND ((SPADCALL (QCDR |x|) (QCDR |y|) (QREFELT $ 20)) 'T)
               ((OR (SPADCALL (QCDR |y|) (QCDR |x|) (QREFELT $ 20)) (QCAR |x|))
                NIL)
@@ -28,21 +28,19 @@
 
 (DECLAIM (NOTINLINE |FourierComponent;|)) 
 
-(DEFUN |FourierComponent| (#1=#:G713)
+(DEFUN |FourierComponent| (#1=#:G712)
   (SPROG NIL
-         (PROG (#2=#:G714)
+         (PROG (#2=#:G713)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|FourierComponent|)
-                                               '|domainEqualList|)
-                    . #3=(|FourierComponent|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|FourierComponent;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|FourierComponent;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|FourierComponent|)))))))))) 
@@ -50,11 +48,11 @@
 (DEFUN |FourierComponent;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|FourierComponent|))
-          (LETT |dv$| (LIST '|FourierComponent| DV$1) . #1#)
-          (LETT $ (GETREFV 24) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|FourierComponent| DV$1))
+          (LETT $ (GETREFV 24))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|FourierComponent| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)

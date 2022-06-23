@@ -1,60 +1,58 @@
 
-(SDEFUN |RESRING;Zero;$;1| (($ $)) (|spadConstant| $ 20)) 
+(SDEFUN |RESRING;Zero;$;1| (($ ($))) (|spadConstant| $ 20)) 
 
-(SDEFUN |RESRING;One;$;2| (($ $)) (|spadConstant| $ 22)) 
+(SDEFUN |RESRING;One;$;2| (($ ($))) (|spadConstant| $ 22)) 
 
-(SDEFUN |RESRING;reduce;FPol$;3| ((|f| |FPol|) ($ $))
+(SDEFUN |RESRING;reduce;FPol$;3| ((|f| (|FPol|)) ($ ($)))
         (SPADCALL |f| (QREFELT $ 15) (QREFELT $ 24))) 
 
-(SDEFUN |RESRING;coerce;FPol$;4| ((|f| |FPol|) ($ $))
+(SDEFUN |RESRING;coerce;FPol$;4| ((|f| (|FPol|)) ($ ($)))
         (SPADCALL |f| (QREFELT $ 15) (QREFELT $ 24))) 
 
 (PUT '|RESRING;lift;$FPol;5| '|SPADreplace| '(XLAM (|x|) |x|)) 
 
-(SDEFUN |RESRING;lift;$FPol;5| ((|x| $) ($ |FPol|)) |x|) 
+(SDEFUN |RESRING;lift;$FPol;5| ((|x| ($)) ($ (|FPol|))) |x|) 
 
-(SDEFUN |RESRING;+;3$;6| ((|x| $) (|y| $) ($ $))
+(SDEFUN |RESRING;+;3$;6| ((|x| ($)) (|y| ($)) ($ ($)))
         (SPADCALL |x| |y| (QREFELT $ 28))) 
 
-(SDEFUN |RESRING;-;2$;7| ((|x| $) ($ $)) (SPADCALL |x| (QREFELT $ 30))) 
+(SDEFUN |RESRING;-;2$;7| ((|x| ($)) ($ ($))) (SPADCALL |x| (QREFELT $ 30))) 
 
-(SDEFUN |RESRING;*;3$;8| ((|x| $) (|y| $) ($ $))
+(SDEFUN |RESRING;*;3$;8| ((|x| ($)) (|y| ($)) ($ ($)))
         (SPADCALL (SPADCALL (SPADCALL |x| |y| (QREFELT $ 32)) (QREFELT $ 27))
                   (QREFELT $ 15) (QREFELT $ 24))) 
 
-(SDEFUN |RESRING;*;I2$;9| ((|n| |Integer|) (|x| $) ($ $))
+(SDEFUN |RESRING;*;I2$;9| ((|n| (|Integer|)) (|x| ($)) ($ ($)))
         (SPADCALL |n| |x| (QREFELT $ 35))) 
 
-(SDEFUN |RESRING;*;F2$;10| ((|a| F) (|x| $) ($ $))
+(SDEFUN |RESRING;*;F2$;10| ((|a| (F)) (|x| ($)) ($ ($)))
         (SPADCALL |a| |x| (QREFELT $ 37))) 
 
-(SDEFUN |RESRING;=;2$B;11| ((|x| $) (|y| $) ($ |Boolean|))
+(SDEFUN |RESRING;=;2$B;11| ((|x| ($)) (|y| ($)) ($ (|Boolean|)))
         (SPADCALL |x| |y| (QREFELT $ 39))) 
 
-(SDEFUN |RESRING;characteristic;Nni;12| (($ |NonNegativeInteger|))
+(SDEFUN |RESRING;characteristic;Nni;12| (($ (|NonNegativeInteger|)))
         (SPADCALL (QREFELT $ 42))) 
 
-(SDEFUN |RESRING;coerce;$Of;13| ((|x| $) ($ |OutputForm|))
+(SDEFUN |RESRING;coerce;$Of;13| ((|x| ($)) ($ (|OutputForm|)))
         (SPADCALL |x| (QREFELT $ 45))) 
 
 (DECLAIM (NOTINLINE |ResidueRing;|)) 
 
-(DEFUN |ResidueRing| (&REST #1=#:G722)
+(DEFUN |ResidueRing| (&REST #1=#:G717)
   (SPROG NIL
-         (PROG (#2=#:G723)
+         (PROG (#2=#:G718)
            (RETURN
             (COND
              ((LETT #2#
-                    (|lassocShiftWithFunction| (|devaluateList| #1#)
-                                               (HGET |$ConstructorCache|
-                                                     '|ResidueRing|)
-                                               '|domainEqualList|)
-                    . #3=(|ResidueRing|))
+                    (|lassocShiftWithFunction|
+                     (|devaluate_sig| #1# '(T T T T NIL))
+                     (HGET |$ConstructorCache| '|ResidueRing|)
+                     '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (APPLY (|function| |ResidueRing;|) #1#)
-                    (LETT #2# T . #3#))
+                  (PROG1 (APPLY (|function| |ResidueRing;|) #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|ResidueRing|)))))))))) 
 
@@ -63,15 +61,15 @@
    ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$5 NIL) (DV$4 NIL) (DV$3 NIL) (DV$2 NIL)
     (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #1=(|ResidueRing|))
-    (LETT DV$2 (|devaluate| |#2|) . #1#)
-    (LETT DV$3 (|devaluate| |#3|) . #1#)
-    (LETT DV$4 (|devaluate| |#4|) . #1#)
-    (LETT DV$5 (|devaluate| |#5|) . #1#)
-    (LETT |dv$| (LIST '|ResidueRing| DV$1 DV$2 DV$3 DV$4 DV$5) . #1#)
-    (LETT $ (GETREFV 52) . #1#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT DV$4 (|devaluate| |#4|))
+    (LETT DV$5 |#5|)
+    (LETT |dv$| (LIST '|ResidueRing| DV$1 DV$2 DV$3 DV$4 DV$5))
+    (LETT $ (GETREFV 52))
     (QSETREFV $ 0 |dv$|)
-    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
     (|haddProp| |$ConstructorCache| '|ResidueRing|
                 (LIST DV$1 DV$2 DV$3 DV$4 DV$5) (CONS 1 $))
     (|stuffDomainSlots| $)
@@ -93,8 +91,8 @@
           (LIST
            '#(NIL NIL NIL NIL NIL NIL (|local| |#1|) (|local| |#2|)
               (|local| |#3|) (|local| |#4|) (|local| |#5|) '|Rep| (|List| 9)
-              (|GroebnerPackage| 6 7 8 9) (0 . |groebner|) '|relations|
-              (5 . |One|) (|Boolean|) (9 . =) '#:G690 (15 . |Zero|)
+              (|GroebnerPackage| 6 7 9) (0 . |groebner|) '|relations|
+              (5 . |One|) (|Boolean|) (9 . =) '#:G689 (15 . |Zero|)
               (CONS IDENTITY
                     (FUNCALL (|dispatchFunction| |RESRING;Zero;$;1|) $))
               (19 . |One|)
@@ -120,13 +118,13 @@
            (CONS
             (|makeByteWordVec2| 1
                                 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-                                  0 0 0 0 0 0 0 0 0))
+                                  0 0 0 0 0 0 0 0 0 0))
             (CONS
              '#(NIL |Algebra&| |Algebra&| NIL |Rng&| NIL |Module&| |Module&|
                 NIL NIL NIL |NonAssociativeRing&| NIL NIL NIL
                 |NonAssociativeRng&| NIL |AbelianGroup&| NIL NIL NIL NIL
                 |MagmaWithUnit&| |NonAssociativeSemiRng&| |AbelianMonoid&|
-                |Magma&| |AbelianSemiGroup&| |SetCategory&| NIL NIL
+                |Magma&| |AbelianSemiGroup&| NIL |SetCategory&| NIL NIL
                 |BasicType&| NIL)
              (CONS
               '#((|CommutativeRing|) (|Algebra| 6) (|Algebra| $$) (|Ring|)
@@ -137,8 +135,9 @@
                  (|Monoid|) (|NonAssociativeSemiRing|)
                  (|CancellationAbelianMonoid|) (|SemiGroup|) (|MagmaWithUnit|)
                  (|NonAssociativeSemiRng|) (|AbelianMonoid|) (|Magma|)
-                 (|AbelianSemiGroup|) (|SetCategory|) (|CommutativeStar|)
-                 (|unitsKnown|) (|BasicType|) (|CoercibleTo| 44))
+                 (|AbelianSemiGroup|) (|CommutativeStar|) (|SetCategory|)
+                 (|TwoSidedRecip|) (|unitsKnown|) (|BasicType|)
+                 (|CoercibleTo| 44))
               (|makeByteWordVec2| 51
                                   '(1 13 12 12 14 0 9 0 16 2 12 17 0 0 18 0 11
                                     0 20 0 11 0 22 2 13 9 9 12 24 2 11 0 0 0 28

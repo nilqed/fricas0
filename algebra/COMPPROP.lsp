@@ -1,34 +1,32 @@
 
 (PUT '|COMPPROP;closed?;$B;1| '|SPADreplace| 'QCAR) 
 
-(SDEFUN |COMPPROP;closed?;$B;1| ((|p| $) ($ |Boolean|)) (QCAR |p|)) 
+(SDEFUN |COMPPROP;closed?;$B;1| ((|p| ($)) ($ (|Boolean|))) (QCAR |p|)) 
 
 (PUT '|COMPPROP;solid?;$B;2| '|SPADreplace| 'QCDR) 
 
-(SDEFUN |COMPPROP;solid?;$B;2| ((|p| $) ($ |Boolean|)) (QCDR |p|)) 
+(SDEFUN |COMPPROP;solid?;$B;2| ((|p| ($)) ($ (|Boolean|))) (QCDR |p|)) 
 
-(SDEFUN |COMPPROP;close;$2B;3| ((|p| $) (|b| |Boolean|) ($ |Boolean|))
+(SDEFUN |COMPPROP;close;$2B;3| ((|p| ($)) (|b| (|Boolean|)) ($ (|Boolean|)))
         (PROGN (RPLACA |p| |b|) (QCAR |p|))) 
 
-(SDEFUN |COMPPROP;solid;$2B;4| ((|p| $) (|b| |Boolean|) ($ |Boolean|))
+(SDEFUN |COMPPROP;solid;$2B;4| ((|p| ($)) (|b| (|Boolean|)) ($ (|Boolean|)))
         (PROGN (RPLACD |p| |b|) (QCDR |p|))) 
 
 (PUT '|COMPPROP;new;$;5| '|SPADreplace| '(XLAM NIL (CONS NIL NIL))) 
 
-(SDEFUN |COMPPROP;new;$;5| (($ $)) (CONS NIL NIL)) 
+(SDEFUN |COMPPROP;new;$;5| (($ ($))) (CONS NIL NIL)) 
 
-(SDEFUN |COMPPROP;copy;2$;6| ((|p| $) ($ $))
+(SDEFUN |COMPPROP;copy;2$;6| ((|p| ($)) ($ ($)))
         (SPROG ((|annuderOne| ($)))
-               (SEQ
-                (LETT |annuderOne| (SPADCALL (QREFELT $ 12))
-                      |COMPPROP;copy;2$;6|)
-                (SPADCALL |annuderOne| (SPADCALL |p| (QREFELT $ 8))
-                          (QREFELT $ 10))
-                (SPADCALL |annuderOne| (SPADCALL |p| (QREFELT $ 9))
-                          (QREFELT $ 11))
-                (EXIT |annuderOne|)))) 
+               (SEQ (LETT |annuderOne| (SPADCALL (QREFELT $ 12)))
+                    (SPADCALL |annuderOne| (SPADCALL |p| (QREFELT $ 8))
+                              (QREFELT $ 10))
+                    (SPADCALL |annuderOne| (SPADCALL |p| (QREFELT $ 9))
+                              (QREFELT $ 11))
+                    (EXIT |annuderOne|)))) 
 
-(SDEFUN |COMPPROP;coerce;$Of;7| ((|p| $) ($ |OutputForm|))
+(SDEFUN |COMPPROP;coerce;$Of;7| ((|p| ($)) ($ (|OutputForm|)))
         (SPADCALL
          (LIST (SPADCALL "Component is " (QREFELT $ 16))
                (SPADCALL
@@ -44,11 +42,11 @@
 
 (DEFUN |SubSpaceComponentProperty| ()
   (SPROG NIL
-         (PROG (#1=#:G711)
+         (PROG (#1=#:G710)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|SubSpaceComponentProperty|)
-                    . #2=(|SubSpaceComponentProperty|))
+             ((LETT #1#
+                    (HGET |$ConstructorCache| '|SubSpaceComponentProperty|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -58,7 +56,7 @@
                              (LIST
                               (CONS NIL
                                     (CONS 1 (|SubSpaceComponentProperty;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache|
@@ -67,11 +65,10 @@
 (DEFUN |SubSpaceComponentProperty;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|SubSpaceComponentProperty|)
-                . #1=(|SubSpaceComponentProperty|))
-          (LETT $ (GETREFV 22) . #1#)
+          (LETT |dv$| '(|SubSpaceComponentProperty|))
+          (LETT $ (GETREFV 22))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|SubSpaceComponentProperty| NIL
                       (CONS 1 $))
           (|stuffDomainSlots| $)

@@ -1,33 +1,31 @@
 
-(SDEFUN |FUNCTION;name;$S;1| ((|r| $) ($ |Symbol|)) (QREFELT $ 6)) 
+(SDEFUN |FUNCTION;name;$S;1| ((|r| ($)) ($ (|Symbol|))) (QREFELT $ 6)) 
 
-(SDEFUN |FUNCTION;coerce;$Of;2| ((|r| $) ($ |OutputForm|))
+(SDEFUN |FUNCTION;coerce;$Of;2| ((|r| ($)) ($ (|OutputForm|)))
         (|outputMapTran| (QREFELT $ 6) |r|)) 
 
 (PUT '|FUNCTION;=;2$B;3| '|SPADreplace| '(XLAM (|x| |y|) 'T)) 
 
-(SDEFUN |FUNCTION;=;2$B;3| ((|x| $) (|y| $) ($ |Boolean|)) 'T) 
+(SDEFUN |FUNCTION;=;2$B;3| ((|x| ($)) (|y| ($)) ($ (|Boolean|))) 'T) 
 
-(SDEFUN |FUNCTION;latex;$S;4| ((|x| $) ($ |String|))
+(SDEFUN |FUNCTION;latex;$S;4| ((|x| ($)) ($ (|String|)))
         (SPADCALL (QREFELT $ 6) (QREFELT $ 14))) 
 
 (DECLAIM (NOTINLINE |FunctionCalled;|)) 
 
-(DEFUN |FunctionCalled| (#1=#:G712)
+(DEFUN |FunctionCalled| (#1=#:G707)
   (SPROG NIL
-         (PROG (#2=#:G713)
+         (PROG (#2=#:G708)
            (RETURN
             (COND
              ((LETT #2#
-                    (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
+                    (|lassocShiftWithFunction| (LIST #1#)
                                                (HGET |$ConstructorCache|
                                                      '|FunctionCalled|)
-                                               '|domainEqualList|)
-                    . #3=(|FunctionCalled|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|FunctionCalled;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|FunctionCalled;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|FunctionCalled|)))))))))) 
@@ -35,11 +33,11 @@
 (DEFUN |FunctionCalled;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|FunctionCalled|))
-          (LETT |dv$| (LIST '|FunctionCalled| DV$1) . #1#)
-          (LETT $ (GETREFV 18) . #1#)
+          (LETT DV$1 |#1|)
+          (LETT |dv$| (LIST '|FunctionCalled| DV$1))
+          (LETT $ (GETREFV 18))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|FunctionCalled| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)

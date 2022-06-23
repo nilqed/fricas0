@@ -1,40 +1,49 @@
 
-(SDEFUN |OCT;Zero;$;1| (($ $))
+(SDEFUN |OCT;Zero;$;1| (($ ($)))
         (CONS (|spadConstant| $ 11) (|spadConstant| $ 11))) 
 
-(SDEFUN |OCT;One;$;2| (($ $))
+(SDEFUN |OCT;One;$;2| (($ ($)))
         (CONS (|spadConstant| $ 13) (|spadConstant| $ 11))) 
 
-(SDEFUN |OCT;real;$R;3| ((|x| $) ($ R)) (SPADCALL (QCAR |x|) (QREFELT $ 15))) 
+(SDEFUN |OCT;real;$R;3| ((|x| ($)) ($ (R)))
+        (SPADCALL (QCAR |x|) (QREFELT $ 15))) 
 
-(SDEFUN |OCT;imagi;$R;4| ((|x| $) ($ R)) (SPADCALL (QCAR |x|) (QREFELT $ 17))) 
+(SDEFUN |OCT;imagi;$R;4| ((|x| ($)) ($ (R)))
+        (SPADCALL (QCAR |x|) (QREFELT $ 17))) 
 
-(SDEFUN |OCT;imagj;$R;5| ((|x| $) ($ R)) (SPADCALL (QCAR |x|) (QREFELT $ 19))) 
+(SDEFUN |OCT;imagj;$R;5| ((|x| ($)) ($ (R)))
+        (SPADCALL (QCAR |x|) (QREFELT $ 19))) 
 
-(SDEFUN |OCT;imagk;$R;6| ((|x| $) ($ R)) (SPADCALL (QCAR |x|) (QREFELT $ 21))) 
+(SDEFUN |OCT;imagk;$R;6| ((|x| ($)) ($ (R)))
+        (SPADCALL (QCAR |x|) (QREFELT $ 21))) 
 
-(SDEFUN |OCT;imagE;$R;7| ((|x| $) ($ R)) (SPADCALL (QCDR |x|) (QREFELT $ 15))) 
+(SDEFUN |OCT;imagE;$R;7| ((|x| ($)) ($ (R)))
+        (SPADCALL (QCDR |x|) (QREFELT $ 15))) 
 
-(SDEFUN |OCT;imagI;$R;8| ((|x| $) ($ R)) (SPADCALL (QCDR |x|) (QREFELT $ 17))) 
+(SDEFUN |OCT;imagI;$R;8| ((|x| ($)) ($ (R)))
+        (SPADCALL (QCDR |x|) (QREFELT $ 17))) 
 
-(SDEFUN |OCT;imagJ;$R;9| ((|x| $) ($ R)) (SPADCALL (QCDR |x|) (QREFELT $ 19))) 
+(SDEFUN |OCT;imagJ;$R;9| ((|x| ($)) ($ (R)))
+        (SPADCALL (QCDR |x|) (QREFELT $ 19))) 
 
-(SDEFUN |OCT;imagK;$R;10| ((|x| $) ($ R)) (SPADCALL (QCDR |x|) (QREFELT $ 21))) 
+(SDEFUN |OCT;imagK;$R;10| ((|x| ($)) ($ (R)))
+        (SPADCALL (QCDR |x|) (QREFELT $ 21))) 
 
 (SDEFUN |OCT;octon;8R$;11|
-        ((|a| R) (|b| R) (|c| R) (|d| R) (|f| R) (|g| R) (|h| R) (|i| R) ($ $))
+        ((|a| (R)) (|b| (R)) (|c| (R)) (|d| (R)) (|f| (R)) (|g| (R)) (|h| (R))
+         (|i| (R)) ($ ($)))
         (CONS (SPADCALL |a| |b| |c| |d| (QREFELT $ 27))
               (SPADCALL |f| |g| |h| |i| (QREFELT $ 27)))) 
 
 (PUT '|OCT;octon;2Q$;12| '|SPADreplace| 'CONS) 
 
-(SDEFUN |OCT;octon;2Q$;12| ((|p| |Quaternion| R) (|q| |Quaternion| R) ($ $))
-        (CONS |p| |q|)) 
+(SDEFUN |OCT;octon;2Q$;12|
+        ((|p| (|Quaternion| R)) (|q| (|Quaternion| R)) ($ ($))) (CONS |p| |q|)) 
 
-(SDEFUN |OCT;coerce;Q$;13| ((|q| |Quaternion| R) ($ $))
+(SDEFUN |OCT;coerce;Q$;13| ((|q| (|Quaternion| R)) ($ ($)))
         (CONS |q| (|spadConstant| $ 11))) 
 
-(SDEFUN |OCT;retract;$Q;14| ((|x| $) ($ |Quaternion| R))
+(SDEFUN |OCT;retract;$Q;14| ((|x| ($)) ($ (|Quaternion| R)))
         (SEQ
          (COND
           ((SPADCALL (SPADCALL |x| (QREFELT $ 23)) (QREFELT $ 32))
@@ -55,7 +64,7 @@
                     (QREFELT $ 27))))) 
 
 (SDEFUN |OCT;retractIfCan;$U;15|
-        ((|x| $) ($ |Union| (|Quaternion| R) "failed"))
+        ((|x| ($)) ($ (|Union| (|Quaternion| R) "failed")))
         (SEQ
          (COND
           ((SPADCALL (SPADCALL |x| (QREFELT $ 23)) (QREFELT $ 32))
@@ -76,7 +85,7 @@
                           (SPADCALL |x| (QREFELT $ 20))
                           (SPADCALL |x| (QREFELT $ 22)) (QREFELT $ 27)))))) 
 
-(SDEFUN |OCT;*;3$;16| ((|x| $) (|y| $) ($ $))
+(SDEFUN |OCT;*;3$;16| ((|x| ($)) (|y| ($)) ($ ($)))
         (CONS
          (SPADCALL (SPADCALL (QCAR |x|) (QCAR |y|) (QREFELT $ 36))
                    (SPADCALL (SPADCALL (QCDR |y|) (QREFELT $ 37)) (QCDR |x|)
@@ -89,30 +98,29 @@
 
 (DECLAIM (NOTINLINE |Octonion;|)) 
 
-(DEFUN |Octonion| (#1=#:G783)
+(DEFUN |Octonion| (#1=#:G782)
   (SPROG NIL
-         (PROG (#2=#:G784)
+         (PROG (#2=#:G783)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|Octonion|)
-                                               '|domainEqualList|)
-                    . #3=(|Octonion|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|Octonion;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|Octonion;| #1#) (LETT #2# T))
                 (COND ((NOT #2#) (HREM |$ConstructorCache| '|Octonion|)))))))))) 
 
 (DEFUN |Octonion;| (|#1|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G780 NIL) (#2=#:G781 NIL) (#3=#:G782 NIL) ($ NIL)
+   ((|pv$| NIL) (#1=#:G779 NIL) (#2=#:G780 NIL) (#3=#:G781 NIL) ($ NIL)
     (|dv$| NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #4=(|Octonion|))
-    (LETT |dv$| (LIST '|Octonion| DV$1) . #4#)
-    (LETT $ (GETREFV 71) . #4#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT |dv$| (LIST '|Octonion| DV$1))
+    (LETT $ (GETREFV 71))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -122,8 +130,7 @@
                                                             '(|CharacteristicNonZero|))
                                              (LETT #3#
                                                    (|HasCategory| |#1|
-                                                                  '(|CharacteristicZero|))
-                                                   . #4#)
+                                                                  '(|CharacteristicZero|)))
                                              (OR
                                               (|HasCategory| |#1|
                                                              '(|CharacteristicNonZero|))
@@ -133,8 +140,7 @@
                                                               (|InputForm|)))
                                              (LETT #2#
                                                    (|HasCategory| |#1|
-                                                                  '(|OrderedSet|))
-                                                   . #4#)
+                                                                  '(|OrderedSet|)))
                                              (OR
                                               (|HasCategory| |#1| '(|Finite|))
                                               #2#)
@@ -172,8 +178,7 @@
                                                '(|RetractableTo| (|Integer|))))
                                              (LETT #1#
                                                    (|HasCategory| |#1|
-                                                                  '(|IntegralDomain|))
-                                                   . #4#)
+                                                                  '(|IntegralDomain|)))
                                              (OR
                                               (|HasCategory| |#1|
                                                              '(|CharacteristicNonZero|))
@@ -193,8 +198,7 @@
                                               (|HasCategory|
                                                (|Quaternion| |#1|)
                                                '(|RetractableTo|
-                                                 (|Integer|))))))
-                    . #4#))
+                                                 (|Integer|))))))))
     (|haddProp| |$ConstructorCache| '|Octonion| (LIST DV$1) (CONS 1 $))
     (|stuffDomainSlots| $)
     (QSETREFV $ 6 |#1|)
@@ -263,8 +267,8 @@
            (CONS
             (|makeByteWordVec2| 14
                                 '(0 0 2 3 0 4 0 4 4 0 4 0 0 4 4 0 0 0 4 4 0 0 4
-                                  4 0 0 1 4 4 6 0 0 0 7 0 0 0 9 0 0 0 0 14 5 6
-                                  8 9 10 11 12))
+                                  4 0 0 1 4 4 6 0 0 0 0 0 7 0 0 0 9 11 12 0 0 0
+                                  0 14 5 6 8 9 10 11 12))
             (CONS
              '#(|OctonionCategory&| |FramedNonAssociativeAlgebra&| NIL NIL
                 |FiniteRankNonAssociativeAlgebra&| NIL |NonAssociativeAlgebra&|
@@ -272,11 +276,12 @@
                 |NonAssociativeRing&| |NonAssociativeRng&| NIL NIL NIL NIL
                 |AbelianGroup&| NIL NIL NIL |NonAssociativeSemiRng&|
                 |AbelianMonoid&| |Finite&| |MagmaWithUnit&| NIL |OrderedSet&|
-                |FullyEvalableOver&| |AbelianSemiGroup&| |Magma&| NIL
-                |FullyRetractableTo&| |FullyRetractableTo&| |SetCategory&|
-                |Evalable&| |RetractableTo&| |RetractableTo&| |BasicType&| NIL
-                NIL NIL |PartialOrder&| |InnerEvalable&| |InnerEvalable&| NIL
-                |RetractableTo&| |RetractableTo&|)
+                |FullyRetractableTo&| |FullyEvalableOver&|
+                |FullyRetractableTo&| |AbelianSemiGroup&| |Magma&| NIL
+                |RetractableTo&| |RetractableTo&| |SetCategory&| |Evalable&|
+                |RetractableTo&| |RetractableTo&| NIL NIL |BasicType&| NIL NIL
+                NIL |PartialOrder&| |InnerEvalable&| |InnerEvalable&| NIL NIL
+                NIL)
              (CONS
               '#((|OctonionCategory| 6) (|FramedNonAssociativeAlgebra| 6)
                  (|CharacteristicNonZero|) (|CharacteristicZero|)
@@ -289,14 +294,16 @@
                  (|CancellationAbelianMonoid|) (|NonAssociativeSemiRing|)
                  (|Monoid|) (|NonAssociativeSemiRng|) (|AbelianMonoid|)
                  (|Finite|) (|MagmaWithUnit|) (|SemiGroup|) (|OrderedSet|)
-                 (|FullyEvalableOver| 6) (|AbelianSemiGroup|) (|Magma|)
-                 (|Comparable|) (|FullyRetractableTo| (|Quaternion| 6))
-                 (|FullyRetractableTo| 6) (|SetCategory|) (|Evalable| 6)
+                 (|FullyRetractableTo| (|Quaternion| 6))
+                 (|FullyEvalableOver| 6) (|FullyRetractableTo| 6)
+                 (|AbelianSemiGroup|) (|Magma|) (|Comparable|)
                  (|RetractableTo| (|Quaternion| 6)) (|RetractableTo| 6)
-                 (|BasicType|) (|CoercibleTo| 70) (|unitsKnown|)
-                 (|ConvertibleTo| 47) (|PartialOrder|) (|InnerEvalable| 55 6)
-                 (|InnerEvalable| 6 6) (|Eltable| 6 $$) (|RetractableTo| 45)
-                 (|RetractableTo| 42))
+                 (|SetCategory|) (|Evalable| 6) (|RetractableTo| 45)
+                 (|RetractableTo| 42) (|CoercibleFrom| (|Quaternion| 6))
+                 (|CoercibleFrom| 6) (|BasicType|) (|CoercibleTo| 70)
+                 (|unitsKnown|) (|ConvertibleTo| 47) (|PartialOrder|)
+                 (|InnerEvalable| 55 6) (|InnerEvalable| 6 6) (|Eltable| 6 $$)
+                 (|CoercibleFrom| 45) (|CoercibleFrom| 42))
               (|makeByteWordVec2| 70
                                   '(0 6 0 9 0 10 0 11 0 6 0 12 0 10 0 13 1 10 6
                                     0 15 1 10 6 0 17 1 10 6 0 19 1 10 6 0 21 4

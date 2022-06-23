@@ -1,20 +1,22 @@
 
 (PUT '|ICARD;<;2$B;1| '|SPADreplace| '(XLAM (|x| |y|) (CGREATERP |y| |x|))) 
 
-(SDEFUN |ICARD;<;2$B;1| ((|x| $) (|y| $) ($ |Boolean|)) (CGREATERP |y| |x|)) 
+(SDEFUN |ICARD;<;2$B;1| ((|x| ($)) (|y| ($)) ($ (|Boolean|)))
+        (CGREATERP |y| |x|)) 
 
 (PUT '|ICARD;=;2$B;2| '|SPADreplace| 'EQUAL) 
 
-(SDEFUN |ICARD;=;2$B;2| ((|x| $) (|y| $) ($ |Boolean|)) (EQUAL |x| |y|)) 
+(SDEFUN |ICARD;=;2$B;2| ((|x| ($)) (|y| ($)) ($ (|Boolean|))) (EQUAL |x| |y|)) 
 
 (PUT '|ICARD;db_part| '|SPADreplace| '|dbPart|) 
 
-(SDEFUN |ICARD;db_part| ((|x| $) (|n| |Integer|) (|k| |Integer|) ($ |String|))
+(SDEFUN |ICARD;db_part|
+        ((|x| ($)) (|n| (|Integer|)) (|k| (|Integer|)) ($ (|String|)))
         (|dbPart| |x| |n| |k|)) 
 
-(SDEFUN |ICARD;alql_get_kind| ((|x| $) ($ |String|))
+(SDEFUN |ICARD;alql_get_kind| ((|x| ($)) ($ (|String|)))
         (SPROG ((|xs| (|String|)))
-               (SEQ (LETT |xs| |x| |ICARD;alql_get_kind|)
+               (SEQ (LETT |xs| |x|)
                     (COND
                      ((OR
                        (|eql_SI| (SPADCALL |xs| 1 (QREFELT $ 12))
@@ -29,42 +31,39 @@
                      (SPADCALL |xs| (SPADCALL 1 1 (QREFELT $ 14))
                                (QREFELT $ 15)))))) 
 
-(SDEFUN |ICARD;alql_get_origin| ((|x| $) ($ |String|))
+(SDEFUN |ICARD;alql_get_origin| ((|x| ($)) ($ (|String|)))
         (SPROG ((|k| (|Integer|)) (|field| (|String|)))
-               (SEQ
-                (LETT |field| (|ICARD;db_part| |x| 5 1 $)
-                      . #1=(|ICARD;alql_get_origin|))
-                (LETT |k|
-                      (SPADCALL (|STR_to_CHAR| "(") |field| 3 (QREFELT $ 16))
-                      . #1#)
-                (EXIT
-                 (COND
-                  ((< |k| 1)
-                   (SPADCALL |field| (SPADCALL 2 (QREFELT $ 17))
-                             (QREFELT $ 15)))
-                  ('T
-                   (SPADCALL |field| (SPADCALL 2 (- |k| 1) (QREFELT $ 14))
-                             (QREFELT $ 15)))))))) 
+               (SEQ (LETT |field| (|ICARD;db_part| |x| 5 1 $))
+                    (LETT |k|
+                          (SPADCALL (|STR_to_CHAR| "(") |field| 3
+                                    (QREFELT $ 16)))
+                    (EXIT
+                     (COND
+                      ((< |k| 1)
+                       (SPADCALL |field| (SPADCALL 2 (QREFELT $ 17))
+                                 (QREFELT $ 15)))
+                      ('T
+                       (SPADCALL |field| (SPADCALL 2 (- |k| 1) (QREFELT $ 14))
+                                 (QREFELT $ 15)))))))) 
 
-(SDEFUN |ICARD;alql_get_params| ((|x| $) ($ |String|))
+(SDEFUN |ICARD;alql_get_params| ((|x| ($)) ($ (|String|)))
         (SPROG ((|k| (|Integer|)) (|field| (|String|)))
-               (SEQ
-                (LETT |field| (|ICARD;db_part| |x| 5 1 $)
-                      . #1=(|ICARD;alql_get_params|))
-                (LETT |k| (SPADCALL (|STR_to_CHAR| "(") |field| (QREFELT $ 18))
-                      . #1#)
-                (EXIT
-                 (COND ((< |k| 1) "")
-                       ('T
-                        (SPADCALL |field| (SPADCALL |k| (QREFELT $ 17))
-                                  (QREFELT $ 15)))))))) 
+               (SEQ (LETT |field| (|ICARD;db_part| |x| 5 1 $))
+                    (LETT |k|
+                          (SPADCALL (|STR_to_CHAR| "(") |field|
+                                    (QREFELT $ 18)))
+                    (EXIT
+                     (COND ((< |k| 1) "")
+                           ('T
+                            (SPADCALL |field| (SPADCALL |k| (QREFELT $ 17))
+                                      (QREFELT $ 15)))))))) 
 
-(SDEFUN |ICARD;display;$V;7| ((|x| $) ($ |Void|))
+(SDEFUN |ICARD;display;$V;7| ((|x| ($)) ($ (|Void|)))
         (SPROG ((|type| (|OutputForm|)) (|name| (|OutputForm|)))
-               (SEQ (LETT |name| (|dbName| |x|) . #1=(|ICARD;display;$V;7|))
+               (SEQ (LETT |name| (|dbName| |x|))
                     (LETT |type|
-                          (SPADCALL (|ICARD;db_part| |x| 4 1 $) (QREFELT $ 20))
-                          . #1#)
+                          (SPADCALL (|ICARD;db_part| |x| 4 1 $)
+                                    (QREFELT $ 20)))
                     (EXIT
                      (SPADCALL
                       (SPADCALL |name|
@@ -73,67 +72,59 @@
                                 (QREFELT $ 21))
                       (QREFELT $ 24)))))) 
 
-(SDEFUN |ICARD;fullDisplay;$V;8| ((|x| $) ($ |Void|))
+(SDEFUN |ICARD;fullDisplay;$V;8| ((|x| ($)) ($ (|Void|)))
         (SPROG
          ((|secondPart| #1=(|OutputForm|)) (|firstPart| #1#)
           (|exposedPart| (|OutputForm|)) (|exposed?| (|String|)) (|ifPart| #1#)
           (|condition| (|String|)) (|fromPart| #1#) (|origin| #1#)
           (|type| (|OutputForm|)) (|name| (|OutputForm|)))
-         (SEQ (LETT |name| (|dbName| |x|) . #2=(|ICARD;fullDisplay;$V;8|))
+         (SEQ (LETT |name| (|dbName| |x|))
               (LETT |type|
-                    (SPADCALL (|ICARD;db_part| |x| 4 1 $) (QREFELT $ 20))
-                    . #2#)
+                    (SPADCALL (|ICARD;db_part| |x| 4 1 $) (QREFELT $ 20)))
               (LETT |origin|
                     (SPADCALL
                      (SPADCALL (|ICARD;alql_get_origin| |x| $) (QREFELT $ 20))
                      (SPADCALL (|ICARD;alql_get_params| |x| $) (QREFELT $ 20))
-                     (QREFELT $ 21))
-                    . #2#)
+                     (QREFELT $ 21)))
               (LETT |fromPart|
                     (SPADCALL (SPADCALL " from " (QREFELT $ 20)) |origin|
-                              (QREFELT $ 21))
-                    . #2#)
-              (LETT |condition| (|ICARD;db_part| |x| 6 1 $) . #2#)
+                              (QREFELT $ 21)))
+              (LETT |condition| (|ICARD;db_part| |x| 6 1 $))
               (LETT |ifPart|
                     (COND ((EQUAL |condition| "") (SPADCALL (QREFELT $ 26)))
-                          (#3='T
+                          (#2='T
                            (SPADCALL (SPADCALL " if " (QREFELT $ 20))
                                      (SPADCALL |condition| (QREFELT $ 20))
-                                     (QREFELT $ 21))))
-                    . #2#)
+                                     (QREFELT $ 21)))))
               (LETT |exposed?|
                     (SPADCALL (|ICARD;db_part| |x| 3 1 $)
-                              (SPADCALL 1 1 (QREFELT $ 14)) (QREFELT $ 15))
-                    . #2#)
+                              (SPADCALL 1 1 (QREFELT $ 14)) (QREFELT $ 15)))
               (LETT |exposedPart|
                     (COND
                      ((EQUAL |exposed?| "n")
                       (SPADCALL " (unexposed)" (QREFELT $ 20)))
-                     (#3# (SPADCALL (QREFELT $ 26))))
-                    . #2#)
+                     (#2# (SPADCALL (QREFELT $ 26)))))
               (LETT |firstPart|
                     (SPADCALL |name|
                               (SPADCALL (SPADCALL " : " (QREFELT $ 20)) |type|
                                         (QREFELT $ 21))
-                              (QREFELT $ 21))
-                    . #2#)
+                              (QREFELT $ 21)))
               (LETT |secondPart|
                     (SPADCALL |fromPart|
                               (SPADCALL |ifPart| |exposedPart| (QREFELT $ 21))
-                              (QREFELT $ 21))
-                    . #2#)
+                              (QREFELT $ 21)))
               (EXIT
                (SPADCALL (SPADCALL |firstPart| |secondPart| (QREFELT $ 21))
                          (QREFELT $ 24)))))) 
 
 (PUT '|ICARD;coerce;S$;9| '|SPADreplace| '(XLAM (|s|) |s|)) 
 
-(SDEFUN |ICARD;coerce;S$;9| ((|s| |String|) ($ $)) |s|) 
+(SDEFUN |ICARD;coerce;S$;9| ((|s| (|String|)) ($ ($))) |s|) 
 
-(SDEFUN |ICARD;coerce;$Of;10| ((|x| $) ($ |OutputForm|))
+(SDEFUN |ICARD;coerce;$Of;10| ((|x| ($)) ($ (|OutputForm|)))
         (SPADCALL |x| (QREFELT $ 29))) 
 
-(SDEFUN |ICARD;elt;$SS;11| ((|x| $) (|s| |Symbol|) ($ |String|))
+(SDEFUN |ICARD;elt;$SS;11| ((|x| ($)) (|s| (|Symbol|)) ($ (|String|)))
         (COND ((EQUAL |s| '|name|) (|dbName| |x|))
               ((EQUAL |s| '|nargs|) (|ICARD;db_part| |x| 2 1 $))
               ((EQUAL |s| '|exposed|)
@@ -152,11 +143,10 @@
 
 (DEFUN |IndexCard| ()
   (SPROG NIL
-         (PROG (#1=#:G751)
+         (PROG (#1=#:G746)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|IndexCard|)
-                    . #2=(|IndexCard|))
+             ((LETT #1# (HGET |$ConstructorCache| '|IndexCard|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -164,17 +154,17 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|IndexCard|
                              (LIST (CONS NIL (CONS 1 (|IndexCard;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#) (HREM |$ConstructorCache| '|IndexCard|)))))))))) 
 
 (DEFUN |IndexCard;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|IndexCard|) . #1=(|IndexCard|))
-          (LETT $ (GETREFV 35) . #1#)
+          (LETT |dv$| '(|IndexCard|))
+          (LETT $ (GETREFV 35))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|IndexCard| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

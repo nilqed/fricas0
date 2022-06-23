@@ -1,31 +1,30 @@
 
-(SDEFUN |TOOLSIGN;nonQsign;RU;1| ((|r| R) ($ |Union| (|Integer|) "failed"))
+(SDEFUN |TOOLSIGN;nonQsign;RU;1| ((|r| (R)) ($ (|Union| (|Integer|) "failed")))
         (SPADCALL (SPADCALL |r| (QREFELT $ 9)) (QREFELT $ 12))) 
 
 (PUT '|TOOLSIGN;nonQsign;RU;2| '|SPADreplace| '(XLAM (|r|) (CONS 1 "failed"))) 
 
-(SDEFUN |TOOLSIGN;nonQsign;RU;2| ((|r| R) ($ |Union| (|Integer|) "failed"))
+(SDEFUN |TOOLSIGN;nonQsign;RU;2| ((|r| (R)) ($ (|Union| (|Integer|) "failed")))
         (CONS 1 "failed")) 
 
-(SDEFUN |TOOLSIGN;sign;RU;3| ((|r| R) ($ |Union| (|Integer|) "failed"))
+(SDEFUN |TOOLSIGN;sign;RU;3| ((|r| (R)) ($ (|Union| (|Integer|) "failed")))
         (SPROG ((|u| (|Union| (|Fraction| (|Integer|)) "failed")))
-               (SEQ
-                (LETT |u| (SPADCALL |r| (QREFELT $ 15)) |TOOLSIGN;sign;RU;3|)
-                (EXIT
-                 (COND
-                  ((QEQCAR |u| 0)
-                   (CONS 0 (SPADCALL (QCDR |u|) (QREFELT $ 18))))
-                  ('T (SPADCALL |r| (QREFELT $ 13)))))))) 
+               (SEQ (LETT |u| (SPADCALL |r| (QREFELT $ 15)))
+                    (EXIT
+                     (COND
+                      ((QEQCAR |u| 0)
+                       (CONS 0 (SPADCALL (QCDR |u|) (QREFELT $ 18))))
+                      ('T (SPADCALL |r| (QREFELT $ 13)))))))) 
 
-(SDEFUN |TOOLSIGN;sign;RU;4| ((|r| R) ($ |Union| (|Integer|) "failed"))
+(SDEFUN |TOOLSIGN;sign;RU;4| ((|r| (R)) ($ (|Union| (|Integer|) "failed")))
         (SPROG ((|u| (|Union| (|Integer|) "failed")))
-               (SEQ
-                (LETT |u| (SPADCALL |r| (QREFELT $ 20)) |TOOLSIGN;sign;RU;4|)
-                (EXIT
-                 (COND ((QEQCAR |u| 1) (CONS 1 "failed"))
-                       ('T (CONS 0 (SPADCALL (QCDR |u|) (QREFELT $ 21))))))))) 
+               (SEQ (LETT |u| (SPADCALL |r| (QREFELT $ 20)))
+                    (EXIT
+                     (COND ((QEQCAR |u| 1) (CONS 1 "failed"))
+                           ('T
+                            (CONS 0 (SPADCALL (QCDR |u|) (QREFELT $ 21))))))))) 
 
-(SDEFUN |TOOLSIGN;sign;RU;5| ((|r| R) ($ |Union| (|Integer|) "failed"))
+(SDEFUN |TOOLSIGN;sign;RU;5| ((|r| (R)) ($ (|Union| (|Integer|) "failed")))
         (COND ((SPADCALL |r| (QREFELT $ 23)) (CONS 0 0))
               ((SPADCALL |r| (|spadConstant| $ 24) (QREFELT $ 25)) (CONS 0 1))
               (#1='T
@@ -35,37 +34,36 @@
                  (CONS 0 -1))
                 (#1# (CONS 1 "failed")))))) 
 
-(SDEFUN |TOOLSIGN;direction;SI;6| ((|st| |String|) ($ |Integer|))
+(SDEFUN |TOOLSIGN;direction;SI;6| ((|st| (|String|)) ($ (|Integer|)))
         (COND ((EQUAL |st| "right") 1) ((EQUAL |st| "left") -1)
               ('T (|error| "Unknown option")))) 
 
 (DECLAIM (NOTINLINE |ToolsForSign;|)) 
 
-(DEFUN |ToolsForSign| (#1=#:G733)
+(DEFUN |ToolsForSign| (#1=#:G732)
   (SPROG NIL
-         (PROG (#2=#:G734)
+         (PROG (#2=#:G733)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|ToolsForSign|)
-                                               '|domainEqualList|)
-                    . #3=(|ToolsForSign|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|ToolsForSign;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|ToolsForSign;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|ToolsForSign|)))))))))) 
 
 (DEFUN |ToolsForSign;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|ToolsForSign|))
-          (LETT |dv$| (LIST '|ToolsForSign| DV$1) . #1#)
-          (LETT $ (GETREFV 29) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|ToolsForSign| DV$1))
+          (LETT $ (GETREFV 29))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|ToolsForSign| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -98,15 +96,24 @@
               (35 . |sign|) (|Boolean|) (40 . |zero?|) (45 . |One|) (49 . =)
               (55 . -) (|String|) |TOOLSIGN;direction;SI;6|)
            '#(|sign| 60 |nonQsign| 65 |direction| 70) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 28
-                                                 '(1 8 0 7 9 1 11 10 8 12 1 0
-                                                   10 6 13 1 6 14 0 15 1 17 16
-                                                   0 18 1 0 10 6 19 1 6 10 0 20
-                                                   1 16 16 0 21 1 6 22 0 23 0 6
-                                                   0 24 2 6 22 0 0 25 1 6 0 0
-                                                   26 1 0 10 6 19 1 0 10 6 13 1
-                                                   0 16 27 28)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|sign| ((|Union| (|Integer|) "failed") |#1|))
+                                T)
+                              '((|nonQsign|
+                                 ((|Union| (|Integer|) "failed") |#1|))
+                                T)
+                              '((|direction| ((|Integer|) (|String|))) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 28
+                                            '(1 8 0 7 9 1 11 10 8 12 1 0 10 6
+                                              13 1 6 14 0 15 1 17 16 0 18 1 0
+                                              10 6 19 1 6 10 0 20 1 16 16 0 21
+                                              1 6 22 0 23 0 6 0 24 2 6 22 0 0
+                                              25 1 6 0 0 26 1 0 10 6 19 1 0 10
+                                              6 13 1 0 16 27 28)))))
            '|lookupComplete|)) 

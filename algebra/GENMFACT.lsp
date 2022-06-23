@@ -1,5 +1,5 @@
 
-(SDEFUN |GENMFACT;factor;PF;1| ((|p| P) ($ |Factored| P))
+(SDEFUN |GENMFACT;factor;PF;1| ((|p| (P)) ($ (|Factored| P)))
         (SEQ
          (COND
           ((|HasCategory| (QREFELT $ 9) '(|FiniteFieldCategory|))
@@ -17,7 +17,10 @@
                ((|HasCategory| (QREFELT $ 8) '(|CharacteristicZero|))
                 (COND
                  ((|HasCategory| (QREFELT $ 8) '(|EuclideanDomain|))
-                  (EXIT (SPADCALL |p| (QREFELT $ 17)))))))))
+                  (COND
+                   ((|HasCategory| (QREFELT $ 8)
+                                   '(|PolynomialFactorizationExplicit|))
+                    (EXIT (SPADCALL |p| (QREFELT $ 17)))))))))))
             (EXIT
              (COND
               ((|domainEqual| (QREFELT $ 9)
@@ -29,35 +32,32 @@
                  ((|HasCategory| (QREFELT $ 9) '(|CharacteristicZero|))
                   (COND
                    ((|HasCategory| (QREFELT $ 9) '(|EuclideanDomain|))
-                    (EXIT (SPADCALL |p| (QREFELT $ 21)))))))
+                    (COND
+                     ((|HasCategory| (QREFELT $ 9)
+                                     '(|PolynomialFactorizationExplicit|))
+                      (EXIT (SPADCALL |p| (QREFELT $ 21)))))))))
                 (EXIT
-                 (COND
-                  ((|HasCategory| (QREFELT $ 9) '(|GcdDomain|))
-                   (SPADCALL |p| (QREFELT $ 23)))
-                  (#1#
-                   (|error|
-                    "factor for this domain is unimplemented"))))))))))))) 
+                 (|error| "factor for this domain is unimplemented"))))))))))) 
 
 (DECLAIM (NOTINLINE |GeneralizedMultivariateFactorize;|)) 
 
-(DEFUN |GeneralizedMultivariateFactorize| (&REST #1=#:G709)
+(DEFUN |GeneralizedMultivariateFactorize| (&REST #1=#:G708)
   (SPROG NIL
-         (PROG (#2=#:G710)
+         (PROG (#2=#:G709)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|GeneralizedMultivariateFactorize|)
-                                               '|domainEqualList|)
-                    . #3=(|GeneralizedMultivariateFactorize|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1
                       (APPLY (|function| |GeneralizedMultivariateFactorize;|)
                              #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -68,17 +68,16 @@
    ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$5 NIL) (DV$4 NIL) (DV$3 NIL) (DV$2 NIL)
     (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #1=(|GeneralizedMultivariateFactorize|))
-    (LETT DV$2 (|devaluate| |#2|) . #1#)
-    (LETT DV$3 (|devaluate| |#3|) . #1#)
-    (LETT DV$4 (|devaluate| |#4|) . #1#)
-    (LETT DV$5 (|devaluate| |#5|) . #1#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT DV$4 (|devaluate| |#4|))
+    (LETT DV$5 (|devaluate| |#5|))
     (LETT |dv$|
-          (LIST '|GeneralizedMultivariateFactorize| DV$1 DV$2 DV$3 DV$4 DV$5)
-          . #1#)
-    (LETT $ (GETREFV 25) . #1#)
+          (LIST '|GeneralizedMultivariateFactorize| DV$1 DV$2 DV$3 DV$4 DV$5))
+    (LETT $ (GETREFV 23))
     (QSETREFV $ 0 |dv$|)
-    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
     (|haddProp| |$ConstructorCache| '|GeneralizedMultivariateFactorize|
                 (LIST DV$1 DV$2 DV$3 DV$4 DV$5) (CONS 1 $))
     (|stuffDomainSlots| $)
@@ -98,15 +97,18 @@
               (|MPolyCatPolyFactorizer| 7 6 8 10) (5 . |factor|)
               (|MRationalFactorize| 7 6 8 10) (10 . |factor|)
               (|MPolyCatRationalFunctionFactorizer| 7 6 8 10) (15 . |factor|)
-              (|MultivariateFactorize| 6 7 9 10) (20 . |factor|) (|Factored| $)
-              (25 . |squareFree|) |GENMFACT;factor;PF;1|)
-           '#(|factor| 30) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 24
-                                                 '(1 12 11 10 13 1 14 11 10 15
-                                                   1 16 11 10 17 1 18 11 10 19
-                                                   1 20 11 10 21 1 10 22 0 23 1
-                                                   0 11 10 24)))))
+              (|MultivariateFactorize| 6 7 9 10) (20 . |factor|)
+              |GENMFACT;factor;PF;1|)
+           '#(|factor| 25) 'NIL
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|factor| ((|Factored| |#5|) |#5|)) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 22
+                                            '(1 12 11 10 13 1 14 11 10 15 1 16
+                                              11 10 17 1 18 11 10 19 1 20 11 10
+                                              21 1 0 11 10 22)))))
            '|lookupComplete|)) 

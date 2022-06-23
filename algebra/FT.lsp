@@ -1,41 +1,38 @@
 
-(SDEFUN |FT;coerce;$Of;1| ((|a| $) ($ |OutputForm|))
-        (SPROG ((#1=#:G719 NIL) (|u| NIL) (#2=#:G718 NIL) (|t| (|OutputForm|)))
+(SDEFUN |FT;coerce;$Of;1| ((|a| ($)) ($ (|OutputForm|)))
+        (SPROG ((#1=#:G715 NIL) (|u| NIL) (#2=#:G714 NIL) (|t| (|OutputForm|)))
                (SEQ
                 (COND
                  ((SPADCALL |a| (QREFELT $ 8))
                   (COND
                    ((QEQCAR (SPADCALL |a| (QREFELT $ 10)) 1)
-                    (LETT |t| (SPADCALL "EXTERNAL" (QREFELT $ 13))
-                          . #3=(|FT;coerce;$Of;1|)))
-                   (#4='T
+                    (LETT |t| (SPADCALL "EXTERNAL" (QREFELT $ 13))))
+                   (#3='T
                     (LETT |t|
                           (SPADCALL
                            (LIST (SPADCALL "EXTERNAL" (QREFELT $ 13))
                                  (SPADCALL (SPADCALL |a| (QREFELT $ 10))
                                            (QREFELT $ 14)))
-                           (QREFELT $ 16))
-                          . #3#))))
-                 (#4#
+                           (QREFELT $ 16))))))
+                 (#3#
                   (LETT |t|
-                        (SPADCALL (SPADCALL |a| (QREFELT $ 10)) (QREFELT $ 14))
-                        . #3#)))
+                        (SPADCALL (SPADCALL |a| (QREFELT $ 10))
+                                  (QREFELT $ 14)))))
                 (EXIT
                  (COND ((NULL (SPADCALL |a| (QREFELT $ 18))) |t|)
-                       (#4#
+                       (#3#
                         (SPADCALL |t|
                                   (SPADCALL
                                    (PROGN
-                                    (LETT #2# NIL . #3#)
-                                    (SEQ (LETT |u| NIL . #3#)
+                                    (LETT #2# NIL)
+                                    (SEQ (LETT |u| NIL)
                                          (LETT #1#
-                                               (SPADCALL |a| (QREFELT $ 18))
-                                               . #3#)
+                                               (SPADCALL |a| (QREFELT $ 18)))
                                          G190
                                          (COND
                                           ((OR (ATOM #1#)
                                                (PROGN
-                                                (LETT |u| (CAR #1#) . #3#)
+                                                (LETT |u| (CAR #1#))
                                                 NIL))
                                            (GO G191)))
                                          (SEQ
@@ -43,33 +40,32 @@
                                            (LETT #2#
                                                  (CONS
                                                   (SPADCALL |u| (QREFELT $ 20))
-                                                  #2#)
-                                                 . #3#)))
-                                         (LETT #1# (CDR #1#) . #3#) (GO G190)
-                                         G191 (EXIT (NREVERSE #2#))))
+                                                  #2#))))
+                                         (LETT #1# (CDR #1#)) (GO G190) G191
+                                         (EXIT (NREVERSE #2#))))
                                    (QREFELT $ 21))
                                   (QREFELT $ 22)))))))) 
 
 (PUT '|FT;scalarTypeOf;$U;2| '|SPADreplace| '(XLAM (|u|) (QVELT |u| 0))) 
 
 (SDEFUN |FT;scalarTypeOf;$U;2|
-        ((|u| $)
-         ($ |Union| (|:| |fst| (|FortranScalarType|)) (|:| |void| "void")))
+        ((|u| ($))
+         ($ (|Union| (|:| |fst| (|FortranScalarType|)) (|:| |void| "void"))))
         (QVELT |u| 0)) 
 
 (PUT '|FT;dimensionsOf;$L;3| '|SPADreplace| '(XLAM (|u|) (QVELT |u| 1))) 
 
-(SDEFUN |FT;dimensionsOf;$L;3| ((|u| $) ($ |List| (|Polynomial| (|Integer|))))
-        (QVELT |u| 1)) 
+(SDEFUN |FT;dimensionsOf;$L;3|
+        ((|u| ($)) ($ (|List| (|Polynomial| (|Integer|))))) (QVELT |u| 1)) 
 
 (PUT '|FT;external?;$B;4| '|SPADreplace| '(XLAM (|u|) (QVELT |u| 2))) 
 
-(SDEFUN |FT;external?;$B;4| ((|u| $) ($ |Boolean|)) (QVELT |u| 2)) 
+(SDEFUN |FT;external?;$B;4| ((|u| ($)) ($ (|Boolean|))) (QVELT |u| 2)) 
 
 (SDEFUN |FT;construct;ULB$;5|
-        ((|t| |Union| (|:| |fst| (|FortranScalarType|)) (|:| |void| "void"))
-         (|d| |List| (|Symbol|)) (|e| |Boolean|) ($ $))
-        (SPROG ((#1=#:G732 NIL) (|l| NIL) (#2=#:G731 NIL))
+        ((|t| (|Union| (|:| |fst| (|FortranScalarType|)) (|:| |void| "void")))
+         (|d| (|List| (|Symbol|))) (|e| (|Boolean|)) ($ ($)))
+        (SPROG ((#1=#:G729 NIL) (|l| NIL) (#2=#:G728 NIL))
                (SEQ
                 (COND
                  (|e|
@@ -85,24 +81,24 @@
                 (EXIT
                  (VECTOR |t|
                          (PROGN
-                          (LETT #2# NIL . #3=(|FT;construct;ULB$;5|))
-                          (SEQ (LETT |l| NIL . #3#) (LETT #1# |d| . #3#) G190
+                          (LETT #2# NIL)
+                          (SEQ (LETT |l| NIL) (LETT #1# |d|) G190
                                (COND
                                 ((OR (ATOM #1#)
-                                     (PROGN (LETT |l| (CAR #1#) . #3#) NIL))
+                                     (PROGN (LETT |l| (CAR #1#)) NIL))
                                  (GO G191)))
                                (SEQ
                                 (EXIT
                                  (LETT #2#
-                                       (CONS (SPADCALL |l| (QREFELT $ 25)) #2#)
-                                       . #3#)))
-                               (LETT #1# (CDR #1#) . #3#) (GO G190) G191
+                                       (CONS (SPADCALL |l| (QREFELT $ 25))
+                                             #2#))))
+                               (LETT #1# (CDR #1#)) (GO G190) G191
                                (EXIT (NREVERSE #2#))))
                          |e|))))) 
 
 (SDEFUN |FT;construct;ULB$;6|
-        ((|t| |Union| (|:| |fst| (|FortranScalarType|)) (|:| |void| "void"))
-         (|d| |List| (|Polynomial| (|Integer|))) (|e| |Boolean|) ($ $))
+        ((|t| (|Union| (|:| |fst| (|FortranScalarType|)) (|:| |void| "void")))
+         (|d| (|List| (|Polynomial| (|Integer|)))) (|e| (|Boolean|)) ($ ($)))
         (SEQ
          (COND
           (|e|
@@ -116,39 +112,38 @@
              (EXIT (|error| "VOID objects must be EXTERNAL"))))))
          (EXIT (VECTOR |t| |d| |e|)))) 
 
-(SDEFUN |FT;coerce;Fst$;7| ((|u| |FortranScalarType|) ($ $))
+(SDEFUN |FT;coerce;Fst$;7| ((|u| (|FortranScalarType|)) ($ ($)))
         (SPADCALL (CONS 0 |u|) NIL NIL (QREFELT $ 28))) 
 
-(SDEFUN |FT;fortranReal;$;8| (($ $))
+(SDEFUN |FT;fortranReal;$;8| (($ ($)))
         (SPADCALL (SPADCALL "real" (QREFELT $ 31)) (QREFELT $ 30))) 
 
-(SDEFUN |FT;fortranDouble;$;9| (($ $))
+(SDEFUN |FT;fortranDouble;$;9| (($ ($)))
         (SPADCALL (SPADCALL "double precision" (QREFELT $ 31)) (QREFELT $ 30))) 
 
-(SDEFUN |FT;fortranInteger;$;10| (($ $))
+(SDEFUN |FT;fortranInteger;$;10| (($ ($)))
         (SPADCALL (SPADCALL "integer" (QREFELT $ 31)) (QREFELT $ 30))) 
 
-(SDEFUN |FT;fortranComplex;$;11| (($ $))
+(SDEFUN |FT;fortranComplex;$;11| (($ ($)))
         (SPADCALL (SPADCALL "complex" (QREFELT $ 31)) (QREFELT $ 30))) 
 
-(SDEFUN |FT;fortranDoubleComplex;$;12| (($ $))
+(SDEFUN |FT;fortranDoubleComplex;$;12| (($ ($)))
         (SPADCALL (SPADCALL "double complex" (QREFELT $ 31)) (QREFELT $ 30))) 
 
-(SDEFUN |FT;fortranCharacter;$;13| (($ $))
+(SDEFUN |FT;fortranCharacter;$;13| (($ ($)))
         (SPADCALL (SPADCALL "character" (QREFELT $ 31)) (QREFELT $ 30))) 
 
-(SDEFUN |FT;fortranLogical;$;14| (($ $))
+(SDEFUN |FT;fortranLogical;$;14| (($ ($)))
         (SPADCALL (SPADCALL "logical" (QREFELT $ 31)) (QREFELT $ 30))) 
 
 (DECLAIM (NOTINLINE |FortranType;|)) 
 
 (DEFUN |FortranType| ()
   (SPROG NIL
-         (PROG (#1=#:G758)
+         (PROG (#1=#:G755)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|FortranType|)
-                    . #2=(|FortranType|))
+             ((LETT #1# (HGET |$ConstructorCache| '|FortranType|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -156,17 +151,17 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|FortranType|
                              (LIST (CONS NIL (CONS 1 (|FortranType;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#) (HREM |$ConstructorCache| '|FortranType|)))))))))) 
 
 (DEFUN |FortranType;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|FortranType|) . #1=(|FortranType|))
-          (LETT $ (GETREFV 41) . #1#)
+          (LETT |dv$| '(|FortranType|))
+          (LETT $ (GETREFV 41))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|FortranType| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

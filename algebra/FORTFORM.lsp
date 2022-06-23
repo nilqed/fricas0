@@ -1,26 +1,24 @@
 
-(SDEFUN |FORTFORM;assignable_form?| ((|o| |OutputForm|) ($ |Boolean|))
+(SDEFUN |FORTFORM;assignable_form?| ((|o| (|OutputForm|)) ($ (|Boolean|)))
         (SPROG ((|sop| (|Symbol|)) (|op| (|OutputForm|)))
                (SEQ
                 (COND ((SPADCALL |o| (QREFELT $ 10)) 'T)
                       (#1='T
-                       (SEQ
-                        (LETT |op| (SPADCALL |o| (QREFELT $ 11))
-                              . #2=(|FORTFORM;assignable_form?|))
-                        (EXIT
-                         (COND
-                          ((SPADCALL |op| (QREFELT $ 12))
-                           (SEQ
-                            (LETT |sop| (SPADCALL |op| (QREFELT $ 14)) . #2#)
-                            (COND
-                             ((OR (EQUAL |sop| '=)
-                                  (OR (EQUAL |sop| 'MATRIX)
-                                      (EQUAL |sop| '|construct|)))
-                              (EXIT NIL)))
-                            (EXIT 'T)))
-                          (#1# 'T))))))))) 
+                       (SEQ (LETT |op| (SPADCALL |o| (QREFELT $ 11)))
+                            (EXIT
+                             (COND
+                              ((SPADCALL |op| (QREFELT $ 12))
+                               (SEQ (LETT |sop| (SPADCALL |op| (QREFELT $ 14)))
+                                    (COND
+                                     ((OR (EQUAL |sop| '=)
+                                          (OR (EQUAL |sop| 'MATRIX)
+                                              (EQUAL |sop| '|construct|)))
+                                      (EXIT NIL)))
+                                    (EXIT 'T)))
+                              (#1# 'T))))))))) 
 
-(SDEFUN |FORTFORM;convert;OfI$;2| ((|o| |OutputForm|) (|i| |Integer|) ($ $))
+(SDEFUN |FORTFORM;convert;OfI$;2|
+        ((|o| (|OutputForm|)) (|i| (|Integer|)) ($ ($)))
         (SPROG ((|var| ($)))
                (SEQ
                 (COND ((NULL (|FORTFORM;assignable_form?| |o| $)) |o|)
@@ -30,13 +28,12 @@
                               (SPADCALL
                                (SPADCALL (STRCONC "R" (STRINGIMAGE |i|))
                                          (QREFELT $ 16))
-                               (QREFELT $ 17))
-                              |FORTFORM;convert;OfI$;2|)
+                               (QREFELT $ 17)))
                         (EXIT
                          (SPADCALL (SPADCALL '= (QREFELT $ 18))
                                    (LIST |var| |o|) (QREFELT $ 20))))))))) 
 
-(SDEFUN |FORTFORM;display;$V;3| ((|x| $) ($ |Void|))
+(SDEFUN |FORTFORM;display;$V;3| ((|x| ($)) ($ (|Void|)))
         (SPADCALL (SPADCALL (SPADCALL |x| (QREFELT $ 25)) (QREFELT $ 26))
                   (QREFELT $ 28))) 
 
@@ -44,11 +41,10 @@
 
 (DEFUN |FortranFormat| ()
   (SPROG NIL
-         (PROG (#1=#:G724)
+         (PROG (#1=#:G719)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|FortranFormat|)
-                    . #2=(|FortranFormat|))
+             ((LETT #1# (HGET |$ConstructorCache| '|FortranFormat|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -56,17 +52,17 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|FortranFormat|
                              (LIST (CONS NIL (CONS 1 (|FortranFormat;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#) (HREM |$ConstructorCache| '|FortranFormat|)))))))))) 
 
 (DEFUN |FortranFormat;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|FortranFormat|) . #1=(|FortranFormat|))
-          (LETT $ (GETREFV 30) . #1#)
+          (LETT |dv$| '(|FortranFormat|))
+          (LETT $ (GETREFV 30))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|FortranFormat| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

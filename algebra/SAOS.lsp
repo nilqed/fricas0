@@ -1,39 +1,38 @@
 
 (PUT '|SAOS;create;$;1| '|SPADreplace| '(XLAM NIL "?")) 
 
-(SDEFUN |SAOS;create;$;1| (($ $)) "?") 
+(SDEFUN |SAOS;create;$;1| (($ ($))) "?") 
 
 (PUT '|SAOS;<;2$B;2| '|SPADreplace| '(XLAM (|a| |b|) NIL)) 
 
-(SDEFUN |SAOS;<;2$B;2| ((|a| $) (|b| $) ($ |Boolean|)) NIL) 
+(SDEFUN |SAOS;<;2$B;2| ((|a| ($)) (|b| ($)) ($ (|Boolean|))) NIL) 
 
-(SDEFUN |SAOS;coerce;$Of;3| ((|a| $) ($ |OutputForm|))
+(SDEFUN |SAOS;coerce;$Of;3| ((|a| ($)) ($ (|OutputForm|)))
         (SPADCALL "?" (QREFELT $ 11))) 
 
 (PUT '|SAOS;=;2$B;4| '|SPADreplace| '(XLAM (|a| |b|) 'T)) 
 
-(SDEFUN |SAOS;=;2$B;4| ((|a| $) (|b| $) ($ |Boolean|)) 'T) 
+(SDEFUN |SAOS;=;2$B;4| ((|a| ($)) (|b| ($)) ($ (|Boolean|))) 'T) 
 
 (PUT '|SAOS;min;3$;5| '|SPADreplace| '(XLAM (|a| |b|) |a|)) 
 
-(SDEFUN |SAOS;min;3$;5| ((|a| $) (|b| $) ($ $)) |a|) 
+(SDEFUN |SAOS;min;3$;5| ((|a| ($)) (|b| ($)) ($ ($))) |a|) 
 
 (PUT '|SAOS;max;3$;6| '|SPADreplace| '(XLAM (|a| |b|) |a|)) 
 
-(SDEFUN |SAOS;max;3$;6| ((|a| $) (|b| $) ($ $)) |a|) 
+(SDEFUN |SAOS;max;3$;6| ((|a| ($)) (|b| ($)) ($ ($))) |a|) 
 
-(SDEFUN |SAOS;convert;$S;7| ((|a| $) ($ |Symbol|))
+(SDEFUN |SAOS;convert;$S;7| ((|a| ($)) ($ (|Symbol|)))
         (SPADCALL "?" (QREFELT $ 17))) 
 
 (DECLAIM (NOTINLINE |SingletonAsOrderedSet;|)) 
 
 (DEFUN |SingletonAsOrderedSet| ()
   (SPROG NIL
-         (PROG (#1=#:G716)
+         (PROG (#1=#:G711)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|SingletonAsOrderedSet|)
-                    . #2=(|SingletonAsOrderedSet|))
+             ((LETT #1# (HGET |$ConstructorCache| '|SingletonAsOrderedSet|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -42,7 +41,7 @@
                        (HPUT |$ConstructorCache| '|SingletonAsOrderedSet|
                              (LIST
                               (CONS NIL (CONS 1 (|SingletonAsOrderedSet;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache| '|SingletonAsOrderedSet|)))))))))) 
@@ -50,11 +49,10 @@
 (DEFUN |SingletonAsOrderedSet;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|SingletonAsOrderedSet|)
-                . #1=(|SingletonAsOrderedSet|))
-          (LETT $ (GETREFV 21) . #1#)
+          (LETT |dv$| '(|SingletonAsOrderedSet|))
+          (LETT $ (GETREFV 21))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|SingletonAsOrderedSet| NIL
                       (CONS 1 $))
           (|stuffDomainSlots| $)

@@ -7,15 +7,14 @@
            (RETURN
             (COND
              ((LETT #2#
-                    (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
+                    (|lassocShiftWithFunction| (LIST #1#)
                                                (HGET |$ConstructorCache|
                                                      '|BalancedPAdicRational|)
-                                               '|domainEqualList|)
-                    . #3=(|BalancedPAdicRational|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (|BalancedPAdicRational;| #1#) (LETT #2# T . #3#))
+                  (PROG1 (|BalancedPAdicRational;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|BalancedPAdicRational|)))))))))) 
@@ -23,9 +22,9 @@
 (DEFUN |BalancedPAdicRational;| (|#1|)
   (SPROG ((|pv$| NIL) (#1=#:G759 NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #2=(|BalancedPAdicRational|))
-          (LETT |dv$| (LIST '|BalancedPAdicRational| DV$1) . #2#)
-          (LETT $ (GETREFV 58) . #2#)
+          (LETT DV$1 |#1|)
+          (LETT |dv$| (LIST '|BalancedPAdicRational| DV$1))
+          (LETT $ (GETREFV 58))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -127,8 +126,7 @@
                                                     (|HasCategory|
                                                      (|BalancedPAdicInteger|
                                                       |#1|)
-                                                     '(|Comparable|))
-                                                    . #2#)
+                                                     '(|Comparable|)))
                                               (OR #1#
                                                   (|HasCategory|
                                                    (|BalancedPAdicInteger|
@@ -137,8 +135,7 @@
                                                   (|HasCategory|
                                                    (|BalancedPAdicInteger|
                                                     |#1|)
-                                                   '(|OrderedSet|)))))
-                          . #2#))
+                                                   '(|OrderedSet|)))))))
           (|haddProp| |$ConstructorCache| '|BalancedPAdicRational| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -171,9 +168,9 @@
               (|Matrix| 24) (|Integer|) (|List| 14) (|PatternMatchResult| 33 $)
               (|PatternMatchResult| 24 $) (|Factored| 29)
               (|SparseUnivariatePolynomial| $) (|Union| 31 '#1#) (|List| 29)
-              (|DoubleFloat|) (|Float|) (|Fraction| 24)
-              (|Union| 24 '#2="failed") (|Union| 34 '#2#) (|Union| 19 '#2#)
-              (|ContinuedFraction| 34) (|Matrix| 15)
+              (|DoubleFloat|) (|Float|) (|Union| 24 '#2="failed")
+              (|Union| 36 '#2#) (|Fraction| 24) (|Union| 19 '#2#)
+              (|ContinuedFraction| 36) (|Matrix| 15)
               (|Record| (|:| |mat| 39) (|:| |vec| (|Vector| 15)))
               (|Mapping| 15 15) (|Union| 15 '#2#) (|Factored| $)
               (|Record| (|:| |coef1| $) (|:| |coef2| $))
@@ -191,8 +188,8 @@
                                 '(0 0 0 1 0 0 0 7 0 0 0 0 0 0 7 0 0 0 0 0 3 4
                                   15 16 17 0 0 0 0 0 0 0 0 0 0 0 7 0 0 0 0 0 0
                                   0 7 0 7 0 0 0 7 0 0 0 0 0 9 0 0 0 25 11 20 21
-                                  0 0 6 13 0 0 0 0 0 0 0 0 0 2 5 6 6 8 10 10 12
-                                  13 14 18 19))
+                                  0 0 0 0 2 6 10 10 13 0 0 0 0 0 0 0 0 0 2 5 6
+                                  6 8 10 10 12 13 14 18 19))
             (CONS
              '#(|QuotientFieldCategory&| |Field&| |EuclideanDomain&|
                 |PolynomialFactorizationExplicit&| NIL
@@ -206,11 +203,11 @@
                 |NonAssociativeRng&| NIL NIL |AbelianGroup&| NIL NIL NIL NIL
                 NIL NIL NIL |MagmaWithUnit&| |NonAssociativeSemiRng&|
                 |AbelianMonoid&| |OrderedSet&| |FullyEvalableOver&| |Magma&|
-                |AbelianSemiGroup&| NIL NIL NIL NIL NIL |SetCategory&| NIL
-                |Evalable&| NIL |RetractableTo&| NIL NIL NIL NIL NIL
-                |BasicType&| NIL |RetractableTo&| NIL NIL NIL |PartialOrder&|
-                |RetractableTo&| |RetractableTo&| |InnerEvalable&|
-                |InnerEvalable&| NIL NIL NIL)
+                |AbelianSemiGroup&| NIL NIL NIL NIL NIL |RetractableTo&| NIL
+                |SetCategory&| |RetractableTo&| NIL |RetractableTo&|
+                |RetractableTo&| |Evalable&| NIL NIL NIL NIL NIL NIL NIL
+                |BasicType&| NIL NIL NIL NIL NIL |PartialOrder&| NIL NIL
+                |InnerEvalable&| |InnerEvalable&| NIL NIL NIL)
              (CONS
               '#((|QuotientFieldCategory| (|BalancedPAdicInteger| 6)) (|Field|)
                  (|EuclideanDomain|) (|PolynomialFactorizationExplicit|)
@@ -221,19 +218,19 @@
                  (|DivisionRing|) (|CommutativeRing|) (|LeftOreRing|)
                  (|OrderedRing|)
                  (|LinearlyExplicitOver| (|BalancedPAdicInteger| 6))
-                 (|Algebra| (|BalancedPAdicInteger| 6)) (|Algebra| 34)
+                 (|Algebra| (|BalancedPAdicInteger| 6)) (|Algebra| 36)
                  (|EntireRing|) (|Algebra| $$) (|CharacteristicNonZero|)
                  (|CharacteristicZero|) (|PartialDifferentialRing| 19)
                  (|DifferentialRing|) (|LinearlyExplicitOver| 24) (|Ring|)
                  (|Rng|) (|SemiRing|) (|Module| (|BalancedPAdicInteger| 6))
-                 (|Module| 34) (|Module| $$) (|SemiRng|)
+                 (|Module| 36) (|Module| $$) (|SemiRng|)
                  (|BiModule| (|BalancedPAdicInteger| 6)
                              (|BalancedPAdicInteger| 6))
-                 (|BiModule| 34 34) (|BiModule| $$ $$) (|NonAssociativeRing|)
+                 (|BiModule| 36 36) (|BiModule| $$ $$) (|NonAssociativeRing|)
                  (|OrderedAbelianGroup|)
                  (|RightModule| (|BalancedPAdicInteger| 6))
-                 (|LeftModule| (|BalancedPAdicInteger| 6)) (|RightModule| 34)
-                 (|LeftModule| 34) (|LeftModule| $$) (|NonAssociativeRng|)
+                 (|LeftModule| (|BalancedPAdicInteger| 6)) (|RightModule| 36)
+                 (|LeftModule| 36) (|LeftModule| $$) (|NonAssociativeRng|)
                  (|RightModule| $$) (|OrderedCancellationAbelianMonoid|)
                  (|AbelianGroup|) (|OrderedAbelianMonoid|) (|Monoid|)
                  (|NonAssociativeSemiRing|) (|CancellationAbelianMonoid|)
@@ -244,14 +241,17 @@
                  (|FullyEvalableOver| (|BalancedPAdicInteger| 6)) (|Magma|)
                  (|AbelianSemiGroup|) (|Comparable|) (|StepThrough|)
                  (|PatternMatchable| 33) (|PatternMatchable| 24)
-                 (|Patternable| (|BalancedPAdicInteger| 6)) (|SetCategory|)
-                 (|RealConstant|) (|Evalable| (|BalancedPAdicInteger| 6))
-                 (|Type|) (|RetractableTo| (|BalancedPAdicInteger| 6))
+                 (|Patternable| (|BalancedPAdicInteger| 6))
+                 (|RetractableTo| (|BalancedPAdicInteger| 6))
+                 (|CommutativeStar|) (|SetCategory|) (|RetractableTo| 19)
+                 (|RealConstant|) (|RetractableTo| 36) (|RetractableTo| 24)
+                 (|Evalable| (|BalancedPAdicInteger| 6)) (|Type|)
+                 (|CoercibleFrom| (|BalancedPAdicInteger| 6))
                  (|canonicalsClosed|) (|canonicalUnitNormal|)
-                 (|noZeroDivisors|) (|CommutativeStar|) (|unitsKnown|)
-                 (|BasicType|) (|CoercibleTo| 57) (|RetractableTo| 19)
+                 (|noZeroDivisors|) (|TwoSidedRecip|) (|unitsKnown|)
+                 (|BasicType|) (|CoercibleTo| 57) (|CoercibleFrom| 19)
                  (|ConvertibleTo| 11) (|ConvertibleTo| 32) (|ConvertibleTo| 33)
-                 (|PartialOrder|) (|RetractableTo| 34) (|RetractableTo| 24)
+                 (|PartialOrder|) (|CoercibleFrom| 36) (|CoercibleFrom| 24)
                  (|InnerEvalable| 19 (|BalancedPAdicInteger| 6))
                  (|InnerEvalable| (|BalancedPAdicInteger| 6)
                                   (|BalancedPAdicInteger| 6))

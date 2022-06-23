@@ -1,14 +1,14 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; compReduce(form,m,e) ==
 ;  compReduce1(form,m,e,$formalArgList)
- 
+
 (DEFUN |compReduce| (|form| |m| |e|)
   (PROG () (RETURN (|compReduce1| |form| |m| |e| |$formalArgList|))))
- 
+
 ; compReduce1(form is ["REDUCE",op,.,collectForm],m,e,$formalArgList) ==
 ;   [collectOp,:itl,body]:= collectForm
 ;   if STRINGP op then op:= INTERN op
@@ -18,16 +18,15 @@
 ;   $until: local := nil
 ;   $initList: local := nil
 ;   $endTestList: local := nil
-;   $e:= e
-;   itl:= [([.,$e]:= compIterator(x,$e) or return "failed").(0) for x in itl]
+;   itl := [([., e] := compIterator(x, e) or return "failed").(0) for x in itl]
 ;   itl="failed" => return nil
-;   e:= $e
 ;   acc:= GENSYM()
 ;   afterFirst:= GENSYM()
 ;   bodyVal:= GENSYM()
-;   [part1,m,e]:= comp(["LET",bodyVal,body],m,e) or return nil
-;   [part2,.,e]:= comp(["LET",acc,bodyVal],m,e) or return nil
-;   [part3,.,e]:= comp(["LET",acc,parseTran [op,acc,bodyVal]],m,e) or return nil
+;   [part1, m, e] := comp([":=", bodyVal, body], m, e) or return nil
+;   [part2, ., e] := comp([":=", acc, bodyVal], m, e) or return nil
+;   [part3, ., e] := comp([":=", acc, parseTran [op, acc, bodyVal]], m, e)
+;                      or return nil
 ;   identityCode:=
 ;     id:= getIdentity(op,e) => u.expr where u() == comp(id,m,e) or return nil
 ;     ["IdentityError",MKQ op]
@@ -43,7 +42,7 @@
 ;     [untilCode,.,e]:= comp($until,$Boolean,e)
 ;     finalCode:= substitute(["UNTIL",untilCode],'$until,finalCode)
 ;   [finalCode,m,e]
- 
+
 (DEFUN |compReduce1| (|form| |m| |e| |$formalArgList|)
   (DECLARE (SPECIAL |$formalArgList|))
   (PROG (|$endTestList| |$initList| |$until| |$sideEffectsList| |untilCode|
@@ -69,7 +68,6 @@
          (SETQ |$until| NIL)
          (SETQ |$initList| NIL)
          (SETQ |$endTestList| NIL)
-         (SETQ |$e| |e|)
          (SETQ |itl|
                  ((LAMBDA (|bfVar#2| |bfVar#1| |x|)
                     (LOOP
@@ -83,9 +81,9 @@
                                 (ELT
                                  (PROGN
                                   (SETQ |LETTMP#1|
-                                          (OR (|compIterator| |x| |$e|)
+                                          (OR (|compIterator| |x| |e|)
                                               (RETURN '|failed|)))
-                                  (SETQ |$e| (CADR |LETTMP#1|))
+                                  (SETQ |e| (CADR |LETTMP#1|))
                                   |LETTMP#1|)
                                  0)
                                 |bfVar#2|))))
@@ -94,25 +92,24 @@
          (COND ((EQ |itl| '|failed|) (RETURN NIL))
                (#2#
                 (PROGN
-                 (SETQ |e| |$e|)
                  (SETQ |acc| (GENSYM))
                  (SETQ |afterFirst| (GENSYM))
                  (SETQ |bodyVal| (GENSYM))
                  (SETQ |LETTMP#1|
-                         (OR (|comp| (LIST 'LET |bodyVal| |body|) |m| |e|)
+                         (OR (|comp| (LIST '|:=| |bodyVal| |body|) |m| |e|)
                              (RETURN NIL)))
                  (SETQ |part1| (CAR |LETTMP#1|))
                  (SETQ |m| (CADR . #3=(|LETTMP#1|)))
                  (SETQ |e| (CADDR . #3#))
                  (SETQ |LETTMP#1|
-                         (OR (|comp| (LIST 'LET |acc| |bodyVal|) |m| |e|)
+                         (OR (|comp| (LIST '|:=| |acc| |bodyVal|) |m| |e|)
                              (RETURN NIL)))
                  (SETQ |part2| (CAR |LETTMP#1|))
                  (SETQ |e| (CADDR |LETTMP#1|))
                  (SETQ |LETTMP#1|
                          (OR
                           (|comp|
-                           (LIST 'LET |acc|
+                           (LIST '|:=| |acc|
                                  (|parseTran| (LIST |op| |acc| |bodyVal|)))
                            |m| |e|)
                           (RETURN NIL)))
@@ -146,42 +143,44 @@
                            (|substitute| (LIST 'UNTIL |untilCode|) '|$until|
                             |finalCode|))))
                  (LIST |finalCode| |m| |e|)))))))))))
- 
+
 ; $identity_list := [ _
 ;    ["+", ["Zero"]], _
 ;    ["*", ["One"]], _
 ;    ['gcd, ["Zero"]], _
 ;    ['lcm, ["One"]], _
-;    ['append, ['nil]], _
-;    ['union, ['nil]], _
+;    ['append, ['construct]], _
+;    ['union, ['construct]], _
 ;    ['strconc, '""], _
 ;    ['and, 'true], _
 ;    ['or, 'false]]
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$identity_list|
           (LIST (LIST '+ (LIST '|Zero|)) (LIST '* (LIST '|One|))
                 (LIST '|gcd| (LIST '|Zero|)) (LIST '|lcm| (LIST '|One|))
-                (LIST '|append| (LIST '|nil|)) (LIST '|union| (LIST '|nil|))
-                (LIST '|strconc| "") (LIST '|and| '|true|)
-                (LIST '|or| '|false|))))
- 
+                (LIST '|append| (LIST '|construct|))
+                (LIST '|union| (LIST '|construct|)) (LIST '|strconc| "")
+                (LIST '|and| '|true|) (LIST '|or| '|false|))))
+
 ; getIdentity(x,e) ==
 ;     av := ASSQ(x, $identity_list)
 ;     av => av.1
 ;     nil
- 
+
 (DEFUN |getIdentity| (|x| |e|)
   (PROG (|av|)
     (RETURN
      (PROGN
       (SETQ |av| (ASSQ |x| |$identity_list|))
       (COND (|av| (ELT |av| 1)) ('T NIL))))))
- 
+
 ; compRepeatOrCollect(form,m,e) ==
 ;   fn(form,[m,:$exitModeStack],[#$exitModeStack,:$leaveLevelStack],$formalArgList
 ;     ,e) where
 ;       fn(form,$exitModeStack,$leaveLevelStack,$formalArgList,e) ==
+;         $iterate_tag : local := [MKQ(GENSYM())]
+;         $iterate_count : local := 0
 ;         $until: local := nil
 ;         [repeatOrCollect,:itl,body]:= form
 ;         itl':=
@@ -206,7 +205,9 @@
 ;           $NoValueMode
 ;         [body',m',e']:=
 ;           -- (m1:= listOrVectorElementMode targetMode) and comp(body,m1,e) or
-;             compOrCroak(body,bodyMode,e) or return nil
+;             comp(body, bodyMode, e) or return nil
+;         if $iterate_count > 0 then
+;             body' := ['CATCH, first($iterate_tag), body']
 ;         if $until then
 ;           [untilCode,.,e']:= comp($until,$Boolean,e')
 ;           itl':= substitute(["UNTIL",untilCode],'$until,itl')
@@ -223,7 +224,7 @@
 ;             ["Vector",m']
 ;           m'
 ;         coerceExit([form',m'',e'],targetMode)
- 
+
 (DEFUN |compRepeatOrCollect| (|form| |m| |e|)
   (PROG ()
     (RETURN
@@ -233,11 +234,14 @@
 (DEFUN |compRepeatOrCollect,fn|
        (|form| |$exitModeStack| |$leaveLevelStack| |$formalArgList| |e|)
   (DECLARE (SPECIAL |$exitModeStack| |$leaveLevelStack| |$formalArgList|))
-  (PROG (|$until| |m''| |form'| |untilCode| |e'| |m'| |body'| |bodyMode| |u|
-         |targetMode| |itl'| |x'| |itl| |body| |LETTMP#1| |repeatOrCollect|)
-    (DECLARE (SPECIAL |$until|))
+  (PROG (|$until| |$iterate_count| |$iterate_tag| |m''| |form'| |untilCode|
+         |e'| |m'| |body'| |bodyMode| |u| |targetMode| |itl'| |x'| |itl| |body|
+         |LETTMP#1| |repeatOrCollect|)
+    (DECLARE (SPECIAL |$until| |$iterate_count| |$iterate_tag|))
     (RETURN
      (PROGN
+      (SETQ |$iterate_tag| (LIST (MKQ (GENSYM))))
+      (SETQ |$iterate_count| 0)
       (SETQ |$until| NIL)
       (SETQ |repeatOrCollect| (CAR |form|))
       (SETQ |LETTMP#1| (REVERSE (CDR |form|)))
@@ -293,10 +297,13 @@
                                 (RETURN NIL)))))
                        (#1# |$NoValueMode|)))
               (SETQ |LETTMP#1|
-                      (OR (|compOrCroak| |body| |bodyMode| |e|) (RETURN NIL)))
+                      (OR (|comp| |body| |bodyMode| |e|) (RETURN NIL)))
               (SETQ |body'| (CAR |LETTMP#1|))
               (SETQ |m'| (CADR |LETTMP#1|))
               (SETQ |e'| (CADDR |LETTMP#1|))
+              (COND
+               ((< 0 |$iterate_count|)
+                (SETQ |body'| (LIST 'CATCH (CAR |$iterate_tag|) |body'|))))
               (COND
                (|$until| (SETQ |LETTMP#1| (|comp| |$until| |$Boolean| |e'|))
                 (SETQ |untilCode| (CAR |LETTMP#1|))
@@ -332,10 +339,10 @@
                          (#1# (LIST '|Vector| |m'|))))
                        (#1# |m'|)))
               (|coerceExit| (LIST |form'| |m''| |e'|) |targetMode|))))))))
- 
+
 ; listOrVectorElementMode x ==
 ;   x is [a,b,:.] and member(a,'(PrimitiveArray Vector List)) => b
- 
+
 (DEFUN |listOrVectorElementMode| (|x|)
   (PROG (|a| |ISTMP#1| |b|)
     (RETURN
@@ -347,29 +354,29 @@
              (AND (CONSP |ISTMP#1|) (PROGN (SETQ |b| (CAR |ISTMP#1|)) 'T)))
             (|member| |a| '(|PrimitiveArray| |Vector| |List|)))
        (IDENTITY |b|))))))
- 
+
 ; genLetHelper(op, arg, d, var) ==
 ;     form0 := [["elt", d, op], arg]
-;     ["LET", var, form0]
- 
+;     [":=", var, form0]
+
 (DEFUN |genLetHelper| (|op| |arg| |d| |var|)
   (PROG (|form0|)
     (RETURN
      (PROGN
       (SETQ |form0| (LIST (LIST '|elt| |d| |op|) |arg|))
-      (LIST 'LET |var| |form0|)))))
- 
+      (LIST '|:=| |var| |form0|)))))
+
 ; compInitGstep(y, ef, sf, mOver, e) ==
 ;     gvar := genSomeVariable()
 ;     [., ., e] := compMakeDeclaration([":", gvar, mOver], $EmptyMode, e)
-;     form := ["SEQ", ["LET", gvar, y],
+;     form := ["SEQ", [":=", gvar, y],
 ;                     genLetHelper("emptyFun", gvar, mOver, ef),
 ;                        genLetHelper("stepFun", gvar, mOver, sf),
 ;                          ["exit", 1, 1]]
 ;     res := compSeq(form, $Integer, e)
 ;     res => res
 ;     nil
- 
+
 (DEFUN |compInitGstep| (|y| |ef| |sf| |mOver| |e|)
   (PROG (|gvar| |LETTMP#1| |form| |res|)
     (RETURN
@@ -380,13 +387,13 @@
                |e|))
       (SETQ |e| (CADDR |LETTMP#1|))
       (SETQ |form|
-              (LIST 'SEQ (LIST 'LET |gvar| |y|)
+              (LIST 'SEQ (LIST '|:=| |gvar| |y|)
                     (|genLetHelper| '|emptyFun| |gvar| |mOver| |ef|)
                     (|genLetHelper| '|stepFun| |gvar| |mOver| |sf|)
                     (LIST '|exit| 1 1)))
       (SETQ |res| (|compSeq| |form| |$Integer| |e|))
       (COND (|res| |res|) ('T NIL))))))
- 
+
 ; compIterator1(it, e) ==
 ;   it is ["IN",x,y] =>
 ;     --these two lines must be in this order, to get "for f in list f"
@@ -428,14 +435,14 @@
 ;     --if all start/inc/end compile as small integers, then loop
 ;     --is compiled as a small integer loop
 ;     final':= nil
-;     (start':= comp(start,$SmallInteger,e)) and
+;     (start' := comp(start, $SingleInteger, e)) and
 ;       (inc':= comp(inc,$NonNegativeInteger,start'.env)) and
 ;         (not (optFinal is [final]) or
-;           (final':= comp(final,$SmallInteger,inc'.env))) =>
+;           (final' := comp(final, $SingleInteger, inc'.env))) =>
 ;             indexmode:=
 ;               comp(start,$NonNegativeInteger,e) =>
 ;                       $NonNegativeInteger
-;               $SmallInteger
+;               $SingleInteger
 ;             if null get(index,"mode",e) then [.,.,e]:=
 ;               compMakeDeclaration([":",index,indexmode],$EmptyMode,
 ;                 (final' => final'.env; inc'.env)) or return nil
@@ -472,7 +479,7 @@
 ;         stackMessage ["SUCHTHAT operand: ",x," is not Boolean value"]
 ;     [["|",u.expr],u.env]
 ;   nil
- 
+
 (DEFUN |compIterator1| (|it| |e|)
   (PROG (|ISTMP#1| |x| |ISTMP#2| |y| |LETTMP#1| |y'| |m| |mOver| |mUnder| |ef|
          |sf| |y''| |res| |m''| |index| |start| |ISTMP#3| |inc| |optFinal|
@@ -605,7 +612,7 @@
         (SETQ |$formalArgList| (CONS |index| |$formalArgList|))
         (SETQ |final'| NIL)
         (COND
-         ((AND (SETQ |start'| (|comp| |start| |$SmallInteger| |e|))
+         ((AND (SETQ |start'| (|comp| |start| |$SingleInteger| |e|))
                (SETQ |inc'|
                        (|comp| |inc| |$NonNegativeInteger| (CADDR |start'|)))
                (OR
@@ -613,13 +620,13 @@
                  (AND (CONSP |optFinal|) (EQ (CDR |optFinal|) NIL)
                       (PROGN (SETQ |final| (CAR |optFinal|)) #1#)))
                 (SETQ |final'|
-                        (|comp| |final| |$SmallInteger| (CADDR |inc'|)))))
+                        (|comp| |final| |$SingleInteger| (CADDR |inc'|)))))
           (PROGN
            (SETQ |indexmode|
                    (COND
                     ((|comp| |start| |$NonNegativeInteger| |e|)
                      |$NonNegativeInteger|)
-                    (#1# |$SmallInteger|)))
+                    (#1# |$SingleInteger|)))
            (COND
             ((NULL (|get| |index| '|mode| |e|))
              (SETQ |LETTMP#1|
@@ -722,12 +729,12 @@
                             '| is not Boolean value|)))))
         (LIST (LIST '|\|| (CAR |u|)) (CADDR |u|))))
       (#1# NIL)))))
- 
+
 ; match_segment(i, n) ==
 ;     n is ['SEGMENT,a] => ['STEP,i,a,1]
 ;     n is ['SEGMENT, a, b] => (b => ['STEP, i, a, 1, b]; ['STEP, i, a, 1])
 ;     ['IN, i, n]
- 
+
 (DEFUN |match_segment| (|i| |n|)
   (PROG (|ISTMP#1| |a| |ISTMP#2| |b|)
     (RETURN
@@ -749,7 +756,7 @@
                         (PROGN (SETQ |b| (CAR |ISTMP#2|)) #1#))))))
        (COND (|b| (LIST 'STEP |i| |a| 1 |b|)) (#1# (LIST 'STEP |i| |a| 1))))
       (#1# (LIST 'IN |i| |n|))))))
- 
+
 ; compIterator(it, e) ==
 ;     it is ["INBY", i, n, inc] =>
 ;         u := match_segment(i, n)
@@ -760,7 +767,7 @@
 ;     it is ["IN", i, n] =>
 ;         compIterator1(match_segment(i, n), e)
 ;     compIterator1(it, e)
- 
+
 (DEFUN |compIterator| (|it| |e|)
   (PROG (|ISTMP#1| |i| |ISTMP#2| |n| |ISTMP#3| |inc| |u| |a| |r|)
     (RETURN
@@ -814,7 +821,7 @@
                         (PROGN (SETQ |n| (CAR |ISTMP#2|)) #1#))))))
        (|compIterator1| (|match_segment| |i| |n|) |e|))
       (#1# (|compIterator1| |it| |e|))))))
- 
+
 ; modeIsAggregateOf(ListOrVector,m,e) ==
 ;   m is [ =ListOrVector,R] => [m,R]
 ; --m = '$EmptyMode => [m,m] I don't think this is correct, breaks POLY +
@@ -826,7 +833,7 @@
 ;     m="$" => "Rep"
 ;     m
 ;   get(name,"value",e) is [[ =ListOrVector,R],:.] => [m,R]
- 
+
 (DEFUN |modeIsAggregateOf| (|ListOrVector| |m| |e|)
   (PROG (|ISTMP#1| R |l| |pair| |mList| |fn| |name| |ISTMP#2| |ISTMP#3|)
     (RETURN

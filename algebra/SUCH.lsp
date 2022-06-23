@@ -1,50 +1,48 @@
 
 (PUT '|SUCH;construct;S1S2$;1| '|SPADreplace| 'CONS) 
 
-(SDEFUN |SUCH;construct;S1S2$;1| ((|o| S1) (|c| S2) ($ $)) (CONS |o| |c|)) 
+(SDEFUN |SUCH;construct;S1S2$;1| ((|o| (S1)) (|c| (S2)) ($ ($))) (CONS |o| |c|)) 
 
 (PUT '|SUCH;lhs;$S1;2| '|SPADreplace| 'QCAR) 
 
-(SDEFUN |SUCH;lhs;$S1;2| ((|st| $) ($ S1)) (QCAR |st|)) 
+(SDEFUN |SUCH;lhs;$S1;2| ((|st| ($)) ($ (S1))) (QCAR |st|)) 
 
 (PUT '|SUCH;rhs;$S2;3| '|SPADreplace| 'QCDR) 
 
-(SDEFUN |SUCH;rhs;$S2;3| ((|st| $) ($ S2)) (QCDR |st|)) 
+(SDEFUN |SUCH;rhs;$S2;3| ((|st| ($)) ($ (S2))) (QCDR |st|)) 
 
-(SDEFUN |SUCH;coerce;$Of;4| ((|w| $) ($ |OutputForm|))
+(SDEFUN |SUCH;coerce;$Of;4| ((|w| ($)) ($ (|OutputForm|)))
         (SPADCALL (SPADCALL '|\|| (QREFELT $ 14))
                   (SPADCALL (QCAR |w|) (QREFELT $ 15))
                   (SPADCALL (QCDR |w|) (QREFELT $ 16)) (QREFELT $ 17))) 
 
 (DECLAIM (NOTINLINE |SuchThat;|)) 
 
-(DEFUN |SuchThat| (&REST #1=#:G715)
+(DEFUN |SuchThat| (&REST #1=#:G710)
   (SPROG NIL
-         (PROG (#2=#:G716)
+         (PROG (#2=#:G711)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|SuchThat|)
-                                               '|domainEqualList|)
-                    . #3=(|SuchThat|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (APPLY (|function| |SuchThat;|) #1#)
-                    (LETT #2# T . #3#))
+                  (PROG1 (APPLY (|function| |SuchThat;|) #1#) (LETT #2# T))
                 (COND ((NOT #2#) (HREM |$ConstructorCache| '|SuchThat|)))))))))) 
 
 (DEFUN |SuchThat;| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|SuchThat|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|SuchThat| DV$1 DV$2) . #1#)
-          (LETT $ (GETREFV 23) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|SuchThat| DV$1 DV$2))
+          (LETT $ (GETREFV 23))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|SuchThat| (LIST DV$1 DV$2)
                       (CONS 1 $))
           (|stuffDomainSlots| $)

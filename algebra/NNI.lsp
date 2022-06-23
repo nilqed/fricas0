@@ -8,19 +8,24 @@
 
 (PUT '|NNI;sup;3$;1| '|SPADreplace| 'MAX) 
 
-(SDEFUN |NNI;sup;3$;1| ((|x| $) (|y| $) ($ $)) (MAX |x| |y|)) 
+(SDEFUN |NNI;sup;3$;1| ((|x| ($)) (|y| ($)) ($ ($))) (MAX |x| |y|)) 
 
-(PUT '|NNI;shift;$I$;2| '|SPADreplace| 'ASH) 
+(PUT '|NNI;inf;3$;2| '|SPADreplace| 'MIN) 
 
-(SDEFUN |NNI;shift;$I$;2| ((|x| $) (|n| |Integer|) ($ $)) (ASH |x| |n|)) 
+(SDEFUN |NNI;inf;3$;2| ((|x| ($)) (|y| ($)) ($ ($))) (MIN |x| |y|)) 
 
-(PUT '|NNI;qcoerce;I$;3| '|SPADreplace| '(XLAM (|n|) |n|)) 
+(PUT '|NNI;shift;$I$;3| '|SPADreplace| 'ASH) 
 
-(SDEFUN |NNI;qcoerce;I$;3| ((|n| |Integer|) ($ $)) |n|) 
+(SDEFUN |NNI;shift;$I$;3| ((|x| ($)) (|n| (|Integer|)) ($ ($))) (ASH |x| |n|)) 
 
-(SDEFUN |NNI;subtractIfCan;2$U;4| ((|x| $) (|y| $) ($ |Union| $ "failed"))
+(PUT '|NNI;qcoerce;I$;4| '|SPADreplace| '(XLAM (|n|) |n|)) 
+
+(SDEFUN |NNI;qcoerce;I$;4| ((|n| (|Integer|)) ($ ($))) |n|) 
+
+(SDEFUN |NNI;subtractIfCan;2$U;5|
+        ((|x| ($)) (|y| ($)) ($ (|Union| $ "failed")))
         (SPROG ((|c| (|Integer|)))
-               (SEQ (LETT |c| (- |x| |y|) |NNI;subtractIfCan;2$U;4|)
+               (SEQ (LETT |c| (- |x| |y|))
                     (EXIT
                      (COND ((< |c| 0) (CONS 1 "failed")) ('T (CONS 0 |c|))))))) 
 
@@ -28,11 +33,10 @@
 
 (DEFUN |NonNegativeInteger| ()
   (SPROG NIL
-         (PROG (#1=#:G2260)
+         (PROG (#1=#:G2377)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|NonNegativeInteger|)
-                    . #2=(|NonNegativeInteger|))
+             ((LETT #1# (HGET |$ConstructorCache| '|NonNegativeInteger|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -41,7 +45,7 @@
                        (HPUT |$ConstructorCache| '|NonNegativeInteger|
                              (LIST
                               (CONS NIL (CONS 1 (|NonNegativeInteger;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache| '|NonNegativeInteger|)))))))))) 
@@ -49,10 +53,10 @@
 (DEFUN |NonNegativeInteger;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|NonNegativeInteger|) . #1=(|NonNegativeInteger|))
-          (LETT $ (GETREFV 20) . #1#)
+          (LETT |dv$| '(|NonNegativeInteger|))
+          (LETT $ (GETREFV 21))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|NonNegativeInteger| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (AND (|HasCategory| $ '(|AbelianGroup|)) (|augmentPredVector| $ 1))
@@ -61,9 +65,9 @@
 
 (MAKEPROP '|NonNegativeInteger| '|infovec|
           (LIST
-           '#(NIL NIL NIL NIL NIL (|Integer|) |NNI;sup;3$;1| |NNI;shift;$I$;2|
-              |NNI;qcoerce;I$;3| (|Union| $ '"failed")
-              |NNI;subtractIfCan;2$U;4|
+           '#(NIL NIL NIL NIL NIL (|Integer|) |NNI;sup;3$;1| |NNI;inf;3$;2|
+              |NNI;shift;$I$;3| |NNI;qcoerce;I$;4| (|Union| $ '"failed")
+              |NNI;subtractIfCan;2$U;5|
               (|Record| (|:| |quotient| $) (|:| |remainder| $)) (|InputForm|)
               (|PositiveInteger|) (|NonNegativeInteger|) (|Boolean|) (|String|)
               (|SingleInteger|) (|HashState|) (|OutputForm|))
@@ -71,18 +75,19 @@
               29 |sample| 35 |rightRecip| 39 |rightPower| 44 |rem| 56 |recip|
               62 |random| 67 |quo| 72 |qcoerce| 78 |opposite?| 83 |one?| 89
               |min| 94 |max| 100 |leftRecip| 106 |leftPower| 111 |latex| 123
-              |hashUpdate!| 128 |hash| 134 |gcd| 139 |exquo| 145 |divide| 151
-              |convert| 157 |coerce| 162 |antiCommutator| 167 ^ 173 |Zero| 185
-              |One| 189 >= 193 > 199 = 205 <= 211 < 217 - 223 + 234 * 240)
+              |inf| 128 |hashUpdate!| 134 |hash| 140 |gcd| 145 |exquo| 151
+              |divide| 157 |convert| 163 |coerce| 168 |antiCommutator| 173 ^
+              179 |Zero| 191 |One| 195 >= 199 > 205 = 211 <= 217 < 223 - 229 +
+              240 * 246)
            'NIL
            (CONS
             (|makeByteWordVec2| 1
                                 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-                                  0 0 0))
+                                  0 0 0 0))
             (CONS
              '#(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL |OrderedSet&|
                 NIL |MagmaWithUnit&| |NonAssociativeSemiRng&| |AbelianMonoid&|
-                NIL |Magma&| |AbelianSemiGroup&| |SetCategory&| NIL NIL
+                NIL |Magma&| |AbelianSemiGroup&| NIL |SetCategory&| NIL NIL
                 |BasicType&| |PartialOrder&| NIL)
              (CONS
               '#((|SemiRing|) (|SemiRng|) (|OrderedAbelianMonoidSup|)
@@ -92,23 +97,24 @@
                  (|NonAssociativeSemiRing|) (|CancellationAbelianMonoid|)
                  (|OrderedSet|) (|SemiGroup|) (|MagmaWithUnit|)
                  (|NonAssociativeSemiRng|) (|AbelianMonoid|) (|Comparable|)
-                 (|Magma|) (|AbelianSemiGroup|) (|SetCategory|)
-                 (|ConvertibleTo| 12) (|CommutativeStar|) (|BasicType|)
-                 (|PartialOrder|) (|CoercibleTo| 19))
-              (|makeByteWordVec2| 19
-                                  '(2 0 15 0 0 1 1 0 15 0 1 2 0 0 0 0 6 2 0 9 0
-                                    0 10 2 0 15 0 0 1 2 0 0 0 5 7 0 0 0 1 1 0 9
-                                    0 1 2 0 0 0 13 1 2 0 0 0 14 1 2 0 0 0 0 1 1
-                                    0 9 0 1 1 0 0 0 1 2 0 0 0 0 1 1 0 0 5 8 2 0
-                                    15 0 0 1 1 0 15 0 1 2 0 0 0 0 1 2 0 0 0 0 1
-                                    1 0 9 0 1 2 0 0 0 13 1 2 0 0 0 14 1 1 0 16
-                                    0 1 2 0 18 18 0 1 1 0 17 0 1 2 0 0 0 0 1 2
-                                    0 9 0 0 1 2 0 11 0 0 1 1 0 12 0 1 1 0 19 0
-                                    1 2 0 0 0 0 1 2 0 0 0 13 1 2 0 0 0 14 1 0 0
-                                    0 1 0 0 0 1 2 0 15 0 0 1 2 0 15 0 0 1 2 0
-                                    15 0 0 1 2 0 15 0 0 1 2 0 15 0 0 1 1 1 0 0
-                                    1 2 1 0 0 0 1 2 0 0 0 0 1 2 1 0 5 0 1 2 0 0
-                                    0 0 1 2 0 0 14 0 1 2 0 0 13 0 1)))))
+                 (|Magma|) (|AbelianSemiGroup|) (|CommutativeStar|)
+                 (|SetCategory|) (|ConvertibleTo| 13) (|TwoSidedRecip|)
+                 (|BasicType|) (|PartialOrder|) (|CoercibleTo| 20))
+              (|makeByteWordVec2| 20
+                                  '(2 0 16 0 0 1 1 0 16 0 1 2 0 0 0 0 6 2 0 10
+                                    0 0 11 2 0 16 0 0 1 2 0 0 0 5 8 0 0 0 1 1 0
+                                    10 0 1 2 0 0 0 14 1 2 0 0 0 15 1 2 0 0 0 0
+                                    1 1 0 10 0 1 1 0 0 0 1 2 0 0 0 0 1 1 0 0 5
+                                    9 2 0 16 0 0 1 1 0 16 0 1 2 0 0 0 0 1 2 0 0
+                                    0 0 1 1 0 10 0 1 2 0 0 0 14 1 2 0 0 0 15 1
+                                    1 0 17 0 1 2 0 0 0 0 7 2 0 19 19 0 1 1 0 18
+                                    0 1 2 0 0 0 0 1 2 0 10 0 0 1 2 0 12 0 0 1 1
+                                    0 13 0 1 1 0 20 0 1 2 0 0 0 0 1 2 0 0 0 14
+                                    1 2 0 0 0 15 1 0 0 0 1 0 0 0 1 2 0 16 0 0 1
+                                    2 0 16 0 0 1 2 0 16 0 0 1 2 0 16 0 0 1 2 0
+                                    16 0 0 1 2 1 0 0 0 1 1 1 0 0 1 2 0 0 0 0 1
+                                    2 1 0 5 0 1 2 0 0 0 0 1 2 0 0 15 0 1 2 0 0
+                                    14 0 1)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|NonNegativeInteger| 'NILADIC T) 

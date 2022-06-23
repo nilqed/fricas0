@@ -1,13 +1,13 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; getBrowseDatabase(kind) ==
 ;     $includeUnexposed? : local := true
 ;     not member(kind,'("o" "k" "c" "d" "p")) => nil
 ;     grepConstruct('"*", INTERN kind)
- 
+
 (DEFUN |getBrowseDatabase| (|kind|)
   (PROG (|$includeUnexposed?|)
     (DECLARE (SPECIAL |$includeUnexposed?|))
@@ -16,7 +16,7 @@
       (SETQ |$includeUnexposed?| T)
       (COND ((NULL (|member| |kind| '("o" "k" "c" "d" "p"))) NIL)
             ('T (|grepConstruct| "*" (INTERN |kind|))))))))
- 
+
 ; grepConstruct(s,key,:options) == --key = a o c d p x k (all) . (aok) w (doc)
 ; --Called from genSearch with key = "." and "w"
 ; --key = "." means a o c d p x
@@ -30,7 +30,7 @@
 ;   IFCAR options => grepSplit(lines,key = 'w)    --leave now if a constructor
 ;   MEMQ(key,'(o a)) => dbScreenForDefaultFunctions lines --kill default lines if a/o
 ;   lines
- 
+
 (DEFUN |grepConstruct| (|s| |key| &REST |options|)
   (PROG (|$localLibdb| |lines|)
     (DECLARE (SPECIAL |$localLibdb|))
@@ -42,7 +42,7 @@
             ((IFCAR |options|) (|grepSplit| |lines| (EQ |key| '|w|)))
             ((MEMQ |key| '(|o| |a|)) (|dbScreenForDefaultFunctions| |lines|))
             ('T |lines|))))))
- 
+
 ; grepConstruct1(s,key) ==
 ; --returns the name of file (WITHOUT .text.$SPADNUM on the end)
 ;   $key     : local := key
@@ -51,8 +51,8 @@
 ;   filter := pmTransFilter STRINGIMAGE s  --parses and-or-not form
 ;   filter is ['error,:.] => filter        --exit on parser error
 ;   pattern := mkGrepPattern(filter,key)  --create string to pass to "grep"
-;   grepConstructDo(pattern, key)  --do the "grep"---see b-saturn.boot
- 
+;   grepConstructDo(pattern, key)
+
 (DEFUN |grepConstruct1| (|s| |key|)
   (PROG (|$key| |pattern| |filter|)
     (DECLARE (SPECIAL |$key|))
@@ -77,7 +77,7 @@
              (PROGN
               (SETQ |pattern| (|mkGrepPattern| |filter| |key|))
               (|grepConstructDo| |pattern| |key|))))))))
- 
+
 ; grepConstructDo(x, key) ==
 ; --atom x => grepFile(x, key,'i)
 ;   $localLibdb =>
@@ -85,7 +85,7 @@
 ;     newLines := grepf(x,$localLibdb,false)
 ;     union(oldLines, newLines)
 ;   grepf(x,key,false)
- 
+
 (DEFUN |grepConstructDo| (|x| |key|)
   (PROG (|oldLines| |newLines|)
     (RETURN
@@ -98,13 +98,13 @@
         (SETQ |newLines| (|grepf| |x| |$localLibdb| NIL))
         (|union| |oldLines| |newLines|)))
       ('T (|grepf| |x| |key| NIL))))))
- 
+
 ; dbExposed?(line,kind) == -- does line come from an unexposed constructor?
 ;   conname := INTERN
 ;     kind = char 'a or kind = char 'o => dbNewConname line --get conname from middle
 ;     dbName line
 ;   isExposedConstructor conname
- 
+
 (DEFUN |dbExposed?| (|line| |kind|)
   (PROG (|conname|)
     (RETURN
@@ -116,9 +116,9 @@
                  (|dbNewConname| |line|))
                 ('T (|dbName| |line|)))))
       (|isExposedConstructor| |conname|)))))
- 
+
 ; dbScreenForDefaultFunctions lines == [x for x in lines | not isDefaultOpAtt x]
- 
+
 (DEFUN |dbScreenForDefaultFunctions| (|lines|)
   (PROG ()
     (RETURN
@@ -132,13 +132,13 @@
                 (SETQ |bfVar#4| (CONS |x| |bfVar#4|)))))
          (SETQ |bfVar#3| (CDR |bfVar#3|))))
       NIL |lines| NIL))))
- 
+
 ; isDefaultOpAtt x == x.(1 + dbTickIndex(x,4,0)) = char 'x
- 
+
 (DEFUN |isDefaultOpAtt| (|x|)
   (PROG ()
     (RETURN (EQUAL (ELT |x| (+ 1 (|dbTickIndex| |x| 4 0))) (|char| '|x|)))))
- 
+
 ; grepForAbbrev(s,key) ==
 ; --checks that filter s is not * and is all uppercase; if so, look for abbrevs
 ;   u := HGET($lowerCaseConTb,s) => ['Abbreviations,u]    --try cheap test first
@@ -156,7 +156,7 @@
 ;          not $includeUnexposed? and not isExposedConstructor x => false
 ;          a := GETDATABASE(x,'ABBREVIATION)
 ;          match?(pattern,PNAME a) and not HGET($defaultPackageNamesHT,x)
- 
+
 (DEFUN |grepForAbbrev| (|s| |key|)
   (PROG (|u| |someLowerCaseChar| |someUpperCaseChar| |c| |pattern| |a|)
     (RETURN
@@ -206,7 +206,7 @@
                                            |bfVar#7|)))))
                           (SETQ |bfVar#6| (CDR |bfVar#6|))))
                        NIL (|allConstructors|) NIL)))))))))))
- 
+
 ; applyGrep(x,filename) ==
 ;   atom x => grepFile(x,filename,'i)
 ;   $localLibdb =>
@@ -214,7 +214,7 @@
 ;     b := grepf(x,$localLibdb,false)
 ;     grepCombine(a,b)
 ;   grepf(x,filename,false)
- 
+
 (DEFUN |applyGrep| (|x| |filename|)
   (PROG (|a| |b|)
     (RETURN
@@ -227,11 +227,11 @@
              (SETQ |b| (|grepf| |x| |$localLibdb| NIL))
              (|grepCombine| |a| |b|)))
            ('T (|grepf| |x| |filename| NIL))))))
- 
+
 ; grepCombine(a,b) == MSORT union(a,b)
- 
+
 (DEFUN |grepCombine| (|a| |b|) (PROG () (RETURN (MSORT (|union| |a| |b|)))))
- 
+
 ; grepf(pattern,s,not?) ==  --s=sourceFile or list of strings
 ;   pattern is [op,:argl] =>
 ;     op = "and" =>
@@ -251,10 +251,10 @@
 ;     not? => 'iv
 ;     'i
 ;   source :=
-;     LISTP s => dbWriteLines s
+;     LISTP s => dbWriteLines(s, getTempPath 'source)
 ;     s
 ;   grepFile(pattern,source,option)
- 
+
 (DEFUN |grepf| (|pattern| |s| |not?|)
   (PROG (|op| |argl| |arg| |targetStack| |lines| |option| |source|)
     (RETURN
@@ -302,9 +302,12 @@
       (#1#
        (PROGN
         (SETQ |option| (COND (|not?| '|iv|) (#1# '|i|)))
-        (SETQ |source| (COND ((LISTP |s|) (|dbWriteLines| |s|)) (#1# |s|)))
+        (SETQ |source|
+                (COND
+                 ((LISTP |s|) (|dbWriteLines| |s| (|getTempPath| '|source|)))
+                 (#1# |s|)))
         (|grepFile| |pattern| |source| |option|)))))))
- 
+
 ; pmTransFilter s ==
 ; --result is either a string or (op ..) where op= and,or,not and arg are results
 ;   if $browseMixedCase = true then s := DOWNCASE s
@@ -315,7 +318,7 @@
 ;       and (i=0 or s . (i - 1) ~= char $charUnderscore) for i in 0..(MAXINDEX s - 1)]
 ;        => ['error,'"Illegal search string",'"\vspace{3}\center{Consecutive {\em *}'s are not allowed in search patterns}"]
 ;   s
- 
+
 (DEFUN |pmTransFilter| (|s|)
   (PROG (|parse|)
     (RETURN
@@ -357,7 +360,7 @@
         (LIST '|error| "Illegal search string"
               "\\vspace{3}\\center{Consecutive {\\em *}'s are not allowed in search patterns}"))
        (#1# |s|))))))
- 
+
 ; checkPmParse parse ==
 ;   STRINGP parse => parse
 ;   (fn parse => parse) where fn(u) ==
@@ -366,7 +369,7 @@
 ;     STRINGP u => true
 ;     false
 ;   nil
- 
+
 (DEFUN |checkPmParse| (|parse|)
   (PROG ()
     (RETURN
@@ -392,7 +395,7 @@
                 (SETQ |bfVar#14| (CDR |bfVar#14|))))
              T |args| NIL)))
       ((STRINGP |u|) T) (#1# NIL)))))
- 
+
 ; dnForm x ==
 ;   STRINGP x => x
 ;   x is ['not,argl] =>
@@ -408,7 +411,7 @@
 ;   x is ['or,:argl1] => ['or,:[dnForm u for u in argl1]]
 ;   x is ['and,:argl2] => ['and,:[dnForm u for u in argl2]]
 ;   x
- 
+
 (DEFUN |dnForm| (|x|)
   (PROG (|ISTMP#1| |argl| |orargs| |andargs| |notargl| |argl1| |argl2|)
     (RETURN
@@ -494,7 +497,7 @@
                   (PROGN (SETQ |argx| (CAR |ISTMP#1|)) #1='T))))
        |argx|)
       (#1# (LIST '|not| |s|))))))
- 
+
 ; pmParseFromString s ==
 ;   u := ncParseFromString pmPreparse s
 ;   dnForm flatten u where flatten s ==
@@ -502,7 +505,7 @@
 ;       STRINGP op => STRCONC(op,"STRCONC"/[STRCONC('" ",x) for x in argl])
 ;       [op,:[flatten x for x in argl]]
 ;     s
- 
+
 (DEFUN |pmParseFromString| (|s|)
   (PROG (|u|)
     (RETURN
@@ -541,7 +544,7 @@
                    (SETQ |bfVar#26| (CDR |bfVar#26|))))
                 NIL |argl| NIL)))))
       (#1# |s|)))))
- 
+
 ; pmPreparse s == hn fn(s,0,#s) where--stupid insertion of chars to get correct parse
 ;   hn x == SUBLISLIS('(and or not),'("and" "or" "not"),x)
 ;   fn(s,n,siz) ==  --main function: s is string, n is origin
@@ -560,7 +563,7 @@
 ;     n := or/[k for k in i..j | s.k = $charUnderscore] =>
 ;       STRCONC(SUBSTRING(s,i,n - i + 1),$charUnderscore,gn(s,n + 1,j))
 ;     SUBSTRING(s,i,j - i + 1)
- 
+
 (DEFUN |pmPreparse| (|s|)
   (PROG () (RETURN (|pmPreparse,hn| (|pmPreparse,fn| |s| 0 (LENGTH |s|))))))
 (DEFUN |pmPreparse,hn| (|x|)
@@ -603,9 +606,9 @@
        (STRCONC (SUBSTRING |s| |i| (+ (- |n| |i|) 1)) |$charUnderscore|
         (|pmPreparse,gn| |s| (+ |n| 1) |j|)))
       (#1# (SUBSTRING |s| |i| (+ (- |j| |i|) 1)))))))
- 
+
 ; firstNonDelim(s,n) ==  or/[k for k in n..MAXINDEX s | not isFilterDelimiter? s.k]
- 
+
 (DEFUN |firstNonDelim| (|s| |n|)
   (PROG ()
     (RETURN
@@ -619,9 +622,9 @@
                       (COND (|bfVar#30| (RETURN |bfVar#30|)))))))
          (SETQ |k| (+ |k| 1))))
       NIL (MAXINDEX |s|) |n|))))
- 
+
 ; firstDelim(s,n) ==  or/[k for k in n..MAXINDEX s | isFilterDelimiter? s.k]
- 
+
 (DEFUN |firstDelim| (|s| |n|)
   (PROG ()
     (RETURN
@@ -635,15 +638,15 @@
                       (COND (|bfVar#32| (RETURN |bfVar#32|)))))))
          (SETQ |k| (+ |k| 1))))
       NIL (MAXINDEX |s|) |n|))))
- 
+
 ; isFilterDelimiter? c == MEMQ(c,$pmFilterDelimiters)
- 
+
 (DEFUN |isFilterDelimiter?| (|c|)
   (PROG () (RETURN (MEMQ |c| |$pmFilterDelimiters|))))
- 
+
 ; grepSplit(lines,doc?) ==
 ;   if doc? then
-;     instream2 := OPEN STRCONC(getEnv '"AXIOM",'"/algebra/libdb.text")
+;     instream2 := OPEN STRCONC(getEnv '"FRICAS",'"/algebra/libdb.text")
 ;   cons := atts := doms := nil
 ;   while lines is [line, :lines] repeat
 ;     if doc? then
@@ -664,14 +667,17 @@
 ;       kind = char '_- => 'skip                --for now
 ;       systemError 'kind
 ;   if doc? then CLOSE instream2
-;   [['"attribute",:NREVERSE atts],
+;   not(atts = []) => BREAK()
+;   [
+;      -- no attributes
+;      -- ['"attribute",:NREVERSE atts],
 ;      ['"operation",:NREVERSE ops],
 ;        ['"category",:NREVERSE cats],
 ;          ['"domain",:NREVERSE doms],
 ;            ['"package",:NREVERSE paks]
 ; --           ['"default_ package",:NREVERSE defs]   -- drop defaults
 ;                ]
- 
+
 (DEFUN |grepSplit| (|lines| |doc?|)
   (PROG (|instream2| |doms| |atts| CONS |line| N |kind| |cats| |defs| |paks|
          |ops|)
@@ -680,7 +686,7 @@
       (COND
        (|doc?|
         (SETQ |instream2|
-                (OPEN (STRCONC (|getEnv| "AXIOM") "/algebra/libdb.text")))))
+                (OPEN (STRCONC (|getEnv| "FRICAS") "/algebra/libdb.text")))))
       (SETQ CONS (SETQ |atts| (SETQ |doms| NIL)))
       ((LAMBDA ()
          (LOOP
@@ -725,12 +731,13 @@
                 ((EQUAL |kind| (|char| '-)) '|skip|)
                 (#1# (|systemError| '|kind|)))))))))))
       (COND (|doc?| (CLOSE |instream2|)))
-      (LIST (CONS "attribute" (NREVERSE |atts|))
-            (CONS "operation" (NREVERSE |ops|))
-            (CONS "category" (NREVERSE |cats|))
-            (CONS "domain" (NREVERSE |doms|))
-            (CONS "package" (NREVERSE |paks|)))))))
- 
+      (COND ((NULL (NULL |atts|)) (BREAK))
+            (#1#
+             (LIST (CONS "operation" (NREVERSE |ops|))
+                   (CONS "category" (NREVERSE |cats|))
+                   (CONS "domain" (NREVERSE |doms|))
+                   (CONS "package" (NREVERSE |paks|)))))))))
+
 ; mkUpDownPattern s == recurse(s,0,#s) where
 ;   recurse(s,i,n) ==
 ;     i = n => '""
@@ -739,7 +746,7 @@
 ;     ALPHA_-CHAR_-P c =>
 ;       STRCONC(char '_[,CHAR_-UPCASE c,CHAR_-DOWNCASE c,char '_])
 ;     c
- 
+
 (DEFUN |mkUpDownPattern| (|s|)
   (PROG () (RETURN (|mkUpDownPattern,recurse| |s| 0 (LENGTH |s|)))))
 (DEFUN |mkUpDownPattern,recurse| (|s| |i| |n|)
@@ -756,12 +763,12 @@
       ((ALPHA-CHAR-P |c|)
        (STRCONC (|char| '[) (CHAR-UPCASE |c|) (CHAR-DOWNCASE |c|) (|char| '])))
       ('T |c|)))))
- 
+
 ; mkGrepPattern(s,key) ==
 ;   --called by grepConstruct1 and grepf
 ;   atom s => mkGrepPattern1(s,key)
 ;   [first s,:[mkGrepPattern(x,key) for x in rest s]]
- 
+
 (DEFUN |mkGrepPattern| (|s| |key|)
   (PROG ()
     (RETURN
@@ -780,7 +787,7 @@
                                       |bfVar#34|))))
                       (SETQ |bfVar#33| (CDR |bfVar#33|))))
                    NIL (CDR |s|) NIL)))))))
- 
+
 ; mkGrepPattern1(x,:options) == --called by mkGrepPattern (and grepConstructName?)
 ;   $options : local := options
 ;   s := STRINGIMAGE x
@@ -841,7 +848,7 @@
 ;         STRINGIMAGE one
 ;       s = $wild1 => STRCONC('"^",prefix)
 ;       STRCONC('"^",prefix,s)
- 
+
 (DEFUN |mkGrepPattern1| (|x| &REST |options|)
   (PROG (|$options| |s|)
     (DECLARE (SPECIAL |$options|))
@@ -986,13 +993,13 @@
                        (#1# (STRINGIMAGE |one|))))
               (COND ((EQUAL |s| |$wild1|) (STRCONC "^" |prefix|))
                     (#1# (STRCONC "^" |prefix| |s|))))))))))
- 
+
 ; oPage(a,:b) == --called by \spadfun{opname}
 ;   oSearch (IFCAR b or a) --always take slow path
- 
+
 (DEFUN |oPage| (|a| &REST |b|)
   (PROG () (RETURN (|oSearch| (OR (IFCAR |b|) |a|)))))
- 
+
 ; oPageFrom(opname,conname) == --called by \spadfunFrom{opname}{conname}
 ;   htPage := htInitPage(nil,nil) --create empty page and fill in needed properties
 ;   htpSetProperty(htPage,'conform,conform := getConstructorForm conname)
@@ -1001,7 +1008,7 @@
 ;   null itemlist => systemError [conform,'" has no operation named ",opname]
 ;   opAlist := [itemlist]
 ;   dbShowOperationsFromConform(htPage,'"operation",opAlist)
- 
+
 (DEFUN |oPageFrom| (|opname| |conname|)
   (PROG (|htPage| |conform| |itemlist| |opAlist|)
     (RETURN
@@ -1019,38 +1026,15 @@
         (PROGN
          (SETQ |opAlist| (LIST |itemlist|))
          (|dbShowOperationsFromConform| |htPage| "operation" |opAlist|))))))))
- 
-; aPage(a,:b) ==  --called by \spadatt{a}
-;   $attributeArgs : local := nil
-;   arg := IFCAR b or a
-;   s   := pmParseFromString STRINGIMAGE arg
-;   searchOn :=
-;     ATOM s => s
-;     IFCAR s
-;   $attributeArgs : local := IFCAR IFCDR s
-;   aSearch searchOn
- 
-(DEFUN |aPage| (|a| &REST |b|)
-  (PROG (|$attributeArgs| |searchOn| |s| |arg|)
-    (DECLARE (SPECIAL |$attributeArgs|))
-    (RETURN
-     (PROGN
-      (SETQ |$attributeArgs| NIL)
-      (SETQ |arg| (OR (IFCAR |b|) |a|))
-      (SETQ |s| (|pmParseFromString| (STRINGIMAGE |arg|)))
-      (SETQ |searchOn| (COND ((ATOM |s|) |s|) ('T (IFCAR |s|))))
-      (SETQ |$attributeArgs| (IFCAR (IFCDR |s|)))
-      (|aSearch| |searchOn|)))))
- 
+
 ; spadType(x) ==  --called by \spadtype{x} from HyperDoc
 ;   s := PNAME x
 ;   form := ncParseFromString s or
 ;             systemError ['"Argument: ",s,'" to spadType won't parse"]
 ;   if atom form then form := [form]
 ;   op    := opOf form
-;   looksLikeDomainForm form => APPLY(function conPage,form)
 ;   conPage(op)
- 
+
 (DEFUN |spadType| (|x|)
   (PROG (|s| |form| |op|)
     (RETURN
@@ -1062,71 +1046,12 @@
                    (LIST "Argument: " |s| " to spadType won't parse"))))
       (COND ((ATOM |form|) (SETQ |form| (LIST |form|))))
       (SETQ |op| (|opOf| |form|))
-      (COND ((|looksLikeDomainForm| |form|) (APPLY #'|conPage| |form|))
-            ('T (|conPage| |op|)))))))
- 
-; looksLikeDomainForm x ==
-;   entry := getCDTEntry(opOf x,true) or return false
-;   coSig := LASSOC('coSig,CDDR entry)
-;   k := #coSig
-;   atom x => k = 1
-;   k ~= #x => false
-;   and/[p for key in rest coSig for arg in rest x] where
-;     p ==
-;       key => looksLikeDomainForm arg
-;       not IDENTP arg
- 
-(DEFUN |looksLikeDomainForm| (|x|)
-  (PROG (|entry| |coSig| |k|)
-    (RETURN
-     (PROGN
-      (SETQ |entry| (OR (|getCDTEntry| (|opOf| |x|) T) (RETURN NIL)))
-      (SETQ |coSig| (LASSOC '|coSig| (CDDR |entry|)))
-      (SETQ |k| (LENGTH |coSig|))
-      (COND ((ATOM |x|) (EQL |k| 1)) ((NOT (EQL |k| (LENGTH |x|))) NIL)
-            (#1='T
-             ((LAMBDA (|bfVar#42| |bfVar#40| |key| |bfVar#41| |arg|)
-                (LOOP
-                 (COND
-                  ((OR (ATOM |bfVar#40|)
-                       (PROGN (SETQ |key| (CAR |bfVar#40|)) NIL)
-                       (ATOM |bfVar#41|)
-                       (PROGN (SETQ |arg| (CAR |bfVar#41|)) NIL))
-                   (RETURN |bfVar#42|))
-                  (#1#
-                   (PROGN
-                    (SETQ |bfVar#42|
-                            (COND (|key| (|looksLikeDomainForm| |arg|))
-                                  (#1# (NULL (IDENTP |arg|)))))
-                    (COND ((NOT |bfVar#42|) (RETURN NIL))))))
-                 (SETQ |bfVar#40| (CDR |bfVar#40|))
-                 (SETQ |bfVar#41| (CDR |bfVar#41|))))
-              T (CDR |coSig|) NIL (CDR |x|) NIL)))))))
- 
-; spadSys(x) ==   --called by \spadsyscom{x}
-;   s := PNAME x
-;   if s.0 = char '_) then s := SUBSTRING(s,1,nil)
-;   form := ncParseFromString s or
-;            systemError ['"Argument: ",s,'" to spadType won't parse"]
-;   htSystemCommands PNAME opOf form
- 
-(DEFUN |spadSys| (|x|)
-  (PROG (|s| |form|)
-    (RETURN
-     (PROGN
-      (SETQ |s| (PNAME |x|))
-      (COND
-       ((EQUAL (ELT |s| 0) (|char| '|)|)) (SETQ |s| (SUBSTRING |s| 1 NIL))))
-      (SETQ |form|
-              (OR (|ncParseFromString| |s|)
-                  (|systemError|
-                   (LIST "Argument: " |s| " to spadType won't parse"))))
-      (|htSystemCommands| (PNAME (|opOf| |form|)))))))
- 
+      (|conPage| |op|)))))
+
 ; aokSearch filter ==  genSearch(filter,true)  --"General" from HD (see man0.ht)
- 
+
 (DEFUN |aokSearch| (|filter|) (PROG () (RETURN (|genSearch| |filter| T))))
- 
+
 ; genSearch(filter,:options) == --"Complete" from HD (see man0.ht) and aokSearch
 ; --General + documentation search
 ;   null (filter := checkFilter filter) => nil  --in case of filter error
@@ -1141,7 +1066,7 @@
 ;     docSearchAlist is ['error,:.] => bcErrorPage docSearchAlist
 ;     docSearchAlist := [x for x in docSearchAlist | x.0 ~= char 'x]--drop defaults
 ;   genSearch1(filter,genSearchTran regSearchAlist,genSearchTran docSearchAlist)
- 
+
 (DEFUN |genSearch| (|filter| &REST |options|)
   (PROG (|includeDoc?| |regSearchAlist| |key| |docSearchAlist|)
     (RETURN
@@ -1168,43 +1093,43 @@
                     (|bcErrorPage| |docSearchAlist|))
                    (#1#
                     (SETQ |docSearchAlist|
-                            ((LAMBDA (|bfVar#44| |bfVar#43| |x|)
+                            ((LAMBDA (|bfVar#41| |bfVar#40| |x|)
                                (LOOP
                                 (COND
-                                 ((OR (ATOM |bfVar#43|)
-                                      (PROGN (SETQ |x| (CAR |bfVar#43|)) NIL))
-                                  (RETURN (NREVERSE |bfVar#44|)))
+                                 ((OR (ATOM |bfVar#40|)
+                                      (PROGN (SETQ |x| (CAR |bfVar#40|)) NIL))
+                                  (RETURN (NREVERSE |bfVar#41|)))
                                  (#1#
                                   (AND (NOT (EQUAL (ELT |x| 0) (|char| '|x|)))
-                                       (SETQ |bfVar#44|
-                                               (CONS |x| |bfVar#44|)))))
-                                (SETQ |bfVar#43| (CDR |bfVar#43|))))
+                                       (SETQ |bfVar#41|
+                                               (CONS |x| |bfVar#41|)))))
+                                (SETQ |bfVar#40| (CDR |bfVar#40|))))
                              NIL |docSearchAlist| NIL))))))
                 (|genSearch1| |filter| (|genSearchTran| |regSearchAlist|)
                  (|genSearchTran| |docSearchAlist|)))))))))))
- 
+
 ; genSearchTran alist == [[x,y,:y] for [x,:y] in alist]
- 
+
 (DEFUN |genSearchTran| (|alist|)
   (PROG (|x| |y|)
     (RETURN
-     ((LAMBDA (|bfVar#47| |bfVar#46| |bfVar#45|)
+     ((LAMBDA (|bfVar#44| |bfVar#43| |bfVar#42|)
         (LOOP
          (COND
-          ((OR (ATOM |bfVar#46|)
-               (PROGN (SETQ |bfVar#45| (CAR |bfVar#46|)) NIL))
-           (RETURN (NREVERSE |bfVar#47|)))
+          ((OR (ATOM |bfVar#43|)
+               (PROGN (SETQ |bfVar#42| (CAR |bfVar#43|)) NIL))
+           (RETURN (NREVERSE |bfVar#44|)))
           (#1='T
-           (AND (CONSP |bfVar#45|)
+           (AND (CONSP |bfVar#42|)
                 (PROGN
-                 (SETQ |x| (CAR |bfVar#45|))
-                 (SETQ |y| (CDR |bfVar#45|))
+                 (SETQ |x| (CAR |bfVar#42|))
+                 (SETQ |y| (CDR |bfVar#42|))
                  #1#)
-                (SETQ |bfVar#47|
-                        (CONS (CONS |x| (CONS |y| |y|)) |bfVar#47|)))))
-         (SETQ |bfVar#46| (CDR |bfVar#46|))))
+                (SETQ |bfVar#44|
+                        (CONS (CONS |x| (CONS |y| |y|)) |bfVar#44|)))))
+         (SETQ |bfVar#43| (CDR |bfVar#43|))))
       NIL |alist| NIL))))
- 
+
 ; genSearch1(filter,reg,doc) ==
 ;   regSearchAlist := searchDropUnexposedLines reg
 ;   docSearchAlist := searchDropUnexposedLines doc
@@ -1239,14 +1164,13 @@
 ;     htSayStandard '"\tab{2}"
 ;     genSearchSay(pair,summarize?,kind,i,'showConstruct)
 ;   if docSearchAlist then
-;     htSaySaturn '"\bigskip{}"
 ;     dbSayItems(['"\newline{\bf Documentation Summary:} ",docCount],'"mention",'"mentions",'" of {\em ",key,'"}")
 ;     for [kind,:pair] in docSearchAlist for i in 0.. | #(first pair) > 0 repeat
 ;       bcHt "\newline{}"
 ;       htSayStandard '"\tab{2}"
 ;       genSearchSay(pair,true,kind,i,'showDoc)
 ;   htShowPageStar()
- 
+
 (DEFUN |genSearch1| (|filter| |reg| |doc|)
   (PROG (|regSearchAlist| |docSearchAlist| |key| |regCount| |docCount| |count|
          |alist| |nonEmpties| |pair| |summarize?| |plural| |prefix| |emfilter|
@@ -1266,18 +1190,18 @@
                       (COND ((EQL |regCount| 1) |regSearchAlist|)
                             (#1='T |docSearchAlist|)))
               (|showNamedConstruct|
-               ((LAMBDA (|bfVar#49| |bfVar#48| |x|)
+               ((LAMBDA (|bfVar#46| |bfVar#45| |x|)
                   (LOOP
                    (COND
-                    ((OR (ATOM |bfVar#48|)
-                         (PROGN (SETQ |x| (CAR |bfVar#48|)) NIL))
-                     (RETURN |bfVar#49|))
+                    ((OR (ATOM |bfVar#45|)
+                         (PROGN (SETQ |x| (CAR |bfVar#45|)) NIL))
+                     (RETURN |bfVar#46|))
                     (#1#
                      (AND (CADR |x|)
                           (PROGN
-                           (SETQ |bfVar#49| |x|)
-                           (COND (|bfVar#49| (RETURN |bfVar#49|)))))))
-                   (SETQ |bfVar#48| (CDR |bfVar#48|))))
+                           (SETQ |bfVar#46| |x|)
+                           (COND (|bfVar#46| (RETURN |bfVar#46|)))))))
+                   (SETQ |bfVar#45| (CDR |bfVar#45|))))
                 NIL |alist| NIL))))
             (#1#
              (PROGN
@@ -1286,20 +1210,20 @@
                             (#1#
                              (PROGN
                               (SETQ |nonEmpties|
-                                      ((LAMBDA (|bfVar#51| |bfVar#50| |pair|)
+                                      ((LAMBDA (|bfVar#48| |bfVar#47| |pair|)
                                          (LOOP
                                           (COND
-                                           ((OR (ATOM |bfVar#50|)
+                                           ((OR (ATOM |bfVar#47|)
                                                 (PROGN
-                                                 (SETQ |pair| (CAR |bfVar#50|))
+                                                 (SETQ |pair| (CAR |bfVar#47|))
                                                  NIL))
-                                            (RETURN (NREVERSE |bfVar#51|)))
+                                            (RETURN (NREVERSE |bfVar#48|)))
                                            (#1#
                                             (AND (< 0 (LENGTH (CADR |pair|)))
-                                                 (SETQ |bfVar#51|
+                                                 (SETQ |bfVar#48|
                                                          (CONS |pair|
-                                                               |bfVar#51|)))))
-                                          (SETQ |bfVar#50| (CDR |bfVar#50|))))
+                                                               |bfVar#48|)))))
+                                          (SETQ |bfVar#47| (CDR |bfVar#47|))))
                                        NIL |regSearchAlist| NIL))
                               (NULL
                                (AND (CONSP |nonEmpties|)
@@ -1332,17 +1256,17 @@
                         (|dbSayItems|
                          (LIST "{\\bf Construct Summary:} " |regCount|)
                          "name matches" "names match")))
-                      ((LAMBDA (|bfVar#53| |bfVar#52| |i|)
+                      ((LAMBDA (|bfVar#50| |bfVar#49| |i|)
                          (LOOP
                           (COND
-                           ((OR (ATOM |bfVar#53|)
-                                (PROGN (SETQ |bfVar#52| (CAR |bfVar#53|)) NIL))
+                           ((OR (ATOM |bfVar#50|)
+                                (PROGN (SETQ |bfVar#49| (CAR |bfVar#50|)) NIL))
                             (RETURN NIL))
                            (#1#
-                            (AND (CONSP |bfVar#52|)
+                            (AND (CONSP |bfVar#49|)
                                  (PROGN
-                                  (SETQ |kind| (CAR |bfVar#52|))
-                                  (SETQ |pair| (CDR |bfVar#52|))
+                                  (SETQ |kind| (CAR |bfVar#49|))
+                                  (SETQ |pair| (CDR |bfVar#49|))
                                   #1#)
                                  (< 0 (LENGTH (CAR |pair|)))
                                  (PROGN
@@ -1350,28 +1274,28 @@
                                   (|htSayStandard| "\\tab{2}")
                                   (|genSearchSay| |pair| |summarize?| |kind|
                                    |i| '|showConstruct|)))))
-                          (SETQ |bfVar#53| (CDR |bfVar#53|))
+                          (SETQ |bfVar#50| (CDR |bfVar#50|))
                           (SETQ |i| (+ |i| 1))))
                        |regSearchAlist| NIL 0)
                       (COND
-                       (|docSearchAlist| (|htSaySaturn| "\\bigskip{}")
+                       (|docSearchAlist|
                         (|dbSayItems|
                          (LIST "\\newline{\\bf Documentation Summary:} "
                                |docCount|)
                          "mention" "mentions" " of {\\em " |key| "}")
-                        ((LAMBDA (|bfVar#55| |bfVar#54| |i|)
+                        ((LAMBDA (|bfVar#52| |bfVar#51| |i|)
                            (LOOP
                             (COND
-                             ((OR (ATOM |bfVar#55|)
+                             ((OR (ATOM |bfVar#52|)
                                   (PROGN
-                                   (SETQ |bfVar#54| (CAR |bfVar#55|))
+                                   (SETQ |bfVar#51| (CAR |bfVar#52|))
                                    NIL))
                               (RETURN NIL))
                              (#1#
-                              (AND (CONSP |bfVar#54|)
+                              (AND (CONSP |bfVar#51|)
                                    (PROGN
-                                    (SETQ |kind| (CAR |bfVar#54|))
-                                    (SETQ |pair| (CDR |bfVar#54|))
+                                    (SETQ |kind| (CAR |bfVar#51|))
+                                    (SETQ |pair| (CDR |bfVar#51|))
                                     #1#)
                                    (< 0 (LENGTH (CAR |pair|)))
                                    (PROGN
@@ -1379,45 +1303,45 @@
                                     (|htSayStandard| "\\tab{2}")
                                     (|genSearchSay| |pair| T |kind| |i|
                                      '|showDoc|)))))
-                            (SETQ |bfVar#55| (CDR |bfVar#55|))
+                            (SETQ |bfVar#52| (CDR |bfVar#52|))
                             (SETQ |i| (+ |i| 1))))
                          |docSearchAlist| NIL 0)))
                       (|htShowPageStar|)))))))))))
- 
+
 ; searchDropUnexposedLines alist ==
 ;   [[op,[pred for line in lines | pred],:lines] for [op,.,:lines] in alist] where
 ;     pred ==
 ;       not $exposedOnlyIfTrue or dbExposed?(line,dbKind line) => line
 ;       nil
- 
+
 (DEFUN |searchDropUnexposedLines| (|alist|)
   (PROG (|op| |ISTMP#1| |lines|)
     (RETURN
-     ((LAMBDA (|bfVar#60| |bfVar#59| |bfVar#58|)
+     ((LAMBDA (|bfVar#57| |bfVar#56| |bfVar#55|)
         (LOOP
          (COND
-          ((OR (ATOM |bfVar#59|)
-               (PROGN (SETQ |bfVar#58| (CAR |bfVar#59|)) NIL))
-           (RETURN (NREVERSE |bfVar#60|)))
+          ((OR (ATOM |bfVar#56|)
+               (PROGN (SETQ |bfVar#55| (CAR |bfVar#56|)) NIL))
+           (RETURN (NREVERSE |bfVar#57|)))
           (#1='T
-           (AND (CONSP |bfVar#58|)
+           (AND (CONSP |bfVar#55|)
                 (PROGN
-                 (SETQ |op| (CAR |bfVar#58|))
-                 (SETQ |ISTMP#1| (CDR |bfVar#58|))
+                 (SETQ |op| (CAR |bfVar#55|))
+                 (SETQ |ISTMP#1| (CDR |bfVar#55|))
                  (AND (CONSP |ISTMP#1|)
                       (PROGN (SETQ |lines| (CDR |ISTMP#1|)) #1#)))
-                (SETQ |bfVar#60|
+                (SETQ |bfVar#57|
                         (CONS
                          (CONS |op|
                                (CONS
-                                ((LAMBDA (|bfVar#57| |bfVar#56| |line|)
+                                ((LAMBDA (|bfVar#54| |bfVar#53| |line|)
                                    (LOOP
                                     (COND
-                                     ((OR (ATOM |bfVar#56|)
+                                     ((OR (ATOM |bfVar#53|)
                                           (PROGN
-                                           (SETQ |line| (CAR |bfVar#56|))
+                                           (SETQ |line| (CAR |bfVar#53|))
                                            NIL))
-                                      (RETURN (NREVERSE |bfVar#57|)))
+                                      (RETURN (NREVERSE |bfVar#54|)))
                                      (#1#
                                       (AND
                                        #2=(COND
@@ -1426,15 +1350,15 @@
                                                  (|dbKind| |line|)))
                                             |line|)
                                            (#1# NIL))
-                                       (SETQ |bfVar#57|
-                                               (CONS #2# |bfVar#57|)))))
-                                    (SETQ |bfVar#56| (CDR |bfVar#56|))))
+                                       (SETQ |bfVar#54|
+                                               (CONS #2# |bfVar#54|)))))
+                                    (SETQ |bfVar#53| (CDR |bfVar#53|))))
                                  NIL |lines| NIL)
                                 |lines|))
-                         |bfVar#60|)))))
-         (SETQ |bfVar#59| (CDR |bfVar#59|))))
+                         |bfVar#57|)))))
+         (SETQ |bfVar#56| (CDR |bfVar#56|))))
       NIL |alist| NIL))))
- 
+
 ; repeatSearch(htPage,newValue) ==
 ;   $exposedOnlyIfTrue := newValue
 ;   filter := htpProperty(htPage,'filter)
@@ -1442,7 +1366,7 @@
 ;   doc    := htpProperty(htPage,'docSearchAlist)
 ;   reg => genSearch1(filter,reg,doc)
 ;   docSearch1(filter,doc)
- 
+
 (DEFUN |repeatSearch| (|htPage| |newValue|)
   (PROG (|filter| |reg| |doc|)
     (RETURN
@@ -1453,45 +1377,45 @@
       (SETQ |doc| (|htpProperty| |htPage| '|docSearchAlist|))
       (COND (|reg| (|genSearch1| |filter| |reg| |doc|))
             ('T (|docSearch1| |filter| |doc|)))))))
- 
+
 ; searchCount u == +/[# y for [x,y,:.] in u]
- 
+
 (DEFUN |searchCount| (|u|)
   (PROG (|x| |ISTMP#1| |y|)
     (RETURN
-     ((LAMBDA (|bfVar#63| |bfVar#62| |bfVar#61|)
+     ((LAMBDA (|bfVar#60| |bfVar#59| |bfVar#58|)
         (LOOP
          (COND
-          ((OR (ATOM |bfVar#62|)
-               (PROGN (SETQ |bfVar#61| (CAR |bfVar#62|)) NIL))
-           (RETURN |bfVar#63|))
+          ((OR (ATOM |bfVar#59|)
+               (PROGN (SETQ |bfVar#58| (CAR |bfVar#59|)) NIL))
+           (RETURN |bfVar#60|))
           (#1='T
-           (AND (CONSP |bfVar#61|)
+           (AND (CONSP |bfVar#58|)
                 (PROGN
-                 (SETQ |x| (CAR |bfVar#61|))
-                 (SETQ |ISTMP#1| (CDR |bfVar#61|))
+                 (SETQ |x| (CAR |bfVar#58|))
+                 (SETQ |ISTMP#1| (CDR |bfVar#58|))
                  (AND (CONSP |ISTMP#1|)
                       (PROGN (SETQ |y| (CAR |ISTMP#1|)) #1#)))
-                (SETQ |bfVar#63| (+ |bfVar#63| (LENGTH |y|))))))
-         (SETQ |bfVar#62| (CDR |bfVar#62|))))
+                (SETQ |bfVar#60| (+ |bfVar#60| (LENGTH |y|))))))
+         (SETQ |bfVar#59| (CDR |bfVar#59|))))
       0 |u| NIL))))
- 
+
 ; showDoc(htPage,count) ==
 ;   showIt(htPage,count,htpProperty(htPage,'docSearchAlist))
- 
+
 (DEFUN |showDoc| (|htPage| |count|)
   (PROG ()
     (RETURN
      (|showIt| |htPage| |count| (|htpProperty| |htPage| '|docSearchAlist|)))))
- 
+
 ; showConstruct(htPage,count) ==
 ;   showIt(htPage,count,htpProperty(htPage,'regSearchAlist))
- 
+
 (DEFUN |showConstruct| (|htPage| |count|)
   (PROG ()
     (RETURN
      (|showIt| |htPage| |count| (|htpProperty| |htPage| '|regSearchAlist|)))))
- 
+
 ; showIt(htPage,index,searchAlist) ==
 ;   filter      := htpProperty(htPage,'filter)
 ;   [relativeIndex,n] := DIVIDE(index,8)
@@ -1501,7 +1425,7 @@
 ;   firstName := dbName first items --select name then gather all of same name
 ;   lines := [line for line in items while dbName line = firstName]
 ;   showNamedConstruct [kind,nil,:lines]
- 
+
 (DEFUN |showIt| (|htPage| |index| |searchAlist|)
   (PROG (|filter| |LETTMP#1| |relativeIndex| |n| |kind| |items| |firstName|
          |lines|)
@@ -1526,28 +1450,28 @@
           1)
          (SETQ |firstName| (|dbName| (CAR |items|)))
          (SETQ |lines|
-                 ((LAMBDA (|bfVar#65| |bfVar#64| |line|)
+                 ((LAMBDA (|bfVar#62| |bfVar#61| |line|)
                     (LOOP
                      (COND
-                      ((OR (ATOM |bfVar#64|)
-                           (PROGN (SETQ |line| (CAR |bfVar#64|)) NIL)
+                      ((OR (ATOM |bfVar#61|)
+                           (PROGN (SETQ |line| (CAR |bfVar#61|)) NIL)
                            (NOT (EQUAL (|dbName| |line|) |firstName|)))
-                       (RETURN (NREVERSE |bfVar#65|)))
-                      (#1# (SETQ |bfVar#65| (CONS |line| |bfVar#65|))))
-                     (SETQ |bfVar#64| (CDR |bfVar#64|))))
+                       (RETURN (NREVERSE |bfVar#62|)))
+                      (#1# (SETQ |bfVar#62| (CONS |line| |bfVar#62|))))
+                     (SETQ |bfVar#61| (CDR |bfVar#61|))))
                   NIL |items| NIL))
          (|showNamedConstruct| (CONS |kind| (CONS NIL |lines|))))))))))
- 
+
 ; showNamedConstruct([kind,.,:lines]) == dbSearch(lines,kind,'"")
- 
-(DEFUN |showNamedConstruct| (|bfVar#66|)
+
+(DEFUN |showNamedConstruct| (|bfVar#63|)
   (PROG (|kind| |lines|)
     (RETURN
      (PROGN
-      (SETQ |kind| (CAR |bfVar#66|))
-      (SETQ |lines| (CDDR |bfVar#66|))
+      (SETQ |kind| (CAR |bfVar#63|))
+      (SETQ |lines| (CDDR |bfVar#63|))
       (|dbSearch| |lines| |kind| "")))))
- 
+
 ; genSearchSay(pair,summarize,kind,who,fn) ==
 ;   [u,:fullLineList] := pair
 ;   count := #u
@@ -1555,11 +1479,11 @@
 ;   short := summarize and uniqueCount >= $browseCountThreshold
 ;   htMakePage
 ;     [['bcLinks,[menuButton(),'"",'genSearchSayJump,[fullLineList,kind]]]]
-;   if count = 0 then htSay('"{\em No ",kind,'"} ")
+;   if count = 0 then htSayList(['"{\em No ", kind, '"} "])
 ;   else if count = 1 then
-;     htSay('"{\em 1 ",kind,'"} ")
+;     htSayList(['"{\em 1 ", kind, '"} "])
 ;   else
-;     htSay('"{\em ",count,'" ",pluralize kind,'"} ")
+;     htSayList(['"{\em ", count, '" ", pluralize kind, '"} "])
 ;   short => 'done
 ;   if uniqueCount ~= 1 then
 ;     htSayStandard '"\indent{4}"
@@ -1582,7 +1506,7 @@
 ;   if uniqueCount ~= 1 then
 ;      htEndTable()
 ;      htSayStandard '"\indent{0}"
- 
+
 (DEFUN |genSearchSay| (|pair| |summarize| |kind| |who| |fn|)
   (PROG (|u| |fullLineList| |count| |uniqueCount| |short| |lastid| |groups| |i|
          |id| |exposed?|)
@@ -1600,9 +1524,11 @@
         (LIST '|bcLinks|
               (LIST (|menuButton|) "" '|genSearchSayJump|
                     (LIST |fullLineList| |kind|)))))
-      (COND ((EQL |count| 0) (|htSay| "{\\em No " |kind| "} "))
-            ((EQL |count| 1) (|htSay| "{\\em 1 " |kind| "} "))
-            (#1='T (|htSay| "{\\em " |count| " " (|pluralize| |kind|) "} ")))
+      (COND ((EQL |count| 0) (|htSayList| (LIST "{\\em No " |kind| "} ")))
+            ((EQL |count| 1) (|htSayList| (LIST "{\\em 1 " |kind| "} ")))
+            (#1='T
+             (|htSayList|
+              (LIST "{\\em " |count| " " (|pluralize| |kind|) "} "))))
       (COND (|short| '|done|)
             (#1#
              (PROGN
@@ -1612,11 +1538,11 @@
               (SETQ |lastid| NIL)
               (SETQ |groups| (|organizeByName| |u|))
               (SETQ |i| 1)
-              ((LAMBDA (|bfVar#67| |group|)
+              ((LAMBDA (|bfVar#64| |group|)
                  (LOOP
                   (COND
-                   ((OR (ATOM |bfVar#67|)
-                        (PROGN (SETQ |group| (CAR |bfVar#67|)) NIL))
+                   ((OR (ATOM |bfVar#64|)
+                        (PROGN (SETQ |group| (CAR |bfVar#64|)) NIL))
                     (RETURN NIL))
                    (#1#
                     (PROGN
@@ -1624,22 +1550,22 @@
                      (COND
                       (|$includeUnexposed?|
                        (SETQ |exposed?|
-                               ((LAMBDA (|bfVar#69| |bfVar#68| |item|)
+                               ((LAMBDA (|bfVar#66| |bfVar#65| |item|)
                                   (LOOP
                                    (COND
-                                    ((OR (ATOM |bfVar#68|)
+                                    ((OR (ATOM |bfVar#65|)
                                          (PROGN
-                                          (SETQ |item| (CAR |bfVar#68|))
+                                          (SETQ |item| (CAR |bfVar#65|))
                                           NIL))
-                                     (RETURN |bfVar#69|))
+                                     (RETURN |bfVar#66|))
                                     (#1#
                                      (PROGN
-                                      (SETQ |bfVar#69|
+                                      (SETQ |bfVar#66|
                                               (|dbExposed?| |item|
                                                (|dbKind| |item|)))
                                       (COND
-                                       (|bfVar#69| (RETURN |bfVar#69|))))))
-                                   (SETQ |bfVar#68| (CDR |bfVar#68|))))
+                                       (|bfVar#66| (RETURN |bfVar#66|))))))
+                                   (SETQ |bfVar#65| (CDR |bfVar#65|))))
                                 NIL |group| NIL))))
                      (|bcHt| "{")
                      (COND
@@ -1652,56 +1578,56 @@
                              (LIST |id| "" |fn| (+ |who| (* 8 |i|))))))
                      (SETQ |i| (+ |i| (LENGTH |group|)))
                      (|bcHt| "}"))))
-                  (SETQ |bfVar#67| (CDR |bfVar#67|))))
+                  (SETQ |bfVar#64| (CDR |bfVar#64|))))
                |groups| NIL)
               (COND
                ((NOT (EQL |uniqueCount| 1)) (|htEndTable|)
                 (|htSayStandard| "\\indent{0}"))))))))))
- 
+
 ; organizeByName u ==
 ;   [[(u := rest u; x) while u and head = dbName (x := first u)]
 ;       while u and (head := dbName first u)]
- 
+
 (DEFUN |organizeByName| (|u|)
   (PROG (|head| |x|)
     (RETURN
-     ((LAMBDA (|bfVar#71|)
+     ((LAMBDA (|bfVar#68|)
         (LOOP
          (COND
           ((NOT (AND |u| (SETQ |head| (|dbName| (CAR |u|)))))
-           (RETURN (NREVERSE |bfVar#71|)))
+           (RETURN (NREVERSE |bfVar#68|)))
           (#1='T
-           (SETQ |bfVar#71|
+           (SETQ |bfVar#68|
                    (CONS
-                    ((LAMBDA (|bfVar#70|)
+                    ((LAMBDA (|bfVar#67|)
                        (LOOP
                         (COND
                          ((NOT
                            (AND |u|
                                 (EQUAL |head|
                                        (|dbName| (SETQ |x| (CAR |u|))))))
-                          (RETURN (NREVERSE |bfVar#70|)))
+                          (RETURN (NREVERSE |bfVar#67|)))
                          (#1#
-                          (SETQ |bfVar#70|
+                          (SETQ |bfVar#67|
                                   (CONS (PROGN (SETQ |u| (CDR |u|)) |x|)
-                                        |bfVar#70|))))))
+                                        |bfVar#67|))))))
                      NIL)
-                    |bfVar#71|))))))
+                    |bfVar#68|))))))
       NIL))))
- 
+
 ; genSearchSayJump(htPage,[lines,kind]) ==
 ;   filter := htpProperty(htPage,'filter)
 ;   dbSearch(lines,kind,filter)
- 
-(DEFUN |genSearchSayJump| (|htPage| |bfVar#72|)
+
+(DEFUN |genSearchSayJump| (|htPage| |bfVar#69|)
   (PROG (|lines| |kind| |filter|)
     (RETURN
      (PROGN
-      (SETQ |lines| (CAR |bfVar#72|))
-      (SETQ |kind| (CADR |bfVar#72|))
+      (SETQ |lines| (CAR |bfVar#69|))
+      (SETQ |kind| (CADR |bfVar#69|))
       (SETQ |filter| (|htpProperty| |htPage| '|filter|))
       (|dbSearch| |lines| |kind| |filter|)))))
- 
+
 ; genSearchUniqueCount(u) ==
 ; --count the unique number of items (if less than $browseCountThreshold)
 ;   count := 0
@@ -1712,17 +1638,17 @@
 ;       count := count + 1
 ;       lastid := id
 ;   count
- 
+
 (DEFUN |genSearchUniqueCount| (|u|)
   (PROG (|count| |lastid| |id|)
     (RETURN
      (PROGN
       (SETQ |count| 0)
       (SETQ |lastid| NIL)
-      ((LAMBDA (|bfVar#73| |item|)
+      ((LAMBDA (|bfVar#70| |item|)
          (LOOP
           (COND
-           ((OR (ATOM |bfVar#73|) (PROGN (SETQ |item| (CAR |bfVar#73|)) NIL)
+           ((OR (ATOM |bfVar#70|) (PROGN (SETQ |item| (CAR |bfVar#70|)) NIL)
                 (NOT (< |count| |$browseCountThreshold|)))
             (RETURN NIL))
            ('T
@@ -1731,41 +1657,28 @@
              (COND
               ((NOT (EQUAL |id| |lastid|)) (SETQ |count| (+ |count| 1))
                (SETQ |lastid| |id|))))))
-          (SETQ |bfVar#73| (CDR |bfVar#73|))))
+          (SETQ |bfVar#70| (CDR |bfVar#70|))))
        |u| NIL)
       |count|))))
- 
+
 ; dbGetName line == SUBSTRING(line,1,charPosition($tick,line,1) - 1)
- 
+
 (DEFUN |dbGetName| (|line|)
   (PROG ()
     (RETURN (SUBSTRING |line| 1 (- (|charPosition| |$tick| |line| 1) 1)))))
- 
-; pluralSay(count,singular,plural,:options) ==
-;   item := (options is [x,:options] => x; '"")
-;   colon := (IFCAR options => '":"; '"")
-;   count = 0 => concat('"No ",singular,item)
-;   count = 1 => concat('"1 ",singular,item,colon)
-;   concat(count,'" ",plural,item,colon)
- 
-(DEFUN |pluralSay| (|count| |singular| |plural| &REST |options|)
-  (PROG (|x| |item| |colon|)
+
+; pluralSay(count,singular,plural) ==
+;     count = 0 => concat('"No ", singular)
+;     count = 1 => concat('"1 ", singular)
+;     concat(count, '" ", plural)
+
+(DEFUN |pluralSay| (|count| |singular| |plural|)
+  (PROG ()
     (RETURN
-     (PROGN
-      (SETQ |item|
-              (COND
-               ((AND (CONSP |options|)
-                     (PROGN
-                      (SETQ |x| (CAR |options|))
-                      (SETQ |options| (CDR |options|))
-                      #1='T))
-                |x|)
-               (#1# "")))
-      (SETQ |colon| (COND ((IFCAR |options|) ":") (#1# "")))
-      (COND ((EQL |count| 0) (|concat| "No " |singular| |item|))
-            ((EQL |count| 1) (|concat| "1 " |singular| |item| |colon|))
-            (#1# (|concat| |count| " " |plural| |item| |colon|)))))))
- 
+     (COND ((EQL |count| 0) (|concat| "No " |singular|))
+           ((EQL |count| 1) (|concat| "1 " |singular|))
+           ('T (|concat| |count| " " |plural|))))))
+
 ; docSearch filter ==  --"Documentation" from HD (see man0.ht)
 ;   null (filter := checkFilter filter) => nil  --in case of filter error
 ;   filter = '"*" => htErrorStar()
@@ -1774,7 +1687,7 @@
 ;   docSearchAlist is ['error,:.] => bcErrorPage docSearchAlist
 ;   docSearchAlist := [x for x in docSearchAlist | x.0 ~= char 'x] --drop defaults
 ;   docSearch1(filter,genSearchTran docSearchAlist)
- 
+
 (DEFUN |docSearch| (|filter|)
   (PROG (|key| |docSearchAlist|)
     (RETURN
@@ -1791,20 +1704,20 @@
               (#1#
                (PROGN
                 (SETQ |docSearchAlist|
-                        ((LAMBDA (|bfVar#75| |bfVar#74| |x|)
+                        ((LAMBDA (|bfVar#72| |bfVar#71| |x|)
                            (LOOP
                             (COND
-                             ((OR (ATOM |bfVar#74|)
-                                  (PROGN (SETQ |x| (CAR |bfVar#74|)) NIL))
-                              (RETURN (NREVERSE |bfVar#75|)))
+                             ((OR (ATOM |bfVar#71|)
+                                  (PROGN (SETQ |x| (CAR |bfVar#71|)) NIL))
+                              (RETURN (NREVERSE |bfVar#72|)))
                              (#1#
                               (AND (NOT (EQUAL (ELT |x| 0) (|char| '|x|)))
-                                   (SETQ |bfVar#75| (CONS |x| |bfVar#75|)))))
-                            (SETQ |bfVar#74| (CDR |bfVar#74|))))
+                                   (SETQ |bfVar#72| (CONS |x| |bfVar#72|)))))
+                            (SETQ |bfVar#71| (CDR |bfVar#71|))))
                          NIL |docSearchAlist| NIL))
                 (|docSearch1| |filter|
                  (|genSearchTran| |docSearchAlist|)))))))))))
- 
+
 ; docSearch1(filter,doc) ==
 ;   docSearchAlist := searchDropUnexposedLines doc
 ;   count := searchCount docSearchAlist
@@ -1823,7 +1736,7 @@
 ;     htSayStandard '"\tab{2}"
 ;     genSearchSay(pair,true,kind,i,'showDoc)
 ;   htShowPageStar()
- 
+
 (DEFUN |docSearch1| (|filter| |doc|)
   (PROG (|docSearchAlist| |count| |prefix| |emfilter| |header| |page| |kind|
          |pair|)
@@ -1834,18 +1747,18 @@
       (COND ((EQL |count| 0) (|emptySearchPage| "entry" |filter| T))
             ((EQL |count| 1)
              (|showNamedConstruct|
-              ((LAMBDA (|bfVar#77| |bfVar#76| |x|)
+              ((LAMBDA (|bfVar#74| |bfVar#73| |x|)
                  (LOOP
                   (COND
-                   ((OR (ATOM |bfVar#76|)
-                        (PROGN (SETQ |x| (CAR |bfVar#76|)) NIL))
-                    (RETURN |bfVar#77|))
+                   ((OR (ATOM |bfVar#73|)
+                        (PROGN (SETQ |x| (CAR |bfVar#73|)) NIL))
+                    (RETURN |bfVar#74|))
                    (#1='T
                     (AND (CADR |x|)
                          (PROGN
-                          (SETQ |bfVar#77| |x|)
-                          (COND (|bfVar#77| (RETURN |bfVar#77|)))))))
-                  (SETQ |bfVar#76| (CDR |bfVar#76|))))
+                          (SETQ |bfVar#74| |x|)
+                          (COND (|bfVar#74| (RETURN |bfVar#74|)))))))
+                  (SETQ |bfVar#73| (CDR |bfVar#73|))))
                NIL |docSearchAlist| NIL)))
             (#1#
              (PROGN
@@ -1861,34 +1774,34 @@
               (|htpSetProperty| |page| '|filter| |filter|)
               (|dbSayItems| (LIST "\\newline Documentation Summary: " |count|)
                "mention" "mentions" " of {\\em " |filter| "}")
-              ((LAMBDA (|bfVar#79| |bfVar#78| |i|)
+              ((LAMBDA (|bfVar#76| |bfVar#75| |i|)
                  (LOOP
                   (COND
-                   ((OR (ATOM |bfVar#79|)
-                        (PROGN (SETQ |bfVar#78| (CAR |bfVar#79|)) NIL))
+                   ((OR (ATOM |bfVar#76|)
+                        (PROGN (SETQ |bfVar#75| (CAR |bfVar#76|)) NIL))
                     (RETURN NIL))
                    (#1#
-                    (AND (CONSP |bfVar#78|)
+                    (AND (CONSP |bfVar#75|)
                          (PROGN
-                          (SETQ |kind| (CAR |bfVar#78|))
-                          (SETQ |pair| (CDR |bfVar#78|))
+                          (SETQ |kind| (CAR |bfVar#75|))
+                          (SETQ |pair| (CDR |bfVar#75|))
                           #1#)
                          (< 0 (LENGTH (CAR |pair|)))
                          (PROGN
                           (|bcHt| "\\newline{}")
                           (|htSayStandard| "\\tab{2}")
                           (|genSearchSay| |pair| T |kind| |i| '|showDoc|)))))
-                  (SETQ |bfVar#79| (CDR |bfVar#79|))
+                  (SETQ |bfVar#76| (CDR |bfVar#76|))
                   (SETQ |i| (+ |i| 1))))
                |docSearchAlist| NIL 0)
               (|htShowPageStar|))))))))
- 
+
 ; removeSurroundingStars filter ==
 ;   key := STRINGIMAGE filter
 ;   if key.0 = char '_* then key := SUBSTRING(key,1,nil)
 ;   if key.(max := MAXINDEX key) = char '_* then key := SUBSTRING(key,0,max)
 ;   key
- 
+
 (DEFUN |removeSurroundingStars| (|filter|)
   (PROG (|key| |max|)
     (RETURN
@@ -1901,30 +1814,30 @@
        ((EQUAL (ELT |key| (SETQ |max| (MAXINDEX |key|))) (|char| '*))
         (SETQ |key| (SUBSTRING |key| 0 |max|))))
       |key|))))
- 
+
 ; showNamedDoc([kind,:lines],index) ==
 ;   dbGather(kind,lines,index - 1,true)
- 
-(DEFUN |showNamedDoc| (|bfVar#80| |index|)
+
+(DEFUN |showNamedDoc| (|bfVar#77| |index|)
   (PROG (|kind| |lines|)
     (RETURN
      (PROGN
-      (SETQ |kind| (CAR |bfVar#80|))
-      (SETQ |lines| (CDR |bfVar#80|))
+      (SETQ |kind| (CAR |bfVar#77|))
+      (SETQ |lines| (CDR |bfVar#77|))
       (|dbGather| |kind| |lines| (- |index| 1) T)))))
- 
+
 ; sayDocMessage message ==
 ;   htSay('"{\em ")
 ;   if message is [leftEnd,left,middle,right,rightEnd] then
-;     htSay(leftEnd,left,'"}")
+;     htSayList([leftEnd, left, '"}"])
 ;     if left ~= '"" and left.(MAXINDEX left) = $blank then htBlank()
 ;     htSay middle
 ;     if right ~= '"" and right.0 = $blank then htBlank()
-;     htSay('"{\em ",right,rightEnd)
+;     htSayList(['"{\em ", right, rightEnd])
 ;   else
 ;     htSay message
 ;   htSay ('"}")
- 
+
 (DEFUN |sayDocMessage| (|message|)
   (PROG (|leftEnd| |ISTMP#1| |left| |ISTMP#2| |middle| |ISTMP#3| |right|
          |ISTMP#4| |rightEnd|)
@@ -1952,7 +1865,7 @@
                                      (PROGN
                                       (SETQ |rightEnd| (CAR |ISTMP#4|))
                                       #1='T))))))))))
-        (|htSay| |leftEnd| |left| "}")
+        (|htSayList| (LIST |leftEnd| |left| "}"))
         (COND
          ((AND (NOT (EQUAL |left| ""))
                (EQUAL (ELT |left| (MAXINDEX |left|)) |$blank|))
@@ -1961,10 +1874,10 @@
         (COND
          ((AND (NOT (EQUAL |right| "")) (EQUAL (ELT |right| 0) |$blank|))
           (|htBlank|)))
-        (|htSay| "{\\em " |right| |rightEnd|))
+        (|htSayList| (LIST "{\\em " |right| |rightEnd|)))
        (#1# (|htSay| |message|)))
       (|htSay| "}")))))
- 
+
 ; stripOffSegments(s,n) ==
 ;   progress := true
 ;   while n > 0 and progress = true repeat
@@ -1975,7 +1888,7 @@
 ;     progress := false
 ;   n = 0 => s
 ;   nil
- 
+
 (DEFUN |stripOffSegments| (|s| |n|)
   (PROG (|progress| |k| |new|)
     (RETURN
@@ -1992,13 +1905,13 @@
                   (COND ((< (LENGTH |new|) (LENGTH |s|)) (SETQ |s| |new|))
                         (#1# (SETQ |progress| NIL)))))))))
       (COND ((EQL |n| 0) |s|) (#1# NIL))))))
- 
+
 ; replaceTicksBySpaces s ==
 ;   n := -1
 ;   max := MAXINDEX s
 ;   while (n := charPosition(char '_`,s,n + 1)) <= max repeat SETELT(s,n,char '_ )
 ;   s
- 
+
 (DEFUN |replaceTicksBySpaces| (|s|)
   (PROG (|n| |max|)
     (RETURN
@@ -2012,38 +1925,26 @@
             (RETURN NIL))
            ('T (SETELT |s| |n| (|char| '| |)))))))
       |s|))))
- 
+
 ; checkFilter filter ==
 ;   filter := STRINGIMAGE filter
 ;   filter = '"" => '"*"
 ;   trimString filter
- 
+
 (DEFUN |checkFilter| (|filter|)
   (PROG ()
     (RETURN
      (PROGN
       (SETQ |filter| (STRINGIMAGE |filter|))
       (COND ((EQUAL |filter| "") "*") ('T (|trimString| |filter|)))))))
- 
-; aSearch filter ==  --called from HD (man0.ht): general attribute search
-;   null (filter := checkFilter filter) => nil  --in case of filter error
-;   dbSearch(grepConstruct(filter,'a),'"attribute",filter)
- 
-(DEFUN |aSearch| (|filter|)
-  (PROG ()
-    (RETURN
-     (COND ((NULL (SETQ |filter| (|checkFilter| |filter|))) NIL)
-           ('T
-            (|dbSearch| (|grepConstruct| |filter| '|a|) "attribute"
-             |filter|))))))
- 
+
 ; oSearch filter == -- called from HD (man0.ht): operation search
 ;   opAlist := opPageFastPath filter => opPageFast opAlist
 ;   key := 'o
 ;   null (filter := checkFilter filter) => nil  --in case of filter error
 ;   filter = '"*" => grepSearchQuery('"operation",[filter,key,'"operation",'oSearchGrep])
 ;   oSearchGrep(filter,key,'"operation")
- 
+
 (DEFUN |oSearch| (|filter|)
   (PROG (|opAlist| |key|)
     (RETURN
@@ -2057,20 +1958,20 @@
                (|grepSearchQuery| "operation"
                 (LIST |filter| |key| "operation" '|oSearchGrep|)))
               (#1# (|oSearchGrep| |filter| |key| "operation")))))))))
- 
+
 ; oSearchGrep(filter,key,kind) == --called from grepSearchQuery/oSearch
 ;   dbSearch(grepConstruct(filter,'o),kind,filter)
- 
+
 (DEFUN |oSearchGrep| (|filter| |key| |kind|)
   (PROG ()
     (RETURN (|dbSearch| (|grepConstruct| |filter| '|o|) |kind| |filter|))))
- 
+
 ; grepSearchQuery(kind,items) ==
 ;   page := htInitPage('"Query Page",nil)
 ;   htpSetProperty(page,'items,items)
 ;   htQuery(['"{\em Do you want a list of {\em all} ",pluralize kind,'"?\vspace{1}}"],'grepSearchJump,true)
 ;   htShowPage()
- 
+
 (DEFUN |grepSearchQuery| (|kind| |items|)
   (PROG (|page|)
     (RETURN
@@ -2082,50 +1983,50 @@
              "?\\vspace{1}}")
        '|grepSearchJump| T)
       (|htShowPage|)))))
- 
+
 ; cSearch filter ==  --called from HD (man0.ht): category search
 ;    constructorSearch(checkFilter filter,'c,'"category")
- 
+
 (DEFUN |cSearch| (|filter|)
   (PROG ()
     (RETURN (|constructorSearch| (|checkFilter| |filter|) '|c| "category"))))
- 
+
 ; dSearch filter ==  --called from HD (man0.ht): domain search
 ;    constructorSearch(checkFilter filter,'d,'"domain")
- 
+
 (DEFUN |dSearch| (|filter|)
   (PROG ()
     (RETURN (|constructorSearch| (|checkFilter| |filter|) '|d| "domain"))))
- 
+
 ; pSearch filter ==  --called from HD (man0.ht): package search
 ;    constructorSearch(checkFilter filter,'p,'"package")
- 
+
 (DEFUN |pSearch| (|filter|)
   (PROG ()
     (RETURN (|constructorSearch| (|checkFilter| |filter|) '|p| "package"))))
- 
+
 ; xSearch filter ==  --called from HD (man0.ht): default package search
 ;    constructorSearch(checkFilter filter,'x,'"default package")
- 
+
 (DEFUN |xSearch| (|filter|)
   (PROG ()
     (RETURN
      (|constructorSearch| (|checkFilter| |filter|) '|x| "default package"))))
- 
+
 ; kSearch filter ==  --called from HD (man0.ht): constructor search (no defaults)
 ;    constructorSearch(checkFilter filter,'k,'"constructor")
- 
+
 (DEFUN |kSearch| (|filter|)
   (PROG ()
     (RETURN (|constructorSearch| (|checkFilter| |filter|) '|k| "constructor"))))
- 
+
 ; ySearch filter == --called from conPage: like kSearch but defaults included
 ;   constructorSearch(checkFilter filter,'y,'"constructor")
- 
+
 (DEFUN |ySearch| (|filter|)
   (PROG ()
     (RETURN (|constructorSearch| (|checkFilter| |filter|) '|y| "constructor"))))
- 
+
 ; constructorSearch(filter,key,kind) ==
 ;   null filter => nil      --in case of filter error
 ;   (parse := conSpecialString? filter) => conPage parse
@@ -2140,7 +2041,7 @@
 ;       code = char 'd => '"domain"
 ;       code = char 'c => '"category"
 ;       nil
-;     kind = '"constructor" or kind = newkind => kPage line
+;     kind = '"constructor" or kind = newkind => kPage(line, [])
 ;     page := htInitPage('"Query Page",nil)
 ;     htpSetProperty(page,'line,line)
 ;     message :=
@@ -2150,7 +2051,7 @@
 ;     htShowPage()
 ;   filter = '"*" => grepSearchQuery(kind,[filter,key,kind,'constructorSearchGrep])
 ;   constructorSearchGrep(filter,key,kind)
- 
+
 (DEFUN |constructorSearch| (|filter| |key| |kind|)
   (PROG (|parse| |pageName| |name| |u| |line| |code| |newkind| |page|
          |message|)
@@ -2182,7 +2083,7 @@
                               (#1# NIL)))
                 (COND
                  ((OR (EQUAL |kind| "constructor") (EQUAL |kind| |newkind|))
-                  (|kPage| |line|))
+                  (|kPage| |line| NIL))
                  (#1#
                   (PROGN
                    (SETQ |page| (|htInitPage| "Query Page" NIL))
@@ -2197,14 +2098,18 @@
                (|grepSearchQuery| |kind|
                 (LIST |filter| |key| |kind| '|constructorSearchGrep|)))
               (#1# (|constructorSearchGrep| |filter| |key| |kind|)))))))))
- 
-; grepConstructorSearch(htPage,yes) == kPage htpProperty(htPage,'line)
- 
+
+; grepConstructorSearch(htPage, yes) == kPage(htpProperty(htPage, 'line), [])
+
 (DEFUN |grepConstructorSearch| (|htPage| |yes|)
-  (PROG () (RETURN (|kPage| (|htpProperty| |htPage| '|line|)))))
- 
-; conSpecialString?(filter,:options) ==
-;   secondTime := IFCAR options
+  (PROG () (RETURN (|kPage| (|htpProperty| |htPage| '|line|) NIL))))
+
+; conSpecialString?(filter) == conSpecialString2?(filter, false)
+
+(DEFUN |conSpecialString?| (|filter|)
+  (PROG () (RETURN (|conSpecialString2?| |filter| NIL))))
+
+; conSpecialString2?(filter, secondTime) ==
 ;   parse :=
 ;     words := string2Words filter is [s] => ncParseFromString s
 ;     and/[not member(x,'("and" "or" "not")) for x in words] => ncParseFromString filter
@@ -2216,13 +2121,12 @@
 ;   u := kisValidType form => u
 ;   secondTime => false
 ;   u := "STRCONC"/[string2Constructor x for x in dbString2Words filter]
-;   conSpecialString?(u, true)
- 
-(DEFUN |conSpecialString?| (|filter| &REST |options|)
-  (PROG (|secondTime| |ISTMP#1| |s| |words| |parse| |form| |u|)
+;   conSpecialString2?(u, true)
+
+(DEFUN |conSpecialString2?| (|filter| |secondTime|)
+  (PROG (|ISTMP#1| |s| |words| |parse| |form| |u|)
     (RETURN
      (PROGN
-      (SETQ |secondTime| (IFCAR |options|))
       (SETQ |parse|
               (COND
                ((SETQ |words|
@@ -2231,18 +2135,18 @@
                          (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
                               (PROGN (SETQ |s| (CAR |ISTMP#1|)) #1='T))))
                 (|ncParseFromString| |s|))
-               (((LAMBDA (|bfVar#82| |bfVar#81| |x|)
+               (((LAMBDA (|bfVar#79| |bfVar#78| |x|)
                    (LOOP
                     (COND
-                     ((OR (ATOM |bfVar#81|)
-                          (PROGN (SETQ |x| (CAR |bfVar#81|)) NIL))
-                      (RETURN |bfVar#82|))
+                     ((OR (ATOM |bfVar#78|)
+                          (PROGN (SETQ |x| (CAR |bfVar#78|)) NIL))
+                      (RETURN |bfVar#79|))
                      (#1#
                       (PROGN
-                       (SETQ |bfVar#82|
+                       (SETQ |bfVar#79|
                                (NULL (|member| |x| '("and" "or" "not"))))
-                       (COND ((NOT |bfVar#82|) (RETURN NIL))))))
-                    (SETQ |bfVar#81| (CDR |bfVar#81|))))
+                       (COND ((NOT |bfVar#79|) (RETURN NIL))))))
+                    (SETQ |bfVar#78| (CDR |bfVar#78|))))
                  T |words| NIL)
                 (|ncParseFromString| |filter|))
                (#1# NIL)))
@@ -2259,30 +2163,30 @@
                (#1#
                 (PROGN
                  (SETQ |u|
-                         ((LAMBDA (|bfVar#84| |bfVar#83| |x|)
+                         ((LAMBDA (|bfVar#81| |bfVar#80| |x|)
                             (LOOP
                              (COND
-                              ((OR (ATOM |bfVar#83|)
-                                   (PROGN (SETQ |x| (CAR |bfVar#83|)) NIL))
-                               (RETURN |bfVar#84|))
+                              ((OR (ATOM |bfVar#80|)
+                                   (PROGN (SETQ |x| (CAR |bfVar#80|)) NIL))
+                               (RETURN |bfVar#81|))
                               (#1#
-                               (SETQ |bfVar#84|
-                                       (STRCONC |bfVar#84|
+                               (SETQ |bfVar#81|
+                                       (STRCONC |bfVar#81|
                                         (|string2Constructor| |x|)))))
-                             (SETQ |bfVar#83| (CDR |bfVar#83|))))
+                             (SETQ |bfVar#80| (CDR |bfVar#80|))))
                           "" (|dbString2Words| |filter|) NIL))
-                 (|conSpecialString?| |u| T)))))))))))
- 
+                 (|conSpecialString2?| |u| T)))))))))))
+
 ; dbString2Words l ==
 ;   i := 0
 ;   [w while dbWordFrom(l,i) is [w,i]]
- 
+
 (DEFUN |dbString2Words| (|l|)
   (PROG (|i| |ISTMP#1| |w| |ISTMP#2|)
     (RETURN
      (PROGN
       (SETQ |i| 0)
-      ((LAMBDA (|bfVar#85|)
+      ((LAMBDA (|bfVar#82|)
          (LOOP
           (COND
            ((NOT
@@ -2294,15 +2198,15 @@
                     (SETQ |ISTMP#2| (CDR |ISTMP#1|))
                     (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
                          (PROGN (SETQ |i| (CAR |ISTMP#2|)) #1='T))))))
-            (RETURN (NREVERSE |bfVar#85|)))
-           (#1# (SETQ |bfVar#85| (CONS |w| |bfVar#85|))))))
+            (RETURN (NREVERSE |bfVar#82|)))
+           (#1# (SETQ |bfVar#82| (CONS |w| |bfVar#82|))))))
        NIL)))))
- 
+
 ; $dbDelimiters := [char " " , char "(", char ")"]
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$dbDelimiters| (LIST (|char| '| |) (|char| '|(|) (|char| '|)|))))
- 
+
 ; dbWordFrom(l,i) ==
 ;   maxIndex := MAXINDEX l
 ;   while maxIndex >= i and l.i = char " " repeat i := i + 1
@@ -2316,81 +2220,81 @@
 ;     buf := STRCONC(buf,ch)
 ;     k := k + 1
 ;   [buf,k]
- 
+
 (DEFUN |dbWordFrom| (|l| |i|)
   (PROG (|maxIndex| |k| |buf| |c| |ch|)
     (RETURN
      (PROGN
       (SETQ |maxIndex| (MAXINDEX |l|))
-      ((LAMBDA #1=()
+      ((LAMBDA ()
          (LOOP
           (COND
            ((NOT
              (AND (NOT (< |maxIndex| |i|))
                   (EQUAL (ELT |l| |i|) (|char| '| |))))
             (RETURN NIL))
-           (#2='T (SETQ |i| (+ |i| 1)))))))
+           (#1='T (SETQ |i| (+ |i| 1)))))))
       (COND
        ((AND (NOT (< |maxIndex| |i|)) (|member| (ELT |l| |i|) |$dbDelimiters|))
         (RETURN (LIST (ELT |l| |i|) (+ |i| 1)))))
       (SETQ |k|
               (OR
-               ((LAMBDA (|bfVar#86| |j|)
+               ((LAMBDA (|bfVar#83| |j|)
                   (LOOP
-                   (COND ((> |j| |maxIndex|) (RETURN |bfVar#86|))
-                         (#2#
+                   (COND ((> |j| |maxIndex|) (RETURN |bfVar#83|))
+                         (#1#
                           (AND (NULL (|member| (ELT |l| |j|) |$dbDelimiters|))
                                (PROGN
-                                (SETQ |bfVar#86| |j|)
-                                (COND (|bfVar#86| (RETURN |bfVar#86|)))))))
+                                (SETQ |bfVar#83| |j|)
+                                (COND (|bfVar#83| (RETURN |bfVar#83|)))))))
                    (SETQ |j| (+ |j| 1))))
                 NIL |i|)
                (RETURN NIL)))
       (SETQ |buf| "")
-      ((LAMBDA #1#
+      ((LAMBDA ()
          (LOOP
           (COND
            ((NOT
              (AND (NOT (< |maxIndex| |k|))
                   (NULL (|member| (SETQ |c| (ELT |l| |k|)) |$dbDelimiters|))))
             (RETURN NIL))
-           (#2#
+           (#1#
             (PROGN
              (SETQ |ch|
                      (COND
                       ((EQUAL |c| (|char| '_)) (ELT |l| (SETQ |k| (+ 1 |k|))))
-                      (#2# |c|)))
+                      (#1# |c|)))
              (SETQ |buf| (STRCONC |buf| |ch|))
              (SETQ |k| (+ |k| 1))))))))
       (LIST |buf| |k|)))))
- 
+
 ; conLowerCaseConTran x ==
 ;   IDENTP x => IFCAR HGET($lowerCaseConTb, x) or x
 ;   atom x   => x
 ;   [conLowerCaseConTran y for y in x]
- 
+
 (DEFUN |conLowerCaseConTran| (|x|)
   (PROG ()
     (RETURN
      (COND ((IDENTP |x|) (OR (IFCAR (HGET |$lowerCaseConTb| |x|)) |x|))
            ((ATOM |x|) |x|)
            (#1='T
-            ((LAMBDA (|bfVar#88| |bfVar#87| |y|)
+            ((LAMBDA (|bfVar#85| |bfVar#84| |y|)
                (LOOP
                 (COND
-                 ((OR (ATOM |bfVar#87|)
-                      (PROGN (SETQ |y| (CAR |bfVar#87|)) NIL))
-                  (RETURN (NREVERSE |bfVar#88|)))
+                 ((OR (ATOM |bfVar#84|)
+                      (PROGN (SETQ |y| (CAR |bfVar#84|)) NIL))
+                  (RETURN (NREVERSE |bfVar#85|)))
                  (#1#
-                  (SETQ |bfVar#88|
-                          (CONS (|conLowerCaseConTran| |y|) |bfVar#88|))))
-                (SETQ |bfVar#87| (CDR |bfVar#87|))))
+                  (SETQ |bfVar#85|
+                          (CONS (|conLowerCaseConTran| |y|) |bfVar#85|))))
+                (SETQ |bfVar#84| (CDR |bfVar#84|))))
              NIL |x| NIL))))))
- 
+
 ; string2Constructor x ==
 ;   not STRINGP x => x
 ;   IFCAR HGET($lowerCaseConTb, INTERN DOWNCASE x) or x
- 
+
 (DEFUN |string2Constructor| (|x|)
   (PROG ()
     (RETURN
@@ -2398,18 +2302,18 @@
            ('T
             (OR (IFCAR (HGET |$lowerCaseConTb| (INTERN (DOWNCASE |x|))))
                 |x|))))))
- 
+
 ; constructorSearchGrep(filter,key,kind) ==
 ;   dbSearch(grepConstruct(filter,key),kind,filter)
- 
+
 (DEFUN |constructorSearchGrep| (|filter| |key| |kind|)
   (PROG ()
     (RETURN (|dbSearch| (|grepConstruct| |filter| |key|) |kind| |filter|))))
- 
+
 ; grepSearchJump(htPage,yes) ==
 ;   [filter,key,kind,fn] := htpProperty(htPage,'items)
 ;   FUNCALL(fn,filter,key,kind)
- 
+
 (DEFUN |grepSearchJump| (|htPage| |yes|)
   (PROG (|LETTMP#1| |filter| |key| |kind| |fn|)
     (RETURN
@@ -2420,41 +2324,42 @@
       (SETQ |kind| (CADDR . #1#))
       (SETQ |fn| (CADDDR . #1#))
       (FUNCALL |fn| |filter| |key| |kind|)))))
- 
+
 ; dbSearch(lines,kind,filter) == --called by attribute, operation, constructor search
+;   kind = '"attribute" => BREAK()
 ;   lines is ['error,:.] => bcErrorPage lines
 ;   null filter => nil      --means filter error
 ;   lines is ['Abbreviations,:r] => dbSearchAbbrev(lines,kind,filter)
-;   if member(kind,'("attribute" "operation")) then --should not be necessary!!
+;   if kind = '"operation" then --should not be necessary!!
 ;     lines := dbScreenForDefaultFunctions lines
 ;   count := #lines
-;   count = 0 => emptySearchPage(kind,filter)
-;   member(kind,'("attribute" "operation")) => dbShowOperationLines(kind,lines)
+;   count = 0 => emptySearchPage(kind, filter, false)
+;   kind = '"operation" => dbShowOperationLines(kind, lines)
 ;   dbShowConstructorLines lines
- 
+
 (DEFUN |dbSearch| (|lines| |kind| |filter|)
   (PROG (|r| |count|)
     (RETURN
-     (COND
-      ((AND (CONSP |lines|) (EQ (CAR |lines|) '|error|))
-       (|bcErrorPage| |lines|))
-      ((NULL |filter|) NIL)
-      ((AND (CONSP |lines|) (EQ (CAR |lines|) '|Abbreviations|)
-            (PROGN (SETQ |r| (CDR |lines|)) #1='T))
-       (|dbSearchAbbrev| |lines| |kind| |filter|))
-      (#1#
-       (PROGN
-        (COND
-         ((|member| |kind| '("attribute" "operation"))
-          (SETQ |lines| (|dbScreenForDefaultFunctions| |lines|))))
-        (SETQ |count| (LENGTH |lines|))
-        (COND ((EQL |count| 0) (|emptySearchPage| |kind| |filter|))
-              ((|member| |kind| '("attribute" "operation"))
-               (|dbShowOperationLines| |kind| |lines|))
-              (#1# (|dbShowConstructorLines| |lines|)))))))))
- 
+     (COND ((EQUAL |kind| "attribute") (BREAK))
+           ((AND (CONSP |lines|) (EQ (CAR |lines|) '|error|))
+            (|bcErrorPage| |lines|))
+           ((NULL |filter|) NIL)
+           ((AND (CONSP |lines|) (EQ (CAR |lines|) '|Abbreviations|)
+                 (PROGN (SETQ |r| (CDR |lines|)) #1='T))
+            (|dbSearchAbbrev| |lines| |kind| |filter|))
+           (#1#
+            (PROGN
+             (COND
+              ((EQUAL |kind| "operation")
+               (SETQ |lines| (|dbScreenForDefaultFunctions| |lines|))))
+             (SETQ |count| (LENGTH |lines|))
+             (COND ((EQL |count| 0) (|emptySearchPage| |kind| |filter| NIL))
+                   ((EQUAL |kind| "operation")
+                    (|dbShowOperationLines| |kind| |lines|))
+                   (#1# (|dbShowConstructorLines| |lines|)))))))))
+
 ; dbSearchAbbrev([.,:conlist],kind,filter) ==
-;   null conlist => emptySearchPage('"abbreviation",filter)
+;   null conlist => emptySearchPage('"abbreviation", filter, false)
 ;   kind := intern kind
 ;   if kind ~= 'constructor then
 ;     conlist := [x for x in conlist | LASSOC('kind,IFCDR IFCDR x) = kind]
@@ -2468,38 +2373,38 @@
 ;     '" Abbreviations Match {\em ",STRINGIMAGE filter,'"}"],nil)
 ;   for [nam,abbr,:r] in conlist repeat
 ;     kind := LASSOC('kind,r)
-;     htSay('"\newline{\em ",s := STRINGIMAGE abbr)
+;     htSayList(['"\newline{\em ", s := STRINGIMAGE abbr])
 ;     htSayStandard '"\tab{10}"
 ;     htSay '"}"
 ;     htSay kind
 ;     htSayStandard '"\tab{19}"
 ;     bcCon nam
 ;   htShowPage()
- 
-(DEFUN |dbSearchAbbrev| (|bfVar#95| |kind| |filter|)
+
+(DEFUN |dbSearchAbbrev| (|bfVar#92| |kind| |filter|)
   (PROG (|conlist| |ISTMP#1| |nam| |cAlist| |htPage| |page| |abbr| |r| |s|)
     (RETURN
      (PROGN
-      (SETQ |conlist| (CDR |bfVar#95|))
-      (COND ((NULL |conlist|) (|emptySearchPage| "abbreviation" |filter|))
+      (SETQ |conlist| (CDR |bfVar#92|))
+      (COND ((NULL |conlist|) (|emptySearchPage| "abbreviation" |filter| NIL))
             (#1='T
              (PROGN
               (SETQ |kind| (|intern| |kind|))
               (COND
                ((NOT (EQ |kind| '|constructor|))
                 (SETQ |conlist|
-                        ((LAMBDA (|bfVar#90| |bfVar#89| |x|)
+                        ((LAMBDA (|bfVar#87| |bfVar#86| |x|)
                            (LOOP
                             (COND
-                             ((OR (ATOM |bfVar#89|)
-                                  (PROGN (SETQ |x| (CAR |bfVar#89|)) NIL))
-                              (RETURN (NREVERSE |bfVar#90|)))
+                             ((OR (ATOM |bfVar#86|)
+                                  (PROGN (SETQ |x| (CAR |bfVar#86|)) NIL))
+                              (RETURN (NREVERSE |bfVar#87|)))
                              (#1#
                               (AND
                                (EQUAL (LASSOC '|kind| (IFCDR (IFCDR |x|)))
                                       |kind|)
-                               (SETQ |bfVar#90| (CONS |x| |bfVar#90|)))))
-                            (SETQ |bfVar#89| (CDR |bfVar#89|))))
+                               (SETQ |bfVar#87| (CONS |x| |bfVar#87|)))))
+                            (SETQ |bfVar#86| (CDR |bfVar#86|))))
                          NIL |conlist| NIL))))
               (COND
                ((AND (CONSP |conlist|) (EQ (CDR |conlist|) NIL)
@@ -2511,16 +2416,16 @@
                (#1#
                 (PROGN
                  (SETQ |cAlist|
-                         ((LAMBDA (|bfVar#92| |bfVar#91| |con|)
+                         ((LAMBDA (|bfVar#89| |bfVar#88| |con|)
                             (LOOP
                              (COND
-                              ((OR (ATOM |bfVar#91|)
-                                   (PROGN (SETQ |con| (CAR |bfVar#91|)) NIL))
-                               (RETURN (NREVERSE |bfVar#92|)))
+                              ((OR (ATOM |bfVar#88|)
+                                   (PROGN (SETQ |con| (CAR |bfVar#88|)) NIL))
+                               (RETURN (NREVERSE |bfVar#89|)))
                               (#1#
-                               (SETQ |bfVar#92|
-                                       (CONS (CONS |con| T) |bfVar#92|))))
-                             (SETQ |bfVar#91| (CDR |bfVar#91|))))
+                               (SETQ |bfVar#89|
+                                       (CONS (CONS |con| T) |bfVar#89|))))
+                             (SETQ |bfVar#88| (CDR |bfVar#88|))))
                           NIL |conlist| NIL))
                  (SETQ |htPage| (|htInitPage| "" NIL))
                  (|htpSetProperty| |htPage| '|cAlist| |cAlist|)
@@ -2532,17 +2437,17 @@
                                 " Abbreviations Match {\\em "
                                 (STRINGIMAGE |filter|) "}")
                           NIL))
-                 ((LAMBDA (|bfVar#94| |bfVar#93|)
+                 ((LAMBDA (|bfVar#91| |bfVar#90|)
                     (LOOP
                      (COND
-                      ((OR (ATOM |bfVar#94|)
-                           (PROGN (SETQ |bfVar#93| (CAR |bfVar#94|)) NIL))
+                      ((OR (ATOM |bfVar#91|)
+                           (PROGN (SETQ |bfVar#90| (CAR |bfVar#91|)) NIL))
                        (RETURN NIL))
                       (#1#
-                       (AND (CONSP |bfVar#93|)
+                       (AND (CONSP |bfVar#90|)
                             (PROGN
-                             (SETQ |nam| (CAR |bfVar#93|))
-                             (SETQ |ISTMP#1| (CDR |bfVar#93|))
+                             (SETQ |nam| (CAR |bfVar#90|))
+                             (SETQ |ISTMP#1| (CDR |bfVar#90|))
                              (AND (CONSP |ISTMP#1|)
                                   (PROGN
                                    (SETQ |abbr| (CAR |ISTMP#1|))
@@ -2550,17 +2455,18 @@
                                    #1#)))
                             (PROGN
                              (SETQ |kind| (LASSOC '|kind| |r|))
-                             (|htSay| "\\newline{\\em "
-                              (SETQ |s| (STRINGIMAGE |abbr|)))
+                             (|htSayList|
+                              (LIST "\\newline{\\em "
+                                    (SETQ |s| (STRINGIMAGE |abbr|))))
                              (|htSayStandard| "\\tab{10}")
                              (|htSay| "}")
                              (|htSay| |kind|)
                              (|htSayStandard| "\\tab{19}")
                              (|bcCon| |nam|)))))
-                     (SETQ |bfVar#94| (CDR |bfVar#94|))))
+                     (SETQ |bfVar#91| (CDR |bfVar#91|))))
                   |conlist| NIL)
                  (|htShowPage|)))))))))))
- 
+
 ; detailedSearch(filter) ==
 ;   page := htInitPage('"Detailed Search with Options",nil)
 ;   filter   := escapeSpecialChars PNAME filter
@@ -2577,13 +2483,6 @@
 ;           (text . " signature") (bcStrings (14 "*" opsig EM))
 ;           (text . "\vspace{1}\newline "))
 ;          ops)
-;       (  "\tab{3}{\em Attributes}"
-;          ((text . "\newline\space{3}")
-;           (text . "name")       (bcStrings (14 "*" attrname EM))
-;           (text . " \#args ")   (bcStrings (1  "*" attrnargs EM))
-;           (text . " arguments ")(bcStrings (14 "*" attrargs EM))
-;           (text . "\vspace{1}\newline "))
-;          attrs)
 ;       (  "\tab{3}{\em Constructors}"
 ;          ((text . "\tab{17}")
 ;           (bcButtons (1 cats)) (text . " {\em categories} ")
@@ -2605,7 +2504,7 @@
 ;     (bcLinks ("\box{Search}" "" generalSearchDo NIL))
 ;     (text . "}"))
 ;   htShowPage()
- 
+
 (DEFUN |detailedSearch| (|filter|)
   (PROG (|page|)
     (RETURN
@@ -2627,13 +2526,6 @@
             (|bcStrings| (14 "*" |opsig| EM))
             (|text| . "\\vspace{1}\\newline "))
            |ops|)
-          ("\\tab{3}{\\em Attributes}"
-           ((|text| . "\\newline\\space{3}") (|text| . "name")
-            (|bcStrings| (14 "*" |attrname| EM)) (|text| . " \\#args ")
-            (|bcStrings| (1 "*" |attrnargs| EM)) (|text| . " arguments ")
-            (|bcStrings| (14 "*" |attrargs| EM))
-            (|text| . "\\vspace{1}\\newline "))
-           |attrs|)
           ("\\tab{3}{\\em Constructors}"
            ((|text| . "\\tab{17}") (|bcButtons| (1 |cats|))
             (|text| . " {\\em categories} ") (|bcButtons| (1 |doms|))
@@ -2649,7 +2541,7 @@
          (|bcLinks| ("\\box{Search}" "" |generalSearchDo| NIL))
          (|text| . "}")))
       (|htShowPage|)))))
- 
+
 ; generalSearchDo(htPage,flag) ==
 ; --$exposedOnlyIfTrue := (flag => 'T; nil)
 ;   $htPage := htPage
@@ -2658,13 +2550,15 @@
 ;   selectors :=
 ;     which = 'cons => '(conname connargs consig)
 ;     which = 'ops  => '(opname  opnargs  opsig)
-;     '(attrname attrnargs attrargs)
+;     BREAK()
 ;   name := generalSearchString(htPage,selectors.0)
 ;   nargs:= generalSearchString(htPage,selectors.1)
 ;   npat := standardizeSignature generalSearchString(htPage,selectors.2)
 ;   kindCode :=
 ;     which = 'ops => char 'o
-;     which = 'attrs => char 'a
+;     which = 'attrs =>
+;         BREAK()
+;         char 'a
 ;     acc := '""
 ;     if htButtonOn?(htPage,'cats) then acc := STRCONC(char 'c,acc)
 ;     if htButtonOn?(htPage,'doms) then acc := STRCONC(char 'd,acc)
@@ -2676,7 +2570,6 @@
 ;     STRCONC(char '_[,acc,char '_])
 ;   form := mkDetailedGrepPattern(kindCode,name,nargs,npat)
 ;   lines := applyGrep(form,'libdb)
-; --lines := dbReadLines resultFile
 ;   if MEMQ(which,'(ops attrs)) then lines := dbScreenForDefaultFunctions lines
 ;   kind :=
 ;     which = 'cons =>
@@ -2687,10 +2580,10 @@
 ;         '"default package"
 ;       '"constructor"
 ;     which = 'ops  => '"operation"
-;     '"attribute"
-;   null lines => emptySearchPage(kind,nil)
+;     BREAK()
+;   null lines => emptySearchPage(kind, nil, false)
 ;   dbSearch(lines,kind,'"filter")
- 
+
 (DEFUN |generalSearchDo| (|htPage| |flag|)
   (PROG (|alist| |which| |selectors| |name| |nargs| |npat| |acc| |n| |kindCode|
          |form| |lines| |kind|)
@@ -2702,7 +2595,7 @@
       (SETQ |selectors|
               (COND ((EQ |which| '|cons|) '(|conname| |connargs| |consig|))
                     ((EQ |which| '|ops|) '(|opname| |opnargs| |opsig|))
-                    (#1='T '(|attrname| |attrnargs| |attrargs|))))
+                    (#1='T (BREAK))))
       (SETQ |name| (|generalSearchString| |htPage| (ELT |selectors| 0)))
       (SETQ |nargs| (|generalSearchString| |htPage| (ELT |selectors| 1)))
       (SETQ |npat|
@@ -2710,7 +2603,7 @@
                (|generalSearchString| |htPage| (ELT |selectors| 2))))
       (SETQ |kindCode|
               (COND ((EQ |which| '|ops|) (|char| '|o|))
-                    ((EQ |which| '|attrs|) (|char| '|a|))
+                    ((EQ |which| '|attrs|) (PROGN (BREAK) (|char| '|a|)))
                     (#1#
                      (PROGN
                       (SETQ |acc| "")
@@ -2745,25 +2638,25 @@
                         ((|htButtonOn?| |htPage| '|paks|) "package")
                         (#1# "default package")))
                  (#1# "constructor")))
-               ((EQ |which| '|ops|) "operation") (#1# "attribute")))
-      (COND ((NULL |lines|) (|emptySearchPage| |kind| NIL))
+               ((EQ |which| '|ops|) "operation") (#1# (BREAK))))
+      (COND ((NULL |lines|) (|emptySearchPage| |kind| NIL NIL))
             (#1# (|dbSearch| |lines| |kind| "filter")))))))
- 
+
 ; generalSearchString(htPage,sel) ==
 ;   string := htpLabelInputString(htPage,sel)
 ;   string = '"" => '"*"
 ;   string
- 
+
 (DEFUN |generalSearchString| (|htPage| |sel|)
   (PROG (|string|)
     (RETURN
      (PROGN
       (SETQ |string| (|htpLabelInputString| |htPage| |sel|))
       (COND ((EQUAL |string| "") "*") ('T |string|))))))
- 
+
 ; htButtonOn?(htPage,key) ==
 ;   LASSOC(key,htpInputAreaAlist htPage) is [a,:.] and a = '" t"
- 
+
 (DEFUN |htButtonOn?| (|htPage| |key|)
   (PROG (|ISTMP#1| |a|)
     (RETURN
@@ -2772,14 +2665,12 @@
        (SETQ |ISTMP#1| (LASSOC |key| (|htpInputAreaAlist| |htPage|)))
        (AND (CONSP |ISTMP#1|) (PROGN (SETQ |a| (CAR |ISTMP#1|)) 'T)))
       (EQUAL |a| " t")))))
- 
+
 ; mkDetailedGrepPattern(kind,name,nargs,argOrSig) == main where
 ;   main ==
 ;     nottick := '"[^`]"
 ;     name := replaceGrepStar name
-;     firstPart :=
-;       $saturn => STRCONC(char '_^,name)
-;       STRCONC(char '_^,kind,name)
+;     firstPart := STRCONC(char '_^,kind,name)
 ;     nargsPart := replaceGrepStar nargs
 ;     exposedPart := char '_.   --always get exposed/unexposed
 ;     patPart := replaceGrepStar argOrSig
@@ -2794,16 +2685,14 @@
 ;           and a.(m-1) = char '_* and a.m = $tick
 ;             => simp SUBSTRING(a,0,m-5)
 ;     a
- 
+
 (DEFUN |mkDetailedGrepPattern| (|kind| |name| |nargs| |argOrSig|)
   (PROG (|nottick| |firstPart| |nargsPart| |exposedPart| |patPart|)
     (RETURN
      (PROGN
       (SETQ |nottick| "[^`]")
       (SETQ |name| (|replaceGrepStar| |name|))
-      (SETQ |firstPart|
-              (COND (|$saturn| (STRCONC (|char| '^) |name|))
-                    ('T (STRCONC (|char| '^) |kind| |name|))))
+      (SETQ |firstPart| (STRCONC (|char| '^) |kind| |name|))
       (SETQ |nargsPart| (|replaceGrepStar| |nargs|))
       (SETQ |exposedPart| (|char| '|.|))
       (SETQ |patPart| (|replaceGrepStar| |argOrSig|))
@@ -2832,14 +2721,14 @@
              (EQUAL (ELT |a| |m|) |$tick|))
         (|mkDetailedGrepPattern,simp| (SUBSTRING |a| 0 (- |m| 5))))
        ('T |a|))))))
- 
+
 ; replaceGrepStar s ==
 ;   s = "" => s
 ;   final := MAXINDEX s
 ;   i := charPosition(char '_*,s,0)
 ;   i > final => s
 ;   STRCONC(SUBSTRING(s,0,i),'"[^`]*",replaceGrepStar SUBSTRING(s,i + 1,nil))
- 
+
 (DEFUN |replaceGrepStar| (|s|)
   (PROG (|final| |i|)
     (RETURN
@@ -2852,13 +2741,13 @@
                    (#1#
                     (STRCONC (SUBSTRING |s| 0 |i|) "[^`]*"
                      (|replaceGrepStar| (SUBSTRING |s| (+ |i| 1) NIL)))))))))))
- 
+
 ; standardizeSignature(s) == underscoreDollars
 ;   s.0 = char '_( => s
 ;   k := STRPOS('"->",s,0,nil) or return s --will fail except perhaps on constants
 ;   s.(k - 1) = char '_) => STRCONC(char '_(,s)
 ;   STRCONC(char '_(,SUBSTRING(s,0,k),char '_),SUBSTRING(s,k,nil))
- 
+
 (DEFUN |standardizeSignature| (|s|)
   (PROG (|k|)
     (RETURN
@@ -2873,13 +2762,13 @@
                (#1#
                 (STRCONC (|char| '|(|) (SUBSTRING |s| 0 |k|) (|char| '|)|)
                  (SUBSTRING |s| |k| NIL)))))))))))
- 
+
 ; underscoreDollars(s) == fn(s,0,MAXINDEX s) where
 ;   fn(s,i,n) ==
 ;     i > n => '""
 ;     (m := charPosition(char '_$,s,i)) > n => SUBSTRING(s,i,nil)
 ;     STRCONC(SUBSTRING(s,i,m - i),'"___$",fn(s,m + 1,n))
- 
+
 (DEFUN |underscoreDollars| (|s|)
   (PROG () (RETURN (|underscoreDollars,fn| |s| 0 (MAXINDEX |s|)))))
 (DEFUN |underscoreDollars,fn| (|s| |i| |n|)
@@ -2891,59 +2780,57 @@
            ('T
             (STRCONC (SUBSTRING |s| |i| (- |m| |i|)) "_$"
              (|underscoreDollars,fn| |s| (+ |m| 1) |n|)))))))
- 
+
 ; getTempPath kind == mkGrepFile kind
- 
+
 (DEFUN |getTempPath| (|kind|) (PROG () (RETURN (|mkGrepFile| |kind|))))
- 
-; dbWriteLines(s, :options) ==
-;   pathname := IFCAR options or getTempPath 'source
-;   $outStream: local := MAKE_-OUTSTREAM pathname
+
+; dbWriteLines(s, pathname) ==
+;   $outStream : local := MAKE_OUTSTREAM(pathname)
 ;   for x in s repeat writedb x
 ;   SHUT $outStream
 ;   pathname
- 
-(DEFUN |dbWriteLines| (|s| &REST |options|)
-  (PROG (|$outStream| |pathname|)
+
+(DEFUN |dbWriteLines| (|s| |pathname|)
+  (PROG (|$outStream|)
     (DECLARE (SPECIAL |$outStream|))
     (RETURN
      (PROGN
-      (SETQ |pathname| (OR (IFCAR |options|) (|getTempPath| '|source|)))
-      (SETQ |$outStream| (MAKE-OUTSTREAM |pathname|))
-      ((LAMBDA (|bfVar#96| |x|)
+      (SETQ |$outStream| (MAKE_OUTSTREAM |pathname|))
+      ((LAMBDA (|bfVar#93| |x|)
          (LOOP
           (COND
-           ((OR (ATOM |bfVar#96|) (PROGN (SETQ |x| (CAR |bfVar#96|)) NIL))
+           ((OR (ATOM |bfVar#93|) (PROGN (SETQ |x| (CAR |bfVar#93|)) NIL))
             (RETURN NIL))
            ('T (|writedb| |x|)))
-          (SETQ |bfVar#96| (CDR |bfVar#96|))))
+          (SETQ |bfVar#93| (CDR |bfVar#93|))))
        |s| NIL)
       (SHUT |$outStream|)
       |pathname|))))
- 
+
 ; dbReadLines target == --AIX only--called by grepFile
 ;   instream := OPEN target
 ;   lines := [read_line instream while not EOFP instream]
 ;   CLOSE instream
 ;   lines
- 
+
 (DEFUN |dbReadLines| (|target|)
   (PROG (|instream| |lines|)
     (RETURN
      (PROGN
       (SETQ |instream| (OPEN |target|))
       (SETQ |lines|
-              ((LAMBDA (|bfVar#97|)
+              ((LAMBDA (|bfVar#94|)
                  (LOOP
-                  (COND ((EOFP |instream|) (RETURN (NREVERSE |bfVar#97|)))
+                  (COND ((EOFP |instream|) (RETURN (NREVERSE |bfVar#94|)))
                         ('T
-                         (SETQ |bfVar#97|
+                         (SETQ |bfVar#94|
                                  (CONS (|read_line| |instream|)
-                                       |bfVar#97|))))))
+                                       |bfVar#94|))))))
                NIL))
       (CLOSE |instream|)
       |lines|))))
- 
+
 ; dbGetCommentOrigin line ==
 ; --Given a comment line in comdb, returns line in libdb pointing to it
 ; --Comment lines have format  [dcpxoa]xxxxxx`ccccc... where
@@ -2956,7 +2843,7 @@
 ;   line := read_line instream
 ;   CLOSE instream
 ;   line
- 
+
 (DEFUN |dbGetCommentOrigin| (|line|)
   (PROG (|firstPart| |key| |address| |instream|)
     (RETURN
@@ -2969,7 +2856,7 @@
       (SETQ |line| (|read_line| |instream|))
       (CLOSE |instream|)
       |line|))))
- 
+
 ; grepSource key ==
 ;   key = 'libdb   => STRCONC($SPADROOT,'"/algebra/libdb.text")
 ;   key = 'gloss   => STRCONC($SPADROOT,'"/algebra/glosskey.text")
@@ -2977,7 +2864,7 @@
 ;   mkGrepTextfile
 ;     MEMQ(key, '(_. a c d k o p x)) => 'libdb
 ;     'comdb
- 
+
 (DEFUN |grepSource| (|key|)
   (PROG ()
     (RETURN
@@ -2988,36 +2875,30 @@
             (|mkGrepTextfile|
              (COND ((MEMQ |key| '(|.| |a| |c| |d| |k| |o| |p| |x|)) '|libdb|)
                    (#1# '|comdb|))))))))
- 
+
 ; mkGrepTextfile s == STRCONC($SPADROOT,"/algebra/", STRINGIMAGE s, '".text")
- 
+
 (DEFUN |mkGrepTextfile| (|s|)
   (PROG () (RETURN (STRCONC $SPADROOT '|/algebra/| (STRINGIMAGE |s|) ".text"))))
- 
+
 ; mkGrepFile s ==  --called to generate a path name for a temporary grep file
-;   prefix :=
-;     $standard or $aixTestSaturn => '"/tmp/"
-;     STRCONC($SPADROOT,'"/algebra/")
+;   prefix := '"/tmp/"
 ;   suffix := getEnv '"SPADNUM"
 ;   STRCONC(prefix, PNAME s,'".txt.", suffix)
- 
+
 (DEFUN |mkGrepFile| (|s|)
   (PROG (|prefix| |suffix|)
     (RETURN
      (PROGN
-      (SETQ |prefix|
-              (COND ((OR |$standard| |$aixTestSaturn|) "/tmp/")
-                    ('T (STRCONC $SPADROOT "/algebra/"))))
+      (SETQ |prefix| "/tmp/")
       (SETQ |suffix| (|getEnv| "SPADNUM"))
       (STRCONC |prefix| (PNAME |s|) ".txt." |suffix|)))))
- 
+
 ; grepFile(pattern, key, option) ==
 ;   options := [option]
 ;   source := grepSource key
 ;   lines :=
-;     not PROBE_-FILE source => NIL
-;     $standard or $aixTestSaturn =>
-;     -----AIX Version----------
+;       not PROBE_-FILE source => NIL
 ;       target := getTempPath 'target
 ;       casepart :=
 ;         MEMQ('iv,options)=> '"-vi"
@@ -3025,36 +2906,29 @@
 ;       command := STRCONC('"grep ", casepart, '" '", pattern, '"' ", source)
 ;       OBEY STRCONC(command, '" > ",target)
 ;       dbReadLines target
-;     ----Windows Version------
-;     invert? := MEMQ('iv, options)
-;     GREP(source, pattern, false, not invert?)
+;       -- deleteFile target
 ;   dbUnpatchLines lines
- 
+
 (DEFUN |grepFile| (|pattern| |key| |option|)
-  (PROG (|options| |source| |target| |casepart| |command| |invert?| |lines|)
+  (PROG (|options| |source| |target| |casepart| |command| |lines|)
     (RETURN
      (PROGN
       (SETQ |options| (LIST |option|))
       (SETQ |source| (|grepSource| |key|))
       (SETQ |lines|
               (COND ((NULL (PROBE-FILE |source|)) NIL)
-                    ((OR |$standard| |$aixTestSaturn|)
+                    (#1='T
                      (PROGN
                       (SETQ |target| (|getTempPath| '|target|))
                       (SETQ |casepart|
-                              (COND ((MEMQ '|iv| |options|) "-vi")
-                                    (#1='T "-i")))
+                              (COND ((MEMQ '|iv| |options|) "-vi") (#1# "-i")))
                       (SETQ |command|
                               (STRCONC "grep " |casepart| " '" |pattern| "' "
                                |source|))
                       (OBEY (STRCONC |command| " > " |target|))
-                      (|dbReadLines| |target|)))
-                    (#1#
-                     (PROGN
-                      (SETQ |invert?| (MEMQ '|iv| |options|))
-                      (GREP |source| |pattern| NIL (NULL |invert?|))))))
+                      (|dbReadLines| |target|)))))
       (|dbUnpatchLines| |lines|)))))
- 
+
 ; dbUnpatchLines lines ==  --concatenate long lines together, skip blank lines
 ;   dash := char '_-
 ;   acc := nil
@@ -3066,7 +2940,7 @@
 ;       [line,:acc]
 ;   -- following call to NREVERSE needed to keep lines properly sorted
 ;   NREVERSE acc  ------> added by BMT 12/95
- 
+
 (DEFUN |dbUnpatchLines| (|lines|)
   (PROG (|dash| |acc| |line|)
     (RETURN

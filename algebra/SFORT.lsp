@@ -2,56 +2,53 @@
 (PUT '|SFORT;fortran;SFstFS$;1| '|SPADreplace| 'VECTOR) 
 
 (SDEFUN |SFORT;fortran;SFstFS$;1|
-        ((|fname| |Symbol|) (|ftype| |FortranScalarType|) (|res| FS) ($ $))
+        ((|fname| (|Symbol|)) (|ftype| (|FortranScalarType|)) (|res| (FS))
+         ($ ($)))
         (VECTOR |fname| |ftype| |res|)) 
 
 (PUT '|SFORT;nameOf| '|SPADreplace| '(XLAM (|u|) (QVELT |u| 0))) 
 
-(SDEFUN |SFORT;nameOf| ((|u| $) ($ |Symbol|)) (QVELT |u| 0)) 
+(SDEFUN |SFORT;nameOf| ((|u| ($)) ($ (|Symbol|))) (QVELT |u| 0)) 
 
-(SDEFUN |SFORT;typeOf| ((|u| $) ($ |Union| (|FortranScalarType|) "void"))
+(SDEFUN |SFORT;typeOf| ((|u| ($)) ($ (|Union| (|FortranScalarType|) "void")))
         (CONS 0 (QVELT |u| 1))) 
 
 (PUT '|SFORT;bodyOf| '|SPADreplace| '(XLAM (|u|) (QVELT |u| 2))) 
 
-(SDEFUN |SFORT;bodyOf| ((|u| $) ($ FS)) (QVELT |u| 2)) 
+(SDEFUN |SFORT;bodyOf| ((|u| ($)) ($ (FS))) (QVELT |u| 2)) 
 
-(SDEFUN |SFORT;argumentsOf| ((|u| $) ($ |List| (|Symbol|)))
+(SDEFUN |SFORT;argumentsOf| ((|u| ($)) ($ (|List| (|Symbol|))))
         (SPADCALL (|SFORT;bodyOf| |u| $) (QREFELT $ 13))) 
 
-(SDEFUN |SFORT;coerce;$Of;6| ((|u| $) ($ |OutputForm|))
+(SDEFUN |SFORT;coerce;$Of;6| ((|u| ($)) ($ (|OutputForm|)))
         (SPADCALL (|SFORT;nameOf| |u| $) (QREFELT $ 15))) 
 
-(SDEFUN |SFORT;outputAsFortran;$V;7| ((|u| $) ($ |Void|))
+(SDEFUN |SFORT;outputAsFortran;$V;7| ((|u| ($)) ($ (|Void|)))
         (SPROG
          ((|val| (|OutputForm|)) (|nargs| (|List| (|OutputForm|)))
-          (#1=#:G725 NIL) (|arg| NIL) (#2=#:G724 NIL)
+          (#1=#:G721 NIL) (|arg| NIL) (#2=#:G720 NIL)
           (|args| (|List| (|Symbol|))) (|fname| (|Symbol|))
           (|ftype_s| (|String|)) (|ftype| (|FortranScalarType|)))
-         (SEQ (LETT |ftype| (QVELT |u| 1) . #3=(|SFORT;outputAsFortran;$V;7|))
+         (SEQ (LETT |ftype| (QVELT |u| 1))
               (LETT |ftype_s|
-                    (SPADCALL (SPADCALL |ftype| (QREFELT $ 18)) (QREFELT $ 20))
-                    . #3#)
-              (LETT |fname| (|SFORT;nameOf| |u| $) . #3#)
-              (LETT |args| (|SFORT;argumentsOf| |u| $) . #3#)
+                    (SPADCALL (SPADCALL |ftype| (QREFELT $ 18))
+                              (QREFELT $ 20)))
+              (LETT |fname| (|SFORT;nameOf| |u| $))
+              (LETT |args| (|SFORT;argumentsOf| |u| $))
               (LETT |nargs|
                     (PROGN
-                     (LETT #2# NIL . #3#)
-                     (SEQ (LETT |arg| NIL . #3#) (LETT #1# |args| . #3#) G190
+                     (LETT #2# NIL)
+                     (SEQ (LETT |arg| NIL) (LETT #1# |args|) G190
                           (COND
-                           ((OR (ATOM #1#)
-                                (PROGN (LETT |arg| (CAR #1#) . #3#) NIL))
+                           ((OR (ATOM #1#) (PROGN (LETT |arg| (CAR #1#)) NIL))
                             (GO G191)))
                           (SEQ
                            (EXIT
                             (LETT #2#
-                                  (CONS (SPADCALL |arg| (QREFELT $ 15)) #2#)
-                                  . #3#)))
-                          (LETT #1# (CDR #1#) . #3#) (GO G190) G191
-                          (EXIT (NREVERSE #2#))))
-                    . #3#)
-              (LETT |val| (SPADCALL (|SFORT;bodyOf| |u| $) (QREFELT $ 21))
-                    . #3#)
+                                  (CONS (SPADCALL |arg| (QREFELT $ 15)) #2#))))
+                          (LETT #1# (CDR #1#)) (GO G190) G191
+                          (EXIT (NREVERSE #2#)))))
+              (LETT |val| (SPADCALL (|SFORT;bodyOf| |u| $) (QREFELT $ 21)))
               (SPADCALL |fname| (CONS 0 |ftype|) |args| (QREFELT $ 24))
               (SPADCALL |ftype_s| |nargs| (QREFELT $ 26))
               (|dispfortexp1|
@@ -62,22 +59,21 @@
 
 (DECLAIM (NOTINLINE |SimpleFortranProgram;|)) 
 
-(DEFUN |SimpleFortranProgram| (&REST #1=#:G726)
+(DEFUN |SimpleFortranProgram| (&REST #1=#:G722)
   (SPROG NIL
-         (PROG (#2=#:G727)
+         (PROG (#2=#:G723)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|SimpleFortranProgram|)
-                                               '|domainEqualList|)
-                    . #3=(|SimpleFortranProgram|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |SimpleFortranProgram;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|SimpleFortranProgram|)))))))))) 
@@ -85,12 +81,12 @@
 (DEFUN |SimpleFortranProgram;| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|SimpleFortranProgram|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|SimpleFortranProgram| DV$1 DV$2) . #1#)
-          (LETT $ (GETREFV 30) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|SimpleFortranProgram| DV$1 DV$2))
+          (LETT $ (GETREFV 30))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|SimpleFortranProgram|
                       (LIST DV$1 DV$2) (CONS 1 $))
           (|stuffDomainSlots| $)

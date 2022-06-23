@@ -1,13 +1,13 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; getSignatureDocumentation(lineno) ==
 ;     $docList : local := nil
 ;     recordDocumentation("Signature", lineno)
 ;     rest first $docList
- 
+
 (DEFUN |getSignatureDocumentation| (|lineno|)
   (PROG (|$docList|)
     (DECLARE (SPECIAL |$docList|))
@@ -16,18 +16,18 @@
       (SETQ |$docList| NIL)
       (|recordDocumentation| '|Signature| |lineno|)
       (CDR (CAR |$docList|))))))
- 
+
 ; record_on_docList(key, item) ==
 ;     $docList := [[key, :item], :$docList]
- 
+
 (DEFUN |record_on_docList| (|key| |item|)
   (PROG () (RETURN (SETQ |$docList| (CONS (CONS |key| |item|) |$docList|)))))
- 
-; recordAttributeDocumentation(['Attribute,att],lineno) ==
+
+; recordAttributeDocumentation(['ATTRIBUTE, att], lineno) ==
 ;   name := opOf att
 ;   UPPER_-CASE_-P (PNAME name).0 => nil
 ;   recordDocumentation([name,['attribute,:IFCDR postTransform att]],lineno)
- 
+
 (DEFUN |recordAttributeDocumentation| (|bfVar#1| |lineno|)
   (PROG (|att| |name|)
     (RETURN
@@ -39,14 +39,14 @@
              (|recordDocumentation|
               (LIST |name| (CONS '|attribute| (IFCDR (|postTransform| |att|))))
               |lineno|)))))))
- 
+
 ; recordDocumentation(key,lineno) ==
 ;   recordHeaderDocumentation lineno
 ;   u:= collectComBlock lineno
 ;   --record NIL to mean "there was no documentation"
 ;   $maxSignatureLineNumber := lineno
 ;   $docList := [[key,:u],:$docList]
- 
+
 (DEFUN |recordDocumentation| (|key| |lineno|)
   (PROG (|u|)
     (RETURN
@@ -55,7 +55,7 @@
       (SETQ |u| (|collectComBlock| |lineno|))
       (SETQ |$maxSignatureLineNumber| |lineno|)
       (SETQ |$docList| (CONS (CONS |key| |u|) |$docList|))))))
- 
+
 ; recordHeaderDocumentation lineno ==
 ;   if $maxSignatureLineNumber = 0 then
 ;     al := [p for (p := [n,:u]) in $COMBLOCKLIST
@@ -64,7 +64,7 @@
 ;     $headerDocumentation := ASSOCRIGHT al
 ;     if $headerDocumentation then $maxSignatureLineNumber := 1 --see postDef
 ;     $headerDocumentation
- 
+
 (DEFUN |recordHeaderDocumentation| (|lineno|)
   (PROG (|n| |u| |al|)
     (RETURN
@@ -88,14 +88,14 @@
        (SETQ |$headerDocumentation| (ASSOCRIGHT |al|))
        (COND (|$headerDocumentation| (SETQ |$maxSignatureLineNumber| 1)))
        |$headerDocumentation|)))))
- 
+
 ; collectComBlock x ==
 ;   $COMBLOCKLIST is [[=x,:val],:.] =>
 ;     u := [:val,:collectAndDeleteAssoc x]
 ;     $COMBLOCKLIST := rest $COMBLOCKLIST
 ;     u
 ;   collectAndDeleteAssoc x
- 
+
 (DEFUN |collectComBlock| (|x|)
   (PROG (|ISTMP#1| |val| |u|)
     (RETURN
@@ -110,7 +110,7 @@
         (SETQ $COMBLOCKLIST (CDR $COMBLOCKLIST))
         |u|))
       (#1# (|collectAndDeleteAssoc| |x|))))))
- 
+
 ; collectAndDeleteAssoc x ==
 ; --u is (.. (x . a) .. (x . b) .. )  ==> (a b ..) deleting entries from u
 ; --assumes that the first element is useless
@@ -120,7 +120,7 @@
 ;       s := rest s
 ;       RPLACD(y,s)
 ;   res
- 
+
 (DEFUN |collectAndDeleteAssoc| (|x|)
   (PROG (|s| |ISTMP#1| |r| |res|)
     (RETURN
@@ -151,7 +151,7 @@
           (SETQ |y| (CDR |y|))))
        $COMBLOCKLIST)
       |res|))))
- 
+
 ; finalizeDocumentation() ==
 ;   -- skip during bootstrap to save time
 ;   $bootStrapMode => []
@@ -189,17 +189,16 @@
 ;         say_msg('"%1 The constructor %2b has incorrectly placed documentation.",[STRCONC(STRINGIMAGE bigcnt,'"."),name])
 ;         for [n,r] in unusedCommentLineNumbers repeat
 ;           sayMSG ['"   ",:bright n,'"   ",r]
-;   hn [[:fn(sig,$e),:doc] for [sig,:doc] in docList] where
-;     fn(x,e) ==
+;   hn([[:fn(sig), :doc] for [sig, :doc] in docList]) where
+;     fn(x) ==
 ;       atom x => [x,nil]
 ;       if #x > 2 then x := TAKE(2,x)
-;       SUBLISLIS($FormalMapVariableList,rest $lisplibForm,
-;         macroExpand(x,e))
+;       SUBLISLIS($FormalMapVariableList, rest($lisplibForm), x)
 ;     hn u ==
 ;      -- ((op,sig,doc), ...)  --> ((op ((sig doc) ...)) ...)
 ;       opList := REMDUP ASSOCLEFT u
 ;       [[op,:[[sig,doc] for [op1,sig,doc] in u | op = op1]] for op in opList]
- 
+
 (DEFUN |finalizeDocumentation| ()
   (PROG (|s| |op| |litcnt| |bigcnt| |name| |signatures| |attributes| |b|
          |ISTMP#1| |x| |noHeading| |u| |doc| |sig| |docList|
@@ -352,21 +351,19 @@
                           #1#)
                          (SETQ |bfVar#16|
                                  (CONS
-                                  (APPEND
-                                   (|finalizeDocumentation,fn| |sig| |$e|)
-                                   |doc|)
+                                  (APPEND (|finalizeDocumentation,fn| |sig|)
+                                          |doc|)
                                   |bfVar#16|)))))
                   (SETQ |bfVar#15| (CDR |bfVar#15|))))
                NIL |docList| NIL))))))))
-(DEFUN |finalizeDocumentation,fn| (|x| |e|)
+(DEFUN |finalizeDocumentation,fn| (|x|)
   (PROG ()
     (RETURN
      (COND ((ATOM |x|) (LIST |x| NIL))
            ('T
             (PROGN
              (COND ((< 2 (LENGTH |x|)) (SETQ |x| (TAKE 2 |x|))))
-             (SUBLISLIS |$FormalMapVariableList| (CDR |$lisplibForm|)
-              (|macroExpand| |x| |e|))))))))
+             (SUBLISLIS |$FormalMapVariableList| (CDR |$lisplibForm|) |x|)))))))
 (DEFUN |finalizeDocumentation,hn| (|u|)
   (PROG (|opList| |op1| |ISTMP#1| |sig| |ISTMP#2| |doc|)
     (RETURN
@@ -412,7 +409,7 @@
                      |bfVar#21|))))
           (SETQ |bfVar#20| (CDR |bfVar#20|))))
        NIL |opList| NIL)))))
- 
+
 ; transDocList($constructorName,doclist) == --returns ((key line)...)
 ; --called ONLY by finalizeDocumentation
 ; --if $exposeFlag then messages go to file $outStream; flag=nil by default
@@ -427,7 +424,7 @@
 ;   conEntry => [conEntry,:acc]
 ;   checkDocError1 ['"Missing Description"]
 ;   acc
- 
+
 (DEFUN |transDocList| (|$constructorName| |doclist|)
   (DECLARE (SPECIAL |$constructorName|))
   (PROG (|commentList| |acc| |ISTMP#1| |x| |conEntry|)
@@ -458,7 +455,7 @@
       (COND (|conEntry| (CONS |conEntry| |acc|))
             (#1#
              (PROGN (|checkDocError1| (LIST "Missing Description")) |acc|)))))))
- 
+
 ; transDoc(conname,doclist) ==
 ; --$exposeFlag and not isExposedConstructor conname => nil
 ; --skip over unexposed constructors when checking system files
@@ -502,7 +499,7 @@
 ;       transformAndRecheckComments($x,u)
 ;     acc := [[$x,longline],:acc]  --processor assumes a list of lines
 ;   NREVERSE acc
- 
+
 (DEFUN |transDoc| (|conname| |doclist|)
   (PROG (|$argl| |$attribute?| |$x| |acc| |longline| |v| |u| |key| |ISTMP#2|
          |ISTMP#1| |lines| |rlist|)
@@ -569,7 +566,7 @@
           (SETQ |bfVar#24| (CDR |bfVar#24|))))
        |rlist| NIL)
       (NREVERSE |acc|)))))
- 
+
 ; checkExtractItemList l ==  --items are separated by commas or end of line
 ;   acc := nil               --l is list of remaining lines
 ;   while l repeat           --stop when you get to a line with a colon
@@ -579,7 +576,7 @@
 ;     acc := [first l,:acc]
 ;     l := rest l
 ;   "STRCONC"/[x for x in NREVERSE acc]
- 
+
 (DEFUN |checkExtractItemList| (|l|)
   (PROG (|acc| |m| |k|)
     (RETURN
@@ -605,7 +602,7 @@
            (#1# (SETQ |bfVar#26| (STRCONC |bfVar#26| |x|))))
           (SETQ |bfVar#25| (CDR |bfVar#25|))))
        "" (NREVERSE |acc|) NIL)))))
- 
+
 ; transformAndRecheckComments(name,lines) ==
 ;   $checkingXmptex? := false
 ;   $x            : local := name
@@ -619,7 +616,7 @@
 ;   checkRewrite(name,[u])
 ;   $recheckingFlag := false
 ;   u
- 
+
 (DEFUN |transformAndRecheckComments| (|name| |lines|)
   (PROG (|$exposeFlagHeading| |$recheckingFlag| |$origin| |$name| |$x| |u|)
     (DECLARE
@@ -638,7 +635,7 @@
       (|checkRewrite| |name| (LIST |u|))
       (SETQ |$recheckingFlag| NIL)
       |u|))))
- 
+
 ; checkRewrite(name, lines) ==    --similar to checkComments from c-doc
 ;     $checkErrorFlag: local := true
 ;     margin := 0
@@ -666,15 +663,14 @@
 ;     u := checkAddMacros u
 ;     u := checkTexht u
 ; --  checkBalance u
-;     okBefore := null $checkErrorFlag
 ;     checkArguments u
 ;     if $checkErrorFlag then u := checkFixCommonProblem u
 ;     checkRecordHash u
 ; --  u := checkTranVerbatim u
 ;     checkDecorateForHt u
- 
+
 (DEFUN |checkRewrite| (|name| |lines|)
-  (PROG (|$checkErrorFlag| |okBefore| |w| |verbatim| |u2| |u| |margin|)
+  (PROG (|$checkErrorFlag| |w| |verbatim| |u2| |u| |margin|)
     (DECLARE (SPECIAL |$checkErrorFlag|))
     (RETURN
      (PROGN
@@ -724,12 +720,11 @@
       (SETQ |u| (|checkSplit2Words| |u|))
       (SETQ |u| (|checkAddMacros| |u|))
       (SETQ |u| (|checkTexht| |u|))
-      (SETQ |okBefore| (NULL |$checkErrorFlag|))
       (|checkArguments| |u|)
       (COND (|$checkErrorFlag| (SETQ |u| (|checkFixCommonProblem| |u|))))
       (|checkRecordHash| |u|)
       (|checkDecorateForHt| |u|)))))
- 
+
 ; checkTexht u ==
 ;   count := 0
 ;   acc   := nil
@@ -753,17 +748,17 @@
 ;     acc := [x,:acc]
 ;     u := rest u
 ;   NREVERSE acc
- 
+
 (DEFUN |checkTexht| (|u|)
   (PROG (|count| |acc| |x| |y|)
     (RETURN
      (PROGN
       (SETQ |count| 0)
       (SETQ |acc| NIL)
-      ((LAMBDA #1=()
+      ((LAMBDA ()
          (LOOP
           (COND ((NOT |u|) (RETURN NIL))
-                (#2='T
+                (#1='T
                  (PROGN
                   (SETQ |x| (CAR |u|))
                   (COND
@@ -773,7 +768,7 @@
                       (|checkDocError|
                        "First left brace after \\texht missing")))
                     (SETQ |count| 1)
-                    ((LAMBDA #1#
+                    ((LAMBDA ()
                        (LOOP
                         (COND
                          ((NOT
@@ -783,7 +778,7 @@
                                     |$charRbrace|))
                             (< 1 |count|)))
                           (RETURN NIL))
-                         (#2#
+                         (#1#
                           (PROGN
                            (COND
                             ((EQUAL |y| |$charLbrace|)
@@ -796,26 +791,26 @@
                    ((AND (EQUAL |x| "\\httex") (SETQ |u| (IFCDR |u|))
                          (EQUAL (IFCAR |u|) |$charLbrace|))
                     (SETQ |acc| (CONS (IFCAR |u|) |acc|))
-                    ((LAMBDA #1#
+                    ((LAMBDA ()
                        (LOOP
                         (COND
                          ((EQUAL (SETQ |y| (IFCAR (SETQ |u| (CDR |u|))))
                                  |$charRbrace|)
                           (RETURN NIL))
-                         (#2# (SETQ |acc| (CONS |y| |acc|)))))))
+                         (#1# (SETQ |acc| (CONS |y| |acc|)))))))
                     (SETQ |acc| (CONS (IFCAR |u|) |acc|))
                     (SETQ |x| (IFCAR (SETQ |u| (CDR |u|))))
-                    ((LAMBDA #1#
+                    ((LAMBDA ()
                        (LOOP
                         (COND
                          ((EQUAL (IFCAR (SETQ |u| (CDR |u|))) |$charRbrace|)
                           (RETURN NIL))
-                         (#2# '|skip|)))))
+                         (#1# '|skip|)))))
                     (SETQ |x| (IFCAR (SETQ |u| (CDR |u|))))))
                   (SETQ |acc| (CONS |x| |acc|))
                   (SETQ |u| (CDR |u|))))))))
       (NREVERSE |acc|)))))
- 
+
 ; checkRecordHash u ==
 ;   while u repeat
 ;     x := first u
@@ -872,7 +867,7 @@
 ;             checkDocError ['"Unknown \spadop: ",x]
 ;     u := rest u
 ;   'done
- 
+
 (DEFUN |checkRecordHash| (|u|)
   (PROG (|x| |htname| |entry| |p| |q| |s| |parse| |ISTMP#1| |arg| |n| |key|)
     (RETURN
@@ -1000,19 +995,19 @@
                         (|checkDocError| (LIST "Unknown \\spadop: " |x|))))))))
                   (SETQ |u| (CDR |u|))))))))
       '|done|))))
- 
+
 ; checkGetParse s == ncParseFromString removeBackslashes s
- 
+
 (DEFUN |checkGetParse| (|s|)
   (PROG () (RETURN (|ncParseFromString| (|removeBackslashes| |s|)))))
- 
+
 ; removeBackslashes s ==
 ;     s = '"" => '""
 ;     (k := charPosition($charBack,s,0)) < #s =>
 ;       k = 0 => removeBackslashes SUBSTRING(s,1,nil)
 ;       STRCONC(SUBSTRING(s,0,k),removeBackslashes SUBSTRING(s,k + 1,nil))
 ;     s
- 
+
 (DEFUN |removeBackslashes| (|s|)
   (PROG (|k|)
     (RETURN
@@ -1023,13 +1018,13 @@
                    (STRCONC (SUBSTRING |s| 0 |k|)
                     (|removeBackslashes| (SUBSTRING |s| (+ |k| 1) NIL))))))
            (#1# |s|)))))
- 
+
 ; checkNumOfArgs conform ==
 ;   conname := opOf conform
 ;   constructor? conname or (conname := abbreviation? conname) =>
 ;     #GETDATABASE(conname,'CONSTRUCTORARGS)
 ;   nil  --signals error
- 
+
 (DEFUN |checkNumOfArgs| (|conform|)
   (PROG (|conname|)
     (RETURN
@@ -1040,7 +1035,7 @@
             (SETQ |conname| (|abbreviation?| |conname|)))
         (LENGTH (GETDATABASE |conname| 'CONSTRUCTORARGS)))
        ('T NIL))))))
- 
+
 ; checkIsValidType form == main where
 ; --returns ok if correct, form is wrong number of arguments, nil if unknown
 ;   main ==
@@ -1054,7 +1049,7 @@
 ;     or/[null checkIsValidType x for x in rest form for flag in rest coSig | flag]
 ;       => nil
 ;     'ok
- 
+
 (DEFUN |checkIsValidType| (|form|)
   (PROG (|op| |args| |conname|)
     (RETURN
@@ -1091,14 +1086,14 @@
              NIL (CDR |form|) NIL (CDR |coSig|) NIL)
             NIL)
            (#1# '|ok|)))))
- 
+
 ; checkGetLispFunctionName s ==
 ;   n := #s
 ;   (k := charPosition(char '_|,s,1)) and k < n and
 ;     (j := charPosition(char '_|,s,k + 1)) and j < n => SUBSTRING(s,k + 1,j-k-1)
 ;   checkDocError ['"Ill-formed lisp expression : ",s]
 ;   'illformed
- 
+
 (DEFUN |checkGetLispFunctionName| (|s|)
   (PROG (|n| |k| |j|)
     (RETURN
@@ -1113,7 +1108,7 @@
         (PROGN
          (|checkDocError| (LIST "Ill-formed lisp expression : " |s|))
          '|illformed|)))))))
- 
+
 ; checkGetStringBeforeRightBrace u ==
 ;   acc := nil
 ;   while u repeat
@@ -1121,7 +1116,7 @@
 ;     x = $charRbrace => return "STRCONC"/(NREVERSE acc)
 ;     acc := [x,:acc]
 ;     u := rest u
- 
+
 (DEFUN |checkGetStringBeforeRightBrace| (|u|)
   (PROG (|acc| |x|)
     (RETURN
@@ -1150,7 +1145,7 @@
                     (PROGN
                      (SETQ |acc| (CONS |x| |acc|))
                      (SETQ |u| (CDR |u|)))))))))))))))
- 
+
 ; appendOver [head,:tail] ==
 ;  acc := LASTNODE head
 ;  for x in tail repeat
@@ -1158,7 +1153,7 @@
 ;    RPLACD(acc,x)
 ;    acc := end
 ;  head
- 
+
 (DEFUN |appendOver| (|bfVar#37|)
   (PROG (|head| |tail| |acc| |end|)
     (RETURN
@@ -1179,7 +1174,7 @@
           (SETQ |bfVar#36| (CDR |bfVar#36|))))
        |tail| NIL)
       |head|))))
- 
+
 ; checkRemoveComments lines ==
 ;   while lines repeat
 ;     do
@@ -1187,7 +1182,7 @@
 ;       if firstNonBlankPosition line >= 0 then acc := [line,:acc]
 ;     lines := rest lines
 ;   NREVERSE acc
- 
+
 (DEFUN |checkRemoveComments| (|lines|)
   (PROG (|line| |acc|)
     (RETURN
@@ -1205,7 +1200,7 @@
                       (SETQ |acc| (CONS |line| |acc|))))))
                   (SETQ |lines| (CDR |lines|))))))))
       (NREVERSE |acc|)))))
- 
+
 ; checkTrimCommented line ==
 ;   n := #line
 ;   k := htcharPosition(char '_%,line,0)
@@ -1215,7 +1210,7 @@
 ;   k >= n - 1 or line.(k + 1) ~= char '_% => line
 ;   k < #line => SUBSTRING(line,0,k)
 ;   line
- 
+
 (DEFUN |checkTrimCommented| (|line|)
   (PROG (|n| |k|)
     (RETURN
@@ -1227,7 +1222,7 @@
                  (NOT (EQUAL (ELT |line| (+ |k| 1)) (|char| '%))))
              |line|)
             ((< |k| (LENGTH |line|)) (SUBSTRING |line| 0 |k|)) ('T |line|))))))
- 
+
 ; htcharPosition(char,line,i) ==
 ;   m := #line
 ;   k := charPosition(char,line,i)
@@ -1236,7 +1231,7 @@
 ;     line.(k - 1) ~= $charBack => k
 ;     htcharPosition(char,line,k + 1)
 ;   0
- 
+
 (DEFUN |htcharPosition| (|char| |line| |i|)
   (PROG (|m| |k|)
     (RETURN
@@ -1248,7 +1243,7 @@
              (COND ((NOT (EQUAL (ELT |line| (- |k| 1)) |$charBack|)) |k|)
                    (#1='T (|htcharPosition| |char| |line| (+ |k| 1)))))
             (#1# 0))))))
- 
+
 ; checkAddMacros u ==
 ;   acc := nil
 ;   verbatim := false
@@ -1266,7 +1261,7 @@
 ;       [x,:acc]
 ;     u := rest u
 ;   NREVERSE acc
- 
+
 (DEFUN |checkAddMacros| (|u|)
   (PROG (|acc| |verbatim| |x| |y|)
     (RETURN
@@ -1291,7 +1286,7 @@
                            (#1# (CONS |x| |acc|))))
                   (SETQ |u| (CDR |u|))))))))
       (NREVERSE |acc|)))))
- 
+
 ; checkComments(nameSig,lines) == main where
 ;   main ==
 ;     $checkErrorFlag: local := false
@@ -1319,7 +1314,6 @@
 ;     u := checkIeEg u
 ;     u := checkSplit2Words u
 ;     checkBalance u
-;     okBefore := null $checkErrorFlag
 ;     checkArguments u
 ;     if $checkErrorFlag then u := checkFixCommonProblem u
 ;     v := checkDecorate u
@@ -1327,10 +1321,9 @@
 ;     res := checkAddPeriod res
 ;     if $checkErrorFlag then pp res
 ;     res
- 
+
 (DEFUN |checkComments| (|nameSig| |lines|)
-  (PROG (|$checkErrorFlag| |res| |v| |okBefore| |w| |verbatim| |u2| |u|
-         |margin|)
+  (PROG (|$checkErrorFlag| |res| |v| |w| |verbatim| |u2| |u| |margin|)
     (DECLARE (SPECIAL |$checkErrorFlag|))
     (RETURN
      (PROGN
@@ -1372,7 +1365,6 @@
       (SETQ |u| (|checkIeEg| |u|))
       (SETQ |u| (|checkSplit2Words| |u|))
       (|checkBalance| |u|)
-      (SETQ |okBefore| (NULL |$checkErrorFlag|))
       (|checkArguments| |u|)
       (COND (|$checkErrorFlag| (SETQ |u| (|checkFixCommonProblem| |u|))))
       (SETQ |v| (|checkDecorate| |u|))
@@ -1389,7 +1381,7 @@
       (SETQ |res| (|checkAddPeriod| |res|))
       (COND (|$checkErrorFlag| (|pp| |res|)))
       |res|))))
- 
+
 ; checkIndentedLines(u, margin) ==
 ;   verbatim := false
 ;   u2 := nil
@@ -1409,7 +1401,7 @@
 ;     margin = k => u2 := [:u2, s]
 ;     u2 := [:u2, STRCONC('"\indented{",STRINGIMAGE(k-margin),'"}{",checkAddSpaceSegments(s,0),'"}")]
 ;   u2
- 
+
 (DEFUN |checkIndentedLines| (|u| |margin|)
   (PROG (|verbatim| |u2| |k| |s|)
     (RETURN
@@ -1459,14 +1451,14 @@
           (SETQ |bfVar#41| (CDR |bfVar#41|))))
        |u| NIL)
       |u2|))))
- 
+
 ; newString2Words l ==
 ;   not STRINGP l => [l]
 ;   m := MAXINDEX l
 ;   m = -1 => NIL
 ;   i := 0
 ;   [w while newWordFrom(l,i,m) is [w,i]]
- 
+
 (DEFUN |newString2Words| (|l|)
   (PROG (|m| |i| |ISTMP#1| |w| |ISTMP#2|)
     (RETURN
@@ -1496,7 +1488,7 @@
                            (RETURN (NREVERSE |bfVar#42|)))
                           (#1# (SETQ |bfVar#42| (CONS |w| |bfVar#42|))))))
                       NIL))))))))))
- 
+
 ; newWordFrom(l,i,m) ==
 ;   while i <= m and l.i = $charBlank repeat i := i + 1
 ;   i > m => NIL
@@ -1509,43 +1501,43 @@
 ;     ch = $charBlank or ch = $charFauxNewline => done := true
 ;     i := i + 1
 ;   [SUBSTRING(l, i0, i - i0), i]
- 
+
 (DEFUN |newWordFrom| (|l| |i| |m|)
   (PROG (|i0| |ch| |done|)
     (RETURN
      (PROGN
-      ((LAMBDA #1=()
+      ((LAMBDA ()
          (LOOP
           (COND
            ((NOT (AND (NOT (< |m| |i|)) (EQUAL (ELT |l| |i|) |$charBlank|)))
             (RETURN NIL))
-           (#2='T (SETQ |i| (+ |i| 1)))))))
+           (#1='T (SETQ |i| (+ |i| 1)))))))
       (COND ((< |m| |i|) NIL)
-            (#2#
+            (#1#
              (PROGN
               (SETQ |i0| |i|)
               (SETQ |ch| (ELT |l| |i|))
               (COND
                ((EQUAL |ch| |$charFauxNewline|)
                 (LIST |$stringFauxNewline| (+ |i| 1)))
-               (#2#
+               (#1#
                 (PROGN
                  (SETQ |done| NIL)
-                 ((LAMBDA #1#
+                 ((LAMBDA ()
                     (LOOP
                      (COND
                       ((NOT (AND (NOT (< |m| |i|)) (NULL |done|)))
                        (RETURN NIL))
-                      (#2#
+                      (#1#
                        (PROGN
                         (SETQ |ch| (ELT |l| |i|))
                         (COND
                          ((OR (EQUAL |ch| |$charBlank|)
                               (EQUAL |ch| |$charFauxNewline|))
                           (SETQ |done| T))
-                         (#2# (SETQ |i| (+ |i| 1))))))))))
+                         (#1# (SETQ |i| (+ |i| 1))))))))))
                  (LIST (SUBSTRING |l| |i0| (- |i| |i0|)) |i|)))))))))))
- 
+
 ; checkAddPeriod s ==  --No, just leave blank at the end (rdj: 10/18/91)
 ;   m := MAXINDEX s
 ;   lastChar := s . m
@@ -1554,7 +1546,7 @@
 ;     s . m := (char '_.)
 ;     s
 ;   s
- 
+
 (DEFUN |checkAddPeriod| (|s|)
   (PROG (|m| |lastChar|)
     (RETURN
@@ -1568,7 +1560,7 @@
        ((OR (EQUAL |lastChar| (|char| '|,|)) (EQUAL |lastChar| (|char| '|;|)))
         (PROGN (SETF (ELT |s| |m|) (|char| '|.|)) |s|))
        ('T |s|))))))
- 
+
 ; checkGetArgs u ==
 ;   NOT STRINGP u => nil
 ;   m := MAXINDEX u
@@ -1583,7 +1575,7 @@
 ;     acc := [trimString SUBSTRING(u,i + 1,k - i - 1),:acc]
 ;     i := k
 ;   NREVERSE [SUBSTRING(u,i + 1,m - i - 1),:acc]
- 
+
 (DEFUN |checkGetArgs| (|u|)
   (PROG (|m| |k| |i| |acc|)
     (RETURN
@@ -1628,7 +1620,7 @@
                      (NREVERSE
                       (CONS (SUBSTRING |u| (+ |i| 1) (- (- |m| |i|) 1))
                             |acc|)))))))))))
- 
+
 ; checkGetMargin lines ==
 ;   while lines repeat
 ;     do
@@ -1638,7 +1630,7 @@
 ;       margin := (margin => MIN(margin,k); k)
 ;     lines := rest lines
 ;   margin or 0
- 
+
 (DEFUN |checkGetMargin| (|lines|)
   (PROG (|x| |k| |margin|)
     (RETURN
@@ -1659,14 +1651,14 @@
                                          (#1# |k|)))))))
                   (SETQ |lines| (CDR |lines|))))))))
       (OR |margin| 0)))))
- 
+
 ; firstNonBlankPosition(x,:options) ==
 ;   start := IFCAR options or 0
 ;   k := -1
 ;   for i in start..MAXINDEX x repeat
 ;     if x.i ~= $charBlank then return (k := i)
 ;   k
- 
+
 (DEFUN |firstNonBlankPosition| (|x| &REST |options|)
   (PROG (|start| |k|)
     (RETURN
@@ -1683,13 +1675,13 @@
           (SETQ |i| (+ |i| 1))))
        (MAXINDEX |x|) |start|)
       |k|))))
- 
+
 ; checkAddIndented(x,margin) ==
 ;   k := firstNonBlankPosition x
 ;   k = -1 => '"\blankline "
 ;   margin = k => x
 ;   STRCONC('"\indented{",STRINGIMAGE(k-margin),'"}{",checkAddSpaceSegments(SUBSTRING(x,k,nil),0),'"}")
- 
+
 (DEFUN |checkAddIndented| (|x| |margin|)
   (PROG (|k|)
     (RETURN
@@ -1699,7 +1691,7 @@
             ('T
              (STRCONC "\\indented{" (STRINGIMAGE (- |k| |margin|)) "}{"
               (|checkAddSpaceSegments| (SUBSTRING |x| |k| NIL) 0) "}")))))))
- 
+
 ; checkAddSpaceSegments(u,k) ==
 ;   m := MAXINDEX u
 ;   i := charPosition($charBlank,u,k)
@@ -1710,7 +1702,7 @@
 ;   n > 1 => STRCONC(SUBSTRING(u,0,i),'"\space{",
 ;              STRINGIMAGE n,'"}",checkAddSpaceSegments(SUBSTRING(u,i + n,nil),0))
 ;   checkAddSpaceSegments(u,j)
- 
+
 (DEFUN |checkAddSpaceSegments| (|u| |k|)
   (PROG (|m| |i| |j| |n|)
     (RETURN
@@ -1735,7 +1727,7 @@
                 (STRCONC (SUBSTRING |u| 0 |i|) "\\space{" (STRINGIMAGE |n|) "}"
                  (|checkAddSpaceSegments| (SUBSTRING |u| (+ |i| |n|) NIL) 0)))
                (#1# (|checkAddSpaceSegments| |u| |j|))))))))))
- 
+
 ; checkTrim($x,lines) == main where
 ;   main ==
 ;     s := [wherePP first lines]
@@ -1757,7 +1749,7 @@
 ;     n := k + 2
 ;     for j in (k + 2)..m while s.j = $charBlank repeat (n := n + 1)
 ;     SUBSTRING(s,n,nil)
- 
+
 (DEFUN |checkTrim| (|$x| |lines|)
   (DECLARE (SPECIAL |$x|))
   (PROG (|s| |j|)
@@ -1813,7 +1805,7 @@
           (SETQ |j| (+ |j| 1))))
        (+ |k| 2))
       (SUBSTRING |s| |n| NIL)))))
- 
+
 ; checkExtract(header,lines) ==
 ;   while lines repeat
 ;     line := first lines
@@ -1841,7 +1833,7 @@
 ;       return nil
 ;     acc := [line,:acc]
 ;   NREVERSE acc
- 
+
 (DEFUN |checkExtract| (|header| |lines|)
   (PROG (|line| |k| |u| |j| |margin| |firstLines| |acc| |m| |i|)
     (RETURN
@@ -1902,7 +1894,7 @@
                   (SETQ |bfVar#47| (CDR |bfVar#47|))))
                |firstLines| NIL)
               (NREVERSE |acc|))))))))
- 
+
 ; checkFixCommonProblem u ==
 ;   acc := nil
 ;   while u repeat
@@ -1915,7 +1907,7 @@
 ;     acc := [x,:acc]
 ;     u := rest u
 ;   NREVERSE acc
- 
+
 (DEFUN |checkFixCommonProblem| (|u|)
   (PROG (|acc| |x| |next|)
     (RETURN
@@ -1942,7 +1934,7 @@
                      (SETQ |acc| (CONS |x| |acc|))
                      (SETQ |u| (CDR |u|)))))))))))
       (NREVERSE |acc|)))))
- 
+
 ; checkDecorate u ==
 ;   count := 0
 ;   spadflag := false    --means OK to wrap single letter words with \s{}
@@ -1951,7 +1943,7 @@
 ;   verbatim := false
 ;   while u repeat
 ;     x := first u
-; 
+;
 ;     if not verbatim then
 ;       if x = '"\em" then
 ;         if count > 0 then
@@ -1969,7 +1961,7 @@
 ;       else if not mathSymbolsOk and member(x,'("+" "*" "=" "==" "->")) then
 ;         if $checkingXmptex? then
 ;           checkDocError ["Symbol ",x,'" appearing outside \spad{}"]
-; 
+;
 ;     acc :=
 ;       x = '"\end{verbatim}" =>
 ;         verbatim := false
@@ -1978,7 +1970,7 @@
 ;       x = '"\begin{verbatim}" =>
 ;         verbatim := true
 ;         [x, :acc]
-; 
+;
 ;       x = '"\begin" and first (v := IFCDR u) = $charLbrace and
 ;         first (v := IFCDR v) = '"detail" and first (v := IFCDR v) = $charRbrace
 ;           =>
@@ -2012,7 +2004,7 @@
 ;       [checkAddBackSlashes x,:acc]
 ;     u := rest u
 ;   NREVERSE acc
- 
+
 (DEFUN |checkDecorate| (|u|)
   (PROG (|count| |spadflag| |mathSymbolsOk| |acc| |verbatim| |x| |v| |xcount|)
     (RETURN
@@ -2150,12 +2142,12 @@
                                (CONS (|checkAddBackSlashes| |x|) |acc|)))))))
                   (SETQ |u| (CDR |u|))))))))
       (NREVERSE |acc|)))))
- 
+
 ; hasNoVowels x ==
 ;   max := MAXINDEX x
 ;   x.max = char 'y => false
 ;   and/[not isVowel(x.i) for i in 0..max]
- 
+
 (DEFUN |hasNoVowels| (|x|)
   (PROG (|max|)
     (RETURN
@@ -2172,11 +2164,11 @@
                          (COND ((NOT |bfVar#48|) (RETURN NIL))))))
                  (SETQ |i| (+ |i| 1))))
               T 0)))))))
- 
+
 ; isVowel c ==
 ;   EQ(c,char 'a) or EQ(c,char 'e) or EQ(c,char 'i) or EQ(c,char 'o) or EQ(c,char 'u) or
 ;     EQ(c,char 'A) or EQ(c,char 'E) or EQ(c,char 'I) or EQ(c,char 'O) or EQ(c,char 'U)
- 
+
 (DEFUN |isVowel| (|c|)
   (PROG ()
     (RETURN
@@ -2184,7 +2176,7 @@
          (EQ |c| (|char| '|o|)) (EQ |c| (|char| '|u|)) (EQ |c| (|char| 'A))
          (EQ |c| (|char| 'E)) (EQ |c| (|char| 'I)) (EQ |c| (|char| 'O))
          (EQ |c| (|char| 'U))))))
- 
+
 ; checkAddBackSlashes s ==
 ;   (CHARP s and (c := s)) or (#s = 1 and (c := s.0)) =>
 ;     MEMQ(c, $charEscapeList) => STRCONC($charBack, c)
@@ -2200,7 +2192,7 @@
 ;     k := k + 1
 ;   insertIndex => checkAddBackSlashes STRCONC(SUBSTRING(s,0,insertIndex),$charBack,s.k,SUBSTRING(s,insertIndex + 1,nil))
 ;   s
- 
+
 (DEFUN |checkAddBackSlashes| (|s|)
   (PROG (|c| |k| |m| |insertIndex| |char|)
     (RETURN
@@ -2232,7 +2224,7 @@
            (STRCONC (SUBSTRING |s| 0 |insertIndex|) |$charBack| (ELT |s| |k|)
             (SUBSTRING |s| (+ |insertIndex| 1) NIL))))
          (#1# |s|))))))))
- 
+
 ; checkAddSpaces u ==
 ;   null u => nil
 ;   null rest u => u
@@ -2246,15 +2238,15 @@
 ;     if f = '"\begin{verbatim}" then
 ;         space := $charFauxNewline
 ;         if null u2 then u2 := [space]
-; 
+;
 ;     if i > 1 then u2 := [:u2, space, f]
 ;     else u2 := [:u2, f]
-; 
+;
 ;     if f = '"\end{verbatim}" then
 ;         u2 := [:u2, space]
 ;         space := $charBlank
 ;   u2
- 
+
 (DEFUN |checkAddSpaces| (|u|)
   (PROG (|space| |u2|)
     (RETURN
@@ -2287,7 +2279,7 @@
                  (SETQ |bfVar#49| (CDR |bfVar#49|))))
               1 |u| NIL)
              |u2|))))))
- 
+
 ; checkIeEg u ==
 ;   acc := nil
 ;   verbatim := false
@@ -2305,7 +2297,7 @@
 ;       [x,:acc]
 ;     u := rest u
 ;   NREVERSE acc
- 
+
 (DEFUN |checkIeEg| (|u|)
   (PROG (|acc| |verbatim| |x| |z|)
     (RETURN
@@ -2330,7 +2322,7 @@
                            (#1# (CONS |x| |acc|))))
                   (SETQ |u| (CDR |u|))))))))
       (NREVERSE |acc|)))))
- 
+
 ; checkIeEgfun x ==
 ;   CHARP x => nil
 ;   x = '"" => nil
@@ -2343,7 +2335,7 @@
 ;           result := [:firstPart,'"\spadignore{",SUBSTRING(x,k,4),'"}",
 ;                      :checkIeEgfun SUBSTRING(x,k+4,nil)]
 ;   result
- 
+
 (DEFUN |checkIeEgfun| (|x|)
   (PROG (|m| |key| |firstPart| |result|)
     (RETURN
@@ -2385,7 +2377,7 @@
                  (SETQ |k| (+ |k| 1))))
               (- |m| 3) 0)
              |result|))))))
- 
+
 ; checkSplit2Words u ==
 ;   acc := nil
 ;   while u repeat
@@ -2402,7 +2394,7 @@
 ;       [x,:acc]
 ;     u := rest u
 ;   NREVERSE acc
- 
+
 (DEFUN |checkSplit2Words| (|u|)
   (PROG (|acc| |x| |verbatim| |z|)
     (RETURN
@@ -2426,7 +2418,7 @@
                            (#1# (CONS |x| |acc|))))
                   (SETQ |u| (CDR |u|))))))))
       (NREVERSE |acc|)))))
- 
+
 ; checkSplitBrace x ==
 ;   CHARP x => [x]
 ;   #x = 1 => [x.0]
@@ -2438,7 +2430,7 @@
 ;   (u := checkSplitPunctuation x)
 ;      and rest u  => "append"/[checkSplitBrace y for y in u]
 ;   [x]
- 
+
 (DEFUN |checkSplitBrace| (|x|)
   (PROG (|u| |m|)
     (RETURN
@@ -2484,7 +2476,7 @@
                    (SETQ |bfVar#55| (CDR |bfVar#55|))))
                 NIL |u| NIL))
               (#1# (LIST |x|)))))))))
- 
+
 ; checkSplitBackslash x ==
 ;   not STRINGP x => [x]
 ;   m := MAXINDEX x
@@ -2500,7 +2492,7 @@
 ;     k + 1 = m => [u,v]
 ;     [u,v,:checkSplitBackslash SUBSTRING(x,k + 2,nil)]
 ;   [x]
- 
+
 (DEFUN |checkSplitBackslash| (|x|)
   (PROG (|m| |k| |u| |v|)
     (RETURN
@@ -2531,7 +2523,7 @@
                                      (|checkSplitBackslash|
                                       (SUBSTRING |x| (+ |k| 2) NIL))))))))))
               (#1# (LIST |x|)))))))))
- 
+
 ; checkSplitPunctuation x ==
 ;   CHARP x => [x]
 ;   m := MAXINDEX x
@@ -2557,7 +2549,7 @@
 ;     u := SUBSTRING(x,k + 1,nil)
 ;     [SUBSTRING(x,0,k),$charDash,:checkSplitPunctuation u]
 ;   [x]
- 
+
 (DEFUN |checkSplitPunctuation| (|x|)
   (PROG (|m| |lastchar| |k| |v| |u|)
     (RETURN
@@ -2616,7 +2608,7 @@
                               (CONS |$charDash|
                                     (|checkSplitPunctuation| |u|)))))
                       (#1# (LIST |x|))))))))))))
- 
+
 ; checkSplitOn(x) ==
 ;   CHARP x => [x]
 ;   l := $charSplitList
@@ -2634,7 +2626,7 @@
 ;   k = 0 => [char,SUBSTRING(x,1,nil)]
 ;   k = MAXINDEX x => [SUBSTRING(x,0,k),char]
 ;   [SUBSTRING(x,0,k),char,:checkSplitOn SUBSTRING(x,k + 1,nil)]
- 
+
 (DEFUN |checkSplitOn| (|x|)
   (PROG (|l| |m| |char| |k|)
     (RETURN
@@ -2671,7 +2663,7 @@
                           (CONS |char|
                                 (|checkSplitOn|
                                  (SUBSTRING |x| (+ |k| 1) NIL))))))))))))
- 
+
 ; checkBalance u ==
 ;   checkBeginEnd u
 ;   stack := nil
@@ -2692,7 +2684,7 @@
 ;     for x in NREVERSE stack repeat
 ;       checkDocError ['"Missing right ",checkSayBracket x]
 ;   u
- 
+
 (DEFUN |checkBalance| (|u|)
   (PROG (|stack| |x| |openClose| |open| |top| |restStack|)
     (RETURN
@@ -2743,19 +2735,19 @@
             (SETQ |bfVar#57| (CDR |bfVar#57|))))
          (NREVERSE |stack|) NIL)))
       |u|))))
- 
+
 ; checkSayBracket x ==
 ;   x = char '_( or x = char '_) => '"pren"
 ;   x = char '_{ or x = char '_} => '"brace"
 ;   '"bracket"
- 
+
 (DEFUN |checkSayBracket| (|x|)
   (PROG ()
     (RETURN
      (COND ((OR (EQUAL |x| (|char| '|(|)) (EQUAL |x| (|char| '|)|))) "pren")
            ((OR (EQUAL |x| (|char| '{)) (EQUAL |x| (|char| '}))) "brace")
            ('T "bracket")))))
- 
+
 ; checkBeginEnd u ==
 ;   beginEndStack := nil
 ;   while u repeat
@@ -2791,7 +2783,7 @@
 ;     u := rest u
 ;   beginEndStack => checkDocError ['"Missing \end{",first beginEndStack,'"}"]
 ;   'ok
- 
+
 (DEFUN |checkBeginEnd| (|u|)
   (PROG (|beginEndStack| |x| |ISTMP#1| |ISTMP#2| |y| |r|)
     (RETURN
@@ -2883,7 +2875,7 @@
        (|beginEndStack|
         (|checkDocError| (LIST "Missing \\end{" (CAR |beginEndStack|) "}")))
        (#1# '|ok|))))))
- 
+
 ; checkArguments u ==
 ;   while u repeat
 ;     do
@@ -2894,7 +2886,7 @@
 ;       checkHTargs(x,rest u,-k,true)
 ;     u := rest u
 ;   u
- 
+
 (DEFUN |checkArguments| (|u|)
   (PROG (|x| |k|)
     (RETURN
@@ -2914,7 +2906,7 @@
                      (#1# (|checkHTargs| |x| (CDR |u|) (- |k|) T)))))
                   (SETQ |u| (CDR |u|))))))))
       |u|))))
- 
+
 ; checkHTargs(keyword,u,nargs,integerValue?) ==
 ; --u should start with an open brace ...
 ;    nargs = 0 => 'ok
@@ -2923,7 +2915,7 @@
 ;    if not (u := checkLookForRightBrace IFCDR u) then
 ;      return checkDocError ['"Missing right brace for ",keyword]
 ;    checkHTargs(keyword,rest u,nargs - 1,integerValue?)
- 
+
 (DEFUN |checkHTargs| (|keyword| |u| |nargs| |integerValue?|)
   (PROG ()
     (RETURN
@@ -2941,7 +2933,7 @@
                  (LIST "Missing right brace for " |keyword|)))))
              (|checkHTargs| |keyword| (CDR |u|) (- |nargs| 1)
               |integerValue?|)))))))
- 
+
 ; checkLookForLeftBrace(u) ==   --return line beginning with left brace
 ;   while u repeat
 ;     x := first u
@@ -2949,7 +2941,7 @@
 ;     x ~= $charBlank => return nil
 ;     u := rest u
 ;   u
- 
+
 (DEFUN |checkLookForLeftBrace| (|u|)
   (PROG (|x|)
     (RETURN
@@ -2964,7 +2956,7 @@
                   (COND ((NOT (EQUAL |x| |$charBlank|)) (RETURN NIL))
                         (#1# (SETQ |u| (CDR |u|))))))))))
       |u|))))
- 
+
 ; checkLookForRightBrace(u) ==  --return line beginning with right brace
 ;   count := 0
 ;   while u repeat
@@ -2976,7 +2968,7 @@
 ;       x = $charLbrace => count := count + 1
 ;     u := rest u
 ;   found
- 
+
 (DEFUN |checkLookForRightBrace| (|u|)
   (PROG (|count| |x| |found|)
     (RETURN
@@ -2996,12 +2988,12 @@
                     ((EQUAL |x| |$charLbrace|) (SETQ |count| (+ |count| 1)))))
                   (SETQ |u| (CDR |u|))))))))
       |found|))))
- 
+
 ; checkInteger s ==
 ;   CHARP s => false
 ;   s = '"" => false
 ;   and/[DIGIT_-CHAR_-P s.i for i in 0..MAXINDEX s]
- 
+
 (DEFUN |checkInteger| (|s|)
   (PROG ()
     (RETURN
@@ -3016,7 +3008,7 @@
                         (COND ((NOT |bfVar#59|) (RETURN NIL))))))
                 (SETQ |i| (+ |i| 1))))
              T (MAXINDEX |s|) 0))))))
- 
+
 ; checkTransformFirsts(opname,u,margin) ==
 ; --case 1: \spad{...
 ; --case 2: form(args)
@@ -3084,7 +3076,7 @@
 ;       checkDocError ['"Improper first word in comments: ",firstWord]
 ;       u
 ;     STRCONC('"\spad{",SUBSTRING(u,0,k),'"}",SUBSTRING(u,k,nil))
- 
+
 (DEFUN |checkTransformFirsts| (|opname| |u| |margin|)
   (PROG (|namestring| |s| |m| |i| |j| |open| |close| |k| |firstWord| |infixOp|
          |p| |l| |n| |prefixOp|)
@@ -3234,7 +3226,7 @@
                                 (#1#
                                  (STRCONC "\\spad{" (SUBSTRING |u| 0 |k|) "}"
                                   (SUBSTRING |u| |k| NIL)))))))))))))))))))))))
- 
+
 ; getMatchingRightPren(u,j,open,close) ==
 ;   count := 0
 ;   m := MAXINDEX u
@@ -3246,7 +3238,7 @@
 ;         count := count - 1
 ;       c = open => count := count + 1
 ;   found
- 
+
 (DEFUN |getMatchingRightPren| (|u| |j| |open| |close|)
   (PROG (|count| |m| |c| |found|)
     (RETURN
@@ -3268,93 +3260,93 @@
           (SETQ |i| (+ |i| 1))))
        |j|)
       |found|))))
- 
+
 ; checkSkipBlanks(u,i,m) ==
 ;   while i < m and u.i = $charBlank repeat i := i + 1
 ;   i = m => nil
 ;   i
- 
+
 (DEFUN |checkSkipBlanks| (|u| |i| |m|)
-  (PROG #1=()
+  (PROG ()
     (RETURN
      (PROGN
-      ((LAMBDA #1#
+      ((LAMBDA ()
          (LOOP
           (COND
            ((NOT (AND (< |i| |m|) (EQUAL (ELT |u| |i|) |$charBlank|)))
             (RETURN NIL))
-           (#2='T (SETQ |i| (+ |i| 1)))))))
-      (COND ((EQUAL |i| |m|) NIL) (#2# |i|))))))
- 
+           (#1='T (SETQ |i| (+ |i| 1)))))))
+      (COND ((EQUAL |i| |m|) NIL) (#1# |i|))))))
+
 ; checkSkipToken(u,i,m) ==
 ;   ALPHA_-CHAR_-P(u.i) => checkSkipIdentifierToken(u,i,m)
 ;   checkSkipOpToken(u,i,m)
- 
+
 (DEFUN |checkSkipToken| (|u| |i| |m|)
   (PROG ()
     (RETURN
      (COND
       ((ALPHA-CHAR-P (ELT |u| |i|)) (|checkSkipIdentifierToken| |u| |i| |m|))
       ('T (|checkSkipOpToken| |u| |i| |m|))))))
- 
+
 ; checkSkipOpToken(u,i,m) ==
 ;   while i < m and
 ;     (not(checkAlphabetic(u.i)) and not(member(u.i,$charDelimiters))) repeat
 ;       i := i + 1
 ;   i = m => nil
 ;   i
- 
+
 (DEFUN |checkSkipOpToken| (|u| |i| |m|)
-  (PROG #1=()
+  (PROG ()
     (RETURN
      (PROGN
-      ((LAMBDA #1#
+      ((LAMBDA ()
          (LOOP
           (COND
            ((NOT
              (AND (< |i| |m|) (NULL (|checkAlphabetic| (ELT |u| |i|)))
                   (NULL (|member| (ELT |u| |i|) |$charDelimiters|))))
             (RETURN NIL))
-           (#2='T (SETQ |i| (+ |i| 1)))))))
-      (COND ((EQUAL |i| |m|) NIL) (#2# |i|))))))
- 
+           (#1='T (SETQ |i| (+ |i| 1)))))))
+      (COND ((EQUAL |i| |m|) NIL) (#1# |i|))))))
+
 ; checkSkipIdentifierToken(u,i,m) ==
 ;   while i < m and checkAlphabetic u.i repeat i := i + 1
 ;   i = m => nil
 ;   i
- 
+
 (DEFUN |checkSkipIdentifierToken| (|u| |i| |m|)
-  (PROG #1=()
+  (PROG ()
     (RETURN
      (PROGN
-      ((LAMBDA #1#
+      ((LAMBDA ()
          (LOOP
           (COND
            ((NOT (AND (< |i| |m|) (|checkAlphabetic| (ELT |u| |i|))))
             (RETURN NIL))
-           (#2='T (SETQ |i| (+ |i| 1)))))))
-      (COND ((EQUAL |i| |m|) NIL) (#2# |i|))))))
- 
+           (#1='T (SETQ |i| (+ |i| 1)))))))
+      (COND ((EQUAL |i| |m|) NIL) (#1# |i|))))))
+
 ; checkAlphabetic c ==
 ;   ALPHA_-CHAR_-P c or DIGITP c or MEMQ(c,$charIdentifierEndings)
- 
+
 (DEFUN |checkAlphabetic| (|c|)
   (PROG ()
     (RETURN
      (OR (ALPHA-CHAR-P |c|) (DIGITP |c|) (MEMQ |c| |$charIdentifierEndings|)))))
- 
+
 ; checkDocError1 u ==
 ; --when compiling for documentation, ignore certain errors
 ;   BOUNDP '$compileDocumentation and $compileDocumentation => nil
 ;   checkDocError u
- 
+
 (DEFUN |checkDocError1| (|u|)
   (PROG ()
     (RETURN
      (COND
       ((AND (BOUNDP '|$compileDocumentation|) |$compileDocumentation|) NIL)
       ('T (|checkDocError| |u|))))))
- 
+
 ; checkDocError u ==
 ;   $checkErrorFlag := true
 ;   msg :=
@@ -3369,7 +3361,7 @@
 ;     $exposeFlagHeading := nil
 ;   sayBrightly msg
 ;   if $exposeFlag then sayBrightly1(msg,$outStream)
- 
+
 (DEFUN |checkDocError| (|u|)
   (PROG (|msg|)
     (RETURN
@@ -3387,7 +3379,7 @@
         (|sayBrightly| |$exposeFlagHeading|) (SETQ |$exposeFlagHeading| NIL)))
       (|sayBrightly| |msg|)
       (COND (|$exposeFlag| (|sayBrightly1| |msg| |$outStream|)))))))
- 
+
 ; checkDocMessage u ==
 ;   sourcefile := GETDATABASE($constructorName,'SOURCEFILE)
 ;   person := '"---"
@@ -3395,7 +3387,7 @@
 ;     BOUNDP '$x => ['"(",$x,'"): "]
 ;     ['": "]
 ;   concat(person,'">",sourcefile,'"-->",$constructorName,middle,u)
- 
+
 (DEFUN |checkDocMessage| (|u|)
   (PROG (|sourcefile| |person| |middle|)
     (RETURN
@@ -3406,7 +3398,7 @@
               (COND ((BOUNDP '|$x|) (LIST "(" |$x| "): ")) ('T (LIST ": "))))
       (|concat| |person| ">" |sourcefile| "-->" |$constructorName| |middle|
        |u|)))))
- 
+
 ; checkDecorateForHt u ==
 ;   count := 0
 ;   spadflag := false    --means OK to wrap single letter words with \s{}
@@ -3427,7 +3419,7 @@
 ;       x = '"$" or x = '"%" => checkDocError ['"Unescaped ",x]
 ;     u := rest u
 ;   u
- 
+
 (DEFUN |checkDecorateForHt| (|u|)
   (PROG (|count| |spadflag| |x|)
     (RETURN

@@ -1,72 +1,72 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; DEFPARAMETER($useParserSrcPos, NIL)
- 
+
 (DEFPARAMETER |$useParserSrcPos| NIL)
- 
+
 ; DEFPARAMETER($transferParserSrcPos, NIL)
- 
+
 (DEFPARAMETER |$transferParserSrcPos| NIL)
- 
+
 ; DEFCONST($failure, GENSYM())
- 
+
 (EVAL-WHEN (EVAL LOAD) (PROG () (RETURN (DEFCONST |$failure| (GENSYM)))))
- 
+
 ; mkAtreeNode x ==
 ;   -- maker of attrib tree node
-;   v := MAKE_-VEC 5
+;   v := MAKE_VEC(5)
 ;   v.0 := x
 ;   v
- 
+
 (DEFUN |mkAtreeNode| (|x|)
   (PROG (|v|)
-    (RETURN (PROGN (SETQ |v| (MAKE-VEC 5)) (SETF (ELT |v| 0) |x|) |v|))))
- 
+    (RETURN (PROGN (SETQ |v| (MAKE_VEC 5)) (SETF (ELT |v| 0) |x|) |v|))))
+
 ; mkAtree x ==
 ;   -- maker of attrib tree from parser form
 ;   mkAtree1 mkAtreeExpandMacros x
- 
+
 (DEFUN |mkAtree| (|x|)
   (PROG () (RETURN (|mkAtree1| (|mkAtreeExpandMacros| |x|)))))
- 
+
 ; mkAtreeWithSrcPos(form, posnForm) ==
 ;     posnForm and $useParserSrcPos => pf2Atree(posnForm)
 ;     transferSrcPosInfo(posnForm, mkAtree form)
- 
+
 (DEFUN |mkAtreeWithSrcPos| (|form| |posnForm|)
   (PROG ()
     (RETURN
      (COND ((AND |posnForm| |$useParserSrcPos|) (|pf2Atree| |posnForm|))
            ('T (|transferSrcPosInfo| |posnForm| (|mkAtree| |form|)))))))
- 
+
 ; mkAtree1WithSrcPos(form, posnForm) ==
 ;   transferSrcPosInfo(posnForm, mkAtree1 form)
- 
+
 (DEFUN |mkAtree1WithSrcPos| (|form| |posnForm|)
   (PROG () (RETURN (|transferSrcPosInfo| |posnForm| (|mkAtree1| |form|)))))
- 
+
 ; mkAtreeNodeWithSrcPos(form, posnForm) ==
 ;   transferSrcPosInfo(posnForm, mkAtreeNode form)
- 
+
 (DEFUN |mkAtreeNodeWithSrcPos| (|form| |posnForm|)
   (PROG () (RETURN (|transferSrcPosInfo| |posnForm| (|mkAtreeNode| |form|)))))
- 
+
 ; transferSrcPosInfo(pf, atree) ==
 ;     not (pf and $transferParserSrcPos) => atree
 ;     pos := pfPosOrNopos(pf)
 ;     pfNoPosition?(pos) => atree
-; 
+;
 ;     -- following is a hack because parser code for getting filename
 ;     -- seems wrong.
 ;     fn := lnPlaceOfOrigin poGetLineObject(pos)
 ;     if NULL fn or fn = '"strings" then fn := '"console"
-; 
+;
 ;     putSrcPos(atree, fn, pfSourceText(pf), pfLinePosn(pos), pfCharPosn(pos))
 ;     atree
- 
+
 (DEFUN |transferSrcPosInfo| (|pf| |atree|)
   (PROG (|pos| |fn|)
     (RETURN
@@ -84,7 +84,7 @@
                      (|putSrcPos| |atree| |fn| (|pfSourceText| |pf|)
                       (|pfLinePosn| |pos|) (|pfCharPosn| |pos|))
                      |atree|)))))))))
- 
+
 ; mkAtreeExpandMacros x ==
 ;   -- handle macro expansion. if the macros have args we require that
 ;   -- we match the correct number of args
@@ -105,12 +105,12 @@
 ;         [args,:body] := m
 ;         #args = #argl =>
 ;           sl := [[a,:s] for a in args for s in argl]
-;           x := SUBLISNQ(sl,body)
+;           x := sublisNQ(sl, body)
 ;         null args => x := [body,:argl]
 ;         x := [op,:argl]
 ;       x := [mkAtreeExpandMacros op,:argl]
 ;   x
- 
+
 (DEFUN |mkAtreeExpandMacros| (|x|)
   (PROG (|ISTMP#1| |ISTMP#2| |m| |args| |body| |op| |argl| |before| |after|
          |sl|)
@@ -188,7 +188,7 @@
                                     (SETQ |bfVar#3| (CDR |bfVar#3|))
                                     (SETQ |bfVar#4| (CDR |bfVar#4|))))
                                  NIL |args| NIL |argl| NIL))
-                        (SETQ |x| (SUBLISNQ |sl| |body|))))
+                        (SETQ |x| (|sublisNQ| |sl| |body|))))
                       ((NULL |args|) (SETQ |x| (CONS |body| |argl|)))
                       (#1# (SETQ |x| (CONS |op| |argl|))))))
                    (#1#
@@ -196,7 +196,7 @@
                             (CONS (|mkAtreeExpandMacros| |op|)
                                   |argl|)))))))))))
       |x|))))
- 
+
 ; mkAtree1 x ==
 ;   -- first special handler for making attrib tree
 ;   null x => throwKeyedMsg("S2IP0005",['"NIL"])
@@ -204,7 +204,7 @@
 ;   atom x =>
 ;     x in '(noBranch noMapVal) => x
 ;     x in '(nil true false) => mkAtree2([x],x,NIL)
-;     x = '_/throwAway =>
+;     x = "/throwAway" =>
 ;       -- don't want to actually compute this
 ;       tree := mkAtree1 '(void)
 ;       putValue(tree,objNewWrap(voidValue(),$Void))
@@ -218,7 +218,7 @@
 ;     keyedSystemError("S2II0002",[x])
 ;   x is [op,:argl] => mkAtree2(x,op,argl)
 ;   systemErrorHere '"mkAtree1"
- 
+
 (DEFUN |mkAtree1| (|x|)
   (PROG (|tree| |v| |op| |argl|)
     (RETURN
@@ -245,7 +245,7 @@
                  (PROGN (SETQ |op| (CAR |x|)) (SETQ |argl| (CDR |x|)) #1#))
             (|mkAtree2| |x| |op| |argl|))
            (#1# (|systemErrorHere| "mkAtree1"))))))
- 
+
 ; mkAtree2(x,op,argl) ==
 ;   nargl := #argl
 ;   (op= '_-) and (nargl = 1) and (INTEGERP first argl) =>
@@ -314,7 +314,7 @@
 ;     keyedSystemError("S2II0003",['"$",argl,
 ;       '"not qualifying an operator"])
 ;   mkAtree3(x,op,argl)
- 
+
 (DEFUN |mkAtree2| (|x| |op| |argl|)
   (PROG (|nargl| |y| |ISTMP#1| |z| |val| |a| |expr| |ISTMP#2| |type| |t|
          |ISTMP#3| |args| |v| |rhs| |ISTMP#4| D |op1| |a'|)
@@ -494,13 +494,13 @@
           (|keyedSystemError| 'S2II0003
            (LIST "$" |argl| "not qualifying an operator")))))
        (#1# (|mkAtree3| |x| |op| |argl|)))))))
- 
+
 ; mkAtree3fn(a, b) ==
 ;     a and b =>
 ;          if a = b then a
 ;          else throwMessage '"   double declaration of parameter"
 ;     a or b
- 
+
 (DEFUN |mkAtree3fn| (|a| |b|)
   (PROG ()
     (RETURN
@@ -509,7 +509,7 @@
        (COND ((EQUAL |a| |b|) |a|)
              (#1='T (|throwMessage| "   double declaration of parameter"))))
       (#1# (OR |a| |b|))))))
- 
+
 ; mkAtree3(x,op,argl) ==
 ;   op='REDUCE and argl is [op1,axis,body] =>
 ;     [mkAtreeNode op,axis,mkAtree1 op1,mkAtree1 body]
@@ -528,7 +528,6 @@
 ;       lowTest
 ;     mkAtree1 z
 ;   x is ['IF,p,'noBranch,a] => mkAtree1 ['IF,['not,p],a,'noBranch]
-;   x is ['RULEDEF, :.] => [mkAtreeNode 'RULEDEF, :rest x]
 ;   x is ['MDEF,sym,junk1,junk2,val] =>
 ;     -- new macros look like  macro f ==  or macro f(x) ===
 ;     -- so transform into that format
@@ -589,7 +588,7 @@
 ;     atom op => mkAtreeNode op
 ;     mkAtree1 op
 ;   [z,:[mkAtree1 y for y in argl]]
- 
+
 (DEFUN |mkAtree3| (|x| |op| |argl|)
   (PROG (|op1| |ISTMP#1| |axis| |ISTMP#2| |body| |lhs| |ISTMP#3| |rhs| |var|
          |lb| |ISTMP#4| |ul| |upTest| |lowTest| |z| |p| |a| |sym| |junk1|
@@ -684,8 +683,6 @@
                          (AND (CONSP |ISTMP#3|) (EQ (CDR |ISTMP#3|) NIL)
                               (PROGN (SETQ |a| (CAR |ISTMP#3|)) #1#))))))))
        (|mkAtree1| (LIST 'IF (LIST '|not| |p|) |a| '|noBranch|)))
-      ((AND (CONSP |x|) (EQ (CAR |x|) 'RULEDEF))
-       (CONS (|mkAtreeNode| 'RULEDEF) (CDR |x|)))
       ((AND (CONSP |x|) (EQ (CAR |x|) 'MDEF)
             (PROGN
              (SETQ |ISTMP#1| (CDR |x|))
@@ -878,18 +875,18 @@
                    (#1# (SETQ |bfVar#21| (CONS (|mkAtree1| |y|) |bfVar#21|))))
                   (SETQ |bfVar#20| (CDR |bfVar#20|))))
                NIL |argl| NIL))))))))
- 
+
 ; addPred(old, new) ==
 ;     null new => old
 ;     null old => new
 ;     ['and, old, new]
- 
+
 (DEFUN |addPred| (|old| |new|)
   (PROG ()
     (RETURN
      (COND ((NULL |new|) |old|) ((NULL |old|) |new|)
            ('T (LIST '|and| |old| |new|))))))
- 
+
 ; collectDefTypesAndPreds args ==
 ;   -- given an arglist to a DEF-like form, this function returns
 ;   -- a vector of three things:
@@ -928,7 +925,7 @@
 ;     types := [NIL]
 ;     vars  := [args]
 ;   VECTOR(vars,types,pred)
- 
+
 (DEFUN |collectDefTypesAndPreds| (|args|)
   (PROG (|vars| |types| |pred| |ISTMP#1| |var| |ISTMP#2| |type| |var'| |p| |v|
          |args'| |junk|)
@@ -1026,18 +1023,18 @@
                  (SETQ |types| (LIST NIL))
                  (SETQ |vars| (LIST |args|))))))
       (VECTOR |vars| |types| |pred|)))))
- 
+
 ; mkAtreeValueOf l ==
 ;   -- scans for ['valueOf,atom]
 ;   not CONTAINED('valueOf,l) => l
 ;   mkAtreeValueOf1 l
- 
+
 (DEFUN |mkAtreeValueOf| (|l|)
   (PROG ()
     (RETURN
      (COND ((NULL (CONTAINED '|valueOf| |l|)) |l|)
            ('T (|mkAtreeValueOf1| |l|))))))
- 
+
 ; mkAtreeValueOf1 l ==
 ;   null l or atom l or null rest l => l
 ;   l is ['valueOf,u] and IDENTP u =>
@@ -1046,7 +1043,7 @@
 ;       objNewWrap(u,['Variable,u]))
 ;     v
 ;   [mkAtreeValueOf1 x for x in l]
- 
+
 (DEFUN |mkAtreeValueOf1| (|l|)
   (PROG (|ISTMP#1| |u| |v|)
     (RETURN
@@ -1074,12 +1071,12 @@
                   (SETQ |bfVar#24| (CONS (|mkAtreeValueOf1| |x|) |bfVar#24|))))
                 (SETQ |bfVar#23| (CDR |bfVar#23|))))
              NIL |l| NIL))))))
- 
+
 ; mkLessOrEqual(lhs,rhs) == ['not,['_<,rhs,lhs]]
- 
+
 (DEFUN |mkLessOrEqual| (|lhs| |rhs|)
   (PROG () (RETURN (LIST '|not| (LIST '< |rhs| |lhs|)))))
- 
+
 ; emptyAtree expr ==
 ;   -- remove mode, value, and misc. info from attrib tree
 ;   VECP expr =>
@@ -1090,7 +1087,7 @@
 ;     -- kill proplist too?
 ;   atom expr => nil
 ;   for e in expr repeat emptyAtree e
- 
+
 (DEFUN |emptyAtree| (|expr|)
   (PROG ()
     (RETURN
@@ -1112,7 +1109,7 @@
             (#1# (|emptyAtree| |e|)))
            (SETQ |bfVar#25| (CDR |bfVar#25|))))
         |expr| NIL))))))
- 
+
 ; unVectorize body ==
 ;   -- transforms from an atree back into a tree
 ;   VECP body =>
@@ -1127,7 +1124,7 @@
 ;     if newOp = 'Dollar then newOp := "$elt"
 ;     [newOp,:unVectorize argl]
 ;   systemErrorHere '"unVectorize"
- 
+
 (DEFUN |unVectorize| (|body|)
   (PROG (|name| |op| |argl| |newOp|)
     (RETURN
@@ -1147,7 +1144,7 @@
         (COND ((EQ |newOp| '|Dollar|) (SETQ |newOp| '|$elt|)))
         (CONS |newOp| (|unVectorize| |argl|))))
       (#1# (|systemErrorHere| "unVectorize"))))))
- 
+
 ; putAtree(x,prop,val) ==
 ;   x is [op,:.] =>
 ;     -- only willing to add property if op is a vector
@@ -1159,7 +1156,7 @@
 ;     => x.n := val
 ;   x.4 := insertShortAlist(prop,val,x.4)
 ;   x
- 
+
 (DEFUN |putAtree| (|x| |prop| |val|)
   (PROG (|op| |n|)
     (RETURN
@@ -1173,7 +1170,7 @@
        (PROGN
         (SETF (ELT |x| 4) (|insertShortAlist| |prop| |val| (ELT |x| 4)))
         |x|))))))
- 
+
 ; getAtree(x,prop) ==
 ;   x is [op,:.] =>
 ;     -- only willing to get property if op is a vector
@@ -1184,7 +1181,7 @@
 ;   n:= QLASSQ(prop,'((mode . 1) (value . 2) (modeSet . 3)))
 ;     => x.n
 ;   QLASSQ(prop,x.4)
- 
+
 (DEFUN |getAtree| (|x| |prop|)
   (PROG (|op| |n|)
     (RETURN
@@ -1195,36 +1192,36 @@
       ((SETQ |n| (QLASSQ |prop| '((|mode| . 1) (|value| . 2) (|modeSet| . 3))))
        (ELT |x| |n|))
       (#1# (QLASSQ |prop| (ELT |x| 4)))))))
- 
+
 ; putTarget(x, targ) ==
 ;   -- want to put nil modes perhaps to clear old target
 ;   if targ = $EmptyMode then targ := nil
 ;   putAtree(x,'target,targ)
- 
+
 (DEFUN |putTarget| (|x| |targ|)
   (PROG ()
     (RETURN
      (PROGN
       (COND ((EQUAL |targ| |$EmptyMode|) (SETQ |targ| NIL)))
       (|putAtree| |x| '|target| |targ|)))))
- 
+
 ; getTarget(x) == getAtree(x,'target)
- 
+
 (DEFUN |getTarget| (|x|) (PROG () (RETURN (|getAtree| |x| '|target|))))
- 
+
 ; insertShortAlist(prop,val,al) ==
 ;   pair := ASSQ(prop,al) =>
 ;     RPLACD(pair,val)
 ;     al
 ;   [[prop,:val],:al]
- 
+
 (DEFUN |insertShortAlist| (|prop| |val| |al|)
   (PROG (|pair|)
     (RETURN
      (COND
       ((SETQ |pair| (ASSQ |prop| |al|)) (PROGN (RPLACD |pair| |val|) |al|))
       ('T (CONS (CONS |prop| |val|) |al|))))))
- 
+
 ; transferPropsToNode(x,t) ==
 ;   propList := getProplist(x,$env)
 ;   QLASSQ('Led,propList) or QLASSQ('Nud,propList) => nil
@@ -1242,7 +1239,7 @@
 ;     putModeSet(t,[am])
 ;     putMode(t,am)
 ;   t
- 
+
 (DEFUN |transferPropsToNode| (|x| |t|)
   (PROG (|propList| |node| |am|)
     (RETURN
@@ -1274,17 +1271,17 @@
       ((AND (NULL (|member| |x| |$localVars|))
             (SETQ |u| (|get| |x| |prop| |$e|)))
        (|putAtree| |node| |prop| |u|))))))
- 
+
 ; isLeaf x == atom x     --may be a number or a vector
- 
+
 (DEFUN |isLeaf| (|x|) (PROG () (RETURN (ATOM |x|))))
- 
+
 ; getMode x ==
 ;   x is [op,:.] => getMode op
 ;   VECP x => x.1
 ;   m := getBasicMode x => m
 ;   keyedSystemError("S2II0001",[x])
- 
+
 (DEFUN |getMode| (|x|)
   (PROG (|op| |m|)
     (RETURN
@@ -1292,12 +1289,12 @@
       ((AND (CONSP |x|) (PROGN (SETQ |op| (CAR |x|)) #1='T)) (|getMode| |op|))
       ((VECP |x|) (ELT |x| 1)) ((SETQ |m| (|getBasicMode| |x|)) |m|)
       (#1# (|keyedSystemError| 'S2II0001 (LIST |x|)))))))
- 
+
 ; putMode(x,y) ==
 ;   x is [op,:.] => putMode(op,y)
 ;   null VECP x => keyedSystemError("S2II0001",[x])
 ;   x.1 := y
- 
+
 (DEFUN |putMode| (|x| |y|)
   (PROG (|op|)
     (RETURN
@@ -1306,14 +1303,14 @@
        (|putMode| |op| |y|))
       ((NULL (VECP |x|)) (|keyedSystemError| 'S2II0001 (LIST |x|)))
       (#1# (SETF (ELT |x| 1) |y|))))))
- 
+
 ; getValue x ==
 ;   VECP x => x.2
 ;   atom x =>
 ;     t := getBasicObject x => t
 ;     keyedSystemError("S2II0001",[x])
 ;   getValue first x
- 
+
 (DEFUN |getValue| (|x|)
   (PROG (|t|)
     (RETURN
@@ -1322,12 +1319,12 @@
             (COND ((SETQ |t| (|getBasicObject| |x|)) |t|)
                   (#1='T (|keyedSystemError| 'S2II0001 (LIST |x|)))))
            (#1# (|getValue| (CAR |x|)))))))
- 
+
 ; putValue(x,y) ==
 ;   x is [op,:.] => putValue(op,y)
 ;   null VECP x => keyedSystemError("S2II0001",[x])
 ;   x.2 := y
- 
+
 (DEFUN |putValue| (|x| |y|)
   (PROG (|op|)
     (RETURN
@@ -1336,20 +1333,20 @@
        (|putValue| |op| |y|))
       ((NULL (VECP |x|)) (|keyedSystemError| 'S2II0001 (LIST |x|)))
       (#1# (SETF (ELT |x| 2) |y|))))))
- 
+
 ; putValueValue(vec,val) ==
 ;   putValue(vec,val)
 ;   vec
- 
+
 (DEFUN |putValueValue| (|vec| |val|)
   (PROG () (RETURN (PROGN (|putValue| |vec| |val|) |vec|))))
- 
+
 ; getUnnameIfCan x ==
 ;   VECP x => x.0
 ;   x is [op,:.] => getUnnameIfCan op
 ;   atom x => x
 ;   nil
- 
+
 (DEFUN |getUnnameIfCan| (|x|)
   (PROG (|op|)
     (RETURN
@@ -1357,11 +1354,11 @@
            ((AND (CONSP |x|) (PROGN (SETQ |op| (CAR |x|)) #1='T))
             (|getUnnameIfCan| |op|))
            ((ATOM |x|) |x|) (#1# NIL)))))
- 
+
 ; getUnname x ==
 ;   x is [op,:.] => getUnname op
 ;   getUnname1 x
- 
+
 (DEFUN |getUnname| (|x|)
   (PROG (|op|)
     (RETURN
@@ -1369,23 +1366,23 @@
       ((AND (CONSP |x|) (PROGN (SETQ |op| (CAR |x|)) #1='T))
        (|getUnname| |op|))
       (#1# (|getUnname1| |x|))))))
- 
+
 ; getUnname1 x ==
 ;   VECP x => x.0
 ;   null atom x => keyedSystemError("S2II0001",[x])
 ;   x
- 
+
 (DEFUN |getUnname1| (|x|)
   (PROG ()
     (RETURN
      (COND ((VECP |x|) (ELT |x| 0))
            ((NULL (ATOM |x|)) (|keyedSystemError| 'S2II0001 (LIST |x|)))
            ('T |x|)))))
- 
+
 ; computedMode t ==
 ;   getModeSet t is [m] => m
 ;   keyedSystemError("S2GE0016",['"computedMode",'"non-singleton modeset"])
- 
+
 (DEFUN |computedMode| (|t|)
   (PROG (|ISTMP#1| |m|)
     (RETURN
@@ -1398,13 +1395,13 @@
       (#1#
        (|keyedSystemError| 'S2GE0016
         (LIST "computedMode" "non-singleton modeset")))))))
- 
+
 ; putModeSet(x,y) ==
 ;   x is [op,:.] => putModeSet(op,y)
 ;   not VECP x => keyedSystemError("S2II0001",[x])
 ;   x.3 := y
 ;   y
- 
+
 (DEFUN |putModeSet| (|x| |y|)
   (PROG (|op|)
     (RETURN
@@ -1413,7 +1410,7 @@
        (|putModeSet| |op| |y|))
       ((NULL (VECP |x|)) (|keyedSystemError| 'S2II0001 (LIST |x|)))
       (#1# (PROGN (SETF (ELT |x| 3) |y|) |y|))))))
- 
+
 ; getModeOrFirstModeSetIfThere x ==
 ;   x is [op,:.] => getModeOrFirstModeSetIfThere op
 ;   VECP x =>
@@ -1425,7 +1422,7 @@
 ;     NIL
 ;   m := getBasicMode x => m
 ;   NIL
- 
+
 (DEFUN |getModeOrFirstModeSetIfThere| (|x|)
   (PROG (|op| |m| |val| |y| |ISTMP#1|)
     (RETURN
@@ -1445,7 +1442,7 @@
                (#1# (CAR |y|))))
              (#1# NIL)))
       ((SETQ |m| (|getBasicMode| |x|)) |m|) (#1# NIL)))))
- 
+
 ; getModeSet x ==
 ;   x and PAIRP x => getModeSet first x
 ;   VECP x =>
@@ -1458,7 +1455,7 @@
 ;   null atom x => getModeSet first x
 ;   keyedSystemError("S2GE0016",['"getModeSet",
 ;     '"not an attributed tree"])
- 
+
 (DEFUN |getModeSet| (|x|)
   (PROG (|y| |m| |ISTMP#1|)
     (RETURN
@@ -1481,7 +1478,7 @@
            (#1#
             (|keyedSystemError| 'S2GE0016
              (LIST "getModeSet" "not an attributed tree")))))))
- 
+
 ; getModeSetUseSubdomain x ==
 ;   x and PAIRP x => getModeSetUseSubdomain first x
 ;   VECP(x) =>
@@ -1508,7 +1505,7 @@
 ;   null atom x => getModeSetUseSubdomain first x
 ;   keyedSystemError("S2GE0016",
 ;     ['"getModeSetUseSubomain",'"not an attributed tree"])
- 
+
 (DEFUN |getModeSetUseSubdomain| (|x|)
   (PROG (|y| |m| |ISTMP#1| |val| |f|)
     (RETURN
@@ -1549,14 +1546,14 @@
            (#1#
             (|keyedSystemError| 'S2GE0016
              (LIST "getModeSetUseSubomain" "not an attributed tree")))))))
- 
+
 ; getValueFromEnvironment(x,mode) ==
 ;   $failure ~= (v := getValueFromSpecificEnvironment(x,mode,$env)) => v
 ;   $failure ~= (v := getValueFromSpecificEnvironment(x,mode,$e))   => v
 ;   null(v := coerceInt(objNew(x, ['Variable, x]), mode)) =>
 ;      throwKeyedMsg("S2IE0001",[x])
 ;   objValUnwrap v
- 
+
 (DEFUN |getValueFromEnvironment| (|x| |mode|)
   (PROG (|v|)
     (RETURN
@@ -1574,7 +1571,7 @@
         (SETQ |v| (|coerceInt| (|objNew| |x| (LIST '|Variable| |x|)) |mode|)))
        (|throwKeyedMsg| 'S2IE0001 (LIST |x|)))
       ('T (|objValUnwrap| |v|))))))
- 
+
 ; getValueFromSpecificEnvironment(id,mode,e) ==
 ;   PAIRP e =>
 ;     u := get(id,'value,e) =>
@@ -1586,7 +1583,7 @@
 ;       v' := coerceInt(u,mode)
 ;       null v' => throwKeyedMsg("S2IC0002",[objMode u,mode])
 ;       objValUnwrap v'
-; 
+;
 ;     m := get(id,'mode,e) =>
 ;       -- See if we can make it into declared mode from symbolic form
 ;       -- For example, (x : P[x] I; x + 1)
@@ -1595,11 +1592,11 @@
 ;       m' and
 ;         (u := coerceInteractive(objNewWrap(id,['Variable,id]),m')) =>
 ;           objValUnwrap u
-; 
+;
 ;       throwKeyedMsg("S2IE0002",[id,m])
 ;     $failure
 ;   $failure
- 
+
 (DEFUN |getValueFromSpecificEnvironment| (|id| |mode| |e|)
   (PROG (|u| |v| |mapSig| |v'| |m| |m'|)
     (RETURN
@@ -1641,7 +1638,7 @@
            (#1# (|throwKeyedMsg| 'S2IE0002 (LIST |id| |m|))))))
         (#1# |$failure|)))
       (#1# |$failure|)))))
- 
+
 ; addBindingInteractive(var,proplist,e is [[curContour,:.],:.]) ==
 ;   -- change proplist of var in e destructively
 ;   u := ASSQ(var,curContour) =>
@@ -1649,7 +1646,7 @@
 ;     e
 ;   rplac(CAAR e, [[var, :proplist], :curContour])
 ;   e
- 
+
 (DEFUN |addBindingInteractive| (|var| |proplist| |e|)
   (PROG (|curContour| |u|)
     (RETURN
@@ -1662,13 +1659,13 @@
         (PROGN
          (|rplac| (CAAR |e|) (CONS (CONS |var| |proplist|) |curContour|))
          |e|)))))))
- 
+
 ; augProplistInteractive(proplist,prop,val) ==
 ;   u := ASSQ(prop,proplist) =>
 ;     RPLACD(u,val)
 ;     proplist
 ;   [[prop,:val],:proplist]
- 
+
 (DEFUN |augProplistInteractive| (|proplist| |prop| |val|)
   (PROG (|u|)
     (RETURN
@@ -1676,44 +1673,39 @@
       ((SETQ |u| (ASSQ |prop| |proplist|))
        (PROGN (RPLACD |u| |val|) |proplist|))
       ('T (CONS (CONS |prop| |val|) |proplist|))))))
- 
+
 ; getFlag x == get("--flags--",x,$e)
- 
+
 (DEFUN |getFlag| (|x|) (PROG () (RETURN (|get| '|--flags--| |x| |$e|))))
- 
+
 ; putFlag(flag,value) ==
 ;   $e := put ("--flags--", flag, value, $e)
- 
+
 (DEFUN |putFlag| (|flag| |value|)
   (PROG () (RETURN (SETQ |$e| (|put| '|--flags--| |flag| |value| |$e|)))))
- 
+
 ; get(x,prop,e) ==
 ;   $InteractiveMode => get0(x,prop,e)
 ;   get1(x,prop,e)
- 
+
 (DEFUN |get| (|x| |prop| |e|)
   (PROG ()
     (RETURN
      (COND (|$InteractiveMode| (|get0| |x| |prop| |e|))
            ('T (|get1| |x| |prop| |e|))))))
- 
+
 ; get0(x,prop,e) ==
 ;   null atom x => get(QCAR x,prop,e)
-;   u := QLASSQ(x, first QCAR e) => QLASSQ(prop, u)
-;   (tail := rest QCAR e) and (u := fastSearchCurrentEnv(x, tail)) =>
-;     QLASSQ(prop,u)
+;   (pl := getProplist(x, e)) => QLASSQ(prop, pl)
 ;   nil
- 
+
 (DEFUN |get0| (|x| |prop| |e|)
-  (PROG (|u| |tail|)
+  (PROG (|pl|)
     (RETURN
      (COND ((NULL (ATOM |x|)) (|get| (QCAR |x|) |prop| |e|))
-           ((SETQ |u| (QLASSQ |x| (CAR (QCAR |e|)))) (QLASSQ |prop| |u|))
-           ((AND (SETQ |tail| (CDR (QCAR |e|)))
-                 (SETQ |u| (|fastSearchCurrentEnv| |x| |tail|)))
-            (QLASSQ |prop| |u|))
+           ((SETQ |pl| (|getProplist| |x| |e|)) (QLASSQ |prop| |pl|))
            ('T NIL)))))
- 
+
 ; get1(x,prop,e) ==
 ;     --this is the old get
 ;   negHash := nil
@@ -1730,7 +1722,7 @@
 ;   if ress and negHash then
 ;     SAY ["get1", x, prop, ress and true]
 ;   ress
- 
+
 (DEFUN |get1| (|x| |prop| |e|)
   (PROG (|negHash| |ress|)
     (RETURN
@@ -1766,13 +1758,13 @@
                   ((AND |ress| |negHash|)
                    (SAY (LIST '|get1| |x| |prop| (AND |ress| T)))))
                  |ress|))))))))))
- 
+
 ; get2(x,prop,e) ==
 ;   prop="modemap" and constructor? x =>
 ;     (u := getConstructorModemap(x)) => [u]
 ;     nil
 ;   nil
- 
+
 (DEFUN |get2| (|x| |prop| |e|)
   (PROG (|u|)
     (RETURN
@@ -1781,24 +1773,24 @@
        (COND ((SETQ |u| (|getConstructorModemap| |x|)) (LIST |u|))
              (#1='T NIL)))
       (#1# NIL)))))
- 
+
 ; getI(x,prop) == get(x,prop,$InteractiveFrame)
- 
+
 (DEFUN |getI| (|x| |prop|)
   (PROG () (RETURN (|get| |x| |prop| |$InteractiveFrame|))))
- 
+
 ; putI(x,prop,val) == ($InteractiveFrame := put(x,prop,val,$InteractiveFrame))
- 
+
 (DEFUN |putI| (|x| |prop| |val|)
   (PROG ()
     (RETURN
      (SETQ |$InteractiveFrame| (|put| |x| |prop| |val| |$InteractiveFrame|)))))
- 
+
 ; getIProplist x == getProplist(x,$InteractiveFrame)
- 
+
 (DEFUN |getIProplist| (|x|)
   (PROG () (RETURN (|getProplist| |x| |$InteractiveFrame|))))
- 
+
 ; rempropI(x,prop) ==
 ;   id:=
 ;     atom x => x
@@ -1807,7 +1799,7 @@
 ;     recordNewValue(id,prop,NIL)
 ;     recordOldValue(id,prop,getI(id,prop))
 ;     $InteractiveFrame:= remprop(id,prop,$InteractiveFrame)
- 
+
 (DEFUN |rempropI| (|x| |prop|)
   (PROG (|id|)
     (RETURN
@@ -1820,13 +1812,13 @@
          (|recordOldValue| |id| |prop| (|getI| |id| |prop|))
          (SETQ |$InteractiveFrame|
                  (|remprop| |id| |prop| |$InteractiveFrame|)))))))))
- 
+
 ; remprop(x,prop,e) ==
 ;   u:= assoc(prop,pl:= getProplist(x,e)) =>
 ;     e:= addBinding(x,DELASC(first u,pl),e)
 ;     e
 ;   e
- 
+
 (DEFUN |remprop| (|x| |prop| |e|)
   (PROG (|pl| |u|)
     (RETURN
@@ -1834,12 +1826,12 @@
       ((SETQ |u| (|assoc| |prop| (SETQ |pl| (|getProplist| |x| |e|))))
        (PROGN (SETQ |e| (|addBinding| |x| (DELASC (CAR |u|) |pl|) |e|)) |e|))
       ('T |e|)))))
- 
+
 ; fastSearchCurrentEnv(x,currentEnv) ==
 ;   u := QLASSQ(x, first currentEnv) => u
 ;   while (currentEnv:= QCDR currentEnv) repeat
 ;     u := QLASSQ(x, first currentEnv) => u
- 
+
 (DEFUN |fastSearchCurrentEnv| (|x| |currentEnv|)
   (PROG (|u|)
     (RETURN
@@ -1853,7 +1845,7 @@
                   (COND
                    ((SETQ |u| (QLASSQ |x| (CAR |currentEnv|)))
                     (IDENTITY |u|)))))))))))))
- 
+
 ; put(x,prop,val,e) ==
 ;   $InteractiveMode and not EQ(e,$CategoryFrame) =>
 ;     putIntSymTab(x,prop,val,e)
@@ -1867,7 +1859,7 @@
 ;         $CapsuleModemapFrame)
 ;     e
 ;   addBinding(x,newProplist,e)
- 
+
 (DEFUN |put| (|x| |prop| |val| |e|)
   (PROG (|newProplist|)
     (RETURN
@@ -1889,7 +1881,7 @@
                     |$CapsuleModemapFrame|))
            |e|))
          (#1# (|addBinding| |x| |newProplist| |e|)))))))))
- 
+
 ; putIntSymTab(x,prop,val,e) ==
 ;   null atom x => putIntSymTab(first x,prop,val,e)
 ;   pl0 := pl := search(x,e)
@@ -1904,7 +1896,7 @@
 ;     pl
 ;   EQ(pl0,pl) => e
 ;   addIntSymTabBinding(x,pl,e)
- 
+
 (DEFUN |putIntSymTab| (|x| |prop| |val| |e|)
   (PROG (|pl| |pl0| |u| |lp|)
     (RETURN
@@ -1924,7 +1916,7 @@
                              |pl|))))
              (COND ((EQ |pl0| |pl|) |e|)
                    (#1# (|addIntSymTabBinding| |x| |pl| |e|)))))))))
- 
+
 ; addIntSymTabBinding(var,proplist,e is [[curContour,:.],:.]) ==
 ;   -- change proplist of var in e destructively
 ;   u := ASSQ(var,curContour) =>
@@ -1932,7 +1924,7 @@
 ;     e
 ;   rplac(CAAR e, [[var, :proplist], :curContour])
 ;   e
- 
+
 (DEFUN |addIntSymTabBinding| (|var| |proplist| |e|)
   (PROG (|curContour| |u|)
     (RETURN
@@ -1945,48 +1937,48 @@
         (PROGN
          (|rplac| (CAAR |e|) (CONS (CONS |var| |proplist|) |curContour|))
          |e|)))))))
- 
+
 ; putSrcPos(x, file, src, line, col) ==
 ;     putAtree(x, 'srcAndPos, srcPos_New(file, src, line, col))
- 
+
 (DEFUN |putSrcPos| (|x| |file| |src| |line| |col|)
   (PROG ()
     (RETURN
      (|putAtree| |x| '|srcAndPos| (|srcPos_New| |file| |src| |line| |col|)))))
- 
+
 ; getSrcPos(x) == getAtree(x, 'srcAndPos)
- 
+
 (DEFUN |getSrcPos| (|x|) (PROG () (RETURN (|getAtree| |x| '|srcAndPos|))))
- 
+
 ; srcPosNew(file, src, line, col) == LIST2VEC [file, src, line, col]
- 
+
 (DEFUN |srcPosNew| (|file| |src| |line| |col|)
   (PROG () (RETURN (LIST2VEC (LIST |file| |src| |line| |col|)))))
- 
+
 ; srcPosFile(sp) ==
 ;     if sp then sp.0 else nil
- 
+
 (DEFUN |srcPosFile| (|sp|)
   (PROG () (RETURN (COND (|sp| (ELT |sp| 0)) ('T NIL)))))
- 
+
 ; srcPosSource(sp) ==
 ;     if sp then sp.1 else nil
- 
+
 (DEFUN |srcPosSource| (|sp|)
   (PROG () (RETURN (COND (|sp| (ELT |sp| 1)) ('T NIL)))))
- 
+
 ; srcPosLine(sp) ==
 ;     if sp then sp.2 else nil
- 
+
 (DEFUN |srcPosLine| (|sp|)
   (PROG () (RETURN (COND (|sp| (ELT |sp| 2)) ('T NIL)))))
- 
+
 ; srcPosColumn(sp) ==
 ;     if sp then sp.3 else nil
- 
+
 (DEFUN |srcPosColumn| (|sp|)
   (PROG () (RETURN (COND (|sp| (ELT |sp| 3)) ('T NIL)))))
- 
+
 ; srcPosDisplay(sp) ==
 ;     null sp => nil
 ;     s := STRCONC('"_"", srcPosFile sp, '"_", line ",
@@ -1998,7 +1990,7 @@
 ;         fillerSpaces(col, '".")
 ;     sayBrightly [fillerSpaces(#s, '" "), dots, '"^"]
 ;     true
- 
+
 (DEFUN |srcPosDisplay| (|sp|)
   (PROG (|s| |col| |dots|)
     (RETURN
@@ -2016,92 +2008,92 @@
              (|sayBrightly|
               (LIST (|fillerSpaces| (LENGTH |s|) " ") |dots| "^"))
              T))))))
- 
+
 ; mkObj(val, mode) == CONS(mode,val)              -- old names
- 
+
 (DEFUN |mkObj| (|val| |mode|) (PROG () (RETURN (CONS |mode| |val|))))
- 
+
 ; mkObjWrap(val, mode) == CONS(mode,wrap val)
- 
+
 (DEFUN |mkObjWrap| (|val| |mode|)
   (PROG () (RETURN (CONS |mode| (|wrap| |val|)))))
- 
+
 ; mkObjCode(val, mode) == ['CONS, MKQ mode,val ]
- 
+
 (DEFUN |mkObjCode| (|val| |mode|)
   (PROG () (RETURN (LIST 'CONS (MKQ |mode|) |val|))))
- 
+
 ; objNew(val, mode) == CONS(mode,val)             -- new names as of 10/14/93
- 
+
 (DEFUN |objNew| (|val| |mode|) (PROG () (RETURN (CONS |mode| |val|))))
- 
+
 ; objNewWrap(val, mode) == CONS(mode,wrap val)
- 
+
 (DEFUN |objNewWrap| (|val| |mode|)
   (PROG () (RETURN (CONS |mode| (|wrap| |val|)))))
- 
+
 ; objNewCode(val, mode) == ['CONS, MKQ mode,val ]
- 
+
 (DEFUN |objNewCode| (|val| |mode|)
   (PROG () (RETURN (LIST 'CONS (MKQ |mode|) |val|))))
- 
+
 ; objSetVal(obj,val) == RPLACD(obj,val)
- 
+
 (DEFUN |objSetVal| (|obj| |val|) (PROG () (RETURN (RPLACD |obj| |val|))))
- 
+
 ; objSetMode(obj,mode) == RPLACA(obj,mode)
- 
+
 (DEFUN |objSetMode| (|obj| |mode|) (PROG () (RETURN (RPLACA |obj| |mode|))))
- 
+
 ; objVal obj == rest obj
- 
+
 (DEFUN |objVal| (|obj|) (PROG () (RETURN (CDR |obj|))))
- 
+
 ; objValUnwrap obj == unwrap rest obj
- 
+
 (DEFUN |objValUnwrap| (|obj|) (PROG () (RETURN (|unwrap| (CDR |obj|)))))
- 
+
 ; objMode obj == first obj
- 
+
 (DEFUN |objMode| (|obj|) (PROG () (RETURN (CAR |obj|))))
- 
+
 ; objCodeVal obj == CADDR obj
- 
+
 (DEFUN |objCodeVal| (|obj|) (PROG () (RETURN (CADDR |obj|))))
- 
+
 ; objCodeMode obj == CADR obj
- 
+
 (DEFUN |objCodeMode| (|obj|) (PROG () (RETURN (CADR |obj|))))
- 
+
 ; asTupleNew(size, listOfElts) == CONS(size, LIST2VEC listOfElts)
- 
+
 (DEFUN |asTupleNew| (SIZE |listOfElts|)
   (PROG () (RETURN (CONS SIZE (LIST2VEC |listOfElts|)))))
- 
+
 ; asTupleNew0(listOfElts) == CONS(#listOfElts, LIST2VEC listOfElts)
- 
+
 (DEFUN |asTupleNew0| (|listOfElts|)
   (PROG () (RETURN (CONS (LENGTH |listOfElts|) (LIST2VEC |listOfElts|)))))
- 
+
 ; asTupleNewCode(size, listOfElts) == ["asTupleNew", size, ['LIST, :listOfElts]]
- 
+
 (DEFUN |asTupleNewCode| (SIZE |listOfElts|)
   (PROG () (RETURN (LIST '|asTupleNew| SIZE (CONS 'LIST |listOfElts|)))))
- 
+
 ; asTupleNewCode0(listForm) == ["asTupleNew0", listForm]
- 
+
 (DEFUN |asTupleNewCode0| (|listForm|)
   (PROG () (RETURN (LIST '|asTupleNew0| |listForm|))))
- 
+
 ; asTupleSize(at) == first at
- 
+
 (DEFUN |asTupleSize| (|at|) (PROG () (RETURN (CAR |at|))))
- 
+
 ; asTupleAsVector(at) == rest at
- 
+
 (DEFUN |asTupleAsVector| (|at|) (PROG () (RETURN (CDR |at|))))
- 
+
 ; asTupleAsList(at) == VEC2LIST asTupleAsVector at
- 
+
 (DEFUN |asTupleAsList| (|at|)
   (PROG () (RETURN (VEC2LIST (|asTupleAsVector| |at|)))))

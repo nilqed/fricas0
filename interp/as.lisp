@@ -1,37 +1,37 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
-; $docHash  := MAKE_-HASH_-TABLE()
- 
-(EVAL-WHEN (EVAL LOAD) (SETQ |$docHash| (MAKE-HASH-TABLE)))
- 
-; $conHash  := MAKE_-HASH_-TABLE()
- 
-(EVAL-WHEN (EVAL LOAD) (SETQ |$conHash| (MAKE-HASH-TABLE)))
- 
-; $opHash   := MAKE_-HASH_-TABLE()
- 
-(EVAL-WHEN (EVAL LOAD) (SETQ |$opHash| (MAKE-HASH-TABLE)))
- 
+
+; $docHash  := MAKE_HASHTABLE('EQUAL)
+
+(EVAL-WHEN (EVAL LOAD) (SETQ |$docHash| (MAKE_HASHTABLE 'EQUAL)))
+
+; $conHash  := MAKE_HASHTABLE('EQUAL)
+
+(EVAL-WHEN (EVAL LOAD) (SETQ |$conHash| (MAKE_HASHTABLE 'EQUAL)))
+
+; $opHash   := MAKE_HASHTABLE('EQUAL)
+
+(EVAL-WHEN (EVAL LOAD) (SETQ |$opHash| (MAKE_HASHTABLE 'EQUAL)))
+
 ; $asyPrint := false
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$asyPrint| NIL))
- 
+
 ; asList() ==
-;   OBEY '"rm -f temp.text"
+;   maybe_delete_file('"temp.text")
 ;   OBEY '"ls as/*.asy > temp.text"
 ;   instream := OPEN '"temp.text"
 ;   lines := [read_line instream while not EOFP instream]
 ;   CLOSE instream
 ;   lines
- 
+
 (DEFUN |asList| ()
   (PROG (|lines| |instream|)
     (RETURN
      (PROGN
-      (OBEY "rm -f temp.text")
+      (|maybe_delete_file| "temp.text")
       (OBEY "ls as/*.asy > temp.text")
       (SETQ |instream| (OPEN "temp.text"))
       (SETQ |lines|
@@ -44,12 +44,12 @@
                NIL))
       (CLOSE |instream|)
       |lines|))))
- 
+
 ; astran asyFile ==
 ; --global hash tables for new compiler
-;   $docHash  := MAKE_-HASH_-TABLE()
-;   $conHash := MAKE_-HASH_-TABLE()
-;   $constantHash := MAKE_-HASH_-TABLE()
+;   $docHash  := MAKE_HASHTABLE('EQUAL)
+;   $conHash := MAKE_HASHTABLE('EQUAL)
+;   $constantHash := MAKE_HASHTABLE('EQUAL)
 ;   $niladics : local := nil
 ;   $asyFile: local := asyFile
 ;   $asFilename: local := STRCONC(PATHNAME_-NAME asyFile,'".as")
@@ -59,8 +59,8 @@
 ;     [[con,:asyConstructorModemap con] for con in conlist]
 ;   $docAlist : local :=
 ;     [[con,:REMDUP asyDocumentation con] for con in conlist]
-;   $parentsHash : local := MAKE_-HASH_-TABLE()
-; --$childrenHash: local := MAKE_-HASH_-TABLE()
+;   $parentsHash : local := MAKE_HASHTABLE('EQUAL)
+; --$childrenHash: local := MAKE_HASHTABLE('EQUAL)
 ;   for con in conlist repeat
 ;     parents := asyParents con
 ;     HPUT($parentsHash,con,asyParents con)
@@ -69,7 +69,7 @@
 ; --    HPUT($childrenHash,parentOp,insert([con,:pred],HGET($childrenHash,parentOp)))
 ;   $newConlist := union(conlist, $newConlist)
 ;   [[x,:asMakeAlist x] for x in HKEYS $conHash]
- 
+
 (DEFUN |astran| (|asyFile|)
   (PROG (|$parentsHash| |$docAlist| |$mmAlist| |$asFilename| |$asyFile|
          |$niladics| |parents| |conlist| |ISTMP#3| |ISTMP#2| |ISTMP#1|)
@@ -78,9 +78,9 @@
       |$niladics|))
     (RETURN
      (PROGN
-      (SETQ |$docHash| (MAKE-HASH-TABLE))
-      (SETQ |$conHash| (MAKE-HASH-TABLE))
-      (SETQ |$constantHash| (MAKE-HASH-TABLE))
+      (SETQ |$docHash| (MAKE_HASHTABLE 'EQUAL))
+      (SETQ |$conHash| (MAKE_HASHTABLE 'EQUAL))
+      (SETQ |$constantHash| (MAKE_HASHTABLE 'EQUAL))
       (SETQ |$niladics| NIL)
       (SETQ |$asyFile| |asyFile|)
       (SETQ |$asFilename| (STRCONC (PATHNAME-NAME |asyFile|) ".as"))
@@ -135,7 +135,7 @@
                              |bfVar#7|))))
                   (SETQ |bfVar#6| (CDR |bfVar#6|))))
                NIL |conlist| NIL))
-      (SETQ |$parentsHash| (MAKE-HASH-TABLE))
+      (SETQ |$parentsHash| (MAKE_HASHTABLE 'EQUAL))
       ((LAMBDA (|bfVar#8| |con|)
          (LOOP
           (COND
@@ -158,7 +158,7 @@
                     (CONS (CONS |x| (|asMakeAlist| |x|)) |bfVar#10|))))
           (SETQ |bfVar#9| (CDR |bfVar#9|))))
        NIL (HKEYS |$conHash|) NIL)))))
- 
+
 ; asyParents(conform) ==
 ;   acc := nil
 ;   con:= opOf conform
@@ -170,7 +170,7 @@
 ; --  x := SUBLISLIS(IFCDR conform,formalParams,x)
 ;     acc := [:explodeIfs x,:acc]
 ;   NREVERSE acc
- 
+
 (DEFUN |asyParents| (|conform|)
   (PROG (|$constructorCategory| |modemap| |con| |acc|)
     (DECLARE (SPECIAL |$constructorCategory|))
@@ -189,7 +189,7 @@
           (SETQ |bfVar#11| (CDR |bfVar#11|))))
        (|folks| |$constructorCategory|) NIL)
       (NREVERSE |acc|)))))
- 
+
 ; asySubstMapping u ==
 ;   u is [op,:r] =>
 ;     op = "->" =>
@@ -200,7 +200,7 @@
 ;        ['Mapping, asySubstMapping t, :args]
 ;     [asySubstMapping x for x in u]
 ;   u
- 
+
 (DEFUN |asySubstMapping| (|u|)
   (PROG (|op| |r| |s| |t| |args|)
     (RETURN
@@ -241,19 +241,19 @@
              (SETQ |bfVar#14| (CDR |bfVar#14|))))
           NIL |u| NIL))))
       (#1# |u|)))))
- 
+
 ; asyMkSignature(con,sig) ==
 ; --  atom sig => ['TYPE,con,sig]
 ; -- following line converts constants into nullary functions
 ;   atom sig => ['SIGNATURE,con,[sig]]
 ;   ['SIGNATURE,con,sig]
- 
+
 (DEFUN |asyMkSignature| (|con| |sig|)
   (PROG ()
     (RETURN
      (COND ((ATOM |sig|) (LIST 'SIGNATURE |con| (LIST |sig|)))
            ('T (LIST 'SIGNATURE |con| |sig|))))))
- 
+
 ; asMakeAlist con ==
 ;   record := HGET($conHash,con)
 ;   [form,sig,predlist,kind,exposure,comments,typeCode,:filename] := first record
@@ -306,7 +306,7 @@
 ;                           ['documentation,:documentation]]
 ;   if $asyPrint then asyDisplay(con,res)
 ;   res
- 
+
 (DEFUN |asMakeAlist| (|con|)
   (PROG (|$constructorCategory| |res| |constructorModemap| |exportAlist|
          |constructorCategory| |talist| |falist| |niladicPart| |constantPart|
@@ -437,24 +437,25 @@
                                                          NIL)))))))))))))))))
               (COND (|$asyPrint| (|asyDisplay| |con| |res|)))
               |res|)))))))
- 
+
 ; asGetExports(kind, conform, catform) ==
-;   u := asCategoryParts(kind, conform, catform, true) or return nil
+;   [., :op_lst] := categoryParts1(kind, conform, catform, false) or return nil
 ;   -- ensure that signatures are lists
-;   [[op, sigpred] for [op,sig,:pred] in CDDR u] where
+;   [[op, sigpred] for [op,sig,:pred] in op_lst] where
 ;     sigpred ==
 ;       pred :=
 ;         pred = "T" => nil
 ;         pred
 ;       [sig, nil, :pred]
- 
+
 (DEFUN |asGetExports| (|kind| |conform| |catform|)
-  (PROG (|u| |op| |ISTMP#1| |sig| |pred|)
+  (PROG (|LETTMP#1| |op_lst| |op| |ISTMP#1| |sig| |pred|)
     (RETURN
      (PROGN
-      (SETQ |u|
-              (OR (|asCategoryParts| |kind| |conform| |catform| T)
+      (SETQ |LETTMP#1|
+              (OR (|categoryParts1| |kind| |conform| |catform| NIL)
                   (RETURN NIL)))
+      (SETQ |op_lst| (CDR |LETTMP#1|))
       ((LAMBDA (|bfVar#20| |bfVar#19| |bfVar#18|)
          (LOOP
           (COND
@@ -481,8 +482,8 @@
                                  (CONS |sig| (CONS NIL |pred|))))
                           |bfVar#20|)))))
           (SETQ |bfVar#19| (CDR |bfVar#19|))))
-       NIL (CDDR |u|) NIL)))))
- 
+       NIL |op_lst| NIL)))))
+
 ; asMakeAlistForFunction fn ==
 ;   record := HGET($conHash,fn)
 ;   [form,sig,predlist,kind,exposure,comments,typeCode,:filename] := first record
@@ -493,7 +494,7 @@
 ;             ['typeCode,:typeCode]]
 ;   if $asyPrint then asyDisplay(fn,res)
 ;   res
- 
+
 (DEFUN |asMakeAlistForFunction| (|fn|)
   (PROG (|record| |LETTMP#1| |form| |sig| |predlist| |kind| |exposure|
          |comments| |typeCode| |filename| |modemap| |newsig| |opAlist| |res|)
@@ -519,12 +520,12 @@
                (CONS '|typeCode| |typeCode|)))
       (COND (|$asyPrint| (|asyDisplay| |fn| |res|)))
       |res|))))
- 
+
 ; getAttributesFromCATEGORY catform ==
 ;   catform is ['CATEGORY,.,:r] => [y for x in r | x is ['ATTRIBUTE,y]]
 ;   catform is ['Join,:m,x]     => getAttributesFromCATEGORY x
 ;   nil
- 
+
 (DEFUN |getAttributesFromCATEGORY| (|catform|)
   (PROG (|ISTMP#1| |r| |y| |ISTMP#2| |x| |m|)
     (RETURN
@@ -560,7 +561,7 @@
                   (PROGN (SETQ |m| (NREVERSE |m|)) #1#))))
        (|getAttributesFromCATEGORY| |x|))
       (#1# NIL)))))
- 
+
 ; displayDatabase x == main where
 ;   main ==
 ;     for y in
@@ -578,7 +579,7 @@
 ;   fn(x,y) ==
 ;     sayBrightly ['"----------------- ",y,'" --------------------"]
 ;     pp GETDATABASE(x,y)
- 
+
 (DEFUN |displayDatabase| (|x|)
   (PROG ()
     (RETURN
@@ -599,18 +600,18 @@
      (PROGN
       (|sayBrightly| (LIST "----------------- " |y| " --------------------"))
       (|pp| (GETDATABASE |x| |y|))))))
- 
+
 ; zeroOneConversion opAlist == opAlist
- 
+
 (DEFUN |zeroOneConversion| (|opAlist|) (PROG () (RETURN |opAlist|)))
- 
+
 ; asyDisplay(con,alist) ==
 ;   banner := '"=============================="
 ;   sayBrightly [banner,'" ",con,'" ",banner]
 ;   for [prop,:value] in alist repeat
 ;     sayBrightlyNT [prop,'": "]
 ;     pp value
- 
+
 (DEFUN |asyDisplay| (|con| |alist|)
   (PROG (|banner| |prop| |value|)
     (RETURN
@@ -632,7 +633,7 @@
                  (PROGN (|sayBrightlyNT| (LIST |prop| ": ")) (|pp| |value|)))))
           (SETQ |bfVar#25| (CDR |bfVar#25|))))
        |alist| NIL)))))
- 
+
 ; asGetModemaps(opAlist,oform,kind,modemap) ==
 ;   acc:= nil
 ;   rpvl:=
@@ -670,7 +671,7 @@
 ;       mm := [[dc,:sig],[pred']]
 ;       acc := [[op,:interactiveModemapForm mm],:acc]
 ;   NREVERSE acc
- 
+
 (DEFUN |asGetModemaps| (|opAlist| |oform| |kind| |modemap|)
   (PROG (|acc| |rpvl| |form| |dc| |pred1| |signature| |domainList|
          |catPredList| |op| |itemlist| |sig0| |ISTMP#1| |pred| |sig| |pred'|
@@ -786,16 +787,16 @@
           (SETQ |bfVar#35| (CDR |bfVar#35|))))
        (SUBLISLIS |rpvl| |$FormalMapVariableList| |opAlist|) NIL)
       (NREVERSE |acc|)))))
- 
+
 ; asIsCategoryForm m ==
 ;   m = 'BasicType or GETDATABASE(opOf m,'CONSTRUCTORKIND) = 'category
- 
+
 (DEFUN |asIsCategoryForm| (|m|)
   (PROG ()
     (RETURN
      (OR (EQ |m| '|BasicType|)
          (EQ (GETDATABASE (|opOf| |m|) 'CONSTRUCTORKIND) '|category|)))))
- 
+
 ; asyDocumentation con ==
 ;   docHash := HGET($docHash,con)
 ;   u := [[op,:[fn(x,op) for x in rec]] for op in HKEYS docHash
@@ -808,7 +809,7 @@
 ;   --above "first" assumes only one entry
 ;   comments := trimComments asyExtractDescription comments
 ;   [:u,['constructor,[nil,comments]]]
- 
+
 (DEFUN |asyDocumentation| (|con|)
   (PROG (|docHash| |rec| |u| |LETTMP#1| |form| |sig| |pred| |origin| |where?|
          |comments|)
@@ -868,12 +869,12 @@
       (SETQ |comments| (CADR (CDDDDR |x|)))
       (COND ((IDENTP |sig|) (SETQ |sig| (LIST |sig|))))
       (LIST (|asySignature| |sig| NIL) (|trimComments| |comments|))))))
- 
+
 ; asyExtractDescription str ==
 ;   k := STRPOS('"Description:",str,0,nil) => asyExtractDescription SUBSTRING(str,k + 12,nil)
 ;   k := STRPOS('"Author:",str,0,nil) => asyExtractDescription SUBSTRING(str,0,k)
 ;   str
- 
+
 (DEFUN |asyExtractDescription| (|str|)
   (PROG (|k|)
     (RETURN
@@ -883,13 +884,13 @@
       ((SETQ |k| (STRPOS "Author:" |str| 0 NIL))
        (|asyExtractDescription| (SUBSTRING |str| 0 |k|)))
       ('T |str|)))))
- 
+
 ; trimComments str ==
 ;   null str or str = '"" => '""
 ;   m := MAXINDEX str
 ;   str := SUBSTRING(str,0,m)
 ;   trimString str
- 
+
 (DEFUN |trimComments| (|str|)
   (PROG (|m|)
     (RETURN
@@ -899,7 +900,7 @@
              (SETQ |m| (MAXINDEX |str|))
              (SETQ |str| (SUBSTRING |str| 0 |m|))
              (|trimString| |str|)))))))
- 
+
 ; asyExportAlist con ==
 ; --format of 'operationAlist property of LISPLIBS (as returned from koOps):
 ; --    <sig slotNumberOrNil optPred optELT>
@@ -913,7 +914,7 @@
 ;       nil
 ;     newSig := asySignature(sig,nil)
 ;     [newSig,nil,:tail]
- 
+
 (DEFUN |asyExportAlist| (|con|)
   (PROG (|docHash| |rec|)
     (RETURN
@@ -960,7 +961,7 @@
       (SETQ |tail| (COND (|pred| (LIST |pred|)) ('T NIL)))
       (SETQ |newSig| (|asySignature| |sig| NIL))
       (CONS |newSig| (CONS NIL |tail|))))))
- 
+
 ; asyMakeOperationAlist(con,proplist, key) ==
 ;   oplist :=
 ;     u := LASSOC('domExports,proplist) =>
@@ -973,7 +974,7 @@
 ;       kind := 'domain
 ;       u := NIL
 ;     return nil
-;   ht := MAKE_-HASH_-TABLE()
+;   ht := MAKE_HASHTABLE('EQUAL)
 ;   ancestorAlist := nil
 ;   for ['Declare,id,form,r] in oplist repeat
 ;     id = "%%" =>
@@ -998,7 +999,7 @@
 ;     HPUT(ht,id,[entry,:HGET(ht,id)])
 ;   opalist := [[op,:REMDUP HGET(ht,op)] for op in HKEYS ht]
 ;   HPUT($opHash,con,[ancestorAlist,nil,:opalist])
- 
+
 (DEFUN |asyMakeOperationAlist| (|con| |proplist| |key|)
   (PROG (|u| |kind| |oplist| |ht| |ancestorAlist| |ISTMP#1| |id| |ISTMP#2|
          |form| |ISTMP#3| |r| |y| |source| |target| |idForm| |p| |pred| |sig|
@@ -1014,7 +1015,7 @@
                ((EQ |key| '|domain|)
                 (PROGN (SETQ |kind| '|domain|) (SETQ |u| NIL)))
                (#1='T (RETURN NIL))))
-      (SETQ |ht| (MAKE-HASH-TABLE))
+      (SETQ |ht| (MAKE_HASHTABLE 'EQUAL))
       (SETQ |ancestorAlist| NIL)
       ((LAMBDA (|bfVar#47| |bfVar#46|)
          (LOOP
@@ -1105,14 +1106,14 @@
                   (SETQ |bfVar#48| (CDR |bfVar#48|))))
                NIL (HKEYS |ht|) NIL))
       (HPUT |$opHash| |con| (CONS |ancestorAlist| (CONS NIL |opalist|)))))))
- 
+
 ; hackToRemoveAnd p ==
 ; ---remove this as soon as .asy files do not contain forms (And pred) forms
 ;   p is ['And,q,:r] =>
 ;     r => ['AND,q,:r]
 ;     q
 ;   p
- 
+
 (DEFUN |hackToRemoveAnd| (|p|)
   (PROG (|ISTMP#1| |q| |r|)
     (RETURN
@@ -1127,7 +1128,7 @@
                    #1='T))))
        (COND (|r| (CONS 'AND (CONS |q| |r|))) (#1# |q|)))
       (#1# |p|)))))
- 
+
 ; asyAncestors x ==
 ;   x is ['Apply,:r] => asyAncestorList r
 ;   x is [op,y,:.] and MEMQ(op, '(PretendTo RestrictTo)) => asyAncestors y
@@ -1137,7 +1138,7 @@
 ;     GETDATABASE(x ,'NILADIC) => [x]
 ;     x
 ;   asyAncestorList x
- 
+
 (DEFUN |asyAncestors| (|x|)
   (PROG (|r| |op| |ISTMP#1| |y|)
     (RETURN
@@ -1156,9 +1157,9 @@
        (COND ((EQ |x| '%) '$) ((MEMQ |x| |$niladics|) (LIST |x|))
              ((GETDATABASE |x| 'NILADIC) (LIST |x|)) (#1# |x|)))
       (#1# (|asyAncestorList| |x|))))))
- 
+
 ; asyAncestorList x == [asyAncestors y for y in x]
- 
+
 (DEFUN |asyAncestorList| (|x|)
   (PROG ()
     (RETURN
@@ -1170,7 +1171,7 @@
           ('T (SETQ |bfVar#51| (CONS (|asyAncestors| |y|) |bfVar#51|))))
          (SETQ |bfVar#50| (CDR |bfVar#50|))))
       NIL |x| NIL))))
- 
+
 ; asytran fn ==
 ; --put operations into table format for browser:
 ; --    <sig pred origin         exposed? comments>
@@ -1182,13 +1183,13 @@
 ;   for d in u repeat
 ;     ['Declare,name,:.] := d
 ;     name = "%%" => 'skip       --skip over top-level properties
-;     $docHashLocal: local := MAKE_-HASH_-TABLE()
+;     $docHashLocal: local := MAKE_HASHTABLE('EQUAL)
 ;     asytranDeclaration(d,'(top),nil,false)
 ;     if null name then BREAK()
 ;     HPUT($docHash,name,$docHashLocal)
 ;   CLOSE inStream
 ;   'done
- 
+
 (DEFUN |asytran| (|fn|)
   (PROG (|$docHashLocal| |name| |u| |inStream|)
     (DECLARE (SPECIAL |$docHashLocal|))
@@ -1217,7 +1218,7 @@
              (COND ((EQ |name| '%%) '|skip|)
                    (#1#
                     (PROGN
-                     (SETQ |$docHashLocal| (MAKE-HASH-TABLE))
+                     (SETQ |$docHashLocal| (MAKE_HASHTABLE 'EQUAL))
                      (|asytranDeclaration| |d| '(|top|) NIL NIL)
                      (COND ((NULL |name|) (BREAK)))
                      (HPUT |$docHash| |name| |$docHashLocal|)))))))
@@ -1225,10 +1226,10 @@
        |u| NIL)
       (CLOSE |inStream|)
       '|done|))))
- 
+
 ; mkNiladics u ==
 ;   [name for x in u | x is ['Declare,name,y,:.] and y isnt ['Apply,'_-_>,:.]]
- 
+
 (DEFUN |mkNiladics| (|u|)
   (PROG (|ISTMP#1| |name| |ISTMP#2| |y|)
     (RETURN
@@ -1255,7 +1256,7 @@
                 (SETQ |bfVar#55| (CONS |name| |bfVar#55|)))))
          (SETQ |bfVar#54| (CDR |bfVar#54|))))
       NIL |u| NIL))))
- 
+
 ; asytranDeclaration(dform,levels,predlist,local?) ==
 ;   ['Declare,id,form,r] := dform
 ;   id = 'failed => id
@@ -1290,7 +1291,7 @@
 ;     HPUT(ht,id,[record,:HGET(ht,id)])
 ;   if levels = '(top) then asyMakeOperationAlist(id,r, key)
 ;   ['Declare,id,newsig,r]
- 
+
 (DEFUN |asytranDeclaration| (|dform| |levels| |predlist| |local?|)
   (PROG (|id| |form| |r| |ISTMP#1| |comments| |ISTMP#2| |source| |ISTMP#3|
          |target| |idForm| |newsig| |u| |construc| |key| |typeCode| |record|
@@ -1401,12 +1402,12 @@
                ((EQUAL |levels| '(|top|))
                 (|asyMakeOperationAlist| |id| |r| |key|)))
               (LIST '|Declare| |id| |newsig| |r|))))))))
- 
+
 ; asyLooksLikeCatForm? x ==
 ; --TTT don't see a Third in my version ....
 ;   x is ['Define, ['Declare, ., ['Apply, 'Third,:.],:.],:.] or
 ;    x is ['Define, ['Declare, ., 'Category ],:.]
- 
+
 (DEFUN |asyLooksLikeCatForm?| (|x|)
   (PROG (|ISTMP#1| |ISTMP#2| |ISTMP#3| |ISTMP#4| |ISTMP#5| |ISTMP#6|)
     (RETURN
@@ -1447,14 +1448,14 @@
                               (SETQ |ISTMP#4| (CDR |ISTMP#3|))
                               (AND (CONSP |ISTMP#4|) (EQ (CDR |ISTMP#4|) NIL)
                                    (EQ (CAR |ISTMP#4|) '|Category|))))))))))))))
- 
+
 ; asyIsCatForm form ==
 ;   form is ['Apply,:r] =>
 ;     r is ['_-_>,.,a] => asyIsCatForm a
 ;     r is ['Third,'Type,:.] => true
 ;     false
 ;   false
- 
+
 (DEFUN |asyIsCatForm| (|form|)
   (PROG (|r| |ISTMP#1| |ISTMP#2| |a|)
     (RETURN
@@ -1478,13 +1479,13 @@
          T)
         (#1# NIL)))
       (#1# NIL)))))
- 
+
 ; asyArgs source ==
 ;   args :=
 ;     source is [op,:u] and asyComma? op => u
 ;     [source]
 ;   [asyArg x for x in args]
- 
+
 (DEFUN |asyArgs| (|source|)
   (PROG (|op| |u| |args|)
     (RETURN
@@ -1507,11 +1508,11 @@
            (#1# (SETQ |bfVar#57| (CONS (|asyArg| |x|) |bfVar#57|))))
           (SETQ |bfVar#56| (CDR |bfVar#56|))))
        NIL |args| NIL)))))
- 
+
 ; asyArg x ==
 ;   x is ['Declare,id,:.] => id
 ;   x
- 
+
 (DEFUN |asyArg| (|x|)
   (PROG (|ISTMP#1| |id|)
     (RETURN
@@ -1523,12 +1524,12 @@
                   (PROGN (SETQ |id| (CAR |ISTMP#1|)) #1='T))))
        |id|)
       (#1# |x|)))))
- 
+
 ; asyMkpred predlist ==
 ;   null predlist => nil
 ;   predlist is [p] => p
 ;   ['AND,:predlist]
- 
+
 (DEFUN |asyMkpred| (|predlist|)
   (PROG (|p|)
     (RETURN
@@ -1537,19 +1538,19 @@
                  (PROGN (SETQ |p| (CAR |predlist|)) #1='T))
             |p|)
            (#1# (CONS 'AND |predlist|))))))
- 
+
 ; asytranForm(form,levels,local?) ==
 ;   u := asytranForm1(form,levels,local?)
 ;   null u => hahah()
 ;   u
- 
+
 (DEFUN |asytranForm| (|form| |levels| |local?|)
   (PROG (|u|)
     (RETURN
      (PROGN
       (SETQ |u| (|asytranForm1| |form| |levels| |local?|))
       (COND ((NULL |u|) (|hahah|)) ('T |u|))))))
- 
+
 ; asytranForm1(form,levels,local?) ==
 ;   form is ['With,left,cat] =>
 ; --  left ~= nil       => error '"WITH cannot take a left argument yet"
@@ -1574,7 +1575,7 @@
 ;     GETL(form,'NILADIC) => [form]
 ;     form
 ;   [asytranForm(x,levels,local?) for x in form]
- 
+
 (DEFUN |asytranForm1| (|form| |levels| |local?|)
   (PROG (|ISTMP#1| |left| |ISTMP#2| |cat| |r| |op| |a| |b| |s| |ISTMP#3|
          |ISTMP#4| |x| |ISTMP#5| CDR)
@@ -1671,7 +1672,7 @@
                               |bfVar#61|))))
               (SETQ |bfVar#60| (CDR |bfVar#60|))))
            NIL |form| NIL)))))))))
- 
+
 ; asytranApply(['Apply,name,:arglist],levels,local?) ==
 ;   MEMQ(name,'(Record Union)) =>
 ;     [name,:[asytranApplySpecial(x, levels, local?) for x in arglist]]
@@ -1688,7 +1689,7 @@
 ;   [:argl,lastArg] := arglist
 ;   [name,:[asytranFormSpecial(arg,levels,true) for arg in argl],
 ;           asytranFormSpecial(lastArg,levels,false)]
- 
+
 (DEFUN |asytranApply| (|bfVar#68| |levels| |local?|)
   (PROG (|name| |arglist| |LETTMP#1| |lastArg| |argl|)
     (RETURN
@@ -1754,16 +1755,16 @@
                  NIL |argl| NIL)
                 (CONS (|asytranFormSpecial| |lastArg| |levels| NIL)
                       NIL))))))))))
- 
+
 ; asytranLiteral(lit) ==
 ;   first rest lit
- 
+
 (DEFUN |asytranLiteral| (|lit|) (PROG () (RETURN (CAR (CDR |lit|)))))
- 
+
 ; asytranEnumItem arg ==
 ;   arg is ['Declare, name, :.] => name
 ;   error '"Bad Enumeration entry"
- 
+
 (DEFUN |asytranEnumItem| (|arg|)
   (PROG (|ISTMP#1| |name|)
     (RETURN
@@ -1775,11 +1776,11 @@
                   (PROGN (SETQ |name| (CAR |ISTMP#1|)) #1='T))))
        |name|)
       (#1# (|error| "Bad Enumeration entry"))))))
- 
+
 ; asytranApplySpecial(x, levels, local?) ==
 ;   x is ['Declare, name, typ, :.] => [":",name,asytranForm(typ, levels, local?)]
 ;   asytranForm(x, levels, local?)
- 
+
 (DEFUN |asytranApplySpecial| (|x| |levels| |local?|)
   (PROG (|ISTMP#1| |name| |ISTMP#2| |typ|)
     (RETURN
@@ -1795,11 +1796,11 @@
                         (PROGN (SETQ |typ| (CAR |ISTMP#2|)) #1='T))))))
        (LIST '|:| |name| (|asytranForm| |typ| |levels| |local?|)))
       (#1# (|asytranForm| |x| |levels| |local?|))))))
- 
+
 ; asytranFormSpecial(x, levels, local?) ==  --> this throws away variable name (revise later)
 ;   x is ['Declare, name, typ, :.] => asytranForm(typ, levels, local?)
 ;   asytranForm(x, levels, local?)
- 
+
 (DEFUN |asytranFormSpecial| (|x| |levels| |local?|)
   (PROG (|ISTMP#1| |name| |ISTMP#2| |typ|)
     (RETURN
@@ -1815,7 +1816,7 @@
                         (PROGN (SETQ |typ| (CAR |ISTMP#2|)) #1='T))))))
        (|asytranForm| |typ| |levels| |local?|))
       (#1# (|asytranForm| |x| |levels| |local?|))))))
- 
+
 ; asytranCategory(form,levels,predlist,local?) ==
 ;   cat :=
 ;     form is ['With,left,right] =>
@@ -1831,7 +1832,7 @@
 ;   items :=
 ;     cat is ['Sequence,:s] => s
 ;     [cat]
-;   catTable := MAKE_-HASH_-TABLE()
+;   catTable := MAKE_HASHTABLE('EQUAL)
 ;   catList  := nil
 ;   for x in items | x repeat
 ;     if null x then systemError()
@@ -1851,7 +1852,7 @@
 ;     right
 ;   res is [x] and x is ['IF,:.] => x
 ;   ['With,:res]
- 
+
 (DEFUN |asytranCategory| (|form| |levels| |predlist| |local?|)
   (PROG (|$hasPerCent| |x| |res| |right2| |right1| |keys| |r| |ISTMP#3|
          |record| |id| |dform| |catList| |catTable| |items| |s| |cat| |right|
@@ -1900,7 +1901,7 @@
                      (PROGN (SETQ |s| (CDR |cat|)) #1#))
                 |s|)
                (#1# (LIST |cat|))))
-      (SETQ |catTable| (MAKE-HASH-TABLE))
+      (SETQ |catTable| (MAKE_HASHTABLE 'EQUAL))
       (SETQ |catList| NIL)
       ((LAMBDA (|bfVar#69| |x|)
          (LOOP
@@ -1966,17 +1967,17 @@
              (PROGN (SETQ |x| (CAR |res|)) #1#) (CONSP |x|) (EQ (CAR |x|) 'IF))
         |x|)
        (#1# (CONS '|With| |res|)))))))
- 
+
 ; asyWrap(record,predlist) ==
 ;   predlist => ['IF,MKPF(predlist,'AND),record]
 ;   record
- 
+
 (DEFUN |asyWrap| (|record| |predlist|)
   (PROG ()
     (RETURN
      (COND (|predlist| (LIST 'IF (MKPF |predlist| 'AND) |record|))
            ('T |record|)))))
- 
+
 ; asytranCategoryItem(x,levels,predlist,local?) ==
 ;   x is ['If,predicate,item,:r] =>
 ;     IFCAR r => error '"ELSE expressions not allowed yet in conditionals"
@@ -1987,7 +1988,7 @@
 ;   MEMQ(IFCAR x, '(Default Foreign)) => nil
 ;   x is ['Declare,:.] => asytranDeclaration(x,levels,predlist,local?)
 ;   x
- 
+
 (DEFUN |asytranCategoryItem| (|x| |levels| |predlist| |local?|)
   (PROG (|ISTMP#1| |predicate| |ISTMP#2| |item| |r| |pred|)
     (RETURN
@@ -2024,7 +2025,7 @@
       ((AND (CONSP |x|) (EQ (CAR |x|) '|Declare|))
        (|asytranDeclaration| |x| |levels| |predlist| |local?|))
       (#1# |x|)))))
- 
+
 ; extendConstructorDataTable() ==
 ;   for x in listSort(function GLESSEQP,HKEYS $conHash) repeat
 ;      record := HGET($conHash,x)
@@ -2042,7 +2043,7 @@
 ;                 ['sourceFile,STRINGIMAGE filename],
 ;                   ['constructorArgs,:args]],:tb]
 ;   listSort(function GLESSEQP,ASSOCLEFT tb)
- 
+
 (DEFUN |extendConstructorDataTable| ()
   (PROG (|tb| |args| |cosig| |kind| |abb| |filename| |typeCode| |comments|
          |exposure| |origin| |predlist| |sig| |form| |LETTMP#1| |record|)
@@ -2080,13 +2081,13 @@
           (SETQ |bfVar#72| (CDR |bfVar#72|))))
        (|listSort| #'GLESSEQP (HKEYS |$conHash|)) NIL)
       (|listSort| #'GLESSEQP (ASSOCLEFT |tb|))))))
- 
+
 ; asyConstructorArgs sig ==
 ;   sig is ['With,:.] => nil
 ;   sig is ['_-_>,source,target] =>
 ;     source is [op,:argl] and asyComma? op => [asyConstructorArg x for x in argl]
 ;     [asyConstructorArg source]
- 
+
 (DEFUN |asyConstructorArgs| (|sig|)
   (PROG (|ISTMP#1| |source| |ISTMP#2| |target| |op| |argl|)
     (RETURN
@@ -2119,11 +2120,11 @@
                   (SETQ |bfVar#73| (CDR |bfVar#73|))))
                NIL |argl| NIL))
              (#1# (LIST (|asyConstructorArg| |source|)))))))))
- 
+
 ; asyConstructorArg x ==
 ;   x is ['Declare,name,t,:.] => name
 ;   x
- 
+
 (DEFUN |asyConstructorArg| (|x|)
   (PROG (|ISTMP#1| |name| |ISTMP#2| |t|)
     (RETURN
@@ -2139,14 +2140,14 @@
                         (PROGN (SETQ |t| (CAR |ISTMP#2|)) #1='T))))))
        |name|)
       (#1# |x|)))))
- 
+
 ; asyCosig sig ==    --can be a type or could be a signature
 ;   atom sig or sig is ['With,:.] => nil
 ;   sig is ['_-_>,source,target] =>
 ;     source is [op,:argl] and asyComma? op => [asyCosigType x for x in argl]
 ;     [asyCosigType source]
 ;   error false
- 
+
 (DEFUN |asyCosig| (|sig|)
   (PROG (|ISTMP#1| |source| |ISTMP#2| |target| |op| |argl|)
     (RETURN
@@ -2179,7 +2180,7 @@
                NIL |argl| NIL))
              (#1# (LIST (|asyCosigType| |source|)))))
            (#1# (|error| NIL))))))
- 
+
 ; asyCosigType u ==
 ;   u is [name,t] =>
 ;     t is [fn,:.] =>
@@ -2189,7 +2190,7 @@
 ;     t = 'Type => 'T
 ;     error '"Unknown atomic type"
 ;   error false
- 
+
 (DEFUN |asyCosigType| (|u|)
   (PROG (|name| |ISTMP#1| |t| |fn|)
     (RETURN
@@ -2205,7 +2206,7 @@
          (COND ((|asyComma?| |fn|) |fn|) ((EQ |fn| '|With|) 'T) (#1# NIL)))
         ((EQ |t| '|Type|) 'T) (#1# (|error| "Unknown atomic type"))))
       (#1# (|error| NIL))))))
- 
+
 ; asyAbbreviation(id,n) ==  chk(id,main) where   --> n = number of arguments
 ;   main ==
 ;     a := createAbbreviation id => a
@@ -2223,7 +2224,7 @@
 ;       conname = con => abb
 ;       conname
 ;     abb
- 
+
 (DEFUN |asyAbbreviation| (|id| |n|)
   (PROG (|a| |name| |parts| |newname| |tryname|)
     (RETURN
@@ -2260,7 +2261,7 @@
            ((SETQ |con| (|abbreviation?| |abb|))
             (COND ((EQUAL |conname| |con|) |abb|) (#1='T |conname|)))
            (#1# |abb|)))))
- 
+
 ; asyGetAbbrevFromComments con ==
 ;   docHash := HGET($docHash,con)
 ;   u := [[op,:[fn(x,op) for x in rec]] for op in HKEYS docHash
@@ -2274,7 +2275,7 @@
 ;   x := asyExtractAbbreviation comments
 ;   x => intern x
 ;   NIL
- 
+
 (DEFUN |asyGetAbbrevFromComments| (|con|)
   (PROG (|docHash| |rec| |u| |LETTMP#1| |form| |sig| |pred| |origin| |where?|
          |comments| |x|)
@@ -2334,14 +2335,14 @@
       (SETQ |comments| (CADR (CDDDDR |x|)))
       (COND ((IDENTP |sig|) (SETQ |sig| (LIST |sig|))))
       (LIST (|asySignature| |sig| NIL) (|trimComments| |comments|))))))
- 
+
 ; asyExtractAbbreviation str ==
 ;         not (k:= STRPOS('"Abbrev: ",str,0,nil)) => NIL
 ;         str := SUBSTRING(str, k+8, nil)
 ;         k := STRPOS($stringNewline, str,0,nil)
 ;         k => SUBSTRING(str, 0, k)
 ;         str
- 
+
 (DEFUN |asyExtractAbbreviation| (|str|)
   (PROG (|k|)
     (RETURN
@@ -2351,7 +2352,7 @@
              (SETQ |str| (SUBSTRING |str| (+ |k| 8) NIL))
              (SETQ |k| (STRPOS |$stringNewline| |str| 0 NIL))
              (COND (|k| (SUBSTRING |str| 0 |k|)) (#1# |str|))))))))
- 
+
 ; asyShorten x ==
 ;   y := createAbbreviation x
 ;     or LASSOC(x,
@@ -2360,7 +2361,7 @@
 ;              ("Inventor" . "IV")
 ;               ("Finite" . "F") ("Double" . "D") ("Builtin" . "BI"))) => y
 ;   UPCASE x
- 
+
 (DEFUN |asyShorten| (|x|)
   (PROG (|y|)
     (RETURN
@@ -2374,14 +2375,14 @@
                       ("Double" . "D") ("Builtin" . "BI")))))
        |y|)
       ('T (UPCASE |x|))))))
- 
+
 ; asySplit(name,end) ==
 ;   end < 1 => [name]
 ;   k := 0
 ;   for i in 1..end while LOWER_-CASE_-P name.i repeat k := i
 ;   k := k + 1
 ;   [SUBSTRING(name,0,k),:asySplit(SUBSTRING(name,k,nil),end-k)]
- 
+
 (DEFUN |asySplit| (|name| |end|)
   (PROG (|k|)
     (RETURN
@@ -2400,13 +2401,13 @@
              (SETQ |k| (+ |k| 1))
              (CONS (SUBSTRING |name| 0 |k|)
                    (|asySplit| (SUBSTRING |name| |k| NIL) (- |end| |k|)))))))))
- 
+
 ; createAbbreviation s ==
 ;   if STRINGP s then s := INTERN s
 ;   a := constructor? s
 ;   a ~= s => a
 ;   nil
- 
+
 (DEFUN |createAbbreviation| (|s|)
   (PROG (|a|)
     (RETURN
@@ -2414,7 +2415,7 @@
       (COND ((STRINGP |s|) (SETQ |s| (INTERN |s|))))
       (SETQ |a| (|constructor?| |s|))
       (COND ((NOT (EQUAL |a| |s|)) |a|) ('T NIL))))))
- 
+
 ; asyConstructorModemap con ==
 ;   HGET($conHash,con) isnt [record,:.] => nil   --not there
 ;   [form,sig,predlist,kind,exposure,comments,typeCode,:filename] := record
@@ -2425,7 +2426,7 @@
 ;   formals := ['_$,:TAKE(#$constructorArgs,$FormalMapVariableList)]
 ;   mm := [[[con,:$constructorArgs],:signature],['T,con]]
 ;   SUBLISLIS(formals,['_%,:$constructorArgs],mm)
- 
+
 (DEFUN |asyConstructorModemap| (|con|)
   (PROG (|$constructorArgs| |$kind| |mm| |formals| |signature| |filename|
          |typeCode| |comments| |exposure| |kind| |predlist| |sig| |form|
@@ -2460,7 +2461,7 @@
                 (LIST (CONS (CONS |con| |$constructorArgs|) |signature|)
                       (LIST 'T |con|)))
         (SUBLISLIS |formals| (CONS '% |$constructorArgs|) |mm|)))))))
- 
+
 ; asySignature(sig,names?) ==
 ;   sig is ['Join,:.] => [asySig(sig,nil)]
 ;   sig is ['With,:.] => [asySig(sig,nil)]
@@ -2475,7 +2476,7 @@
 ;   sig is ['Third,:.] => [asySig(sig,nil)]
 ;   ----------> Constants change <--------------
 ;   asySig(sig,nil)
- 
+
 (DEFUN |asySignature| (|sig| |names?|)
   (PROG (|ISTMP#1| |source| |ISTMP#2| |target| |op| |argl|)
     (RETURN
@@ -2521,16 +2522,16 @@
       ((AND (CONSP |sig|) (EQ (CAR |sig|) '|Third|))
        (LIST (|asySig| |sig| NIL)))
       (#1# (|asySig| |sig| NIL))))))
- 
+
 ; asySigTarget(u,name?) == asySig1(u,name?,true)
- 
+
 (DEFUN |asySigTarget| (|u| |name?|)
   (PROG () (RETURN (|asySig1| |u| |name?| T))))
- 
+
 ; asySig(u,name?) == asySig1(u,name?,false)
- 
+
 (DEFUN |asySig| (|u| |name?|) (PROG () (RETURN (|asySig1| |u| |name?| NIL))))
- 
+
 ; asySig1(u,name?,target?) ==
 ;   x :=
 ;     name? and u is [name,t] => t
@@ -2561,7 +2562,7 @@
 ; --x = 'Type => '(Type)
 ;   x = '_% => '_$
 ;   x
- 
+
 (DEFUN |asySig1| (|u| |name?| |target?|)
   (PROG (|name| |ISTMP#1| |t| |x| |fn| |r| |b| |s| |typ|)
     (RETURN
@@ -2639,7 +2640,7 @@
                          (SETQ |bfVar#87| (CDR |bfVar#87|))))
                       NIL |r| NIL)))))
        ((EQ |x| '%) '$) (#1# |x|))))))
- 
+
 ; asyMapping([a,b],name?) ==
 ;   newa := asySig(a,name?)
 ;   b    := asySig(b,name?)
@@ -2647,7 +2648,7 @@
 ;     a is [op,:r] and asyComma? op => newa
 ;     [a]
 ;   ['Mapping,b,:args]
- 
+
 (DEFUN |asyMapping| (|bfVar#89| |name?|)
   (PROG (|a| |b| |newa| |op| |r| |args|)
     (RETURN
@@ -2664,7 +2665,7 @@
                 |newa|)
                (#1# (LIST |a|))))
       (CONS '|Mapping| (CONS |b| |args|))))))
- 
+
 ; asyType x ==
 ;   x is [fn,:r] =>
 ;     fn = 'Join => asyTypeJoin r
@@ -2681,7 +2682,7 @@
 ; --x = 'Type => '(Type)
 ;   x = '_% => '_$
 ;   x
- 
+
 (DEFUN |asyType| (|x|)
   (PROG (|fn| |r| |u|)
     (RETURN
@@ -2709,7 +2710,7 @@
              ((EQ |fn| '->) (|asyTypeMapping| |r|)) ((EQ |fn| '|Apply|) |r|)
              ((EQUAL |x| '(%)) '($)) (#1# |x|)))
       ((EQ |x| '%) '$) (#1# |x|)))))
- 
+
 ; asyTypeJoin r ==
 ;   $conStack : local := nil
 ;   $opStack  : local := nil
@@ -2724,7 +2725,7 @@
 ;     rest conpart => ['Join, :conpart]
 ;     conpart
 ;   catpart
- 
+
 (DEFUN |asyTypeJoin| (|r|)
   (PROG (|$predlist| |$opStack| |$conStack| |conpart| |catpart|)
     (DECLARE (SPECIAL |$predlist| |$opStack| |$conStack|))
@@ -2755,12 +2756,12 @@
          (|catpart| (CONS '|Join| (APPEND |conpart| (CONS |catpart| NIL))))
          ((CDR |conpart|) (CONS '|Join| |conpart|)) (#1# |conpart|)))
        (#1# |catpart|))))))
- 
+
 ; asyTypeJoinPart(x,$predlist) ==
 ;   x is ['Join,:y] => for z in y repeat asyTypeJoinPart(z, $predlist)
 ;   x is ['With,:y] => for p in y repeat asyTypeJoinPartWith p
 ;   asyTypeJoinPartWith x
- 
+
 (DEFUN |asyTypeJoinPart| (|x| |$predlist|)
   (DECLARE (SPECIAL |$predlist|))
   (PROG (|y|)
@@ -2787,7 +2788,7 @@
            (SETQ |bfVar#94| (CDR |bfVar#94|))))
         |y| NIL))
       (#1# (|asyTypeJoinPartWith| |x|))))))
- 
+
 ; asyTypeJoinPartWith x ==
 ;   x is ['Exports,:y] => for p in y repeat asyTypeJoinPartExport p
 ;   x is ['Exports,:.] => systemError 'exports
@@ -2796,7 +2797,7 @@
 ;   x is ['IF,:r] => asyTypeJoinPartIf r
 ;   x is ['Sequence,:x] => for y in x repeat asyTypeJoinItem y
 ;   asyTypeJoinItem x
- 
+
 (DEFUN |asyTypeJoinPartWith| (|x|)
   (PROG (|y| |r|)
     (RETURN
@@ -2829,11 +2830,11 @@
            (SETQ |bfVar#96| (CDR |bfVar#96|))))
         |x| NIL))
       (#1# (|asyTypeJoinItem| |x|))))))
- 
+
 ; asyTypeJoinPartIf [pred,value] ==
 ;   predlist := [asyTypeJoinPartPred pred,:$predlist]
 ;   asyTypeJoinPart(value,predlist)
- 
+
 (DEFUN |asyTypeJoinPartIf| (|bfVar#97|)
   (PROG (|pred| |value| |predlist|)
     (RETURN
@@ -2842,11 +2843,11 @@
       (SETQ |value| (CADR |bfVar#97|))
       (SETQ |predlist| (CONS (|asyTypeJoinPartPred| |pred|) |$predlist|))
       (|asyTypeJoinPart| |value| |predlist|)))))
- 
+
 ; asyTypeJoinPartPred x ==
 ;   x is ['Test, y] => asyTypeUnit y
 ;   asyTypeUnit x
- 
+
 (DEFUN |asyTypeJoinPartPred| (|x|)
   (PROG (|ISTMP#1| |y|)
     (RETURN
@@ -2858,13 +2859,13 @@
                   (PROGN (SETQ |y| (CAR |ISTMP#1|)) #1='T))))
        (|asyTypeUnit| |y|))
       (#1# (|asyTypeUnit| |x|))))))
- 
+
 ; asyTypeJoinItem x ==
 ;   result := asyTypeUnit x
 ;   isLowerCaseLetter (PNAME opOf result).0 =>
 ;     $opStack := [[['ATTRIBUTE,result],:$predlist],:$opStack]
 ;   $conStack := [[result,:$predlist],:$conStack]
- 
+
 (DEFUN |asyTypeJoinItem| (|x|)
   (PROG (|result|)
     (RETURN
@@ -2877,7 +2878,7 @@
                       |$opStack|)))
        ('T
         (SETQ |$conStack| (CONS (CONS |result| |$predlist|) |$conStack|))))))))
- 
+
 ; asyTypeMapping([a,b]) ==
 ;   a := asyTypeUnit a
 ;   b := asyTypeUnit b
@@ -2885,7 +2886,7 @@
 ;     a is [op,:r] and asyComma? op => r
 ;     [a]
 ;   ['Mapping,b,:args]
- 
+
 (DEFUN |asyTypeMapping| (|bfVar#98|)
   (PROG (|a| |b| |op| |r| |args|)
     (RETURN
@@ -2902,7 +2903,7 @@
                 |r|)
                (#1# (LIST |a|))))
       (CONS '|Mapping| (CONS |b| |args|))))))
- 
+
 ; asyTypeUnit x ==
 ;   x is [fn,:r] =>
 ;     fn = 'Join => systemError 'Join ----->asyTypeJoin r
@@ -2920,7 +2921,7 @@
 ; --x = 'Type => '(Type)
 ;   x = '_% => '_$
 ;   x
- 
+
 (DEFUN |asyTypeUnit| (|x|)
   (PROG (|fn| |r| |u| |name| |ISTMP#1| |typ|)
     (RETURN
@@ -2958,9 +2959,9 @@
              ((EQUAL |x| '(%)) '($))
              (#1# (CONS |fn| (|asyTypeUnitList| |r|)))))
       ((GETL |x| 'NILADIC) (LIST |x|)) ((EQ |x| '%) '$) (#1# |x|)))))
- 
+
 ; asyTypeUnitList x == [asyTypeUnit y for y in x]
- 
+
 (DEFUN |asyTypeUnitList| (|x|)
   (PROG ()
     (RETURN
@@ -2972,11 +2973,11 @@
           ('T (SETQ |bfVar#102| (CONS (|asyTypeUnit| |y|) |bfVar#102|))))
          (SETQ |bfVar#101| (CDR |bfVar#101|))))
       NIL |x| NIL))))
- 
+
 ; asyTypeUnitDeclare(op,typ) ==
 ;   typ is ['Apply, :r] => asyCatSignature(op,r)
 ;   asyTypeUnit typ
- 
+
 (DEFUN |asyTypeUnitDeclare| (|op| |typ|)
   (PROG (|r|)
     (RETURN
@@ -2985,7 +2986,7 @@
             (PROGN (SETQ |r| (CDR |typ|)) #1='T))
        (|asyCatSignature| |op| |r|))
       (#1# (|asyTypeUnit| |typ|))))))
- 
+
 ; asyCATEGORY x ==
 ;   if x is [join,:y] and join is ['Apply,:s] then
 ;     exports := y
@@ -3009,7 +3010,7 @@
 ;   joins or cats =>
 ;     ['Join,:joins,:cats, exportPart]
 ;   exportPart
- 
+
 (DEFUN |asyCATEGORY| (|x|)
   (PROG (|join| |y| |s| |exports| |r| |joins| |id| |cats| |operations|
          |ISTMP#1| |ISTMP#2| |ops| |exportPart|)
@@ -3085,12 +3086,12 @@
         (CONS '|Join|
               (APPEND |joins| (APPEND |cats| (CONS |exportPart| NIL)))))
        (#1# |exportPart|))))))
- 
+
 ; simpCattran x ==
 ;   u := asyCattran x
 ;   u is [y] => y
 ;   ['Join,:u]
- 
+
 (DEFUN |simpCattran| (|x|)
   (PROG (|u| |y|)
     (RETURN
@@ -3100,12 +3101,12 @@
        ((AND (CONSP |u|) (EQ (CDR |u|) NIL) (PROGN (SETQ |y| (CAR |u|)) #1='T))
         |y|)
        (#1# (CONS '|Join| |u|)))))))
- 
+
 ; asyCattran x ==
 ;   x is ['With,:r] => "append"/[asyCattran1 x for x in r]
 ;   x is ['IF,:.]   => "append"/[asyCattranConstructors(x,nil)]
 ;   [x]
- 
+
 (DEFUN |asyCattran| (|x|)
   (PROG (|r|)
     (RETURN
@@ -3131,12 +3132,12 @@
            (SETQ |bfVar#113| (CDR |bfVar#113|))))
         NIL (LIST (|asyCattranConstructors| |x| NIL)) NIL))
       (#1# (LIST |x|))))))
- 
+
 ; asyCattran1 x ==
 ;   x is ['Exports,:y] => "append"/[asyCattranOp u for u in y]
 ;   x is ['IF,:.]      => "append"/[asyCattranConstructors(x,nil)]
 ;   systemError nil
- 
+
 (DEFUN |asyCattran1| (|x|)
   (PROG (|y|)
     (RETURN
@@ -3162,10 +3163,10 @@
            (SETQ |bfVar#118| (CDR |bfVar#118|))))
         NIL (LIST (|asyCattranConstructors| |x| NIL)) NIL))
       (#1# (|systemError| NIL))))))
- 
+
 ; asyCattranOp [op,:items] ==
 ;   "append"/[asyCattranOp1(op,item,nil) for item in items]
- 
+
 (DEFUN |asyCattranOp| (|bfVar#121|)
   (PROG (|op| |items|)
     (RETURN
@@ -3182,7 +3183,7 @@
                     (APPEND |bfVar#120| (|asyCattranOp1| |op| |item| NIL)))))
           (SETQ |bfVar#119| (CDR |bfVar#119|))))
        NIL |items| NIL)))))
- 
+
 ; asyCattranOp1(op, item, predlist) ==
 ;   item is ['IF, p, x] =>
 ;     pred := asyPredTran
@@ -3194,7 +3195,7 @@
 ;     x is ['IF,:.] => "append"/[asyCattranOp1(op,y,[pred,:predlist]) for y in x]
 ;     [['IF, asySimpPred(pred,predlist), asyCattranSig(op,x), 'noBranch]]
 ;   [asyCattranSig(op,item)]
- 
+
 (DEFUN |asyCattranOp1| (|op| |item| |predlist|)
   (PROG (|ISTMP#1| |p| |ISTMP#2| |x| |t| |pred|)
     (RETURN
@@ -3239,19 +3240,19 @@
            (LIST 'IF (|asySimpPred| |pred| |predlist|)
                  (|asyCattranSig| |op| |x|) '|noBranch|))))))
       (#1# (LIST (|asyCattranSig| |op| |item|)))))))
- 
+
 ; asyPredTran p == asyPredTran1 asyJoinPart p
- 
+
 (DEFUN |asyPredTran| (|p|)
   (PROG () (RETURN (|asyPredTran1| (|asyJoinPart| |p|)))))
- 
+
 ; asyPredTran1 p ==
 ;   p is ['Has,x,y] => ['has,x, simpCattran y]
 ;   p is ['Test, q] => asyPredTran1 q
 ;   p is [op,:r] and MEMQ(op,'(AND OR NOT)) =>
 ;     [op,:[asyPredTran1 q for q in r]]
 ;   p
- 
+
 (DEFUN |asyPredTran1| (|p|)
   (PROG (|ISTMP#1| |x| |ISTMP#2| |y| |q| |op| |r|)
     (RETURN
@@ -3286,7 +3287,7 @@
                  (SETQ |bfVar#124| (CDR |bfVar#124|))))
               NIL |r| NIL)))
       (#1# |p|)))))
- 
+
 ; asyCattranConstructors(item, predlist) ==
 ;   item is ['IF, p, x] =>
 ;     pred := asyPredTran
@@ -3296,7 +3297,7 @@
 ;     form := ['ATTRIBUTE, asyJoinPart x]
 ;     [['IF, asySimpPred(pred,predlist), form, 'noBranch]]
 ;   systemError()
- 
+
 (DEFUN |asyCattranConstructors| (|item| |predlist|)
   (PROG (|ISTMP#1| |p| |ISTMP#2| |x| |t| |pred| |form|)
     (RETURN
@@ -3340,11 +3341,11 @@
             (LIST 'IF (|asySimpPred| |pred| |predlist|) |form|
                   '|noBranch|)))))))
       (#1# (|systemError|))))))
- 
+
 ; asySimpPred(p, predlist) ==
 ;   while predlist is [q,:predlist] repeat p := quickAnd(q,p)
 ;   p
- 
+
 (DEFUN |asySimpPred| (|p| |predlist|)
   (PROG (|q|)
     (RETURN
@@ -3361,7 +3362,7 @@
             (RETURN NIL))
            (#1# (SETQ |p| (|quickAnd| |q| |p|)))))))
       |p|))))
- 
+
 ; asyCattranSig(op,y) ==
 ;   y isnt ["->",source,t] =>
 ; -- following makes constants into nullary functions
@@ -3372,7 +3373,7 @@
 ;   t := asyTypeUnit t
 ;   null t => ['SIGNATURE,op,s]
 ;   ['SIGNATURE,op,[t,:s]]
- 
+
 (DEFUN |asyCattranSig| (|op| |y|)
   (PROG (|ISTMP#1| |source| |ISTMP#2| |t| |s|)
     (RETURN
@@ -3409,21 +3410,21 @@
         (SETQ |t| (|asyTypeUnit| |t|))
         (COND ((NULL |t|) (LIST 'SIGNATURE |op| |s|))
               (#1# (LIST 'SIGNATURE |op| (CONS |t| |s|))))))))))
- 
+
 ; asyJoinPart x ==
 ;   IDENTP x => [x]
 ;   asytranForm(x,nil,true)
- 
+
 (DEFUN |asyJoinPart| (|x|)
   (PROG ()
     (RETURN (COND ((IDENTP |x|) (LIST |x|)) ('T (|asytranForm| |x| NIL T))))))
- 
+
 ; asyCatItem item ==
 ;   atom item  => [item]
 ;   item is ['IF,.,.] => [item]
 ;   [op,:sigs] := item
 ;   [asyCatSignature(op,sig) for sig in sigs | sig]
- 
+
 (DEFUN |asyCatItem| (|item|)
   (PROG (|ISTMP#1| |ISTMP#2| |op| |sigs|)
     (RETURN
@@ -3453,14 +3454,14 @@
                                       |bfVar#132|)))))
                  (SETQ |bfVar#131| (CDR |bfVar#131|))))
               NIL |sigs| NIL)))))))
- 
+
 ; asyCatSignature(op,sig) ==
 ;   sig is ['_-_>,source,target] =>
 ;      ['SIGNATURE,op, [asyTypeItem target,:asyUnTuple source]]
 ;   ----------> Constants change <--------------
 ; -- following line converts constants into nullary functions
 ;   ['SIGNATURE,op,[asyTypeItem sig]]
- 
+
 (DEFUN |asyCatSignature| (|op| |sig|)
   (PROG (|ISTMP#1| |source| |ISTMP#2| |target|)
     (RETURN
@@ -3477,11 +3478,11 @@
        (LIST 'SIGNATURE |op|
              (CONS (|asyTypeItem| |target|) (|asyUnTuple| |source|))))
       (#1# (LIST 'SIGNATURE |op| (LIST (|asyTypeItem| |sig|))))))))
- 
+
 ; asyUnTuple x ==
 ;   x is [op,:u] and asyComma? op => [asyTypeItem y for y in u]
 ;   [asyTypeItem x]
- 
+
 (DEFUN |asyUnTuple| (|x|)
   (PROG (|op| |u|)
     (RETURN
@@ -3498,7 +3499,7 @@
            (SETQ |bfVar#133| (CDR |bfVar#133|))))
         NIL |u| NIL))
       (#1# (LIST (|asyTypeItem| |x|)))))))
- 
+
 ; asyTypeItem x ==
 ;   atom x =>
 ;     x = '_%         => '_$
@@ -3520,7 +3521,7 @@
 ;     args => ['Multi,:[asyTypeItem y for y in args]]
 ;     ['Void]
 ;   [asyTypeItem y for y in x]
- 
+
 (DEFUN |asyTypeItem| (|x|)
   (PROG (|ISTMP#1| |a| |ISTMP#2| |b| |r| |parts| |t| |args|)
     (RETURN
@@ -3627,198 +3628,22 @@
                   (SETQ |bfVar#143| (CONS (|asyTypeItem| |y|) |bfVar#143|))))
                 (SETQ |bfVar#142| (CDR |bfVar#142|))))
              NIL |x| NIL))))))
- 
+
 ; asyComma? op == MEMQ(op,'(Comma Multi))
- 
+
 (DEFUN |asyComma?| (|op|) (PROG () (RETURN (MEMQ |op| '(|Comma| |Multi|)))))
- 
+
 ; hput(table,name,value) ==
 ;   if null name then systemError()
 ;   HPUT(table,name,value)
- 
+
 (DEFUN |hput| (|table| |name| |value|)
   (PROG ()
     (RETURN
      (PROGN
       (COND ((NULL |name|) (|systemError|)))
       (HPUT |table| |name| |value|)))))
- 
-; asCategoryParts(kind,conform,category,:options) == main where
-;   main ==
-;     cons? := IFCAR options  --means to include constructors as well
-;     $attrlist: local := nil
-;     $oplist  : local := nil
-;     $conslist: local := nil
-;     conname := opOf conform
-;     for x in exportsOf(category) repeat build(x,true)
-;     $attrlist := listSort(function GLESSEQP,$attrlist)
-;     $oplist   := listSort(function GLESSEQP,$oplist)
-;     res := [$attrlist,:$oplist]
-;     if cons? then res := [listSort(function GLESSEQP,$conslist),:res]
-;     if kind = 'category then
-;       tvl := TAKE(#rest conform,$TriangleVariableList)
-;       res := SUBLISLIS($FormalMapVariableList,tvl,res)
-;     res
-;   build(item,pred) ==
-;     item is ['SIGNATURE,op,sig,:.] => $oplist   := [[opOf op,sig,:pred],:$oplist]
-;     --note: opOf is needed!!! Bug in compiler puts in (One) and (Zero)
-;     item is ['ATTRIBUTE,attr] =>
-;       constructor? opOf attr =>
-;         $conslist := [[attr,:pred],:$conslist]
-;         nil
-;       opOf attr = 'nothing => 'skip
-;       $attrlist := [[opOf attr,IFCDR attr,:pred],:$attrlist]
-;     item is ['TYPE,op,type] =>
-;         $oplist := [[op,[type],:pred],:$oplist]
-;     item is ['IF,pred1,s1,s2] =>
-;       build(s1,quickAnd(pred,pred1))
-;       s2 => build(s2,quickAnd(pred,['NOT,pred1]))
-;     item is ['PROGN,:r] => for x in r repeat build(x,pred)
-;     item in '(noBranch) => 'ok
-;     null item => 'ok
-;     systemError '"build error"
-;   exportsOf(target) ==
-;     target is ['CATEGORY,.,:r] => r
-;     target is ['Join,:r,f] =>
-;       for x in r repeat $conslist := [[x,:true],:$conslist]
-;       exportsOf f
-;     $conslist := [[target,:true],:$conslist]
-;     nil
- 
-(DEFUN |asCategoryParts| (|kind| |conform| |category| &REST |options|)
-  (PROG (|$conslist| |$oplist| |$attrlist| |tvl| |res| |conname| |cons?|)
-    (DECLARE (SPECIAL |$conslist| |$oplist| |$attrlist|))
-    (RETURN
-     (PROGN
-      (SETQ |cons?| (IFCAR |options|))
-      (SETQ |$attrlist| NIL)
-      (SETQ |$oplist| NIL)
-      (SETQ |$conslist| NIL)
-      (SETQ |conname| (|opOf| |conform|))
-      ((LAMBDA (|bfVar#144| |x|)
-         (LOOP
-          (COND
-           ((OR (ATOM |bfVar#144|) (PROGN (SETQ |x| (CAR |bfVar#144|)) NIL))
-            (RETURN NIL))
-           ('T (|asCategoryParts,build| |x| T)))
-          (SETQ |bfVar#144| (CDR |bfVar#144|))))
-       (|asCategoryParts,exportsOf| |category|) NIL)
-      (SETQ |$attrlist| (|listSort| #'GLESSEQP |$attrlist|))
-      (SETQ |$oplist| (|listSort| #'GLESSEQP |$oplist|))
-      (SETQ |res| (CONS |$attrlist| |$oplist|))
-      (COND
-       (|cons?| (SETQ |res| (CONS (|listSort| #'GLESSEQP |$conslist|) |res|))))
-      (COND
-       ((EQ |kind| '|category|)
-        (SETQ |tvl| (TAKE (LENGTH (CDR |conform|)) |$TriangleVariableList|))
-        (SETQ |res| (SUBLISLIS |$FormalMapVariableList| |tvl| |res|))))
-      |res|))))
-(DEFUN |asCategoryParts,build| (|item| |pred|)
-  (PROG (|ISTMP#1| |op| |ISTMP#2| |sig| |attr| |type| |pred1| |s1| |ISTMP#3|
-         |s2| |r|)
-    (RETURN
-     (COND
-      ((AND (CONSP |item|) (EQ (CAR |item|) 'SIGNATURE)
-            (PROGN
-             (SETQ |ISTMP#1| (CDR |item|))
-             (AND (CONSP |ISTMP#1|)
-                  (PROGN
-                   (SETQ |op| (CAR |ISTMP#1|))
-                   (SETQ |ISTMP#2| (CDR |ISTMP#1|))
-                   (AND (CONSP |ISTMP#2|)
-                        (PROGN (SETQ |sig| (CAR |ISTMP#2|)) #1='T))))))
-       (SETQ |$oplist|
-               (CONS (CONS (|opOf| |op|) (CONS |sig| |pred|)) |$oplist|)))
-      ((AND (CONSP |item|) (EQ (CAR |item|) 'ATTRIBUTE)
-            (PROGN
-             (SETQ |ISTMP#1| (CDR |item|))
-             (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
-                  (PROGN (SETQ |attr| (CAR |ISTMP#1|)) #1#))))
-       (COND
-        ((|constructor?| (|opOf| |attr|))
-         (PROGN
-          (SETQ |$conslist| (CONS (CONS |attr| |pred|) |$conslist|))
-          NIL))
-        ((EQ (|opOf| |attr|) '|nothing|) '|skip|)
-        (#1#
-         (SETQ |$attrlist|
-                 (CONS (CONS (|opOf| |attr|) (CONS (IFCDR |attr|) |pred|))
-                       |$attrlist|)))))
-      ((AND (CONSP |item|) (EQ (CAR |item|) 'TYPE)
-            (PROGN
-             (SETQ |ISTMP#1| (CDR |item|))
-             (AND (CONSP |ISTMP#1|)
-                  (PROGN
-                   (SETQ |op| (CAR |ISTMP#1|))
-                   (SETQ |ISTMP#2| (CDR |ISTMP#1|))
-                   (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
-                        (PROGN (SETQ |type| (CAR |ISTMP#2|)) #1#))))))
-       (SETQ |$oplist|
-               (CONS (CONS |op| (CONS (LIST |type|) |pred|)) |$oplist|)))
-      ((AND (CONSP |item|) (EQ (CAR |item|) 'IF)
-            (PROGN
-             (SETQ |ISTMP#1| (CDR |item|))
-             (AND (CONSP |ISTMP#1|)
-                  (PROGN
-                   (SETQ |pred1| (CAR |ISTMP#1|))
-                   (SETQ |ISTMP#2| (CDR |ISTMP#1|))
-                   (AND (CONSP |ISTMP#2|)
-                        (PROGN
-                         (SETQ |s1| (CAR |ISTMP#2|))
-                         (SETQ |ISTMP#3| (CDR |ISTMP#2|))
-                         (AND (CONSP |ISTMP#3|) (EQ (CDR |ISTMP#3|) NIL)
-                              (PROGN (SETQ |s2| (CAR |ISTMP#3|)) #1#))))))))
-       (PROGN
-        (|asCategoryParts,build| |s1| (|quickAnd| |pred| |pred1|))
-        (COND
-         (|s2|
-          (|asCategoryParts,build| |s2|
-           (|quickAnd| |pred| (LIST 'NOT |pred1|)))))))
-      ((AND (CONSP |item|) (EQ (CAR |item|) 'PROGN)
-            (PROGN (SETQ |r| (CDR |item|)) #1#))
-       ((LAMBDA (|bfVar#145| |x|)
-          (LOOP
-           (COND
-            ((OR (ATOM |bfVar#145|) (PROGN (SETQ |x| (CAR |bfVar#145|)) NIL))
-             (RETURN NIL))
-            (#1# (|asCategoryParts,build| |x| |pred|)))
-           (SETQ |bfVar#145| (CDR |bfVar#145|))))
-        |r| NIL))
-      ((|member| |item| '(|noBranch|)) '|ok|) ((NULL |item|) '|ok|)
-      (#1# (|systemError| "build error"))))))
-(DEFUN |asCategoryParts,exportsOf| (|target|)
-  (PROG (|ISTMP#1| |r| |ISTMP#2| |f|)
-    (RETURN
-     (COND
-      ((AND (CONSP |target|) (EQ (CAR |target|) 'CATEGORY)
-            (PROGN
-             (SETQ |ISTMP#1| (CDR |target|))
-             (AND (CONSP |ISTMP#1|) (PROGN (SETQ |r| (CDR |ISTMP#1|)) #1='T))))
-       |r|)
-      ((AND (CONSP |target|) (EQ (CAR |target|) '|Join|)
-            (PROGN
-             (SETQ |ISTMP#1| (CDR |target|))
-             (AND (CONSP |ISTMP#1|)
-                  (PROGN (SETQ |ISTMP#2| (REVERSE |ISTMP#1|)) #1#)
-                  (CONSP |ISTMP#2|)
-                  (PROGN
-                   (SETQ |f| (CAR |ISTMP#2|))
-                   (SETQ |r| (CDR |ISTMP#2|))
-                   #1#)
-                  (PROGN (SETQ |r| (NREVERSE |r|)) #1#))))
-       (PROGN
-        ((LAMBDA (|bfVar#146| |x|)
-           (LOOP
-            (COND
-             ((OR (ATOM |bfVar#146|) (PROGN (SETQ |x| (CAR |bfVar#146|)) NIL))
-              (RETURN NIL))
-             (#1# (SETQ |$conslist| (CONS (CONS |x| T) |$conslist|))))
-            (SETQ |bfVar#146| (CDR |bfVar#146|))))
-         |r| NIL)
-        (|asCategoryParts,exportsOf| |f|)))
-      (#1#
-       (PROGN (SETQ |$conslist| (CONS (CONS |target| T) |$conslist|)) NIL))))))
- 
+
 ; asyTypeJoinPartExport x ==
 ;   [op,:items] := x
 ;   for y in items repeat
@@ -3835,17 +3660,17 @@
 ;       null t => ['SIGNATURE,op,s]
 ;       ['SIGNATURE,op,[t,:s]]
 ;     $opStack := [[sig,:$predlist],:$opStack]
- 
+
 (DEFUN |asyTypeJoinPartExport| (|x|)
   (PROG (|op| |items| |ISTMP#1| |source| |ISTMP#2| |t| |sig| |s|)
     (RETURN
      (PROGN
       (SETQ |op| (CAR |x|))
       (SETQ |items| (CDR |x|))
-      ((LAMBDA (|bfVar#147| |y|)
+      ((LAMBDA (|bfVar#144| |y|)
          (LOOP
           (COND
-           ((OR (ATOM |bfVar#147|) (PROGN (SETQ |y| (CAR |bfVar#147|)) NIL))
+           ((OR (ATOM |bfVar#144|) (PROGN (SETQ |y| (CAR |bfVar#144|)) NIL))
             (RETURN NIL))
            (#1='T
             (COND
@@ -3868,17 +3693,17 @@
                        (COND
                         ((AND (CONSP |source|) (EQ (CAR |source|) '|Comma|)
                               (PROGN (SETQ |s| (CDR |source|)) #1#))
-                         ((LAMBDA (|bfVar#149| |bfVar#148| |z|)
+                         ((LAMBDA (|bfVar#146| |bfVar#145| |z|)
                             (LOOP
                              (COND
-                              ((OR (ATOM |bfVar#148|)
-                                   (PROGN (SETQ |z| (CAR |bfVar#148|)) NIL))
-                               (RETURN (NREVERSE |bfVar#149|)))
+                              ((OR (ATOM |bfVar#145|)
+                                   (PROGN (SETQ |z| (CAR |bfVar#145|)) NIL))
+                               (RETURN (NREVERSE |bfVar#146|)))
                               (#1#
-                               (SETQ |bfVar#149|
+                               (SETQ |bfVar#146|
                                        (CONS (|asyTypeUnit| |z|)
-                                             |bfVar#149|))))
-                             (SETQ |bfVar#148| (CDR |bfVar#148|))))
+                                             |bfVar#146|))))
+                             (SETQ |bfVar#145| (CDR |bfVar#145|))))
                           NIL |s| NIL))
                         (#1# (LIST (|asyTypeUnit| |source|)))))
                (SETQ |t| (|asyTypeUnit| |t|))
@@ -3887,9 +3712,9 @@
                              (#1# (LIST 'SIGNATURE |op| (CONS |t| |s|)))))
                (SETQ |$opStack|
                        (CONS (CONS |sig| |$predlist|) |$opStack|)))))))
-          (SETQ |bfVar#147| (CDR |bfVar#147|))))
+          (SETQ |bfVar#144| (CDR |bfVar#144|))))
        |items| NIL)))))
- 
+
 ; asyTypeJoinStack r ==
 ;   al := [[[x while r is [[x, :q],:s] and p = q and (r := s; true)],:p]
 ;            while r is [[.,:p],:.]]
@@ -3897,13 +3722,13 @@
 ;     p => [['IF,asyTypeMakePred p,:y]]
 ;     y
 ;   result
- 
+
 (DEFUN |asyTypeJoinStack| (|r|)
   (PROG (|ISTMP#1| |p| |x| |q| |s| |al| |y| |result|)
     (RETURN
      (PROGN
       (SETQ |al|
-              ((LAMBDA (|bfVar#151|)
+              ((LAMBDA (|bfVar#148|)
                  (LOOP
                   (COND
                    ((NOT
@@ -3912,12 +3737,12 @@
                            (SETQ |ISTMP#1| (CAR |r|))
                            (AND (CONSP |ISTMP#1|)
                                 (PROGN (SETQ |p| (CDR |ISTMP#1|)) #1='T)))))
-                    (RETURN (NREVERSE |bfVar#151|)))
+                    (RETURN (NREVERSE |bfVar#148|)))
                    (#1#
-                    (SETQ |bfVar#151|
+                    (SETQ |bfVar#148|
                             (CONS
                              (CONS
-                              ((LAMBDA (|bfVar#150|)
+                              ((LAMBDA (|bfVar#147|)
                                  (LOOP
                                   (COND
                                    ((NOT
@@ -3932,29 +3757,29 @@
                                           (PROGN (SETQ |s| (CDR |r|)) #1#)
                                           (EQUAL |p| |q|)
                                           (PROGN (SETQ |r| |s|) T)))
-                                    (RETURN (NREVERSE |bfVar#150|)))
+                                    (RETURN (NREVERSE |bfVar#147|)))
                                    (#1#
-                                    (SETQ |bfVar#150|
-                                            (CONS |x| |bfVar#150|))))))
+                                    (SETQ |bfVar#147|
+                                            (CONS |x| |bfVar#147|))))))
                                NIL)
                               |p|)
-                             |bfVar#151|))))))
+                             |bfVar#148|))))))
                NIL))
       (SETQ |result|
-              ((LAMBDA (|bfVar#154| |bfVar#153| |bfVar#152|)
+              ((LAMBDA (|bfVar#151| |bfVar#150| |bfVar#149|)
                  (LOOP
                   (COND
-                   ((OR (ATOM |bfVar#153|)
-                        (PROGN (SETQ |bfVar#152| (CAR |bfVar#153|)) NIL))
-                    (RETURN |bfVar#154|))
+                   ((OR (ATOM |bfVar#150|)
+                        (PROGN (SETQ |bfVar#149| (CAR |bfVar#150|)) NIL))
+                    (RETURN |bfVar#151|))
                    (#1#
-                    (AND (CONSP |bfVar#152|)
+                    (AND (CONSP |bfVar#149|)
                          (PROGN
-                          (SETQ |y| (CAR |bfVar#152|))
-                          (SETQ |p| (CDR |bfVar#152|))
+                          (SETQ |y| (CAR |bfVar#149|))
+                          (SETQ |p| (CDR |bfVar#149|))
                           #1#)
-                         (SETQ |bfVar#154|
-                                 (APPEND |bfVar#154|
+                         (SETQ |bfVar#151|
+                                 (APPEND |bfVar#151|
                                          (COND
                                           (|p|
                                            (LIST
@@ -3962,20 +3787,20 @@
                                                   (CONS (|asyTypeMakePred| |p|)
                                                         |y|))))
                                           (#1# |y|)))))))
-                  (SETQ |bfVar#153| (CDR |bfVar#153|))))
+                  (SETQ |bfVar#150| (CDR |bfVar#150|))))
                NIL |al| NIL))
       |result|))))
- 
+
 ; asyTypeMakePred [p,:u] ==
 ;   while u is [q,:u] repeat p := quickAnd(q,p)
 ;   p
- 
-(DEFUN |asyTypeMakePred| (|bfVar#155|)
+
+(DEFUN |asyTypeMakePred| (|bfVar#152|)
   (PROG (|p| |u| |q|)
     (RETURN
      (PROGN
-      (SETQ |p| (CAR |bfVar#155|))
-      (SETQ |u| (CDR |bfVar#155|))
+      (SETQ |p| (CAR |bfVar#152|))
+      (SETQ |u| (CDR |bfVar#152|))
       ((LAMBDA ()
          (LOOP
           (COND

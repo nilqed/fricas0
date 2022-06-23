@@ -1,28 +1,24 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
-; $formatSigAsTeX := 1
- 
-(EVAL-WHEN (EVAL LOAD) (SETQ |$formatSigAsTeX| 1))
- 
+
 ; sayModemap m ==
 ;   -- sayMSG formatModemap displayTranModemap m
 ;   sayMSG formatModemap old2NewModemaps displayTranModemap m
- 
+
 (DEFUN |sayModemap| (|m|)
   (PROG ()
     (RETURN
      (|sayMSG|
       (|formatModemap| (|old2NewModemaps| (|displayTranModemap| |m|)))))))
- 
+
 ; sayModemapWithNumber(m,n) ==
 ;   msg := reverse cleanUpSegmentedMsg reverse ["%i","%i",'" ",
 ;     STRCONC(lbrkSch(),object2String n,rbrkSch()),
 ;       :formatModemap displayTranModemap m,"%u","%u"]
 ;   sayMSG flowSegmentedMsg(reverse msg,$LINELENGTH,3)
- 
+
 (DEFUN |sayModemapWithNumber| (|m| |n|)
   (PROG (|msg|)
     (RETURN
@@ -42,14 +38,14 @@
                                       (|displayTranModemap| |m|))
                                      (CONS '|%u| (CONS '|%u| NIL)))))))))))
       (|sayMSG| (|flowSegmentedMsg| (REVERSE |msg|) $LINELENGTH 3))))))
- 
+
 ; displayOpModemaps(op,modemaps) ==
 ;   TERPRI()
 ;   count:= #modemaps
 ;   phrase:= (count=1 => 'modemap;'modemaps)
 ;   sayMSG ['%b,count,'%d,phrase,'" for",'%b,op,'%d,'":"]
 ;   for modemap in modemaps repeat sayModemap modemap
- 
+
 (DEFUN |displayOpModemaps| (|op| |modemaps|)
   (PROG (|count| |phrase|)
     (RETURN
@@ -67,7 +63,7 @@
            (#1# (|sayModemap| |modemap|)))
           (SETQ |bfVar#1| (CDR |bfVar#1|))))
        |modemaps| NIL)))))
- 
+
 ; displayTranModemap (mm is [[x,:sig],[pred,:y],:z]) ==
 ;   -- The next 8 lines are a HACK to deal with the "partial" definition
 ;   -- JHD/RSS
@@ -83,7 +79,7 @@
 ;     MSORT listOfPredOfTypePatternIds pred,mm)
 ;   EQSUBSTLIST('(D D1 D2 D3 D4 D5 D6 D7 D8 D9 D10 D11 D12 D13 D14),
 ;     MSORT listOfPatternIds [sig,[pred,:y]],mm')
- 
+
 (DEFUN |displayTranModemap| (|mm|)
   (PROG (|x| |sig| |pred| |y| |z| |pred'| |b| |c| |mm'|)
     (RETURN
@@ -107,7 +103,7 @@
                (MSORT (|listOfPredOfTypePatternIds| |pred|)) |mm|))
       (EQSUBSTLIST '(D D1 D2 D3 D4 D5 D6 D7 D8 D9 D10 D11 D12 D13 D14)
        (MSORT (|listOfPatternIds| (LIST |sig| (CONS |pred| |y|)))) |mm'|)))))
- 
+
 ; listOfPredOfTypePatternIds p ==
 ;   p is ['AND,:lp] or p is ['OR,:lp] =>
 ;     UNIONQ([:listOfPredOfTypePatternIds p1 for p1 in lp],NIL)
@@ -115,7 +111,7 @@
 ;     isPatternVar a => [a]
 ;     nil
 ;   nil
- 
+
 (DEFUN |listOfPredOfTypePatternIds| (|p|)
   (PROG (|lp| |op| |ISTMP#1| |a| |ISTMP#2|)
     (RETURN
@@ -149,13 +145,13 @@
             (EQ |op| '|ofType|))
        (COND ((|isPatternVar| |a|) (LIST |a|)) (#1# NIL)))
       (#1# NIL)))))
- 
+
 ; removeIsDomains pred ==
 ;   pred is ['isDomain,a,b] => true
 ;   pred is ['AND,:predl] =>
 ;     MKPF([x for x in predl | x isnt ['isDomain,:.]],'AND)
 ;   pred
- 
+
 (DEFUN |removeIsDomains| (|pred|)
   (PROG (|ISTMP#1| |a| |ISTMP#2| |b| |predl|)
     (RETURN
@@ -185,7 +181,7 @@
          NIL |predl| NIL)
         'AND))
       (#1# |pred|)))))
- 
+
 ; canRemoveIsDomain? pred ==
 ;   -- returns nil OR an alist for substitutions of domains ordered so that
 ;   -- after substituting for each pair in turn, no left-hand names remain
@@ -194,7 +190,7 @@
 ;     pred is ['AND,:predl] =>
 ;       [[a,:b] for pred in predl | pred is ['isDomain,a,b]]
 ;   findSubstitutionOrder? alist
- 
+
 (DEFUN |canRemoveIsDomain?| (|pred|)
   (PROG (|ISTMP#1| |a| |ISTMP#2| |b| |predl| |alist|)
     (RETURN
@@ -236,15 +232,15 @@
                     (SETQ |bfVar#6| (CDR |bfVar#6|))))
                  NIL |predl| NIL))))
       (|findSubstitutionOrder?| |alist|)))))
- 
+
 ; findSubstitutionOrder? alist == fn(alist,nil) where
-;   -- returns NIL or an appropriate substituion order
+;   -- returns NIL or an appropriate substitution order
 ;   fn(alist,res) ==
 ;     null alist => NREVERSE res
 ;     choice := or/[x for (x:=[a,:b]) in alist | null containedRight(a,alist)] =>
 ;       fn(delete(choice,alist),[choice,:res])
 ;     nil
- 
+
 (DEFUN |findSubstitutionOrder?| (|alist|)
   (PROG () (RETURN (|findSubstitutionOrder?,fn| |alist| NIL))))
 (DEFUN |findSubstitutionOrder?,fn| (|alist| |res|)
@@ -273,9 +269,9 @@
             (|findSubstitutionOrder?,fn| (|delete| |choice| |alist|)
              (CONS |choice| |res|)))
            (#1# NIL)))))
- 
+
 ; containedRight(x,alist)== or/[CONTAINED(x,y) for [.,:y] in alist]
- 
+
 (DEFUN |containedRight| (|x| |alist|)
   (PROG (|y|)
     (RETURN
@@ -292,11 +288,11 @@
                  (COND (|bfVar#12| (RETURN |bfVar#12|)))))))
          (SETQ |bfVar#11| (CDR |bfVar#11|))))
       NIL |alist| NIL))))
- 
+
 ; DEFPARAMETER($Dmarker, "<Dmarker>")
- 
+
 (DEFPARAMETER |$Dmarker| '|<Dmarker>|)
- 
+
 ; removeIsDomainD pred ==
 ;   pred is ['isDomain, =$Dmarker, D] =>
 ;     [D,nil]
@@ -311,7 +307,7 @@
 ;       [D,['AND,:npreds]]
 ;     nil
 ;   nil
- 
+
 (DEFUN |removeIsDomainD| (|pred|)
   (PROG (|ISTMP#1| |ISTMP#2| D |preds| D1 |npreds|)
     (RETURN
@@ -358,7 +354,7 @@
                 (#1# (LIST D (CONS 'AND |npreds|)))))
          (#1# NIL))))
       (#1# NIL)))))
- 
+
 ; formatModemap modemap ==
 ;   [[dc,target,:sl],pred,:.]:= modemap
 ;   if alist := canRemoveIsDomain? pred then
@@ -397,7 +393,7 @@
 ;   sayWidth firstPart + sayWidth predPart < 80 =>
 ;     concat(firstPart,predPart)
 ;   concat(firstPart,'%l,predPart)
- 
+
 (DEFUN |formatModemap| (|modemap|)
   (PROG (|dc| |target| |sl| |pred| |alist| |ISTMP#1| D |ISTMP#2| |npred|
          |predPart| |targetPart| |argTypeList| |argPart| |fromPart| |firstPart|
@@ -465,11 +461,11 @@
            ('T
             (|concat| '|,| (|prefix2String| (CAR |l|))
              (|formatModemap,fn| (CDR |l|))))))))
- 
+
 ; substInOrder(alist,x) ==
 ;   alist is [[a, :b], :y] => substInOrder(y, substitute(b, a, x))
 ;   x
- 
+
 (DEFUN |substInOrder| (|alist| |x|)
   (PROG (|ISTMP#1| |a| |b| |y|)
     (RETURN
@@ -485,7 +481,7 @@
             (PROGN (SETQ |y| (CDR |alist|)) #1#))
        (|substInOrder| |y| (|substitute| |b| |a| |x|)))
       (#1# |x|)))))
- 
+
 ; sayMms(op, mms, label) ==
 ;     m := # mms
 ;     sayMSG
@@ -496,7 +492,7 @@
 ;             :bright op, '":"]
 ;     for mm in mms for i in 1.. repeat
 ;         sayModemapWithNumber(mm, i)
- 
+
 (DEFUN |sayMms| (|op| |mms| |label|)
   (PROG (|m|)
     (RETURN
@@ -525,7 +521,7 @@
           (SETQ |bfVar#14| (CDR |bfVar#14|))
           (SETQ |i| (+ |i| 1))))
        |mms| NIL 1)))))
- 
+
 ; reportOpSymbol op1 ==
 ;   op := (STRINGP op1 => INTERN op1; op1)
 ;   modemaps := getAllModemapsFromDatabase(op,nil)
@@ -534,7 +530,7 @@
 ;     sayKeyedMsg("S2IF0010",[op1])
 ;     if SIZE PNAME op1 < 3 then
 ;       x := UPCASE queryUserKeyedMsg("S2IZ0060",[op1])
-;       null MEMQ(STRING2ID_-N(x,1),'(Y YES)) =>
+;       null MEMQ(STRING2ID_N(x, 1),'(Y YES)) =>
 ;         ok := nil
 ;         sayKeyedMsg("S2IZ0061",[op1])
 ;     ok => apropos [op1]
@@ -550,7 +546,7 @@
 ;     if mmsE then sayNewLine()
 ;     sayMms(op,mmsU,'"unexposed")
 ;   nil
- 
+
 (DEFUN |reportOpSymbol| (|op1|)
   (PROG (|op| |modemaps| |ok| |x| |mmsU| |mmsE|)
     (RETURN
@@ -566,7 +562,7 @@
           ((< (SIZE (PNAME |op1|)) 3)
            (SETQ |x| (UPCASE (|queryUserKeyedMsg| 'S2IZ0060 (LIST |op1|))))
            (COND
-            ((NULL (MEMQ (STRING2ID-N |x| 1) '(Y YES)))
+            ((NULL (MEMQ (STRING2ID_N |x| 1) '(Y YES)))
              (PROGN (SETQ |ok| NIL) (|sayKeyedMsg| 'S2IZ0061 (LIST |op1|)))))))
          (COND (|ok| (|apropos| (LIST |op1|))))))
        (#1#
@@ -591,11 +587,11 @@
           (|mmsU| (COND (|mmsE| (|sayNewLine|)))
            (|sayMms| |op| |mmsU| "unexposed")))
          NIL)))))))
- 
+
 ; formatOpType (form:=[op,:argl]) ==
 ;   null argl => unabbrev op
 ;   form2String [unabbrev op, :argl]
- 
+
 (DEFUN |formatOpType| (|form|)
   (PROG (|op| |argl|)
     (RETURN
@@ -604,7 +600,7 @@
       (SETQ |argl| (CDR |form|))
       (COND ((NULL |argl|) (|unabbrev| |op|))
             ('T (|form2String| (CONS (|unabbrev| |op|) |argl|))))))))
- 
+
 ; formatOperationAlistEntry (entry:= [op,:modemaps]) ==
 ;   -- alist has entries of the form: ((op sig) . pred)
 ;   -- opsig on this list => op is defined only when the predicate is true
@@ -615,7 +611,7 @@
 ;     ans :=
 ;       [concat(formatOpSignature(op,sig),formatIf pred),:ans]
 ;   ans
- 
+
 (DEFUN |formatOperationAlistEntry| (|entry|)
   (PROG (|op| |modemaps| |ans| |sig| |ISTMP#1| |predtail| |p| |pred|)
     (RETURN
@@ -651,23 +647,21 @@
           (SETQ |bfVar#17| (CDR |bfVar#17|))))
        |modemaps| NIL)
       |ans|))))
- 
-; formatOperation([[op,sig],.,[fn,.,n]],domain) ==
+
+; formatOperation([[op, sig], :.]) ==
 ;     formatOpSignature(op,sig)
- 
-(DEFUN |formatOperation| (|bfVar#18| |domain|)
-  (PROG (|op| |sig| |fn| |n|)
+
+(DEFUN |formatOperation| (|bfVar#18|)
+  (PROG (|op| |sig|)
     (RETURN
      (PROGN
       (SETQ |op| (CAAR . #1=(|bfVar#18|)))
       (SETQ |sig| (CADAR . #1#))
-      (SETQ |fn| (CAADDR . #2=(|bfVar#18|)))
-      (SETQ |n| (CADR (CDADDR . #2#)))
       (|formatOpSignature| |op| |sig|)))))
- 
+
 ; formatOperationWithPred([[op,sig],pred,.]) ==
 ;     concat(formatOpSignature(op, sig), formatIf pred)
- 
+
 (DEFUN |formatOperationWithPred| (|bfVar#19|)
   (PROG (|op| |sig| |pred|)
     (RETURN
@@ -676,23 +670,23 @@
       (SETQ |sig| (CADAR . #1#))
       (SETQ |pred| (CADR |bfVar#19|))
       (|concat| (|formatOpSignature| |op| |sig|) (|formatIf| |pred|))))))
- 
+
 ; formatOpSignature(op,sig) ==
 ;   concat('%b,formatOpSymbol(op,sig),'%d,": ",formatSignature sig)
- 
+
 (DEFUN |formatOpSignature| (|op| |sig|)
   (PROG ()
     (RETURN
      (|concat| '|%b| (|formatOpSymbol| |op| |sig|) '|%d| '|: |
       (|formatSignature| |sig|)))))
- 
+
 ; formatOpConstant op ==
 ;   concat('%b,formatOpSymbol(op,'($)),'%d,'": constant")
- 
+
 (DEFUN |formatOpConstant| (|op|)
   (PROG ()
     (RETURN (|concat| '|%b| (|formatOpSymbol| |op| '($)) '|%d| ": constant"))))
- 
+
 ; formatOpSymbol(op,sig) ==
 ;   if op = 'Zero then op := "0"
 ;   else if op = 'One then op := "1"
@@ -718,7 +712,7 @@
 ;       [op,quad]
 ;     op
 ;   op
- 
+
 (DEFUN |formatOpSymbol| (|op| |sig|)
   (PROG (|quad| |n| |sel|)
     (RETURN
@@ -752,7 +746,7 @@
                         (#1# (LIST |op| |quad|))))
                  (#1# |op|)))
                (#1# |op|)))))))))
- 
+
 ; dollarPercentTran x ==
 ;     -- Translate $ to %. We actually return %% so that the message
 ;     -- printer will display a single %
@@ -763,7 +757,7 @@
 ;         [y1, :z1]
 ;     x = "$" or x = '"$" => "%%"
 ;     x
- 
+
 (DEFUN |dollarPercentTran| (|x|)
   (PROG (|y| |z| |y1| |z1|)
     (RETURN
@@ -775,25 +769,18 @@
         (SETQ |z1| (|dollarPercentTran| |z|))
         (COND ((AND (EQ |y| |y1|) (EQ |z| |z1|)) |x|) (#1# (CONS |y1| |z1|)))))
       ((OR (EQ |x| '$) (EQUAL |x| "$")) '%%) (#1# |x|)))))
- 
+
 ; formatSignature sig ==
-;   $formatSigAsTeX: local := 1
 ;   formatSignature0 sig
- 
-(DEFUN |formatSignature| (|sig|)
-  (PROG (|$formatSigAsTeX|)
-    (DECLARE (SPECIAL |$formatSigAsTeX|))
-    (RETURN (PROGN (SETQ |$formatSigAsTeX| 1) (|formatSignature0| |sig|)))))
- 
+
+(DEFUN |formatSignature| (|sig|) (PROG () (RETURN (|formatSignature0| |sig|))))
+
 ; formatSignatureArgs sml ==
-;   $formatSigAsTeX: local := 1
 ;   formatSignatureArgs0 sml
- 
+
 (DEFUN |formatSignatureArgs| (|sml|)
-  (PROG (|$formatSigAsTeX|)
-    (DECLARE (SPECIAL |$formatSigAsTeX|))
-    (RETURN (PROGN (SETQ |$formatSigAsTeX| 1) (|formatSignatureArgs0| |sml|)))))
- 
+  (PROG () (RETURN (|formatSignatureArgs0| |sml|))))
+
 ; formatSignature0 sig ==
 ;   null sig => "() -> ()"
 ;   INTEGERP sig => '"hashcode"
@@ -801,7 +788,7 @@
 ;   sourcePart:= formatSignatureArgs0 sml
 ;   targetPart:= prefix2String0 tm
 ;   dollarPercentTran concat(sourcePart,concat(" -> ",targetPart))
- 
+
 (DEFUN |formatSignature0| (|sig|)
   (PROG (|tm| |sml| |sourcePart| |targetPart|)
     (RETURN
@@ -814,7 +801,7 @@
              (SETQ |targetPart| (|prefix2String0| |tm|))
              (|dollarPercentTran|
               (|concat| |sourcePart| (|concat| '| -> | |targetPart|)))))))))
- 
+
 ; formatSignatureArgs0(sml) ==
 ; -- formats the arguments of a signature
 ;   null sml => ["_(_)"]
@@ -823,7 +810,7 @@
 ;   for m in rest sml repeat
 ;     argList:= concat(argList,concat(", ",prefix2String0 m))
 ;   concat("_(",concat(argList,"_)"))
- 
+
 (DEFUN |formatSignatureArgs0| (|sml|)
   (PROG (|argList|)
     (RETURN
@@ -845,11 +832,11 @@
                  (SETQ |bfVar#20| (CDR |bfVar#20|))))
               (CDR |sml|) NIL)
              (|concat| '|(| (|concat| |argList| '|)|))))))))
- 
+
 ; expr2String x ==
 ;   atom (u:= prefix2String0 x) => u
 ;   "STRCONC"/[atom2String y for y in u]
- 
+
 (DEFUN |expr2String| (|x|)
   (PROG (|u|)
     (RETURN
@@ -865,34 +852,24 @@
                   (SETQ |bfVar#22| (STRCONC |bfVar#22| (|atom2String| |y|)))))
                 (SETQ |bfVar#21| (CDR |bfVar#21|))))
              "" |u| NIL))))))
- 
-; prefix2StringAsTeX form ==
-;   form2StringAsTeX form
- 
-(DEFUN |prefix2StringAsTeX| (|form|)
-  (PROG () (RETURN (|form2StringAsTeX| |form|))))
- 
+
 ; prefix2String form ==
-;   $formatSigAsTeX: local := 1
 ;   form2StringLocal form
- 
-(DEFUN |prefix2String| (|form|)
-  (PROG (|$formatSigAsTeX|)
-    (DECLARE (SPECIAL |$formatSigAsTeX|))
-    (RETURN (PROGN (SETQ |$formatSigAsTeX| 1) (|form2StringLocal| |form|)))))
- 
+
+(DEFUN |prefix2String| (|form|) (PROG () (RETURN (|form2StringLocal| |form|))))
+
 ; prefix2String0 form ==
 ;   form2StringLocal form
- 
+
 (DEFUN |prefix2String0| (|form|) (PROG () (RETURN (|form2StringLocal| |form|))))
- 
+
 ; form2StringWithWhere u ==
 ;   $permitWhere : local := true
 ;   $whereList: local := nil
 ;   s:= form2String u
 ;   $whereList => concat(s,'%b,'"where",'%d,"%i",$whereList,"%u")
 ;   s
- 
+
 (DEFUN |form2StringWithWhere| (|u|)
   (PROG (|$whereList| |$permitWhere| |s|)
     (DECLARE (SPECIAL |$whereList| |$permitWhere|))
@@ -905,24 +882,24 @@
        (|$whereList|
         (|concat| |s| '|%b| "where" '|%d| '|%i| |$whereList| '|%u|))
        ('T |s|))))))
- 
+
 ; form2StringWithPrens form ==
 ;   null (argl := rest form) => [first form]
 ;   null rest argl => [first form,"(",first argl,")"]
 ;   form2String form
- 
+
 (DEFUN |form2StringWithPrens| (|form|)
   (PROG (|argl|)
     (RETURN
      (COND ((NULL (SETQ |argl| (CDR |form|))) (LIST (CAR |form|)))
            ((NULL (CDR |argl|)) (LIST (CAR |form|) '|(| (CAR |argl|) '|)|))
            ('T (|form2String| |form|))))))
- 
+
 ; formString u ==
 ;   x := form2String u
 ;   atom x => STRINGIMAGE x
 ;   "STRCONC"/[STRINGIMAGE y for y in x]
- 
+
 (DEFUN |formString| (|u|)
   (PROG (|x|)
     (RETURN
@@ -940,72 +917,51 @@
                    (SETQ |bfVar#24| (STRCONC |bfVar#24| (STRINGIMAGE |y|)))))
                  (SETQ |bfVar#23| (CDR |bfVar#23|))))
               "" |x| NIL)))))))
- 
+
 ; DEFPARAMETER($from_unparse, false)
- 
+
 (DEFPARAMETER |$from_unparse| NIL)
- 
+
 ; unparseInputForm u ==
-;   $formatSigAsTeX: local := 1
 ;   $InteractiveMode: local := false
 ;   $from_unparse : local := true
 ;   form2StringLocal u
- 
+
 (DEFUN |unparseInputForm| (|u|)
-  (PROG (|$from_unparse| |$InteractiveMode| |$formatSigAsTeX|)
-    (DECLARE (SPECIAL |$from_unparse| |$InteractiveMode| |$formatSigAsTeX|))
+  (PROG (|$from_unparse| |$InteractiveMode|)
+    (DECLARE (SPECIAL |$from_unparse| |$InteractiveMode|))
     (RETURN
      (PROGN
-      (SETQ |$formatSigAsTeX| 1)
       (SETQ |$InteractiveMode| NIL)
       (SETQ |$from_unparse| T)
       (|form2StringLocal| |u|)))))
- 
+
 ; form2String u ==
-;   $formatSigAsTeX: local := 1
 ;   form2StringLocal u
- 
-(DEFUN |form2String| (|u|)
-  (PROG (|$formatSigAsTeX|)
-    (DECLARE (SPECIAL |$formatSigAsTeX|))
-    (RETURN (PROGN (SETQ |$formatSigAsTeX| 1) (|form2StringLocal| |u|)))))
- 
-; form2StringAsTeX u ==
-;   $formatSigAsTeX: local := 2
-;   form2StringLocal u
- 
-(DEFUN |form2StringAsTeX| (|u|)
-  (PROG (|$formatSigAsTeX|)
-    (DECLARE (SPECIAL |$formatSigAsTeX|))
-    (RETURN (PROGN (SETQ |$formatSigAsTeX| 2) (|form2StringLocal| |u|)))))
- 
+
+(DEFUN |form2String| (|u|) (PROG () (RETURN (|form2StringLocal| |u|))))
+
 ; form2StringLocal u ==
-; --+
 ;   $NRTmonitorIfTrue : local := nil
-;   $fortInts2Floats  : local := nil
 ;   form2String1 u
- 
+
 (DEFUN |form2StringLocal| (|u|)
-  (PROG (|$fortInts2Floats| |$NRTmonitorIfTrue|)
-    (DECLARE (SPECIAL |$fortInts2Floats| |$NRTmonitorIfTrue|))
-    (RETURN
-     (PROGN
-      (SETQ |$NRTmonitorIfTrue| NIL)
-      (SETQ |$fortInts2Floats| NIL)
-      (|form2String1| |u|)))))
- 
+  (PROG (|$NRTmonitorIfTrue|)
+    (DECLARE (SPECIAL |$NRTmonitorIfTrue|))
+    (RETURN (PROGN (SETQ |$NRTmonitorIfTrue| NIL) (|form2String1| |u|)))))
+
 ; constructorName con ==
 ;   $abbreviateTypes => abbreviate con
 ;   con
- 
+
 (DEFUN |constructorName| (|con|)
   (PROG ()
     (RETURN (COND (|$abbreviateTypes| (|abbreviate| |con|)) ('T |con|)))))
- 
+
 ; DEFPARAMETER($justUnparseType, false)
- 
+
 (DEFPARAMETER |$justUnparseType| NIL)
- 
+
 ; form2String1 u ==
 ;   ATOM u =>
 ;     u=$EmptyMode or u=$quadSymbol => formWrapId specialChar 'quad
@@ -1061,12 +1017,6 @@
 ;   op = 'construct =>
 ;     concat(lbrkSch(),
 ;            tuple2String [form2String1 x for x in argl],rbrkSch())
-;   op = "SEGMENT" =>
-;     null argl => '".."
-;     lo := form2String1 first argl
-;     argl := rest argl
-;     (null argl) or null (first argl) => [lo, '".."]
-;     [lo, '"..", form2String1 first argl]
 ;   op = "MATRIX" => matrix2String argl
 ;   u1 is ["ROOT", arg1] =>
 ;      concat("sqrt(", appOrParen(arg1),")")
@@ -1080,10 +1030,10 @@
 ;      or op = "OVER" or op = '"OVER") =>
 ;           binop2String [op,:argl]
 ;   application2String(op,[form2String1 x for x in argl], u1)
- 
+
 (DEFUN |form2String1| (|u|)
-  (PROG (|u1| |op| |argl| |conSig| |ml| |argl'| |operation| |sig| |lo|
-         |ISTMP#1| |arg1| |ISTMP#2| |arg2| |t| |f|)
+  (PROG (|u1| |op| |argl| |conSig| |ml| |argl'| |operation| |sig| |ISTMP#1|
+         |arg1| |ISTMP#2| |arg2| |t| |f|)
     (RETURN
      (COND
       ((ATOM |u|)
@@ -1220,15 +1170,6 @@
                 (SETQ |bfVar#34| (CDR |bfVar#34|))))
              NIL |argl| NIL))
            (|rbrkSch|)))
-         ((EQ |op| 'SEGMENT)
-          (COND ((NULL |argl|) "..")
-                (#1#
-                 (PROGN
-                  (SETQ |lo| (|form2String1| (CAR |argl|)))
-                  (SETQ |argl| (CDR |argl|))
-                  (COND
-                   ((OR (NULL |argl|) (NULL (CAR |argl|))) (LIST |lo| ".."))
-                   (#1# (LIST |lo| ".." (|form2String1| (CAR |argl|)))))))))
          ((EQ |op| 'MATRIX) (|matrix2String| |argl|))
          ((AND (CONSP |u1|) (EQ (CAR |u1|) 'ROOT)
                (PROGN
@@ -1273,14 +1214,14 @@
                (SETQ |bfVar#36| (CDR |bfVar#36|))))
             NIL |argl| NIL)
            |u1|)))))))))
- 
+
 ; matrix2String x ==
 ;   concat(lbrkSch(),
 ;     tuple2String [outtranRow ri for ri in rest(x)],rbrkSch()) where
 ;       outtranRow x ==
 ;         concat(lbrkSch(),
 ;           tuple2String [form2String1 ei for ei in rest(x)], rbrkSch())
- 
+
 (DEFUN |matrix2String| (|x|)
   (PROG ()
     (RETURN
@@ -1311,13 +1252,13 @@
            (SETQ |bfVar#40| (CDR |bfVar#40|))))
         NIL (CDR |x|) NIL))
       (|rbrkSch|)))))
- 
+
 ; binop2String x ==
 ;     $curExpr : local := x
 ;     x is ["=", arg1, arg2] or x is ['"=", arg1, arg2] =>
 ;         concat(sumOrParen(arg1), '"=", sumOrParen(arg2))
 ;     sumOrParen(x)
- 
+
 (DEFUN |binop2String| (|x|)
   (PROG (|$curExpr| |arg2| |ISTMP#2| |arg1| |ISTMP#1|)
     (DECLARE (SPECIAL |$curExpr|))
@@ -1346,7 +1287,7 @@
                           (PROGN (SETQ |arg2| (CAR |ISTMP#2|)) #1#)))))))
         (|concat| (|sumOrParen| |arg1|) "=" (|sumOrParen| |arg2|)))
        (#1# (|sumOrParen| |x|)))))))
- 
+
 ; sumOrParen(x) ==
 ;    x is [op, arg1, arg2] =>
 ;        op = "+" or op = '"+" =>
@@ -1357,7 +1298,7 @@
 ;            concat(appOrParen(arg1), '"/", appOrParen(arg2))
 ;        productOrParen(x)
 ;    productOrParen(x)
- 
+
 (DEFUN |sumOrParen| (|x|)
   (PROG (|op| |ISTMP#1| |arg1| |ISTMP#2| |arg2|)
     (RETURN
@@ -1381,14 +1322,14 @@
          (|concat| (|appOrParen| |arg1|) "/" (|appOrParen| |arg2|)))
         (#1# (|productOrParen| |x|))))
       (#1# (|productOrParen| |x|))))))
- 
+
 ; productOrParen(x) ==
 ;    x is [op, arg1, arg2] =>
 ;        op = "*" or op ='"*" =>
 ;            concat(productOrParen(arg1), '"*",  powerOrParen(arg2))
 ;        powerOrParen(x)
 ;    powerOrParen(x)
- 
+
 (DEFUN |productOrParen| (|x|)
   (PROG (|op| |ISTMP#1| |arg1| |ISTMP#2| |arg2|)
     (RETURN
@@ -1408,14 +1349,14 @@
          (|concat| (|productOrParen| |arg1|) "*" (|powerOrParen| |arg2|)))
         (#1# (|powerOrParen| |x|))))
       (#1# (|powerOrParen| |x|))))))
- 
+
 ; powerOrParen(x) ==
 ;    x is [op, arg1, arg2] =>
 ;       op = "**" or op = '"**" or op = "^" or op = '"^"  =>
 ;            concat(coerceOrParen(arg1), '"^", coerceOrParen(arg2))
 ;       coerceOrParen(x)
 ;    coerceOrParen(x)
- 
+
 (DEFUN |powerOrParen| (|x|)
   (PROG (|op| |ISTMP#1| |arg1| |ISTMP#2| |arg2|)
     (RETURN
@@ -1435,7 +1376,7 @@
          (|concat| (|coerceOrParen| |arg1|) "^" (|coerceOrParen| |arg2|)))
         (#1# (|coerceOrParen| |x|))))
       (#1# (|coerceOrParen| |x|))))))
- 
+
 ; coerceOrParen(x) ==
 ;    x is [op, arg1, arg2] =>
 ;       op = "::" or op = '"::" =>
@@ -1447,7 +1388,7 @@
 ;                    appOrParen(arg2))
 ;       appOrParen(x)
 ;    appOrParen(x)
- 
+
 (DEFUN |coerceOrParen| (|x|)
   (PROG (|op| |ISTMP#1| |arg1| |ISTMP#2| |arg2|)
     (RETURN
@@ -1472,7 +1413,7 @@
           (|appOrParen| |arg2|)))
         (#1# (|appOrParen| |x|))))
       (#1# (|appOrParen| |x|))))))
- 
+
 ; appOrParen(x) ==
 ;    SYMBOLP(x) => formWrapId x
 ;    INTEGERP(x) =>
@@ -1497,7 +1438,7 @@
 ;    op = "Zero" => '"0"
 ;    op = "One" => '"1"
 ;    form2String1 x
- 
+
 (DEFUN |appOrParen| (|x|)
   (PROG (|op| |argl| |ISTMP#1| |f| |ISTMP#2| |t|)
     (RETURN
@@ -1533,24 +1474,11 @@
                (|concat| "(" (|form2String1| |x|) ")"))
               ((EQ |op| '|Zero|) "0") ((EQ |op| '|One|) "1")
               (#1# (|form2String1| |x|)))))))))
- 
-; formWrapId id ==
-;   $formatSigAsTeX = 1 => id
-;   $formatSigAsTeX = 2 =>
-;     sep := '"`"
-;     FORMAT(NIL,'"\verb~a~a~a",sep, id, sep)
-;   error "Bad formatSigValue"
- 
-(DEFUN |formWrapId| (|id|)
-  (PROG (|sep|)
-    (RETURN
-     (COND ((EQL |$formatSigAsTeX| 1) |id|)
-           ((EQL |$formatSigAsTeX| 2)
-            (PROGN
-             (SETQ |sep| "`")
-             (FORMAT NIL "\\verb~a~a~a" |sep| |id| |sep|)))
-           ('T (|error| '|Bad formatSigValue|))))))
- 
+
+; formWrapId id == id
+
+(DEFUN |formWrapId| (|id|) (PROG () (RETURN |id|)))
+
 ; formArguments2String(argl,ml) == [fn(x,m) for x in argl for m in ml] where
 ;   fn(x,m) ==
 ;     x=$EmptyMode or x=$quadSymbol => specialChar 'quad
@@ -1565,7 +1493,7 @@
 ;           form2String1 objValUnwrap x'
 ;         form2String1 x
 ;     form2String1 x
- 
+
 (DEFUN |formArguments2String| (|argl| |ml|)
   (PROG ()
     (RETURN
@@ -1603,7 +1531,7 @@
          (|form2String1| (|objValUnwrap| |x'|)))
         (#1# (|form2String1| |x|))))
       (#1# (|form2String1| |x|))))))
- 
+
 ; formDecl2String(left,right) ==
 ;   $declVar: local := left
 ;   whereBefore := $whereList
@@ -1611,7 +1539,7 @@
 ;   rs:= form2StringLocal right
 ;   $whereList ~= whereBefore and $permitWhere => ls
 ;   concat(form2StringLocal ls,'": ",rs)
- 
+
 (DEFUN |formDecl2String| (|left| |right|)
   (PROG (|$declVar| |rs| |ls| |whereBefore|)
     (DECLARE (SPECIAL |$declVar|))
@@ -1624,7 +1552,7 @@
       (COND
        ((AND (NOT (EQUAL |$whereList| |whereBefore|)) |$permitWhere|) |ls|)
        ('T (|concat| (|form2StringLocal| |ls|) ": " |rs|)))))))
- 
+
 ; formJoin1(op,u) ==
 ;   if op = 'Join then [:argl,last] := u else (argl := nil; last := [op,:u])
 ;   last is [id, :r] and id in '(mkCategory CATEGORY) =>
@@ -1639,7 +1567,7 @@
 ;     suffix := concat('%b,'"with",'%d,"%i",opList,"%u")
 ;     concat(formJoin2 argl,suffix)
 ;   formJoin2 u
- 
+
 (DEFUN |formJoin1| (|op| |u|)
   (PROG (|LETTMP#1| |last| |argl| |id| |r| |opList| |suffix|)
     (RETURN
@@ -1672,7 +1600,7 @@
             (SETQ |suffix| (|concat| '|%b| "with" '|%d| '|%i| |opList| '|%u|))
             (|concat| (|formJoin2| |argl|) |suffix|))))))
        (#1# (|formJoin2| |u|)))))))
- 
+
 ; formatJoinKey(r,key) ==
 ;   key = 'mkCategory =>
 ;     r is [opPart,catPart,:.] =>
@@ -1693,7 +1621,7 @@
 ;     x is ['SIGNATURE,op,sig] => concat("%l",formatOpSignature(op,sig))
 ;     x is ['ATTRIBUTE,a] => concat("%l",formatAttribute a)
 ;     x
- 
+
 (DEFUN |formatJoinKey| (|r| |key|)
   (PROG (|opPart| |ISTMP#1| |catPart| |u| |ISTMP#2| |ISTMP#3| |op| |ISTMP#4|
          |sig| |ISTMP#5| |pred| |opString| |con| |catString| |a|)
@@ -1830,13 +1758,13 @@
                               (#1# |x|))))))
            (SETQ |bfVar#51| (CDR |bfVar#51|))))
         NIL |r| NIL))))))
- 
+
 ; formJoin2 argl ==
 ; -- argl is a list of categories NOT containing a "with"
 ;   null argl => '""
 ;   1=#argl => form2StringLocal argl.0
 ;   application2String('Join,[form2StringLocal x for x in argl], NIL)
- 
+
 (DEFUN |formJoin2| (|argl|)
   (PROG ()
     (RETURN
@@ -1856,14 +1784,14 @@
                  (SETQ |bfVar#53| (CDR |bfVar#53|))))
               NIL |argl| NIL)
              NIL))))))
- 
+
 ; formJoin2String (u:=[:argl,last]) ==
 ;   last is ["CATEGORY",.,:atsigList] =>
 ;     postString:= concat("_(",formTuple2String atsigList,"_)")
 ;     #argl=1 => concat(first argl,'" with ",postString)
 ;     concat(application2String('Join,argl, NIL)," with ",postString)
 ;   application2String('Join,u, NIL)
- 
+
 (DEFUN |formJoin2String| (|u|)
   (PROG (|LETTMP#1| |last| |argl| |ISTMP#1| |atsigList| |postString|)
     (RETURN
@@ -1887,7 +1815,7 @@
            (|concat| (|application2String| '|Join| |argl| NIL) '| with |
             |postString|)))))
        (#1# (|application2String| '|Join| |u| NIL)))))))
- 
+
 ; sub_to_string(u) ==
 ;     [op, :argl] := u
 ;     fo := form2String1(op)
@@ -1901,7 +1829,7 @@
 ;         if atom(fa) then fa := [fa]
 ;         resl := [:fa, :resl]
 ;     [:fo, "[", :resl, "]"]
- 
+
 (DEFUN |sub_to_string| (|u|)
   (PROG (|op| |argl| |fo| |rargl| |resl| |fa|)
     (RETURN
@@ -1928,10 +1856,10 @@
           (SETQ |bfVar#55| (CDR |bfVar#55|))))
        |rargl| NIL)
       (APPEND |fo| (CONS '[ (APPEND |resl| (CONS '] NIL))))))))
- 
+
 ; formCollect2String [:itl,body] ==
 ;   ["_(",body,:"append"/[formIterator2String x for x in itl],"_)"]
- 
+
 (DEFUN |formCollect2String| (|bfVar#58|)
   (PROG (|LETTMP#1| |body| |itl|)
     (RETURN
@@ -1955,7 +1883,7 @@
                        (SETQ |bfVar#56| (CDR |bfVar#56|))))
                     NIL |itl| NIL)
                    (CONS '|)| NIL))))))))
- 
+
 ; formIterator2String x ==
 ;   x is ["STEP",y,s,.,:l] =>
 ;     tail:= (l is [f] => form2StringLocal f; nil)
@@ -1966,7 +1894,7 @@
 ;   x is ["until",p] => concat("until ",form2StringLocal p)
 ;   x is ["while",p] => concat("while ",form2StringLocal p)
 ;   systemErrorHere "formatIterator"
- 
+
 (DEFUN |formIterator2String| (|x|)
   (PROG (|ISTMP#1| |y| |ISTMP#2| |s| |ISTMP#3| |l| |f| |tail| |p|)
     (RETURN
@@ -2027,7 +1955,7 @@
                   (PROGN (SETQ |p| (CAR |ISTMP#1|)) #1#))))
        (|concat| '|while | (|form2StringLocal| |p|)))
       (#1# (|systemErrorHere| '|formatIterator|))))))
- 
+
 ; tuple2String argl ==
 ;   fn1 argl where
 ;     fn1 argl ==
@@ -2047,7 +1975,7 @@
 ;       ATOM x => object2String x
 ;       -- [fn2 first x, :f rest x]
 ;       [fn2 y for y in x]
- 
+
 (DEFUN |tuple2String| (|argl|) (PROG () (RETURN (|tuple2String,fn1| |argl|))))
 (DEFUN |tuple2String,fn1| (|argl|)
   (PROG (|string|)
@@ -2110,14 +2038,14 @@
                           (CONS (|tuple2String,fn2| |y|) |bfVar#63|))))
                 (SETQ |bfVar#62| (CDR |bfVar#62|))))
              NIL |x| NIL))))))
- 
+
 ; linearFormatName x ==
 ;   atom x => x
 ;   linearFormat x
- 
+
 (DEFUN |linearFormatName| (|x|)
   (PROG () (RETURN (COND ((ATOM |x|) |x|) ('T (|linearFormat| |x|))))))
- 
+
 ; linearFormat x ==
 ;   atom x => x
 ;   x is [op,:argl] and atom op =>
@@ -2126,7 +2054,7 @@
 ;       nil
 ;     [op,"(",:argPart,")"]
 ;   [linearFormat y for y in x]
- 
+
 (DEFUN |linearFormat| (|x|)
   (PROG (|op| |argl| |a| |l| |argPart|)
     (RETURN
@@ -2168,40 +2096,14 @@
                   (SETQ |bfVar#67| (CONS (|linearFormat| |y|) |bfVar#67|))))
                 (SETQ |bfVar#66| (CDR |bfVar#66|))))
              NIL |x| NIL))))))
- 
-; formatArgList l ==
-;   null l => nil
-;   acc:= linearFormat first l
-;   for x in rest l repeat
-;     acc:= concat(acc,",",linearFormat x)
-;   acc
- 
-(DEFUN |formatArgList| (|l|)
-  (PROG (|acc|)
-    (RETURN
-     (COND ((NULL |l|) NIL)
-           (#1='T
-            (PROGN
-             (SETQ |acc| (|linearFormat| (CAR |l|)))
-             ((LAMBDA (|bfVar#68| |x|)
-                (LOOP
-                 (COND
-                  ((OR (ATOM |bfVar#68|)
-                       (PROGN (SETQ |x| (CAR |bfVar#68|)) NIL))
-                   (RETURN NIL))
-                  (#1#
-                   (SETQ |acc| (|concat| |acc| '|,| (|linearFormat| |x|)))))
-                 (SETQ |bfVar#68| (CDR |bfVar#68|))))
-              (CDR |l|) NIL)
-             |acc|))))))
- 
+
 ; formTuple2String argl ==
 ;   null argl => nil
 ;   string:= form2StringLocal first argl
 ;   for x in rest argl repeat
 ;     string:= concat(string,concat(",",form2StringLocal x))
 ;   string
- 
+
 (DEFUN |formTuple2String| (|argl|)
   (PROG (|string|)
     (RETURN
@@ -2209,20 +2111,20 @@
            (#1='T
             (PROGN
              (SETQ |string| (|form2StringLocal| (CAR |argl|)))
-             ((LAMBDA (|bfVar#69| |x|)
+             ((LAMBDA (|bfVar#68| |x|)
                 (LOOP
                  (COND
-                  ((OR (ATOM |bfVar#69|)
-                       (PROGN (SETQ |x| (CAR |bfVar#69|)) NIL))
+                  ((OR (ATOM |bfVar#68|)
+                       (PROGN (SETQ |x| (CAR |bfVar#68|)) NIL))
                    (RETURN NIL))
                   (#1#
                    (SETQ |string|
                            (|concat| |string|
                             (|concat| '|,| (|form2StringLocal| |x|))))))
-                 (SETQ |bfVar#69| (CDR |bfVar#69|))))
+                 (SETQ |bfVar#68| (CDR |bfVar#68|))))
               (CDR |argl|) NIL)
              |string|))))))
- 
+
 ; isInternalFunctionName(op) ==
 ;   (not IDENTP(op)) or (op = "*") or (op = "**") => NIL
 ;   (1 = SIZE(op':= PNAME op)) or (char("*") ~= op'.0) => NIL
@@ -2234,7 +2136,7 @@
 ;   s := STRPOSL(table,op',1,true)
 ;   null(s) or s > e => NIL
 ;   SUBSTRING(op',s,e-s)
- 
+
 (DEFUN |isInternalFunctionName| (|op|)
   (PROG (|op'| |e| |y| |table| |s|)
     (RETURN
@@ -2252,7 +2154,7 @@
              (SETQ |s| (STRPOSL |table| |op'| 1 T))
              (COND ((OR (NULL |s|) (< |e| |s|)) NIL)
                    (#1# (SUBSTRING |op'| |s| (- |e| |s|))))))))))
- 
+
 ; application2String(op,argl, linkInfo) ==
 ;   op is ["$elt", t, f] =>
 ;       concat(application2String(f, argl, linkInfo), '"$", _
@@ -2266,12 +2168,6 @@
 ;   1=#argl =>
 ;     first argl is ["<",:.] => concat(op,first argl)
 ;     concat(app2StringWrap(formWrapId op, linkInfo), '"(", first argl, '")")
-; --op in '(UP SM) =>
-; --  newop:= (op = "UP" => "P";"M")
-; --  concat(newop,concat(lbrkSch(),argl.0,rbrkSch(),argl.1))
-; --op='RM  =>concat("M",concat(lbrkSch(),
-; --                     argl.0,",",argl.1,rbrkSch(),argl.2))
-; --op='MP =>concat("P",concat(argl.0,argl.1))
 ;   op='SEGMENT =>
 ;     null argl => '".."
 ;     (null rest argl) or (null first rest argl) =>
@@ -2279,7 +2175,7 @@
 ;     concat('"(", first argl, concat('"..", first rest argl), '")")
 ;   concat(app2StringWrap(formWrapId op, linkInfo) ,
 ;                         concat("_(",concat(tuple2String argl,"_)")))
- 
+
 (DEFUN |application2String| (|op| |argl| |linkInfo|)
   (PROG (|ISTMP#1| |t| |ISTMP#2| |f| |op'| |res1|)
     (RETURN
@@ -2320,71 +2216,39 @@
       (#1#
        (|concat| (|app2StringWrap| (|formWrapId| |op|) |linkInfo|)
         (|concat| '|(| (|concat| (|tuple2String| |argl|) '|)|))))))))
- 
+
 ; app2StringConcat0(x,y) ==
 ;   FORMAT(NIL, '"~a ~a", x, y)
- 
+
 (DEFUN |app2StringConcat0| (|x| |y|)
   (PROG () (RETURN (FORMAT NIL "~a ~a" |x| |y|))))
- 
-; app2StringWrap(string, linkInfo) ==
-;   not linkInfo => string
-;   $formatSigAsTeX = 1 => string
-;   $formatSigAsTeX = 2 =>
-;     str2 :=  "app2StringConcat0"/form2Fence linkInfo
-;     sep := '"`"
-;     FORMAT(NIL, '"\lispLink{\verb!(|conPage| '~a)!}{~a}",
-;           str2, string)
-;   error "Bad value for $formatSigAsTeX"
- 
-(DEFUN |app2StringWrap| (|string| |linkInfo|)
-  (PROG (|bfVar#72| |str2| |sep|)
-    (RETURN
-     (COND ((NULL |linkInfo|) |string|) ((EQL |$formatSigAsTeX| 1) |string|)
-           ((EQL |$formatSigAsTeX| 2)
-            (PROGN
-             (SETQ |str2|
-                     (PROGN
-                      (SETQ |bfVar#72| (|form2Fence| |linkInfo|))
-                      ((LAMBDA (|bfVar#70| |bfVar#73| |bfVar#71|)
-                         (LOOP
-                          (COND
-                           ((OR (ATOM |bfVar#73|)
-                                (PROGN (SETQ |bfVar#71| (CAR |bfVar#73|)) NIL))
-                            (RETURN |bfVar#70|))
-                           (#1='T
-                            (SETQ |bfVar#70|
-                                    (|app2StringConcat0| |bfVar#70|
-                                     |bfVar#71|))))
-                          (SETQ |bfVar#73| (CDR |bfVar#73|))))
-                       (CAR |bfVar#72|) (CDR |bfVar#72|) NIL)))
-             (SETQ |sep| "`")
-             (FORMAT NIL "\\lispLink{\\verb!(|conPage| '~a)!}{~a}" |str2|
-                     |string|)))
-           (#1# (|error| '|Bad value for $formatSigAsTeX|))))))
- 
+
+; app2StringWrap(string, linkInfo) == string
+
+(DEFUN |app2StringWrap| (|string| |linkInfo|) (PROG () (RETURN |string|)))
+
 ; record2String x ==
 ;   argPart := NIL
 ;   for [":",a,b] in x repeat argPart:=
 ;     concat(argPart,",",a,": ",form2StringLocal b)
 ;   null argPart => '"Record()"
 ;   concat("Record_(",rest argPart,"_)")
- 
+
 (DEFUN |record2String| (|x|)
   (PROG (|argPart| |ISTMP#1| |a| |ISTMP#2| |b|)
     (RETURN
      (PROGN
       (SETQ |argPart| NIL)
-      ((LAMBDA (|bfVar#75| |bfVar#74|)
+      ((LAMBDA (|bfVar#70| |bfVar#69|)
          (LOOP
           (COND
-           ((OR (ATOM |bfVar#75|)
-                (PROGN (SETQ |bfVar#74| (CAR |bfVar#75|)) NIL))
+           ((OR (ATOM |bfVar#70|)
+                (PROGN (SETQ |bfVar#69| (CAR |bfVar#70|)) NIL))
             (RETURN NIL))
            (#1='T
-            (AND (CONSP |bfVar#74|) (EQ (CAR |bfVar#74|) '|:|)
+            (AND (CONSP |bfVar#69|) (EQ (CAR |bfVar#69|) '|:|)
                  (PROGN
-                  (SETQ |ISTMP#1| (CDR |bfVar#74|))
+                  (SETQ |ISTMP#1| (CDR |bfVar#69|))
                   (AND (CONSP |ISTMP#1|)
                        (PROGN
                         (SETQ |a| (CAR |ISTMP#1|))
@@ -2394,35 +2258,35 @@
                  (SETQ |argPart|
                          (|concat| |argPart| '|,| |a| '|: |
                           (|form2StringLocal| |b|))))))
-          (SETQ |bfVar#75| (CDR |bfVar#75|))))
+          (SETQ |bfVar#70| (CDR |bfVar#70|))))
        |x| NIL)
       (COND ((NULL |argPart|) "Record()")
             (#1# (|concat| '|Record(| (CDR |argPart|) '|)|)))))))
- 
+
 ; plural(n,string) ==
 ;   suffix:=
 ;     n = 1 => '""
 ;     '"s"
 ;   [:bright n,string,suffix]
- 
+
 (DEFUN |plural| (|n| |string|)
   (PROG (|suffix|)
     (RETURN
      (PROGN
       (SETQ |suffix| (COND ((EQL |n| 1) "") ('T "s")))
       (APPEND (|bright| |n|) (CONS |string| (CONS |suffix| NIL)))))))
- 
+
 ; formatIf pred ==
 ;   not pred => nil
 ;   pred in '(T (QUOTE T)) => nil
 ;   concat('%b,'"if",'%d,pred2English pred)
- 
+
 (DEFUN |formatIf| (|pred|)
   (PROG ()
     (RETURN
      (COND ((NULL |pred|) NIL) ((|member| |pred| '(T 'T)) NIL)
            ('T (|concat| '|%b| "if" '|%d| (|pred2English| |pred|)))))))
- 
+
 ; formatPredParts s ==
 ;   s is ['QUOTE,s1] => formatPredParts s1
 ;   s is ['LIST,:s1] => [formatPredParts s2 for s2 in s1]
@@ -2434,7 +2298,7 @@
 ;     s1 isnt [fun,sig] => s1
 ;     ['SIGNATURE,fun,[formatPredParts(r) for r in sig]]
 ;   s
- 
+
 (DEFUN |formatPredParts| (|s|)
   (PROG (|ISTMP#1| |s1| |ISTMP#2| |a| |b| |ISTMP#3| |c| |fun| |sig|)
     (RETURN
@@ -2446,13 +2310,13 @@
                   (PROGN (SETQ |s1| (CAR |ISTMP#1|)) #1='T))))
        (|formatPredParts| |s1|))
       ((AND (CONSP |s|) (EQ (CAR |s|) 'LIST) (PROGN (SETQ |s1| (CDR |s|)) #1#))
-       ((LAMBDA (|bfVar#77| |bfVar#76| |s2|)
+       ((LAMBDA (|bfVar#72| |bfVar#71| |s2|)
           (LOOP
            (COND
-            ((OR (ATOM |bfVar#76|) (PROGN (SETQ |s2| (CAR |bfVar#76|)) NIL))
-             (RETURN (NREVERSE |bfVar#77|)))
-            (#1# (SETQ |bfVar#77| (CONS (|formatPredParts| |s2|) |bfVar#77|))))
-           (SETQ |bfVar#76| (CDR |bfVar#76|))))
+            ((OR (ATOM |bfVar#71|) (PROGN (SETQ |s2| (CAR |bfVar#71|)) NIL))
+             (RETURN (NREVERSE |bfVar#72|)))
+            (#1# (SETQ |bfVar#72| (CONS (|formatPredParts| |s2|) |bfVar#72|))))
+           (SETQ |bfVar#71| (CDR |bfVar#71|))))
         NIL |s1| NIL))
       ((AND (CONSP |s|) (EQ (CAR |s|) '|devaluate|)
             (PROGN
@@ -2498,28 +2362,28 @@
           |s1|)
          (#1#
           (LIST 'SIGNATURE |fun|
-                ((LAMBDA (|bfVar#79| |bfVar#78| |r|)
+                ((LAMBDA (|bfVar#74| |bfVar#73| |r|)
                    (LOOP
                     (COND
-                     ((OR (ATOM |bfVar#78|)
-                          (PROGN (SETQ |r| (CAR |bfVar#78|)) NIL))
-                      (RETURN (NREVERSE |bfVar#79|)))
+                     ((OR (ATOM |bfVar#73|)
+                          (PROGN (SETQ |r| (CAR |bfVar#73|)) NIL))
+                      (RETURN (NREVERSE |bfVar#74|)))
                      (#1#
-                      (SETQ |bfVar#79|
-                              (CONS (|formatPredParts| |r|) |bfVar#79|))))
-                    (SETQ |bfVar#78| (CDR |bfVar#78|))))
+                      (SETQ |bfVar#74|
+                              (CONS (|formatPredParts| |r|) |bfVar#74|))))
+                    (SETQ |bfVar#73| (CDR |bfVar#73|))))
                  NIL |sig| NIL))))))
       (#1# |s|)))))
- 
+
 ; form_to_abbrev(x) ==
 ;     $abbreviateTypes : local := true
 ;     form2String(x)
- 
+
 (DEFUN |form_to_abbrev| (|x|)
   (PROG (|$abbreviateTypes|)
     (DECLARE (SPECIAL |$abbreviateTypes|))
     (RETURN (PROGN (SETQ |$abbreviateTypes| T) (|form2String| |x|)))))
- 
+
 ; pred2English x ==
 ;   x is ['IF,cond,thenClause,elseClause] =>
 ;     c := concat('"if ",pred2English cond)
@@ -2551,7 +2415,7 @@
 ;   x is ['ATTRIBUTE, form] => BREAK()
 ;   x is '$ => '"%%"
 ;   form2String x
- 
+
 (DEFUN |pred2English| (|x|)
   (PROG (|ISTMP#1| |cond| |ISTMP#2| |thenClause| |ISTMP#3| |elseClause| |c| |t|
          |e| |l| |tail| |op| |a| |b| |b'| |translation| |form|)
@@ -2580,35 +2444,35 @@
       ((AND (CONSP |x|) (EQ (CAR |x|) 'AND) (PROGN (SETQ |l| (CDR |x|)) #1#))
        (PROGN
         (SETQ |tail|
-                ((LAMBDA (|bfVar#81| |bfVar#80| |x|)
+                ((LAMBDA (|bfVar#76| |bfVar#75| |x|)
                    (LOOP
                     (COND
-                     ((OR (ATOM |bfVar#80|)
-                          (PROGN (SETQ |x| (CAR |bfVar#80|)) NIL))
-                      (RETURN |bfVar#81|))
+                     ((OR (ATOM |bfVar#75|)
+                          (PROGN (SETQ |x| (CAR |bfVar#75|)) NIL))
+                      (RETURN |bfVar#76|))
                      (#1#
-                      (SETQ |bfVar#81|
-                              (APPEND |bfVar#81|
+                      (SETQ |bfVar#76|
+                              (APPEND |bfVar#76|
                                       (|concat| (|bright| "and")
                                        (|pred2English| |x|))))))
-                    (SETQ |bfVar#80| (CDR |bfVar#80|))))
+                    (SETQ |bfVar#75| (CDR |bfVar#75|))))
                  NIL (CDR |l|) NIL))
         (|concat| (|pred2English| (CAR |l|)) |tail|)))
       ((AND (CONSP |x|) (EQ (CAR |x|) 'OR) (PROGN (SETQ |l| (CDR |x|)) #1#))
        (PROGN
         (SETQ |tail|
-                ((LAMBDA (|bfVar#83| |bfVar#82| |x|)
+                ((LAMBDA (|bfVar#78| |bfVar#77| |x|)
                    (LOOP
                     (COND
-                     ((OR (ATOM |bfVar#82|)
-                          (PROGN (SETQ |x| (CAR |bfVar#82|)) NIL))
-                      (RETURN |bfVar#83|))
+                     ((OR (ATOM |bfVar#77|)
+                          (PROGN (SETQ |x| (CAR |bfVar#77|)) NIL))
+                      (RETURN |bfVar#78|))
                      (#1#
-                      (SETQ |bfVar#83|
-                              (APPEND |bfVar#83|
+                      (SETQ |bfVar#78|
+                              (APPEND |bfVar#78|
                                       (|concat| (|bright| "or")
                                        (|pred2English| |x|))))))
-                    (SETQ |bfVar#82| (CDR |bfVar#82|))))
+                    (SETQ |bfVar#77| (CDR |bfVar#77|))))
                  NIL (CDR |l|) NIL))
         (|concat| (|pred2English| (CAR |l|)) |tail|)))
       ((AND (CONSP |x|) (EQ (CAR |x|) '|not|)
@@ -2688,24 +2552,24 @@
                   (PROGN (SETQ |form| (CAR |ISTMP#1|)) #1#))))
        (BREAK))
       ((EQ |x| '$) "%%") (#1# (|form2String| |x|))))))
- 
+
 ; mathObject2String x ==
 ;   CHARACTERP x => COERCE([x],'STRING)
 ;   object2String x
- 
+
 (DEFUN |mathObject2String| (|x|)
   (PROG ()
     (RETURN
      (COND ((CHARACTERP |x|) (COERCE (LIST |x|) 'STRING))
            ('T (|object2String| |x|))))))
- 
+
 ; object2String x ==
 ;   STRINGP x => x
 ;   IDENTP x  => PNAME x
 ;   NULL x    => '""
 ;   PAIRP  x  => STRCONC(object2String first x, object2String rest x)
 ;   WRITE_-TO_-STRING x
- 
+
 (DEFUN |object2String| (|x|)
   (PROG ()
     (RETURN
@@ -2713,32 +2577,32 @@
            ((CONSP |x|)
             (STRCONC (|object2String| (CAR |x|)) (|object2String| (CDR |x|))))
            ('T (WRITE-TO-STRING |x|))))))
- 
+
 ; object2Identifier x ==
 ;   IDENTP x  => x
 ;   STRINGP x => INTERN x
 ;   INTERN WRITE_-TO_-STRING x
- 
+
 (DEFUN |object2Identifier| (|x|)
   (PROG ()
     (RETURN
      (COND ((IDENTP |x|) |x|) ((STRINGP |x|) (INTERN |x|))
            ('T (INTERN (WRITE-TO-STRING |x|)))))))
- 
+
 ; blankList x == "append"/[[BLANK,y] for y in x]
- 
+
 (DEFUN |blankList| (|x|)
   (PROG ()
     (RETURN
-     ((LAMBDA (|bfVar#85| |bfVar#84| |y|)
+     ((LAMBDA (|bfVar#80| |bfVar#79| |y|)
         (LOOP
          (COND
-          ((OR (ATOM |bfVar#84|) (PROGN (SETQ |y| (CAR |bfVar#84|)) NIL))
-           (RETURN |bfVar#85|))
-          ('T (SETQ |bfVar#85| (APPEND |bfVar#85| (LIST BLANK |y|)))))
-         (SETQ |bfVar#84| (CDR |bfVar#84|))))
+          ((OR (ATOM |bfVar#79|) (PROGN (SETQ |y| (CAR |bfVar#79|)) NIL))
+           (RETURN |bfVar#80|))
+          ('T (SETQ |bfVar#80| (APPEND |bfVar#80| (LIST BLANK |y|)))))
+         (SETQ |bfVar#79| (CDR |bfVar#79|))))
       NIL |x| NIL))))
- 
+
 ; string2Float s ==
 ;   -- takes a string, calls the parser on it and returns a float object
 ;   p := ncParseFromString s
@@ -2747,7 +2611,7 @@
 ;   flt := getFunctionFromDomain("float", FloatDomain,
 ;     [$Integer, $Integer, $PositiveInteger])
 ;   SPADCALL(x, y, z, flt)
- 
+
 (DEFUN |string2Float| (|s|)
   (PROG (|p| |ISTMP#1| |ISTMP#2| |FloatDomain| |ISTMP#3| |ISTMP#4| |x|
          |ISTMP#5| |y| |ISTMP#6| |z| |flt|)
@@ -2789,14 +2653,14 @@
                  (|getFunctionFromDomain| '|float| |FloatDomain|
                   (LIST |$Integer| |$Integer| |$PositiveInteger|)))
          (SPADCALL |x| |y| |z| |flt|))))))))
- 
+
 ; form2Fence form ==
 ;   -- body of dbMkEvalable
 ;   [op, :.] := form
 ;   kind := GETDATABASE(op,'CONSTRUCTORKIND)
 ;   kind = 'category => form2Fence1 form
 ;   form2Fence1 mkEvalable form
- 
+
 (DEFUN |form2Fence| (|form|)
   (PROG (|op| |kind|)
     (RETURN
@@ -2805,7 +2669,7 @@
       (SETQ |kind| (GETDATABASE |op| 'CONSTRUCTORKIND))
       (COND ((EQ |kind| '|category|) (|form2Fence1| |form|))
             ('T (|form2Fence1| (|mkEvalable| |form|))))))))
- 
+
 ; form2Fence1 x ==
 ;   x is [op,:argl] =>
 ;     op = 'QUOTE => ['"(QUOTE ",:form2FenceQuote first argl,'")"]
@@ -2814,7 +2678,7 @@
 ;   IDENTP x => [FORMAT(NIL, '"|~a|", x)]
 ; --  [x]
 ;   ['"  ", x]
- 
+
 (DEFUN |form2Fence1| (|x|)
   (PROG (|op| |argl|)
     (RETURN
@@ -2829,27 +2693,27 @@
          (CONS "("
                (CONS (FORMAT NIL "|~a|" |op|)
                      (APPEND
-                      ((LAMBDA (|bfVar#87| |bfVar#86| |y|)
+                      ((LAMBDA (|bfVar#82| |bfVar#81| |y|)
                          (LOOP
                           (COND
-                           ((OR (ATOM |bfVar#86|)
-                                (PROGN (SETQ |y| (CAR |bfVar#86|)) NIL))
-                            (RETURN |bfVar#87|))
+                           ((OR (ATOM |bfVar#81|)
+                                (PROGN (SETQ |y| (CAR |bfVar#81|)) NIL))
+                            (RETURN |bfVar#82|))
                            (#1#
-                            (SETQ |bfVar#87|
-                                    (APPEND |bfVar#87| (|form2Fence1| |y|)))))
-                          (SETQ |bfVar#86| (CDR |bfVar#86|))))
+                            (SETQ |bfVar#82|
+                                    (APPEND |bfVar#82| (|form2Fence1| |y|)))))
+                          (SETQ |bfVar#81| (CDR |bfVar#81|))))
                        NIL |argl| NIL)
                       (CONS ")" NIL)))))))
       ((EQ |x| '$) (LIST '%)) ((IDENTP |x|) (LIST (FORMAT NIL "|~a|" |x|)))
       (#1# (LIST "  " |x|))))))
- 
+
 ; form2FenceQuote x ==
 ;   NUMBERP x => [STRINGIMAGE x]
 ;   SYMBOLP x => [FORMAT(NIL, '"|~a|", x)]
 ;   atom    x => ['"??"]
 ;   ['"(",:form2FenceQuote first x,:form2FenceQuoteTail rest x]
- 
+
 (DEFUN |form2FenceQuote| (|x|)
   (PROG ()
     (RETURN
@@ -2860,12 +2724,12 @@
             (CONS "("
                   (APPEND (|form2FenceQuote| (CAR |x|))
                           (|form2FenceQuoteTail| (CDR |x|)))))))))
- 
+
 ; form2FenceQuoteTail x ==
 ;   null x => ['")"]
 ;   atom x => ['" . ",:form2FenceQuote x,'")"]
 ;   ['" ",:form2FenceQuote first x,:form2FenceQuoteTail rest x]
- 
+
 (DEFUN |form2FenceQuoteTail| (|x|)
   (PROG ()
     (RETURN
@@ -2876,11 +2740,11 @@
             (CONS " "
                   (APPEND (|form2FenceQuote| (CAR |x|))
                           (|form2FenceQuoteTail| (CDR |x|)))))))))
- 
+
 ; form2StringList u ==
 ;   atom (r := form2String u) => [r]
 ;   r
- 
+
 (DEFUN |form2StringList| (|u|)
   (PROG (|r|)
     (RETURN

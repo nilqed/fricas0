@@ -4,14 +4,11 @@
 (DEFPARAMETER |CombinatorialOpsCategory;AL| 'NIL) 
 
 (DEFUN |CombinatorialOpsCategory| ()
-  (LET (#:G692)
-    (COND (|CombinatorialOpsCategory;AL|)
-          (T
-           (SETQ |CombinatorialOpsCategory;AL|
-                   (|CombinatorialOpsCategory;|)))))) 
+  (COND (|CombinatorialOpsCategory;AL|)
+        (T (SETQ |CombinatorialOpsCategory;AL| (|CombinatorialOpsCategory;|))))) 
 
 (DEFUN |CombinatorialOpsCategory;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G689 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|CombinatorialFunctionCategory|)
@@ -22,8 +19,7 @@
                               ((|summation| ($ $ (|SegmentBinding| $))) T)
                               ((|product| ($ $ (|Symbol|))) T)
                               ((|product| ($ $ (|SegmentBinding| $))) T))
-                            NIL '((|SegmentBinding| $) (|Symbol|)) NIL))
-                   |CombinatorialOpsCategory|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|CombinatorialOpsCategory|))))) 
 
 (MAKEPROP '|CombinatorialOpsCategory| 'NILADIC T) 

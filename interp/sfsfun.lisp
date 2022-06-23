@@ -1,55 +1,55 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; FloatError(formatstring,arg) ==
 ; --        ERROR(formatstring,arg)
 ;         ERROR FORMAT([],formatstring,arg)
- 
+
 (DEFUN |FloatError| (|formatstring| |arg|)
   (PROG () (RETURN (ERROR (FORMAT NIL |formatstring| |arg|)))))
- 
+
 ; float(x) == FLOAT(x, 0.0)
- 
+
 (DEFUN |float| (|x|) (PROG () (RETURN (FLOAT |x| 0.0))))
- 
+
 ; fracpart(x) ==
 ;         CADR(MULTIPLE_-VALUE_-LIST(FLOOR(x)))
- 
+
 (DEFUN |fracpart| (|x|)
   (PROG () (RETURN (CADR (MULTIPLE-VALUE-LIST (FLOOR |x|))))))
- 
+
 ; intpart(x) ==
 ;         first(MULTIPLE_-VALUE_-LIST(FLOOR(x)))
- 
+
 (DEFUN |intpart| (|x|)
   (PROG () (RETURN (CAR (MULTIPLE-VALUE-LIST (FLOOR |x|))))))
- 
+
 ; negintp(x) ==
 ;         if ZEROP IMAGPART(x) and x<0.0 and ZEROP fracpart(x)
 ;         then
 ;                 true
 ;         else
 ;                 false
- 
+
 (DEFUN |negintp| (|x|)
   (PROG ()
     (RETURN
      (COND
       ((AND (ZEROP (IMAGPART |x|)) (< |x| 0.0) (ZEROP (|fracpart| |x|))) T)
       ('T NIL)))))
- 
+
 ; DEFCONSTANT(dfPi, 3.14159265358979323846264338328)
- 
+
 (DEFCONSTANT |dfPi| 3.141592653589793)
- 
+
 ; horner(l,x) ==
 ;         result := 0
 ;         for el in l repeat
 ;                 result := result *x + el
 ;         return result
- 
+
 (DEFUN |horner| (|l| |x|)
   (PROG (|result|)
     (RETURN
@@ -64,12 +64,12 @@
           (SETQ |bfVar#1| (CDR |bfVar#1|))))
        |l| NIL)
       (RETURN |result|)))))
- 
+
 ; r_gamma (x) ==
 ;         if COMPLEXP(x) then FloatError('"Gamma not implemented for complex value ~D",x)
 ;         ZEROP (x-1.0) => 1.0
 ;         if x>20 then gammaStirling(x) else gammaRatapprox(x)
- 
+
 (DEFUN |r_gamma| (|x|)
   (PROG ()
     (RETURN
@@ -81,37 +81,37 @@
             (#1='T
              (COND ((< 20 |x|) (|gammaStirling| |x|))
                    (#1# (|gammaRatapprox| |x|)))))))))
- 
+
 ; r_lngamma (x) ==
 ;         if x>20 then lnrgammaRatapprox(x) else LOG(gammaRatapprox(x))
- 
+
 (DEFUN |r_lngamma| (|x|)
   (PROG ()
     (RETURN
      (COND ((< 20 |x|) (|lnrgammaRatapprox| |x|))
            ('T (LOG (|gammaRatapprox| |x|)))))))
- 
+
 ; cbeta(z,w) ==
 ;         cgamma(z)*cgamma(w)/(cgamma(z+w))
- 
+
 (DEFUN |cbeta| (|z| |w|)
   (PROG ()
     (RETURN (/ (* (|cgamma| |z|) (|cgamma| |w|)) (|cgamma| (+ |z| |w|))))))
- 
+
 ; gammaStirling(x) ==
 ;        EXP(r_lngamma(x))
- 
+
 (DEFUN |gammaStirling| (|x|) (PROG () (RETURN (EXP (|r_lngamma| |x|)))))
- 
+
 ; lnrgammaRatapprox(x) ==
 ;        (x-.5)*LOG(x) - x + LOG(SQRT(2.0*dfPi)) + phiRatapprox(x)
- 
+
 (DEFUN |lnrgammaRatapprox| (|x|)
   (PROG ()
     (RETURN
      (+ (+ (- (* (- |x| 0.5) (LOG |x|)) |x|) (LOG (SQRT (* 2.0 |dfPi|))))
         (|phiRatapprox| |x|)))))
- 
+
 ; phiRatapprox(x) ==
 ;         arg := 1/(x^2)
 ;         p := horner([.0666629070402007526,_
@@ -123,7 +123,7 @@
 ;                       1.48779388109699298468156],arg);
 ;         result := p/(x*q)
 ;         result
- 
+
 (DEFUN |phiRatapprox| (|x|)
   (PROG (|arg| |p| |q| |result|)
     (RETURN
@@ -141,7 +141,7 @@
                |arg|))
       (SETQ |result| (/ |p| (* |x| |q|)))
       |result|))))
- 
+
 ; gammaRatapprox (x) ==
 ;         if (x>=2 and x<=3)
 ;         then
@@ -173,7 +173,7 @@
 ;                         else
 ;                           result := Pi/(gammaRatapprox(1.0-x)*(-1.0)^(intpartx+1)*SIN(restx*Pi))
 ;         result
- 
+
 (DEFUN |gammaRatapprox| (|x|)
   (PROG (|result| |n| |a| |reducedarg| |prod| |Pi| |lx| |intpartx| |restx|)
     (RETURN
@@ -216,7 +216,7 @@
                          (EXPT (- 1.0) (+ |intpartx| 1)))
                       (SIN (* |restx| |Pi|)))))))))
       |result|))))
- 
+
 ; gammaRatkernel(x) ==
 ;            p := horner(REVERSE([3786.01050348257245475108,_
 ;                         2077.45979389418732098416,_
@@ -233,7 +233,7 @@
 ;                         -13.40041478578134826274,_
 ;                         1]),x-2.0)
 ;            p/q
- 
+
 (DEFUN |gammaRatkernel| (|x|)
   (PROG (|p| |q|)
     (RETURN
@@ -253,13 +253,13 @@
                       1))
                (- |x| 2.0)))
       (/ |p| |q|)))))
- 
+
 ; cgammat(x) ==
 ;         MAX(0.1, MIN(10.0, 10.0*SQRT(2.0) - ABS(x)))
- 
+
 (DEFUN |cgammat| (|x|)
   (PROG () (RETURN (MAX 0.1 (MIN 10.0 (- (* 10.0 (SQRT 2.0)) (ABS |x|)))))))
- 
+
 ; cgamma (z) ==
 ;         z2 := IMAGPART(z)
 ;         z1 := REALPART(z)       --- call real valued gamma if z is real
@@ -269,7 +269,7 @@
 ;                 result := clngamma(z1,z2,z)
 ;                 result := EXP(result)
 ;         result
- 
+
 (DEFUN |cgamma| (|z|)
   (PROG (|z2| |z1| |result|)
     (RETURN
@@ -280,13 +280,13 @@
             ('T (SETQ |result| (|clngamma| |z1| |z2| |z|))
              (SETQ |result| (EXP |result|))))
       |result|))))
- 
+
 ; lncgamma(z) ==
 ;    clngamma(REALPART z, IMAGPART z, z)
- 
+
 (DEFUN |lncgamma| (|z|)
   (PROG () (RETURN (|clngamma| (REALPART |z|) (IMAGPART |z|) |z|))))
- 
+
 ; clngamma(z1,z2,z) ==
 ;         --- conjugate of gamma is gamma of conjugate.  map 2nd and 4th quads
 ;         --- to first and third quadrants
@@ -299,7 +299,7 @@
 ;                                 COMPLEX(z1,-z2)))
 ;                 else result := clngammacase23(z1,z2,z)
 ;         result
- 
+
 (DEFUN |clngamma| (|z1| |z2| |z|)
   (PROG (|result|)
     (RETURN
@@ -318,12 +318,12 @@
                  (|clngammacase23| |z1| (- |z2|) (COMPLEX |z1| (- |z2|))))))
        (#1# (SETQ |result| (|clngammacase23| |z1| |z2| |z|))))
       |result|))))
- 
+
 ; clngammacase1(z1,z2,z) ==
 ;         result1 := PiMinusLogSinPi(z1,z2,z)
 ;         result2 := clngamma(1.0-z1,-z2,1.0-z)
 ;         result1-result2
- 
+
 (DEFUN |clngammacase1| (|z1| |z2| |z|)
   (PROG (|result1| |result2|)
     (RETURN
@@ -331,22 +331,22 @@
       (SETQ |result1| (|PiMinusLogSinPi| |z1| |z2| |z|))
       (SETQ |result2| (|clngamma| (- 1.0 |z1|) (- |z2|) (- 1.0 |z|)))
       (- |result1| |result2|)))))
- 
+
 ; PiMinusLogSinPi(z1,z2,z) ==
 ;         cgammaG(z1,z2)  - logH(z1,z2,z)
- 
+
 (DEFUN |PiMinusLogSinPi| (|z1| |z2| |z|)
   (PROG () (RETURN (- (|cgammaG| |z1| |z2|) (|logH| |z1| |z2| |z|)))))
- 
+
 ; cgammaG(z1,z2) ==
 ;         LOG(2*dfPi) + dfPi*z2 - COMPLEX(0.0,1.0)*dfPi*(z1-.5)
- 
+
 (DEFUN |cgammaG| (|z1| |z2|)
   (PROG ()
     (RETURN
      (- (+ (LOG (* 2 |dfPi|)) (* |dfPi| |z2|))
         (* (* (COMPLEX 0.0 1.0) |dfPi|) (- |z1| 0.5))))))
- 
+
 ; logH(z1,z2,z) ==
 ;         z1bar := CADR(MULTIPLE_-VALUE_-LIST(FLOOR(z1))) ---frac part of z1
 ;         piz1bar := dfPi*z1bar
@@ -357,7 +357,7 @@
 ;         part1 := -TANH(piz2)*(1.0+EXP(twopiz2))
 ; --- part1 is another way of saying 1 - exp(2*Pi*z1bar)
 ;         LOG(part1+part2)
- 
+
 (DEFUN |logH| (|z1| |z2| |z|)
   (PROG (|z1bar| |piz1bar| |piz2| |twopiz2| |i| |part2| |part1|)
     (RETURN
@@ -373,14 +373,14 @@
                     (* (SIN (* 2.0 |piz1bar|)) |i|))))
       (SETQ |part1| (- (* (TANH |piz2|) (+ 1.0 (EXP |twopiz2|)))))
       (LOG (+ |part1| |part2|))))))
- 
+
 ; clngammacase23(z1,z2,z) ==
 ;         tz2 := cgammat(z2)
 ;         if (z1 < tz2)
 ;         then result:= clngammacase2(z1,z2,tz2,z)
 ;         else result:= clngammacase3(z)
 ;         result
- 
+
 (DEFUN |clngammacase23| (|z1| |z2| |z|)
   (PROG (|tz2| |result|)
     (RETURN
@@ -390,12 +390,12 @@
        ((< |z1| |tz2|) (SETQ |result| (|clngammacase2| |z1| |z2| |tz2| |z|)))
        ('T (SETQ |result| (|clngammacase3| |z|))))
       |result|))))
- 
+
 ; clngammacase2(z1,z2,tz2,z) ==
 ;         n := float(CEILING(tz2-z1))
 ;         zpn := z+n
 ;         (z-.5)*LOG(zpn) - (zpn) + cgammaBernsum(zpn) - cgammaAdjust(logS(z1,z2,z,n,zpn))
- 
+
 (DEFUN |clngammacase2| (|z1| |z2| |tz2| |z|)
   (PROG (|n| |zpn|)
     (RETURN
@@ -404,7 +404,7 @@
       (SETQ |zpn| (+ |z| |n|))
       (- (+ (- (* (- |z| 0.5) (LOG |zpn|)) |zpn|) (|cgammaBernsum| |zpn|))
          (|cgammaAdjust| (|logS| |z1| |z2| |z| |n| |zpn|)))))))
- 
+
 ; logS(z1,z2,z,n,zpn) ==
 ;         sum := 0.0
 ;         for k in 0..(n-1) repeat
@@ -412,7 +412,7 @@
 ;                 then sum := sum + LOG((z+k)/zpn)
 ;                 else sum := sum + LOG(1.0 - (n-k)/zpn)
 ;         sum
- 
+
 (DEFUN |logS| (|z1| |z2| |z| |n| |zpn|)
   (PROG (|sum|)
     (RETURN
@@ -431,13 +431,13 @@
           (SETQ |k| (+ |k| 1))))
        (- |n| 1) 0)
       |sum|))))
- 
+
 ; cgammaAdjust(z) ==
 ;         if IMAGPART(z)<0.0
 ;         then result := z + COMPLEX(0.0, 2.0*dfPi)
 ;         else result := z
 ;         result
- 
+
 (DEFUN |cgammaAdjust| (|z|)
   (PROG (|result|)
     (RETURN
@@ -447,14 +447,14 @@
         (SETQ |result| (+ |z| (COMPLEX 0.0 (* 2.0 |dfPi|)))))
        ('T (SETQ |result| |z|)))
       |result|))))
- 
+
 ; clngammacase3(z) ==
 ;         (z- .5)*LOG(z) - z + cgammaBernsum(z)
- 
+
 (DEFUN |clngammacase3| (|z|)
   (PROG ()
     (RETURN (+ (- (* (- |z| 0.5) (LOG |z|)) |z|) (|cgammaBernsum| |z|)))))
- 
+
 ; cgammaBernsum (z) ==
 ;         sum := LOG(2.0*dfPi)/2.0
 ;         zterm := z
@@ -467,7 +467,7 @@
 ;                 zterm := zterm*zsquaredinv
 ;                 sum := sum + el*zterm
 ;         sum
- 
+
 (DEFUN |cgammaBernsum| (|z|)
   (PROG (|sum| |zterm| |zsquaredinv| |l|)
     (RETURN
@@ -494,14 +494,14 @@
           (SETQ |bfVar#7| (CDR |bfVar#7|))))
        1 |l| NIL)
       |sum|))))
- 
+
 ; $PsiAsymptoticBern := VECTOR(0.0, 0.1666666666666667, -0.03333333333333333, 0.02380952380952381,_
 ;               -0.03333333333333333, 0.07575757575757576, -0.2531135531135531, 1.166666666666667,_
 ;               -7.092156862745098, 54.97117794486216, -529.1242424242424, 6192.123188405797,_
 ;               -86580.25311355311, 1425517.166666667, -27298231.06781609, 601580873.9006424,_
 ;               -15116315767.09216, 429614643061.1667, -13711655205088.33, 488332318973593.2,_
 ;               -19296579341940070.0,  841693047573682600.0, -40338071854059460000.0)
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$PsiAsymptoticBern|
           (VECTOR 0.0 0.16666666666666669 (- 0.03333333333333333)
@@ -514,7 +514,7 @@
                   (- 1.371165520508833e13) 4.8833231897359325e14
                   (- 1.929657934194007e16) 8.416930475736827e17
                   (- 4.033807185405946e19))))
- 
+
 ; PsiAsymptotic(n,x) ==
 ;         xn := x^n
 ;         xnp1 := xn*x
@@ -530,7 +530,7 @@
 ;                 else factterm := factterm * float(2*k+n-1)*float(2*k+n-2)/(float(2*k)*float(2*k-1))
 ;                 sum := sum + AREF($PsiAsymptoticBern,k)*factterm/xterm
 ;         PsiEps(n,x) + 1.0/(2.0*xnp1) + 1.0/xn * sum
- 
+
 (DEFUN |PsiAsymptotic| (|n| |x|)
   (PROG (|xn| |xnp1| |xsq| |xterm| |factterm| |sum|)
     (RETURN
@@ -568,7 +568,7 @@
        2)
       (+ (+ (|PsiEps| |n| |x|) (/ 1.0 (* 2.0 |xnp1|)))
          (* (/ 1.0 |xn|) |sum|))))))
- 
+
 ; PsiEps(n,x) ==
 ;         if n = 0
 ;         then
@@ -576,7 +576,7 @@
 ;         else
 ;                 result :=  1.0/(float(n)*(x^n))
 ;         result
- 
+
 (DEFUN |PsiEps| (|n| |x|)
   (PROG (|result|)
     (RETURN
@@ -584,7 +584,7 @@
       (COND ((EQL |n| 0) (SETQ |result| (- (LOG |x|))))
             ('T (SETQ |result| (/ 1.0 (* (|float| |n|) (EXPT |x| |n|))))))
       |result|))))
- 
+
 ; PsiAsymptoticOrder(n,x,nterms) ==
 ;         sum := 0
 ;         xterm := 1.0
@@ -593,7 +593,7 @@
 ;                 xterm := (x+float(k))^np1
 ;                 sum := sum + 1.0/xterm
 ;         sum
- 
+
 (DEFUN |PsiAsymptoticOrder| (|n| |x| |nterms|)
   (PROG (|sum| |xterm| |np1|)
     (RETURN
@@ -611,7 +611,7 @@
           (SETQ |k| (+ |k| 1))))
        0)
       |sum|))))
- 
+
 ; r_psi(n,x) ==
 ;         if x<=0.0
 ;         then
@@ -632,7 +632,7 @@
 ;                 - rPsiW(n,x)
 ;         else
 ;                 r_gamma(float(n+1))*rPsiW(n,x)*(-1)^MOD(n+1,2)
- 
+
 (DEFUN |r_psi| (|n| |x|)
   (PROG (|m| |sign| |skipit|)
     (RETURN
@@ -653,7 +653,7 @@
       (#1#
        (* (* (|r_gamma| (|float| (+ |n| 1))) (|rPsiW| |n| |x|))
           (EXPT (- 1) (MOD (+ |n| 1) 2))))))))
- 
+
 ; rPsiW(n,x) ==
 ;         if (x <=0 or n < 0)
 ;         then
@@ -682,7 +682,7 @@
 ;                 return PsiAsymptotic(n,x)
 ; ---ordinary case -- use backwards recursion
 ;         PsiBack(n,x,xmin)
- 
+
 (DEFUN |rPsiW| (|n| |x|)
   (PROG (|nd| |alpha| |beta| |xmin| |a| |c| |fln| |bign|)
     (RETURN
@@ -713,7 +713,7 @@
           (RETURN (|PsiAsymptoticOrder| |n| |x| |bign|))))))
       (COND ((NOT (< |x| |xmin|)) (RETURN (|PsiAsymptotic| |n| |x|))))
       (|PsiBack| |n| |x| |xmin|)))))
- 
+
 ; PsiBack(n,x,xmin) ==
 ;         xintpart := PsiIntpart(x)
 ;         x0 := x-xintpart                ---frac part of x
@@ -722,7 +722,7 @@
 ; --- Why not decrement from x?   See Amos p. 498
 ;                 result := result + 1.0/((x0 + float(k))^(n+1))
 ;         result
- 
+
 (DEFUN |PsiBack| (|n| |x| |xmin|)
   (PROG (|xintpart| |x0| |result|)
     (RETURN
@@ -743,7 +743,7 @@
           (SETQ |k| (+ |k| |bfVar#8|))))
        (- 1) |xmin|)
       |result|))))
- 
+
 ; PsiIntpart(x) ==
 ;         if x<0
 ;         then
@@ -751,7 +751,7 @@
 ;         else
 ;                 result := FLOOR(x)
 ;         return result
- 
+
 (DEFUN |PsiIntpart| (|x|)
   (PROG (|result|)
     (RETURN
@@ -759,7 +759,7 @@
       (COND ((MINUSP |x|) (SETQ |result| (- (|PsiInpart| (- |x|)))))
             ('T (SETQ |result| (FLOOR |x|))))
       (RETURN |result|)))))
- 
+
 ; cotdiffeval(n,z,skipit) ==
 ; ---skip=1 if arg z is known to be an exact multiple of Pi/2
 ;         a := MAKE_-ARRAY(n+2)
@@ -800,7 +800,7 @@
 ;                         return AREF(a,0)
 ;         else
 ;                 return s
- 
+
 (DEFUN |cotdiffeval| (|n| |z| |skipit|)
   (PROG (|a| |m| |t1| |t2| |v| |sq| |s|)
     (RETURN
@@ -857,7 +857,7 @@
        ((EQL |skipit| 1)
         (COND ((EQL |m| 0) (RETURN 0)) (#1# (RETURN (AREF |a| 0)))))
        (#1# (RETURN |s|)))))))
- 
+
 ; cPsi(n,z) ==
 ;         x := REALPART(z)
 ;         y := IMAGPART(z)
@@ -883,7 +883,7 @@
 ;                 for k in 0..(m-1) repeat
 ;                         result := result + 1.0/((z + float(k))^(n+1))
 ;                 return PsiXotic(n,result+PsiAsymptotic(n,z+m))
- 
+
 (DEFUN |cPsi| (|n| |z|)
   (PROG (|x| |y| |conjresult| |nterms| |bound| |m| |result|)
     (RETURN
@@ -920,16 +920,16 @@
          (- |m| 1) 0)
         (RETURN
          (|PsiXotic| |n| (+ |result| (|PsiAsymptotic| |n| (+ |z| |m|)))))))))))
- 
+
 ; PsiXotic(n,result) ==
 ;         r_gamma(float(n+1))*(-1)^MOD(n+1,2)*result
- 
+
 (DEFUN |PsiXotic| (|n| |result|)
   (PROG ()
     (RETURN
      (* (* (|r_gamma| (|float| (+ |n| 1))) (EXPT (- 1) (MOD (+ |n| 1) 2)))
         |result|))))
- 
+
 ; chebf01 (c,z) ==
 ; --- w scale factor so that 0<z/w<1
 ; --- n    n+2 coefficients will be produced stored in an array
@@ -983,7 +983,7 @@
 ;                 b := temp
 ;                 temp := -cc + AREF(arr,i)
 ;         temp
- 
+
 (DEFUN |chebf01| (|c| |z|)
   (PROG (|n| |w| |four| |start| |n1| |n2| |a3| |a2| |a1| |z1| |ncount| |arr|
          |x1| |c1| |divfac| |rho| |sum| |p| |b| |temp| |cc|)
@@ -1060,7 +1060,7 @@
           (SETQ |i| (+ |i| |bfVar#13|))))
        (- 1) (+ |n| 1))
       |temp|))))
- 
+
 ; chebf01coefmake (c,w,n) ==
 ; --- arr will be used to store the Cheb. series coefficients
 ;         four:= 4.0
@@ -1098,7 +1098,7 @@
 ;                 SETF(AREF(arr,l), AREF(arr,l)/rho)
 ;         sum := sum/rho
 ;         return([sum,arr])
- 
+
 (DEFUN |chebf01coefmake| (|c| |w| |n|)
   (PROG (|four| |start| |n1| |n2| |a3| |a2| |a1| |z1| |ncount| |arr| |x1| |c1|
          |divfac| |rho| |sum| |p|)
@@ -1160,19 +1160,19 @@
        0)
       (SETQ |sum| (/ |sum| |rho|))
       (RETURN (LIST |sum| |arr|))))))
- 
+
 ; chebstarevalarr(coefarr,x,n) ==          -- evaluation of sum(C(n)*T*(n,x))
-; 
+;
 ;         b := 0
 ;         temp := 0
 ;         y := 2*(2*x-1)
-; 
+;
 ;         for i in (n+1)..0 by -1 repeat
 ;                 c := b
 ;                 b := temp
 ;                 temp := y*b -c + AREF(coefarr,i)
 ;         temp - y*b/2
- 
+
 (DEFUN |chebstarevalarr| (|coefarr| |x| |n|)
   (PROG (|b| |temp| |y| |c|)
     (RETURN
@@ -1192,7 +1192,7 @@
           (SETQ |i| (+ |i| |bfVar#15|))))
        (- 1) (+ |n| 1))
       (- |temp| (/ (* |y| |b|) 2))))))
- 
+
 ; BesselJ(v,z) ==
 ; ---Ad hoc boundaries for approximation
 ;         B1:= 10
@@ -1230,7 +1230,7 @@
 ;                  chebstarevalarr(arr,arg/w,n)/cgamma(vp1)*EXPT(z/2.0,v)
 ;         true => BesselJRecur(v,z)
 ;         FloatError('"BesselJ not implemented for ~S", [v,z])
- 
+
 (DEFUN |BesselJ| (|v| |z|)
   (PROG (B1 B2 |n| |rv| |rz| |arg| |w| |vp1| |LETTMP#1| |sum| |arr|)
     (RETURN
@@ -1283,7 +1283,7 @@
           (#1#
            (|FloatError| "BesselJ not implemented for ~S"
             (LIST |v| |z|)))))))))))
- 
+
 ; BesselJRecur(v,z) ==
 ;         -- boost order
 ;         --Numerical.Recipes. suggest so:=v+sqrt(n.s.f.^2*v)
@@ -1298,7 +1298,7 @@
 ;         for i in m-3 .. 0 by -1 repeat
 ;           SETF(AREF(w,i), 2.0 * (v+i+1.0) * AREF(w,i+1) /z -AREF(w,i+2))
 ;         AREF(w,0)
- 
+
 (DEFUN |BesselJRecur| (|v| |z|)
   (PROG (|so| |m| |w|)
     (RETURN
@@ -1327,7 +1327,7 @@
           (SETQ |i| (+ |i| |bfVar#16|))))
        (- 1) (- |m| 3))
       (AREF |w| 0)))))
- 
+
 ; BesselI(v,z) ==
 ;         B1 := 15.0
 ;         B2 := 10.0
@@ -1352,7 +1352,7 @@
 ;                         chebterms := 50
 ;                         besselIcheb(z,v,chebterms)
 ;         FloatError('"BesselI not implemented for ~S",[v,z])
- 
+
 (DEFUN |BesselI| (|v| |z|)
   (PROG (B1 B2 |chebterms|)
     (RETURN
@@ -1375,14 +1375,14 @@
        ((< (REALPART |v|) 0.0)
         (PROGN (SETQ |chebterms| 50) (|besselIcheb| |z| |v| |chebterms|)))
        (#1# (|FloatError| "BesselI not implemented for ~S" (LIST |v| |z|))))))))
- 
+
 ; besselIcheb(z,v,n) ==
 ;         arg := (z*z)/4.0
 ;         w := 2.0*arg;
 ;         vp1 := v+1.0;
 ;         [sum,arr] := chebf01coefmake(vp1,w,n)
 ;         result := chebstarevalarr(arr,arg/w,n)/cgamma(vp1)*EXPT(z/2.0,v)
- 
+
 (DEFUN |besselIcheb| (|z| |v| |n|)
   (PROG (|arg| |w| |vp1| |LETTMP#1| |sum| |arr| |result|)
     (RETURN
@@ -1397,7 +1397,7 @@
               (*
                (/ (|chebstarevalarr| |arr| (/ |arg| |w|) |n|) (|cgamma| |vp1|))
                (EXPT (/ |z| 2.0) |v|)))))))
- 
+
 ; besselIback(v,z) ==
 ;         ipv := IMAGPART(v)
 ;         rpv := REALPART(v)
@@ -1409,7 +1409,7 @@
 ;         vp1 := tv+1.0;
 ;         result := BesselIBackRecur(v,m,tv,z,'"I",n)
 ;         result := result/cgamma(vp1)*EXPT(z/2.0,tv)
- 
+
 (DEFUN |besselIback| (|v| |z|)
   (PROG (|ipv| |rpv| |lm| |m| |n| |tv| |vp1| |result|)
     (RETURN
@@ -1424,7 +1424,7 @@
       (SETQ |result| (|BesselIBackRecur| |v| |m| |tv| |z| "I" |n|))
       (SETQ |result|
               (* (/ |result| (|cgamma| |vp1|)) (EXPT (/ |z| 2.0) |tv|)))))))
- 
+
 ; BesselIBackRecur(largev,argm,v,z,type,n) ==
 ; --- v + m = largev
 ;         one := 1.0
@@ -1471,7 +1471,7 @@
 ;         for m in 1..m1 repeat
 ;                 SETF(AREF(w,m), AREF(w,m)/pn)
 ;         AREF(w,argm+1)
- 
+
 (DEFUN |BesselIBackRecur| (|largev| |argm| |v| |z| |type| |n|)
   (PROG (|one| |two| |zero| |start| |z2| |m2| |w| |val| |m1| |m| |xm| |ct1|
          |pn| |v1|)
@@ -1543,24 +1543,24 @@
           (SETQ |m| (+ |m| 1))))
        1)
       (AREF |w| (+ |argm| 1))))))
- 
+
 ; BesselasymptA(mu,zsqr,zfth) ==
 ;         (mu -1)/(16.0*zsqr) * (1 + (mu - 13.0)/(8.0*zsqr) + _
 ;                 (mu^2 - 53.0*mu + 412.0)/(48.0*zfth))
- 
+
 (DEFUN |BesselasymptA| (|mu| |zsqr| |zfth|)
   (PROG ()
     (RETURN
      (* (/ (- |mu| 1) (* 16.0 |zsqr|))
         (+ (+ 1 (/ (- |mu| 13.0) (* 8.0 |zsqr|)))
            (/ (+ (- (EXPT |mu| 2) (* 53.0 |mu|)) 412.0) (* 48.0 |zfth|)))))))
- 
+
 ; BesselasymptB(mu,z,zsqr,zfth) ==
 ;         musqr := mu*mu
 ;         z + (mu-1.0)/(8.0*z) *(1.0 + (mu - 25.0)/(48.0*zsqr) + _
 ;                 (musqr - 114.0*mu + 1073.0)/(640.0*zfth) +_
 ;                 (5.0*mu*musqr - 1535.0*musqr + 54703.0*mu - 375733.0)/(128.0*zsqr*zfth))
- 
+
 (DEFUN |BesselasymptB| (|mu| |z| |zsqr| |zfth|)
   (PROG (|musqr|)
     (RETURN
@@ -1577,7 +1577,7 @@
                   (* 54703.0 |mu|))
                375733.0)
               (* (* 128.0 |zsqr|) |zfth|)))))))))
- 
+
 ; BesselJAsympt (v,z) ==
 ;         pi := dfPi
 ;         mu := 4.0*v*v
@@ -1585,7 +1585,7 @@
 ;         zfth := zsqr*zsqr
 ;         SQRT(2.0/(pi*z))*EXP(BesselasymptA(mu,zsqr,zfth))*_
 ;                 COS(BesselasymptB(mu,z,zsqr,zfth) - pi*v/2.0 - pi/4.0)
- 
+
 (DEFUN |BesselJAsympt| (|v| |z|)
   (PROG (|pi| |mu| |zsqr| |zfth|)
     (RETURN
@@ -1600,7 +1600,7 @@
        (COS
         (- (- (|BesselasymptB| |mu| |z| |zsqr| |zfth|) (/ (* |pi| |v|) 2.0))
            (/ |pi| 4.0))))))))
- 
+
 ; BesselIAsympt(v,z,n) ==
 ;         i := COMPLEX(0.0, 1.0)
 ;         if (REALPART(z) = 0.0)
@@ -1620,7 +1620,7 @@
 ;         sqrttwopiz := SQRT(two*dfPi*z)
 ;         EXP(z)/sqrttwopiz*(1.0 + sum1 ) +_
 ;                 EXP(-(float(n)+.5)*dfPi*i)*EXP(-z)/sqrttwopiz*(1.0+ sum2)
- 
+
 (DEFUN |BesselIAsympt| (|v| |z| |n|)
   (PROG (|i| |sum1| |sum2| |fourvsq| |two| |eight| |term1| |sqrttwopiz|)
     (RETURN
@@ -1658,14 +1658,14 @@
            (* (EXP (- (* (* (+ (|float| |n|) 0.5) |dfPi|) |i|))) (EXP (- |z|)))
            |sqrttwopiz|)
           (+ 1.0 |sum2|)))))))
- 
+
 ; BesselJAsymptOrder(v,z) ==
 ;         sechalpha := z/v
 ;         alpha := ACOSH(1.0/sechalpha)
 ;         tanhalpha := SQRT(1.0-(sechalpha*sechalpha))
 ;     --  cothalpha := 1.0/tanhalpha
 ;         ca := 1.0/tanhalpha
-; 
+;
 ;         Pi := dfPi
 ;         ca2:=ca*ca
 ;         ca4:=ca2*ca2
@@ -1684,7 +1684,7 @@
 ;                                                                 ca2)*ca4*ca/(6688604160.0*v*v*v*v*v)+_
 ;         horner([1023694168371875.0,-3685299006138750.0,5104696716244125.0,-3369032068261860.0,1050760774457901.0,-127577298354750.0,2757049477875.0],_
 ;                                                                 ca2)*ca4*ca2/(4815794995200.0*v*v*v*v*v*v))
- 
+
 (DEFUN |BesselJAsymptOrder| (|v| |z|)
   (PROG (|sechalpha| |alpha| |tanhalpha| |ca| |Pi| |ca2| |ca4| |ca8|)
     (RETURN
@@ -1747,7 +1747,7 @@
            |ca4|)
           |ca2|)
          (* (* (* (* (* (* 4.8157949952e12 |v|) |v|) |v|) |v|) |v|) |v|))))))))
- 
+
 ; BesselIAsymptOrder(v,vz) ==
 ;         z := vz/v
 ;         Pi := dfPi
@@ -1772,7 +1772,7 @@
 ;         u5p := (59535.0/262144.0+(-67608983.0/9175040.0+(250881631.0/5898240.0+(-108313205.0/1179648.0+(5391411025.0/63700992.0-5391411025.0/191102976.0*p2)*p2)*p2)*p2)*p2)*p4*p
 ;         hornerresult := horner([u5p,u4p,u3p,u2p,u1p,u0p],vinv)
 ;         EXP(v*eta)/(SQRT(2.0*Pi*v)*SQRT(opzsqroh))*hornerresult
- 
+
 (DEFUN |BesselIAsymptOrder| (|v| |vz|)
   (PROG (|z| |Pi| |vinv| |opzsqroh| |eta| |p| |p2| |p4| |u0p| |u1p| |u2p| |u3p|
          |u4p| |u5p| |hornerresult|)
@@ -1852,7 +1852,7 @@
        (/ (EXP (* |v| |eta|))
           (* (SQRT (* (* 2.0 |Pi|) |v|)) (SQRT |opzsqroh|)))
        |hornerresult|)))))
- 
+
 ; BesselKAsymptOrder (v,vz) ==
 ;         z := vz/v
 ;         vinv := 1.0/v
@@ -1870,7 +1870,7 @@
 ;         u5p := ((59535.0/262144.0+(-67608983.0/9175040.0+(250881631.0/5898240.0+(-108313205.0/1179648.0+(5391411025.0/63700992.0-5391411025.0/191102976.0*p2)*p2)*p2)*p2)*p2)*p4*p)*(-1.0)
 ;         hornerresult := horner([u5p,u4p,u3p,u2p,u1p,u0p],vinv)
 ;         SQRT(dfPi/(2.0*v))*EXP(-v*eta)/(SQRT(opzsqroh))*hornerresult
- 
+
 (DEFUN |BesselKAsymptOrder| (|v| |vz|)
   (PROG (|z| |vinv| |opzsqroh| |eta| |p| |p2| |p4| |u0p| |u1p| |u2p| |u3p|
          |u4p| |u5p| |hornerresult|)
@@ -1946,15 +1946,15 @@
        (/ (* (SQRT (/ |dfPi| (* 2.0 |v|))) (EXP (- (* |v| |eta|))))
           (SQRT |opzsqroh|))
        |hornerresult|)))))
- 
+
 ; s_to_c(c) == COMPLEX(first c, CDR c)
- 
+
 (DEFUN |s_to_c| (|c|) (PROG () (RETURN (COMPLEX (CAR |c|) (CDR |c|)))))
- 
+
 ; c_to_s(c) == CONS(REALPART c, IMAGPART c)
- 
+
 (DEFUN |c_to_s| (|c|) (PROG () (RETURN (CONS (REALPART |c|) (IMAGPART |c|)))))
- 
+
 ; c_to_r(c) ==
 ;     r := REALPART c
 ;     i := IMAGPART c
@@ -1962,7 +1962,7 @@
 ;         r
 ;     else
 ;         error "Result is not real."
- 
+
 (DEFUN |c_to_r| (|c|)
   (PROG (|r| |i|)
     (RETURN
@@ -1972,44 +1972,44 @@
       (COND
        ((OR (ZEROP |i|) (< (ABS |i|) (* 9.999999999999999e-11 (ABS |r|)))) |r|)
        ('T (|error| '|Result is not real.|)))))))
- 
+
 ; c_to_rf(c) == COERCE(c_to_r(c), 'DOUBLE_-FLOAT)
- 
+
 (DEFUN |c_to_rf| (|c|) (PROG () (RETURN (COERCE (|c_to_r| |c|) 'DOUBLE-FLOAT))))
- 
+
 ; c_lngamma(z) ==  c_to_s(lncgamma(s_to_c z))
- 
+
 (DEFUN |c_lngamma| (|z|)
   (PROG () (RETURN (|c_to_s| (|lncgamma| (|s_to_c| |z|))))))
- 
+
 ; c_gamma(z) ==  c_to_s(cgamma (s_to_c z))
- 
+
 (DEFUN |c_gamma| (|z|) (PROG () (RETURN (|c_to_s| (|cgamma| (|s_to_c| |z|))))))
- 
+
 ; c_psi(n, z) == c_to_s(cPsi(n, s_to_c(z)))
- 
+
 (DEFUN |c_psi| (|n| |z|)
   (PROG () (RETURN (|c_to_s| (|cPsi| |n| (|s_to_c| |z|))))))
- 
+
 ; r_besselj(n, x) == c_to_r(BesselJ(n, x))
- 
+
 (DEFUN |r_besselj| (|n| |x|) (PROG () (RETURN (|c_to_r| (|BesselJ| |n| |x|)))))
- 
+
 ; c_besselj(v, z) == c_to_s(BesselJ(s_to_c(v), s_to_c(z)))
- 
+
 (DEFUN |c_besselj| (|v| |z|)
   (PROG () (RETURN (|c_to_s| (|BesselJ| (|s_to_c| |v|) (|s_to_c| |z|))))))
- 
+
 ; r_besseli(n, x) == c_to_r(BesselI(n, x))
- 
+
 (DEFUN |r_besseli| (|n| |x|) (PROG () (RETURN (|c_to_r| (|BesselI| |n| |x|)))))
- 
+
 ; c_besseli(v, z) == c_to_s(BesselI(s_to_c(v), s_to_c(z)))
- 
+
 (DEFUN |c_besseli| (|v| |z|)
   (PROG () (RETURN (|c_to_s| (|BesselI| (|s_to_c| |v|) (|s_to_c| |z|))))))
- 
+
 ; c_hyper0f1(a, z) == c_to_s(chebf01(s_to_c(a), s_to_c(z)))
- 
+
 (DEFUN |c_hyper0f1| (|a| |z|)
   (PROG () (RETURN (|c_to_s| (|chebf01| (|s_to_c| |a|) (|s_to_c| |z|))))))

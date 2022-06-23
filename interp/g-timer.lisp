@@ -1,62 +1,8 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
-; printNamedStatsByProperty(listofnames, property) ==
-;   total := +/[GET(name, property) for [name, :.] in listofnames]
-;   for [name,:.] in listofnames repeat
-;     n := GET(name, property)
-;     strname := STRINGIMAGE name
-;     strval  := STRINGIMAGE n
-;     sayBrightly concat(bright strname,
-;       fillerSpaces(70-#strname-#strval,'"."),bright strval)
-;   sayBrightly bright fillerSpaces(72,'"-")
-;   sayBrightly concat(bright '"Total",
-;     fillerSpaces(65-# STRINGIMAGE total,'"."),bright STRINGIMAGE total)
- 
-(DEFUN |printNamedStatsByProperty| (|listofnames| |property|)
-  (PROG (|name| |total| |n| |strname| |strval|)
-    (RETURN
-     (PROGN
-      (SETQ |total|
-              ((LAMBDA (|bfVar#3| |bfVar#2| |bfVar#1|)
-                 (LOOP
-                  (COND
-                   ((OR (ATOM |bfVar#2|)
-                        (PROGN (SETQ |bfVar#1| (CAR |bfVar#2|)) NIL))
-                    (RETURN |bfVar#3|))
-                   (#1='T
-                    (AND (CONSP |bfVar#1|)
-                         (PROGN (SETQ |name| (CAR |bfVar#1|)) #1#)
-                         (SETQ |bfVar#3|
-                                 (+ |bfVar#3| (GET |name| |property|))))))
-                  (SETQ |bfVar#2| (CDR |bfVar#2|))))
-               0 |listofnames| NIL))
-      ((LAMBDA (|bfVar#5| |bfVar#4|)
-         (LOOP
-          (COND
-           ((OR (ATOM |bfVar#5|) (PROGN (SETQ |bfVar#4| (CAR |bfVar#5|)) NIL))
-            (RETURN NIL))
-           (#1#
-            (AND (CONSP |bfVar#4|) (PROGN (SETQ |name| (CAR |bfVar#4|)) #1#)
-                 (PROGN
-                  (SETQ |n| (GET |name| |property|))
-                  (SETQ |strname| (STRINGIMAGE |name|))
-                  (SETQ |strval| (STRINGIMAGE |n|))
-                  (|sayBrightly|
-                   (|concat| (|bright| |strname|)
-                    (|fillerSpaces|
-                     (- (- 70 (LENGTH |strname|)) (LENGTH |strval|)) ".")
-                    (|bright| |strval|)))))))
-          (SETQ |bfVar#5| (CDR |bfVar#5|))))
-       |listofnames| NIL)
-      (|sayBrightly| (|bright| (|fillerSpaces| 72 "-")))
-      (|sayBrightly|
-       (|concat| (|bright| "Total")
-        (|fillerSpaces| (- 65 (LENGTH (STRINGIMAGE |total|))) ".")
-        (|bright| (STRINGIMAGE |total|))))))))
- 
+
 ; makeLongStatStringByProperty _
 ;  (listofnames, listofclasses, property, classproperty, units, flag) ==
 ;   total := 0
@@ -94,7 +40,7 @@
 ;   total := STRCONC(normalizeStatAndStringify total,'" ", units)
 ;   str = '"" =>  total
 ;   STRCONC(str, '" = ", total)
- 
+
 (DEFUN |makeLongStatStringByProperty|
        (|listofnames| |listofclasses| |property| |classproperty| |units|
         |flag|)
@@ -105,16 +51,16 @@
       (SETQ |total| 0)
       (SETQ |str| "")
       (SETQ |otherStatTotal| (GET '|other| |property|))
-      ((LAMBDA (|bfVar#7| |bfVar#6|)
+      ((LAMBDA (|bfVar#2| |bfVar#1|)
          (LOOP
           (COND
-           ((OR (ATOM |bfVar#7|) (PROGN (SETQ |bfVar#6| (CAR |bfVar#7|)) NIL))
+           ((OR (ATOM |bfVar#2|) (PROGN (SETQ |bfVar#1| (CAR |bfVar#2|)) NIL))
             (RETURN NIL))
            (#1='T
-            (AND (CONSP |bfVar#6|)
+            (AND (CONSP |bfVar#1|)
                  (PROGN
-                  (SETQ |name| (CAR |bfVar#6|))
-                  (SETQ |ISTMP#1| (CDR |bfVar#6|))
+                  (SETQ |name| (CAR |bfVar#1|))
+                  (SETQ |ISTMP#1| (CDR |bfVar#1|))
                   (AND (CONSP |ISTMP#1|)
                        (PROGN
                         (SETQ |class| (CAR |ISTMP#1|))
@@ -136,7 +82,7 @@
                          (SETQ |str|
                                  (|makeStatString| |str| |timestr| |ab|
                                   |flag|))))))))
-          (SETQ |bfVar#7| (CDR |bfVar#7|))))
+          (SETQ |bfVar#2| (CDR |bfVar#2|))))
        |listofnames| NIL)
       (SETQ |otherStatTotal| |otherStatTotal|)
       (PUT '|other| |property| |otherStatTotal|)
@@ -152,17 +98,17 @@
          (+ |otherStatTotal| (GET |cl| |classproperty|)))))
       (COND
        ((NOT (EQ |flag| '|long|)) (SETQ |total| 0) (SETQ |str| "")
-        ((LAMBDA (|bfVar#9| |bfVar#8|)
+        ((LAMBDA (|bfVar#4| |bfVar#3|)
            (LOOP
             (COND
-             ((OR (ATOM |bfVar#9|)
-                  (PROGN (SETQ |bfVar#8| (CAR |bfVar#9|)) NIL))
+             ((OR (ATOM |bfVar#4|)
+                  (PROGN (SETQ |bfVar#3| (CAR |bfVar#4|)) NIL))
               (RETURN NIL))
              (#1#
-              (AND (CONSP |bfVar#8|)
+              (AND (CONSP |bfVar#3|)
                    (PROGN
-                    (SETQ |class| (CAR |bfVar#8|))
-                    (SETQ |ISTMP#1| (CDR |bfVar#8|))
+                    (SETQ |class| (CAR |bfVar#3|))
+                    (SETQ |ISTMP#1| (CDR |bfVar#3|))
                     (AND (CONSP |ISTMP#1|)
                          (PROGN
                           (SETQ |name| (CAR |ISTMP#1|))
@@ -178,12 +124,12 @@
                             (SETQ |str|
                                     (|makeStatString| |str| |timestr| |ab|
                                      |flag|)))))))))
-            (SETQ |bfVar#9| (CDR |bfVar#9|))))
+            (SETQ |bfVar#4| (CDR |bfVar#4|))))
          |listofclasses| NIL)))
       (SETQ |total|
               (STRCONC (|normalizeStatAndStringify| |total|) " " |units|))
       (COND ((EQUAL |str| "") |total|) (#1# (STRCONC |str| " = " |total|)))))))
- 
+
 ; normalizeStatAndStringify t ==
 ;   FLOATP t =>
 ;       t := roundStat t
@@ -196,7 +142,7 @@
 ;       t > 9*K => CONCAT(STRINGIMAGE((t + 512)/K),   '"K")
 ;       STRINGIMAGE t
 ;   STRINGIMAGE t
- 
+
 (DEFUN |normalizeStatAndStringify| (|t|)
   (PROG (K M)
     (RETURN
@@ -214,33 +160,33 @@
          ((< (* 9 K) |t|) (CONCAT (STRINGIMAGE (/ (+ |t| 512) K)) "K"))
          (#1# (STRINGIMAGE |t|)))))
       (#1# (STRINGIMAGE |t|))))))
- 
+
 ; significantStat t ==
 ;    FLOATP t => (t > 0.01)
 ;    INTEGERP  t => (t > 100)
 ;    true
- 
+
 (DEFUN |significantStat| (|t|)
   (PROG ()
     (RETURN
      (COND ((FLOATP |t|) (< 0.01 |t|)) ((INTEGERP |t|) (< 100 |t|)) ('T T)))))
- 
+
 ; roundStat t ==
 ;   not FLOATP t => t
 ;   (TRUNCATE (0.5 + t * 1000.0)) / 1000.0
- 
+
 (DEFUN |roundStat| (|t|)
   (PROG ()
     (RETURN
      (COND ((NULL (FLOATP |t|)) |t|)
            ('T (/ (TRUNCATE (+ 0.5 (* |t| 1000.0))) 1000.0))))))
- 
+
 ; makeStatString(oldstr,time,abb,flag) ==
 ;   time = '"" => oldstr
 ;   opening := (flag = 'long => '"("; '" (")
 ;   oldstr = '"" => STRCONC(time,opening,abb,'")")
 ;   STRCONC(oldstr,'" + ",time,opening,abb,'")")
- 
+
 (DEFUN |makeStatString| (|oldstr| |time| |abb| |flag|)
   (PROG (|opening|)
     (RETURN
@@ -251,16 +197,16 @@
              (COND ((EQUAL |oldstr| "") (STRCONC |time| |opening| |abb| ")"))
                    (#1#
                     (STRCONC |oldstr| " + " |time| |opening| |abb| ")")))))))))
- 
+
 ; peekTimedName() == IFCAR $timedNameStack
- 
-(DEFUN |peekTimedName| #1=() (PROG #1# (RETURN (IFCAR |$timedNameStack|))))
- 
+
+(DEFUN |peekTimedName| () (PROG () (RETURN (IFCAR |$timedNameStack|))))
+
 ; popTimedName() ==
 ;   name := IFCAR $timedNameStack
 ;   $timedNameStack := IFCDR $timedNameStack
 ;   name
- 
+
 (DEFUN |popTimedName| ()
   (PROG (|name|)
     (RETURN
@@ -268,18 +214,18 @@
       (SETQ |name| (IFCAR |$timedNameStack|))
       (SETQ |$timedNameStack| (IFCDR |$timedNameStack|))
       |name|))))
- 
+
 ; pushTimedName name ==
 ;   PUSH(name,$timedNameStack)
- 
+
 (DEFUN |pushTimedName| (|name|)
   (PROG () (RETURN (PUSH |name| |$timedNameStack|))))
- 
+
 ; startTimingProcess name ==
 ;   updateTimedName peekTimedName()
 ;   pushTimedName name
 ;   if EQ(name, 'load) then          statRecordLoadEvent()
- 
+
 (DEFUN |startTimingProcess| (|name|)
   (PROG ()
     (RETURN
@@ -287,13 +233,13 @@
       (|updateTimedName| (|peekTimedName|))
       (|pushTimedName| |name|)
       (COND ((EQ |name| '|load|) (|statRecordLoadEvent|)))))))
- 
+
 ; stopTimingProcess name ==
 ;   (name ~= peekTimedName()) and null $InteractiveMode =>
 ;     keyedSystemError("S2GL0015",[name,peekTimedName()])
 ;   updateTimedName peekTimedName()
 ;   popTimedName()
- 
+
 (DEFUN |stopTimingProcess| (|name|)
   (PROG ()
     (RETURN
@@ -301,27 +247,27 @@
       ((AND (NOT (EQUAL |name| (|peekTimedName|))) (NULL |$InteractiveMode|))
        (|keyedSystemError| 'S2GL0015 (LIST |name| (|peekTimedName|))))
       ('T (PROGN (|updateTimedName| (|peekTimedName|)) (|popTimedName|)))))))
- 
+
 ; DEFPARAMETER($oldElapsedSpace, 0)
- 
+
 (DEFPARAMETER |$oldElapsedSpace| 0)
- 
+
 ; DEFPARAMETER($oldElapsedGCTime, 0.0)
- 
+
 (DEFPARAMETER |$oldElapsedGCTime| 0.0)
- 
+
 ; DEFPARAMETER($oldElapsedTime, 0.0)
- 
+
 (DEFPARAMETER |$oldElapsedTime| 0.0)
- 
+
 ; DEFPARAMETER($gcTimeTotal, 0.0)
- 
+
 (DEFPARAMETER |$gcTimeTotal| 0.0)
- 
+
 ; DEFPARAMETER($timedNameStack, '(other))
- 
+
 (DEFPARAMETER |$timedNameStack| '(|other|))
- 
+
 ; DEFPARAMETER($interpreterTimedNames, '(
 ; -- name         class abbrev
 ;   (algebra        2 .   B) _
@@ -339,17 +285,16 @@
 ;   (querycoerce    1 .   Q) _
 ;   (other          3 .   O) _
 ;   (diskread       3 .   K) _
-;   (print          3 .   P) _
 ;   (resolve        1 .   R) _
 ;   ))
- 
+
 (DEFPARAMETER |$interpreterTimedNames|
   '((|algebra| 2 . B) (|analysis| 1 . A) (|coercion| 1 . C)
     (|compilation| 3 . T) (|debug| 3 . D) (|evaluation| 2 . E) (|gc| 4 . G)
     (|history| 3 . H) (|instantiation| 3 . I) (|load| 3 . L) (|modemaps| 1 . M)
     (|optimization| 3 . Z) (|querycoerce| 1 . Q) (|other| 3 . O)
-    (|diskread| 3 . K) (|print| 3 . P) (|resolve| 1 . R)))
- 
+    (|diskread| 3 . K) (|resolve| 1 . R)))
+
 ; DEFPARAMETER($interpreterTimedClasses, '(
 ; -- number class name    short name
 ;   ( 1    interpreter     .  IN) _
@@ -357,11 +302,11 @@
 ;   ( 3    other           .  OT) _
 ;   ( 4    reclaim         .  GC) _
 ;   ))
- 
+
 (DEFPARAMETER |$interpreterTimedClasses|
   '((1 |interpreter| . IN) (2 |evaluation| . EV) (3 |other| . OT)
     (4 |reclaim| . GC)))
- 
+
 ; initializeTimedNames(listofnames,listofclasses) ==
 ;   for [name,:.] in listofnames repeat
 ;     PUT(name, 'TimeTotal, 0.0)
@@ -374,51 +319,49 @@
 ;   PUT('gc, 'TimeTotal, 0.0)
 ;   PUT('gc, 'SpaceTotal,  0)
 ;   NIL
- 
+
 (DEFUN |initializeTimedNames| (|listofnames| |listofclasses|)
   (PROG (|name| |ISTMP#1|)
     (RETURN
      (PROGN
-      ((LAMBDA (|bfVar#11| |bfVar#10|)
+      ((LAMBDA (|bfVar#6| |bfVar#5|)
          (LOOP
           (COND
-           ((OR (ATOM |bfVar#11|)
-                (PROGN (SETQ |bfVar#10| (CAR |bfVar#11|)) NIL))
+           ((OR (ATOM |bfVar#6|) (PROGN (SETQ |bfVar#5| (CAR |bfVar#6|)) NIL))
             (RETURN NIL))
            (#1='T
-            (AND (CONSP |bfVar#10|) (PROGN (SETQ |name| (CAR |bfVar#10|)) #1#)
+            (AND (CONSP |bfVar#5|) (PROGN (SETQ |name| (CAR |bfVar#5|)) #1#)
                  (PROGN
                   (PUT |name| '|TimeTotal| 0.0)
                   (PUT |name| '|SpaceTotal| 0)))))
-          (SETQ |bfVar#11| (CDR |bfVar#11|))))
+          (SETQ |bfVar#6| (CDR |bfVar#6|))))
        |listofnames| NIL)
-      ((LAMBDA (|bfVar#13| |bfVar#12|)
+      ((LAMBDA (|bfVar#8| |bfVar#7|)
          (LOOP
           (COND
-           ((OR (ATOM |bfVar#13|)
-                (PROGN (SETQ |bfVar#12| (CAR |bfVar#13|)) NIL))
+           ((OR (ATOM |bfVar#8|) (PROGN (SETQ |bfVar#7| (CAR |bfVar#8|)) NIL))
             (RETURN NIL))
            (#1#
-            (AND (CONSP |bfVar#12|)
+            (AND (CONSP |bfVar#7|)
                  (PROGN
-                  (SETQ |ISTMP#1| (CDR |bfVar#12|))
+                  (SETQ |ISTMP#1| (CDR |bfVar#7|))
                   (AND (CONSP |ISTMP#1|)
                        (PROGN (SETQ |name| (CAR |ISTMP#1|)) #1#)))
                  (PROGN
                   (PUT |name| '|ClassTimeTotal| 0.0)
                   (PUT |name| '|ClassSpaceTotal| 0)))))
-          (SETQ |bfVar#13| (CDR |bfVar#13|))))
+          (SETQ |bfVar#8| (CDR |bfVar#8|))))
        |listofclasses| NIL)
       (SETQ |$timedNameStack| '(|other|))
       (|computeElapsedTime|)
       (PUT '|gc| '|TimeTotal| 0.0)
       (PUT '|gc| '|SpaceTotal| 0)
       NIL))))
- 
+
 ; updateTimedName name ==
 ;   count := (GET(name, 'TimeTotal) or 0) + computeElapsedTime()
 ;   PUT(name, 'TimeTotal, count)
- 
+
 (DEFUN |updateTimedName| (|name|)
   (PROG (|count|)
     (RETURN
@@ -426,48 +369,33 @@
       (SETQ |count|
               (+ (OR (GET |name| '|TimeTotal|) 0) (|computeElapsedTime|)))
       (PUT |name| '|TimeTotal| |count|)))))
- 
-; printNamedStats listofnames ==
-;   printNamedStatsByProperty(listofnames, 'TimeTotal)
-;   sayBrightly '" "
-;   sayBrightly '"Space (in bytes):"
-;   printNamedStatsByProperty(listofnames, 'SpaceTotal)
- 
-(DEFUN |printNamedStats| (|listofnames|)
-  (PROG ()
-    (RETURN
-     (PROGN
-      (|printNamedStatsByProperty| |listofnames| '|TimeTotal|)
-      (|sayBrightly| " ")
-      (|sayBrightly| "Space (in bytes):")
-      (|printNamedStatsByProperty| |listofnames| '|SpaceTotal|)))))
- 
+
 ; makeLongTimeString(listofnames,listofclasses) ==
 ;   makeLongStatStringByProperty(listofnames, listofclasses,  _
 ;                                'TimeTotal, 'ClassTimeTotal, _
 ;                                '"sec", $printTimeIfTrue)
- 
+
 (DEFUN |makeLongTimeString| (|listofnames| |listofclasses|)
   (PROG ()
     (RETURN
      (|makeLongStatStringByProperty| |listofnames| |listofclasses| '|TimeTotal|
       '|ClassTimeTotal| "sec" |$printTimeIfTrue|))))
- 
+
 ; makeLongSpaceString(listofnames,listofclasses) ==
 ;   makeLongStatStringByProperty(listofnames, listofclasses,    _
 ;                                'SpaceTotal, 'ClassSpaceTotal, _
 ;                                '"bytes", $printStorageIfTrue)
- 
+
 (DEFUN |makeLongSpaceString| (|listofnames| |listofclasses|)
   (PROG ()
     (RETURN
      (|makeLongStatStringByProperty| |listofnames| |listofclasses|
       '|SpaceTotal| '|ClassSpaceTotal| "bytes" |$printStorageIfTrue|))))
- 
+
 ; DEFPARAMETER($inverseTimerTicksPerSecond, 1.0/$timerTicksPerSecond)
- 
+
 (DEFPARAMETER |$inverseTimerTicksPerSecond| (/ 1.0 |$timerTicksPerSecond|))
- 
+
 ; computeElapsedTime() ==
 ;   -- in total time lists, CAR is VIRTCPU and CADR is TOTCPU
 ;   currentTime:= elapsedUserTime()
@@ -480,7 +408,7 @@
 ;   $oldElapsedTime := currentTime
 ;   $oldElapsedGCTime := currentGCTime
 ;   elapsedSeconds
- 
+
 (DEFUN |computeElapsedTime| ()
   (PROG (|elapsedSeconds| |gcDelta| |currentGCTime| |currentTime|)
     (RETURN
@@ -497,13 +425,13 @@
       (SETQ |$oldElapsedTime| |currentTime|)
       (SETQ |$oldElapsedGCTime| |currentGCTime|)
       |elapsedSeconds|))))
- 
+
 ; computeElapsedSpace() ==
 ;   currentElapsedSpace := HEAPELAPSED()
 ;   elapsedBytes := currentElapsedSpace - $oldElapsedSpace
 ;   $oldElapsedSpace := currentElapsedSpace
 ;   elapsedBytes
- 
+
 (DEFUN |computeElapsedSpace| ()
   (PROG (|elapsedBytes| |currentElapsedSpace|)
     (RETURN
@@ -512,13 +440,13 @@
       (SETQ |elapsedBytes| (- |currentElapsedSpace| |$oldElapsedSpace|))
       (SETQ |$oldElapsedSpace| |currentElapsedSpace|)
       |elapsedBytes|))))
- 
+
 ; timedAlgebraEvaluation(code) ==
 ;   startTimingProcess 'algebra
 ;   r := eval code
 ;   stopTimingProcess 'algebra
 ;   r
- 
+
 (DEFUN |timedAlgebraEvaluation| (|code|)
   (PROG (|r|)
     (RETURN
@@ -527,7 +455,7 @@
       (SETQ |r| (|eval| |code|))
       (|stopTimingProcess| '|algebra|)
       |r|))))
- 
+
 ; timedOptimization(code) ==
 ;   startTimingProcess 'optimization
 ;   r := lispize code
@@ -536,7 +464,7 @@
 ;     pp r
 ;   stopTimingProcess 'optimization
 ;   r
- 
+
 (DEFUN |timedOptimization| (|code|)
   (PROG (|r|)
     (RETURN
@@ -548,13 +476,13 @@
         (|sayBrightlyI| (|bright| "Optimized LISP code:")) (|pp| |r|)))
       (|stopTimingProcess| '|optimization|)
       |r|))))
- 
+
 ; timedEVALFUN(code) ==
 ;   startTimingProcess 'evaluation
 ;   r := timedEvaluate code
 ;   stopTimingProcess 'evaluation
 ;   r
- 
+
 (DEFUN |timedEVALFUN| (|code|)
   (PROG (|r|)
     (RETURN
@@ -563,45 +491,45 @@
       (SETQ |r| (|timedEvaluate| |code|))
       (|stopTimingProcess| '|evaluation|)
       |r|))))
- 
+
 ; timedEvaluate code ==
 ;   code is ["LIST",:a] and #a > 200 =>
 ;     "append"/[eval ["LIST",:x] for x in splitIntoBlocksOf200 a]
 ;   eval code
- 
+
 (DEFUN |timedEvaluate| (|code|)
   (PROG (|a|)
     (RETURN
      (COND
       ((AND (CONSP |code|) (EQ (CAR |code|) 'LIST)
             (PROGN (SETQ |a| (CDR |code|)) #1='T) (< 200 (LENGTH |a|)))
-       ((LAMBDA (|bfVar#15| |bfVar#14| |x|)
+       ((LAMBDA (|bfVar#10| |bfVar#9| |x|)
           (LOOP
            (COND
-            ((OR (ATOM |bfVar#14|) (PROGN (SETQ |x| (CAR |bfVar#14|)) NIL))
-             (RETURN |bfVar#15|))
+            ((OR (ATOM |bfVar#9|) (PROGN (SETQ |x| (CAR |bfVar#9|)) NIL))
+             (RETURN |bfVar#10|))
             (#1#
-             (SETQ |bfVar#15| (APPEND |bfVar#15| (|eval| (CONS 'LIST |x|))))))
-           (SETQ |bfVar#14| (CDR |bfVar#14|))))
+             (SETQ |bfVar#10| (APPEND |bfVar#10| (|eval| (CONS 'LIST |x|))))))
+           (SETQ |bfVar#9| (CDR |bfVar#9|))))
         NIL (|splitIntoBlocksOf200| |a|) NIL))
       (#1# (|eval| |code|))))))
- 
+
 ; displayHeapStatsIfWanted() ==
 ;    $printStorageIfTrue => sayBrightly OLDHEAPSTATS()
- 
-(DEFUN |displayHeapStatsIfWanted| #1=()
-  (PROG #1#
+
+(DEFUN |displayHeapStatsIfWanted| ()
+  (PROG ()
     (RETURN
      (COND (|$printStorageIfTrue| (IDENTITY (|sayBrightly| (OLDHEAPSTATS))))))))
- 
+
 ; statRecordInstantiationEvent() == nil
- 
-(DEFUN |statRecordInstantiationEvent| #1=() (PROG #1# (RETURN NIL)))
- 
+
+(DEFUN |statRecordInstantiationEvent| () (PROG () (RETURN NIL)))
+
 ; statRecordLoadEvent()          == nil
- 
-(DEFUN |statRecordLoadEvent| #1=() (PROG #1# (RETURN NIL)))
- 
+
+(DEFUN |statRecordLoadEvent| () (PROG () (RETURN NIL)))
+
 ; statisticsSummary()  == '"No statistics available."
- 
-(DEFUN |statisticsSummary| #1=() (PROG #1# (RETURN "No statistics available.")))
+
+(DEFUN |statisticsSummary| () (PROG () (RETURN "No statistics available.")))

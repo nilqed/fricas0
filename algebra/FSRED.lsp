@@ -1,24 +1,21 @@
 
-(SDEFUN |FSRED;newReduc;IV;1| ((|n| |Integer|) ($ |Void|))
+(SDEFUN |FSRED;newReduc;IV;1| ((|n| (|Integer|)) ($ (|Void|)))
         (SPROG ((#1=#:G708 NIL) (|k| NIL))
                (SEQ (SETELT $ 12 |n|)
                     (EXIT
-                     (SEQ (LETT |k| NIL . #2=(|FSRED;newReduc;IV;1|))
-                          (LETT #1# (SPADCALL (QREFELT $ 11) (QREFELT $ 14))
-                                . #2#)
+                     (SEQ (LETT |k| NIL)
+                          (LETT #1# (SPADCALL (QREFELT $ 11) (QREFELT $ 14)))
                           G190
                           (COND
-                           ((OR (ATOM #1#)
-                                (PROGN (LETT |k| (CAR #1#) . #2#) NIL))
+                           ((OR (ATOM #1#) (PROGN (LETT |k| (CAR #1#)) NIL))
                             (GO G191)))
                           (SEQ
                            (EXIT (SPADCALL |k| (QREFELT $ 11) (QREFELT $ 17))))
-                          (LETT #1# (CDR #1#) . #2#) (GO G190) G191
-                          (EXIT NIL)))))) 
+                          (LETT #1# (CDR #1#)) (GO G190) G191 (EXIT NIL)))))) 
 
 (SDEFUN |FSRED;bringDown;FKSup;2|
-        ((|f| F) (|k| |Kernel| F)
-         ($ |SparseUnivariatePolynomial| (|Fraction| (|Integer|))))
+        ((|f| (F)) (|k| (|Kernel| F))
+         ($ (|SparseUnivariatePolynomial| (|Fraction| (|Integer|)))))
         (SPROG
          ((|bc|
            (|Union|
@@ -30,54 +27,46 @@
             "failed"))
           (|m| (|SparseUnivariatePolynomial| (|Fraction| (|Integer|))))
           (|ff| (|Fraction| (|SparseUnivariatePolynomial| F))))
-         (SEQ
-          (LETT |ff| (SPADCALL |f| |k| (QREFELT $ 23))
-                . #1=(|FSRED;bringDown;FKSup;2|))
-          (LETT |bc|
-                (SPADCALL
-                 (SPADCALL (ELT $ 25) (SPADCALL |ff| (QREFELT $ 28))
-                           (QREFELT $ 32))
-                 (LETT |m|
-                       (SPADCALL (ELT $ 25) (SPADCALL |k| (QREFELT $ 34))
-                                 (QREFELT $ 32))
-                       . #1#)
-                 (|spadConstant| $ 35) (QREFELT $ 38))
-                . #1#)
-          (EXIT
-           (COND ((QEQCAR |bc| 1) (|error| "denominator is 0"))
-                 ('T
-                  (SPADCALL
-                   (SPADCALL
-                    (SPADCALL (ELT $ 25) (SPADCALL |ff| (QREFELT $ 39))
-                              (QREFELT $ 32))
-                    (QCAR (QCDR |bc|)) (QREFELT $ 40))
-                   |m| (QREFELT $ 41)))))))) 
+         (SEQ (LETT |ff| (SPADCALL |f| |k| (QREFELT $ 23)))
+              (LETT |bc|
+                    (SPADCALL
+                     (SPADCALL (ELT $ 25) (SPADCALL |ff| (QREFELT $ 28))
+                               (QREFELT $ 32))
+                     (LETT |m|
+                           (SPADCALL (ELT $ 25) (SPADCALL |k| (QREFELT $ 34))
+                                     (QREFELT $ 32)))
+                     (|spadConstant| $ 35) (QREFELT $ 38)))
+              (EXIT
+               (COND ((QEQCAR |bc| 1) (|error| "denominator is 0"))
+                     ('T
+                      (SPADCALL
+                       (SPADCALL
+                        (SPADCALL (ELT $ 25) (SPADCALL |ff| (QREFELT $ 39))
+                                  (QREFELT $ 32))
+                        (QCAR (QCDR |bc|)) (QREFELT $ 40))
+                       |m| (QREFELT $ 41)))))))) 
 
-(SDEFUN |FSRED;bringDown;FF;3| ((|f| F) ($ |Fraction| (|Integer|)))
+(SDEFUN |FSRED;bringDown;FF;3| ((|f| (F)) ($ (|Fraction| (|Integer|))))
         (SPROG
-         ((#1=#:G730 NIL) (|k| NIL) (#2=#:G729 NIL)
+         ((#1=#:G731 NIL) (|k| NIL) (#2=#:G730 NIL)
           (|lk| (|List| (|Kernel| F))))
          (SEQ
           (SPADCALL
-           (SPADCALL |f|
-                     (LETT |lk| (SPADCALL |f| (QREFELT $ 44))
-                           . #3=(|FSRED;bringDown;FF;3|))
+           (SPADCALL |f| (LETT |lk| (SPADCALL |f| (QREFELT $ 44)))
                      (PROGN
-                      (LETT #2# NIL . #3#)
-                      (SEQ (LETT |k| NIL . #3#) (LETT #1# |lk| . #3#) G190
+                      (LETT #2# NIL)
+                      (SEQ (LETT |k| NIL) (LETT #1# |lk|) G190
                            (COND
-                            ((OR (ATOM #1#)
-                                 (PROGN (LETT |k| (CAR #1#) . #3#) NIL))
+                            ((OR (ATOM #1#) (PROGN (LETT |k| (CAR #1#)) NIL))
                              (GO G191)))
                            (SEQ
-                            (EXIT
-                             (LETT #2# (CONS (|FSRED;K2Z| |k| $) #2#) . #3#)))
-                           (LETT #1# (CDR #1#) . #3#) (GO G190) G191
+                            (EXIT (LETT #2# (CONS (|FSRED;K2Z| |k| $) #2#))))
+                           (LETT #1# (CDR #1#)) (GO G190) G191
                            (EXIT (NREVERSE #2#))))
                      (QREFELT $ 46))
            (QREFELT $ 47))))) 
 
-(SDEFUN |FSRED;K2Z| ((|k| |Kernel| F) ($ F))
+(SDEFUN |FSRED;K2Z| ((|k| (|Kernel| F)) ($ (F)))
         (SPROG ((|u| (|Union| (|Integer|) "failed")))
                (SEQ
                 (COND
@@ -85,36 +74,33 @@
                             (QREFELT $ 52))
                   (|error| "Cannot reduce constant field"))
                  (#1='T
-                  (SEQ
-                   (LETT |u| (SPADCALL |k| (QREFELT $ 11) (QREFELT $ 53))
-                         |FSRED;K2Z|)
-                   (EXIT
-                    (COND
-                     ((QEQCAR |u| 1)
-                      (SPADCALL
-                       (SPADCALL (QREFELT $ 11) |k| (RANDOM (QREFELT $ 12))
-                                 (QREFELT $ 54))
-                       (QREFELT $ 55)))
-                     (#1# (SPADCALL (QCDR |u|) (QREFELT $ 55))))))))))) 
+                  (SEQ (LETT |u| (SPADCALL |k| (QREFELT $ 11) (QREFELT $ 53)))
+                       (EXIT
+                        (COND
+                         ((QEQCAR |u| 1)
+                          (SPADCALL
+                           (SPADCALL (QREFELT $ 11) |k| (RANDOM (QREFELT $ 12))
+                                     (QREFELT $ 54))
+                           (QREFELT $ 55)))
+                         (#1# (SPADCALL (QCDR |u|) (QREFELT $ 55))))))))))) 
 
 (DECLAIM (NOTINLINE |FunctionSpaceReduce;|)) 
 
-(DEFUN |FunctionSpaceReduce| (&REST #1=#:G737)
+(DEFUN |FunctionSpaceReduce| (&REST #1=#:G738)
   (SPROG NIL
-         (PROG (#2=#:G738)
+         (PROG (#2=#:G739)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|FunctionSpaceReduce|)
-                                               '|domainEqualList|)
-                    . #3=(|FunctionSpaceReduce|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |FunctionSpaceReduce;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|FunctionSpaceReduce|)))))))))) 
@@ -122,12 +108,12 @@
 (DEFUN |FunctionSpaceReduce;| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|FunctionSpaceReduce|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|FunctionSpaceReduce| DV$1 DV$2) . #1#)
-          (LETT $ (GETREFV 56) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|FunctionSpaceReduce| DV$1 DV$2))
+          (LETT $ (GETREFV 56))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|FunctionSpaceReduce|
                       (LIST DV$1 DV$2) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -157,20 +143,30 @@
               (|BasicOperator|) (82 . |operator|) (|Boolean|) (|Symbol|)
               (87 . |has?|) (93 . |search|) (99 . |setelt!|) (106 . |coerce|))
            '#(|newReduc| 111 |bringDown| 116) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 55
-                                                 '(0 9 0 10 1 9 13 0 14 2 9 15
-                                                   16 0 17 2 7 21 0 22 23 1 27
-                                                   26 0 28 2 31 29 30 26 32 1 7
-                                                   33 22 34 0 29 0 35 3 29 37 0
-                                                   0 0 38 1 27 26 0 39 2 29 0 0
-                                                   0 40 2 29 0 0 0 41 1 7 43 0
-                                                   44 3 7 0 0 43 45 46 1 7 24 0
-                                                   47 1 16 48 0 49 2 48 50 0 51
-                                                   52 2 9 15 16 0 53 3 9 19 0
-                                                   16 19 54 1 7 0 19 55 1 0 18
-                                                   19 20 1 0 24 7 25 2 0 29 7
-                                                   16 42)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|bringDown| ((|Fraction| (|Integer|)) |#2|))
+                                T)
+                              '((|bringDown|
+                                 ((|SparseUnivariatePolynomial|
+                                   (|Fraction| (|Integer|)))
+                                  |#2| (|Kernel| |#2|)))
+                                T)
+                              '((|newReduc| ((|Void|) (|Integer|))) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 55
+                                            '(0 9 0 10 1 9 13 0 14 2 9 15 16 0
+                                              17 2 7 21 0 22 23 1 27 26 0 28 2
+                                              31 29 30 26 32 1 7 33 22 34 0 29
+                                              0 35 3 29 37 0 0 0 38 1 27 26 0
+                                              39 2 29 0 0 0 40 2 29 0 0 0 41 1
+                                              7 43 0 44 3 7 0 0 43 45 46 1 7 24
+                                              0 47 1 16 48 0 49 2 48 50 0 51 52
+                                              2 9 15 16 0 53 3 9 19 0 16 19 54
+                                              1 7 0 19 55 1 0 18 19 20 1 0 24 7
+                                              25 2 0 29 7 16 42)))))
            '|lookupComplete|)) 

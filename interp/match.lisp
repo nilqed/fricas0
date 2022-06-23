@@ -1,17 +1,17 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; DEFPARAMETER($wildCard, char "*")
- 
+
 (DEFPARAMETER |$wildCard| (|char| '*))
- 
+
 ; maskMatch?(mask,subject) ==
 ;   null mask => true
 ;   if null STRINGP subject then subject := PNAME subject
 ;   or/[match?(pattern,subject) for pattern in mask]
- 
+
 (DEFUN |maskMatch?| (|mask| |subject|)
   (PROG ()
     (RETURN
@@ -32,7 +32,7 @@
                     (COND (|bfVar#2| (RETURN |bfVar#2|))))))
                  (SETQ |bfVar#1| (CDR |bfVar#1|))))
               NIL |mask| NIL)))))))
- 
+
 ; substring?(part, whole, startpos) ==
 ; --This function should be replaced by STRING<
 ;   np := SIZE part
@@ -40,7 +40,7 @@
 ;   np > nw - startpos => false
 ;   and/[CHAR_-EQUAL(ELT(part, ip), ELT(whole, iw))
 ;       for ip in 0..np-1 for iw in startpos.. ]
- 
+
 (DEFUN |substring?| (|part| |whole| |startpos|)
   (PROG (|np| |nw|)
     (RETURN
@@ -61,13 +61,13 @@
                  (SETQ |ip| (+ |ip| 1))
                  (SETQ |iw| (+ |iw| 1))))
               T (- |np| 1) 0 |startpos|)))))))
- 
+
 ; anySubstring?(part,whole,startpos) ==
 ;   np := SIZE part
 ;   nw := SIZE whole
 ;   or/[((k := i) and and/[CHAR_-EQUAL(ELT(part, ip),ELT(whole, iw))
 ;        for ip in 0..np - 1 for iw in i..]) for i in startpos..nw - np] => k
- 
+
 (DEFUN |anySubstring?| (|part| |whole| |startpos|)
   (PROG (|np| |nw| |k|)
     (RETURN
@@ -101,7 +101,7 @@
             (SETQ |i| (+ |i| 1))))
          NIL (- |nw| |np|) |startpos|)
         |k|))))))
- 
+
 ; charPosition(c,t,startpos) ==
 ;   n := SIZE t
 ;   startpos < 0 or startpos > n => n
@@ -110,7 +110,7 @@
 ;     c = ELT(t,i) => return nil
 ;     k := k+1
 ;   k
- 
+
 (DEFUN |charPosition| (|c| |t| |startpos|)
   (PROG (|n| |k|)
     (RETURN
@@ -129,12 +129,12 @@
                   (SETQ |i| (+ |i| 1))))
                (- |n| 1) |startpos|)
               |k|)))))))
- 
+
 ; rightCharPosition(c,t,startpos) == --startpos often equals MAXINDEX t (rightmost)
 ;   k := startpos
 ;   for i in startpos..0 by -1 while c ~= ELT(t,i) repeat (k := k - 1)
 ;   k
- 
+
 (DEFUN |rightCharPosition| (|c| |t| |startpos|)
   (PROG (|k|)
     (RETURN
@@ -150,14 +150,14 @@
           (SETQ |i| (+ |i| |bfVar#10|))))
        (- 1) |startpos|)
       |k|))))
- 
+
 ; stringPosition(s,t,startpos) ==
 ;   n := SIZE t
 ;   if startpos < 0 or startpos > n then error "index out of range"
 ;   if SIZE s = 0 then return startpos -- bug in STRPOS
 ;   r := STRPOS(s,t,startpos,NIL)
 ;   if EQ(r,NIL) then n else r
- 
+
 (DEFUN |stringPosition| (|s| |t| |startpos|)
   (PROG (|n| |r|)
     (RETURN
@@ -169,12 +169,12 @@
       (COND ((EQL (SIZE |s|) 0) (RETURN |startpos|)))
       (SETQ |r| (STRPOS |s| |t| |startpos| NIL))
       (COND ((EQ |r| NIL) |n|) ('T |r|))))))
- 
+
 ; superMatch?(opattern,subject) ==  --subject assumed to be DOWNCASEd
 ;   $wildCard : local := char '_*
 ;   pattern := patternCheck opattern
 ;   logicalMatch?(pattern,subject)
- 
+
 (DEFUN |superMatch?| (|opattern| |subject|)
   (PROG (|$wildCard| |pattern|)
     (DECLARE (SPECIAL |$wildCard|))
@@ -183,7 +183,7 @@
       (SETQ |$wildCard| (|char| '*))
       (SETQ |pattern| (|patternCheck| |opattern|))
       (|logicalMatch?| |pattern| |subject|)))))
- 
+
 ; logicalMatch?(pattern,subject) ==  --subject assumed to be DOWNCASEd
 ;   pattern is [op,:argl] =>
 ;     op = "and" => and/[superMatch?(p,subject) for p in argl]
@@ -191,7 +191,7 @@
 ;     op = "not" =>  not superMatch?(first argl,subject)
 ;     systemError '"unknown pattern form"
 ;   basicMatch?(pattern,subject)
- 
+
 (DEFUN |logicalMatch?| (|pattern| |subject|)
   (PROG (|op| |argl|)
     (RETURN
@@ -229,7 +229,7 @@
         ((EQ |op| '|not|) (NULL (|superMatch?| (CAR |argl|) |subject|)))
         (#1# (|systemError| "unknown pattern form"))))
       (#1# (|basicMatch?| |pattern| |subject|))))))
- 
+
 ; patternCheck pattern == main where
 ;  --checks for escape characters, maybe new $wildCard
 ;   main ==
@@ -273,7 +273,7 @@
 ;     for id in u repeat
 ;       c := char id
 ;       not(or/[p.i = c for i in 0..MAXINDEX(p)]) => return c
- 
+
 (DEFUN |patternCheck| (|pattern|)
   (PROG (|$oldWild| |c| |u|)
     (DECLARE (SPECIAL |$oldWild|))
@@ -379,13 +379,13 @@
               (RETURN |c|))))))
          (SETQ |bfVar#17| (CDR |bfVar#17|))))
       |u| NIL))))
- 
+
 ; match?(pattern,subject) ==  --returns index of first character that matches
 ;   basicMatch?(pattern,DOWNCASE subject)
- 
+
 (DEFUN |match?| (|pattern| |subject|)
   (PROG () (RETURN (|basicMatch?| |pattern| (DOWNCASE |subject|)))))
- 
+
 ; basicMatch?(pattern,target) ==
 ;   n := #pattern
 ;   p := charPosition($wildCard,pattern,0)
@@ -415,7 +415,7 @@
 ;      if not suffix?(s,target) then return false
 ;      if null ans then ans := 1  --pattern is a word preceded by a *
 ;   ans
- 
+
 (DEFUN |basicMatch?| (|pattern| |target|)
   (PROG (|n| |p| |ans| |s| |i| |q| |ltarget| |returnFlag|)
     (RETURN
@@ -464,22 +464,22 @@
                         (COND ((NULL (|suffix?| |s| |target|)) (RETURN NIL)))
                         (COND ((NULL |ans|) (SETQ |ans| 1)))))
                       |ans|))))))))))
- 
+
 ; stringMatches?(pattern, subject) ==
 ;     FIXP basicMatch?(pattern,subject) => true
 ;     false
- 
+
 (DEFUN |stringMatches?| (|pattern| |subject|)
   (PROG ()
     (RETURN (COND ((FIXP (|basicMatch?| |pattern| |subject|)) T) ('T NIL)))))
- 
+
 ; matchSegment?(pattern,subject,k) ==
 ;   matchAnySegment?(pattern,DOWNCASE subject,k,nil)
- 
+
 (DEFUN |matchSegment?| (|pattern| |subject| |k|)
   (PROG ()
     (RETURN (|matchAnySegment?| |pattern| (DOWNCASE |subject|) |k| NIL))))
- 
+
 ; matchAnySegment?(pattern,target,k,nc) ==  --k = start position; nc=#chars or NIL
 ;   n := #pattern
 ;   p := charPosition($wildCard,pattern,0)
@@ -514,7 +514,7 @@
 ;      if not suffix?(s,target) then return false
 ;      if null ans then ans := 1  --pattern is a word preceded by a *
 ;   true
- 
+
 (DEFUN |matchAnySegment?| (|pattern| |target| |k| |nc|)
   (PROG (|n| |p| |m| |ans| |s| |i| |q| |ltarget| |returnFlag|)
     (RETURN
@@ -564,24 +564,24 @@
                    (COND ((NULL (|suffix?| |s| |target|)) (RETURN NIL)))
                    (COND ((NULL |ans|) (SETQ |ans| 1)))))
                  T))))))))))
- 
+
 ; infix?(s,t,x) == #s + #t >= #x and prefix?(s,x) and suffix?(t,x)
- 
+
 (DEFUN |infix?| (|s| |t| |x|)
   (PROG ()
     (RETURN
      (AND (NOT (< (+ (LENGTH |s|) (LENGTH |t|)) (LENGTH |x|)))
           (|prefix?| |s| |x|) (|suffix?| |t| |x|)))))
- 
+
 ; prefix?(s,t) == substring?(s,t,0)
- 
+
 (DEFUN |prefix?| (|s| |t|) (PROG () (RETURN (|substring?| |s| |t| 0))))
- 
+
 ; suffix?(s,t) ==
 ;   m := #s; n := #t
 ;   if m > n then return false
 ;   substring?(s,t,(n-m))
- 
+
 (DEFUN |suffix?| (|s| |t|)
   (PROG (|m| |n|)
     (RETURN

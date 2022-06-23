@@ -1,92 +1,90 @@
 
 (PUT '|PRIMARR;#;$Nni;1| '|SPADreplace| 'QVSIZE) 
 
-(SDEFUN |PRIMARR;#;$Nni;1| ((|x| $) ($ |NonNegativeInteger|)) (QVSIZE |x|)) 
+(SDEFUN |PRIMARR;#;$Nni;1| ((|x| ($)) ($ (|NonNegativeInteger|))) (QVSIZE |x|)) 
 
 (PUT '|PRIMARR;minIndex;$I;2| '|SPADreplace| '(XLAM (|x|) 0)) 
 
-(SDEFUN |PRIMARR;minIndex;$I;2| ((|x| $) ($ |Integer|)) 0) 
+(SDEFUN |PRIMARR;minIndex;$I;2| ((|x| ($)) ($ (|Integer|))) 0) 
 
 (PUT '|PRIMARR;empty;$;3| '|SPADreplace| '(XLAM NIL (MAKE-ARRAY 0))) 
 
-(SDEFUN |PRIMARR;empty;$;3| (($ $)) (MAKE-ARRAY 0)) 
+(SDEFUN |PRIMARR;empty;$;3| (($ ($))) (MAKE-ARRAY 0)) 
 
 (PUT '|PRIMARR;new;NniS$;4| '|SPADreplace| 'MAKEARR1) 
 
-(SDEFUN |PRIMARR;new;NniS$;4| ((|n| |NonNegativeInteger|) (|x| S) ($ $))
+(SDEFUN |PRIMARR;new;NniS$;4| ((|n| (|NonNegativeInteger|)) (|x| (S)) ($ ($)))
         (MAKEARR1 |n| |x|)) 
 
 (PUT '|PRIMARR;qelt;$IS;5| '|SPADreplace| 'QAREF1) 
 
-(SDEFUN |PRIMARR;qelt;$IS;5| ((|x| $) (|i| |Integer|) ($ S)) (QAREF1 |x| |i|)) 
+(SDEFUN |PRIMARR;qelt;$IS;5| ((|x| ($)) (|i| (|Integer|)) ($ (S)))
+        (QAREF1 |x| |i|)) 
 
 (PUT '|PRIMARR;elt;$IS;6| '|SPADreplace| 'QAREF1) 
 
-(SDEFUN |PRIMARR;elt;$IS;6| ((|x| $) (|i| |Integer|) ($ S)) (QAREF1 |x| |i|)) 
+(SDEFUN |PRIMARR;elt;$IS;6| ((|x| ($)) (|i| (|Integer|)) ($ (S)))
+        (QAREF1 |x| |i|)) 
 
 (PUT '|PRIMARR;qsetelt!;$I2S;7| '|SPADreplace| 'QSETAREF1) 
 
-(SDEFUN |PRIMARR;qsetelt!;$I2S;7| ((|x| $) (|i| |Integer|) (|s| S) ($ S))
-        (QSETAREF1 |x| |i| |s|)) 
+(SDEFUN |PRIMARR;qsetelt!;$I2S;7|
+        ((|x| ($)) (|i| (|Integer|)) (|s| (S)) ($ (S))) (QSETAREF1 |x| |i| |s|)) 
 
 (PUT '|PRIMARR;setelt!;$I2S;8| '|SPADreplace| 'QSETAREF1) 
 
-(SDEFUN |PRIMARR;setelt!;$I2S;8| ((|x| $) (|i| |Integer|) (|s| S) ($ S))
-        (QSETAREF1 |x| |i| |s|)) 
+(SDEFUN |PRIMARR;setelt!;$I2S;8|
+        ((|x| ($)) (|i| (|Integer|)) (|s| (S)) ($ (S))) (QSETAREF1 |x| |i| |s|)) 
 
-(SDEFUN |PRIMARR;fill!;$S$;9| ((|x| $) (|s| S) ($ $))
-        (SPROG ((#1=#:G2430 NIL) (|i| NIL))
+(SDEFUN |PRIMARR;fill!;$S$;9| ((|x| ($)) (|s| (S)) ($ ($)))
+        (SPROG ((#1=#:G2565 NIL) (|i| NIL))
                (SEQ
-                (SEQ (LETT |i| 0 . #2=(|PRIMARR;fill!;$S$;9|))
-                     (LETT #1# (QVMAXINDEX |x|) . #2#) G190
+                (SEQ (LETT |i| 0) (LETT #1# (QVMAXINDEX |x|)) G190
                      (COND ((|greater_SI| |i| #1#) (GO G191)))
                      (SEQ (EXIT (QSETAREF1 |x| |i| |s|)))
-                     (LETT |i| (|inc_SI| |i|) . #2#) (GO G190) G191 (EXIT NIL))
+                     (LETT |i| (|inc_SI| |i|)) (GO G190) G191 (EXIT NIL))
                 (EXIT |x|)))) 
 
 (SDEFUN |PRIMARR;hashUpdate!;Hs$Hs;10|
-        ((|s| |HashState|) (|x| $) ($ |HashState|))
-        (SPROG ((#1=#:G2434 NIL) (|i| NIL))
+        ((|s| (|HashState|)) (|x| ($)) ($ (|HashState|)))
+        (SPROG ((#1=#:G2570 NIL) (|i| NIL))
                (SEQ
-                (SEQ (LETT |i| 0 . #2=(|PRIMARR;hashUpdate!;Hs$Hs;10|))
-                     (LETT #1# (QVMAXINDEX |x|) . #2#) G190
+                (SEQ (LETT |i| 0) (LETT #1# (QVMAXINDEX |x|)) G190
                      (COND ((|greater_SI| |i| #1#) (GO G191)))
                      (SEQ
                       (EXIT
-                       (LETT |s| (SPADCALL |s| (QAREF1 |x| |i|) (QREFELT $ 19))
-                             . #2#)))
-                     (LETT |i| (|inc_SI| |i|) . #2#) (GO G190) G191 (EXIT NIL))
+                       (LETT |s|
+                             (SPADCALL |s| (QAREF1 |x| |i|) (QREFELT $ 19)))))
+                     (LETT |i| (|inc_SI| |i|)) (GO G190) G191 (EXIT NIL))
                 (EXIT |s|)))) 
 
 (DECLAIM (NOTINLINE |PrimitiveArray;|)) 
 
-(DEFUN |PrimitiveArray| (#1=#:G2445)
+(DEFUN |PrimitiveArray| (#1=#:G2581)
   (SPROG NIL
-         (PROG (#2=#:G2446)
+         (PROG (#2=#:G2582)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|PrimitiveArray|)
-                                               '|domainEqualList|)
-                    . #3=(|PrimitiveArray|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|PrimitiveArray;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|PrimitiveArray;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|PrimitiveArray|)))))))))) 
 
 (DEFUN |PrimitiveArray;| (|#1|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G2442 NIL) (#2=#:G2443 NIL) (#3=#:G2444 NIL) ($ NIL)
+   ((|pv$| NIL) (#1=#:G2578 NIL) (#2=#:G2579 NIL) (#3=#:G2580 NIL) ($ NIL)
     (|dv$| NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #4=(|PrimitiveArray|))
-    (LETT |dv$| (LIST '|PrimitiveArray| DV$1) . #4#)
-    (LETT $ (GETREFV 38) . #4#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT |dv$| (LIST '|PrimitiveArray| DV$1))
+    (LETT $ (GETREFV 38))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -101,15 +99,13 @@
                                         (|HasCategory| |#1| '(|BasicType|))
                                         (LETT #3#
                                               (|HasCategory| |#1|
-                                                             '(|Comparable|))
-                                              . #4#)
+                                                             '(|Comparable|)))
                                         (OR #3#
                                             (|HasCategory| |#1|
                                                            '(|OrderedSet|)))
                                         (LETT #2#
                                               (|HasCategory| |#1|
-                                                             '(|SetCategory|))
-                                              . #4#)
+                                                             '(|SetCategory|)))
                                         (AND
                                          (|HasCategory| |#1|
                                                         (LIST '|Evalable|
@@ -128,13 +124,11 @@
                                         (LETT #1#
                                               (|HasCategory| |#1|
                                                              '(|CoercibleTo|
-                                                               (|OutputForm|)))
-                                              . #4#)
+                                                               (|OutputForm|))))
                                         (OR #1# #3#
                                             (|HasCategory| |#1|
                                                            '(|OrderedSet|))
-                                            #2#)))
-                    . #4#))
+                                            #2#)))))
     (|haddProp| |$ConstructorCache| '|PrimitiveArray| (LIST DV$1) (CONS 1 $))
     (|stuffDomainSlots| $)
     (QSETREFV $ 6 |#1|)
@@ -198,14 +192,14 @@
               |rightTrim| 100 |reverse!| 106 |reverse| 111 |removeDuplicates|
               116 |remove| 121 |reduce| 133 |qsetelt!| 154 |qelt| 161
               |position| 167 |parts| 186 |new| 191 |more?| 197 |minIndex| 203
-              |min| 208 |merge| 214 |members| 227 |member?| 232 |maxIndex| 238
-              |max| 243 |map!| 249 |map| 255 |less?| 268 |leftTrim| 274 |latex|
-              280 |insert| 285 |indices| 299 |index?| 304 |hashUpdate!| 310
-              |hash| 316 |first| 321 |find| 332 |fill!| 338 |every?| 344 |eval|
-              350 |eq?| 376 |entry?| 382 |entries| 388 |empty?| 393 |empty| 398
-              |elt| 402 |delete| 421 |count| 433 |copyInto!| 445 |copy| 452
-              |convert| 457 |construct| 462 |concat| 467 |coerce| 490 |any?|
-              495 >= 501 > 507 = 513 <= 519 < 525 |#| 531)
+              |min| 208 |merge| 219 |members| 232 |member?| 237 |maxIndex| 243
+              |max| 248 |map!| 265 |map| 271 |less?| 284 |leftTrim| 290 |latex|
+              296 |insert| 301 |indices| 315 |index?| 320 |hashUpdate!| 326
+              |hash| 332 |first| 337 |find| 348 |fill!| 354 |every?| 360 |eval|
+              366 |eq?| 392 |entry?| 398 |entries| 404 |empty?| 409 |empty| 414
+              |elt| 418 |delete| 437 |count| 449 |copyInto!| 461 |copy| 468
+              |convert| 473 |construct| 478 |concat| 483 |coerce| 506 |any?|
+              511 >= 517 > 523 = 529 <= 535 < 541 |#| 547)
            'NIL
            (CONS
             (|makeByteWordVec2| 12
@@ -235,24 +229,25 @@
                                     30 0 1 0 0 0 1 2 15 0 0 6 1 1 16 0 0 1 1 14
                                     0 0 1 1 15 0 0 1 2 15 0 6 0 1 2 14 0 30 0 1
                                     4 15 6 22 0 6 6 1 2 14 6 22 0 1 3 14 6 22 0
-                                    6 1 3 13 6 0 9 6 15 2 0 6 0 9 13 3 15 9 6 0
-                                    9 1 2 15 9 6 0 1 2 14 9 30 0 1 1 14 24 0 1
+                                    6 1 3 13 6 0 9 6 15 2 0 6 0 9 13 2 15 9 6 0
+                                    1 3 15 9 6 0 9 1 2 14 9 30 0 1 1 14 24 0 1
                                     2 0 0 7 6 12 2 0 23 0 7 1 1 3 9 0 10 2 18 0
-                                    0 0 1 2 18 0 0 0 1 3 14 0 21 0 0 1 1 14 24
-                                    0 1 2 15 23 6 0 1 1 3 9 0 1 2 18 0 0 0 1 2
-                                    13 0 33 0 1 3 0 0 22 0 0 1 2 0 0 33 0 1 2 0
-                                    23 0 7 1 2 15 0 0 6 1 1 20 29 0 1 3 0 0 6 0
-                                    9 1 3 0 0 0 0 9 1 1 0 37 0 1 2 0 23 9 0 1 2
-                                    20 18 18 0 20 1 20 28 0 1 1 3 6 0 1 2 0 0 0
-                                    7 1 2 0 36 30 0 1 2 13 0 0 6 17 2 14 23 30
-                                    0 1 3 8 0 0 24 24 1 3 8 0 0 6 6 1 2 8 0 0
-                                    25 1 2 8 0 0 26 1 2 0 23 0 0 1 2 15 23 6 0
-                                    1 1 0 24 0 1 1 0 23 0 1 0 0 0 11 2 0 0 0 31
-                                    1 2 0 6 0 9 14 3 0 6 0 9 6 1 2 0 0 0 31 1 2
-                                    0 0 0 9 1 2 15 7 6 0 1 2 14 7 30 0 1 3 16 0
-                                    0 0 9 1 1 0 0 0 1 1 2 34 0 1 1 0 0 24 1 1 0
-                                    0 35 1 2 0 0 0 0 1 2 0 0 0 6 1 2 0 0 6 0 1
-                                    1 21 27 0 1 2 14 23 30 0 1 2 18 23 0 0 1 2
-                                    18 23 0 0 1 2 22 23 0 0 1 2 18 23 0 0 1 2
-                                    18 23 0 0 1 1 14 7 0 8)))))
+                                    0 0 1 1 18 6 0 1 2 18 0 0 0 1 3 14 0 21 0 0
+                                    1 1 14 24 0 1 2 15 23 6 0 1 1 3 9 0 1 2 18
+                                    0 0 0 1 1 18 6 0 1 2 14 6 21 0 1 2 13 0 33
+                                    0 1 3 0 0 22 0 0 1 2 0 0 33 0 1 2 0 23 0 7
+                                    1 2 15 0 0 6 1 1 20 29 0 1 3 0 0 0 0 9 1 3
+                                    0 0 6 0 9 1 1 0 37 0 1 2 0 23 9 0 1 2 20 18
+                                    18 0 20 1 20 28 0 1 1 3 6 0 1 2 0 0 0 7 1 2
+                                    0 36 30 0 1 2 13 0 0 6 17 2 14 23 30 0 1 3
+                                    8 0 0 6 6 1 3 8 0 0 24 24 1 2 8 0 0 25 1 2
+                                    8 0 0 26 1 2 0 23 0 0 1 2 15 23 6 0 1 1 0
+                                    24 0 1 1 0 23 0 1 0 0 0 11 2 0 0 0 31 1 2 0
+                                    6 0 9 14 3 0 6 0 9 6 1 2 0 0 0 31 1 2 0 0 0
+                                    9 1 2 15 7 6 0 1 2 14 7 30 0 1 3 16 0 0 0 9
+                                    1 1 0 0 0 1 1 2 34 0 1 1 0 0 24 1 1 0 0 35
+                                    1 2 0 0 6 0 1 2 0 0 0 0 1 2 0 0 0 6 1 1 21
+                                    27 0 1 2 14 23 30 0 1 2 18 23 0 0 1 2 18 23
+                                    0 0 1 2 22 23 0 0 1 2 18 23 0 0 1 2 18 23 0
+                                    0 1 1 14 7 0 8)))))
            '|lookupComplete|)) 

@@ -1,29 +1,28 @@
 
 (DECLAIM (NOTINLINE |Quaternion;|)) 
 
-(DEFUN |Quaternion| (#1=#:G724)
+(DEFUN |Quaternion| (#1=#:G723)
   (SPROG NIL
-         (PROG (#2=#:G725)
+         (PROG (#2=#:G724)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|Quaternion|)
-                                               '|domainEqualList|)
-                    . #3=(|Quaternion|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|Quaternion;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|Quaternion;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|Quaternion|)))))))))) 
 
 (DEFUN |Quaternion;| (|#1|)
-  (SPROG ((|pv$| NIL) (#1=#:G723 NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
+  (SPROG ((|pv$| NIL) (#1=#:G722 NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #2=(|Quaternion|))
-          (LETT |dv$| (LIST '|Quaternion| DV$1) . #2#)
-          (LETT $ (GETREFV 38) . #2#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|Quaternion| DV$1))
+          (LETT $ (GETREFV 38))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -39,8 +38,7 @@
                                               (|HasCategory| |#1| '(|Field|))
                                               (LETT #1#
                                                     (|HasCategory| |#1|
-                                                                   '(|EntireRing|))
-                                                    . #2#)
+                                                                   '(|EntireRing|)))
                                               (OR #1#
                                                   (|HasCategory| |#1|
                                                                  '(|Field|)))
@@ -87,8 +85,7 @@
                                                                 (|Fraction|
                                                                  (|Integer|))))
                                                (|HasCategory| |#1|
-                                                              '(|Field|)))))
-                          . #2#))
+                                                              '(|Field|)))))))
           (|haddProp| |$ConstructorCache| '|Quaternion| (LIST DV$1) (CONS 1 $))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)
@@ -119,8 +116,8 @@
            (CONS
             (|makeByteWordVec2| 15
                                 '(0 0 0 4 0 0 1 2 6 4 10 11 15 0 0 0 0 0 4 0 0
-                                  0 4 0 0 0 0 0 4 4 0 0 0 0 0 0 0 0 7 0 0 0 7 0
-                                  0 13 0 0 0 0 3 5 7 8 9 12 13 14))
+                                  0 4 0 0 0 0 0 4 4 0 0 0 0 0 0 0 0 7 0 0 0 0 7
+                                  0 0 8 9 13 0 0 0 0 3 5 4 7 8 9 12 13 14))
             (CONS
              '#(|QuaternionCategory&| |FullyLinearlyExplicitOver&|
                 |DifferentialExtension&| |DivisionRing&| |Algebra&| NIL NIL NIL
@@ -129,11 +126,11 @@
                 NIL |NonAssociativeRing&| NIL NIL NIL NIL |NonAssociativeRng&|
                 NIL NIL NIL NIL |AbelianGroup&| NIL NIL NIL NIL
                 |MagmaWithUnit&| |NonAssociativeSemiRng&| |AbelianMonoid&|
-                |OrderedSet&| |FullyEvalableOver&| |Magma&| |AbelianSemiGroup&|
-                NIL |FullyRetractableTo&| |SetCategory&| |Evalable&|
-                |RetractableTo&| NIL |BasicType&| NIL NIL NIL |PartialOrder&|
-                |RetractableTo&| |RetractableTo&| |InnerEvalable&|
-                |InnerEvalable&| NIL)
+                |OrderedSet&| |FullyEvalableOver&| |FullyRetractableTo&|
+                |Magma&| |AbelianSemiGroup&| NIL |RetractableTo&|
+                |SetCategory&| |RetractableTo&| |RetractableTo&| |Evalable&|
+                NIL NIL |BasicType&| NIL NIL NIL NIL |PartialOrder&| NIL NIL
+                |InnerEvalable&| |InnerEvalable&| NIL)
              (CONS
               '#((|QuaternionCategory| 6) (|FullyLinearlyExplicitOver| 6)
                  (|DifferentialExtension| 6) (|DivisionRing|) (|Algebra| 6)
@@ -149,11 +146,13 @@
                  (|NonAssociativeSemiRing|) (|CancellationAbelianMonoid|)
                  (|SemiGroup|) (|MagmaWithUnit|) (|NonAssociativeSemiRng|)
                  (|AbelianMonoid|) (|OrderedSet|) (|FullyEvalableOver| 6)
-                 (|Magma|) (|AbelianSemiGroup|) (|Comparable|)
-                 (|FullyRetractableTo| 6) (|SetCategory|) (|Evalable| 6)
-                 (|RetractableTo| 6) (|unitsKnown|) (|BasicType|)
+                 (|FullyRetractableTo| 6) (|Magma|) (|AbelianSemiGroup|)
+                 (|Comparable|) (|RetractableTo| 6) (|SetCategory|)
+                 (|RetractableTo| 10) (|RetractableTo| 19) (|Evalable| 6)
+                 (|CoercibleFrom| 6) (|unitsKnown|) (|BasicType|)
                  (|CoercibleTo| 36) (|ConvertibleTo| 12) (|noZeroDivisors|)
-                 (|PartialOrder|) (|RetractableTo| 10) (|RetractableTo| 19)
-                 (|InnerEvalable| 20 6) (|InnerEvalable| 6 6) (|Eltable| 6 $$))
+                 (|TwoSidedRecip|) (|PartialOrder|) (|CoercibleFrom| 10)
+                 (|CoercibleFrom| 19) (|InnerEvalable| 20 6)
+                 (|InnerEvalable| 6 6) (|Eltable| 6 $$))
               (|makeByteWordVec2| 9 '(0 0 0 7 0 6 0 8 1 6 0 0 9 0 0 0 7)))))
            '|lookupIncomplete|)) 

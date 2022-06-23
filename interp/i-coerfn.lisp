@@ -1,24 +1,24 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; DEFPARAMETER($coerceFailure, GENSYM())
- 
+
 (DEFPARAMETER |$coerceFailure| (GENSYM))
- 
+
 ; position1(x,y) ==
 ;   -- this is used where we want to assume a 1-based index
 ;   1 + position(x,y)
- 
+
 (DEFUN |position1| (|x| |y|) (PROG () (RETURN (+ 1 (|position| |x| |y|)))))
- 
+
 ; Zeros n ==
 ;     BOUNDP '$ZeroVecCache and #$ZeroVecCache = n => $ZeroVecCache
-;     $ZeroVecCache := MAKE_-VEC n
+;     $ZeroVecCache := MAKE_VEC(n)
 ;     for i in 0..n-1 repeat $ZeroVecCache.i := 0
 ;     $ZeroVecCache
- 
+
 (DEFUN |Zeros| (|n|)
   (PROG ()
     (RETURN
@@ -27,7 +27,7 @@
        |$ZeroVecCache|)
       (#1='T
        (PROGN
-        (SETQ |$ZeroVecCache| (MAKE-VEC |n|))
+        (SETQ |$ZeroVecCache| (MAKE_VEC |n|))
         ((LAMBDA (|bfVar#1| |i|)
            (LOOP
             (COND ((> |i| |bfVar#1|) (RETURN NIL))
@@ -35,13 +35,13 @@
             (SETQ |i| (+ |i| 1))))
          (- |n| 1) 0)
         |$ZeroVecCache|))))))
- 
+
 ; LZeros n ==
 ;     n < 1 => nil
 ;     l := [0]
 ;     for i in 2..n repeat l := [0, :l]
 ;     l
- 
+
 (DEFUN |LZeros| (|n|)
   (PROG (|l|)
     (RETURN
@@ -56,14 +56,14 @@
                  (SETQ |i| (+ |i| 1))))
               2)
              |l|))))))
- 
+
 ; DP2DP(u,source is [.,n,S],target is [.,m,T]) ==
 ;   n ~= m => nil
 ;   u = '_$fromCoerceable_$ => canCoerce(S,T)
 ;   null (u' := coerceInt(objNewWrap(u,['Vector,S]),['Vector,T])) =>
 ;     coercionFailure()
 ;   objValUnwrap u'
- 
+
 (DEFUN DP2DP (|u| |source| |target|)
   (PROG (|m| T$ |n| S |u'|)
     (RETURN
@@ -80,7 +80,7 @@
                        (LIST '|Vector| T$))))
              (|coercionFailure|))
             ('T (|objValUnwrap| |u'|)))))))
- 
+
 ; Dmp2Dmp(u,source is [dmp,v1,S], target is [.,v2,T]) ==
 ;   -- the variable lists must share some variables, or u is a constant
 ;   u = '_$fromCoerceable_$ =>
@@ -99,7 +99,7 @@
 ;       coerceDmp1(u,source,target,v,w1)
 ;     coerceDmp2(u,source,target)
 ;   coercionFailure()
- 
+
 (DEFUN |Dmp2Dmp| (|u| |source| |target|)
   (PROG (|v2| T$ |dmp| |v1| S |v| |w2| |t1| |t2| |ISTMP#1| |e| |c| |z| |w1|)
     (RETURN
@@ -149,7 +149,7 @@
           (|coerceDmp1| |u| |source| |target| |v| |w1|))
          (#3# (|coerceDmp2| |u| |source| |target|))))
        (#3# (|coercionFailure|)))))))
- 
+
 ; coerceDmp1(u,source is [.,v1,S],target is [.,v2,T],v,w) ==
 ;   -- coerces one Dmp to another, where v1 is not a subset of v2
 ;   -- v is the intersection, w the complement of v1 and v2
@@ -169,7 +169,7 @@
 ;       x:= SPADCALL(x,SPADCALL(objValUnwrap(z),a,multfunc),plusfunc)
 ;   z => x
 ;   coercionFailure()
- 
+
 (DEFUN |coerceDmp1| (|u| |source| |target| |v| |w|)
   (PROG (|v2| T$ |v1| S |t| |x| |one| |plusfunc| |multfunc| |pat1| |pat2|
          |pat3| |e| |c| |exp| |z| |li| |a|)
@@ -302,7 +302,7 @@
           (SETQ |bfVar#12| (NULL |z|))))
        |u| NIL NIL)
       (COND (|z| |x|) (#3# (|coercionFailure|)))))))
- 
+
 ; coerceDmp2(u,source is [.,v1,S],target is [.,v2,T]) ==
 ;   -- coerces one Dmp to another, where v1 is included in v2
 ;   x:= domainZero(target)
@@ -318,7 +318,7 @@
 ;     NIL
 ;   z => x
 ;   coercionFailure()
- 
+
 (DEFUN |coerceDmp2| (|u| |source| |target|)
   (PROG (|v2| T$ |v1| S |x| |one| |plusfunc| |multfunc| |pat| |e| |c| |z| |li|
          |a|)
@@ -393,23 +393,23 @@
           (SETQ |bfVar#25| (NULL |z|))))
        |u| NIL NIL)
       (COND (|z| |x|) (#3# (|coercionFailure|)))))))
- 
+
 ; Dmp2Expr(u,source is [dmp,vars,S], target is [Expr,T]) ==
 ;     u = '_$fromCoerceable_$ => canCoerce(S, target)
-; 
+;
 ;     null vars =>
 ;         [[., :c]] := u
 ;         not (c := coerceInt(objNewWrap(c, S), target)) => coercionFailure()
 ;         objValUnwrap(c)
-; 
+;
 ;     syms := [objValUnwrap coerceInt(objNewWrap(var, $Symbol), target) for
 ;                 var in vars]
 ;     sum := domainZero(target)
-; 
+;
 ;     plus := getFunctionFromDomain("+",  target, [target, target])
 ;     mult := getFunctionFromDomain("*",  target, [target, target])
 ;     expn := getFunctionFromDomain("^", target, [target, $Integer])
-; 
+;
 ;     for [e, :c] in u repeat
 ;         not (c := coerceInt(objNewWrap(c, S), target)) => coercionFailure()
 ;         c := objValUnwrap(c)
@@ -418,9 +418,9 @@
 ;             exp := e.i
 ;             e.i > 0 => term := SPADCALL(term, SPADCALL(sym, e.i, expn), mult)
 ;         sum := SPADCALL(sum, SPADCALL(c, term, mult), plus)
-; 
+;
 ;     sum
- 
+
 (DEFUN |Dmp2Expr| (|u| |source| |target|)
   (PROG (|Expr| T$ |dmp| |vars| S |c| |syms| |sum| |plus| |mult| |expn| |e|
          |term| |exp|)
@@ -518,7 +518,7 @@
                   (SETQ |bfVar#31| (CDR |bfVar#31|))))
                |u| NIL)
               |sum|)))))))
- 
+
 ; Dmp2Mp(u, source is [dmp, x, S], target is [mp, y, T]) ==
 ;   source' := [dmp,y,T]
 ;   u = '_$fromCoerceable_$ =>
@@ -529,12 +529,12 @@
 ;     (u' := coerceInt(objNewWrap(u,source),source')) or coercionFailure()
 ;     (u' := coerceInt(u',target)) or coercionFailure()
 ;     objValUnwrap(u')
-; 
+;
 ;   -- slight optimization for case #u = 1, x=y , #x =1 and S=T
 ;   -- I know it's pathological, but it may avoid an instantiation
 ;   (x=y) and (1 = #u) and (1 = #x) and (S = T) =>
 ;     [1,1,[(CAAR u).0,0,:CDAR u]]
-; 
+;
 ;   (u' := coerceDmpCoeffs(u,S,T)) = 'failed =>
 ;     coercionFailure()
 ;   plusfunc := getFunctionFromDomain("+",target,[target,target])
@@ -542,7 +542,7 @@
 ;   for i in 1..(#u' - 1) repeat
 ;     u'' := SPADCALL(u'',genMpFromDmpTerm(u'.i, 0),plusfunc)
 ;   u''
- 
+
 (DEFUN |Dmp2Mp| (|u| |source| |target|)
   (PROG (|mp| |y| T$ |dmp| |x| S |source'| |u'| |plusfunc| |u''|)
     (RETURN
@@ -587,7 +587,7 @@
              (SETQ |i| (+ |i| 1))))
           (- (LENGTH |u'|) 1) 1)
          |u''|)))))))
- 
+
 ; coerceDmpCoeffs(u,S,T) ==
 ;   -- u is a dmp, S is domain of coeffs, T is domain to coerce coeffs to
 ;   S = T => u
@@ -599,7 +599,7 @@
 ;     u' := [[e,:objValUnwrap(c')],:u']
 ;   bad => 'failed
 ;   nreverse u'
- 
+
 (DEFUN |coerceDmpCoeffs| (|u| S T$)
   (PROG (|u'| |bad| |e| |c| |c'|)
     (RETURN
@@ -632,7 +632,7 @@
                  (SETQ |bfVar#35| (CDR |bfVar#35|))))
               |u| NIL)
              (COND (|bad| '|failed|) (#1# (NREVERSE |u'|)))))))))
- 
+
 ; sortAndReorderDmpExponents(u,vl) ==
 ;   vl' := reverse MSORT vl
 ;   n := (-1) + #vl
@@ -644,7 +644,7 @@
 ;     for i in 0..n repeat e'.(pos.i) := e.i
 ;     u' := [[e',:c],:u']
 ;   reverse u'
- 
+
 (DEFUN |sortAndReorderDmpExponents| (|u| |vl|)
   (PROG (|vl'| |n| |pos| |u'| |e| |c| |e'|)
     (RETURN
@@ -685,7 +685,7 @@
           (SETQ |bfVar#37| (CDR |bfVar#37|))))
        |u| NIL)
       (REVERSE |u'|)))))
- 
+
 ; domain2NDmp(u, source, target is [., y, T]) ==
 ;   target' := ['DistributedMultivariatePolynomial,y,T]
 ;   u = '_$fromCoerceable_$ => canCoerce(source,target')
@@ -694,7 +694,7 @@
 ;       objValUnwrap(u'')
 ;     coercionFailure()
 ;   coercionFailure()
- 
+
 (DEFUN |domain2NDmp| (|u| |source| |target|)
   (PROG (|y| T$ |target'| |u'| |u''|)
     (RETURN
@@ -708,7 +708,7 @@
               ((SETQ |u''| (|coerceInt| |u'| |target|)) (|objValUnwrap| |u''|))
               (#2='T (|coercionFailure|))))
             (#2# (|coercionFailure|)))))))
- 
+
 ; Dmp2NDmp(u,source is [dmp,x,S],target is [ndmp,y,T]) ==
 ;   -- a null DMP = 0
 ;   null u => domainZero(target)
@@ -716,7 +716,7 @@
 ;   u = '_$fromCoerceable_$ => Dmp2Dmp(u,source,target')
 ;   (u' := Dmp2Dmp(u,source,target')) => addDmpLikeTermsAsTarget(u',target)
 ;   coercionFailure()
- 
+
 (DEFUN |Dmp2NDmp| (|u| |source| |target|)
   (PROG (|ndmp| |y| T$ |dmp| |x| S |target'| |u'|)
     (RETURN
@@ -737,13 +737,13 @@
                ((SETQ |u'| (|Dmp2Dmp| |u| |source| |target'|))
                 (|addDmpLikeTermsAsTarget| |u'| |target|))
                (#3# (|coercionFailure|))))))))))
- 
+
 ; addDmpLikeTermsAsTarget(u,target) ==
 ;   u' := domainZero(target)
 ;   func := getFunctionFromDomain("+",target,[target,target])
 ;   for t in u repeat u' := SPADCALL(u',[t],func)
 ;   u'
- 
+
 (DEFUN |addDmpLikeTermsAsTarget| (|u| |target|)
   (PROG (|u'| |func|)
     (RETURN
@@ -760,7 +760,7 @@
           (SETQ |bfVar#38| (CDR |bfVar#38|))))
        |u| NIL)
       |u'|))))
- 
+
 ; Dmp2P(u, source is [dmp,vl, S], target is [.,T]) ==
 ;   -- a null DMP = 0
 ;   null u => domainZero(target)
@@ -768,13 +768,13 @@
 ;     t := canCoerce(S,T)
 ;     null t => canCoerce(S,target)
 ;     t
-; 
+;
 ;   S is ['Polynomial,.] =>
 ;     mp := coerceInt(objNewWrap(u,source),['MultivariatePolynomial,vl,S])
 ;       or coercionFailure()
 ;     p := coerceInt(mp,target) or coercionFailure()
 ;     objValUnwrap p
-; 
+;
 ;   -- slight optimization for case #u = 1, #vl =1 and S=T
 ;   -- I know it's pathological, but it may avoid an instantiation
 ;   (1 = #u) and (1 = #vl) and (S = T) =>
@@ -782,7 +782,7 @@
 ;     (lexp:= (CAAR u).0) = 0 =>
 ;        [0,:CDAR u]
 ;     [1,vl.0,[lexp,0,:CDAR u]]
-; 
+;
 ;   vl' := reverse MSORT vl
 ;   source' := [dmp,vl',S]
 ;   target' := ['MultivariatePolynomial,vl',S]
@@ -805,7 +805,7 @@
 ;     t := SPADCALL(objValUnwrap(e'),objValUnwrap(c'),multfunc)
 ;     u' := SPADCALL(u',t,plusfunc)
 ;   coercionFailure()
- 
+
 (DEFUN |Dmp2P| (|u| |source| |target|)
   (PROG (T$ |dmp| |vl| S |t| |ISTMP#1| |mp| |p| |lexp| |vl'| |source'|
          |target'| |u'| |oneT| |plusfunc| |multfunc| |e| |c| |c'| |e'|)
@@ -896,13 +896,13 @@
                           (SETQ |bfVar#40| (CDR |bfVar#40|))))
                        |u| NIL)
                       (|coercionFailure|)))))))))))
- 
+
 ; translateMpVars2PVars (u, vl) ==
 ;   u is [ =1, v, :termlist] =>
 ;     [ 1, vl.(v-1),
 ;       :[[e,:translateMpVars2PVars(c,vl)] for [e,:c] in termlist]]
 ;   u
- 
+
 (DEFUN |translateMpVars2PVars| (|u| |vl|)
   (PROG (|ISTMP#1| |v| |termlist| |e| |c|)
     (RETURN
@@ -938,11 +938,11 @@
                        (SETQ |bfVar#42| (CDR |bfVar#42|))))
                     NIL |termlist| NIL))))
       (#1# |u|)))))
- 
+
 ; Dmp2Up(u, source is [dmp,vl,S],target is [up,var,T]) ==
 ;   null u =>    -- this is true if u = 0
 ;     domainZero(target)
-; 
+;
 ;   u = '_$fromCoerceable_$ =>
 ;     member(var,vl) =>
 ;       vl' := remove(vl,var)
@@ -952,27 +952,27 @@
 ;         canCoerce([up,first vl',S],T)
 ;       canCoerce([dmp,vl',S], T)
 ;     canCoerce(source,T)
-; 
+;
 ;   -- check constant case
 ;   (null rest u) and (first(u) is [e,:c]) and
 ;     ( and/[(0 = e.i) for i in 0..(-1 + #vl)] ) =>
 ;       (x := coerceInt(objNewWrap(c,S),target)) or coercionFailure()
 ;       objValUnwrap(x)
-; 
+;
 ;   -- check non-member case
 ;   null member(var,vl) =>
 ;     (u' := coerceInt(objNewWrap(u,source),T)) or coercionFailure()
 ;     [[0,:objValUnwrap u']]
-; 
+;
 ;   vl' := remove(vl,var)
-; 
+;
 ;   -- only one variable in DMP case
 ;   null vl' =>
 ;     u' := nreverse SORTBY('CAR,[[e.0,:c] for [e,:c] in u])
 ;     (u' := coerceInt(objNewWrap(u',[up,var,S]),target)) or
 ;       coercionFailure()
 ;     objValUnwrap u'
-; 
+;
 ;   S1 := [dmp,vl',S]
 ;   plusfunc:= getFunctionFromDomain('_+,T,[T,T])
 ;   zero := getConstantFromDomain('(Zero),T)
@@ -991,7 +991,7 @@
 ;       x := CONS(CONS(exp,objValUnwrap(y)),x)
 ;   y => nreverse SORTBY('CAR,x)
 ;   coercionFailure()
- 
+
 (DEFUN |Dmp2Up| (|u| |source| |target|)
   (PROG (|up| |var| T$ |dmp| |vl| S |vl'| |ISTMP#1| |e| |c| |x| |u'| S1
          |plusfunc| |zero| |pos| |exp| |e1| |y| |p| |c'|)
@@ -1125,11 +1125,11 @@
                   |u| NIL NIL)
                  (COND (|y| (NREVERSE (SORTBY 'CAR |x|)))
                        (#3# (|coercionFailure|)))))))))))))
- 
+
 ; removeVectorElt(v,pos) ==
 ;   -- removes the pos'th element from vector v
 ;   LIST2VEC [x for x in VEC2LIST v for y in 0.. | not (y=pos)]
- 
+
 (DEFUN |removeVectorElt| (|v| |pos|)
   (PROG ()
     (RETURN
@@ -1145,17 +1145,17 @@
           (SETQ |bfVar#52| (CDR |bfVar#52|))
           (SETQ |y| (+ |y| 1))))
        NIL (VEC2LIST |v|) NIL 0)))))
- 
+
 ; removeListElt(l,pos) ==
 ;   pos = 0 => rest l
 ;   [first l, :removeListElt(rest l, pos - 1)]
- 
+
 (DEFUN |removeListElt| (|l| |pos|)
   (PROG ()
     (RETURN
      (COND ((EQL |pos| 0) (CDR |l|))
            ('T (CONS (CAR |l|) (|removeListElt| (CDR |l|) (- |pos| 1))))))))
- 
+
 ; NDmp2domain(u,source is [ndmp,x,S],target) ==
 ;   -- a null NDMP = 0
 ;   null u => domainZero(target)
@@ -1166,7 +1166,7 @@
 ;   (u'' := coerceInt(objNewWrap(u',source'),target)) =>
 ;     objValUnwrap(u'')
 ;   coercionFailure()
- 
+
 (DEFUN |NDmp2domain| (|u| |source| |target|)
   (PROG (|ndmp| |x| S |dmp| |source'| |u'| |u''|)
     (RETURN
@@ -1190,7 +1190,7 @@
                             |target|))
                    (|objValUnwrap| |u''|))
                   (#2# (|coercionFailure|)))))))))))))
- 
+
 ; NDmp2NDmp(u,source is [ndmp,x,S],target is [.,y,T]) ==
 ;   -- a null NDMP = 0
 ;   null u => domainZero(target)
@@ -1202,7 +1202,7 @@
 ;   (u'' := coerceInt(objNewWrap(u',source'),target')) =>
 ;     addDmpLikeTermsAsTarget(objValUnwrap(u''),target)
 ;   coercionFailure()
- 
+
 (DEFUN |NDmp2NDmp| (|u| |source| |target|)
   (PROG (|y| T$ |ndmp| |x| S |dmp| |source'| |target'| |u'| |u''|)
     (RETURN
@@ -1229,15 +1229,15 @@
                             |target'|))
                    (|addDmpLikeTermsAsTarget| (|objValUnwrap| |u''|) |target|))
                   (#3# (|coercionFailure|)))))))))))))
- 
+
 ; Expr2Complex(u,source is [.,S], target is [.,T]) ==
 ;     u = '_$fromCoerceable_$ => nil   -- can't tell, in general
-; 
+;
 ;     not member(S, [$Integer, $Float, $DoubleFloat]) => coercionFailure()
 ;     not member(T, [$Float, $DoubleFloat]) => coercionFailure()
-; 
+;
 ;     complexNumeric := getFunctionFromDomain("complexNumeric", ['Numeric, S], [source])
-; 
+;
 ;     -- the following might fail
 ;     cf := SPADCALL(u,complexNumeric)  -- returns a Float
 ;     T = $DoubleFloat =>
@@ -1245,7 +1245,7 @@
 ;             coercionFailure()
 ;         objValUnwrap z
 ;     cf
- 
+
 (DEFUN |Expr2Complex| (|u| |source| |target|)
   (PROG (T$ S |complexNumeric| |cf| |z|)
     (RETURN
@@ -1274,14 +1274,14 @@
                   (|coercionFailure|))
                  (#1# (|objValUnwrap| |z|))))
                (#1# |cf|)))))))))
- 
+
 ; Expr2Dmp(u,source is [Expr,S], target is [dmp,v2,T]) ==
 ;     u = '_$fromCoerceable_$ => canCoerce(source, T)
-; 
+;
 ;     null v2 =>
 ;         not (z := coerceInt(objNewWrap(u, source), T)) => coercionFailure()
 ;         [[LIST2VEC NIL, :objValUnwrap z]]
-; 
+;
 ;     obj := objNewWrap(u, source)
 ;     univ := coerceInt(obj, ['UnivariatePolynomial, first v2, T])
 ;     not univ =>
@@ -1294,29 +1294,29 @@
 ;             not (c := coerceInt(objNewWrap(c, source), T)) => coercionFailure()
 ;             RPLACD(term, objValUnwrap c)
 ;         z
-; 
+;
 ;     univ := objValUnwrap univ
-; 
+;
 ;     -- only one variable
-; 
+;
 ;     null rest v2 =>
 ;         for term in univ repeat
 ;             RPLACA(term, VECTOR first term)
 ;         univ
-; 
+;
 ;     -- more than one variable
-; 
+;
 ;     summands := nil
 ;     for [e,:c] in univ repeat
 ;         summands := Expr2Dmp1(summands,
 ;             LIST2VEC [e, :[0 for v in rest v2]], c, T, 1, rest v2, T)
-; 
+;
 ;     plus := getFunctionFromDomain("+", target, [target, target])
 ;     sum  := domainZero target
 ;     for summand in summands repeat
 ;         sum := SPADCALL([summand], sum, plus)
 ;     sum
- 
+
 (DEFUN |Expr2Dmp| (|u| |source| |target|)
   (PROG (|dmp| |v2| T$ |Expr| S |z| |obj| |univ| |c| |summands| |e| |plus|
          |sum|)
@@ -1442,7 +1442,7 @@
                         (SETQ |bfVar#60| (CDR |bfVar#60|))))
                      |summands| NIL)
                     |sum|)))))))))))))
- 
+
 ; Expr2Dmp1(summands, vec, c, source, index, varList, T) ==
 ;     if null varList then
 ;         if not (source = T) then
@@ -1453,13 +1453,13 @@
 ;         univ := coerceInt(objNewWrap(c, source),
 ;             ['UnivariatePolynomial, first varList, T])
 ;         univ := objValUnwrap univ
-; 
+;
 ;         for [e,:c] in univ repeat
 ;             vec := COPY_-SEQ vec
 ;             vec.index := e
 ;             summands := Expr2Dmp1(summands, vec, c, T, index+1, rest varList, T)
 ;     summands
- 
+
 (DEFUN |Expr2Dmp1| (|summands| |vec| |c| |source| |index| |varList| T$)
   (PROG (|univ| |e|)
     (RETURN
@@ -1499,15 +1499,15 @@
             (SETQ |bfVar#62| (CDR |bfVar#62|))))
          |univ| NIL)))
       |summands|))))
- 
+
 ; Expr2Mp(u,source is [Expr,S], target is [.,v2,T]) ==
 ;     u = '_$fromCoerceable_$ => canCoerce(source, T)
-; 
+;
 ;     dmp := ['DistributedMultivariatePolynomial,v2,T]
 ;     d   := Expr2Dmp(u,source, dmp)
 ;     not (m := coerceInt(objNewWrap(d, dmp), target)) => coercionFailure()
 ;     objValUnwrap m
- 
+
 (DEFUN |Expr2Mp| (|u| |source| |target|)
   (PROG (|v2| T$ |Expr| S |dmp| |d| |m|)
     (RETURN
@@ -1526,7 +1526,7 @@
                  (SETQ |m| (|coerceInt| (|objNewWrap| |d| |dmp|) |target|)))
                 (|coercionFailure|))
                (#2# (|objValUnwrap| |m|))))))))))
- 
+
 ; Expr2Up(u,source is [Expr,S], target is [.,var,T]) ==
 ;     u = '_$fromCoerceable_$ => canCoerce(source, T)
 ;     kernelFunc := getFunctionFromDomain("kernels", source, [source])
@@ -1534,25 +1534,25 @@
 ;     nameFunc   := getFunctionFromDomain("name", kernelDom, [kernelDom])
 ;     kernels    := SPADCALL(u,kernelFunc)
 ;     v1         := [SPADCALL(kernel, nameFunc) for kernel in kernels]
-; 
+;
 ;     not member(var, v1) => coercionFailure()
-; 
+;
 ;     -- variable is a kernel
-; 
+;
 ;     varKernel  := kernels.(POSN1(var, v1))
 ;     univFunc   := getFunctionFromDomain("univariate", source, [source, kernelDom])
 ;     sup        := ['SparseUnivariatePolynomial, source]
-; 
+;
 ;     fracUniv   := SPADCALL(u, varKernel, univFunc)
 ;     denom      := rest fracUniv
-; 
+;
 ;     not equalOne(denom, sup) => coercionFailure()
-; 
+;
 ;     numer      := first fracUniv
 ;     uniType := ['UnivariatePolynomial, var, source]
 ;     (z := coerceInt(objNewWrap(numer, uniType), target)) => objValUnwrap z
 ;     coercionFailure()
- 
+
 (DEFUN |Expr2Up| (|u| |source| |target|)
   (PROG (|var| T$ |Expr| S |kernelFunc| |kernelDom| |nameFunc| |kernels| |v1|
          |varKernel| |univFunc| |sup| |fracUniv| |denom| |numer| |uniType| |z|)
@@ -1610,7 +1610,7 @@
                                     (|objNewWrap| |numer| |uniType|) |target|))
                            (|objValUnwrap| |z|))
                           (#2# (|coercionFailure|))))))))))))))))
- 
+
 ; Ker2Ker(u,source is [.,S], target is [.,T]) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(S, T)
 ;   not (m := coerceInt(objNewWrap(u, source), S)) => coercionFailure()
@@ -1619,7 +1619,7 @@
 ;   u'' := objValUnwrap m'
 ;   not (m'' := coerceInt(objNewWrap(u'', T), target)) => coercionFailure()
 ;   objValUnwrap m''
- 
+
 (DEFUN |Ker2Ker| (|u| |source| |target|)
   (PROG (T$ S |m| |u'| |m'| |u''| |m''|)
     (RETURN
@@ -1644,14 +1644,14 @@
                             (|coerceInt| (|objNewWrap| |u''| T$) |target|)))
                    (|coercionFailure|))
                   (#1# (|objValUnwrap| |m''|)))))))))))))
- 
+
 ; Ker2Expr(u,source is [.,S], target) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(S, target)
 ;   not (m := coerceByFunction(objNewWrap(u, source), S)) => coercionFailure()
 ;   u':= objValUnwrap m
 ;   not (m' := coerceInt(objNewWrap(u', S), target)) => coercionFailure()
 ;   objValUnwrap m'
- 
+
 (DEFUN |Ker2Expr| (|u| |source| |target|)
   (PROG (S |m| |u'| |m'|)
     (RETURN
@@ -1668,7 +1668,7 @@
                ((NULL (SETQ |m'| (|coerceInt| (|objNewWrap| |u'| S) |target|)))
                 (|coercionFailure|))
                (#1# (|objValUnwrap| |m'|))))))))))
- 
+
 ; Factored2Factored(u,oldmode,newmode) ==
 ;   [.,oldargmode,:.]:= oldmode
 ;   [.,newargmode,:.]:= newmode
@@ -1680,7 +1680,7 @@
 ;   factors' := [(coerceFFE(x,oldargmode,newargmode)) for x in factors]
 ;   member('failed,factors') => coercionFailure()
 ;   [objValUnwrap(unit'),:factors']
- 
+
 (DEFUN |Factored2Factored| (|u| |oldmode| |newmode|)
   (PROG (|oldargmode| |newargmode| |u'| |unit'| |factors| |factors'|)
     (RETURN
@@ -1717,12 +1717,12 @@
                  (COND ((|member| '|failed| |factors'|) (|coercionFailure|))
                        (#1#
                         (CONS (|objValUnwrap| |unit'|) |factors'|)))))))))))))
- 
+
 ; coerceFFE(ffe, oldmode, newmode) ==
 ;   fac' := coerceInt(objNewWrap(ffe.1,oldmode),newmode)
 ;   null fac' => 'failed
 ;   LIST2VEC [ffe.0,objValUnwrap(fac'),ffe.2]
- 
+
 (DEFUN |coerceFFE| (|ffe| |oldmode| |newmode|)
   (PROG (|fac'|)
     (RETURN
@@ -1733,7 +1733,7 @@
             ('T
              (LIST2VEC
               (LIST (ELT |ffe| 0) (|objValUnwrap| |fac'|) (ELT |ffe| 2)))))))))
- 
+
 ; Complex2underDomain(u,[.,S],target) ==
 ;   u = '_$fromCoerceable_$ => nil
 ;   [r,:i] := u
@@ -1742,7 +1742,7 @@
 ;       coercionFailure()
 ;     r'
 ;   coercionFailure()
- 
+
 (DEFUN |Complex2underDomain| (|u| |bfVar#67| |target|)
   (PROG (S |r| |i| |LETTMP#1| |r'|)
     (RETURN
@@ -1762,7 +1762,7 @@
                  (SETQ |r'| (CAR |LETTMP#1|))
                  |r'|))
                (#1# (|coercionFailure|))))))))))
- 
+
 ; Complex2FR(u,S is [.,R],target is [.,T]) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     S ~= T => nil
@@ -1774,7 +1774,7 @@
 ;     coercionFailure()
 ;   factor := getFunctionFromDomain('factor,package,[S])
 ;   SPADCALL(u,factor)
- 
+
 (DEFUN |Complex2FR| (|u| S |target|)
   (PROG (T$ R |package| |factor|)
     (RETURN
@@ -1793,7 +1793,7 @@
                   (#1# (|coercionFailure|))))
          (SETQ |factor| (|getFunctionFromDomain| '|factor| |package| (LIST S)))
          (SPADCALL |u| |factor|))))))))
- 
+
 ; Complex2Expr(u, source is [.,S], target is [., T]) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     T is ['Complex, T1] and canCoerceFrom(S, T1) or coercionFailure()
@@ -1818,7 +1818,7 @@
 ;   finalObj := coerceInt(newObj, target)
 ;   finalObj => objValUnwrap finalObj
 ;   coercionFailure()
- 
+
 (DEFUN |Complex2Expr| (|u| |source| |target|)
   (PROG (T$ S |ISTMP#1| T1 E |negOne| |sqrtFun| |i| |realFun| |imagFun| |real|
          |imag| |realExp| |imagExp| |timesFun| |plusFun| |newVal| |newObj|
@@ -1881,53 +1881,33 @@
                                  (COND (|finalObj| (|objValUnwrap| |finalObj|))
                                        (#1#
                                         (|coercionFailure|)))))))))))))))))))
- 
-; I2EI(n,source,target) ==
-;   n = '_$fromCoerceable_$ => nil
-;   if not ODDP(n) then n else coercionFailure()
- 
-(DEFUN I2EI (|n| |source| |target|)
-  (PROG ()
-    (RETURN
-     (COND ((EQ |n| '|$fromCoerceable$|) NIL)
-           (#1='T (COND ((NULL (ODDP |n|)) |n|) (#1# (|coercionFailure|))))))))
- 
-; I2OI(n,source,target) ==
-;   n = '_$fromCoerceable_$ => nil
-;   if ODDP(n) then n else coercionFailure()
- 
-(DEFUN I2OI (|n| |source| |target|)
-  (PROG ()
-    (RETURN
-     (COND ((EQ |n| '|$fromCoerceable$|) NIL)
-           (#1='T (COND ((ODDP |n|) |n|) (#1# (|coercionFailure|))))))))
- 
+
 ; I2PI(n,source,target) ==
 ;   n = '_$fromCoerceable_$ => nil
 ;   if n > 0 then n else coercionFailure()
- 
+
 (DEFUN I2PI (|n| |source| |target|)
   (PROG ()
     (RETURN
      (COND ((EQ |n| '|$fromCoerceable$|) NIL)
            (#1='T (COND ((< 0 |n|) |n|) (#1# (|coercionFailure|))))))))
- 
+
 ; I2NNI(n,source,target) ==
 ;   n = '_$fromCoerceable_$ => nil
 ;   if n >= 0 then n else coercionFailure()
- 
+
 (DEFUN I2NNI (|n| |source| |target|)
   (PROG ()
     (RETURN
      (COND ((EQ |n| '|$fromCoerceable$|) NIL)
            (#1='T (COND ((NOT (MINUSP |n|)) |n|) (#1# (|coercionFailure|))))))))
- 
+
 ; L2Tuple(val, source is [.,S], target is [.,T]) ==
 ;     val = '_$fromCoerceable_$ => canCoerce(S,T)
 ;     null (object := coerceInt1(mkObjWrap(val,source), ['List, T])) =>
 ;       coercionFailure()
 ;     asTupleNew0 objValUnwrap object
- 
+
 (DEFUN |L2Tuple| (|val| |source| |target|)
   (PROG (T$ S |object|)
     (RETURN
@@ -1941,7 +1921,7 @@
                        (LIST '|List| T$))))
              (|coercionFailure|))
             ('T (|asTupleNew0| (|objValUnwrap| |object|))))))))
- 
+
 ; L2DP(l, source is [.,S], target is [.,n,T]) ==
 ;   -- need to know size of the list
 ;   l = '_$fromCoerceable_$ => nil
@@ -1949,7 +1929,7 @@
 ;   (v := coerceInt(objNewWrap(LIST2VEC l,['Vector,S]),['Vector,T])) or
 ;     coercionFailure()
 ;   V2DP(objValUnwrap v, ['Vector, T], target)
- 
+
 (DEFUN L2DP (|l| |source| |target|)
   (PROG (|n| T$ S |v|)
     (RETURN
@@ -1968,7 +1948,7 @@
                         (LIST '|Vector| T$)))
                (|coercionFailure|))
               (V2DP (|objValUnwrap| |v|) (LIST '|Vector| T$) |target|))))))))
- 
+
 ; V2DP(v, source is [.,S], target is [.,n,T]) ==
 ;   -- need to know size of the vector
 ;   v = '_$fromCoerceable_$ => nil
@@ -1977,7 +1957,7 @@
 ;     coercionFailure()
 ;   dpFun  := getFunctionFromDomain('directProduct, target, [['Vector,T]])
 ;   SPADCALL(objValUnwrap v1, dpFun)
- 
+
 (DEFUN V2DP (|v| |source| |target|)
   (PROG (|n| T$ S |v1| |dpFun|)
     (RETURN
@@ -1998,13 +1978,13 @@
                       (|getFunctionFromDomain| '|directProduct| |target|
                        (LIST (LIST '|Vector| T$))))
               (SPADCALL (|objValUnwrap| |v1|) |dpFun|))))))))
- 
+
 ; L2V(l, source is [.,S], target is [.,T]) ==
 ;   l = '_$fromCoerceable_$ => canCoerce(S,T)
 ;   (v := coerceInt(objNewWrap(LIST2VEC l,['Vector,S]),target)) or
 ;     coercionFailure()
 ;   objValUnwrap(v)
- 
+
 (DEFUN L2V (|l| |source| |target|)
   (PROG (T$ S |v|)
     (RETURN
@@ -2021,13 +2001,13 @@
                         |target|))
                (|coercionFailure|))
               (|objValUnwrap| |v|))))))))
- 
+
 ; V2L(v, source is [.,S], target is [.,T]) ==
 ;   v = '_$fromCoerceable_$ => canCoerce(S,T)
 ;   (l := coerceInt(objNewWrap(VEC2LIST v,['List,S]),target)) or
 ;     coercionFailure()
 ;   objValUnwrap(l)
- 
+
 (DEFUN V2L (|v| |source| |target|)
   (PROG (T$ S |l|)
     (RETURN
@@ -2044,7 +2024,7 @@
                         |target|))
                (|coercionFailure|))
               (|objValUnwrap| |l|))))))))
- 
+
 ; L2M(u,[.,D],[.,R]) ==
 ;   u = '_$fromCoerceable_$ => nil
 ;   D is ['List,E] and isRectangularList(u, n := #u, m :=# first u) =>
@@ -2055,7 +2035,7 @@
 ;         QSETAREF2O(v, i, j, objValUnwrap(y'), 0, 0)
 ;     v
 ;   coercionFailure()
- 
+
 (DEFUN L2M (|u| |bfVar#72| |bfVar#73|)
   (PROG (R D |ISTMP#1| E |n| |m| |v| |y'|)
     (RETURN
@@ -2101,7 +2081,7 @@
                |u| NIL (- |n| 1) 0)
               |v|))
             (#1# (|coercionFailure|)))))))
- 
+
 ; L2Record(l,[.,D],[.,:al]) ==
 ;   l = '_$fromCoerceable_$ => nil
 ;   #l = #al =>
@@ -2112,7 +2092,7 @@
 ;     #v = 2 => [v.0,:v.1]
 ;     LIST2VEC v
 ;   coercionFailure()
- 
+
 (DEFUN |L2Record| (|l| |bfVar#78| |bfVar#79|)
   (PROG (|al| D |ISTMP#1| |ISTMP#2| |D'| T$ |v|)
     (RETURN
@@ -2161,13 +2141,13 @@
                     ((EQL (LENGTH |v|) 2) (CONS (ELT |v| 0) (ELT |v| 1)))
                     (#1# (LIST2VEC |v|)))))
             (#1# (|coercionFailure|)))))))
- 
+
 ; L2Rm(u,source is [.,D],target is [.,n,m,R]) ==
 ;   u = '_$fromCoerceable_$ => nil
 ;   D is ['List,E] and isRectangularList(u,n,m) =>
 ;     L2M(u,source,['Matrix,R])
 ;   coercionFailure()
- 
+
 (DEFUN |L2Rm| (|u| |source| |target|)
   (PROG (|n| |m| R D |ISTMP#1| E)
     (RETURN
@@ -2185,13 +2165,13 @@
                   (|isRectangularList| |u| |n| |m|))
              (L2M |u| |source| (LIST '|Matrix| R)))
             (#2# (|coercionFailure|)))))))
- 
+
 ; L2Sm(u,source is [.,D],[.,n,R]) ==
 ;   u = '_$fromCoerceable_$ => nil
 ;   D is ['List,E] and isRectangularList(u,n,n) =>
 ;     L2M(u,source,['Matrix,R])
 ;   coercionFailure()
- 
+
 (DEFUN |L2Sm| (|u| |source| |bfVar#80|)
   (PROG (|n| R D |ISTMP#1| E)
     (RETURN
@@ -2208,7 +2188,7 @@
                   (|isRectangularList| |u| |n| |n|))
              (L2M |u| |source| (LIST '|Matrix| R)))
             (#2# (|coercionFailure|)))))))
- 
+
 ; L2Set(x,source is [.,S],target is [.,T]) ==
 ;   x = '_$fromCoerceable_$ => canCoerce(S,T)
 ;   -- call library function set to get a set
@@ -2218,7 +2198,7 @@
 ;       target')
 ;   (u := coerceInt(u,target)) or coercionFailure()
 ;   objValUnwrap u
- 
+
 (DEFUN |L2Set| (|x| |source| |target|)
   (PROG (T$ S |target'| |u|)
     (RETURN
@@ -2237,7 +2217,7 @@
                        |target'|))
               (OR (SETQ |u| (|coerceInt| |u| |target|)) (|coercionFailure|))
               (|objValUnwrap| |u|))))))))
- 
+
 ; Set2L(x,source is [.,S],target is [.,T]) ==
 ;   x = '_$fromCoerceable_$ => canCoerce(S,T)
 ;   -- call library function  destruct  to get a list
@@ -2246,7 +2226,7 @@
 ;       ['List,S])
 ;   (u := coerceInt(u,target)) or coercionFailure()
 ;   objValUnwrap u
- 
+
 (DEFUN |Set2L| (|x| |source| |target|)
   (PROG (T$ S |u|)
     (RETURN
@@ -2264,7 +2244,7 @@
                        (LIST '|List| S)))
               (OR (SETQ |u| (|coerceInt| |u| |target|)) (|coercionFailure|))
               (|objValUnwrap| |u|))))))))
- 
+
 ; Agg2Agg(x,source is [agg1,S],target is [.,T]) ==
 ;   x = '_$fromCoerceable_$ => canCoerce(S,T)
 ;   S = T => coercionFailure()         -- library function
@@ -2272,7 +2252,7 @@
 ;   (u := coerceInt(objNewWrap(x,source),target')) or coercionFailure()
 ;   (u := coerceInt(u,target)) or coercionFailure()
 ;   objValUnwrap u
- 
+
 (DEFUN |Agg2Agg| (|x| |source| |target|)
   (PROG (T$ |agg1| S |target'| |u|)
     (RETURN
@@ -2290,7 +2270,7 @@
                (|coercionFailure|))
               (OR (SETQ |u| (|coerceInt| |u| |target|)) (|coercionFailure|))
               (|objValUnwrap| |u|))))))))
- 
+
 ; Agg2L2Agg(x,source is [.,S],target) ==
 ;   -- tries to use list as an intermediate type
 ;   mid := ['List,S]
@@ -2299,7 +2279,7 @@
 ;   (u := coerceInt(objNewWrap(x,source),mid)) or coercionFailure()
 ;   (u := coerceInt(u,target)) or coercionFailure()
 ;   objValUnwrap u
- 
+
 (DEFUN |Agg2L2Agg| (|x| |source| |target|)
   (PROG (S |mid| |u|)
     (RETURN
@@ -2315,12 +2295,12 @@
              (|coercionFailure|))
          (OR (SETQ |u| (|coerceInt| |u| |target|)) (|coercionFailure|))
          (|objValUnwrap| |u|))))))))
- 
+
 ; isRectangularList(x,p,q) ==
 ;   p=0 or p=#x =>
 ;     n:= #first x
 ;     and/[n=#y for y in rest x] => p=0 or q=n
- 
+
 (DEFUN |isRectangularList| (|x| |p| |q|)
   (PROG (|n|)
     (RETURN
@@ -2342,7 +2322,7 @@
                (SETQ |bfVar#81| (CDR |bfVar#81|))))
             T (CDR |x|) NIL)
            (OR (EQL |p| 0) (EQUAL |q| |n|)))))))))))
- 
+
 ; M2VV(x) ==
 ;     n := ANROWS(x)
 ;     m := ANCOLS(x)
@@ -2353,7 +2333,7 @@
 ;             QSETAREF1(vi, j, QAREF2O(x, i, j, 0, 0))
 ;         QSETAREF1(v, i, vi)
 ;     v
- 
+
 (DEFUN M2VV (|x|)
   (PROG (|n| |m| |v| |vi|)
     (RETURN
@@ -2378,13 +2358,13 @@
           (SETQ |i| (+ |i| 1))))
        (- |n| 1) 0)
       |v|))))
- 
+
 ; M2L(x,[.,S],target) ==
 ;   mid := ['Vector,['Vector,S]]
 ;   x = '_$fromCoerceable_$ => canCoerce(mid,target)
 ;   (u := coerceInt(objNewWrap(M2VV x, mid), target)) or coercionFailure()
 ;   objValUnwrap u
- 
+
 (DEFUN M2L (|x| |bfVar#85| |target|)
   (PROG (S |mid| |u|)
     (RETURN
@@ -2399,7 +2379,7 @@
                        (|coerceInt| (|objNewWrap| (M2VV |x|) |mid|) |target|))
                (|coercionFailure|))
               (|objValUnwrap| |u|))))))))
- 
+
 ; M2M(x,[.,R],[.,S]) ==
 ;     x = '_$fromCoerceable_$ => canCoerce(R,S)
 ;     n := ANROWS(x)
@@ -2411,7 +2391,7 @@
 ;             (y' := coerceInt(objNewWrap(y, R), S)) or coercionFailure()
 ;             QSETAREF2O(v, i, j, objValUnwrap y', 0, 0)
 ;     v
- 
+
 (DEFUN M2M (|x| |bfVar#88| |bfVar#89|)
   (PROG (S R |n| |m| |v| |y| |y'|)
     (RETURN
@@ -2446,14 +2426,14 @@
                   (SETQ |i| (+ |i| 1))))
                (- |n| 1) 0)
               |v|)))))))
- 
+
 ; M2Rm(x,source is [.,R],[.,p,q,S]) ==
 ;     x = '_$fromCoerceable_$ => nil
 ;     n := ANROWS(x)
 ;     m := ANCOLS(x)
 ;     n = p and m = q => M2M(x, source, [nil, S])
 ;     coercionFailure()
- 
+
 (DEFUN |M2Rm| (|x| |source| |bfVar#90|)
   (PROG (|p| |q| S R |n| |m|)
     (RETURN
@@ -2471,14 +2451,14 @@
                ((AND (EQUAL |n| |p|) (EQUAL |m| |q|))
                 (M2M |x| |source| (LIST NIL S)))
                (#2# (|coercionFailure|))))))))))
- 
+
 ; M2Sm(x,source is [.,R],[.,p,S]) ==
 ;     x = '_$fromCoerceable_$ => nil
 ;     n := ANROWS(x)
 ;     m := ANCOLS(x)
 ;     n = m and m = p => M2M(x, source, [nil, S])
 ;     coercionFailure()
- 
+
 (DEFUN |M2Sm| (|x| |source| |bfVar#91|)
   (PROG (|p| S R |n| |m|)
     (RETURN
@@ -2495,13 +2475,13 @@
                ((AND (EQUAL |n| |m|) (EQUAL |m| |p|))
                 (M2M |x| |source| (LIST NIL S)))
                (#2# (|coercionFailure|))))))))))
- 
+
 ; M2V(x,[.,S],target) ==
 ;   mid := ['Vector,['Vector,S]]
 ;   x = '_$fromCoerceable_$ =>  canCoerce(mid,target)
 ;   (u := coerceInt(objNewWrap(M2VV x, mid), target)) or coercionFailure()
 ;   objValUnwrap u
- 
+
 (DEFUN M2V (|x| |bfVar#92| |target|)
   (PROG (S |mid| |u|)
     (RETURN
@@ -2516,19 +2496,19 @@
                        (|coerceInt| (|objNewWrap| (M2VV |x|) |mid|) |target|))
                (|coercionFailure|))
               (|objValUnwrap| |u|))))))))
- 
+
 ; Mp2Dmp(u, source is [., x, S], target is [dmp, y, T]) ==
 ;   -- Change the representation to a DMP with the same variables and
 ;   -- coerce.
 ;   target' := [dmp,x,S]
 ;   u = '_$fromCoerceable_$ => canCoerce(target',target)
-; 
+;
 ;   -- check if we have a constant
 ;   u is [ =0,:c] =>
 ;     null (u' := coerceInt(objNewWrap(c,S),target)) =>
 ;       coercionFailure()
 ;     objValUnwrap(u')
-; 
+;
 ;   plus := getFunctionFromDomain('_+,target',[target',target'])
 ;   mult := getFunctionFromDomain('_*,target',[target',target'])
 ;   one := domainOne(S)
@@ -2536,7 +2516,7 @@
 ;   (u' := coerceInt(objNewWrap(Mp2SimilarDmp(u,S,#x,plus,mult,one,zero),
 ;     target'),target)) or coercionFailure()
 ;   objValUnwrap(u')
- 
+
 (DEFUN |Mp2Dmp| (|u| |source| |target|)
   (PROG (|dmp| |y| T$ |x| S |target'| |c| |u'| |plus| |mult| |one| |zero|)
     (RETURN
@@ -2574,7 +2554,7 @@
                         |target|))
                (|coercionFailure|))
               (|objValUnwrap| |u'|))))))))
- 
+
 ; Mp2SimilarDmp(u,S,n,plus,mult,one,zero) ==
 ;   u is [ =0,:c] =>
 ;     c = zero => NIL  -- zero for dmp
@@ -2588,7 +2568,7 @@
 ;       t := SPADCALL(t,Mp2SimilarDmp(c,S,n,plus,mult,one,zero),mult)
 ;       u' := SPADCALL(u',t,plus)
 ;     u'
- 
+
 (DEFUN |Mp2SimilarDmp| (|u| S |n| |plus| |mult| |one| |zero|)
   (PROG (|c| |ISTMP#1| |x| |terms| |u'| |e| |e'| |t|)
     (RETURN
@@ -2631,14 +2611,14 @@
             (SETQ |bfVar#94| (CDR |bfVar#94|))))
          |terms| NIL)
         |u'|))))))
- 
+
 ; Mp2Expr(u,source is [mp,vars,S], target is [Expr,T]) ==
 ;     u = '_$fromCoerceable_$ => canCoerce(S, target)
-; 
+;
 ;     dmp := ['DistributedMultivariatePolynomial, vars, S]
 ;     not (d := coerceInt(objNewWrap(u, source), dmp)) => coercionFailure()
 ;     Dmp2Expr(objValUnwrap d, dmp, target)
- 
+
 (DEFUN |Mp2Expr| (|u| |source| |target|)
   (PROG (|Expr| T$ |mp| |vars| S |dmp| |d|)
     (RETURN
@@ -2657,7 +2637,7 @@
                  (SETQ |d| (|coerceInt| (|objNewWrap| |u| |source|) |dmp|)))
                 (|coercionFailure|))
                (#2# (|Dmp2Expr| (|objValUnwrap| |d|) |dmp| |target|))))))))))
- 
+
 ; Mp2FR(u,S is [.,vl,R],[.,T]) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     S ~= T => nil
@@ -2674,7 +2654,7 @@
 ;     coercionFailure()
 ;   factor := getFunctionFromDomain('factor,package,[S])
 ;   SPADCALL(u,factor)
- 
+
 (DEFUN |Mp2FR| (|u| S |bfVar#95|)
   (PROG (T$ |vl| R |ovl| |ISTMP#1| D |package| |factor|)
     (RETURN
@@ -2711,41 +2691,41 @@
                   (#2# (|coercionFailure|))))
          (SETQ |factor| (|getFunctionFromDomain| '|factor| |package| (LIST S)))
          (SPADCALL |u| |factor|))))))))
- 
+
 ; Mp2Mp(u,source is [mp,x,S], target is [.,y,T]) ==
 ;   -- need not deal with case of x = y (coerceByMapping)
 ;   common := intersection(y,x)
 ;   x' := SETDIFFERENCE(x,common)
 ;   y' := SETDIFFERENCE(y,common)
-; 
+;
 ;   u = '_$fromCoerceable_$ =>
 ;     x = y => canCoerce(S,T)
 ;     null common => canCoerce(source,T)
 ;     null x' => canCoerce(S,target)
 ;     null y' => canCoerce([mp,x',S],T)
 ;     canCoerce([mp,x',S],[mp,y',T])
-; 
+;
 ;   -- first check for constant case
 ;   u is [ =0,:c] =>
 ;     (u' := coerceInt(objNewWrap(c,S),target)) or coercionFailure()
 ;     objValUnwrap(u')
-; 
+;
 ;   plus  := getFunctionFromDomain('_+,target,[target,target])
-; 
+;
 ;   -- now no-common-variables case
-; 
+;
 ;   null common =>
 ;     times := getFunctionFromDomain('_*,target,[target,target])
 ;     expn  := getFunctionFromDomain("^", target,
 ;       [target,$NonNegativeInteger])
 ;     Mp2MpAux0(u,S,target,x,plus,times,expn)
-; 
+;
 ;   -- if source vars are all in target
 ;   null x' =>
 ;     monom := getFunctionFromDomain('monomial,target,
 ;       [target,['OrderedVariableList,y],$NonNegativeInteger])
 ;     Mp2MpAux1(u,S,target,x,y,plus,monom)
-; 
+;
 ;   -- if target vars are all in source
 ;   null y' =>    -- change source to MP[common] MP[x'] S
 ;     univariate := getFunctionFromDomain('univariate,
@@ -2754,13 +2734,13 @@
 ;     (u' := coerceInt(objNewWrap(u', [mp,common,[mp,x',S]]),target)) or
 ;       coercionFailure()
 ;     objValUnwrap(u')
-; 
+;
 ;   -- we have a mixture
 ;   (u' := coerceInt(objNewWrap(u,source),[mp,common,[mp,x',S]])) or
 ;     coercionFailure()
 ;   (u' := coerceInt(u',target)) or coercionFailure()
 ;   objValUnwrap(u')
- 
+
 (DEFUN |Mp2Mp| (|u| |source| |target|)
   (PROG (|y| T$ |mp| |x| S |common| |x'| |y'| |c| |u'| |plus| |times| |expn|
          |monom| |univariate|)
@@ -2833,7 +2813,7 @@
              (|coercionFailure|))
             (OR (SETQ |u'| (|coerceInt| |u'| |target|)) (|coercionFailure|))
             (|objValUnwrap| |u'|)))))))))))
- 
+
 ; Mp2MpAux0(u,S,target,vars,plus,times,expn) ==
 ;   -- for case when no common variables
 ;   u is [ =0,:c] =>
@@ -2851,7 +2831,7 @@
 ;       Mp2MpAux0(c,S,target,vars,plus,times,expn),times)
 ;     sum := SPADCALL(sum,prod,plus)
 ;   sum
- 
+
 (DEFUN |Mp2MpAux0| (|u| S |target| |vars| |plus| |times| |expn|)
   (PROG (|c| |u'| |var| |terms| |mp| T$ |x| |sum| |e| |prod|)
     (RETURN
@@ -2899,7 +2879,7 @@
             (SETQ |bfVar#97| (CDR |bfVar#97|))))
          |terms| NIL)
         |sum|))))))
- 
+
 ; Mp2MpAux1(u,S,target,varl1,varl2,plus,monom) ==
 ;   -- for case when source vars are all in target
 ;   u is [ =0,:c] =>
@@ -2912,7 +2892,7 @@
 ;       position1(varl1.(var-1), varl2),e,monom)
 ;     sum := SPADCALL(sum,mon,plus)
 ;   sum
- 
+
 (DEFUN |Mp2MpAux1| (|u| S |target| |varl1| |varl2| |plus| |monom|)
   (PROG (|c| |u'| |var| |terms| |sum| |e| |mon|)
     (RETURN
@@ -2950,7 +2930,7 @@
             (SETQ |bfVar#99| (CDR |bfVar#99|))))
          |terms| NIL)
         |sum|))))))
- 
+
 ; Mp2MpAux2(u,x,oldcomm,oldrest,common,restvars,univariate,S,isUnder) ==
 ;   -- target vars are all in source
 ;   mp2 := ['MultivariatePolynomial,oldcomm,['MultivariatePolynomial,
@@ -2975,7 +2955,7 @@
 ;     Mp2MpAux2(u,x,oldcomm,oldrest,common,restvars,univariate,S,isUnder)
 ;   [1,position1(var,oldrest),:[[e,:Mp2MpAux2(c,x,oldcomm,oldrest,
 ;     common,restvars,univariate,S,isUnder)] for [e,:c] in u']]
- 
+
 (DEFUN |Mp2MpAux2|
        (|u| |x| |oldcomm| |oldrest| |common| |restvars| |univariate| S
         |isUnder|)
@@ -3073,12 +3053,12 @@
                                            |bfVar#105|)))))
                            (SETQ |bfVar#104| (CDR |bfVar#104|))))
                         NIL |u'| NIL))))))))))))
- 
+
 ; genMpFromDmpTerm(u, oldlen) ==
-; 
+;
 ;   -- given one term of a DMP representation of a polynomial, this creates
 ;   -- the corresponding MP term.
-; 
+;
 ;   patlen := oldlen
 ;   [e,:c] := u
 ;   numexps := # e
@@ -3088,7 +3068,7 @@
 ;     return nil
 ;   patlen >= numexps => [0, :c]
 ;   [1, 1+patlen, [e.patlen,:genMpFromDmpTerm(u,patlen+1)]]
- 
+
 (DEFUN |genMpFromDmpTerm| (|u| |oldlen|)
   (PROG (|patlen| |e| |c| |numexps|)
     (RETURN
@@ -3116,7 +3096,7 @@
                            (CONS (ELT |e| |patlen|)
                                  (|genMpFromDmpTerm| |u|
                                   (+ |patlen| 1)))))))))))))
- 
+
 ; Mp2P(u, source is [mp,vl, S], target is [p,R]) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(S,target)
 ;   S is ['Polynomial,.] => MpP2P(u,vl,S,R)
@@ -3126,7 +3106,7 @@
 ;   u' := translateMpVars2PVars (u',vl')
 ;   (u' := coerceInt(objNewWrap(u',[p,S]),target)) or coercionFailure()
 ;   objValUnwrap(u')
- 
+
 (DEFUN |Mp2P| (|u| |source| |target|)
   (PROG (|p| R |mp| |vl| S |ISTMP#1| |vl'| |u'|)
     (RETURN
@@ -3152,7 +3132,7 @@
                        (|coerceInt| (|objNewWrap| |u'| (LIST |p| S)) |target|))
                (|coercionFailure|))
               (|objValUnwrap| |u'|))))))))
- 
+
 ; MpP2P(u,vl,PS,R) ==
 ;   -- u has type MP(vl,PS). Want to coerce to P R.
 ;   PR := ['Polynomial,R]
@@ -3165,7 +3145,7 @@
 ;     PR,[['SparseUnivariatePolynomial,PR],$Symbol])
 ;   sup := [[e,:MpP2P(c,vl,PS,R)] for [e,:c] in ec]
 ;   p := SPADCALL(sup,vl.(pos-1),multivariate)
- 
+
 (DEFUN |MpP2P| (|u| |vl| PS R)
   (PROG (PR |c| |u'| |pos| |ec| |multivariate| |e| |sup| |p|)
     (RETURN
@@ -3205,28 +3185,28 @@
                   NIL |ec| NIL))
          (SETQ |p|
                  (SPADCALL |sup| (ELT |vl| (- |pos| 1)) |multivariate|)))))))))
- 
+
 ; Mp2Up(u,source is [mp,vl,S],target is [up,x,T]) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     member(x,vl) =>
 ;       vl = [x] => canCoerce(S,T)
 ;       canCoerce([mp,delete(x,vl),S],T)
 ;     canCoerce(source,T)
-; 
+;
 ;   u is [ =0,:c] =>      -- constant polynomial?
 ;     (u' := coerceInt(objNewWrap(c,S),target)) or coercionFailure()
 ;     objValUnwrap u'
-; 
+;
 ;   null member(x,vl) =>
 ;     (u' := coerceInt(objNewWrap(u,source),T)) or coercionFailure()
 ;     [[0,:objValUnwrap(u')]]
-; 
+;
 ;   vl = [x] =>
 ;     u' := [[e,:c] for [e,.,:c] in CDDR u]
 ;     (u' := coerceInt(objNewWrap(u',[up,x,S]),target))
 ;       or coercionFailure()
 ;     objValUnwrap u'
-; 
+;
 ;   -- do a univariate to transform u to a UP(x,P S) and then coerce again
 ;   var := position1(x,vl)
 ;   UPP := ['UnivariatePolynomial,x,source]
@@ -3235,7 +3215,7 @@
 ;   upU := SPADCALL(u,var,univariate)  -- we may assume this has type UPP
 ;   (u' := coerceInt(objNewWrap(upU,UPP),target)) or coercionFailure()
 ;   objValUnwrap u'
- 
+
 (DEFUN |Mp2Up| (|u| |source| |target|)
   (PROG (|up| |x| T$ |mp| |vl| S |c| |u'| |e| |ISTMP#1| |var| UPP |univariate|
          |upU|)
@@ -3300,14 +3280,14 @@
          (OR (SETQ |u'| (|coerceInt| (|objNewWrap| |upU| UPP) |target|))
              (|coercionFailure|))
          (|objValUnwrap| |u'|))))))))
- 
+
 ; OV2OV(u,source is [.,svl], target is [.,tvl]) ==
 ;   svl = intersection(svl,tvl) =>
 ;     u = '_$fromCoerceable_$ => true
 ;     position1(svl.(u-1),tvl)
 ;   u = '_$fromCoerceable_$ => nil
 ;   coercionFailure()
- 
+
 (DEFUN OV2OV (|u| |source| |target|)
   (PROG (|tvl| |svl|)
     (RETURN
@@ -3319,12 +3299,12 @@
         (COND ((EQ |u| '|$fromCoerceable$|) T)
               (#1='T (|position1| (ELT |svl| (- |u| 1)) |tvl|))))
        ((EQ |u| '|$fromCoerceable$|) NIL) (#1# (|coercionFailure|)))))))
- 
+
 ; OV2P(u,source is [.,svl], target is [.,T]) ==
 ;   u = '_$fromCoerceable_$ => true
 ;   v := svl.(unwrap(u)-1)
 ;   [1,v,[1,0,:domainOne(T)]]
- 
+
 (DEFUN OV2P (|u| |source| |target|)
   (PROG (T$ |svl| |v|)
     (RETURN
@@ -3336,7 +3316,7 @@
              (PROGN
               (SETQ |v| (ELT |svl| (- (|unwrap| |u|) 1)))
               (LIST 1 |v| (CONS 1 (CONS 0 (|domainOne| T$)))))))))))
- 
+
 ; OV2poly(u,source is [.,svl], target is [p,vl,T]) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     p = 'UnivariatePolynomial => (# svl = 1) and (p = svl.0)
@@ -3352,7 +3332,7 @@
 ;   (u' := coerceInt(objNewWrap(val',source'),target)) or
 ;     coercionFailure()
 ;   objValUnwrap(u')
- 
+
 (DEFUN |OV2poly| (|u| |source| |target|)
   (PROG (|p| |vl| T$ |svl| |v| |val'| |source'| |u'|)
     (RETURN
@@ -3396,11 +3376,11 @@
              (SETQ |u'| (|coerceInt| (|objNewWrap| |val'| |source'|) |target|))
              (|coercionFailure|))
             (|objValUnwrap| |u'|)))))))))))
- 
+
 ; OV2SE(u,source is [.,svl], target) ==
 ;   u = '_$fromCoerceable_$ => true
 ;   svl.(unwrap(u)-1)
- 
+
 (DEFUN OV2SE (|u| |source| |target|)
   (PROG (|svl|)
     (RETURN
@@ -3408,11 +3388,11 @@
       (SETQ |svl| (CADR |source|))
       (COND ((EQ |u| '|$fromCoerceable$|) T)
             ('T (ELT |svl| (- (|unwrap| |u|) 1))))))))
- 
+
 ; OV2Sy(u,source is [.,svl], target) ==
 ;   u = '_$fromCoerceable_$ => true
 ;   svl.(unwrap(u)-1)
- 
+
 (DEFUN |OV2Sy| (|u| |source| |target|)
   (PROG (|svl|)
     (RETURN
@@ -3420,12 +3400,12 @@
       (SETQ |svl| (CADR |source|))
       (COND ((EQ |u| '|$fromCoerceable$|) T)
             ('T (ELT |svl| (- (|unwrap| |u|) 1))))))))
- 
+
 ; varsInPoly(u) ==
 ;   u is [ =1, v, :termlist] =>
 ;     [v,:varsInPoly(c) for [e,:c] in termlist]
 ;   nil
- 
+
 (DEFUN |varsInPoly| (|u|)
   (PROG (|ISTMP#1| |v| |termlist| |e| |c|)
     (RETURN
@@ -3456,7 +3436,7 @@
            (SETQ |bfVar#116| (CDR |bfVar#116|))))
         NIL |termlist| NIL))
       (#1# NIL)))))
- 
+
 ; P2FR(u,S is [.,R],[.,T]) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     S ~= T => nil
@@ -3472,7 +3452,7 @@
 ;     coercionFailure()
 ;   factor := getFunctionFromDomain('factor,package,[S])
 ;   SPADCALL(u,factor)
- 
+
 (DEFUN P2FR (|u| S |bfVar#118|)
   (PROG (T$ R |ISTMP#1| D |package| |factor|)
     (RETURN
@@ -3504,7 +3484,7 @@
                   (#1# (|coercionFailure|))))
          (SETQ |factor| (|getFunctionFromDomain| '|factor| |package| (LIST S)))
          (SPADCALL |u| |factor|))))))))
- 
+
 ; P2Dmp(u, source is [., S], target is [., y, T]) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     -- might be able to say yes
@@ -3518,7 +3498,7 @@
 ;   monom := getFunctionFromDomain('monomial,target,
 ;     [target,['OrderedVariableList,y],$NonNegativeInteger])
 ;   P2DmpAux(u,source,S,target,copy y,y,T,univariate,plus,monom)
- 
+
 (DEFUN |P2Dmp| (|u| |source| |target|)
   (PROG (|y| T$ S |c| |u'| |univariate| |plus| |monom|)
     (RETURN
@@ -3547,7 +3527,7 @@
                              |$NonNegativeInteger|)))
               (|P2DmpAux| |u| |source| S |target| (COPY |y|) |y| T$
                |univariate| |plus| |monom|))))))))
- 
+
 ; P2Expr(u, source is [.,S], target is [., T]) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     canCoerce(S, T)
@@ -3558,7 +3538,7 @@
 ;   val := coerceInt(val, target)
 ;   null val => coercionFailure()
 ;   objValUnwrap val
- 
+
 (DEFUN |P2Expr| (|u| |source| |target|)
   (PROG (T$ S |newS| |val|)
     (RETURN
@@ -3577,19 +3557,19 @@
                       (SETQ |val| (|coerceInt| |val| |target|))
                       (COND ((NULL |val|) (|coercionFailure|))
                             (#1# (|objValUnwrap| |val|)))))))))))))
- 
+
 ; P2DmpAux(u,source,S,target,varlist,vars,T,univariate,plus,monom) ==
 ;   u is [ =0,:c] =>       -- polynomial is a constant
 ;     (u' := coerceInt(objNewWrap(c,S),target)) or coercionFailure()
 ;     objValUnwrap(u')
-; 
+;
 ;   -- if no variables left, try to go to underdomain of target (T)
 ;   null vars =>
 ;     (u' := coerceInt(objNewWrap(u,source),T)) or coercionFailure()
 ;     -- if successful, embed
 ;     (u' := coerceByFunction(u',target)) or coercionFailure()
 ;     objValUnwrap(u')
-; 
+;
 ;   -- there are variables, so get them out of u
 ;   [x,:vars] := vars
 ;   sup := SPADCALL(u,x,univariate)  -- this is a SUP P S
@@ -3607,7 +3587,7 @@
 ;         var,e,monom)
 ;     u' := SPADCALL(u',u'',plus)
 ;   u'
- 
+
 (DEFUN |P2DmpAux|
        (|u| |source| S |target| |varlist| |vars| T$ |univariate| |plus|
         |monom|)
@@ -3666,7 +3646,7 @@
                     (SETQ |bfVar#120| (CDR |bfVar#120|))))
                  |sup| NIL)
                 |u'|)))))))))
- 
+
 ; P2Mp(u, source is [., S], target is [., y, T]) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     -- might be able to say yes
@@ -3674,7 +3654,7 @@
 ;   univariate := getFunctionFromDomain('univariate,
 ;     source,[source,$Symbol])
 ;   P2MpAux(u,source,S,target,copy y,y,T,univariate)
- 
+
 (DEFUN |P2Mp| (|u| |source| |target|)
   (PROG (|y| T$ S |univariate|)
     (RETURN
@@ -3690,20 +3670,20 @@
                        (LIST |source| |$Symbol|)))
               (|P2MpAux| |u| |source| S |target| (COPY |y|) |y| T$
                |univariate|))))))))
- 
+
 ; P2MpAux(u,source,S,target,varlist,vars,T,univariate) ==
 ;   u is [ =0,:c] =>       -- polynomial is a constant
 ;     (u' := coerceInt(objNewWrap(c,S),target)) or
 ;       coercionFailure()
 ;     objValUnwrap(u')
-; 
+;
 ;   -- if no variables left, try to go to underdomain of target (T)
 ;   null vars =>
 ;     (u' := coerceInt(objNewWrap(u,source),T)) or
 ;       coercionFailure()
 ;     -- if successful, embed
 ;     [ 0,:objValUnwrap(u')]
-; 
+;
 ;   -- there are variables, so get them out of u
 ;   [x,:vars] := vars
 ;   sup := SPADCALL(u,x,univariate)  -- this is a SUP P S
@@ -3716,7 +3696,7 @@
 ;   terms := [[e,:P2MpAux(c,source,S,target,varlist,vars,T,univariate)] for
 ;     [e,:c] in sup]
 ;   [1, position1(x,varlist), :terms]
- 
+
 (DEFUN |P2MpAux| (|u| |source| S |target| |varlist| |vars| T$ |univariate|)
   (PROG (|c| |u'| |LETTMP#1| |x| |sup| |ISTMP#1| |e| |terms|)
     (RETURN
@@ -3772,13 +3752,13 @@
                             (SETQ |bfVar#122| (CDR |bfVar#122|))))
                          NIL |sup| NIL))
                 (CONS 1 (CONS (|position1| |x| |varlist|) |terms|)))))))))))
- 
+
 ; varIsOnlyVarInPoly(u, var) ==
 ;   u is [ =1, v, :termlist] =>
 ;     v ~= var => nil
 ;     and/[varIsOnlyVarInPoly(c,var) for [e,:c] in termlist]
 ;   true
- 
+
 (DEFUN |varIsOnlyVarInPoly| (|u| |var|)
   (PROG (|ISTMP#1| |v| |termlist| |e| |c|)
     (RETURN
@@ -3811,20 +3791,20 @@
                   (SETQ |bfVar#125| (CDR |bfVar#125|))))
                T |termlist| NIL))))
       (#1# T)))))
- 
+
 ; P2Up(u,source is [.,S],target is [.,x,T]) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(source,T)
 ;   u is [ =0,:c] =>
 ;     (u' := coerceInt(objNewWrap(c,S),target)) or coercionFailure()
 ;     objValUnwrap(u')
-; 
+;
 ;   -- see if the target var is the polynomial vars
 ;   varsFun := getFunctionFromDomain('variables,source,[source])
 ;   vars := SPADCALL(u,varsFun)
 ;   not member(x,vars) =>
 ;     (u' := coerceInt(objNewWrap(u,source),T)) or coercionFailure()
 ;     [[0,:objValUnwrap(u')]]
-; 
+;
 ;   #vars = 1 and S = T =>
 ;       univariate := getFunctionFromDomain('univariate,
 ;           source,[source])
@@ -3835,7 +3815,7 @@
 ;     source,[source,$Symbol])
 ;   upU := SPADCALL(u,x,univariate)  -- we may assume this has type UPP
 ;   SUP2Up_aux(upU, UPP, target)
- 
+
 (DEFUN |P2Up| (|u| |source| |target|)
   (PROG (|x| T$ S |c| |u'| |varsFun| |vars| |univariate| UPP |upU|)
     (RETURN
@@ -3876,7 +3856,7 @@
                           (LIST |source| |$Symbol|)))
                  (SETQ |upU| (SPADCALL |u| |x| |univariate|))
                  (|SUP2Up_aux| |upU| UPP |target|)))))))))))
- 
+
 ; Qf2PF(u,source is [.,D],target) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(D,target)
 ;   [num,:den] := u
@@ -3888,7 +3868,7 @@
 ;   den' := objValUnwrap den'
 ;   equalZero(den', target) => throwKeyedMsg("S2IA0001",NIL)
 ;   SPADCALL(num',den', getFunctionFromDomain("/",target,[target,target]))
- 
+
 (DEFUN |Qf2PF| (|u| |source| |target|)
   (PROG (D |num| |den| |num'| |den'|)
     (RETURN
@@ -3913,7 +3893,7 @@
                 (SPADCALL |num'| |den'|
                  (|getFunctionFromDomain| '/ |target|
                   (LIST |target| |target|))))))))))))
- 
+
 ; Qf2domain(u,source is [.,D],target) ==
 ;   -- tests whether it is an element of the underlying domain
 ;   useUnder := (ut := underDomainOf target) and canCoerce(source,ut)
@@ -3932,7 +3912,7 @@
 ;         [[$QuotientField,T],target])
 ;       SPADCALL(den',num',timesfunc)
 ;   coercionFailure()
- 
+
 (DEFUN |Qf2domain| (|u| |source| |target|)
   (PROG (D |ut| |useUnder| |num| |den| |num'| |ISTMP#1| |ISTMP#2| |ISTMP#3| T$
          |ISTMP#4| |den'| |timesfunc|)
@@ -4002,7 +3982,7 @@
                                (LIST (LIST |$QuotientField| T$) |target|)))
                       (SPADCALL |den'| |num'| |timesfunc|)))
                     (#1# (|coercionFailure|))))))))))
- 
+
 ; Qf2EF(u,[.,S],target) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(S,target)
 ;   [num,:den] := u
@@ -4012,7 +3992,7 @@
 ;     coercionFailure()
 ;   divfun := getFunctionFromDomain("/",target,[target,target])
 ;   SPADCALL(objValUnwrap(num'),objValUnwrap(den'),divfun)
- 
+
 (DEFUN |Qf2EF| (|u| |bfVar#127| |target|)
   (PROG (S |num| |den| |num'| |den'| |divfun|)
     (RETURN
@@ -4032,7 +4012,7 @@
                        (LIST |target| |target|)))
               (SPADCALL (|objValUnwrap| |num'|) (|objValUnwrap| |den'|)
                |divfun|))))))))
- 
+
 ; Qf2Qf(u0,[.,S],target is [.,T]) ==
 ;   u0 = '_$fromCoerceable_$ =>
 ;     S = ['Polynomial, [$QuotientField, $Integer]] and
@@ -4052,7 +4032,7 @@
 ;       [objValUnwrap(a'),:objValUnwrap(b')]
 ;     coercionFailure()
 ;   coercionFailure()
- 
+
 (DEFUN |Qf2Qf| (|u0| |bfVar#128| |target|)
   (PROG (T$ S |a| |b| |a'| |b'| |divfunc|)
     (RETURN
@@ -4093,18 +4073,18 @@
              (CONS (|objValUnwrap| |a'|) (|objValUnwrap| |b'|)))
             (#1# (|coercionFailure|))))
           (#1# (|coercionFailure|))))))))))
- 
+
 ; Rm2L(x,[.,.,.,R],target) == M2L(x,['Matrix,R],target)
- 
+
 (DEFUN |Rm2L| (|x| |bfVar#129| |target|)
   (PROG (R)
     (RETURN
      (PROGN
       (SETQ R (CADDDR |bfVar#129|))
       (M2L |x| (LIST '|Matrix| R) |target|)))))
- 
+
 ; Rm2M(x,[.,.,.,R],target is [.,S]) == M2M(x,[nil,R],target)
- 
+
 (DEFUN |Rm2M| (|x| |bfVar#130| |target|)
   (PROG (S R)
     (RETURN
@@ -4112,13 +4092,13 @@
       (SETQ S (CADR |target|))
       (SETQ R (CADDDR |bfVar#130|))
       (M2M |x| (LIST NIL R) |target|)))))
- 
+
 ; Rm2Sm(x,[.,n,m,S],[.,p,R]) ==
 ;   x = '_$fromCoerceable_$ => n=m and m=p and canCoerce(S,R)
 ;   n=m and m=p =>
 ;     M2M(x,[nil,S],[nil,R])
 ;   coercionFailure()
- 
+
 (DEFUN |Rm2Sm| (|x| |bfVar#131| |bfVar#132|)
   (PROG (|p| R |n| |m| S)
     (RETURN
@@ -4134,33 +4114,16 @@
        ((AND (EQUAL |n| |m|) (EQUAL |m| |p|))
         (M2M |x| (LIST NIL S) (LIST NIL R)))
        ('T (|coercionFailure|)))))))
- 
+
 ; Rm2V(x,[.,.,.,R],target) == M2V(x,['Matrix,R],target)
- 
+
 (DEFUN |Rm2V| (|x| |bfVar#133| |target|)
   (PROG (R)
     (RETURN
      (PROGN
       (SETQ R (CADDDR |bfVar#133|))
       (M2V |x| (LIST '|Matrix| R) |target|)))))
- 
-; Scr2Scr(u, source is [.,S], target is [.,T]) ==
-;   u = '_$fromCoerceable_$ => canCoerce(S,T)
-;   null (v := coerceInt(objNewWrap(rest u, S), T)) =>
-;     coercionFailure()
-;   [first u, :objValUnwrap(v)]
- 
-(DEFUN |Scr2Scr| (|u| |source| |target|)
-  (PROG (T$ S |v|)
-    (RETURN
-     (PROGN
-      (SETQ T$ (CADR |target|))
-      (SETQ S (CADR |source|))
-      (COND ((EQ |u| '|$fromCoerceable$|) (|canCoerce| S T$))
-            ((NULL (SETQ |v| (|coerceInt| (|objNewWrap| (CDR |u|) S) T$)))
-             (|coercionFailure|))
-            ('T (CONS (CAR |u|) (|objValUnwrap| |v|))))))))
- 
+
 ; SUP2Up_aux(u,source is [.,S],target is [.,x,T]) ==
 ;     -- must be careful in case any of the coeffs come back 0
 ;     u' := NIL
@@ -4171,7 +4134,7 @@
 ;         c' = zero => 'iterate
 ;         u' := [[e,:c'],:u']
 ;     nreverse u'
- 
+
 (DEFUN |SUP2Up_aux| (|u| |source| |target|)
   (PROG (|x| T$ S |u'| |zero| |e| |c| |c'|)
     (RETURN
@@ -4203,7 +4166,7 @@
           (SETQ |bfVar#135| (CDR |bfVar#135|))))
        |u| NIL)
       (NREVERSE |u'|)))))
- 
+
 ; SUP2Up(u,source is [.,S],target is [.,x,T]) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(source,T) or canCoerce(S,T)
 ;   null u => u
@@ -4212,7 +4175,7 @@
 ;   null (u' := coerceInt(objNewWrap(u,source),T)) =>
 ;       SUP2Up_aux(u, source, target)
 ;   [[0,:objValUnwrap u']]
- 
+
 (DEFUN |SUP2Up| (|u| |source| |target|)
   (PROG (|x| T$ S |u'|)
     (RETURN
@@ -4227,18 +4190,18 @@
        ((NULL (SETQ |u'| (|coerceInt| (|objNewWrap| |u| |source|) T$)))
         (|SUP2Up_aux| |u| |source| |target|))
        ('T (LIST (CONS 0 (|objValUnwrap| |u'|)))))))))
- 
+
 ; Sm2L(x,[.,.,R],target) == M2L(x,['Matrix,R],target)
- 
+
 (DEFUN |Sm2L| (|x| |bfVar#136| |target|)
   (PROG (R)
     (RETURN
      (PROGN
       (SETQ R (CADDR |bfVar#136|))
       (M2L |x| (LIST '|Matrix| R) |target|)))))
- 
+
 ; Sm2M(x,[.,n,R],target is [.,S]) == M2M(x,[nil,R],target)
- 
+
 (DEFUN |Sm2M| (|x| |bfVar#137| |target|)
   (PROG (S |n| R)
     (RETURN
@@ -4247,7 +4210,7 @@
       (SETQ |n| (CADR . #1=(|bfVar#137|)))
       (SETQ R (CADDR . #1#))
       (M2M |x| (LIST NIL R) |target|)))))
- 
+
 ; Sm2PolyType(u,source is [sm,n,S], target is [pol,vl,T]) ==
 ;   -- only really handles cases like:
 ;   --      SM[2] P I -> P[x,y] SM[2] P I
@@ -4273,7 +4236,7 @@
 ;     objValUnwrap(u')
 ;   -- let other cases be handled by standard machinery
 ;   coercionFailure()
- 
+
 (DEFUN |Sm2PolyType| (|u| |source| |target|)
   (PROG (|pol| |vl| T$ |sm| |n| S |ISTMP#1| |S'| |vl'| |novars| |varsUsed|
          |source'| |u'|)
@@ -4345,13 +4308,13 @@
                         (|coercionFailure|))
                        (#3# (|objValUnwrap| |u'|))))))))
             (#3# (|coercionFailure|)))))))
- 
+
 ; Sm2Rm(x,[.,n,R],[.,p,q,S]) ==
 ;   x = '_$fromCoerceable_$ => p=q and p=n and canCoerce(R,S)
 ;   p=q and p=n =>
 ;     M2M(x,[nil,R],[nil,S])
 ;   coercionFailure()
- 
+
 (DEFUN |Sm2Rm| (|x| |bfVar#142| |bfVar#143|)
   (PROG (|p| |q| S |n| R)
     (RETURN
@@ -4367,22 +4330,22 @@
        ((AND (EQUAL |p| |q|) (EQUAL |p| |n|))
         (M2M |x| (LIST NIL R) (LIST NIL S)))
        ('T (|coercionFailure|)))))))
- 
+
 ; Sm2V(x,[.,.,R],target) == M2V(x,['Matrix,R],target)
- 
+
 (DEFUN |Sm2V| (|x| |bfVar#144| |target|)
   (PROG (R)
     (RETURN
      (PROGN
       (SETQ R (CADDR |bfVar#144|))
       (M2V |x| (LIST '|Matrix| R) |target|)))))
- 
+
 ; Sy2OV(u,source,target is [.,vl]) ==
 ;   u = '_$fromCoerceable_$ => nil
 ;   res := position1(u,vl)
 ;   res = 0 => coercionFailure()
 ;   res
- 
+
 (DEFUN |Sy2OV| (|u| |source| |target|)
   (PROG (|vl| |res|)
     (RETURN
@@ -4393,7 +4356,7 @@
              (PROGN
               (SETQ |res| (|position1| |u| |vl|))
               (COND ((EQL |res| 0) (|coercionFailure|)) (#1# |res|)))))))))
- 
+
 ; Sy2Dmp(u,source,target is [dmp,vl,S]) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(source,S)
 ;   len:= #vl
@@ -4402,7 +4365,7 @@
 ;     objValUnwrap(coerceInt(objNew(u,[dmp,vl,$Integer]),target))
 ;   (u := coerceInt(objNewWrap(u,source),S)) or coercionFailure()
 ;   [[Zeros len,:objValUnwrap u]]
- 
+
 (DEFUN |Sy2Dmp| (|u| |source| |target|)
   (PROG (|dmp| |vl| S |len| |n|)
     (RETURN
@@ -4443,14 +4406,14 @@
                  (OR (SETQ |u| (|coerceInt| (|objNewWrap| |u| |source|) S))
                      (|coercionFailure|))
                  (LIST (CONS (|Zeros| |len|) (|objValUnwrap| |u|)))))))))))))
- 
+
 ; Sy2Mp(u,source,target is [mp,vl,S]) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(source,S)
 ;   (n:= position1(u,vl)) ~= 0 =>
 ;     [1,n,[1,0,:domainOne(S)]]
 ;   (u := coerceInt(objNewWrap(u,source),S)) or coercionFailure()
 ;   [0,:objValUnwrap(u)]
- 
+
 (DEFUN |Sy2Mp| (|u| |source| |target|)
   (PROG (|mp| |vl| S |n|)
     (RETURN
@@ -4466,7 +4429,7 @@
               (OR (SETQ |u| (|coerceInt| (|objNewWrap| |u| |source|) S))
                   (|coercionFailure|))
               (CONS 0 (|objValUnwrap| |u|)))))))))
- 
+
 ; Sy2NDmp(u,source,target is [ndmp,vl,S]) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(source,S)
 ;   len:= #vl
@@ -4475,7 +4438,7 @@
 ;     objValUnwrap(coerceInt(objNew(u,[ndmp,vl,$Integer]),target))
 ;   (u := coerceInt(objNewWrap(u,source),S)) or coercionFailure()
 ;   [[Zeros len,:objValUnwrap(u)]]
- 
+
 (DEFUN |Sy2NDmp| (|u| |source| |target|)
   (PROG (|ndmp| |vl| S |len| |n|)
     (RETURN
@@ -4516,7 +4479,7 @@
                  (OR (SETQ |u| (|coerceInt| (|objNewWrap| |u| |source|) S))
                      (|coercionFailure|))
                  (LIST (CONS (|Zeros| |len|) (|objValUnwrap| |u|)))))))))))))
- 
+
 ; Sy2P(u,source,target is [poly,S]) ==
 ;   u = '_$fromCoerceable_$ => true
 ;   -- first try to get it into an underdomain
@@ -4525,7 +4488,7 @@
 ;     if u' then return [0,:objValUnwrap(u')]
 ;   -- if that failed, return it as a polynomial variable
 ;   [1,u,[1,0,:domainOne(S)]]
- 
+
 (DEFUN |Sy2P| (|u| |source| |target|)
   (PROG (|poly| S |u'|)
     (RETURN
@@ -4540,13 +4503,13 @@
                 (SETQ |u'| (|coerceInt| (|objNewWrap| |u| |source|) S))
                 (COND (|u'| (RETURN (CONS 0 (|objValUnwrap| |u'|)))))))
               (LIST 1 |u| (CONS 1 (CONS 0 (|domainOne| S)))))))))))
- 
+
 ; Sy2Up(u,source,target is [up,x,S]) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(source,S)
 ;   u=x => [[1,:domainOne(S)]]
 ;   (u := coerceInt(objNewWrap(u,source),S)) or coercionFailure()
 ;   [[0,:objValUnwrap u]]
- 
+
 (DEFUN |Sy2Up| (|u| |source| |target|)
   (PROG (|up| |x| S)
     (RETURN
@@ -4561,12 +4524,12 @@
               (OR (SETQ |u| (|coerceInt| (|objNewWrap| |u| |source|) S))
                   (|coercionFailure|))
               (LIST (CONS 0 (|objValUnwrap| |u|))))))))))
- 
+
 ; Sy2Var(u,source,target is [.,x]) ==
 ;   u = '_$fromCoerceable_$ => NIL
 ;   u=x => u
 ;   coercionFailure()
- 
+
 (DEFUN |Sy2Var| (|u| |source| |target|)
   (PROG (|x|)
     (RETURN
@@ -4574,7 +4537,7 @@
       (SETQ |x| (CADR |target|))
       (COND ((EQ |u| '|$fromCoerceable$|) NIL) ((EQUAL |u| |x|) |u|)
             ('T (|coercionFailure|)))))))
- 
+
 ; Up2Dmp(u,source is ['UnivariatePolynomial,var,S],
 ;  target is ['DistributedMultivariatePolynomial,vl,T]) ==
 ;   -- var must be a member of vl, or u is a constant
@@ -4599,7 +4562,7 @@
 ;     z => x
 ;     coercionFailure()
 ;   coercionFailure()
- 
+
 (DEFUN |Up2Dmp| (|u| |source| |target|)
   (PROG (|vl| T$ |var| S |ISTMP#1| |e| |c| |z| |x| |one| |plusfunc| |multfunc|
          |n| |p| |l1| |l2| |y|)
@@ -4686,29 +4649,29 @@
           |u| NIL NIL)
          (COND (|z| |x|) (#3# (|coercionFailure|)))))
        (#3# (|coercionFailure|)))))))
- 
+
 ; Up2Expr(u,source is [up,var,S], target is [Expr,T]) ==
 ;     u = '_$fromCoerceable_$ => canCoerce(S, target)
-; 
+;
 ;     null u => domainZero(target)
-; 
+;
 ;     u is [[e,:c]] and e=0 =>
 ;         (z := coerceInt(objNewWrap(c, S), target)) => objValUnwrap(z)
 ;         coercionFailure()
-; 
+;
 ;     sym := objValUnwrap coerceInt(objNewWrap(var, $Symbol), target)
-; 
+;
 ;     plus := getFunctionFromDomain("+",  target, [target, target])
 ;     mult := getFunctionFromDomain("*",  target, [target, target])
 ;     expn := getFunctionFromDomain("^", target, [target, $Integer])
-; 
+;
 ;     -- coerce via Horner's rule
-; 
+;
 ;     [e1, :c1] := first u
 ;     if not (S = target) then
 ;         not (c1 := coerceInt(objNewWrap(c1, S), target)) => coercionFailure()
 ;         c1 := objValUnwrap(c1)
-; 
+;
 ;     for [e2, :c2] in rest u repeat
 ;         coef :=
 ;             e1 - e2 = 1 => sym
@@ -4720,11 +4683,11 @@
 ;         coef := SPADCALL(SPADCALL(c1, coef, mult), c2, plus)
 ;         e1 := e2
 ;         c1 := coef
-; 
+;
 ;     e1 = 0 => c1
 ;     e1 = 1 => SPADCALL(sym, c1, mult)
 ;     SPADCALL(SPADCALL(sym, e1, expn), c1, mult)
- 
+
 (DEFUN |Up2Expr| (|u| |source| |target|)
   (PROG (|Expr| T$ |up| |var| S |ISTMP#1| |e| |c| |z| |sym| |plus| |mult|
          |expn| |LETTMP#1| |e1| |c1| |e2| |c2| |coef|)
@@ -4813,7 +4776,7 @@
                     (#2#
                      (SPADCALL (SPADCALL |sym| |e1| |expn|) |c1|
                       |mult|))))))))))
- 
+
 ; Up2FR(u,S is [.,x,R],target is [.,T]) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     S ~= T => nil
@@ -4826,7 +4789,7 @@
 ;     coercionFailure()
 ;   factor := getFunctionFromDomain('factor,package,[S])
 ;   SPADCALL(u,factor)
- 
+
 (DEFUN |Up2FR| (|u| S |target|)
   (PROG (T$ |x| R |package| |factor|)
     (RETURN
@@ -4849,34 +4812,34 @@
                        (#2# (|coercionFailure|))))
          (SETQ |factor| (|getFunctionFromDomain| '|factor| |package| (LIST S)))
          (SPADCALL |u| |factor|))))))))
- 
+
 ; Up2Mp(u,source is [.,x,S], target is [.,vl,T]) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     member(x,vl) => canCoerce(S,T)
 ;     canCoerce(source,T)
-; 
+;
 ;   null u => domainZero(target)
-; 
+;
 ;   null(rest(u)) and (first(u) is [e,:c]) and e=0 =>
 ;     x:= coerceInt(objNewWrap(c,S),target) => objValUnwrap(x)
 ;     coercionFailure()
-; 
+;
 ;   null member(x,vl) =>
 ;     (x := coerceInt(objNewWrap(u,source),T)) or coercionFailure()
 ;     [0,:objValUnwrap(x)]
-; 
+;
 ;   plus  := getFunctionFromDomain('_+,target,[target,target])
 ;   monom := getFunctionFromDomain('monomial,target,
 ;     [target,['OrderedVariableList,vl],$NonNegativeInteger])
 ;   sum := domainZero(target)
 ;   pos := position1(x,vl)
-; 
+;
 ;   for [e,:c] in u repeat
 ;     (p := coerceInt(objNewWrap(c,S),target)) or coercionFailure()
 ;     mon := SPADCALL(objValUnwrap(p),pos,e,monom)
 ;     sum := SPADCALL(sum,mon,plus)
 ;   sum
- 
+
 (DEFUN |Up2Mp| (|u| |source| |target|)
   (PROG (|vl| T$ |x| S |ISTMP#1| |e| |c| |plus| |monom| |sum| |pos| |p| |mon|)
     (RETURN
@@ -4940,7 +4903,7 @@
              (SETQ |bfVar#158| (CDR |bfVar#158|))))
           |u| NIL)
          |sum|)))))))
- 
+
 ; Up2P(u,source is [.,var,S],target is [.,T]) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(S,target)
 ;   null u => domainZero(target)
@@ -4963,7 +4926,7 @@
 ;     coercionFailure()
 ;   x => pol
 ;   coercionFailure()
- 
+
 (DEFUN |Up2P| (|u| |source| |target|)
   (PROG (T$ |var| S |ISTMP#1| |e| |c| |x| |res| |pol| |one| |plusfunc|
          |multfunc| |term|)
@@ -5043,7 +5006,7 @@
                   (SETQ |bfVar#163| (NULL |x|))))
                |u| NIL NIL)
               (COND (|x| |pol|) (#2# (|coercionFailure|))))))))))
- 
+
 ; Up2SUP(u,source is [.,x,S],target is [.,T]) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(source,T) or canCoerce(S,T)
 ;   null u => u
@@ -5059,7 +5022,7 @@
 ;       u' := [[e,:c'],:u']
 ;     nreverse u'
 ;   [[0,:objValUnwrap u']]
- 
+
 (DEFUN |Up2SUP| (|u| |source| |target|)
   (PROG (T$ |x| S |u'| |zero| |e| |c| |c'|)
     (RETURN
@@ -5098,7 +5061,7 @@
           |u| NIL)
          (NREVERSE |u'|)))
        (#2# (LIST (CONS 0 (|objValUnwrap| |u'|)))))))))
- 
+
 ; Up2Up(u,source is [.,v1,S], target is [.,v2,T]) ==
 ;   -- if v1 = v2 then this is handled by coerceIntByMap
 ;   -- this only handles case where poly is a constant
@@ -5110,7 +5073,7 @@
 ;     x:= coerceInt(objNewWrap(c,S),target) => objValUnwrap(x)
 ;     coercionFailure()
 ;   coercionFailure()
- 
+
 (DEFUN |Up2Up| (|u| |source| |target|)
   (PROG (|v2| T$ |v1| S |ISTMP#1| |e| |c| |x|)
     (RETURN
@@ -5138,7 +5101,7 @@
           (|objValUnwrap| |x|))
          (#3# (|coercionFailure|))))
        (#3# (|coercionFailure|)))))))
- 
+
 ; insertAlist(a,b,l) ==
 ;   null l => [[a,:b]]
 ;   a = l.0.0 => (rplac(CDAR l, b); l)
@@ -5148,7 +5111,7 @@
 ;     a = l.1.0 => rplac(rest(l.1), b)
 ;     _?ORDER(l.1.0, a) => rplac(rest l, [[a, :b], :rest l])
 ;     fn(a, b, rest l)
- 
+
 (DEFUN |insertAlist| (|a| |b| |l|)
   (PROG ()
     (RETURN
@@ -5165,13 +5128,13 @@
            ((?ORDER (ELT (ELT |l| 1) 0) |a|)
             (|rplac| (CDR |l|) (CONS (CONS |a| |b|) (CDR |l|))))
            ('T (|insertAlist,fn| |a| |b| (CDR |l|)))))))
- 
+
 ; Un2E(x,source,target) ==
 ;   ['Union,:branches] := source
 ;   x = '_$fromCoerceable_$ =>
 ;     and/[canCoerce(t, target) for t in branches | not STRINGP t]
 ;   coerceUn2E(x,source)
- 
+
 (DEFUN |Un2E| (|x| |source| |target|)
   (PROG (|branches|)
     (RETURN
@@ -5192,13 +5155,13 @@
             (SETQ |bfVar#166| (CDR |bfVar#166|))))
          T |branches| NIL))
        (#1# (|coerceUn2E| |x| |source|)))))))
- 
+
 ; Var2OV(u,source,target is [.,vl]) ==
 ;   sym := CADR source
 ;   u = '_$fromCoerceable_$ => member(sym,vl)
 ;   member(sym,vl) => position1(sym,vl)
 ;   coercionFailure()
- 
+
 (DEFUN |Var2OV| (|u| |source| |target|)
   (PROG (|vl| |sym|)
     (RETURN
@@ -5208,18 +5171,18 @@
       (COND ((EQ |u| '|$fromCoerceable$|) (|member| |sym| |vl|))
             ((|member| |sym| |vl|) (|position1| |sym| |vl|))
             ('T (|coercionFailure|)))))))
- 
+
 ; Var2Dmp(u,source,target is [dmp,vl,S]) ==
 ;   sym := CADR source
 ;   u = '_$fromCoerceable_$ => member(sym,vl) or canCoerce(source,S)
-; 
+;
 ;   len := #vl
 ;   -1 ~= (n:= position(sym,vl)) =>
 ;     LIST [LIST2VEC [(n=i => 1; 0) for i in 0..len-1],
 ;       :getConstantFromDomain('(One),S)]
 ;   (u := coerceInt(objNewWrap(u,source),S)) or coercionFailure()
 ;   [[Zeros len,:objValUnwrap u]]
- 
+
 (DEFUN |Var2Dmp| (|u| |source| |target|)
   (PROG (|dmp| |vl| S |sym| |len| |n|)
     (RETURN
@@ -5254,18 +5217,18 @@
             (OR (SETQ |u| (|coerceInt| (|objNewWrap| |u| |source|) S))
                 (|coercionFailure|))
             (LIST (CONS (|Zeros| |len|) (|objValUnwrap| |u|)))))))))))))
- 
+
 ; Var2Gdmp(u,source,target is [dmp,vl,S]) ==
 ;   sym := CADR source
 ;   u = '_$fromCoerceable_$ => member(sym,vl) or canCoerce(source,S)
-; 
+;
 ;   len := #vl
 ;   -1 ~= (n:= position(sym,vl)) =>
 ;     LIST [LIST2VEC [(n=i => 1; 0) for i in 0..len-1],
 ;       :getConstantFromDomain('(One),S)]
 ;   (u := coerceInt(objNewWrap(u,source),S)) or coercionFailure()
 ;   [[Zeros len,:objValUnwrap u]]
- 
+
 (DEFUN |Var2Gdmp| (|u| |source| |target|)
   (PROG (|dmp| |vl| S |sym| |len| |n|)
     (RETURN
@@ -5300,7 +5263,7 @@
             (OR (SETQ |u| (|coerceInt| (|objNewWrap| |u| |source|) S))
                 (|coercionFailure|))
             (LIST (CONS (|Zeros| |len|) (|objValUnwrap| |u|)))))))))))))
- 
+
 ; Var2Mp(u,source,target is [mp,vl,S]) ==
 ;   sym := CADR source
 ;   u = '_$fromCoerceable_$ => member(sym,vl) or canCoerce(source,S)
@@ -5308,7 +5271,7 @@
 ;     [1,n,[1,0,:getConstantFromDomain('(One),S)]]
 ;   (u := coerceInt(objNewWrap(u,source),S)) or coercionFailure()
 ;   [0,:objValUnwrap u]
- 
+
 (DEFUN |Var2Mp| (|u| |source| |target|)
   (PROG (|mp| |vl| S |sym| |n|)
     (RETURN
@@ -5327,18 +5290,18 @@
          (OR (SETQ |u| (|coerceInt| (|objNewWrap| |u| |source|) S))
              (|coercionFailure|))
          (CONS 0 (|objValUnwrap| |u|)))))))))
- 
+
 ; Var2NDmp(u,source,target is [ndmp,vl,S]) ==
 ;   sym := CADR source
 ;   u = '_$fromCoerceable_$ => member(sym,vl) or canCoerce(source,S)
-; 
+;
 ;   len:= #vl
 ;   -1~=(n:= position(u,vl)) =>
 ;     LIST [LIST2VEC [(n=i => 1; 0) for i in 0..len-1],
 ;       :getConstantFromDomain('(One),S)]
 ;   (u := coerceInt(objNewWrap(u,source),S)) or coercionFailure()
 ;   [[Zeros len,:objValUnwrap(u)]]
- 
+
 (DEFUN |Var2NDmp| (|u| |source| |target|)
   (PROG (|ndmp| |vl| S |sym| |len| |n|)
     (RETURN
@@ -5373,18 +5336,18 @@
             (OR (SETQ |u| (|coerceInt| (|objNewWrap| |u| |source|) S))
                 (|coercionFailure|))
             (LIST (CONS (|Zeros| |len|) (|objValUnwrap| |u|)))))))))))))
- 
+
 ; Var2P(u,source,target is [poly,S]) ==
 ;   sym := CADR source
 ;   u = '_$fromCoerceable_$ => true
-; 
+;
 ;   -- first try to get it into an underdomain
 ;   if (S ~= $Integer) then
 ;     u' := coerceInt(objNewWrap(u,source),S)
 ;     if u' then return [0,:objValUnwrap(u')]
 ;   -- if that failed, return it as a polynomial variable
 ;   [1,sym,[1,0,:getConstantFromDomain('(One),S)]]
- 
+
 (DEFUN |Var2P| (|u| |source| |target|)
   (PROG (|poly| S |sym| |u'|)
     (RETURN
@@ -5402,15 +5365,15 @@
               (LIST 1 |sym|
                     (CONS 1
                           (CONS 0 (|getConstantFromDomain| '(|One|) S)))))))))))
- 
+
 ; Var2QF(u,source,target is [qf,S]) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(source,S)
-; 
+;
 ;   S = $Integer => coercionFailure()
 ;   sym := CADR source
 ;   (u' := coerceInt(objNewWrap(u,source),S)) or coercionFailure()
 ;   [objValUnwrap u',:getConstantFromDomain('(One),S)]
- 
+
 (DEFUN |Var2QF| (|u| |source| |target|)
   (PROG (|qf| S |sym| |u'|)
     (RETURN
@@ -5426,15 +5389,15 @@
                   (|coercionFailure|))
               (CONS (|objValUnwrap| |u'|)
                     (|getConstantFromDomain| '(|One|) S)))))))))
- 
+
 ; Var2Up(u,source,target is [up,x,S]) ==
 ;   sym := CADR source
 ;   u = '_$fromCoerceable_$ => (sym = x) or canCoerce(source,S)
-; 
+;
 ;   x=sym => [[1,:getConstantFromDomain('(One),S)]]
 ;   (u := coerceInt(objNewWrap(u,source),S)) or coercionFailure()
 ;   [[0,:objValUnwrap u]]
- 
+
 (DEFUN |Var2Up| (|u| |source| |target|)
   (PROG (|up| |x| S |sym|)
     (RETURN
@@ -5452,15 +5415,15 @@
          (OR (SETQ |u| (|coerceInt| (|objNewWrap| |u| |source|) S))
              (|coercionFailure|))
          (LIST (CONS 0 (|objValUnwrap| |u|))))))))))
- 
+
 ; Var2SUP(u,source,target is [sup,S]) ==
 ;   sym := CADR source
 ;   u = '_$fromCoerceable_$ => (sym = "?") or canCoerce(source,S)
-; 
+;
 ;   sym = "?" => [[1,:getConstantFromDomain('(One),S)]]
 ;   (u := coerceInt(objNewWrap(u,source),S)) or coercionFailure()
 ;   [[0,:objValUnwrap u]]
- 
+
 (DEFUN |Var2SUP| (|u| |source| |target|)
   (PROG (|sup| S |sym|)
     (RETURN
@@ -5477,11 +5440,11 @@
          (OR (SETQ |u| (|coerceInt| (|objNewWrap| |u| |source|) S))
              (|coercionFailure|))
          (LIST (CONS 0 (|objValUnwrap| |u|))))))))))
- 
+
 ; Var2UpS(u,source,target is [ups,x,S]) ==
 ;   sym := CADR source
 ;   u = '_$fromCoerceable_$ => (sym = x) or canCoerce(source,S)
-; 
+;
 ;   mid := ['UnivariatePolynomial,x,S]
 ;   x = sym =>
 ;     u := Var2Up(u,source,mid)
@@ -5490,7 +5453,7 @@
 ;   (u := coerceInt(objNewWrap(u,source),S)) or coercionFailure()
 ;   (u := coerceInt(u,target)) or coercionFailure()
 ;   objValUnwrap u
- 
+
 (DEFUN |Var2UpS| (|u| |source| |target|)
   (PROG (|ups| |x| S |sym| |mid|)
     (RETURN
@@ -5518,7 +5481,7 @@
                 (|coercionFailure|))
             (OR (SETQ |u| (|coerceInt| |u| |target|)) (|coercionFailure|))
             (|objValUnwrap| |u|)))))))))))
- 
+
 ; Var2OtherPS(u,source,target is [.,x,S]) ==
 ;   sym := CADR source
 ;   mid := ['UnivariatePowerSeries,x,S]
@@ -5527,7 +5490,7 @@
 ;   u := Var2UpS(u,source,mid)
 ;   (u := coerceInt(objNewWrap(u,mid),target)) or coercionFailure()
 ;   objValUnwrap u
- 
+
 (DEFUN |Var2OtherPS| (|u| |source| |target|)
   (PROG (|x| S |sym| |mid|)
     (RETURN
@@ -5546,11 +5509,9 @@
          (OR (SETQ |u| (|coerceInt| (|objNewWrap| |u| |mid|) |target|))
              (|coercionFailure|))
          (|objValUnwrap| |u|))))))))
- 
+
 ; V2M(u,[.,D],[.,R]) ==
 ;   u = '_$fromCoerceable_$ => nil
-;     -- D is ['Vector,:.] => nil  -- don't have data
-;     -- canCoerce(D,R)
 ;   -- first see if we are coercing a vector of vectors
 ;   D is ['Vector,E] and
 ;     isRectangularVector(u, n := MAXINDEX u, m := MAXINDEX u.0) =>
@@ -5563,7 +5524,7 @@
 ;       res
 ;   -- if not, try making it into a 1 by n matrix
 ;   coercionFailure()
- 
+
 (DEFUN V2M (|u| |bfVar#174| |bfVar#175|)
   (PROG (R D |ISTMP#1| E |n| |m| |res| |x| |y'|)
     (RETURN
@@ -5603,13 +5564,13 @@
                0)
               |res|))
             (#1# (|coercionFailure|)))))))
- 
+
 ; V2Rm(u, source is [., D], [., n, m, R]) ==
 ;   u = '_$fromCoerceable_$ => nil
 ;   D is [.,E,:.] and isRectangularVector(u,n-1,m-1) =>
 ;       V2M(u, source, ["Matrix", R])
 ;   coercionFailure()
- 
+
 (DEFUN |V2Rm| (|u| |source| |bfVar#176|)
   (PROG (|n| |m| R D |ISTMP#1| E)
     (RETURN
@@ -5627,13 +5588,13 @@
                   (|isRectangularVector| |u| (- |n| 1) (- |m| 1)))
              (V2M |u| |source| (LIST '|Matrix| R)))
             (#2# (|coercionFailure|)))))))
- 
+
 ; V2Sm(u, source is [., D], [., n, R]) ==
 ;   u = '_$fromCoerceable_$ => nil
 ;   D is [.,E,:.] and isRectangularVector(u,n-1,n-1) =>
 ;       V2M(u, source, ["Matrix", R])
 ;   coercionFailure()
- 
+
 (DEFUN |V2Sm| (|u| |source| |bfVar#177|)
   (PROG (|n| R D |ISTMP#1| E)
     (RETURN
@@ -5650,11 +5611,11 @@
                   (|isRectangularVector| |u| (- |n| 1) (- |n| 1)))
              (V2M |u| |source| (LIST '|Matrix| R)))
             (#2# (|coercionFailure|)))))))
- 
+
 ; isRectangularVector(x,p,q) ==
 ;   MAXINDEX x = p =>
 ;     and/[q=MAXINDEX x.i for i in 0..p]
- 
+
 (DEFUN |isRectangularVector| (|x| |p| |q|)
   (PROG ()
     (RETURN
@@ -5670,25 +5631,25 @@
                     (COND ((NOT |bfVar#178|) (RETURN NIL))))))
             (SETQ |i| (+ |i| 1))))
          T 0)))))))
- 
+
 ; P2Uts(u, source, target) ==
 ;   P2Us(u,source, target, 'taylor)
- 
+
 (DEFUN |P2Uts| (|u| |source| |target|)
   (PROG () (RETURN (|P2Us| |u| |source| |target| '|taylor|))))
- 
+
 ; P2Uls(u, source, target) ==
 ;   P2Us(u,source, target, 'laurent)
- 
+
 (DEFUN |P2Uls| (|u| |source| |target|)
   (PROG () (RETURN (|P2Us| |u| |source| |target| '|laurent|))))
- 
+
 ; P2Upxs(u, source, target) ==
 ;   P2Us(u,source, target, 'puiseux)
- 
+
 (DEFUN |P2Upxs| (|u| |source| |target|)
   (PROG () (RETURN (|P2Us| |u| |source| |target| '|puiseux|))))
- 
+
 ; P2Us(u, source is [.,S], target is [.,T,var,cen], type) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     -- might be able to say yes
@@ -5715,7 +5676,7 @@
 ;   finalObj := coerceInt(objNewWrap(newVal, newType), target)
 ;   null finalObj => coercionFailure()
 ;   objValUnwrap finalObj
- 
+
 (DEFUN |P2Us| (|u| |source| |target| |type|)
   (PROG (T$ |var| |cen| S |obj| E |newU| |EQtype| |eqfun| |varE| |cenE| |eq|
          |package| |func| |newObj| |newType| |newVal| |finalObj|)
@@ -5781,7 +5742,7 @@
                                           (#2#
                                            (|objValUnwrap|
                                             |finalObj|))))))))))))))))))))))
- 
+
 ; commuteComplex(u,source,S,target,T) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     canCoerce(S,target) and canCoerce(T,target)
@@ -5796,7 +5757,7 @@
 ;   i := SPADCALL(objValUnwrap i, objValUnwrap imag, f)
 ;   f := getFunctionFromDomain("+",target,[target,target])
 ;   SPADCALL(objValUnwrap real,i,f)
- 
+
 (DEFUN |commuteComplex| (|u| |source| S |target| T$)
   (PROG (|real| |imag| |T'| |i| |f|)
     (RETURN
@@ -5821,7 +5782,7 @@
         (SETQ |f|
                 (|getFunctionFromDomain| '+ |target| (LIST |target| |target|)))
         (SPADCALL (|objValUnwrap| |real|) |i| |f|)))))))
- 
+
 ; commuteQuaternion(u,source,S,target,T) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     canCoerce(S,target) and canCoerce(T,target)
@@ -5838,7 +5799,7 @@
 ;   for x in c for y in e repeat
 ;     u' := SPADCALL(u',SPADCALL(x,y,mult),plus)
 ;   u'
- 
+
 (DEFUN |commuteQuaternion| (|u| |source| S |target| T$)
   (PROG (|c| |q| |e| |u'| |mult| |plus|)
     (RETURN
@@ -5917,7 +5878,7 @@
             (SETQ |bfVar#186| (CDR |bfVar#186|))))
          |c| NIL |e| NIL)
         |u'|))))))
- 
+
 ; commuteFraction(u,source,S,target,T) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     ofCategory(target,'(Field)) => canCoerce(S,target)
@@ -5943,7 +5904,7 @@
 ;   (n' := coerceInt(objNewWrap(n,S),target)) or coercionFailure()
 ;   multfunc := getFunctionFromDomain("*",target,[target,target])
 ;   SPADCALL(objValUnwrap d',objValUnwrap n',multfunc)
- 
+
 (DEFUN |commuteFraction| (|u| |source| S |target| T$)
   (PROG (|n| |d| |d'| |inv| |n'| |multfunc|)
     (RETURN
@@ -5984,7 +5945,7 @@
                     (LIST |target| |target|)))
            (SPADCALL (|objValUnwrap| |d'|) (|objValUnwrap| |n'|)
             |multfunc|))))))))))
- 
+
 ; commuteSquareMatrix(u,source,S,target,T) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     canCoerce(S,target) and canCoerce(T,target)
@@ -6008,7 +5969,7 @@
 ;       e' := SPADCALL(objValUnwrap(e'),objValUnwrap(Eij),multfunc)
 ;       u' := SPADCALL(e',u',plusfunc)
 ;   u'
- 
+
 (DEFUN |commuteSquareMatrix| (|u| |source| S |target| T$)
   (PROG (|u'| |plusfunc| |multfunc| |zero| |sm| |n| |S'| |e| |e'| |Eij|)
     (RETURN
@@ -6067,12 +6028,12 @@
             (SETQ |i| (+ |i| 1))))
          (- |n| 1) 0)
         |u'|))))))
- 
+
 ; makeEijSquareMatrix(i, j, dim) ==
 ;     res := MAKE_MATRIX1(dim, dim, 0)
 ;     QSETAREF2O(res, i, j, 1, 0, 0)
 ;     res
- 
+
 (DEFUN |makeEijSquareMatrix| (|i| |j| |dim|)
   (PROG (|res|)
     (RETURN
@@ -6080,27 +6041,27 @@
       (SETQ |res| (MAKE_MATRIX1 |dim| |dim| 0))
       (QSETAREF2O |res| |i| |j| 1 0 0)
       |res|))))
- 
+
 ; commuteUnivariatePolynomial(u,source,S,target,T) ==
 ;   commuteSparseUnivariatePolynomial(u,source,S,target,T)
- 
+
 (DEFUN |commuteUnivariatePolynomial| (|u| |source| S |target| T$)
   (PROG ()
     (RETURN (|commuteSparseUnivariatePolynomial| |u| |source| S |target| T$))))
- 
+
 ; commuteSparseUnivariatePolynomial(u,source,S,target,T) ==
 ;   u = '_$fromCoerceable_$ =>
 ;     canCoerce(S,target) and canCoerce(T,target)
-; 
+;
 ;   u' := domainZero(target)
 ;   null u => u'
-; 
+;
 ;   T'  := underDomainOf T
 ;   one := domainOne(T')
 ;   monom := getFunctionFromDomain('monomial,T,[T',$NonNegativeInteger])
 ;   plus  := getFunctionFromDomain("+",target,[target,target])
 ;   times := getFunctionFromDomain("*",target,[target,target])
-; 
+;
 ;   for [e,:c] in u repeat
 ;     (c := coerceInt(objNewWrap(c,S),target)) or coercionFailure()
 ;     m := SPADCALL(one,e,monom)
@@ -6109,7 +6070,7 @@
 ;     m := objValUnwrap m
 ;     u' := SPADCALL(u',SPADCALL(c,m,times),plus)
 ;   u'
- 
+
 (DEFUN |commuteSparseUnivariatePolynomial| (|u| |source| S |target| T$)
   (PROG (|u'| |T'| |one| |monom| |plus| |times| |e| |c| |m|)
     (RETURN
@@ -6165,32 +6126,32 @@
                     (SETQ |bfVar#190| (CDR |bfVar#190|))))
                  |u| NIL)
                 |u'|)))))))))
- 
+
 ; commutePolynomial(u,source,S,target,T) ==
 ;   commuteMPolyCat(u,source,S,target,T)
- 
+
 (DEFUN |commutePolynomial| (|u| |source| S |target| T$)
   (PROG () (RETURN (|commuteMPolyCat| |u| |source| S |target| T$))))
- 
+
 ; commuteMultivariatePolynomial(u,source,S,target,T) ==
 ;   commuteMPolyCat(u,source,S,target,T)
- 
+
 (DEFUN |commuteMultivariatePolynomial| (|u| |source| S |target| T$)
   (PROG () (RETURN (|commuteMPolyCat| |u| |source| S |target| T$))))
- 
+
 ; commuteDistributedMultivariatePolynomial(u,source,S,target,T) ==
 ;   commuteMPolyCat(u,source,S,target,T)
- 
+
 (DEFUN |commuteDistributedMultivariatePolynomial| (|u| |source| S |target| T$)
   (PROG () (RETURN (|commuteMPolyCat| |u| |source| S |target| T$))))
- 
+
 ; commuteNewDistributedMultivariatePolynomial(u,source,S,target,T) ==
 ;   commuteMPolyCat(u,source,S,target,T)
- 
+
 (DEFUN |commuteNewDistributedMultivariatePolynomial|
        (|u| |source| S |target| T$)
   (PROG () (RETURN (|commuteMPolyCat| |u| |source| S |target| T$))))
- 
+
 ; commuteMPolyCat(u,source,S,target,T) ==
 ;   u = '_$fromCoerceable_$ => canCoerce(S,target)
 ;   -- check constant case
@@ -6200,31 +6161,31 @@
 ;     c := SPADCALL(u,constfun)
 ;     (u' := coerceInt(objNewWrap(c,S),target)) or coercionFailure()
 ;     objValUnwrap(u')
-; 
+;
 ;   lmfun := getFunctionFromDomain('leadingMonomial,source,[source])
 ;   lm := SPADCALL(u,lmfun)    -- has type source, is leading monom
-; 
+;
 ;   lcfun := getFunctionFromDomain('leadingCoefficient,source,[source])
 ;   lc := SPADCALL(lm,lcfun)    -- has type S, is leading coef
 ;   (lc' := coerceInt(objNewWrap(lc,S),target)) or coercionFailure()
-; 
+;
 ;   pmfun := getFunctionFromDomain('primitiveMonomials,source,[source])
 ;   lm := first SPADCALL(lm,pmfun) -- now we have removed the leading coef
 ;   (lm' := coerceInt(objNewWrap(lm,source),T)) or coercionFailure()
 ;   (lm' := coerceInt(lm',target)) or coercionFailure()
-; 
+;
 ;   rdfun := getFunctionFromDomain('reductum,source,[source])
 ;   rd := SPADCALL(u,rdfun)    -- has type source, is reductum
 ;   (rd' := coerceInt(objNewWrap(rd,source),target)) or coercionFailure()
-; 
+;
 ;   lc' := objValUnwrap lc'
 ;   lm' := objValUnwrap lm'
 ;   rd' := objValUnwrap rd'
-; 
+;
 ;   plusfun := getFunctionFromDomain("+",target,[target,target])
 ;   multfun := getFunctionFromDomain("*",target,[target,target])
 ;   SPADCALL(SPADCALL(lc',lm',multfun),rd',plusfun)
- 
+
 (DEFUN |commuteMPolyCat| (|u| |source| S |target| T$)
   (PROG (|isconstfun| |constfun| |c| |u'| |lmfun| |lm| |lcfun| |lc| |lc'|
          |pmfun| |lm'| |rdfun| |rd| |rd'| |plusfun| |multfun|)
@@ -6284,7 +6245,7 @@
                          (LIST |target| |target|)))
                 (SPADCALL (SPADCALL |lc'| |lm'| |multfun|) |rd'|
                  |plusfun|))))))))))
- 
+
 ; DEFPARAMETER($CoerceTable, '(                                          _
 ;   (Complex . ( _
 ;     (Expression                       indeterm   Complex2Expr) _
@@ -6314,12 +6275,12 @@
 ;     (UnivariatePuiseuxSeries                         indeterm   P2Upxs) _
 ;     (UnivariateTaylorSeries                          indeterm   P2Uts) _
 ;     )) _
-; 
+;
 ;   (Kernel . ( _
 ;     (Kernel                                          indeterm   Ker2Ker) _
 ;     (Expression                                      indeterm   Ker2Expr) _
 ;      )) _
-; 
+;
 ;   (Factored . ( _
 ;     (Factored                             indeterm   Factored2Factored) _
 ;     ))_
@@ -6469,7 +6430,7 @@
 ;     (Stream                               indeterm   Agg2Agg) _
 ;     ) ) _
 ;   ) )
- 
+
 (DEFPARAMETER |$CoerceTable|
   '((|Complex| (|Expression| |indeterm| |Complex2Expr|)
      (|Factored| |indeterm| |Complex2FR|)
@@ -6586,7 +6547,7 @@
      (|Matrix| |indeterm| V2M) (|RectangularMatrix| |indeterm| |V2Rm|)
      (|Set| |indeterm| |Agg2L2Agg|) (|SquareMatrix| |indeterm| |V2Sm|)
      (|Stream| |indeterm| |Agg2Agg|))))
- 
+
 ; DEFPARAMETER($CommuteTable, '(                                           _
 ;   (Complex . (                                                         _
 ;     (DistributedMultivariatePolynomial    commute    commuteG2)         _
@@ -6618,7 +6579,7 @@
 ;     (UnivariatePolynomial                 commute    commuteSm2)        _
 ;     ))                                                                  _
 ;   ))
- 
+
 (DEFPARAMETER |$CommuteTable|
   '((|Complex| (|DistributedMultivariatePolynomial| |commute| |commuteG2|)
      (|MultivariatePolynomial| |commute| |commuteG2|)

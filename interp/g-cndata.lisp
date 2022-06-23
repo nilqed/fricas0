@@ -1,20 +1,19 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; mkLowerCaseConTable() ==
-; --Called at system build time by function BUILD-INTERPSYS (see util.lisp)
 ; --Table is referenced by functions conPageFastPath and grepForAbbrev
-;   $lowerCaseConTb := MAKE_-HASH_-TABLE()
+;   $lowerCaseConTb := MAKE_HASHTABLE('EQUAL)
 ;   for x in allConstructors() repeat augmentLowerCaseConTable x
 ;   $lowerCaseConTb
- 
-(DEFUN |mkLowerCaseConTable| #1=()
-  (PROG #1#
+
+(DEFUN |mkLowerCaseConTable| ()
+  (PROG ()
     (RETURN
      (PROGN
-      (SETQ |$lowerCaseConTb| (MAKE-HASH-TABLE))
+      (SETQ |$lowerCaseConTb| (MAKE_HASHTABLE 'EQUAL))
       ((LAMBDA (|bfVar#1| |x|)
          (LOOP
           (COND
@@ -24,14 +23,14 @@
           (SETQ |bfVar#1| (CDR |bfVar#1|))))
        (|allConstructors|) NIL)
       |$lowerCaseConTb|))))
- 
+
 ; augmentLowerCaseConTable x ==
 ;   y:=GETDATABASE(x,'ABBREVIATION)
 ;   item:=[x,y,nil]
 ;   HPUT($lowerCaseConTb,x,item)
 ;   HPUT($lowerCaseConTb,DOWNCASE x,item)
 ;   HPUT($lowerCaseConTb,y,item)
- 
+
 (DEFUN |augmentLowerCaseConTable| (|x|)
   (PROG (|y| |item|)
     (RETURN
@@ -41,7 +40,7 @@
       (HPUT |$lowerCaseConTb| |x| |item|)
       (HPUT |$lowerCaseConTb| (DOWNCASE |x|) |item|)
       (HPUT |$lowerCaseConTb| |y| |item|)))))
- 
+
 ; getCDTEntry(info,isName) ==
 ;   not IDENTP info => NIL
 ;   (entry := HGET($lowerCaseConTb,info)) =>
@@ -50,7 +49,7 @@
 ;     not isName and EQ(abb,info) => entry
 ;     NIL
 ;   entry
- 
+
 (DEFUN |getCDTEntry| (|info| |isName|)
   (PROG (|entry| |name| |abb|)
     (RETURN
@@ -63,40 +62,40 @@
                    ((AND (NULL |isName|) (EQ |abb| |info|)) |entry|)
                    (#1='T NIL))))
            (#1# |entry|)))))
- 
+
 ; abbreviation? abb ==
 ;   -- if it is an abbreviation, return the corresponding name
 ;   GETDATABASE(abb,'CONSTRUCTOR)
- 
+
 (DEFUN |abbreviation?| (|abb|)
   (PROG () (RETURN (GETDATABASE |abb| 'CONSTRUCTOR))))
- 
+
 ; constructor? name ==
 ;   -- if it is a constructor name, return the abbreviation
 ;   GETDATABASE(name,'ABBREVIATION)
- 
+
 (DEFUN |constructor?| (|name|)
   (PROG () (RETURN (GETDATABASE |name| 'ABBREVIATION))))
- 
+
 ; domainForm? d ==
 ;   GETDATABASE(opOf d,'CONSTRUCTORKIND) = 'domain
- 
+
 (DEFUN |domainForm?| (|d|)
   (PROG () (RETURN (EQ (GETDATABASE (|opOf| |d|) 'CONSTRUCTORKIND) '|domain|))))
- 
+
 ; packageForm? d ==
 ;   GETDATABASE(opOf d,'CONSTRUCTORKIND) = 'package
- 
+
 (DEFUN |packageForm?| (|d|)
   (PROG ()
     (RETURN (EQ (GETDATABASE (|opOf| |d|) 'CONSTRUCTORKIND) '|package|))))
- 
+
 ; categoryForm? c ==
 ;   op := opOf c
 ;   MEMQ(op, $CategoryNames) => true
 ;   GETDATABASE(op,'CONSTRUCTORKIND) = 'category => true
 ;   nil
- 
+
 (DEFUN |categoryForm?| (|c|)
   (PROG (|op|)
     (RETURN
@@ -105,17 +104,17 @@
       (COND ((MEMQ |op| |$CategoryNames|) T)
             ((EQ (GETDATABASE |op| 'CONSTRUCTORKIND) '|category|) T)
             ('T NIL))))))
- 
+
 ; getImmediateSuperDomain(d) ==
 ;   IFCAR GETDATABASE(opOf d, 'SUPERDOMAIN)
- 
+
 (DEFUN |getImmediateSuperDomain| (|d|)
   (PROG () (RETURN (IFCAR (GETDATABASE (|opOf| |d|) 'SUPERDOMAIN)))))
- 
+
 ; maximalSuperType d ==
 ;   d' := GETDATABASE(opOf d, 'SUPERDOMAIN) => maximalSuperType first d'
 ;   d
- 
+
 (DEFUN |maximalSuperType| (|d|)
   (PROG (|d'|)
     (RETURN
@@ -123,39 +122,39 @@
       ((SETQ |d'| (GETDATABASE (|opOf| |d|) 'SUPERDOMAIN))
        (|maximalSuperType| (CAR |d'|)))
       ('T |d|)))))
- 
+
 ; getConstructorAbbreviation op ==
 ;   constructor?(op) or throwKeyedMsg("S2IL0015",[op])
- 
+
 (DEFUN |getConstructorAbbreviation| (|op|)
   (PROG ()
     (RETURN
      (OR (|constructor?| |op|) (|throwKeyedMsg| 'S2IL0015 (LIST |op|))))))
- 
+
 ; mkUserConstructorAbbreviation(c,a,type) ==
 ;   if not atom c then c := first c  --  Existing constructors will be wrapped
-;   constructorAbbreviationErrorCheck(c,a,type,'abbreviationError)
+;   constructorAbbreviationErrorCheck(c, a, type)
 ;   clearClams()
 ;   clearConstructorCache(c)
-;   installConstructor(c,type)
+;   installConstructor(c)
 ;   setAutoLoadProperty(c)
- 
+
 (DEFUN |mkUserConstructorAbbreviation| (|c| |a| |type|)
   (PROG ()
     (RETURN
      (PROGN
       (COND ((NULL (ATOM |c|)) (SETQ |c| (CAR |c|))))
-      (|constructorAbbreviationErrorCheck| |c| |a| |type| '|abbreviationError|)
+      (|constructorAbbreviationErrorCheck| |c| |a| |type|)
       (|clearClams|)
       (|clearConstructorCache| |c|)
-      (|installConstructor| |c| |type|)
+      (|installConstructor| |c|)
       (|setAutoLoadProperty| |c|)))))
- 
+
 ; abbQuery(x) ==
 ;   abb := GETDATABASE(x,'ABBREVIATION) =>
 ;    sayKeyedMsg("S2IZ0001",[abb,GETDATABASE(x,'CONSTRUCTORKIND),x])
 ;   sayKeyedMsg("S2IZ0003",[x])
- 
+
 (DEFUN |abbQuery| (|x|)
   (PROG (|abb|)
     (RETURN
@@ -164,15 +163,15 @@
        (|sayKeyedMsg| 'S2IZ0001
         (LIST |abb| (GETDATABASE |x| 'CONSTRUCTORKIND) |x|)))
       ('T (|sayKeyedMsg| 'S2IZ0003 (LIST |x|)))))))
- 
-; installConstructor(cname,type) ==
+
+; installConstructor(cname) ==
 ;   (entry := getCDTEntry(cname,true)) => entry
 ;   item := [cname,GETDATABASE(cname,'ABBREVIATION),nil]
 ;   if BOUNDP '$lowerCaseConTb and $lowerCaseConTb then
 ;     HPUT($lowerCaseConTb,cname,item)
 ;     HPUT($lowerCaseConTb,DOWNCASE cname,item)
- 
-(DEFUN |installConstructor| (|cname| |type|)
+
+(DEFUN |installConstructor| (|cname|)
   (PROG (|entry| |item|)
     (RETURN
      (COND ((SETQ |entry| (|getCDTEntry| |cname| T)) |entry|)
@@ -184,8 +183,8 @@
               ((AND (BOUNDP '|$lowerCaseConTb|) |$lowerCaseConTb|)
                (HPUT |$lowerCaseConTb| |cname| |item|)
                (HPUT |$lowerCaseConTb| (DOWNCASE |cname|) |item|)))))))))
- 
-; constructorAbbreviationErrorCheck(c,a,typ,errmess) ==
+
+; constructorAbbreviationErrorCheck(c,a,typ) ==
 ;   siz := SIZE (s := PNAME a)
 ;   if typ = 'category and siz > 7
 ;     then throwKeyedErrorMsg('precompilation,"S2IL0021",NIL)
@@ -197,8 +196,8 @@
 ;   a=abb and c~=name => lisplibError(c,a,typ,abb,name,type,'duplicateAbb)
 ;   a=name and c~=name => lisplibError(c,a,typ,abb,name,type,'abbIsName)
 ;   c=name and typ~=type => lisplibError(c,a,typ,abb,name,type,'wrongType)
- 
-(DEFUN |constructorAbbreviationErrorCheck| (|c| |a| |typ| |errmess|)
+
+(DEFUN |constructorAbbreviationErrorCheck| (|c| |a| |typ|)
   (PROG (|s| |siz| |abb| |name| |type|)
     (RETURN
      (PROGN
@@ -219,31 +218,7 @@
         (|lisplibError| |c| |a| |typ| |abb| |name| |type| '|abbIsName|))
        ((AND (EQUAL |c| |name|) (NOT (EQUAL |typ| |type|)))
         (|lisplibError| |c| |a| |typ| |abb| |name| |type| '|wrongType|)))))))
- 
-; abbreviationError(c,a,typ,abb,name,type,error) ==
-;   sayKeyedMsg("S2IL0009",[a,typ,c])
-;   error='duplicateAbb =>
-;     throwKeyedMsg("S2IL0010",[a,typ,name])
-;   error='abbIsName =>
-;     throwKeyedMsg("S2IL0011",[a,type])
-;   error='wrongType =>
-;     throwKeyedMsg("S2IL0012",[c,type])
-;   NIL
- 
-(DEFUN |abbreviationError| (|c| |a| |typ| |abb| |name| |type| |error|)
-  (PROG ()
-    (RETURN
-     (PROGN
-      (|sayKeyedMsg| 'S2IL0009 (LIST |a| |typ| |c|))
-      (COND
-       ((EQ |error| '|duplicateAbb|)
-        (|throwKeyedMsg| 'S2IL0010 (LIST |a| |typ| |name|)))
-       ((EQ |error| '|abbIsName|)
-        (|throwKeyedMsg| 'S2IL0011 (LIST |a| |type|)))
-       ((EQ |error| '|wrongType|)
-        (|throwKeyedMsg| 'S2IL0012 (LIST |c| |type|)))
-       ('T NIL))))))
- 
+
 ; abbreviate u ==
 ;   u is ['Union,:arglist] =>
 ;     ['Union,:[abbreviate a for a in arglist]]
@@ -252,7 +227,7 @@
 ;       [abb,:condAbbrev(arglist,getPartialConstructorModemapSig(op))]
 ;     u
 ;   constructor?(u) or u
- 
+
 (DEFUN |abbreviate| (|u|)
   (PROG (|arglist| |op| |abb|)
     (RETURN
@@ -277,22 +252,22 @@
                 (|getPartialConstructorModemapSig| |op|))))
         (#1# |u|)))
       (#1# (OR (|constructor?| |u|) |u|))))))
- 
+
 ; unabbrev u == unabbrev1(u,nil)
- 
+
 (DEFUN |unabbrev| (|u|) (PROG () (RETURN (|unabbrev1| |u| NIL))))
- 
+
 ; unabbrevAndLoad u == unabbrev1(u,true)
- 
+
 (DEFUN |unabbrevAndLoad| (|u|) (PROG () (RETURN (|unabbrev1| |u| T))))
- 
+
 ; isNameOfType x ==
 ;   (val := get(x,'value,$InteractiveFrame)) and
 ;     (domain := objMode val) and
 ;       domain in '((Mode) (Type) (Category)) => true
 ;   y := opOf unabbrev x
 ;   constructor? y
- 
+
 (DEFUN |isNameOfType| (|x|)
   (PROG (|val| |domain| |y|)
     (RETURN
@@ -302,7 +277,7 @@
             (|member| |domain| '((|Mode|) (|Type|) (|Category|))))
        T)
       ('T (PROGN (SETQ |y| (|opOf| (|unabbrev| |x|))) (|constructor?| |y|)))))))
- 
+
 ; unabbrev1(u,modeIfTrue) ==
 ;   atom u =>
 ;     modeIfTrue =>
@@ -327,7 +302,7 @@
 ;     [cname,:condUnabbrev(op,arglist,
 ;       getPartialConstructorModemapSig(cname),modeIfTrue)]
 ;   u
- 
+
 (DEFUN |unabbrev1| (|u| |modeIfTrue|)
   (PROG (|d| |a| |largs| |op| |arglist| |r| |cname|)
     (RETURN
@@ -394,7 +369,7 @@
                    (|getPartialConstructorModemapSig| |cname|)
                    |modeIfTrue|)))))
          (#1# |u|))))))))
- 
+
 ; unabbrevSpecialForms(op,arglist,modeIfTrue) ==
 ;   op = 'Mapping => [op,:[unabbrev1(a,modeIfTrue) for a in arglist]]
 ;   op = 'Union   =>
@@ -402,7 +377,7 @@
 ;   op = 'Record =>
 ;     [op,:[unabbrevRecordComponent(a,modeIfTrue) for a in arglist]]
 ;   nil
- 
+
 (DEFUN |unabbrevSpecialForms| (|op| |arglist| |modeIfTrue|)
   (PROG ()
     (RETURN
@@ -448,12 +423,12 @@
                  (SETQ |bfVar#12| (CDR |bfVar#12|))))
               NIL |arglist| NIL)))
       (#1# NIL)))))
- 
+
 ; unabbrevRecordComponent(a,modeIfTrue) ==
 ;   a is ["Declare",b,T] or a is [":",b,T] =>
 ;     [":",b,unabbrev1(T,modeIfTrue)]
 ;   userError "wrong format for Record type"
- 
+
 (DEFUN |unabbrevRecordComponent| (|a| |modeIfTrue|)
   (PROG (|ISTMP#1| |b| |ISTMP#2| T$)
     (RETURN
@@ -479,12 +454,12 @@
                          (PROGN (SETQ T$ (CAR |ISTMP#2|)) #1#)))))))
        (LIST '|:| |b| (|unabbrev1| T$ |modeIfTrue|)))
       (#1# (|userError| '|wrong format for Record type|))))))
- 
+
 ; unabbrevUnionComponent(a,modeIfTrue) ==
 ;   a is ["Declare",b,T] or a is [":",b,T] =>
 ;     [":",b,unabbrev1(T,modeIfTrue)]
 ;   unabbrev1(a, modeIfTrue)
- 
+
 (DEFUN |unabbrevUnionComponent| (|a| |modeIfTrue|)
   (PROG (|ISTMP#1| |b| |ISTMP#2| T$)
     (RETURN
@@ -510,14 +485,14 @@
                          (PROGN (SETQ T$ (CAR |ISTMP#2|)) #1#)))))))
        (LIST '|:| |b| (|unabbrev1| T$ |modeIfTrue|)))
       (#1# (|unabbrev1| |a| |modeIfTrue|))))))
- 
+
 ; condAbbrev(arglist,argtypes) ==
 ;   res:= nil
 ;   for arg in arglist for type in argtypes repeat
 ;     if categoryForm?(type) then arg:= abbreviate arg
 ;     res:=[:res,arg]
 ;   res
- 
+
 (DEFUN |condAbbrev| (|arglist| |argtypes|)
   (PROG (|res|)
     (RETURN
@@ -538,7 +513,7 @@
           (SETQ |bfVar#15| (CDR |bfVar#15|))))
        |arglist| NIL |argtypes| NIL)
       |res|))))
- 
+
 ; condUnabbrev(op,arglist,argtypes,modeIfTrue) ==
 ;   #arglist ~= #argtypes =>
 ;     throwKeyedMsg("S2IL0014",[op,plural(#argtypes,'"argument"),
@@ -546,7 +521,7 @@
 ;   [newArg for arg in arglist for type in argtypes] where newArg ==
 ;     categoryForm?(type) => unabbrev1(arg,modeIfTrue)
 ;     arg
- 
+
 (DEFUN |condUnabbrev| (|op| |arglist| |argtypes| |modeIfTrue|)
   (PROG ()
     (RETURN

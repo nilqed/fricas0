@@ -5,26 +5,24 @@
 
 (DEFPARAMETER |FiniteRankNonAssociativeAlgebra;AL| 'NIL) 
 
-(DEFUN |FiniteRankNonAssociativeAlgebra| (#1=#:G712)
-  (LET (#2=#:G713)
+(DEFUN |FiniteRankNonAssociativeAlgebra| (|t#1|)
+  (LET (#1=#:G711 (#2=#:G712 (|devaluate| |t#1|)))
     (COND
-     ((SETQ #2#
-              (|assoc| #3=(|devaluate| #1#)
-                       |FiniteRankNonAssociativeAlgebra;AL|))
-      (CDR #2#))
+     ((SETQ #1# (|assoc| #2# |FiniteRankNonAssociativeAlgebra;AL|)) (CDR #1#))
      (T
       (SETQ |FiniteRankNonAssociativeAlgebra;AL|
               (|cons5|
-               (CONS #3# (SETQ #2# (|FiniteRankNonAssociativeAlgebra;| #1#)))
+               (CONS #2# (SETQ #1# (|FiniteRankNonAssociativeAlgebra;| #2#)))
                |FiniteRankNonAssociativeAlgebra;AL|))
-      #2#)))) 
+      #1#)))) 
 
 (DEFUN |FiniteRankNonAssociativeAlgebra;| (|t#1|)
-  (SPROG ((#1=#:G711 NIL))
+  (SPROG ((#1=#:G710 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
-                              (COND (|FiniteRankNonAssociativeAlgebra;CAT|)
+                   (|subst_in_cat| '(|t#1|) (LIST |t#1|)
+                                   (COND
+                                    (|FiniteRankNonAssociativeAlgebra;CAT|)
                                     ('T
                                      (LETT
                                       |FiniteRankNonAssociativeAlgebra;CAT|
@@ -194,17 +192,5 @@
                                                '(((|unitsKnown|)
                                                   (|has| |t#1|
                                                          (|IntegralDomain|))))
-                                               '((|SparseUnivariatePolynomial|
-                                                  |t#1|)
-                                                 (|List| (|Vector| |t#1|))
-                                                 (|Boolean|) (|Matrix| |t#1|)
-                                                 (|Vector| $) (|Vector| |t#1|)
-                                                 (|Vector| (|Matrix| |t#1|))
-                                                 (|List| (|Polynomial| |t#1|))
-                                                 (|PositiveInteger|))
-                                               NIL))
-                                      . #2=(|FiniteRankNonAssociativeAlgebra|)))))
-                   . #2#)
-           (SETELT #1# 0
-                   (LIST '|FiniteRankNonAssociativeAlgebra|
-                         (|devaluate| |t#1|)))))) 
+                                               NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|FiniteRankNonAssociativeAlgebra| |t#1|))))) 

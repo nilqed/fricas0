@@ -41,7 +41,6 @@
 (defvar |$reportInstantiations| nil)
 (defvar |$reportEachInstantiation| nil)
 (defvar |$reportCounts| nil)
-(defvar |$compileOnlyCertainItems| nil "list of functions to compile")
 (defvar |$doNotCompileJustPrint| nil "switch for compile")
 (defvar |$PrintCompilerMessageIfTrue| t)
 (defvar |$Rep| '|$Rep| "should be bound to gensym? checked in coerce")
@@ -71,10 +70,8 @@
 (defun |makeSF| (mantissa exponent)
   (FLOAT (/ mantissa (expt 2 (- exponent))) 0.0d0))
 
-;; This is used in the domain Boolean (BOOLEAN.NRLIB/code.lsp)
+;; This is used in the domain Boolean
 (defun |BooleanEquality| (x y) (if x y (null y)))
-
-(MAKEPROP 'END_UNIT 'KEY T)
 
 ;;; (defun |evalSharpOne| (x \#1) (declare (special \#1)) (EVAL x))
 (defun |evalSharpOne| (x |#1|)
@@ -96,12 +93,6 @@
 (MAKEPROP 'SEGMENT '|isSuffix| 'T)
 
 ;; function to create byte and half-word vectors in new runtime system 8/90
-
-(defun |makeByteWordVec| (initialvalue)
-  (let ((n (cond ((null initialvalue) 7) ('t (reduce #'max initialvalue)))))
-    (make-array (length initialvalue)
-      :element-type (list 'mod (1+ n))
-      :initial-contents initialvalue)))
 
 (defun |makeByteWordVec2| (maxelement initialvalue)
   (let ((n (cond ((null initialvalue) 7) ('t maxelement))))

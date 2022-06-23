@@ -1,20 +1,20 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; $systemType := nil
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$systemType| NIL))
- 
+
 ; $numberOfEquations := 0
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$numberOfEquations| 0))
- 
+
 ; $solutionMethod := nil
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$solutionMethod| NIL))
- 
+
 ; bcSolve() ==
 ;   htInitPage('"Solve Basic Command", nil)
 ;   htMakePage '(
@@ -28,9 +28,9 @@
 ;    (bcLinks ("\menuitemstyle{A Single Polynomial Equation}" "" bcSolveSingle onePolynomial))
 ;    (text . "\endmenu"))
 ;   htShowPage()
- 
-(DEFUN |bcSolve| #1=()
-  (PROG #1#
+
+(DEFUN |bcSolve| ()
+  (PROG ()
     (RETURN
      (PROGN
       (|htInitPage| "Solve Basic Command" NIL)
@@ -50,7 +50,7 @@
            |onePolynomial|))
          (|text| . "\\endmenu")))
       (|htShowPage|)))))
- 
+
 ; bcLinearSolve(p,nn) ==
 ;   htInitPage('"Basic Solve Command", nil)
 ;   htMakePage '(
@@ -67,7 +67,7 @@
 ;     (text . "\indentrel{-16}\item ")
 ;     (text . "\endmenu"))
 ;   htShowPage()
- 
+
 (DEFUN |bcLinearSolve| (|p| |nn|)
   (PROG ()
     (RETURN
@@ -88,7 +88,7 @@
           . " \\spad{AX = B}, where \\spad{A} is a matrix of coefficients and \\spad{B} is a vector")
          (|text| . "\\indentrel{-16}\\item ") (|text| . "\\endmenu")))
       (|htShowPage|)))))
- 
+
 ; bcLinearSolveEqns(htPage, p) ==
 ;   htInitPage('"Basic Solve Command", nil)
 ;   htMakePage '(
@@ -97,7 +97,7 @@
 ;       ("Enter the {\em number} of equations:" "" 5 2 numberOfEquations PI)))
 ;   htMakeDoneButton('"Continue", 'bcLinearSolveEqns1)
 ;   htShowPage()
- 
+
 (DEFUN |bcLinearSolveEqns| (|htPage| |p|)
   (PROG ()
     (RETURN
@@ -110,7 +110,7 @@
            PI))))
       (|htMakeDoneButton| "Continue" '|bcLinearSolveEqns1|)
       (|htShowPage|)))))
- 
+
 ; bcSystemSolve(htPage, p) ==
 ;   htInitPage('"Basic Solve Command", nil)
 ;   htMakePage '(
@@ -119,7 +119,7 @@
 ;       ("Enter the {\em number} of equations:" "" 5 2 numberOfEquations PI)))
 ;   htMakeDoneButton('"Continue", 'bcSystemSolveEqns1)
 ;   htShowPage()
- 
+
 (DEFUN |bcSystemSolve| (|htPage| |p|)
   (PROG ()
     (RETURN
@@ -132,12 +132,12 @@
            PI))))
       (|htMakeDoneButton| "Continue" '|bcSystemSolveEqns1|)
       (|htShowPage|)))))
- 
+
 ; bcSolveSingle(htPage,p) ==
 ;   htpSetProperty(htPage,'systemType, 'onePolynomial)
 ;   htpSetProperty(htPage,'exitFunction,'bcInputSolveInfo)
 ;   bcInputEquations(htPage,'exact)
- 
+
 (DEFUN |bcSolveSingle| (|htPage| |p|)
   (PROG ()
     (RETURN
@@ -145,12 +145,12 @@
       (|htpSetProperty| |htPage| '|systemType| '|onePolynomial|)
       (|htpSetProperty| |htPage| '|exitFunction| '|bcInputSolveInfo|)
       (|bcInputEquations| |htPage| '|exact|)))))
- 
+
 ; bcSystemSolveEqns1 htPage ==
 ;   htpSetProperty(htPage,'systemType,'polynomial)
 ;   htpSetProperty(htPage,'exitFunction,'bcInputSolveInfo)
 ;   bcInputEquations(htPage,'exact)
- 
+
 (DEFUN |bcSystemSolveEqns1| (|htPage|)
   (PROG ()
     (RETURN
@@ -158,12 +158,12 @@
       (|htpSetProperty| |htPage| '|systemType| '|polynomial|)
       (|htpSetProperty| |htPage| '|exitFunction| '|bcInputSolveInfo|)
       (|bcInputEquations| |htPage| '|exact|)))))
- 
+
 ; bcLinearSolveEqns1 htPage ==
 ;   htpSetProperty(htPage,'systemType,'linear)
 ;   htpSetProperty(htPage,'exitFunction,'bcLinearSolveEqnsGen)
 ;   bcInputEquations(htPage,'exact)
- 
+
 (DEFUN |bcLinearSolveEqns1| (|htPage|)
   (PROG ()
     (RETURN
@@ -171,7 +171,7 @@
       (|htpSetProperty| |htPage| '|systemType| '|linear|)
       (|htpSetProperty| |htPage| '|exitFunction| '|bcLinearSolveEqnsGen|)
       (|bcInputEquations| |htPage| '|exact|)))))
- 
+
 ; bcInputSolveInfo htPage ==
 ;   page := htInitPage('"Solve Basic Command", htpPropertyList htPage)
 ;   htpSetProperty(page,'numberOfEquations,htpProperty(htPage,'numberOfEquations))
@@ -197,7 +197,7 @@
 ;    (text . "\indentrel{-18}")
 ;    (text . "\endmenu"))
 ;   htShowPage()
- 
+
 (DEFUN |bcInputSolveInfo| (|htPage|)
   (PROG (|page|)
     (RETURN
@@ -233,7 +233,7 @@
           . "Solutions expressed in terms of {\\em radicals} if it is possible")
          (|text| . "\\indentrel{-18}") (|text| . "\\endmenu")))
       (|htShowPage|)))))
- 
+
 ; bcInputEquations(htPage,solutionMethod) ==
 ;   numEqs :=
 ;     htpProperty(htPage, 'systemType) = 'onePolynomial => 1
@@ -282,7 +282,7 @@
 ;       ['bcStrings, [10,bcMakeUnknowns(numEqs),'unknowns,'P]]]
 ;   htMakeDoneButton('"Continue", 'bcInputEquationsEnd)
 ;   htShowPage()
- 
+
 (DEFUN |bcInputEquations| (|htPage| |solutionMethod|)
   (PROG (|numEqs| |linearPred| |labelList| |equationPart| |page|)
     (RETURN
@@ -361,17 +361,17 @@
       (LIST (CONS '|text| |prefix|)
             (LIST '|bcStrings| (LIST 30 |var| |lnam| 'P)) '(|text| . " = ")
             (LIST '|bcStrings| (LIST 5 '|0| |rnam| 'P)))))))
- 
+
 ; bcCreateVariableString(i) ==
 ;    STRCONC('"x",STRINGIMAGE i)
- 
+
 (DEFUN |bcCreateVariableString| (|i|)
   (PROG () (RETURN (STRCONC "x" (STRINGIMAGE |i|)))))
- 
+
 ; bcMakeUnknowns(number)==
 ;    concatenateStringList([STRCONC(bcCreateVariableString(i)," ")
 ;                             for i in 1..number])
- 
+
 (DEFUN |bcMakeUnknowns| (|number|)
   (PROG ()
     (RETURN
@@ -385,7 +385,7 @@
                                |bfVar#2|))))
           (SETQ |i| (+ |i| 1))))
        NIL 1)))))
- 
+
 ; bcMakeEquations(i,number)==
 ;    number =1 => STRCONC(bcCreateVariableString(1),"^2+1")
 ;    bcCreateVariableString(i)
@@ -394,7 +394,7 @@
 ;       concatenateStringList([STRCONC(bcCreateVariableString(j),"+")
 ;                                for j in 1..number]),"1"),
 ;         STRCONC("-2*",STRCONC(bcCreateVariableString(i),"^2")))
- 
+
 (DEFUN |bcMakeEquations| (|i| |number|)
   (PROG ()
     (RETURN
@@ -418,7 +418,7 @@
                '|1|)
               (STRCONC '-2*
                (STRCONC (|bcCreateVariableString| |i|) '|^2|)))))))))
- 
+
 ; bcMakeLinearEquations(i,number)==
 ;    number = 1 => bcCreateVariableString(1)
 ;    number = 2 =>
@@ -429,7 +429,7 @@
 ;       concatenateStringList([STRCONC(bcCreateVariableString(j),"+")
 ;                                for j in 1..number]),"1"),
 ;         STRCONC("-2*",bcCreateVariableString(i)))
- 
+
 (DEFUN |bcMakeLinearEquations| (|i| |number|)
   (PROG ()
     (RETURN
@@ -458,11 +458,11 @@
                 NIL 1))
               '|1|)
              (STRCONC '-2* (|bcCreateVariableString| |i|))))))))
- 
+
 ; bcInputEquationsEnd htPage ==
 ;   fun := htpProperty(htPage, 'exitFunction) => FUNCALL(fun,htPage)
 ;   systemError nil
- 
+
 (DEFUN |bcInputEquationsEnd| (|htPage|)
   (PROG (|fun|)
     (RETURN
@@ -470,7 +470,7 @@
       ((SETQ |fun| (|htpProperty| |htPage| '|exitFunction|))
        (FUNCALL |fun| |htPage|))
       ('T (|systemError| NIL))))))
- 
+
 ; bcSolveEquationsNumerically(htPage,p) ==
 ;   page := htInitPage('"Solve Basic Command", htpPropertyList htPage)
 ;   htMakePage '(
@@ -485,7 +485,7 @@
 ;         ("Enter the number of desired {\em digits} of accuracy" "" 5 20 acc PI)))
 ;   htMakeDoneButton('"Continue", 'bcSolveNumerically1)
 ;   htShowPage()
- 
+
 (DEFUN |bcSolveEquationsNumerically| (|htPage| |p|)
   (PROG (|page|)
     (RETURN
@@ -506,13 +506,13 @@
            |acc| PI))))
       (|htMakeDoneButton| "Continue" '|bcSolveNumerically1|)
       (|htShowPage|)))))
- 
+
 ; bcSolveNumerically1(htPage) ==
 ;  bcSolveEquations(htPage,'numeric)
- 
+
 (DEFUN |bcSolveNumerically1| (|htPage|)
   (PROG () (RETURN (|bcSolveEquations| |htPage| '|numeric|))))
- 
+
 ; bcSolveEquations(htPage,solutionMethod) ==
 ;   if solutionMethod = 'numeric then
 ;     digits := htpLabelInputString(htPage,'acc)
@@ -534,7 +534,7 @@
 ;     solutionMethod = 'radical => '"radicalSolve"
 ;     '"solve"
 ;   bcFinish(name,eqnString,varString,accString)
- 
+
 (DEFUN |bcSolveEquations| (|htPage| |solutionMethod|)
   (PROG (|digits| |kind| |accString| |alist| |varpart| |r| |varlist|
          |varString| |eqnString| |name|)
@@ -569,13 +569,13 @@
                  (COND ((EQ |solutionMethod| '|radical|) "radicalSolve")
                        (#1# "solve")))
          (|bcFinish| |name| |eqnString| |varString| |accString|))))))))
- 
+
 ; bcLinearSolveMatrix(htPage,junk) ==
 ;   bcReadMatrix 'bcLinearSolveMatrix1
- 
+
 (DEFUN |bcLinearSolveMatrix| (|htPage| |junk|)
   (PROG () (RETURN (|bcReadMatrix| '|bcLinearSolveMatrix1|))))
- 
+
 ; bcLinearSolveMatrix1 htPage ==
 ;   page := htInitPage('"Linear Solve Basic Command",htpPropertyList htPage)
 ;   htpSetProperty(page,'matrix,bcLinearExtractMatrix htPage)
@@ -585,7 +585,7 @@
 ;       ("Zero:" "the system is homogeneous" bcLinearSolveMatrixHomo homo)
 ;       ("Not zero:" "the system is not homogeneous" bcLinearSolveMatrixInhomo nothomo)))
 ;   htShowPage()
- 
+
 (DEFUN |bcLinearSolveMatrix1| (|htPage|)
   (PROG (|page|)
     (RETURN
@@ -602,12 +602,12 @@
           ("Not zero:" "the system is not homogeneous"
            |bcLinearSolveMatrixInhomo| |nothomo|))))
       (|htShowPage|)))))
- 
+
 ; bcLinearExtractMatrix htPage == REVERSE htpInputAreaAlist htPage
- 
+
 (DEFUN |bcLinearExtractMatrix| (|htPage|)
   (PROG () (RETURN (REVERSE (|htpInputAreaAlist| |htPage|)))))
- 
+
 ; bcLinearSolveMatrixInhomo(htPage,junk) ==
 ;   nrows := htpProperty(htPage,'nrows)
 ;   ncols := htpProperty(htPage,'ncols)
@@ -632,7 +632,7 @@
 ;                  ("All the solutions?" "" bcLinearSolveMatrixInhomoGen all)
 ;                   ("A particular solution?" "" bcLinearSolveMatrixInhomoGen particular))]
 ;   htShowPage()
- 
+
 (DEFUN |bcLinearSolveMatrixInhomo| (|htPage| |junk|)
   (PROG (|nrows| |ncols| |labelList| |page|)
     (RETURN
@@ -677,17 +677,17 @@
                 (STRCONC |prefix| "\\space{" (STRINGIMAGE |spacer|) "}"))))
       (SETQ |name| (INTERN (STRCONC "c" (STRINGIMAGE |i|))))
       (LIST |prefix| '|| 30 0 |name| 'P)))))
- 
+
 ; bcLinearSolveMatrixInhomoGen(htPage,key) ==  bcLinearMatrixGen(htPage,key)
- 
+
 (DEFUN |bcLinearSolveMatrixInhomoGen| (|htPage| |key|)
   (PROG () (RETURN (|bcLinearMatrixGen| |htPage| |key|))))
- 
+
 ; bcLinearSolveMatrixHomo(htPage,key) == bcLinearMatrixGen(htPage,'homo)
- 
+
 (DEFUN |bcLinearSolveMatrixHomo| (|htPage| |key|)
   (PROG () (RETURN (|bcLinearMatrixGen| |htPage| '|homo|))))
- 
+
 ; bcLinearMatrixGen(htPage,key) ==
 ;   matform := bcMatrixGen htPage
 ;   key = 'homo => bcFinish('"nullSpace",matform)
@@ -697,7 +697,7 @@
 ;   bcGen
 ;     key = 'particular => STRCONC(form,'".particular")
 ;     form
- 
+
 (DEFUN |bcLinearMatrixGen| (|htPage| |key|)
   (PROG (|matform| |vector| |vecform| |form|)
     (RETURN
@@ -721,7 +721,7 @@
               (|bcGen|
                (COND ((EQ |key| '|particular|) (STRCONC |form| ".particular"))
                      (#1# |form|))))))))))
- 
+
 ; linearFinalRequest(nhh,mat,vect) ==
 ;   sayBrightly '"Do you want more information on the meaning of the output"
 ;   sayBrightly '"   (1) no "
@@ -729,7 +729,7 @@
 ;   tt := bcQueryInteger(1,2,true)
 ;   tt=1 => sayBrightly '"Bye Bye"
 ;   tt=2 => explainLinear(nhh)
- 
+
 (DEFUN |linearFinalRequest| (|nhh| |mat| |vect|)
   (PROG (|tt|)
     (RETURN
@@ -741,7 +741,7 @@
       (SETQ |tt| (|bcQueryInteger| 1 2 T))
       (COND ((EQL |tt| 1) (|sayBrightly| "Bye Bye"))
             ((EQL |tt| 2) (|explainLinear| |nhh|)))))))
- 
+
 ; explainLinear(flag) ==
 ;   flag="notHomogeneous" =>
 ;    '("solve returns a particular solution and a basis for"
@@ -751,7 +751,7 @@
 ;     '("solve returns a basis for"
 ;       "the vector space of solutions for the homogeneous part")
 ;   systemError nil
- 
+
 (DEFUN |explainLinear| (|flag|)
   (PROG ()
     (RETURN
@@ -764,7 +764,7 @@
        '("solve returns a basis for"
          "the vector space of solutions for the homogeneous part"))
       ('T (|systemError| NIL))))))
- 
+
 ; finalExactRequest(equations,unknowns) ==
 ;   sayBrightly '"Do you like:"
 ;   sayBrightly '"   (1) the solutions how they are displayed"
@@ -774,7 +774,7 @@
 ;   tt=1 => sayBrightly '"Bye Bye"
 ;   tt=2 => moreExactSolution(equations,unknowns,flag)
 ;   tt=3 => explainExact(equations,unknowns)
- 
+
 (DEFUN |finalExactRequest| (|equations| |unknowns|)
   (PROG (|tt|)
     (RETURN
@@ -787,7 +787,7 @@
       (COND ((EQL |tt| 1) (|sayBrightly| "Bye Bye"))
             ((EQL |tt| 2) (|moreExactSolution| |equations| |unknowns| |flag|))
             ((EQL |tt| 3) (|explainExact| |equations| |unknowns|)))))))
- 
+
 ; bcLinearSolveEqnsGen htPage ==
 ;   alist := htpInputAreaAlist htPage
 ;   if vars := htpLabelInputString(htPage,'unknowns) then
@@ -796,7 +796,7 @@
 ;     alist := rest alist  --know these are first on the list
 ;   eqnString := bcGenEquations alist
 ;   bcFinish('"solve",eqnString,varString)
- 
+
 (DEFUN |bcLinearSolveEqnsGen| (|htPage|)
   (PROG (|alist| |vars| |varlist| |varString| |eqnString|)
     (RETURN
@@ -811,7 +811,7 @@
         (SETQ |alist| (CDR |alist|))))
       (SETQ |eqnString| (|bcGenEquations| |alist|))
       (|bcFinish| "solve" |eqnString| |varString|)))))
- 
+
 ; bcGenEquations alist ==
 ;   y := alist
 ;   while y repeat
@@ -822,7 +822,7 @@
 ;     eqnlist := [STRCONC(left,'" = ",right),:eqnlist]
 ;   rest eqnlist => bcwords2liststring eqnlist
 ;   first eqnlist
- 
+
 (DEFUN |bcGenEquations| (|alist|)
   (PROG (|y| |right| |left| |eqnlist|)
     (RETURN

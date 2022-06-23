@@ -1,18 +1,15 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; reportFunctionCompilation(op,nam,argl,body,isRecursive) ==
 ;   -- for an alternate definition of this function which does not allow
 ;   -- dynamic caching, see SLAMOLD BOOT
 ; --+
 ;   $compiledOpNameList := [nam]
 ;   minivectorName := makeInternalMapMinivectorName(nam)
-;   $minivectorNames := [[op,:minivectorName],:$minivectorNames]
 ;   body := substitute(minivectorName, "$$$", body)
-;   if $compilingInputFile then
-;     $minivectorCode := [:$minivectorCode,minivectorName]
 ;   SET(minivectorName,LIST2REFVEC $minivector)
 ;   argl := COPY argl     -- play it safe for optimization
 ;   init :=
@@ -71,7 +68,7 @@
 ;   eval cacheResetCode
 ;   SET(cacheName,mkCircularAlist cacheCount)
 ;   nam
- 
+
 (DEFUN |reportFunctionCompilation| (|op| |nam| |argl| |body| |isRecursive|)
   (PROG (|minivectorName| |init| |cacheCount| FUNCTION |num| |auxfn| |g1|
          |LETTMP#1| |arg| |computeValue| |cacheName| |g2| |g3| |secondPredPair|
@@ -81,13 +78,7 @@
      (PROGN
       (SETQ |$compiledOpNameList| (LIST |nam|))
       (SETQ |minivectorName| (|makeInternalMapMinivectorName| |nam|))
-      (SETQ |$minivectorNames|
-              (CONS (CONS |op| |minivectorName|) |$minivectorNames|))
       (SETQ |body| (|substitute| |minivectorName| '$$$ |body|))
-      (COND
-       (|$compilingInputFile|
-        (SETQ |$minivectorCode|
-                (APPEND |$minivectorCode| (CONS |minivectorName| NIL)))))
       (SET |minivectorName| (LIST2REFVEC |$minivector|))
       (SETQ |argl| (COPY |argl|))
       (SETQ |init|
@@ -187,16 +178,16 @@
             (|eval| |cacheResetCode|)
             (SET |cacheName| (|mkCircularAlist| |cacheCount|))
             |nam|))))))))))
- 
+
 ; getCacheCount fn ==
 ;   n:= LASSOC(fn,$cacheAlist) => n
 ;   $cacheCount
- 
+
 (DEFUN |getCacheCount| (|fn|)
   (PROG (|n|)
     (RETURN
      (COND ((SETQ |n| (LASSOC |fn| |$cacheAlist|)) |n|) ('T |$cacheCount|)))))
- 
+
 ; reportFunctionCacheAll(op,nam,argl,body) ==
 ;   sayKeyedMsg("S2IX0004",[op])
 ;   auxfn:= mkAuxiliaryName nam
@@ -217,14 +208,14 @@
 ;   compileInteractive mainFunction
 ;   compileInteractive computeFunction
 ;   cacheType:= 'hash_-table
-;   cacheResetCode:= ['SETQ,cacheName,['MAKE_-HASHTABLE,''UEQUAL]]
+;   cacheResetCode := ['SETQ, cacheName, ['MAKE_HASHTABLE, ''UEQUAL]]
 ;   cacheCountCode:= ['hashCount,cacheName]
 ;   cacheVector:=
 ;     mkCacheVec(op,cacheName,cacheType,cacheResetCode,cacheCountCode)
 ;   $e:= put(nam,'cacheInfo, cacheVector,$e)
 ;   eval cacheResetCode
 ;   nam
- 
+
 (DEFUN |reportFunctionCacheAll| (|op| |nam| |argl| |body|)
   (PROG (|auxfn| |g1| |LETTMP#1| |arg| |computeValue| |cacheName| |g2|
          |secondPredPair| |thirdPredPair| |codeBody| |lamex| |mainFunction|
@@ -264,7 +255,7 @@
       (|compileInteractive| |computeFunction|)
       (SETQ |cacheType| '|hash-table|)
       (SETQ |cacheResetCode|
-              (LIST 'SETQ |cacheName| (LIST 'MAKE-HASHTABLE ''UEQUAL)))
+              (LIST 'SETQ |cacheName| (LIST 'MAKE_HASHTABLE ''UEQUAL)))
       (SETQ |cacheCountCode| (LIST '|hashCount| |cacheName|))
       (SETQ |cacheVector|
               (|mkCacheVec| |op| |cacheName| |cacheType| |cacheResetCode|
@@ -272,10 +263,10 @@
       (SETQ |$e| (|put| |nam| '|cacheInfo| |cacheVector| |$e|))
       (|eval| |cacheResetCode|)
       |nam|))))
- 
+
 ; hashCount table ==
 ;   +/[ADD1 nodeCount HGET(table,key) for key in HKEYS table]
- 
+
 (DEFUN |hashCount| (|table|)
   (PROG ()
     (RETURN
@@ -289,11 +280,11 @@
                    (+ |bfVar#2| (ADD1 (|nodeCount| (HGET |table| |key|)))))))
          (SETQ |bfVar#1| (CDR |bfVar#1|))))
       0 (HKEYS |table|) NIL))))
- 
+
 ; mkCircularAlist n ==
 ;   l:= [[$failed,:$failed] for i in 1..n]
 ;   RPLACD(LASTNODE l,l)
- 
+
 (DEFUN |mkCircularAlist| (|n|)
   (PROG (|l|)
     (RETURN
@@ -308,10 +299,10 @@
                   (SETQ |i| (+ |i| 1))))
                NIL 1))
       (RPLACD (LASTNODE |l|) |l|)))))
- 
+
 ; countCircularAlist(cal,n) ==
 ;   +/[nodeCount x for x in cal for i in 1..n]
- 
+
 (DEFUN |countCircularAlist| (|cal| |n|)
   (PROG ()
     (RETURN
@@ -325,11 +316,11 @@
          (SETQ |bfVar#4| (CDR |bfVar#4|))
          (SETQ |i| (+ |i| 1))))
       0 |cal| NIL 1))))
- 
+
 ; predCircular(al,n) ==
 ;   for i in 1..dec_SI n repeat al := QCDR al
 ;   al
- 
+
 (DEFUN |predCircular| (|al| |n|)
   (PROG ()
     (RETURN
@@ -340,7 +331,7 @@
           (SETQ |i| (+ |i| 1))))
        (|dec_SI| |n|) 1)
       |al|))))
- 
+
 ; assocCircular(x,al) ==  --like ASSOC except that al is circular
 ;   forwardPointer:= al
 ;   val:= nil
@@ -348,7 +339,7 @@
 ;     EQUAL(CAAR forwardPointer,x) => return (val := first forwardPointer)
 ;     forwardPointer := rest forwardPointer
 ;   val
- 
+
 (DEFUN |assocCircular| (|x| |al|)
   (PROG (|forwardPointer| |val|)
     (RETURN
@@ -366,7 +357,7 @@
           (SETQ |bfVar#7| (EQ |forwardPointer| |al|))))
        NIL)
       |val|))))
- 
+
 ; compileRecurrenceRelation(op,nam,argl,junk,[body,sharpArg,n,:initCode]) ==
 ;   k:= #initCode
 ;   extraArgumentCode :=
@@ -382,19 +373,19 @@
 ;   stateNam:= GENVAR()
 ;   stateVar:= GENSYM()
 ;   stateVal:= GENSYM()
-;   lastArg := INTERNL('"#", STRINGIMAGE inc_SI LENGTH argl)
+;   lastArg := INTERNL1('"#", STRINGIMAGE(inc_SI(LENGTH(argl))))
 ;   decomposeCode:=
 ;     [['LET,gIndex,['ELT,lastArg,0]],:[['LET,g,['ELT,lastArg,i]]
 ;       for g in gsList for i in 1..]]
 ;   gsRev:= REVERSE gsList
 ;   rotateCode:= [['LET,p,q] for p in gsRev for q in [:rest gsRev,g]]
 ;   advanceCode:= ['LET,gIndex,['ADD1,gIndex]]
-; 
+;
 ;   newTripleCode := ['LIST,sharpArg,:gsList]
 ;   newStateCode :=
 ;     null extraArguments => ['SETQ,stateNam,newTripleCode]
 ;     ['HPUT,stateNam,extraArgumentCode,newTripleCode]
-; 
+;
 ;   computeFunction:= [auxfn,['LAMBDA, cargl, cbody]] where
 ;     cargl:= [:argl,lastArg]
 ;     returnValue:= ['PROGN,newStateCode,first gsList]
@@ -406,28 +397,23 @@
 ;       ['PROGN,:decomposeCode,
 ;         ['REPEAT,['WHILE,'T],['PROGN,endTest,advanceCode,
 ;           newValueCode,:rotateCode]]]
-;   fromScratchInit:=
-;     [['LET,gIndex,n],:[['LET,g,x] for g in gsList for x in initCode]]
-;   continueInit:=
-;     [['LET,gIndex,['ELT,stateVar,0]],
-;       :[['LET,g,['ELT,stateVar,i]] for g in gsList for i in 1..]]
 ;   mainFunction:= [nam,['LAMBDA, margl, mbody]] where
 ;     margl:= [:argl,'envArg]
 ;     max:= GENSYM()
 ;     tripleCode := ['CONS,n,['LIST,:initCode]]
-; 
+;
 ;     -- initialSetCode initializes the global variable if necessary and
 ;     --  also binds "stateVar" to its current value
 ;     initialSetCode :=
 ;       initialValueCode :=
-;         extraArguments => ['MAKE_-HASHTABLE,''UEQUAL]
+;         extraArguments => ['MAKE_HASHTABLE, ''UEQUAL]
 ;         tripleCode
 ;       cacheResetCode := ['SETQ,stateNam,initialValueCode]
 ;       ['COND,[['NULL,['AND,['BOUNDP,MKQ stateNam], _
 ;                           ['PAIRP,stateNam]]],    _
 ;                  ['LET,stateVar,cacheResetCode]], _
 ;              [''T, ['LET,stateVar,stateNam]]]
-; 
+;
 ;     -- when there are extra arguments, initialResetCode resets "stateVar"
 ;     --  to the hashtable entry for the extra arguments
 ;     initialResetCode :=
@@ -435,7 +421,7 @@
 ;       [['LET,stateVar,['OR,
 ;          ['HGET,stateVar,extraArgumentCode],
 ;           ['HPUT,stateVar,extraArgumentCode,tripleCode]]]]
-; 
+;
 ;     mbody :=
 ;       preset := [initialSetCode,:initialResetCode,['LET,max,['ELT,stateVar,0]]]
 ;       phrase1:= [['AND, ['LET, max, ['ELT, stateVar, 0]],
@@ -456,21 +442,21 @@
 ;   cacheVector:= mkCacheVec(op,stateNam,cacheType,cacheResetCode,cacheCountCode)
 ;   $e:= put(nam,'cacheInfo, cacheVector,$e)
 ;   nam
- 
-(DEFUN |compileRecurrenceRelation| (|op| |nam| |argl| |junk| |bfVar#22|)
+
+(DEFUN |compileRecurrenceRelation| (|op| |nam| |argl| |junk| |bfVar#17|)
   (PROG (|body| |sharpArg| |n| |initCode| |k| |extraArguments| |x|
          |extraArgumentCode| |g| |gIndex| |gsList| |auxfn| |stateNam|
          |stateVar| |stateVal| |lastArg| |decomposeCode| |gsRev| |rotateCode|
          |advanceCode| |newTripleCode| |newStateCode| |cargl| |returnValue|
-         |endTest| |newValueCode| |cbody| |computeFunction| |fromScratchInit|
-         |continueInit| |margl| |max| |tripleCode| |initialValueCode|
-         |cacheResetCode| |initialSetCode| |initialResetCode| |preset|
-         |phrase1| |phrase2| |phrase3| |phrase4| |phrase5| |mbody|
-         |mainFunction| |cacheType| |cacheCountCode| |cacheVector|)
+         |endTest| |newValueCode| |cbody| |computeFunction| |margl| |max|
+         |tripleCode| |initialValueCode| |cacheResetCode| |initialSetCode|
+         |initialResetCode| |preset| |phrase1| |phrase2| |phrase3| |phrase4|
+         |phrase5| |mbody| |mainFunction| |cacheType| |cacheCountCode|
+         |cacheVector|)
     (RETURN
      (PROGN
-      (SETQ |body| (CAR |bfVar#22|))
-      (SETQ |sharpArg| (CADR . #1=(|bfVar#22|)))
+      (SETQ |body| (CAR |bfVar#17|))
+      (SETQ |sharpArg| (CADR . #1=(|bfVar#17|)))
       (SETQ |n| (CADDR . #1#))
       (SETQ |initCode| (CDDDR . #1#))
       (SETQ |k| (LENGTH |initCode|))
@@ -512,7 +498,7 @@
       (SETQ |stateNam| (GENVAR))
       (SETQ |stateVar| (GENSYM))
       (SETQ |stateVal| (GENSYM))
-      (SETQ |lastArg| (INTERNL "#" (STRINGIMAGE (|inc_SI| (LENGTH |argl|)))))
+      (SETQ |lastArg| (INTERNL1 "#" (STRINGIMAGE (|inc_SI| (LENGTH |argl|)))))
       (SETQ |decomposeCode|
               (CONS (LIST 'LET |gIndex| (LIST 'ELT |lastArg| 0))
                     ((LAMBDA (|bfVar#13| |bfVar#12| |g| |i|)
@@ -576,45 +562,13 @@
                                                             |rotateCode|)))))
                               NIL)))))
       (SETQ |computeFunction| (LIST |auxfn| (LIST 'LAMBDA |cargl| |cbody|)))
-      (SETQ |fromScratchInit|
-              (CONS (LIST 'LET |gIndex| |n|)
-                    ((LAMBDA (|bfVar#19| |bfVar#17| |g| |bfVar#18| |x|)
-                       (LOOP
-                        (COND
-                         ((OR (ATOM |bfVar#17|)
-                              (PROGN (SETQ |g| (CAR |bfVar#17|)) NIL)
-                              (ATOM |bfVar#18|)
-                              (PROGN (SETQ |x| (CAR |bfVar#18|)) NIL))
-                          (RETURN (NREVERSE |bfVar#19|)))
-                         (#2#
-                          (SETQ |bfVar#19|
-                                  (CONS (LIST 'LET |g| |x|) |bfVar#19|))))
-                        (SETQ |bfVar#17| (CDR |bfVar#17|))
-                        (SETQ |bfVar#18| (CDR |bfVar#18|))))
-                     NIL |gsList| NIL |initCode| NIL)))
-      (SETQ |continueInit|
-              (CONS (LIST 'LET |gIndex| (LIST 'ELT |stateVar| 0))
-                    ((LAMBDA (|bfVar#21| |bfVar#20| |g| |i|)
-                       (LOOP
-                        (COND
-                         ((OR (ATOM |bfVar#20|)
-                              (PROGN (SETQ |g| (CAR |bfVar#20|)) NIL))
-                          (RETURN (NREVERSE |bfVar#21|)))
-                         (#2#
-                          (SETQ |bfVar#21|
-                                  (CONS
-                                   (LIST 'LET |g| (LIST 'ELT |stateVar| |i|))
-                                   |bfVar#21|))))
-                        (SETQ |bfVar#20| (CDR |bfVar#20|))
-                        (SETQ |i| (+ |i| 1))))
-                     NIL |gsList| NIL 1)))
       (SETQ |margl| (APPEND |argl| (CONS '|envArg| NIL)))
       (SETQ |max| (GENSYM))
       (SETQ |tripleCode| (LIST 'CONS |n| (CONS 'LIST |initCode|)))
       (SETQ |initialSetCode|
               (PROGN
                (SETQ |initialValueCode|
-                       (COND (|extraArguments| (LIST 'MAKE-HASHTABLE ''UEQUAL))
+                       (COND (|extraArguments| (LIST 'MAKE_HASHTABLE ''UEQUAL))
                              (#2# |tripleCode|)))
                (SETQ |cacheResetCode|
                        (LIST 'SETQ |stateNam| |initialValueCode|))
@@ -687,41 +641,41 @@
                |cacheCountCode|))
       (SETQ |$e| (|put| |nam| '|cacheInfo| |cacheVector| |$e|))
       |nam|))))
- 
+
 ; NUMOFNODES(x) ==
 ;     ATOM(x) => 0
 ;     NUMOFNODES(first(x)) + NUMOFNODES(rest(x)) + 1
- 
+
 (DEFUN NUMOFNODES (|x|)
   (PROG ()
     (RETURN
      (COND ((ATOM |x|) 0)
            ('T (+ (+ (NUMOFNODES (CAR |x|)) (NUMOFNODES (CDR |x|))) 1))))))
- 
+
 ; nodeCount x == NUMOFNODES x
- 
+
 (DEFUN |nodeCount| (|x|) (PROG () (RETURN (NUMOFNODES |x|))))
- 
+
 ; recurrenceError(op,arg) == throwKeyedMsg("S2IX0002",[op,arg])
- 
+
 (DEFUN |recurrenceError| (|op| |arg|)
   (PROG () (RETURN (|throwKeyedMsg| 'S2IX0002 (LIST |op| |arg|)))))
- 
+
 ; mkCacheVec(op,nam,kind,resetCode,countCode) ==
 ;   [op,nam,kind,resetCode,countCode]
- 
+
 (DEFUN |mkCacheVec| (|op| |nam| |kind| |resetCode| |countCode|)
   (PROG () (RETURN (LIST |op| |nam| |kind| |resetCode| |countCode|))))
- 
+
 ; clearCache x ==
 ;   get(x,'localModemap,$e) or get(x,'mapBody,$e) =>
 ;     for [map,:sub] in $mapSubNameAlist repeat
-;       map=x => _/UNTRACE_-2(sub,NIL)
+;       map=x => untrace2(sub,[])
 ;     $e:= putHist(x,'localModemap,nil,$e)
 ;     $e:= putHist(x,'mapBody,nil,$e)
 ;     $e:= putHist(x,'localVars,nil,$e)
 ;     sayKeyedMsg("S2IX0007",[x])
- 
+
 (DEFUN |clearCache| (|x|)
   (PROG (|map| |sub|)
     (RETURN
@@ -729,27 +683,27 @@
       ((OR (|get| |x| '|localModemap| |$e|) (|get| |x| '|mapBody| |$e|))
        (IDENTITY
         (PROGN
-         ((LAMBDA (|bfVar#24| |bfVar#23|)
+         ((LAMBDA (|bfVar#19| |bfVar#18|)
             (LOOP
              (COND
-              ((OR (ATOM |bfVar#24|)
-                   (PROGN (SETQ |bfVar#23| (CAR |bfVar#24|)) NIL))
+              ((OR (ATOM |bfVar#19|)
+                   (PROGN (SETQ |bfVar#18| (CAR |bfVar#19|)) NIL))
                (RETURN NIL))
               (#1='T
-               (AND (CONSP |bfVar#23|)
+               (AND (CONSP |bfVar#18|)
                     (PROGN
-                     (SETQ |map| (CAR |bfVar#23|))
-                     (SETQ |sub| (CDR |bfVar#23|))
+                     (SETQ |map| (CAR |bfVar#18|))
+                     (SETQ |sub| (CDR |bfVar#18|))
                      #1#)
                     (COND
-                     ((EQUAL |map| |x|) (IDENTITY (/UNTRACE-2 |sub| NIL)))))))
-             (SETQ |bfVar#24| (CDR |bfVar#24|))))
+                     ((EQUAL |map| |x|) (IDENTITY (|untrace2| |sub| NIL)))))))
+             (SETQ |bfVar#19| (CDR |bfVar#19|))))
           |$mapSubNameAlist| NIL)
          (SETQ |$e| (|putHist| |x| '|localModemap| NIL |$e|))
          (SETQ |$e| (|putHist| |x| '|mapBody| NIL |$e|))
          (SETQ |$e| (|putHist| |x| '|localVars| NIL |$e|))
          (|sayKeyedMsg| 'S2IX0007 (LIST |x|)))))))))
- 
+
 ; compileInteractive fn ==
 ;   if $InteractiveMode then startTimingProcess 'compilation
 ;   if $reportCompilation then
@@ -761,7 +715,7 @@
 ;   result := compQuietly optfn
 ;   if $InteractiveMode then stopTimingProcess 'compilation
 ;   result
- 
+
 (DEFUN |compileInteractive| (|fn|)
   (PROG (|optfn| |result|)
     (RETURN
@@ -776,7 +730,7 @@
       (SETQ |result| (|compQuietly| |optfn|))
       (COND (|$InteractiveMode| (|stopTimingProcess| '|compilation|)))
       |result|))))
- 
+
 ; clearAllSlams x ==
 ;   fn(x,nil) where
 ;     fn(thoseToClear,thoseCleared) ==
@@ -788,15 +742,15 @@
 ;           setDifference(LASSOC(x,$functorDependencyAlist),[:thoseToClear,:
 ;             thoseCleared])
 ;         NCONC(thoseToClear,someMoreToClear)
- 
+
 (DEFUN |clearAllSlams| (|x|) (PROG () (RETURN (|clearAllSlams,fn| |x| NIL))))
 (DEFUN |clearAllSlams,fn| (|thoseToClear| |thoseCleared|)
   (PROG (|slamListName| |someMoreToClear|)
     (RETURN
-     ((LAMBDA (|bfVar#25| |x|)
+     ((LAMBDA (|bfVar#20| |x|)
         (LOOP
          (COND
-          ((OR (ATOM |bfVar#25|) (PROGN (SETQ |x| (CAR |bfVar#25|)) NIL))
+          ((OR (ATOM |bfVar#20|) (PROGN (SETQ |x| (CAR |bfVar#20|)) NIL))
            (RETURN NIL))
           ('T
            (AND (NULL (MEMQ |x| |thoseCleared|))
@@ -809,13 +763,13 @@
                                         (APPEND |thoseToClear|
                                                 |thoseCleared|)))
                  (NCONC |thoseToClear| |someMoreToClear|)))))
-         (SETQ |bfVar#25| (CDR |bfVar#25|))))
+         (SETQ |bfVar#20| (CDR |bfVar#20|))))
       |thoseToClear| NIL))))
- 
+
 ; clearSlam(functor)==
 ;   id:= mkCacheName functor
 ;   SET(id,nil)
- 
+
 (DEFUN |clearSlam| (|functor|)
   (PROG (|id|)
     (RETURN (PROGN (SETQ |id| (|mkCacheName| |functor|)) (SET |id| NIL)))))

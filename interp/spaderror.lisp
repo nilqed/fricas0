@@ -48,11 +48,7 @@
 ;;(defmacro |trappedSpadEval| (form) form) ;;nop for now
 
 #+:GCL
-(setq |$quitTag| system::*quit-tag*)
-#+:GCL
 (defun |resetStackLimits| () (system:reset-stack-limits))
-#-:GCL
-(setq |$quitTag| (gensym))
 #-:GCL
 (defun |resetStackLimits| () nil)
 
@@ -85,11 +81,22 @@
   `(let ((|$BreakMode| '|trapSpadErrors|))
        (catch '|trapSpadErrors| ,form)))
 
-;;;;;; considering this version for kcl
-;;(defmacro |trapNumericErrors| (form)
-;;   `(let ((val))
-;;      (setq val (errorset ,form))
-;;      (if (NULL val) |$numericFailure| (cons 0 (car val)))))
+#+:sbcl
+(progn
+(defun |do_timeout| (f ti)
+   (handler-case
+          (sb-ext:with-timeout ti (SPADCALL f))
+       (sb-ext:timeout (e)
+          (THROW '|trapSpadErrors| |$numericFailure|))
+   )
+)
+
+(defun |eval_with_timeout| (f ti)
+    (CATCH '|trapSpadErrors| (cons 0 (|do_timeout| f ti))))
+)
+
+#-:sbcl
+(defun |eval_with_timeout| (f ti) (|error| "unimplemented for this Lisp"))
 
 (defparameter |$inLispVM| nil)
 

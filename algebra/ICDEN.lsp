@@ -1,69 +1,64 @@
 
-(SDEFUN |ICDEN;clearDenominator;BA;1| ((|l| B) ($ A))
+(SDEFUN |ICDEN;clearDenominator;BA;1| ((|l| (B)) ($ (A)))
         (SPROG ((|d| (R)))
-               (SEQ
-                (LETT |d| (SPADCALL |l| (QREFELT $ 10))
-                      |ICDEN;clearDenominator;BA;1|)
-                (EXIT
-                 (SPADCALL
-                  (CONS #'|ICDEN;clearDenominator;BA;1!0| (VECTOR $ |d|)) |l|
-                  (QREFELT $ 16)))))) 
+               (SEQ (LETT |d| (SPADCALL |l| (QREFELT $ 10)))
+                    (EXIT
+                     (SPADCALL
+                      (CONS #'|ICDEN;clearDenominator;BA;1!0| (VECTOR $ |d|))
+                      |l| (QREFELT $ 16)))))) 
 
 (SDEFUN |ICDEN;clearDenominator;BA;1!0| ((|x| NIL) ($$ NIL))
         (PROG (|d| $)
-          (LETT |d| (QREFELT $$ 1) . #1=(|ICDEN;clearDenominator;BA;1|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |d| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL (SPADCALL |d| |x| (QREFELT $ 12)) (QREFELT $ 13)))))) 
 
 (SDEFUN |ICDEN;splitDenominator;BR;2|
-        ((|l| B) ($ |Record| (|:| |num| A) (|:| |den| R)))
+        ((|l| (B)) ($ (|Record| (|:| |num| A) (|:| |den| R))))
         (SPROG ((|d| (R)))
-               (SEQ
-                (LETT |d| (SPADCALL |l| (QREFELT $ 10))
-                      |ICDEN;splitDenominator;BR;2|)
-                (EXIT
-                 (CONS
-                  (SPADCALL
-                   (CONS #'|ICDEN;splitDenominator;BR;2!0| (VECTOR $ |d|)) |l|
-                   (QREFELT $ 16))
-                  |d|))))) 
+               (SEQ (LETT |d| (SPADCALL |l| (QREFELT $ 10)))
+                    (EXIT
+                     (CONS
+                      (SPADCALL
+                       (CONS #'|ICDEN;splitDenominator;BR;2!0| (VECTOR $ |d|))
+                       |l| (QREFELT $ 16))
+                      |d|))))) 
 
 (SDEFUN |ICDEN;splitDenominator;BR;2!0| ((|x| NIL) ($$ NIL))
         (PROG (|d| $)
-          (LETT |d| (QREFELT $$ 1) . #1=(|ICDEN;splitDenominator;BR;2|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |d| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL (SPADCALL |d| |x| (QREFELT $ 12)) (QREFELT $ 13)))))) 
 
-(SDEFUN |ICDEN;commonDenominator;BR;3| ((|l| B) ($ R))
+(SDEFUN |ICDEN;commonDenominator;BR;3| ((|l| (B)) ($ (R)))
         (SPADCALL (ELT $ 20) (SPADCALL (ELT $ 21) |l| (QREFELT $ 16))
                   (|spadConstant| $ 22) (QREFELT $ 24))) 
 
-(SDEFUN |ICDEN;commonDenominator;BR;4| ((|l| B) ($ R))
+(SDEFUN |ICDEN;commonDenominator;BR;4| ((|l| (B)) ($ (R)))
         (SPADCALL (ELT $ 11) (SPADCALL (ELT $ 21) |l| (QREFELT $ 16))
                   (|spadConstant| $ 22) (QREFELT $ 24))) 
 
 (DECLAIM (NOTINLINE |InnerCommonDenominator;|)) 
 
-(DEFUN |InnerCommonDenominator| (&REST #1=#:G717)
+(DEFUN |InnerCommonDenominator| (&REST #1=#:G716)
   (SPROG NIL
-         (PROG (#2=#:G718)
+         (PROG (#2=#:G717)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|InnerCommonDenominator|)
-                                               '|domainEqualList|)
-                    . #3=(|InnerCommonDenominator|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |InnerCommonDenominator;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|InnerCommonDenominator|)))))))))) 
@@ -73,14 +68,14 @@
    ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL) (DV$2 NIL)
     (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #1=(|InnerCommonDenominator|))
-    (LETT DV$2 (|devaluate| |#2|) . #1#)
-    (LETT DV$3 (|devaluate| |#3|) . #1#)
-    (LETT DV$4 (|devaluate| |#4|) . #1#)
-    (LETT |dv$| (LIST '|InnerCommonDenominator| DV$1 DV$2 DV$3 DV$4) . #1#)
-    (LETT $ (GETREFV 25) . #1#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT DV$4 (|devaluate| |#4|))
+    (LETT |dv$| (LIST '|InnerCommonDenominator| DV$1 DV$2 DV$3 DV$4))
+    (LETT $ (GETREFV 25))
     (QSETREFV $ 0 |dv$|)
-    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
     (|haddProp| |$ConstructorCache| '|InnerCommonDenominator|
                 (LIST DV$1 DV$2 DV$3 DV$4) (CONS 1 $))
     (|stuffDomainSlots| $)
@@ -111,14 +106,23 @@
            '#(|splitDenominator| 50 |commonDenominator| 55 |clearDenominator|
               60)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 24
-                                                 '(1 0 6 9 10 2 6 0 0 0 11 2 7
-                                                   0 6 0 12 1 7 6 0 13 2 15 8
-                                                   14 9 16 2 6 0 0 0 20 1 7 6 0
-                                                   21 0 6 0 22 3 8 6 23 0 6 24
-                                                   1 0 18 9 19 1 0 6 9 10 1 0 8
-                                                   9 17)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST '((|commonDenominator| (|#1| |#4|)) T)
+                                   '((|clearDenominator| (|#3| |#4|)) T)
+                                   '((|splitDenominator|
+                                      ((|Record| (|:| |num| |#3|)
+                                                 (|:| |den| |#1|))
+                                       |#4|))
+                                     T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 24
+                                            '(1 0 6 9 10 2 6 0 0 0 11 2 7 0 6 0
+                                              12 1 7 6 0 13 2 15 8 14 9 16 2 6
+                                              0 0 0 20 1 7 6 0 21 0 6 0 22 3 8
+                                              6 23 0 6 24 1 0 18 9 19 1 0 6 9
+                                              10 1 0 8 9 17)))))
            '|lookupComplete|)) 

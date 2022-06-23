@@ -34,10 +34,6 @@ This file is a collection of utility functions that are useful
 for system level work.  {\bf build-interpsys} interfaces to the
 src/interp/Makefile.
 
-A third group of related functions are used to set up the
-{\bf autoload} mechanism. These enable whole subsystems to
-be kept out of memory until they are used.
-
 A fifth group of related functions are some translated boot
 functions we need to define here so they work and are available
 at load time.
@@ -69,7 +65,7 @@ at load time.
     "/share/spadhelp/" ))
 
 ;;; The relative directory list specifies how to find the algebra
-;;; directory from the current {\bf AXIOM} shell variable.
+;;; directory from the current {\bf FRICAS} shell variable.
 (defvar $relative-library-directory-list '("/algebra/"))
 
 ;;; This is the system-wide list of directories to search.
@@ -80,200 +76,23 @@ at load time.
 ;;; It is set up in the {\bf reroot} function.
 (defvar $library-directory-list ())
 
-#|
-Old autoload machinery.  Currently the functions below are
-included in base system.
-
-;;; This is the {\bf Spad parser} subsystem. It is only needed by
-;;; algebra developers.
-(setq parse-functions
-      '(
-;;      loadparser
-        |oldParserAutoloadOnceTrigger|
-        |parse_Expression|
-        |spadCompile|
-        ))
-
-;;; This is the {\bf spad compiler} subsystem. It is only needed by
-;;; developers who write or modify algebra code.
-(setq comp-functions
-      '(
-;;      loadcompiler
-        |oldCompilerAutoloadOnceTrigger|
-        |compileSpad2Cmd|
-        |compilerDoit|
-        |compilerDoitWithScreenedLisplib|
-        |mkCategory|
-        |cons5|
-        |isCategoryForm|
-        |sublisV|))
-
-;;; This is the {\bf browser} subsystem. It will get autoloaded only
-;;; if you use the browse function of the {\bf hypertex} system.
-(setq browse-functions
-      '(
-;;      loadbrowse
-        |browserAutoloadOnceTrigger|
-        |parentsOf|           ;interop.boot
-        |getParentsFor|       ;old compiler
-        |folks|               ;for astran
-        |extendLocalLibdb|    ;)lib needs this
-        |evalDomainOpPred|    ;)show
-        |oSearch|
-        |aokSearch|
-        |kSearch|
-        |aSearch|
-        |genSearch|
-        |docSearch|
-        |abSearch|
-        |detailedSearch|
-        |ancestorsOf|
-        |aPage|
-        |dbGetOrigin|
-        |dbGetParams|
-        |dbGetKindString|
-        |dbGetOrigin|
-        |dbComments|
-        |grepConstruct|
-        |buildLibdb|
-        |bcDefiniteIntegrate|
-        |bcDifferentiate|
-        |bcDraw|
-        |bcExpand|
-        |bcIndefiniteIntegrate|
-        |bcLimit|
-        |bcMatrix|
-        |bcProduct|
-        |bcSeries|
-        |bcSolve|
-        |bcSum|
-        |cSearch|
-        |conPage|
-        |dbName|
-        |dbPart|
-        |extendLocalLibdb|
-        |form2HtString|
-        |htGloss|
-        |htGreekSearch|
-        |htHistory|
-        |htSystemCommands|
-        |htSystemVariables|
-        |htTextSearch|
-        |htUserVariables|
-        |htsv|
-        |oPage|
-        |oPageFrom|
-        |spadSys|
-        |spadType|
-        |syscomPage|
-        |unescapeStringsInForm|))
-
-;;; This is part of the {\bf ALDOR subsystem}. These will be loaded
-;;; if you compile a {\bf .as} file rather than a {\bf .spad} file.
-;;; {\bf ALDOR} is an external compiler that gets automatically called
-;;; if the file extension is {\bf .as}.
-(setq asauto-functions '(
-        loadas
-;;      |as|                         ;; now in as.boot
-;;      |astran|                     ;; now in as.boot
-        |spad2AxTranslatorAutoloadOnceTrigger|
-        |sourceFilesToAxcliqueAxFile|
-        |sourceFilesToAxFile|
-        |setExtendedDomains|
-        |makeAxFile|
-        |makeAxcliqueAxFile|
-        |nrlibsToAxFile|
-        |attributesToAxFile| ))
-
-;;; These are some old {\bf debugging} functions.  I can't imagine
-;;; why you might autoload them but they don't need to be in a running
-;;; system.
-(setq debug-functions '(
-        loaddebug
-        |showSummary|
-        |showPredicates|
-        |showAttributes|
-        |showFrom|
-        |showImp|))
-
-
-There are several subsystems within {\bf AXIOM} that are not normally
-loaded into a running system. They will be loaded only if you invoke
-one of the functions listed here. Each of these listed functions will
-have their definitions replaced by a special ``autoloader'' function.
-The first time a function named here is called it will trigger a
-load of the associated subsystem, the autoloader functions will get
-overwritten, the function call is retried and now succeeds. Files
-containing functions listed here are assumed to exist in the
-{\bf autoload} subdirectory. The list of files to load is defined
-in the src/interp/Makefile.
-
-
-
-This function is called by {\bf build-interpsys}. It takes two lists.
-The first is a list of functions that need to be used as
-``autoload triggers''. The second is a list of files to load if one
-of the trigger functions is called. At system build time each of the
-functions in the first list is set up to load every file in the second
-list. In this way we will automatically load a whole subsystem if we
-touch any function in that subsystem. We call a helper function
-called {\bf setBootAutoLoadProperty} to set up the autoload trigger.
-This helper function is listed below.
-
-(defun |setBootAutloadProperties| (fun-list file-list)
-  (mapc #'(lambda (fun) (|setBootAutoLoadProperty| fun file-list)) fun-list)
-)
-
-;;; This function knows where the {\bf autoload} subdirectory lives.
-;;; It is called by {\bf mkBootAutoLoad} above to find the necessary
-;;; files.
-(defun boot-load (file)
-  (let ((name (concat $SPADROOT "/autoload/" (pathname-name file))))
-    (if |$printLoadMsgs|
-        (|sayKeyedMsg| 'S2IL0030 (list name)))
-    (load name)))
-
-;;; This is a helper function to set up the autoload trigger. It sets
-;;; the function cell of each symbol to {\bf mkBootAutoLoad} which is
-;;; listed below.
-(defun |setBootAutoLoadProperty| (func file-list)
-  (setf (symbol-function func) (|mkBootAutoLoad| func file-list)) )
-
-This is how the autoload magic happens. Every function named in the
-autoload lists is actually just another name for this function. When
-the named function is called we call {\bf boot-load} on all of the
-files in the subsystem. This overwrites all of the autoload triggers.
-We then look up the new (real) function definition and call it again
-with the real arguments. Thus the subsystem loads and the original
-call succeeds.
-
-(defun |mkBootAutoLoad| (fn file-list)
-   (function (lambda (&rest args)
-                 #+:sbcl
-                 (handler-bind ((style-warning #'muffle-warning))
-                     (mapc #'boot-load file-list))
-                 #-:sbcl
-                 (mapc #'boot-load file-list)
-                 (unless (string= (subseq (string fn) 0 4) "LOAD")
-                  (apply (symbol-function fn) args)))))
-|#
-;;; Prefix a filename with the {\bf AXIOM} shell variable.
+;;; Prefix a filename with the {\bf FRICAS} shell variable.
 (defun make-absolute-filename (name)
  (concatenate 'string $spadroot name))
 
 #|
 The reroot function is used to reset the important variables used by
 the system. In particular, these variables are sensitive to the
-{\bf AXIOM} shell variable. That variable is renamed internally to
+{\bf FRICAS} shell variable. That variable is renamed internally to
 be {\bf \$spadroot}. The {\bf reroot} function will change the
 system to use a new root directory and will have the same effect
-as changing the {\bf AXIOM} shell variable and rerunning the system
+as changing the {\bf FRICAS} shell variable and rerunning the system
 from scratch.  A correct call looks like:
 \begin{verbatim}
 (in-package "BOOT")
-(reroot "${AXIOM}")
+(reroot "${FRICAS}")
 \end{verbatim}
-where the [[${AXIOM}]] variable points to installed tree.
+where the [[${FRICAS}]] variable points to installed tree.
 |#
 (defun reroot (dir)
   (setq $spadroot dir)
@@ -285,16 +104,26 @@ where the [[${AXIOM}]] variable points to installed tree.
         (pathname (make-absolute-filename "/share/msgs/s2-us.msgs")))
   )
 
-;;; Sets up the system to use the {\bf AXIOM} shell variable if we can
+;;; Sets up the system to use the {\bf FRICAS} shell variable if we can
 ;;; and default to the {\bf \$spadroot} variable (which was the value
-;;; of the {\bf AXIOM} shell variable at build time) if we can't.
+;;; of the {\bf FRICAS} shell variable at build time) if we can't.
+;;; Use the parent directory of FRICASsys binary as fallback.
 (defun initroot (&optional (newroot nil))
-  (reroot (or (|getEnv| "AXIOM") newroot $spadroot
-              (error "setenv AXIOM or (setq $spadroot)"))))
+  (reroot (or (|getEnv| "FRICAS") newroot
+              (if (|fricas_probe_file| $spadroot) $spadroot)
+              (let ((bin-parent-dir
+                     (concatenate 'string
+                                  (directory-namestring (car (|getCLArgs|)))
+                                  "/../")))
+                (if (|fricas_probe_file| (concatenate 'string bin-parent-dir
+                                                      "algebra/interp.daase"))
+                    bin-parent-dir))
+              (error "setenv FRICAS or (setq $spadroot)"))))
 
 ;;; Gnu Common Lisp (GCL) (at least 2.6.[78]) requires some changes
-;;; to the default memory setup to run Axiom efficently.
+;;; to the default memory setup to run FriCAS efficiently.
 ;;; This function performs those setup commands.
+#+:GCL
 (defun init-memory-config (&key
                            (cons 500)
                            (fixnum 200)
@@ -307,7 +136,6 @@ where the [[${AXIOM}]] variable points to installed tree.
                            (rpages 1000)
                            (hole 2000) )
   ;; initialize GCL memory allocation parameters
-  #+:GCL
   (progn
     (system:allocate 'cons cons)
     (system:allocate 'fixnum fixnum)
@@ -319,7 +147,6 @@ where the [[${AXIOM}]] variable points to installed tree.
     (system:allocate-contiguous-pages cpages)
     (system:allocate-relocatable-pages rpages)
     (system:set-hole-size hole))
-  #-:GCL
   nil)
 
 #|
@@ -358,16 +185,13 @@ it loads all of the named files, resets a few global state variables,
 loads the databases, sets up autoload triggers and clears out hash tables.
 After this function is called the image is clean and can be saved.
 |#
-(defun build-interpsys (load-files parse-files comp-files browse-files
-             asauto-files spad)
-  (declare (ignore nagbr-files))
+(defun build-interpsys (load-files spad)
   #-:ecl
   (progn
       (mapcar #'load load-files)
-      (interpsys-image-init parse-files comp-files browse-files
-             asauto-files spad))
-  (if (and (boundp 'FRICAS-LISP::*building-axiomsys*)
-                FRICAS-LISP::*building-axiomsys*)
+      (interpsys-image-init spad))
+  (if (and (boundp 'FRICAS-LISP::*building-fricassys*)
+                FRICAS-LISP::*building-fricassys*)
        (progn
            #+:GCL(setf compiler::*default-system-p* nil)
            #+:GCL(compiler::emit-fn nil)
@@ -381,14 +205,6 @@ After this function is called the image is clean and can be saved.
            (append FRICAS-LISP::*fricas-initial-lisp-objects*
                    '("util.o")
                    load-files))
-#|
-      (dolist (el `(
-                    ("comp-files" ,comp-files)
-                    ("browse-files" ,browse-files)
-                    ("asauto-files" ,asauto-files)))
-          (c:build-fasl (concatenate 'string spad "/autoload/" (car el))
-                        :lisp-files (nth 1 el)))
-|#
       (let ((initforms nil))
           (dolist (el '(|$build_date| |$build_version| |$createLocalLibDb|))
               (if (boundp el)
@@ -416,22 +232,12 @@ After this function is called the image is clean and can be saved.
      (setf spad $spadroot)
      (format *standard-output* "spad = ~s~%" spad)
      (force-output  *standard-output*)
-     ;;; (load (concatenate 'string spad "/autoload/"  "parini.lsp"))
-#|
-     (interpsys-image-init
-           (list (concatenate 'string spad "/autoload/" "parse-files"))
-           (list (concatenate 'string spad "/autoload/" "comp-files"))
-           (list (concatenate 'string spad "/autoload/" "browse-files"))
-           (list (concatenate 'string spad "/autoload/" "asauto-files"))
-           spad)
-|#
-      (interpsys-image-init ()' ()' ()' ()' spad)
-      (format *standard-output* "before fricas-restart~%")
-      (force-output  *standard-output*)
+     (interpsys-image-init spad)
+     (format *standard-output* "before fricas-restart~%")
+     (force-output  *standard-output*)
 )
 
-(defun interpsys-image-init (parse-files comp-files browse-files
-             asauto-files spad)
+(defun interpsys-image-init (spad)
   (setf *package* (find-package "BOOT"))
   (initroot spad)
   #+:GCL
@@ -442,11 +248,6 @@ After this function is called the image is clean and can be saved.
   (setq compiler::*suppress-compiler-notes* t)
   (|interpsysInitialization|)
   (setq *load-verbose* nil)
-#|
-  (|setBootAutloadProperties| comp-functions comp-files)
-  (|setBootAutloadProperties| browse-functions browse-files)
-  (|setBootAutloadProperties| asauto-functions asauto-files)
-|#
   (resethashtables) ; the databases into core, then close the streams
  )
 
@@ -467,7 +268,7 @@ After this function is called the image is clean and can be saved.
  (cond
   ((load "./exposed" :verbose nil :if-does-not-exist nil)
     '|done|)
-  ((load (concat (|getEnv| "AXIOM") "/algebra/exposed")
+  ((load (concat (|getEnv| "FRICAS") "/algebra/exposed")
      :verbose nil :if-does-not-exist nil)
    '|done|)
   (t '|failed|) ))
@@ -487,10 +288,10 @@ After this function is called the image is clean and can be saved.
 #+:GCL (system:gbc-time 0)
     #+(or :sbcl :clisp :openmcl :lispworks)
     (if *fricas-load-libspad*
-        (let* ((ax-dir (|getEnv| "AXIOM"))
+        (let* ((ax-dir (|getEnv| "FRICAS"))
                (spad-lib (concatenate 'string ax-dir "/lib/libspad.so")))
             (format t "Checking for foreign routines~%")
-            (format t "AXIOM=~S~%" ax-dir)
+            (format t "FRICAS=~S~%" ax-dir)
             (format t "spad-lib=~S~%" spad-lib)
             (if (|fricas_probe_file| spad-lib)
                 (progn
@@ -525,10 +326,18 @@ After this function is called the image is clean and can be saved.
 (DEFVAR CUROUTSTREAM *standard-output*)
 
 (defun fricas-restart ()
-  ;;; Need to reinitialize CUROUTSTREAM and |$trace_stream| because
-  ;;;  clisp closes it when dumping executable
+  ;;; Need to reinitialize various streams because
+  ;;; CLISP closes them when dumping executable
   (setf CUROUTSTREAM *standard-output*)
   (setf |$trace_stream| *standard-output*)
+  (setq |$algebraOutputStream| (|mkOutputConsoleStream|))
+  (setq |$fortranOutputStream| (|mkOutputConsoleStream|))
+  (setq |$mathmlOutputStream| (|mkOutputConsoleStream|))
+  (setq |$texmacsOutputStream| (|mkOutputConsoleStream|))
+  (setq |$htmlOutputStream| (|mkOutputConsoleStream|))
+  (setq |$openMathOutputStream| (|mkOutputConsoleStream|))
+  (setq |$texOutputStream| (|mkOutputConsoleStream|))
+  (setq |$formattedOutputStream| (|mkOutputConsoleStream|))
   (fricas-init)
   #+(or :GCL :poplog)
   (|spad|)
@@ -595,43 +404,3 @@ After this function is called the image is clean and can be saved.
    (|setIOindex| (- |$IOindex| 3))
   )
 )
-
-#+:GCL
-(defun print-xdr-stream (x y z) (format y "XDR:~A" (xdr-stream-name x)))
-#+:GCL
-(defstruct (xdr-stream
-                (:print-function  print-xdr-stream))
-           "A structure to hold XDR streams. The stream is printed out."
-           (handle ) ;; this is what is used for xdr-open xdr-read xdr-write
-           (name ))  ;; this is used for printing
-#+(and :GCL (not (or :dos :win32)))
-(defun |xdrOpen| (str dir) (make-xdr-stream :handle (system:xdr-open str) :name str))
-#+(and :GCL (or :dos :win32))
-(defun |xdrOpen| (str dir) (format t "xdrOpen called"))
-
-#+(and :GCL (not (or :dos :win32)))
-(defun |xdrRead| (xstr r) (system:xdr-read (xdr-stream-handle xstr) r) )
-#+(and :GCL (or :dos :win32))
-(defun |xdrRead| (str) (format t "xdrRead called"))
-
-#+(and :GCL (not (or :dos :win32)))
-(defun |xdrWrite| (xstr d) (system:xdr-write (xdr-stream-handle xstr) d) )
-#+(and :GCL (or :dos :win32))
-(defun |xdrWrite| (str) (format t "xdrWrite called"))
-
-;; here is a test for XDR
-;; (setq *print-array* T)
-;; (setq foo (open "xdrtest" :direction :output))
-;; (setq xfoo (|xdrOpen| foo))
-;; (|xdrWrite| xfoo "hello: This contains an integer, a float and a float array")
-;; (|xdrWrite| xfoo 42)
-;; (|xdrWrite| xfoo 3.14159)
-;; (|xdrWrite| xfoo (make-array 10 :element-type 'double-float :initial-element 2.78111D12))
-;; (close foo)
-;; (setq foo (open "xdrtest" :direction :input))
-;; (setq xfoo (|xdrOpen| foo))
-;; (|xdrRead| xfoo "")
-;; (|xdrRead| xfoo 0)
-;; (|xdrRead| xfoo 0.0)
-;; (|xdrRead| xfoo (make-array 10 :element-type 'double-float ))
-;; (setq *print-array* NIL)

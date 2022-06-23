@@ -2,23 +2,23 @@
 (PUT '|EXIT;coerce;$Of;1| '|SPADreplace|
      '(XLAM (|n|) (|error| "Cannot use an Exit value."))) 
 
-(SDEFUN |EXIT;coerce;$Of;1| ((|n| $) ($ |OutputForm|))
+(SDEFUN |EXIT;coerce;$Of;1| ((|n| ($)) ($ (|OutputForm|)))
         (|error| "Cannot use an Exit value.")) 
 
 (PUT '|EXIT;=;2$B;2| '|SPADreplace|
      '(XLAM (|n1| |n2|) (|error| "Cannot use an Exit value."))) 
 
-(SDEFUN |EXIT;=;2$B;2| ((|n1| $) (|n2| $) ($ |Boolean|))
+(SDEFUN |EXIT;=;2$B;2| ((|n1| ($)) (|n2| ($)) ($ (|Boolean|)))
         (|error| "Cannot use an Exit value.")) 
 
 (DECLAIM (NOTINLINE |Exit;|)) 
 
 (DEFUN |Exit| ()
   (SPROG NIL
-         (PROG (#1=#:G695)
+         (PROG (#1=#:G694)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|Exit|) . #2=(|Exit|))
+             ((LETT #1# (HGET |$ConstructorCache| '|Exit|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -26,16 +26,16 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|Exit|
                              (LIST (CONS NIL (CONS 1 (|Exit;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND ((NOT #1#) (HREM |$ConstructorCache| '|Exit|)))))))))) 
 
 (DEFUN |Exit;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|Exit|) . #1=(|Exit|))
-          (LETT $ (GETREFV 13) . #1#)
+          (LETT |dv$| '(|Exit|))
+          (LETT $ (GETREFV 13))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|Exit| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

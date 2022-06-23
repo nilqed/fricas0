@@ -1,13 +1,13 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; getBasicMode x ==  getBasicMode0(x,$useIntegerSubdomain)
- 
+
 (DEFUN |getBasicMode| (|x|)
   (PROG () (RETURN (|getBasicMode0| |x| |$useIntegerSubdomain|))))
- 
+
 ; getBasicMode0(x,useIntegerSubdomain) ==
 ;   --  if x is one of the basic types (Integer String Float Boolean) then
 ;   --  this function returns its type, and nil otherwise
@@ -22,7 +22,7 @@
 ;   FLOATP x => $DoubleFloat
 ;   (x='noBranch) or (x='noValue) => $NoValueMode
 ;   nil
- 
+
 (DEFUN |getBasicMode0| (|x| |useIntegerSubdomain|)
   (PROG ()
     (RETURN
@@ -36,7 +36,7 @@
            ((FLOATP |x|) |$DoubleFloat|)
            ((OR (EQ |x| '|noBranch|) (EQ |x| '|noValue|)) |$NoValueMode|)
            (#1# NIL)))))
- 
+
 ; getBasicObject x ==
 ;   INTEGERP    x =>
 ;     t :=
@@ -48,7 +48,7 @@
 ;   STRINGP x => objNewWrap(x,$String)
 ;   FLOATP  x => objNewWrap(x,$DoubleFloat)
 ;   NIL
- 
+
 (DEFUN |getBasicObject| (|x|)
   (PROG (|t|)
     (RETURN
@@ -62,7 +62,7 @@
         (|objNewWrap| |x| |t|)))
       ((STRINGP |x|) (|objNewWrap| |x| |$String|))
       ((FLOATP |x|) (|objNewWrap| |x| |$DoubleFloat|)) (#1# NIL)))))
- 
+
 ; getMinimalVariableTower(var,t) ==
 ;   -- gets the minimal polynomial subtower of t that contains the
 ;   -- given variable. Returns NIL if none.
@@ -84,7 +84,7 @@
 ;     getMinimalVariableTower(var,t')
 ;   null (t' := underDomainOf t) => NIL
 ;   getMinimalVariableTower(var,t')
- 
+
 (DEFUN |getMinimalVariableTower| (|var| |t|)
   (PROG (|ISTMP#1| |u| |up| |t'| |ISTMP#2| |ISTMP#3| |mp|)
     (RETURN
@@ -145,7 +145,7 @@
                   (#1# (|getMinimalVariableTower| |var| |t'|))))
            ((NULL (SETQ |t'| (|underDomainOf| |t|))) NIL)
            (#1# (|getMinimalVariableTower| |var| |t'|))))))
- 
+
 ; getMinimalVarMode(id,m) ==
 ;   --  This function finds the minimum polynomial subtower type of the
 ;   --  polynomial domain tower m which id to which can be coerced
@@ -161,7 +161,7 @@
 ;     SUBSTQ('(Integer),$EmptyMode,m)
 ;   (um := underDomainOf m) => getMinimalVarMode(id,um)
 ;   defaultMode
- 
+
 (DEFUN |getMinimalVarMode| (|id| |m|)
   (PROG (|defaultMode| |vl| |um|)
     (RETURN
@@ -176,7 +176,7 @@
                    ((SETQ |um| (|underDomainOf| |m|))
                     (|getMinimalVarMode| |id| |um|))
                    (#1# |defaultMode|))))))))
- 
+
 ; polyVarlist m ==
 ;   --  If m is a polynomial type this function returns a list of its
 ;   --  top level variables, and nil otherwise
@@ -196,7 +196,7 @@
 ;     op in $multivariateDomains =>
 ;           a
 ;   nil
- 
+
 (DEFUN |polyVarlist| (|m|)
   (PROG (|ISTMP#1| |op| |a|)
     (RETURN
@@ -227,7 +227,7 @@
           (COND ((|member| |op| '(|UnivariatePolynomial|)) (LIST |a|))
                 ((|member| |op| |$multivariateDomains|) |a|))))))
       (#1# NIL)))))
- 
+
 ; pushDownTargetInfo(op,target,arglist) ==
 ;   -- put target info on args for certain operations
 ;   target = $OutputForm => NIL
@@ -268,7 +268,7 @@
 ;         if not getTarget(x) then putTarget(x,S)
 ;     NIL
 ;   NIL
- 
+
 (DEFUN |pushDownTargetInfo| (|op| |target| |arglist|)
   (PROG (|ISTMP#1| |dom| |ISTMP#2| |tag| |n| |pdArgs| |x| |nargs| S |targ|)
     (RETURN
@@ -426,7 +426,7 @@
                      |arglist| NIL))
                    (#1# NIL)))
                  (#1# NIL)))))))))))
- 
+
 ; pushDownOnArithmeticVariables(op,target,arglist) ==
 ;   -- tries to push appropriate target information onto variable
 ;   -- occurring in arithmetic expressions
@@ -443,7 +443,7 @@
 ;       [op',:arglist'] := x
 ;       pushDownOnArithmeticVariables(getUnname op',target,arglist')
 ;   arglist
- 
+
 (DEFUN |pushDownOnArithmeticVariables| (|op| |target| |arglist|)
   (PROG (|xn| |t| |op'| |arglist'|)
     (RETURN
@@ -484,7 +484,7 @@
                  (SETQ |i| (+ |i| 1))))
               |arglist| NIL 1)
              |arglist|))))))
- 
+
 ; pushDownOp?(op,n) ==
 ;   -- determine if for op with n arguments whether for all modemaps
 ;   -- the target type is equal to one or more arguments. If so, a list
@@ -506,7 +506,7 @@
 ;   for i in 0..(n-1) repeat
 ;     if numMms = sameAsTarg.i then ok := cons(i,ok)
 ;   reverse ok
- 
+
 (DEFUN |pushDownOp?| (|op| |n|)
   (PROG (|sig| |ops| |sameAsTarg| |numMms| |ISTMP#1| |targ| |argl| |ok|)
     (RETURN
@@ -579,7 +579,7 @@
                   (SETQ |i| (+ |i| 1))))
                (- |n| 1) 0)
               (REVERSE |ok|))))))))
- 
+
 ; bottomUp t ==
 ;   -- bottomUp takes an attributed tree, and returns the modeSet for it.
 ;   -- As a side-effect it also evaluates the tree.
@@ -599,46 +599,46 @@
 ;     else
 ;       opName := NIL
 ;       bottomUp op
-; 
+;
 ;     opVal := getValue op
-; 
+;
 ;     -- call a special handler if we are not being package called
 ;     dol := getAtree(op,'dollar) and (opName ~= 'construct)
-; 
+;
 ;     (null dol) and (fn := GET(opName, "up")) and (u := FUNCALL(fn, t)) => u
 ;     nargs := #argl
 ;     if opName then for x in argl for i in 1.. repeat
 ;       putAtree(x,'callingFunction,opName)
 ;       putAtree(x,'argumentNumber,i)
 ;       putAtree(x,'totalArgs,nargs)
-; 
+;
 ;     if tar then pushDownTargetInfo(opName,tar,argl)
-; 
+;
 ;     -- see if we are calling a declared user map
 ;     -- if so, push down the declared types as targets on the args
 ;     if opVal and (objVal opVal  is ['SPADMAP,:.]) and
 ;       (getMode op is ['Mapping,:ms]) and (nargs + 1= #ms) then
 ;         for m in rest ms for x in argl repeat putTarget(x,m)
-; 
+;
 ;     argModeSetList:= [bottomUp x for x in argl]
-; 
+;
 ;     if not tar and opName = "*" and nargs = 2 then
 ;         [[t1],[t2]] := argModeSetList
 ;         tar := computeTypeWithVariablesTarget(t1, t2)
 ;         tar =>
 ;             pushDownTargetInfo(opName,tar,argl)
 ;             argModeSetList:= [bottomUp x for x in argl]
-; 
+;
 ;     ms := bottomUpForm(t,op,opName,argl,argModeSetList)
 ;     -- If this is a type producing form, then we don't want
 ;     -- to store the representation object in the environment.
 ;     -- Rather, we want to record the reified canonical form.
-;     if ms is [m] and (m is ["Mode"] or isCategoryForm(m,$e))
+;     if ms is [m] and (m is ["Mode"] or isCategoryForm(m))
 ;     then putValue(t,objNew(devaluate objValUnwrap getValue t, m))
-; 
+;
 ;     -- given no target or package calling, force integer constants to
 ;     -- belong to tightest possible subdomain
-; 
+;
 ;     op := first t                -- may have changed in bottomUpElt
 ;     $useIntegerSubdomain and null tar and null dol and
 ;       isEqualOrSubDomain(first ms,$Integer) =>
@@ -654,7 +654,7 @@
 ;   IDENTP (id := getUnname t) =>
 ;     putModeSet(t,bottomUpIdentifier(t,id))
 ;   keyedSystemError("S2GE0016",['"bottomUp",'"unknown object form"])
- 
+
 (DEFUN |bottomUp| (|t|)
   (PROG (|op| |argl| |tar| |v| |om| |r| |opName| |opVal| |dol| |fn| |u| |nargs|
          |ISTMP#1| |ms| |argModeSetList| |t1| |t2| |m| |val| |bm| |id|)
@@ -773,7 +773,7 @@
                      (OR
                       (AND (CONSP |m|) (EQ (CDR |m|) NIL)
                            (EQ (CAR |m|) '|Mode|))
-                      (|isCategoryForm| |m| |$e|)))
+                      (|isCategoryForm| |m|)))
                 (|putValue| |t|
                  (|objNew| (|devaluate| (|objValUnwrap| (|getValue| |t|)))
                   |m|))))
@@ -798,14 +798,14 @@
       (#1#
        (|keyedSystemError| 'S2GE0016
         (LIST "bottomUp" "unknown object form")))))))
- 
+
 ; computeTypeWithVariablesTarget(p, q) ==
 ;     polyVarlist(p) or polyVarlist(q) =>
 ;         t := resolveTT(p, q)
 ;         polyVarlist(t) => t
 ;         NIL
 ;     NIL
- 
+
 (DEFUN |computeTypeWithVariablesTarget| (|p| |q|)
   (PROG (|t|)
     (RETURN
@@ -815,13 +815,13 @@
         (SETQ |t| (|resolveTT| |p| |q|))
         (COND ((|polyVarlist| |t|) |t|) (#1='T NIL))))
       (#1# NIL)))))
- 
+
 ; bottomUpCompile t ==
 ;   $genValue:local := false
 ;   ms := bottomUp t
 ;   compTran1 objVal getValue t
 ;   ms
- 
+
 (DEFUN |bottomUpCompile| (|t|)
   (PROG (|$genValue| |ms|)
     (DECLARE (SPECIAL |$genValue|))
@@ -831,7 +831,7 @@
       (SETQ |ms| (|bottomUp| |t|))
       (|compTran1| (|objVal| (|getValue| |t|)))
       |ms|))))
- 
+
 ; bottomUpUseSubdomain t ==
 ;   $useIntegerSubdomain : local := true
 ;   ms := bottomUp t
@@ -842,7 +842,7 @@
 ;   ms := [objMode o]
 ;   putModeSet(t,ms)
 ;   ms
- 
+
 (DEFUN |bottomUpUseSubdomain| (|t|)
   (PROG (|$useIntegerSubdomain| |o| |num| |ms|)
     (DECLARE (SPECIAL |$useIntegerSubdomain|))
@@ -862,13 +862,13 @@
          (SETQ |ms| (LIST (|objMode| |o|)))
          (|putModeSet| |t| |ms|)
          |ms|)))))))
- 
+
 ; bottomUpPredicate(pred, name) ==
 ;   putTarget(pred,$Boolean)
 ;   ms := bottomUp pred
 ;   $Boolean ~= first ms => throwKeyedMsg("S2IB0001", [name])
 ;   ms
- 
+
 (DEFUN |bottomUpPredicate| (|pred| |name|)
   (PROG (|ms|)
     (RETURN
@@ -879,17 +879,17 @@
        ((NOT (EQUAL |$Boolean| (CAR |ms|)))
         (|throwKeyedMsg| 'S2IB0001 (LIST |name|)))
        ('T |ms|))))))
- 
+
 ; bottomUpCompilePredicate(pred, name) ==
 ;   $genValue:local := false
 ;   bottomUpPredicate(pred,name)
- 
+
 (DEFUN |bottomUpCompilePredicate| (|pred| |name|)
   (PROG (|$genValue|)
     (DECLARE (SPECIAL |$genValue|))
     (RETURN
      (PROGN (SETQ |$genValue| NIL) (|bottomUpPredicate| |pred| |name|)))))
- 
+
 ; bottomUpIdentifier(t,id) ==
 ;   m := isType t => bottomUpType(t, m)
 ;   EQ(id,'noMapVal) => throwKeyedMsg("S2IB0002", NIL)
@@ -914,12 +914,12 @@
 ;         (r := resolveTM(om,tar)) => [r]
 ;         [om]
 ;       bottomUpDefault(t,id,defaultType,getTarget t)
-;     interpRewriteRule(t,id,expr) or
+;     interpRewriteRule(t, id) or
 ;       (isMapExpr expr and [objMode(u)]) or
 ;         keyedSystemError("S2GE0016",
 ;           ['"bottomUpIdentifier",'"cannot evaluate identifier"])
 ;   bottomUpDefault(t,id,defaultType,getTarget t)
- 
+
 (DEFUN |bottomUpIdentifier| (|t| |id|)
   (PROG (|m| |defaultType| |u| |tar| |expr| |om| |ISTMP#1| |r|)
     (RETURN
@@ -955,7 +955,7 @@
                     (|bottomUpDefault| |t| |id| |defaultType|
                      (|getTarget| |t|)))))
                  (#1#
-                  (OR (|interpRewriteRule| |t| |id| |expr|)
+                  (OR (|interpRewriteRule| |t| |id|)
                       (AND (|isMapExpr| |expr|) (LIST (|objMode| |u|)))
                       (|keyedSystemError| 'S2GE0016
                        (LIST "bottomUpIdentifier"
@@ -963,45 +963,45 @@
               (#1#
                (|bottomUpDefault| |t| |id| |defaultType|
                 (|getTarget| |t|))))))))))
- 
+
 ; bottomUpDefault(t,id,defaultMode,target) ==
 ;   if $genValue
-;     then bottomUpDefaultEval(t,id,defaultMode,target,nil)
-;     else bottomUpDefaultCompile(t,id,defaultMode,target,nil)
- 
+;     then bottomUpDefaultEval(t, id, defaultMode, target)
+;     else bottomUpDefaultCompile(t, id, defaultMode, target)
+
 (DEFUN |bottomUpDefault| (|t| |id| |defaultMode| |target|)
   (PROG ()
     (RETURN
      (COND
-      (|$genValue| (|bottomUpDefaultEval| |t| |id| |defaultMode| |target| NIL))
-      ('T (|bottomUpDefaultCompile| |t| |id| |defaultMode| |target| NIL))))))
- 
-; bottomUpDefaultEval(t,id,defaultMode,target,isSub) ==
+      (|$genValue| (|bottomUpDefaultEval| |t| |id| |defaultMode| |target|))
+      ('T (|bottomUpDefaultCompile| |t| |id| |defaultMode| |target|))))))
+
+; bottomUpDefaultEval(t, id, defaultMode, target) ==
 ;   -- try to get value case.
-; 
+;
 ;   -- 1. declared mode but no value case
 ;   (m := getMode t) =>
 ;     m is ['Mapping,:.] => throwKeyedMsg("S2IB0003",[getUnname t])
-; 
+;
 ;     -- hmm, try to treat it like target mode or declared mode
 ;     if isPartialMode(m) then m := resolveTM(['Variable,id],m)
 ;     -- if there is a target, probably want it to be that way and not
 ;     -- declared mode. Like "x" in second line:
 ;     --   x : P[x] I
 ;     --   y : P[x] I
-;     target and not isSub and
+;     target and
 ;       (val := coerceInteractive(objNewWrap(id,['Variable,id]),target))=>
 ;         putValue(t,val)
 ;         [target]
 ;     -- Ok, see if we can make it into declared mode from symbolic form
 ;     -- For example, (x : P[x] I; x + 1)
-;     not target and not isSub and m and
+;     not target and m and
 ;       (val := coerceInteractive(objNewWrap(id,['Variable,id]),m)) =>
 ;         putValue(t,val)
 ;         [m]
 ;     -- give up
 ;     throwKeyedMsg("S2IB0004", [id, m])
-; 
+;
 ;   -- 2. no value and no mode case
 ;   val := objNewWrap(id,defaultMode)
 ;   (null target) or (defaultMode = target) =>
@@ -1027,8 +1027,8 @@
 ;     [defaultMode]
 ;   putValue(t,val')
 ;   [target]
- 
-(DEFUN |bottomUpDefaultEval| (|t| |id| |defaultMode| |target| |isSub|)
+
+(DEFUN |bottomUpDefaultEval| (|t| |id| |defaultMode| |target|)
   (PROG (|m| |val| D |ISTMP#1| |x| |ISTMP#2| |dmode| |val'| |tm|)
     (RETURN
      (COND
@@ -1042,13 +1042,13 @@
            ((|isPartialMode| |m|)
             (SETQ |m| (|resolveTM| (LIST '|Variable| |id|) |m|))))
           (COND
-           ((AND |target| (NULL |isSub|)
+           ((AND |target|
                  (SETQ |val|
                          (|coerceInteractive|
                           (|objNewWrap| |id| (LIST '|Variable| |id|))
                           |target|)))
             (PROGN (|putValue| |t| |val|) (LIST |target|)))
-           ((AND (NULL |target|) (NULL |isSub|) |m|
+           ((AND (NULL |target|) |m|
                  (SETQ |val|
                          (|coerceInteractive|
                           (|objNewWrap| |id| (LIST '|Variable| |id|)) |m|)))
@@ -1098,8 +1098,8 @@
                  (NULL (SETQ |val'| (|coerceInteractive| |val| |target|))))
              (PROGN (|putValue| |t| |val|) (LIST |defaultMode|)))
             (#1# (PROGN (|putValue| |t| |val'|) (LIST |target|)))))))))))))
- 
-; bottomUpDefaultCompile(t,id,defaultMode,target,isSub) ==
+
+; bottomUpDefaultCompile(t, id, defaultMode, target) ==
 ;   tmode := getMode t
 ;   tval  := getValue t
 ;   expr:=
@@ -1126,8 +1126,8 @@
 ;         [target]
 ;   putValue(t,obj)
 ;   [defaultMode]
- 
-(DEFUN |bottomUpDefaultCompile| (|t| |id| |defaultMode| |target| |isSub|)
+
+(DEFUN |bottomUpDefaultCompile| (|t| |id| |defaultMode| |target|)
   (PROG (|tmode| |tval| |envMode| |expr| |mdv| |obj| |obj'|)
     (RETURN
      (PROGN
@@ -1167,14 +1167,14 @@
                 (SETQ |obj'| (|coerceInteractive| |obj| |target|)))
            (PROGN (|putValue| |t| |obj'|) (LIST |target|)))
           (#1# (PROGN (|putValue| |t| |obj|) (LIST |defaultMode|)))))))))))
- 
-; interpRewriteRule(t,id,expr) ==
+
+; interpRewriteRule(t, id) ==
 ;   null get(id,'isInterpreterRule,$e) => NIL
 ;   (ms:= selectLocalMms(t,id,nil,nil)) and (ms:=evalForm(t,id,nil,ms)) =>
 ;     ms
 ;   nil
- 
-(DEFUN |interpRewriteRule| (|t| |id| |expr|)
+
+(DEFUN |interpRewriteRule| (|t| |id|)
   (PROG (|ms|)
     (RETURN
      (COND ((NULL (|get| |id| '|isInterpreterRule| |$e|)) NIL)
@@ -1182,12 +1182,12 @@
                  (SETQ |ms| (|evalForm| |t| |id| NIL |ms|)))
             |ms|)
            ('T NIL)))))
- 
+
 ; bottomUpForm(t,op,opName,argl,argModeSetList) ==
 ;   not($inRetract) =>
 ;     bottomUpForm3(t,op,opName,argl,argModeSetList)
 ;   bottomUpForm2(t,op,opName,argl,argModeSetList)
- 
+
 (DEFUN |bottomUpForm| (|t| |op| |opName| |argl| |argModeSetList|)
   (PROG ()
     (RETURN
@@ -1195,11 +1195,11 @@
       ((NULL |$inRetract|)
        (|bottomUpForm3| |t| |op| |opName| |argl| |argModeSetList|))
       ('T (|bottomUpForm2| |t| |op| |opName| |argl| |argModeSetList|))))))
- 
+
 ; bottomUpForm3(t,op,opName,argl,argModeSetList) ==
 ;   $origArgModeSetList:local  := COPY argModeSetList
 ;   bottomUpForm2(t,op,opName,argl,argModeSetList)
- 
+
 (DEFUN |bottomUpForm3| (|t| |op| |opName| |argl| |argModeSetList|)
   (PROG (|$origArgModeSetList|)
     (DECLARE (SPECIAL |$origArgModeSetList|))
@@ -1207,14 +1207,14 @@
      (PROGN
       (SETQ |$origArgModeSetList| (COPY |argModeSetList|))
       (|bottomUpForm2| |t| |op| |opName| |argl| |argModeSetList|)))))
- 
+
 ; bottomUpForm2(t,op,opName,argl,argModeSetList) ==
 ;   not atom t and EQ(opName,"%%") => bottomUpPercent t
 ;   opVal := getValue op
-; 
+;
 ;   -- for things with objects in operator position, be careful before
 ;   -- we enter general modemap selection
-; 
+;
 ;   lookForIt :=
 ;     getAtree(op,'dollar) => true
 ;     not opVal => true
@@ -1223,23 +1223,23 @@
 ;     opModeTop in '(Record Union) => false
 ;     opModeTop in '(Variable Mapping FunctionCalled RuleCalled AnonymousFunction) => true
 ;     false
-; 
+;
 ;   -- get rid of Union($, "failed") except when op is "=" and all
 ;   -- modesets are the same
-; 
+;
 ;   $genValue and
 ;     not (opName = "=" and argModeSetList is [[m],[=m]] and m is ['Union,:.]) and
 ;       (u := bottomUpFormUntaggedUnionRetract(t,op,opName,argl,argModeSetList)) => u
-; 
-;   lookForIt and (u := bottomUpFormTuple(t, op, opName, argl, argModeSetList)) => u
-; 
+;
+;   lookForIt and (u := bottomUpFormTuple(t, op, opName, argl)) => u
+;
 ;   -- opName can change in the call to selectMms
-; 
+;
 ;   (lookForIt and (mmS := selectMms(op,argl,getTarget op))) and
 ;     (mS := evalForm(op,opName := getUnname op,argl,mmS)) =>
 ;       putModeSet(op,mS)
 ;   bottomUpForm0(t,op,opName,argl,argModeSetList)
- 
+
 (DEFUN |bottomUpForm2| (|t| |op| |opName| |argl| |argModeSetList|)
   (PROG (|opVal| |opMode| |opModeTop| |lookForIt| |ISTMP#1| |m| |ISTMP#2|
          |ISTMP#3| |u| |mmS| |mS|)
@@ -1283,9 +1283,7 @@
                              |opName| |argl| |argModeSetList|)))
                |u|)
               ((AND |lookForIt|
-                    (SETQ |u|
-                            (|bottomUpFormTuple| |t| |op| |opName| |argl|
-                             |argModeSetList|)))
+                    (SETQ |u| (|bottomUpFormTuple| |t| |op| |opName| |argl|)))
                |u|)
               ((AND |lookForIt|
                     (SETQ |mmS| (|selectMms| |op| |argl| (|getTarget| |op|)))
@@ -1296,11 +1294,11 @@
               (#1#
                (|bottomUpForm0| |t| |op| |opName| |argl|
                 |argModeSetList|)))))))))
- 
-; bottomUpFormTuple(t, op, opName, args, argModeSetList) ==
+
+; bottomUpFormTuple(t, op, opName, args) ==
 ;   getAtree(op,'dollar) => NIL
 ;   null (singles := getModemapsFromDatabase(opName, 1)) => NIL
-; 
+;
 ;   -- see if any of the modemaps have Tuple arguments
 ;   haveTuple := false
 ;   for mm in singles while not haveTuple repeat
@@ -1310,13 +1308,13 @@
 ;   nargs = 1 and getUnname first args = "Tuple" => NIL
 ;   nargs = 1 and (ms := bottomUp first args) and
 ;     (ms is [["Tuple",.]] or ms is [["List",.]]) => NIL
-; 
+;
 ;   -- now make the args into a tuple
-; 
+;
 ;   newArg := [mkAtreeNode "Tuple",:args]
 ;   bottomUp [op, newArg]
- 
-(DEFUN |bottomUpFormTuple| (|t| |op| |opName| |args| |argModeSetList|)
+
+(DEFUN |bottomUpFormTuple| (|t| |op| |opName| |args|)
   (PROG (|singles| |haveTuple| |ISTMP#1| |ISTMP#2| |nargs| |ms| |newArg|)
     (RETURN
      (COND ((|getAtree| |op| '|dollar|) NIL)
@@ -1375,7 +1373,7 @@
                        (PROGN
                         (SETQ |newArg| (CONS (|mkAtreeNode| '|Tuple|) |args|))
                         (|bottomUp| (LIST |op| |newArg|))))))))))))))
- 
+
 ; printableArgModeSetList() ==
 ;   amsl := nil
 ;   for a in reverse $origArgModeSetList repeat
@@ -1384,7 +1382,7 @@
 ;     amsl := ['%l,:b,:amsl]
 ;   if amsl then amsl := rest amsl
 ;   amsl
- 
+
 (DEFUN |printableArgModeSetList| ()
   (PROG (|b| |amsl|)
     (RETURN
@@ -1404,14 +1402,14 @@
        (REVERSE |$origArgModeSetList|) NIL)
       (COND (|amsl| (SETQ |amsl| (CDR |amsl|))))
       |amsl|))))
- 
+
 ; bottomUpForm0(t,op,opName,argl,argModeSetList) ==
 ;   op0 := op
 ;   opName0 := opName
-; 
+;
 ;   m := isType t =>
 ;     bottomUpType(t, m)
-; 
+;
 ;   opName = 'copy and argModeSetList is [[['Record,:rargs]]] =>
 ;     -- this is a hack until Records go through the normal
 ;     -- modemap selection process
@@ -1422,7 +1420,7 @@
 ;     val := objNew(code,rtype)
 ;     putValue(t,val)
 ;     putModeSet(t,[rtype])
-; 
+;
 ;   m := getModeOrFirstModeSetIfThere op
 ;   m is ['Record,:.] and argModeSetList is [[['Variable,x]]] and
 ;       member(x,getUnionOrRecordTags m) and (u := bottomUpElt t) => u
@@ -1438,21 +1436,18 @@
 ;       putValue(op,object)
 ;       (u := bottomUpElt t) => u
 ;       bottomUpForm0(t,op,opName,argl,argModeSetList)
-; 
+;
 ;   (opName ~= "elt") and (opName ~= "apply") and
 ;     #argl = 1 and first first argModeSetList is ['Variable, var]
 ;       and var in '(first last rest) and
 ;         isEltable(op, argl, #argl) and (u := bottomUpElt t) => u
-; 
+;
 ;   $genValue and
 ;     ( u:= bottomUpFormRetract(t,op,opName,argl,argModeSetList) ) => u
-; 
+;
 ;   (opName ~= "elt") and (opName ~= "apply") and
 ;     isEltable(op, argl, #argl) and (u := bottomUpElt t) => u
-; 
-;   if FIXP $HTCompanionWindowID then
-;     mkCompanionPage('operationError, t)
-; 
+;
 ;   amsl := printableArgModeSetList()
 ;   opName1 :=
 ;     opName0 = $immediateDataSymbol =>
@@ -1460,7 +1455,7 @@
 ;             outputTran2 objValUnwrap o
 ;         NIL
 ;     opName0
-; 
+;
 ;   if null(opName1) then
 ;     opName1 :=
 ;         (o := getValue op0) => prefix2String objMode o
@@ -1475,13 +1470,13 @@
 ;             opName1 := n
 ;             "S2IB0008g"
 ;         "S2IB0008"
-; 
+;
 ;   sayIntelligentMessageAboutOpAvailability(opName1, #argl)
-; 
+;
 ;   not $genValue =>
 ;     keyedMsgCompFailureSP(msgKey,[opName1, amsl], op0)
 ;   throwKeyedMsgSP(msgKey,[opName1, amsl], op0)
- 
+
 (DEFUN |bottomUpForm0| (|t| |op| |opName| |argl| |argModeSetList|)
   (PROG (|op0| |opName0| |m| |ISTMP#1| |ISTMP#2| |rargs| |rtype| |code| |val|
          |ISTMP#3| |x| |u| |amsl| |object| |var| |o| |opName1| |msgKey| |n|)
@@ -1597,9 +1592,6 @@
                 |u|)
                (#1#
                 (PROGN
-                 (COND
-                  ((FIXP |$HTCompanionWindowID|)
-                   (|mkCompanionPage| '|operationError| |t|)))
                  (SETQ |amsl| (|printableArgModeSetList|))
                  (SETQ |opName1|
                          (COND
@@ -1635,22 +1627,22 @@
                   (#1#
                    (|throwKeyedMsgSP| |msgKey| (LIST |opName1| |amsl|)
                     |op0|)))))))))))))
- 
+
 ; sayIntelligentMessageAboutOpAvailability(opName, nArgs) ==
 ;   -- see if we can give some decent messages about the availability if
 ;   -- library messages
-; 
+;
 ;   NUMBERP opName => NIL
-; 
+;
 ;   oo :=  object2Identifier opOf opName
 ;   if ( oo = "%" ) or ( domainForm? opName ) then
 ;     opName := "elt"
-; 
+;
 ;   nAllExposedMmsWithName := #getModemapsFromDatabase(opName, NIL)
 ;   nAllMmsWithName        := #getAllModemapsFromDatabase(opName, NIL)
-; 
+;
 ;   -- first see if there are ANY ops with this name
-; 
+;
 ;   if nAllMmsWithName = 0 then
 ;     sayKeyedMsg("S2IB0008a", [opName])
 ;   else if nAllExposedMmsWithName = 0 then
@@ -1666,7 +1658,7 @@
 ;         sayKeyedMsg("S2IB0008e", [opName, nArgs, nAllMmsWithNameAndArgs - nAllExposedMmsWithNameAndArgs])
 ;     sayKeyedMsg("S2IB0008f", [opName, nArgs, nAllExposedMmsWithNameAndArgs, nAllMmsWithNameAndArgs - nAllExposedMmsWithNameAndArgs])
 ;   nil
- 
+
 (DEFUN |sayIntelligentMessageAboutOpAvailability| (|opName| |nArgs|)
   (PROG (|oo| |nAllExposedMmsWithName| |nAllMmsWithName|
          |nAllExposedMmsWithNameAndArgs| |nAllMmsWithNameAndArgs|)
@@ -1714,7 +1706,7 @@
                         (- |nAllMmsWithNameAndArgs|
                            |nAllExposedMmsWithNameAndArgs|)))))))
              NIL))))))
- 
+
 ; bottomUpType(t, type) ==
 ;   mode :=
 ;     if isPartialMode type then '(Mode)
@@ -1724,7 +1716,7 @@
 ;   putValue(t,val)
 ;   -- have to fix the following
 ;   putModeSet(t,[mode])
- 
+
 (DEFUN |bottomUpType| (|t| |type|)
   (PROG (|mode| |val|)
     (RETURN
@@ -1735,7 +1727,7 @@
       (SETQ |val| (|objNew| |type| |mode|))
       (|putValue| |t| |val|)
       (|putModeSet| |t| (LIST |mode|))))))
- 
+
 ; bottomUpPercent(tree is [op,:argl]) ==
 ;   -- handles a call %%(5), which means the output of step 5
 ;   -- %%() is the same as %%(-1)
@@ -1750,7 +1742,7 @@
 ;       putModeSet(op,[objMode(val)])
 ;     throwKeyedMsgSP("S2IB0006", NIL, t)
 ;   throwKeyedMsgSP("S2IB0006", NIL, op)
- 
+
 (DEFUN |bottomUpPercent| (|tree|)
   (PROG (|op| |argl| |val| |t| |i|)
     (RETURN
@@ -1773,19 +1765,19 @@
            (|putModeSet| |op| (LIST (|objMode| |val|)))))
          (#1# (|throwKeyedMsgSP| 'S2IB0006 NIL |t|))))
        (#1# (|throwKeyedMsgSP| 'S2IB0006 NIL |op|)))))))
- 
+
 ; bottomUpFormRetract(t,op,opName,argl,amsl) ==
 ;   -- tries to find one argument, which can be pulled back, and calls
 ;   -- bottomUpForm again. We do not retract the first argument to a
 ;   -- setelt, because this is presumably a destructive operation and
 ;   -- the retract can create a new object.
-; 
+;
 ;   -- if no such operation exists in the database, don't bother
 ;   $inRetract: local := true
 ;   null getAllModemapsFromDatabase(getUnname op,#argl) => NIL
-; 
+;
 ;   u := bottomUpFormAnyUnionRetract(t,op,opName,argl,amsl) => u
-; 
+;
 ;   a  := NIL
 ;   b  := NIL
 ;   ms := NIL
@@ -1812,14 +1804,14 @@
 ;   --insert pulled-back items
 ;   a := nreverse a
 ;   ms := nreverse ms
-; 
+;
 ;   -- check that we haven't seen these types before
 ;   typesHad := getAtree(t, 'typesHad)
 ;   if member(ms, typesHad) then b := nil
 ;   else putAtree(t, 'typesHad, cons(ms, typesHad))
-; 
+;
 ;   b and bottomUpForm(t,op,opName,a,amsl)
- 
+
 (DEFUN |bottomUpFormRetract| (|t| |op| |opName| |argl| |amsl|)
   (PROG (|$inRetract| |typesHad| |object| |ms| |b| |a| |u|)
     (DECLARE (SPECIAL |$inRetract|))
@@ -1881,7 +1873,7 @@
          (COND ((|member| |ms| |typesHad|) (SETQ |b| NIL))
                (#1# (|putAtree| |t| '|typesHad| (CONS |ms| |typesHad|))))
          (AND |b| (|bottomUpForm| |t| |op| |opName| |a| |amsl|)))))))))
- 
+
 ; retractAtree atr ==
 ;     object:= retract getValue atr
 ;     EQ(object,'failed) =>
@@ -1891,7 +1883,7 @@
 ;     putValue(atr,object)
 ;     putModeSet(atr,[objMode(object)])
 ;     true
- 
+
 (DEFUN |retractAtree| (|atr|)
   (PROG (|object|)
     (RETURN
@@ -1906,20 +1898,20 @@
          (|putValue| |atr| |object|)
          (|putModeSet| |atr| (LIST (|objMode| |object|)))
          T)))))))
- 
+
 ; bottomUpFormAnyUnionRetract(t,op,opName,argl,amsl) ==
 ;   -- see if we have a Union
-; 
+;
 ;   ok := NIL
 ;   for m in amsl while not ok repeat
 ;     if atom first(m) then return NIL
 ;     first m = $Any => ok := true
 ;     (first first m = 'Union) => ok := true
 ;   not ok => NIL
-; 
+;
 ;   a:= NIL
 ;   b:= NIL
-; 
+;
 ;   for x in argl for m in amsl for i in 0.. repeat
 ;     m0 := first m
 ;     if ( (m0 = $Any) or (first m0 = 'Union) ) and
@@ -1930,7 +1922,7 @@
 ;         putValue(x,object)
 ;     a := cons(x,a)
 ;   b and bottomUpForm(t,op,opName,nreverse a,amsl)
- 
+
 (DEFUN |bottomUpFormAnyUnionRetract| (|t| |op| |opName| |argl| |amsl|)
   (PROG (|ok| |a| |b| |m0| |object|)
     (RETURN
@@ -1981,19 +1973,19 @@
               (AND |b|
                    (|bottomUpForm| |t| |op| |opName| (NREVERSE |a|)
                     |amsl|)))))))))
- 
+
 ; bottomUpFormUntaggedUnionRetract(t,op,opName,argl,amsl) ==
 ;   -- see if we have a Union with no tags, if so retract all such guys
-; 
+;
 ;   ok := NIL
 ;   for [m] in amsl while not ok repeat
 ;     if atom m then return NIL
 ;     if m is ['Union, :.] and null getUnionOrRecordTags m then ok := true
 ;   not ok => NIL
-; 
+;
 ;   a:= NIL
 ;   b:= NIL
-; 
+;
 ;   for x in argl for m in amsl for i in 0.. repeat
 ;     m0 := first m
 ;     if (m0 is ['Union, :.] and null getUnionOrRecordTags m0) and
@@ -2004,7 +1996,7 @@
 ;         putValue(x,object)
 ;     a := cons(x,a)
 ;   b and bottomUpForm(t,op,opName,nreverse a,amsl)
- 
+
 (DEFUN |bottomUpFormUntaggedUnionRetract| (|t| |op| |opName| |argl| |amsl|)
   (PROG (|ok| |m| |a| |b| |m0| |object|)
     (RETURN
@@ -2061,29 +2053,29 @@
               (AND |b|
                    (|bottomUpForm| |t| |op| |opName| (NREVERSE |a|)
                     |amsl|)))))))))
- 
+
 ; bottomUpElt (form:=[op,:argl]) ==
 ;   -- this transfers expressions that look like function calls into
 ;   -- forms with elt or apply.
-; 
+;
 ;     ms := bottomUp op
 ;     ms and (ms is [['Union,:.]] or ms is [['Record,:.]]) =>
 ;         rplac(rest form, [op, :argl])
 ;         rplac(first form, mkAtreeNode "elt")
 ;         bottomUp form
-; 
+;
 ;     target  := getTarget form
-; 
+;
 ;     newOps := [mkAtreeNode "elt", mkAtreeNode "apply"]
 ;     u := nil
-; 
+;
 ;     while not u for newOp in newOps repeat
 ;         newArgs := [op,:argl]
 ;         if selectMms(newOp, newArgs, target) then
 ;             rplac(rest form, newArgs)
 ;             rplac(first form, newOp)
 ;             u := bottomUp form
-; 
+;
 ;     while not u and ( "and"/[retractAtree(a) for a in newArgs] ) repeat
 ;         while not u for newOp in newOps repeat
 ;             newArgs := [op,:argl]
@@ -2092,7 +2084,7 @@
 ;                 rplac(first form, newOp)
 ;                 u := bottomUp form
 ;     u
- 
+
 (DEFUN |bottomUpElt| (|form|)
   (PROG (|op| |argl| |ms| |ISTMP#1| |target| |newOps| |u| |newArgs|)
     (RETURN
@@ -2172,7 +2164,7 @@
                    (SETQ |bfVar#38| (CDR |bfVar#38|))))
                 |newOps| NIL))))))
          |u|)))))))
- 
+
 ; isEltable(op,argl,numArgs) ==
 ;   -- determines if the object might possible have an elt function
 ;   -- we exclude Mapping and Variable types explicitly
@@ -2189,11 +2181,10 @@
 ;   numArgs ~= 1 => nil
 ;   name := getUnname op
 ;   name = 'SEQ => nil
-; --not (name in '(a e h s)) and getAllModemapsFromDatabase(name, nil) => nil
 ;   arg := first argl
 ;   (getUnname arg) ~= 'construct => nil
 ;   true
- 
+
 (DEFUN |isEltable| (|op| |argl| |numArgs|)
   (PROG (|v| |m| |ISTMP#1| |mapDef| |name| |arg|)
     (RETURN

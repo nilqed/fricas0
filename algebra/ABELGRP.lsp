@@ -4,19 +4,17 @@
 (DEFPARAMETER |AbelianGroup;AL| 'NIL) 
 
 (DEFUN |AbelianGroup| ()
-  (LET (#:G693)
-    (COND (|AbelianGroup;AL|) (T (SETQ |AbelianGroup;AL| (|AbelianGroup;|)))))) 
+  (COND (|AbelianGroup;AL|) (T (SETQ |AbelianGroup;AL| (|AbelianGroup;|))))) 
 
 (DEFUN |AbelianGroup;| ()
-  (SPROG ((#1=#:G691 NIL))
+  (SPROG ((#1=#:G690 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|CancellationAbelianMonoid|)
                            (|mkCategory|
                             '(((- ($ $)) T) ((- ($ $ $)) T)
                               ((* ($ (|Integer|) $)) T))
-                            NIL '((|Integer|)) NIL))
-                   |AbelianGroup|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|AbelianGroup|))))) 
 
 (MAKEPROP '|AbelianGroup| 'NILADIC T) 

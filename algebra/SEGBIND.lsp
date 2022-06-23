@@ -1,30 +1,30 @@
 
 (PUT '|SEGBIND;equation;SS$;1| '|SPADreplace| 'CONS) 
 
-(SDEFUN |SEGBIND;equation;SS$;1| ((|x| |Symbol|) (|s| |Segment| S) ($ $))
+(SDEFUN |SEGBIND;equation;SS$;1| ((|x| (|Symbol|)) (|s| (|Segment| S)) ($ ($)))
         (CONS |x| |s|)) 
 
 (PUT '|SEGBIND;variable;$S;2| '|SPADreplace| 'QCAR) 
 
-(SDEFUN |SEGBIND;variable;$S;2| ((|b| $) ($ |Symbol|)) (QCAR |b|)) 
+(SDEFUN |SEGBIND;variable;$S;2| ((|b| ($)) ($ (|Symbol|))) (QCAR |b|)) 
 
 (PUT '|SEGBIND;segment;$S;3| '|SPADreplace| 'QCDR) 
 
-(SDEFUN |SEGBIND;segment;$S;3| ((|b| $) ($ |Segment| S)) (QCDR |b|)) 
+(SDEFUN |SEGBIND;segment;$S;3| ((|b| ($)) ($ (|Segment| S))) (QCDR |b|)) 
 
-(SDEFUN |SEGBIND;=;2$B;4| ((|b1| $) (|b2| $) ($ |Boolean|))
+(SDEFUN |SEGBIND;=;2$B;4| ((|b1| ($)) (|b2| ($)) ($ (|Boolean|)))
         (COND
          ((EQUAL (SPADCALL |b1| (QREFELT $ 11)) (SPADCALL |b2| (QREFELT $ 11)))
           (SPADCALL (SPADCALL |b1| (QREFELT $ 12))
                     (SPADCALL |b2| (QREFELT $ 12)) (QREFELT $ 14)))
          ('T NIL))) 
 
-(SDEFUN |SEGBIND;coerce;$Of;5| ((|b| $) ($ |OutputForm|))
+(SDEFUN |SEGBIND;coerce;$Of;5| ((|b| ($)) ($ (|OutputForm|)))
         (SPADCALL (SPADCALL (SPADCALL |b| (QREFELT $ 11)) (QREFELT $ 17))
                   (SPADCALL (SPADCALL |b| (QREFELT $ 12)) (QREFELT $ 18))
                   (QREFELT $ 19))) 
 
-(SDEFUN |SEGBIND;convert;$If;6| ((|b| $) ($ |InputForm|))
+(SDEFUN |SEGBIND;convert;$If;6| ((|b| ($)) ($ (|InputForm|)))
         (SPADCALL '|equation|
                   (LIST (SPADCALL (SPADCALL |b| (QREFELT $ 11)) (QREFELT $ 22))
                         (SPADCALL (SPADCALL |b| (QREFELT $ 12))
@@ -33,21 +33,19 @@
 
 (DECLAIM (NOTINLINE |SegmentBinding;|)) 
 
-(DEFUN |SegmentBinding| (#1=#:G723)
+(DEFUN |SegmentBinding| (#1=#:G718)
   (SPROG NIL
-         (PROG (#2=#:G724)
+         (PROG (#2=#:G719)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|SegmentBinding|)
-                                               '|domainEqualList|)
-                    . #3=(|SegmentBinding|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|SegmentBinding;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|SegmentBinding;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|SegmentBinding|)))))))))) 
@@ -55,9 +53,9 @@
 (DEFUN |SegmentBinding;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|SegmentBinding|))
-          (LETT |dv$| (LIST '|SegmentBinding| DV$1) . #1#)
-          (LETT $ (GETREFV 31) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|SegmentBinding| DV$1))
+          (LETT $ (GETREFV 31))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -67,8 +65,7 @@
                                                              '(|ConvertibleTo|
                                                                (|InputForm|)))
                                               (|HasCategory| |#1|
-                                                             '(|SetCategory|))))
-                          . #1#))
+                                                             '(|SetCategory|))))))
           (|haddProp| |$ConstructorCache| '|SegmentBinding| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)

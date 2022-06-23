@@ -4,22 +4,20 @@
 (DEFPARAMETER |CombinatorialFunctionCategory;AL| 'NIL) 
 
 (DEFUN |CombinatorialFunctionCategory| ()
-  (LET (#:G692)
-    (COND (|CombinatorialFunctionCategory;AL|)
-          (T
-           (SETQ |CombinatorialFunctionCategory;AL|
-                   (|CombinatorialFunctionCategory;|)))))) 
+  (COND (|CombinatorialFunctionCategory;AL|)
+        (T
+         (SETQ |CombinatorialFunctionCategory;AL|
+                 (|CombinatorialFunctionCategory;|))))) 
 
 (DEFUN |CombinatorialFunctionCategory;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G689 NIL))
          (PROG1
              (LETT #1#
                    (|Join|
                     (|mkCategory|
                      '(((|binomial| ($ $ $)) T) ((|factorial| ($ $)) T)
                        ((|permutation| ($ $ $)) T))
-                     NIL 'NIL NIL))
-                   |CombinatorialFunctionCategory|)
+                     NIL NIL NIL)))
            (SETELT #1# 0 '(|CombinatorialFunctionCategory|))))) 
 
 (MAKEPROP '|CombinatorialFunctionCategory| 'NILADIC T) 

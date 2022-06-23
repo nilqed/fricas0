@@ -1,63 +1,61 @@
 
 (PUT '|REF;=;2$B;1| '|SPADreplace| 'EQ) 
 
-(SDEFUN |REF;=;2$B;1| ((|p| $) (|q| $) ($ |Boolean|)) (EQ |p| |q|)) 
+(SDEFUN |REF;=;2$B;1| ((|p| ($)) (|q| ($)) ($ (|Boolean|))) (EQ |p| |q|)) 
 
 (PUT '|REF;ref;S$;2| '|SPADreplace| 'LIST) 
 
-(SDEFUN |REF;ref;S$;2| ((|v| S) ($ $)) (LIST |v|)) 
+(SDEFUN |REF;ref;S$;2| ((|v| (S)) ($ ($))) (LIST |v|)) 
 
 (PUT '|REF;elt;$S;3| '|SPADreplace| 'QCAR) 
 
-(SDEFUN |REF;elt;$S;3| ((|p| $) ($ S)) (QCAR |p|)) 
+(SDEFUN |REF;elt;$S;3| ((|p| ($)) ($ (S))) (QCAR |p|)) 
 
-(SDEFUN |REF;setelt!;$2S;4| ((|p| $) (|v| S) ($ S))
+(SDEFUN |REF;setelt!;$2S;4| ((|p| ($)) (|v| (S)) ($ (S)))
         (PROGN (RPLACA |p| |v|) (QCAR |p|))) 
 
 (PUT '|REF;deref;$S;5| '|SPADreplace| 'QCAR) 
 
-(SDEFUN |REF;deref;$S;5| ((|p| $) ($ S)) (QCAR |p|)) 
+(SDEFUN |REF;deref;$S;5| ((|p| ($)) ($ (S))) (QCAR |p|)) 
 
-(SDEFUN |REF;setref;$2S;6| ((|p| $) (|v| S) ($ S))
+(SDEFUN |REF;setref;$2S;6| ((|p| ($)) (|v| (S)) ($ (S)))
         (PROGN (RPLACA |p| |v|) (QCAR |p|))) 
 
-(SDEFUN |REF;coerce;$Of;7| ((|p| $) ($ |OutputForm|))
+(SDEFUN |REF;coerce;$Of;7| ((|p| ($)) ($ (|OutputForm|)))
         (SPADCALL (SPADCALL "ref" (QREFELT $ 17))
                   (LIST (SPADCALL (QCAR |p|) (QREFELT $ 18))) (QREFELT $ 20))) 
 
 (DECLAIM (NOTINLINE |Reference;|)) 
 
-(DEFUN |Reference| (#1=#:G2456)
+(DEFUN |Reference| (#1=#:G2592)
   (SPROG NIL
-         (PROG (#2=#:G2457)
+         (PROG (#2=#:G2593)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|Reference|)
-                                               '|domainEqualList|)
-                    . #3=(|Reference|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|Reference;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|Reference;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|Reference|)))))))))) 
 
 (DEFUN |Reference;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|Reference|))
-          (LETT |dv$| (LIST '|Reference| DV$1) . #1#)
-          (LETT $ (GETREFV 24) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|Reference| DV$1))
+          (LETT $ (GETREFV 24))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
                           (|buildPredVector| 0 0
                                              (LIST
                                               (|HasCategory| |#1|
-                                                             '(|SetCategory|))))
-                          . #1#))
+                                                             '(|SetCategory|))))))
           (|haddProp| |$ConstructorCache| '|Reference| (LIST DV$1) (CONS 1 $))
           (|stuffDomainSlots| $)
           (QSETREFV $ 6 |#1|)

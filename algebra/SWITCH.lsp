@@ -1,123 +1,150 @@
 
-(SDEFUN |SWITCH;coerce;$Of;1| ((|s| $) ($ |OutputForm|))
+(SDEFUN |SWITCH;coerce;$Of;1| ((|s| ($)) ($ (|OutputForm|)))
         (SPROG
-         ((|ran| (|List| (|OutputForm|))) (#1=#:G721 NIL) (|u| NIL)
-          (#2=#:G720 NIL) (|rat| (|OutputForm|)))
-         (SEQ
-          (LETT |rat| (SPADCALL (QCAR |s|) (QREFELT $ 12))
-                . #3=(|SWITCH;coerce;$Of;1|))
-          (LETT |ran|
-                (PROGN
-                 (LETT #2# NIL . #3#)
-                 (SEQ (LETT |u| NIL . #3#) (LETT #1# (QCDR |s|) . #3#) G190
-                      (COND
-                       ((OR (ATOM #1#) (PROGN (LETT |u| (CAR #1#) . #3#) NIL))
-                        (GO G191)))
-                      (SEQ
-                       (EXIT
-                        (LETT #2# (CONS (SPADCALL |u| (QREFELT $ 14)) #2#)
-                              . #3#)))
-                      (LETT #1# (CDR #1#) . #3#) (GO G190) G191
-                      (EXIT (NREVERSE #2#))))
-                . #3#)
-          (EXIT
-           (COND
-            ((SPADCALL (QCAR |s|) (QREFELT $ 10) (QREFELT $ 16))
-             (|SPADfirst| |ran|))
-            ((EQL (LENGTH |ran|) 1) (SPADCALL |rat| |ran| (QREFELT $ 20)))
-            ('T (SPADCALL |rat| |ran| (QREFELT $ 21)))))))) 
+         ((|ran| (|List| (|OutputForm|))) (#1=#:G717 NIL) (|u| NIL)
+          (#2=#:G716 NIL) (|rat| (|OutputForm|)))
+         (SEQ (LETT |rat| (SPADCALL (QCAR |s|) (QREFELT $ 12)))
+              (LETT |ran|
+                    (PROGN
+                     (LETT #2# NIL)
+                     (SEQ (LETT |u| NIL) (LETT #1# (QCDR |s|)) G190
+                          (COND
+                           ((OR (ATOM #1#) (PROGN (LETT |u| (CAR #1#)) NIL))
+                            (GO G191)))
+                          (SEQ
+                           (EXIT
+                            (LETT #2#
+                                  (CONS (SPADCALL |u| (QREFELT $ 14)) #2#))))
+                          (LETT #1# (CDR #1#)) (GO G190) G191
+                          (EXIT (NREVERSE #2#)))))
+              (EXIT
+               (COND
+                ((SPADCALL (QCAR |s|) (QREFELT $ 10) (QREFELT $ 16))
+                 (|SPADfirst| |ran|))
+                ((EQL (LENGTH |ran|) 1) (SPADCALL |rat| |ran| (QREFELT $ 20)))
+                ('T (SPADCALL |rat| |ran| (QREFELT $ 21)))))))) 
 
-(SDEFUN |SWITCH;coerce;S$;2| ((|s| |Symbol|) ($ $))
+(SDEFUN |SWITCH;coerce;S$;2| ((|s| (|Symbol|)) ($ ($)))
         (CONS (QREFELT $ 10) (LIST (CONS 0 (SPADCALL |s| (QREFELT $ 23)))))) 
 
 (SDEFUN |SWITCH;NOT;U$;3|
-        ((|r| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         ($ $))
+        ((|r|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         ($ ($)))
         (CONS (SPADCALL '~ (QREFELT $ 9)) (LIST |r|))) 
 
-(SDEFUN |SWITCH;NOT;2$;4| ((|r| $) ($ $))
+(SDEFUN |SWITCH;NOT;2$;4| ((|r| ($)) ($ ($)))
         (CONS (SPADCALL '~ (QREFELT $ 9)) (LIST (CONS 3 |r|)))) 
 
 (SDEFUN |SWITCH;LT;2U$;5|
-        ((|r1| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         (|r2| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         ($ $))
+        ((|r1|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         (|r2|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         ($ ($)))
         (CONS (SPADCALL '< (QREFELT $ 9)) (LIST |r1| |r2|))) 
 
 (SDEFUN |SWITCH;GT;2U$;6|
-        ((|r1| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         (|r2| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         ($ $))
+        ((|r1|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         (|r2|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         ($ ($)))
         (CONS (SPADCALL '> (QREFELT $ 9)) (LIST |r1| |r2|))) 
 
 (SDEFUN |SWITCH;LE;2U$;7|
-        ((|r1| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         (|r2| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         ($ $))
+        ((|r1|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         (|r2|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         ($ ($)))
         (CONS (SPADCALL '<= (QREFELT $ 9)) (LIST |r1| |r2|))) 
 
 (SDEFUN |SWITCH;GE;2U$;8|
-        ((|r1| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         (|r2| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         ($ $))
+        ((|r1|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         (|r2|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         ($ ($)))
         (CONS (SPADCALL '>= (QREFELT $ 9)) (LIST |r1| |r2|))) 
 
 (SDEFUN |SWITCH;AND;2U$;9|
-        ((|r1| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         (|r2| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         ($ $))
+        ((|r1|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         (|r2|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         ($ ($)))
         (CONS (SPADCALL '|and| (QREFELT $ 9)) (LIST |r1| |r2|))) 
 
 (SDEFUN |SWITCH;OR;2U$;10|
-        ((|r1| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         (|r2| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         ($ $))
+        ((|r1|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         (|r2|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         ($ ($)))
         (CONS (SPADCALL '|or| (QREFELT $ 9)) (LIST |r1| |r2|))) 
 
 (SDEFUN |SWITCH;EQ;2U$;11|
-        ((|r1| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         (|r2| |Union| (|:| I (|Expression| (|Integer|)))
-          (|:| F (|Expression| (|Float|)))
-          (|:| CF (|Expression| (|Complex| (|Float|)))) (|:| |switch| $))
-         ($ $))
+        ((|r1|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         (|r2|
+          (|Union| (|:| I (|Expression| (|Integer|)))
+                   (|:| F (|Expression| (|Float|)))
+                   (|:| CF (|Expression| (|Complex| (|Float|))))
+                   (|:| |switch| $)))
+         ($ ($)))
         (CONS (SPADCALL 'EQ (QREFELT $ 9)) (LIST |r1| |r2|))) 
 
 (DECLAIM (NOTINLINE |Switch;|)) 
 
 (DEFUN |Switch| ()
   (SPROG NIL
-         (PROG (#1=#:G777)
+         (PROG (#1=#:G773)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|Switch|) . #2=(|Switch|))
+             ((LETT #1# (HGET |$ConstructorCache| '|Switch|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -125,16 +152,16 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|Switch|
                              (LIST (CONS NIL (CONS 1 (|Switch;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND ((NOT #1#) (HREM |$ConstructorCache| '|Switch|)))))))))) 
 
 (DEFUN |Switch;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|Switch|) . #1=(|Switch|))
-          (LETT $ (GETREFV 35) . #1#)
+          (LETT |dv$| '(|Switch|))
+          (LETT $ (GETREFV 35))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|Switch| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

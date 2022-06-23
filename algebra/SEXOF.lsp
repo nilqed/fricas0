@@ -1,46 +1,40 @@
 
-(SDEFUN |SEXOF;coerce;$Of;1| ((|b| $) ($ |OutputForm|))
+(SDEFUN |SEXOF;coerce;$Of;1| ((|b| ($)) ($ (|OutputForm|)))
         (SPROG
-         ((|l1| (|List| (|OutputForm|))) (#1=#:G737 NIL) (|l| (|List| $))
-          (|b1| NIL) (#2=#:G736 NIL) (|r| ($)))
+         ((|l1| (|List| (|OutputForm|))) (#1=#:G734 NIL) (|l| (|List| $))
+          (|b1| NIL) (#2=#:G733 NIL) (|r| ($)))
          (SEQ
           (COND ((SPADCALL |b| (QREFELT $ 12)) (SPADCALL NIL (QREFELT $ 15)))
                 ((SPADCALL |b| (QREFELT $ 16)) (SPADCALL |b| (QREFELT $ 18)))
                 ((SPADCALL |b| (QREFELT $ 19)) |b|)
                 ('T
-                 (SEQ (LETT |r| |b| . #3=(|SEXOF;coerce;$Of;1|))
+                 (SEQ (LETT |r| |b|)
                       (SEQ G190
                            (COND
                             ((NULL (NULL (SPADCALL |r| (QREFELT $ 19))))
                              (GO G191)))
                            (SEQ
-                            (EXIT
-                             (LETT |r| (SPADCALL |r| (QREFELT $ 20)) . #3#)))
+                            (EXIT (LETT |r| (SPADCALL |r| (QREFELT $ 20)))))
                            NIL (GO G190) G191 (EXIT NIL))
                       (LETT |l1|
                             (PROGN
-                             (LETT #2# NIL . #3#)
-                             (SEQ (LETT |b1| NIL . #3#)
+                             (LETT #2# NIL)
+                             (SEQ (LETT |b1| NIL)
                                   (LETT #1#
-                                        (LETT |l| (SPADCALL |b| (QREFELT $ 21))
-                                              . #3#)
-                                        . #3#)
+                                        (LETT |l|
+                                              (SPADCALL |b| (QREFELT $ 21))))
                                   G190
                                   (COND
                                    ((OR (ATOM #1#)
-                                        (PROGN
-                                         (LETT |b1| (CAR #1#) . #3#)
-                                         NIL))
+                                        (PROGN (LETT |b1| (CAR #1#)) NIL))
                                     (GO G191)))
                                   (SEQ
                                    (EXIT
                                     (LETT #2#
                                           (CONS (SPADCALL |b1| (QREFELT $ 22))
-                                                #2#)
-                                          . #3#)))
-                                  (LETT #1# (CDR #1#) . #3#) (GO G190) G191
-                                  (EXIT (NREVERSE #2#))))
-                            . #3#)
+                                                #2#))))
+                                  (LETT #1# (CDR #1#)) (GO G190) G191
+                                  (EXIT (NREVERSE #2#)))))
                       (COND
                        ((NULL (SPADCALL |r| (QREFELT $ 12)))
                         (EXIT
@@ -67,132 +61,130 @@
 
 (PUT '|SEXOF;=;2$B;2| '|SPADreplace| 'EQUAL) 
 
-(SDEFUN |SEXOF;=;2$B;2| ((|b1| $) (|b2| $) ($ |Boolean|)) (EQUAL |b1| |b2|)) 
+(SDEFUN |SEXOF;=;2$B;2| ((|b1| ($)) (|b2| ($)) ($ (|Boolean|)))
+        (EQUAL |b1| |b2|)) 
 
 (PUT '|SEXOF;eq;2$B;3| '|SPADreplace| 'EQ) 
 
-(SDEFUN |SEXOF;eq;2$B;3| ((|b1| $) (|b2| $) ($ |Boolean|)) (EQ |b1| |b2|)) 
+(SDEFUN |SEXOF;eq;2$B;3| ((|b1| ($)) (|b2| ($)) ($ (|Boolean|))) (EQ |b1| |b2|)) 
 
 (PUT '|SEXOF;null?;$B;4| '|SPADreplace| 'NULL) 
 
-(SDEFUN |SEXOF;null?;$B;4| ((|b| $) ($ |Boolean|)) (NULL |b|)) 
+(SDEFUN |SEXOF;null?;$B;4| ((|b| ($)) ($ (|Boolean|))) (NULL |b|)) 
 
 (PUT '|SEXOF;atom?;$B;5| '|SPADreplace| 'ATOM) 
 
-(SDEFUN |SEXOF;atom?;$B;5| ((|b| $) ($ |Boolean|)) (ATOM |b|)) 
+(SDEFUN |SEXOF;atom?;$B;5| ((|b| ($)) ($ (|Boolean|))) (ATOM |b|)) 
 
 (PUT '|SEXOF;pair?;$B;6| '|SPADreplace| 'PAIRP) 
 
-(SDEFUN |SEXOF;pair?;$B;6| ((|b| $) ($ |Boolean|)) (PAIRP |b|)) 
+(SDEFUN |SEXOF;pair?;$B;6| ((|b| ($)) ($ (|Boolean|))) (PAIRP |b|)) 
 
-(SDEFUN |SEXOF;list?;$B;7| ((|b| $) ($ |Boolean|))
+(SDEFUN |SEXOF;list?;$B;7| ((|b| ($)) ($ (|Boolean|)))
         (COND ((PAIRP |b|) 'T) ('T (NULL |b|)))) 
 
 (PUT '|SEXOF;string?;$B;8| '|SPADreplace| 'STRINGP) 
 
-(SDEFUN |SEXOF;string?;$B;8| ((|b| $) ($ |Boolean|)) (STRINGP |b|)) 
+(SDEFUN |SEXOF;string?;$B;8| ((|b| ($)) ($ (|Boolean|))) (STRINGP |b|)) 
 
 (PUT '|SEXOF;symbol?;$B;9| '|SPADreplace| 'IDENTP) 
 
-(SDEFUN |SEXOF;symbol?;$B;9| ((|b| $) ($ |Boolean|)) (IDENTP |b|)) 
+(SDEFUN |SEXOF;symbol?;$B;9| ((|b| ($)) ($ (|Boolean|))) (IDENTP |b|)) 
 
 (PUT '|SEXOF;integer?;$B;10| '|SPADreplace| 'INTEGERP) 
 
-(SDEFUN |SEXOF;integer?;$B;10| ((|b| $) ($ |Boolean|)) (INTEGERP |b|)) 
+(SDEFUN |SEXOF;integer?;$B;10| ((|b| ($)) ($ (|Boolean|))) (INTEGERP |b|)) 
 
 (PUT '|SEXOF;float?;$B;11| '|SPADreplace| 'FLOATP) 
 
-(SDEFUN |SEXOF;float?;$B;11| ((|b| $) ($ |Boolean|)) (FLOATP |b|)) 
+(SDEFUN |SEXOF;float?;$B;11| ((|b| ($)) ($ (|Boolean|))) (FLOATP |b|)) 
 
-(SDEFUN |SEXOF;destruct;$L;12| ((|b| $) ($ |List| $))
+(SDEFUN |SEXOF;destruct;$L;12| ((|b| ($)) ($ (|List| $)))
         (COND ((SPADCALL |b| (QREFELT $ 37)) |b|) ('T (|error| "Non-list")))) 
 
-(SDEFUN |SEXOF;string;$Str;13| ((|b| $) ($ |Str|))
+(SDEFUN |SEXOF;string;$Str;13| ((|b| ($)) ($ (|Str|)))
         (COND ((STRINGP |b|) |b|) ('T (|error| "Non-string")))) 
 
-(SDEFUN |SEXOF;symbol;$Sym;14| ((|b| $) ($ |Sym|))
+(SDEFUN |SEXOF;symbol;$Sym;14| ((|b| ($)) ($ (|Sym|)))
         (COND ((IDENTP |b|) |b|) ('T (|error| "Non-symbol")))) 
 
-(SDEFUN |SEXOF;float;$Flt;15| ((|b| $) ($ |Flt|))
+(SDEFUN |SEXOF;float;$Flt;15| ((|b| ($)) ($ (|Flt|)))
         (COND ((FLOATP |b|) |b|) ('T (|error| "Non-float")))) 
 
-(SDEFUN |SEXOF;integer;$Int;16| ((|b| $) ($ |Int|))
+(SDEFUN |SEXOF;integer;$Int;16| ((|b| ($)) ($ (|Int|)))
         (COND ((INTEGERP |b|) |b|) ('T (|error| "Non-integer")))) 
 
 (PUT '|SEXOF;convert;L$;17| '|SPADreplace| '(XLAM (|l|) |l|)) 
 
-(SDEFUN |SEXOF;convert;L$;17| ((|l| |List| $) ($ $)) |l|) 
+(SDEFUN |SEXOF;convert;L$;17| ((|l| (|List| $)) ($ ($))) |l|) 
 
 (PUT '|SEXOF;convert;Str$;18| '|SPADreplace| '(XLAM (|st|) |st|)) 
 
-(SDEFUN |SEXOF;convert;Str$;18| ((|st| |Str|) ($ $)) |st|) 
+(SDEFUN |SEXOF;convert;Str$;18| ((|st| (|Str|)) ($ ($))) |st|) 
 
 (PUT '|SEXOF;convert;Sym$;19| '|SPADreplace| '(XLAM (|sy|) |sy|)) 
 
-(SDEFUN |SEXOF;convert;Sym$;19| ((|sy| |Sym|) ($ $)) |sy|) 
+(SDEFUN |SEXOF;convert;Sym$;19| ((|sy| (|Sym|)) ($ ($))) |sy|) 
 
 (PUT '|SEXOF;convert;Int$;20| '|SPADreplace| '(XLAM (|n|) |n|)) 
 
-(SDEFUN |SEXOF;convert;Int$;20| ((|n| |Int|) ($ $)) |n|) 
+(SDEFUN |SEXOF;convert;Int$;20| ((|n| (|Int|)) ($ ($))) |n|) 
 
 (PUT '|SEXOF;convert;Flt$;21| '|SPADreplace| '(XLAM (|f|) |f|)) 
 
-(SDEFUN |SEXOF;convert;Flt$;21| ((|f| |Flt|) ($ $)) |f|) 
+(SDEFUN |SEXOF;convert;Flt$;21| ((|f| (|Flt|)) ($ ($))) |f|) 
 
 (PUT '|SEXOF;car;2$;22| '|SPADreplace| 'CAR) 
 
-(SDEFUN |SEXOF;car;2$;22| ((|b| $) ($ $)) (CAR |b|)) 
+(SDEFUN |SEXOF;car;2$;22| ((|b| ($)) ($ ($))) (CAR |b|)) 
 
 (PUT '|SEXOF;cdr;2$;23| '|SPADreplace| 'CDR) 
 
-(SDEFUN |SEXOF;cdr;2$;23| ((|b| $) ($ $)) (CDR |b|)) 
+(SDEFUN |SEXOF;cdr;2$;23| ((|b| ($)) ($ ($))) (CDR |b|)) 
 
 (PUT '|SEXOF;#;$I;24| '|SPADreplace| 'LENGTH) 
 
-(SDEFUN |SEXOF;#;$I;24| ((|b| $) ($ |Integer|)) (LENGTH |b|)) 
+(SDEFUN |SEXOF;#;$I;24| ((|b| ($)) ($ (|Integer|))) (LENGTH |b|)) 
 
-(SDEFUN |SEXOF;elt;$I$;25| ((|b| $) (|i| |Integer|) ($ $))
+(SDEFUN |SEXOF;elt;$I$;25| ((|b| ($)) (|i| (|Integer|)) ($ ($)))
         (SPADCALL (SPADCALL |b| (QREFELT $ 21)) |i| (QREFELT $ 53))) 
 
-(SDEFUN |SEXOF;elt;$L$;26| ((|b| $) (|li| |List| (|Integer|)) ($ $))
-        (SPROG ((#1=#:G779 NIL) (|i| NIL))
+(SDEFUN |SEXOF;elt;$L$;26| ((|b| ($)) (|li| (|List| (|Integer|))) ($ ($)))
+        (SPROG ((#1=#:G777 NIL) (|i| NIL))
                (SEQ
-                (SEQ (LETT |i| NIL . #2=(|SEXOF;elt;$L$;26|))
-                     (LETT #1# |li| . #2#) G190
+                (SEQ (LETT |i| NIL) (LETT #1# |li|) G190
                      (COND
-                      ((OR (ATOM #1#) (PROGN (LETT |i| (CAR #1#) . #2#) NIL))
+                      ((OR (ATOM #1#) (PROGN (LETT |i| (CAR #1#)) NIL))
                        (GO G191)))
                      (SEQ
                       (EXIT
                        (LETT |b|
                              (SPADCALL (SPADCALL |b| (QREFELT $ 21)) |i|
-                                       (QREFELT $ 53))
-                             . #2#)))
-                     (LETT #1# (CDR #1#) . #2#) (GO G190) G191 (EXIT NIL))
+                                       (QREFELT $ 53)))))
+                     (LETT #1# (CDR #1#)) (GO G190) G191 (EXIT NIL))
                 (EXIT |b|)))) 
 
 (SDEFUN |SEXOF;hashUpdate!;Hs$Hs;27|
-        ((|hs| |HashState|) (|s| $) ($ |HashState|))
+        ((|hs| (|HashState|)) (|s| ($)) ($ (|HashState|)))
         (HASHSTATEUPDATE |hs| (SXHASH |s|))) 
 
 (DECLAIM (NOTINLINE |SExpressionOf;|)) 
 
-(DEFUN |SExpressionOf| (&REST #1=#:G781)
+(DEFUN |SExpressionOf| (&REST #1=#:G779)
   (SPROG NIL
-         (PROG (#2=#:G782)
+         (PROG (#2=#:G780)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|SExpressionOf|)
-                                               '|domainEqualList|)
-                    . #3=(|SExpressionOf|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |SExpressionOf;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|SExpressionOf|)))))))))) 
 
@@ -201,14 +193,14 @@
    ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL) (DV$2 NIL)
     (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #1=(|SExpressionOf|))
-    (LETT DV$2 (|devaluate| |#2|) . #1#)
-    (LETT DV$3 (|devaluate| |#3|) . #1#)
-    (LETT DV$4 (|devaluate| |#4|) . #1#)
-    (LETT |dv$| (LIST '|SExpressionOf| DV$1 DV$2 DV$3 DV$4) . #1#)
-    (LETT $ (GETREFV 60) . #1#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT DV$4 (|devaluate| |#4|))
+    (LETT |dv$| (LIST '|SExpressionOf| DV$1 DV$2 DV$3 DV$4))
+    (LETT $ (GETREFV 60))
     (QSETREFV $ 0 |dv$|)
-    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
     (|haddProp| |$ConstructorCache| '|SExpressionOf| (LIST DV$1 DV$2 DV$3 DV$4)
                 (CONS 1 $))
     (|stuffDomainSlots| $)

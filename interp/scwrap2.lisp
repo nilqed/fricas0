@@ -1,37 +1,54 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; DEFPARAMETER($prev_line_number, 0)
- 
+
 (DEFPARAMETER |$prev_line_number| 0)
- 
+
 ; DEFPARAMETER($curent_line_number, 0)
- 
+
 (DEFPARAMETER |$curent_line_number| 0)
- 
+
 ; DEFPARAMETER($prev_line, nil)
- 
+
 (DEFPARAMETER |$prev_line| NIL)
- 
+
 ; DEFPARAMETER($curent_line, nil)
- 
+
 (DEFPARAMETER |$curent_line| NIL)
- 
+
 ; DEFPARAMETER($compiler_InteractiveFrame,
 ;              addBinding('$DomainsInScope,
 ;                     [["FLUID", :true],
 ;                       ["special", :(COPY_-TREE $InitialDomainsInScope)]],
 ;                     addBinding('$Information, nil,
 ;                                 makeInitialModemapFrame())))
- 
+
 (DEFPARAMETER |$compiler_InteractiveFrame|
   (|addBinding| '|$DomainsInScope|
    (LIST (CONS 'FLUID T)
          (CONS '|special| (COPY-TREE |$InitialDomainsInScope|)))
    (|addBinding| '|$Information| NIL (|makeInitialModemapFrame|))))
- 
+
+; make_BF(mant, expo) == [$BFtag, mant, expo]
+
+(DEFUN |make_BF| (|mant| |expo|)
+  (PROG () (RETURN (LIST |$BFtag| |mant| |expo|))))
+
+; make_float(int, frac, fraclen, expo) ==
+;     frac = 0 => make_BF(int, expo)
+;     make_BF(int*EXPT(10, fraclen) + frac, expo - fraclen)
+
+(DEFUN |make_float| (|int| |frac| |fraclen| |expo|)
+  (PROG ()
+    (RETURN
+     (COND ((EQL |frac| 0) (|make_BF| |int| |expo|))
+           ('T
+            (|make_BF| (+ (* |int| (EXPT 10 |fraclen|)) |frac|)
+             (- |expo| |fraclen|)))))))
+
 ; current_line_number() ==
 ;     tok := current_token()
 ;     tok =>
@@ -39,7 +56,7 @@
 ;          pos and INTEGERP(pos) => pos
 ;          nil
 ;     nil
- 
+
 (DEFUN |current_line_number| ()
   (PROG (|pos| |tok|)
     (RETURN
@@ -51,19 +68,19 @@
          (SETQ |pos| (TOKEN-LINE_NUM |tok|))
          (COND ((AND |pos| (INTEGERP |pos|)) |pos|) (#1='T NIL))))
        (#1# NIL))))))
- 
+
 ; current_token_is_nonblank() ==
 ;     tok := current_token()
 ;     tok => TOKEN_-NONBLANK(tok)
 ;     nil
- 
+
 (DEFUN |current_token_is_nonblank| ()
   (PROG (|tok|)
     (RETURN
      (PROGN
       (SETQ |tok| (|current_token|))
       (COND (|tok| (TOKEN-NONBLANK |tok|)) ('T NIL))))))
- 
+
 ; spad_syntax_error(wanted, parsing) ==
 ;     FORMAT(true, '"******** Spad syntax error detected ********")
 ;     if wanted then
@@ -76,7 +93,7 @@
 ;            $curent_line_number, $curent_line)
 ;     TOKEN_-STACK_-SHOW()
 ;     THROW('SPAD_READER, nil)
- 
+
 (DEFUN |spad_syntax_error| (|wanted| |parsing|)
   (PROG ()
     (RETURN
@@ -93,51 +110,51 @@
                 |$curent_line|)))
       (TOKEN-STACK-SHOW)
       (THROW 'SPAD_READER NIL)))))
- 
+
 ; fakeloopInclude(name, n) ==
 ;     handle_input_file(name, function fakeloopInclude0, [name, n])
- 
+
 (DEFUN |fakeloopInclude| (|name| |n|)
   (PROG ()
     (RETURN
      (|handle_input_file| |name| #'|fakeloopInclude0| (LIST |name| |n|)))))
- 
+
 ; DEFPARAMETER($COMBLOCKLIST, nil)
- 
+
 (DEFPARAMETER $COMBLOCKLIST NIL)
- 
+
 ; DEFPARAMETER($docList, nil)
- 
+
 (DEFPARAMETER |$docList| NIL)
- 
+
 ; DEFVAR($spad_scanner, false)
- 
+
 (DEFVAR |$spad_scanner| NIL)
- 
+
 ; DEFVAR($restore_list, nil)
- 
+
 (DEFVAR |$restore_list| NIL)
- 
+
 ; DEFVAR($compiler_output_stream, nil)
- 
+
 (DEFVAR |$compiler_output_stream| NIL)
- 
+
 ; DEFPARAMETER($file_apply, nil)
- 
+
 (DEFPARAMETER |$file_apply| NIL)
- 
+
 ; output_lisp_form(form) ==
 ;     if $file_apply then FUNCALL($file_apply, form, form)
- 
+
 (DEFUN |output_lisp_form| (|form|)
   (PROG ()
     (RETURN (COND (|$file_apply| (FUNCALL |$file_apply| |form| |form|))))))
- 
+
 ; output_lisp_defparameter(x, y) ==
 ;     form := ['DEFPARAMETER, x, ["QUOTE", y]]
 ;     output_lisp_form(form)
 ;     EVAL(form)
- 
+
 (DEFUN |output_lisp_defparameter| (|x| |y|)
   (PROG (|form|)
     (RETURN
@@ -145,28 +162,28 @@
       (SETQ |form| (LIST 'DEFPARAMETER |x| (LIST 'QUOTE |y|)))
       (|output_lisp_form| |form|)
       (EVAL |form|)))))
- 
+
 ; print_defun(name, body) ==
 ;     print_full2(body, $compiler_output_stream)
- 
+
 (DEFUN |print_defun| (|name| |body|)
   (PROG () (RETURN (|print_full2| |body| |$compiler_output_stream|))))
- 
+
 ; DEFVAR($nopiles, false)
- 
+
 (DEFVAR |$nopiles| NIL)
- 
+
 ; spadCompile(name) == spadCompile1(name, $nopiles)
- 
+
 (DEFUN |spadCompile| (|name|)
   (PROG () (RETURN (|spadCompile1| |name| |$nopiles|))))
- 
+
 ; spadCompile1(name, pile_mode) ==
 ;     $nopiles : local := pile_mode
 ;     $comp370_apply : local := FUNCTION print_defun
 ;     $file_apply : local := FUNCTION print_defun
 ;     _*EOF_* : local := false
-;     _/EDITFILE : local := name
+;     $edit_file : local := name
 ;     $InteractiveMode : local := false
 ;     $spad_scanner : local := true
 ;     $COMBLOCKLIST : local := nil
@@ -174,7 +191,7 @@
 ;     $curent_line_number := 0
 ;     $prev_line := nil
 ;     $InteractiveFrame : local := $compiler_InteractiveFrame
-;     $MacroTable := MAKE_-HASH_-TABLE()
+;     $MacroTable := MAKE_HASHTABLE('EQUAL)
 ;     $restore_list := nil
 ;     $ncMsgList : local := nil
 ;     a := ncloopIncFileName name
@@ -182,14 +199,14 @@
 ;     if not($ncMsgList = nil) then
 ;         processMsgList($ncMsgList, nil)
 ;     true
- 
+
 (DEFUN |spadCompile1| (|name| |pile_mode|)
   (PROG (|$ncMsgList| |$InteractiveFrame| |$docList| $COMBLOCKLIST
-         |$spad_scanner| |$InteractiveMode| /EDITFILE *EOF* |$file_apply|
+         |$spad_scanner| |$InteractiveMode| |$edit_file| *EOF* |$file_apply|
          |$comp370_apply| |$nopiles| |res| |a|)
     (DECLARE
      (SPECIAL |$ncMsgList| |$InteractiveFrame| |$docList| $COMBLOCKLIST
-      |$spad_scanner| |$InteractiveMode| /EDITFILE *EOF* |$file_apply|
+      |$spad_scanner| |$InteractiveMode| |$edit_file| *EOF* |$file_apply|
       |$comp370_apply| |$nopiles|))
     (RETURN
      (PROGN
@@ -197,7 +214,7 @@
       (SETQ |$comp370_apply| #'|print_defun|)
       (SETQ |$file_apply| #'|print_defun|)
       (SETQ *EOF* NIL)
-      (SETQ /EDITFILE |name|)
+      (SETQ |$edit_file| |name|)
       (SETQ |$InteractiveMode| NIL)
       (SETQ |$spad_scanner| T)
       (SETQ $COMBLOCKLIST NIL)
@@ -205,125 +222,89 @@
       (SETQ |$curent_line_number| 0)
       (SETQ |$prev_line| NIL)
       (SETQ |$InteractiveFrame| |$compiler_InteractiveFrame|)
-      (SETQ |$MacroTable| (MAKE-HASH-TABLE))
+      (SETQ |$MacroTable| (MAKE_HASHTABLE 'EQUAL))
       (SETQ |$restore_list| NIL)
       (SETQ |$ncMsgList| NIL)
       (SETQ |a| (|ncloopIncFileName| |name|))
       (SETQ |res| (|fakeloopInclude| |name| NIL))
       (COND ((NULL (NULL |$ncMsgList|)) (|processMsgList| |$ncMsgList| NIL)))
       T))))
- 
+
 ; DEFPARAMETER($toklst, nil)
- 
+
 (DEFPARAMETER |$toklst| NIL)
- 
+
 ; $trans_table := [["id", "IDENTIFIER"], ["key", "KEYWORD"], _
 ;                   ["string", "SPADSTRING"], ["char", "SPADSTRING"], _
 ;                   ["integer", "NUMBER"], ["float", "SPADFLOAT"]]
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$trans_table|
           (LIST (LIST '|id| 'IDENTIFIER) (LIST '|key| 'KEYWORD)
                 (LIST '|string| 'SPADSTRING) (LIST '|char| 'SPADSTRING)
                 (LIST '|integer| 'NUMBER) (LIST '|float| 'SPADFLOAT))))
- 
+
 ; $trans_key := [ _
 ;                 ["ARROW", "->"], _
-;                 ["AT", "@"], _
-;                 ["BAR", "|"], _
-;                 ["BACKSLASHSLASH", "\/"], _
-;                 ["BECOMES", ":="], _
-;                 ["CARAT", "^"], _
-;                 ["COERCE", "::"], _
-;                 ["COLON", ":"], _
-;                 ["COMMA", ","], _
-;                 ["DEF", "=="], _
-;                 ["DOT", "."], _
-;                 ["EQUAL", "="], _
-;                 ["EXIT", "=>"], _
-;                 ["GE", ">="], _
-;                 ["GIVES", "+->"], _
-;                 ["GT", ">"], _
-;                 ["LE", "<="], _
-;                 ["LT", "<"], _
-;                 ["OANGLE", "<<"], _
-;                 ["CANGLE", ">>"], _
-;                 ["MDEF", "==>"], _
-;                 ["MINUS", "-"], _
-;                 ["NOTEQUAL", "~="], _
-;                 ["PLUS", "+"], _
 ;                 ["SEG", ".."], _
-;                 ["SEMICOLON", ";"], _
-;                 ["SLASH", "/"], _
-;                 ["SLASHBACKSLASH", "/\"], _
-;                 ["TIMES", "*"], _
 ;                 ["BACKSET", ";"]]
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$trans_key|
-          (LIST (LIST 'ARROW '->) (LIST 'AT '@) (LIST 'BAR '|\||)
-                (LIST 'BACKSLASHSLASH '|\\/|) (LIST 'BECOMES '|:=|)
-                (LIST 'CARAT '^) (LIST 'COERCE '|::|) (LIST 'COLON '|:|)
-                (LIST 'COMMA '|,|) (LIST 'DEF '==) (LIST 'DOT '|.|)
-                (LIST 'EQUAL '=) (LIST 'EXIT '=>) (LIST 'GE '>=)
-                (LIST 'GIVES '+->) (LIST 'GT '>) (LIST 'LE '<=) (LIST 'LT '<)
-                (LIST 'OANGLE '<<) (LIST 'CANGLE '>>) (LIST 'MDEF '==>)
-                (LIST 'MINUS '-) (LIST 'NOTEQUAL '~=) (LIST 'PLUS '+)
-                (LIST 'SEG '|..|) (LIST 'SEMICOLON '|;|) (LIST 'SLASH '/)
-                (LIST 'SLASHBACKSLASH '|/\\|) (LIST 'TIMES '*)
-                (LIST 'BACKSET '|;|))))
- 
+          (LIST (LIST 'ARROW '->) (LIST 'SEG '|..|) (LIST 'BACKSET '|;|))))
+
 ; $trans_key_id := [ _
 ;                 ["break", "break"], _
+;                 ["ITERATE", "iterate"], _
 ;                 ["DEFAULT", "default"], _
 ;                 ["RULE", "rule"] _
 ;                 ]
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$trans_key_id|
-          (LIST (LIST '|break| '|break|) (LIST 'DEFAULT '|default|)
-                (LIST 'RULE '|rule|))))
- 
-; $expression_nostarters := [ "ARROW", "BACKSET", "BECOMES", "COLON", _
-;     "COMMA", "DEF", "ELSE", "EXIT", "GIVES", "MDEF", "SEMICOLON",
+          (LIST (LIST '|break| '|break|) (LIST 'ITERATE '|iterate|)
+                (LIST 'DEFAULT '|default|) (LIST 'RULE '|rule|))))
+
+; $expression_nostarters := [ "ARROW", "BACKSET", ":=", ":", _
+;     ",", "==", "=>", "+->", "==>", ";",
 ;     "has", "is", "pretend", "where", ")"]
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$expression_nostarters|
-          (LIST 'ARROW 'BACKSET 'BECOMES 'COLON 'COMMA 'DEF 'ELSE 'EXIT 'GIVES
-                'MDEF 'SEMICOLON '|has| '|is| '|pretend| '|where| '|)|)))
- 
+          (LIST 'ARROW 'BACKSET '|:=| '|:| '|,| '== '=> '+-> '==> '|;| '|has|
+                '|is| '|pretend| '|where| '|)|)))
+
 ; starts_expression?(sym, type) ==
 ;     type ~= "key" => true
 ;     MEMBER(sym, $expression_nostarters) => false
 ;     true
- 
+
 (DEFUN |starts_expression?| (|sym| |type|)
   (PROG ()
     (RETURN
      (COND ((NOT (EQ |type| '|key|)) T)
            ((MEMBER |sym| |$expression_nostarters|) NIL) ('T T)))))
- 
+
 ; DEFVAR($paren_level)
- 
+
 (DEFVAR |$paren_level|)
- 
+
 ; DEFVAR($settab_level)
- 
+
 (DEFVAR |$settab_level|)
- 
+
 ; DEFVAR($tab_states)
- 
+
 (DEFVAR |$tab_states|)
- 
+
 ; DEFVAR($ignored_tab)
- 
+
 (DEFVAR |$ignored_tab|)
- 
+
 ; DEFVAR($maybe_insert_semi)
- 
+
 (DEFVAR |$maybe_insert_semi|)
- 
+
 ; ntokreader(token) ==
 ;     nonblank_flag := nil
 ;     if $toklst then
@@ -378,7 +359,7 @@
 ;             ntype1 := first(ntok1)
 ;             nsym := ntok1.1
 ;             if ntype1 = "key" and nsym in ["then", "else",
-;                   "COMMA", "SEMICOLON"] then
+;                   ",", ";"] then
 ;                 PUSH($ignored_tab, $tab_states)
 ;                 $ignored_tab := true
 ;                 return ntokreader(token)
@@ -414,7 +395,7 @@
 ;         token_install(sym, type, nonblank_flag, line_no, char_no, token)
 ;     else
 ;         token_install(nil, "*EOF", nil, nil, 0, token)
- 
+
 (DEFUN |ntokreader| (|token|)
   (PROG (|nonblank_flag| |tok1| |type1| |sym| |pos| |line_info| |line_no|
          |char_no| |mant_i| |exp| |mant_fl| |mant_f| |type| |ntok1| |ntype1|
@@ -491,8 +472,7 @@
                 (SETQ |nsym| (ELT |ntok1| 1))
                 (COND
                  ((AND (EQ |ntype1| '|key|)
-                       (|member| |nsym|
-                        (LIST '|then| '|else| 'COMMA 'SEMICOLON)))
+                       (|member| |nsym| (LIST '|then| '|else| '|,| '|;|)))
                   (PUSH |$ignored_tab| |$tab_states|) (SETQ |$ignored_tab| T)
                   (RETURN (|ntokreader| |token|)))
                  (#1# (PUSH |$ignored_tab| |$tab_states|)
@@ -526,14 +506,14 @@
               (|token_install| |sym| |type| |nonblank_flag| |line_no| |char_no|
                |token|))))))))
        (#1# (|token_install| NIL '*EOF NIL NIL 0 |token|)))))))
- 
+
 ; fakeloopInclude0(st, name, n) ==
 ;     $lines : local := incStream(st, name)
 ;     fakeloopProcess(n,
 ;       next(function insertpile,
 ;         next(function lineoftoks,$lines)))
 ;     nil
- 
+
 (DEFUN |fakeloopInclude0| (|st| |name| |n|)
   (PROG (|$lines|)
     (DECLARE (SPECIAL |$lines|))
@@ -543,7 +523,7 @@
       (|fakeloopProcess| |n|
        (|next| #'|insertpile| (|next| #'|lineoftoks| |$lines|)))
       NIL))))
- 
+
 ; fakeloopProcess1(tok_list) ==
 ;     $toklst := tok_list
 ;     $paren_level := 0
@@ -559,7 +539,7 @@
 ;     parseout := pop_stack_1()
 ;     if parseout then S_process(parseout)
 ;     nil
- 
+
 (DEFUN |fakeloopProcess1| (|tok_list|)
   (PROG (|parseout|)
     (RETURN
@@ -578,14 +558,14 @@
       (SETQ |parseout| (|pop_stack_1|))
       (COND (|parseout| (|S_process| |parseout|)))
       NIL))))
- 
+
 ; processSymbol(s) ==
 ;     sym1 := first s
 ;     pos := first(rest(sym1))
 ;     npos := rest rest pos
 ;     rest rest sym1 => [first sym1, rest s, npos, "nonblank", pos]
 ;     [first sym1, rest s, npos, false, pos]
- 
+
 (DEFUN |processSymbol| (|s|)
   (PROG (|sym1| |pos| |npos|)
     (RETURN
@@ -597,16 +577,16 @@
        ((CDR (CDR |sym1|))
         (LIST (CAR |sym1|) (CDR |s|) |npos| '|nonblank| |pos|))
        ('T (LIST (CAR |sym1|) (CDR |s|) |npos| NIL |pos|)))))))
- 
+
 ; processCommand(line) ==
 ;     cl := rest(line)
 ;     InterpExecuteSpadSystemCommand(cl)
- 
+
 (DEFUN |processCommand| (|line|)
   (PROG (|cl|)
     (RETURN
      (PROGN (SETQ |cl| (CDR |line|)) (|InterpExecuteSpadSystemCommand| |cl|)))))
- 
+
 ; fakeloopProcess(n, s) ==
 ;     StreamNull s => nil
 ;     lp := first s
@@ -618,7 +598,7 @@
 ;     nline := [processSymbol(sym) for sym in line]
 ;     fakeloopProcess1(nline)
 ;     fakeloopProcess(n, rest s)
- 
+
 (DEFUN |fakeloopProcess| (|n| |s|)
   (PROG (|lp| |line| |kind| |nline|)
     (RETURN

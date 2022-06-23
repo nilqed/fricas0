@@ -1,43 +1,37 @@
 
 (SDEFUN |CINTSLPE;solveLinearPolynomialEquation;LSupU;1|
-        ((|lp| |List| (|SparseUnivariatePolynomial| CR))
-         (|p| |SparseUnivariatePolynomial| CR)
-         ($ |Union| (|List| (|SparseUnivariatePolynomial| CR)) "failed"))
+        ((|lp| (|List| (|SparseUnivariatePolynomial| CR)))
+         (|p| (|SparseUnivariatePolynomial| CR))
+         ($ (|Union| (|List| (|SparseUnivariatePolynomial| CR)) "failed")))
         (SPROG
          ((|answer|
            (|Union| (|List| (|SparseUnivariatePolynomial| CR)) "failed"))
-          (#1=#:G713 NIL)
+          (#1=#:G708 NIL)
           (|ans|
            (|Union| (|Vector| (|List| (|SparseUnivariatePolynomial| CR)))
                     #2="failed"))
-          (|deg| #3=(|NonNegativeInteger|)) (#4=#:G710 NIL) (#5=#:G709 #3#)
-          (#6=#:G711 #3#) (#7=#:G724 NIL) (|u| NIL))
+          (|deg| #3=(|NonNegativeInteger|)) (#4=#:G705 NIL) (#5=#:G704 #3#)
+          (#6=#:G706 #3#) (#7=#:G721 NIL) (|u| NIL))
          (SEQ
           (COND
            ((SPADCALL (QREFELT $ 8) |lp| (QREFELT $ 15))
             (SEQ
              (LETT |deg|
                    (PROGN
-                    (LETT #4# NIL
-                          . #8=(|CINTSLPE;solveLinearPolynomialEquation;LSupU;1|))
-                    (SEQ (LETT |u| NIL . #8#) (LETT #7# |lp| . #8#) G190
+                    (LETT #4# NIL)
+                    (SEQ (LETT |u| NIL) (LETT #7# |lp|) G190
                          (COND
-                          ((OR (ATOM #7#)
-                               (PROGN (LETT |u| (CAR #7#) . #8#) NIL))
+                          ((OR (ATOM #7#) (PROGN (LETT |u| (CAR #7#)) NIL))
                            (GO G191)))
                          (SEQ
                           (EXIT
                            (PROGN
-                            (LETT #6# (SPADCALL |u| (QREFELT $ 18)) . #8#)
-                            (COND (#4# (LETT #5# (+ #5# #6#) . #8#))
-                                  ('T
-                                   (PROGN
-                                    (LETT #5# #6# . #8#)
-                                    (LETT #4# 'T . #8#)))))))
-                         (LETT #7# (CDR #7#) . #8#) (GO G190) G191 (EXIT NIL))
-                    (COND (#4# #5#) ('T 0)))
-                   . #8#)
-             (LETT |ans| (CONS 1 "failed") . #8#)
+                            (LETT #6# (SPADCALL |u| (QREFELT $ 18)))
+                            (COND (#4# (LETT #5# (+ #5# #6#)))
+                                  ('T (PROGN (LETT #5# #6#) (LETT #4# 'T)))))))
+                         (LETT #7# (CDR #7#)) (GO G190) G191 (EXIT NIL))
+                    (COND (#4# #5#) ('T 0))))
+             (LETT |ans| (CONS 1 "failed"))
              (SETELT $ 11 (SPADCALL 67108859 (QREFELT $ 10)))
              (SEQ G190 (COND ((NULL (QEQCAR |ans| 1)) (GO G191)))
                   (SEQ
@@ -46,8 +40,7 @@
                                    (SPADCALL (QREFELT $ 11)
                                              (|spadConstant| $ 19)
                                              (QREFELT $ 21))
-                                   |lp| (QREFELT $ 24))
-                         . #8#)
+                                   |lp| (QREFELT $ 24)))
                    (EXIT
                     (COND
                      ((QEQCAR |ans| 1)
@@ -73,7 +66,7 @@
                   NIL (GO G190) G191 (EXIT NIL))
              (EXIT
               (SETELT $ 12
-                      (PROG2 (LETT #1# |ans| . #8#)
+                      (PROG2 (LETT #1# |ans|)
                           (QCDR #1#)
                         (|check_union2| (QEQCAR #1# 0)
                                         (|Vector|
@@ -91,23 +84,21 @@
                 (SPADCALL |p|
                           (SPADCALL (QREFELT $ 11) (|spadConstant| $ 19)
                                     (QREFELT $ 21))
-                          (QREFELT $ 12) (QREFELT $ 30))
-                . #8#)
+                          (QREFELT $ 12) (QREFELT $ 30)))
           (EXIT |answer|)))) 
 
 (DECLAIM (NOTINLINE |ComplexIntegerSolveLinearPolynomialEquation;|)) 
 
-(DEFUN |ComplexIntegerSolveLinearPolynomialEquation| (&REST #1=#:G725)
+(DEFUN |ComplexIntegerSolveLinearPolynomialEquation| (&REST #1=#:G722)
   (SPROG NIL
-         (PROG (#2=#:G726)
+         (PROG (#2=#:G723)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|ComplexIntegerSolveLinearPolynomialEquation|)
-                                               '|domainEqualList|)
-                    . #3=(|ComplexIntegerSolveLinearPolynomialEquation|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
@@ -116,7 +107,7 @@
                        (|function|
                         |ComplexIntegerSolveLinearPolynomialEquation;|)
                        #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -125,15 +116,14 @@
 (DEFUN |ComplexIntegerSolveLinearPolynomialEquation;| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|)
-                . #1=(|ComplexIntegerSolveLinearPolynomialEquation|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
           (LETT |dv$|
-                (LIST '|ComplexIntegerSolveLinearPolynomialEquation| DV$1 DV$2)
-                . #1#)
-          (LETT $ (GETREFV 32) . #1#)
+                (LIST '|ComplexIntegerSolveLinearPolynomialEquation| DV$1
+                      DV$2))
+          (LETT $ (GETREFV 32))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache|
                       '|ComplexIntegerSolveLinearPolynomialEquation|
                       (LIST DV$1 DV$2) (CONS 1 $))
@@ -158,14 +148,24 @@
               (|Vector| 14) (48 . |solveid|)
               |CINTSLPE;solveLinearPolynomialEquation;LSupU;1|)
            '#(|solveLinearPolynomialEquation| 55) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 31
-                                                 '(1 6 0 9 10 2 14 13 0 0 15 1
-                                                   17 16 0 18 0 6 0 19 0 7 0 20
-                                                   2 7 0 6 6 21 3 23 22 16 7 14
-                                                   24 2 6 0 0 0 25 1 26 13 6 27
-                                                   3 23 28 17 7 29 30 2 0 28 14
-                                                   17 31)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|solveLinearPolynomialEquation|
+                                 ((|Union|
+                                   (|List| (|SparseUnivariatePolynomial| |#2|))
+                                   "failed")
+                                  (|List| (|SparseUnivariatePolynomial| |#2|))
+                                  (|SparseUnivariatePolynomial| |#2|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 31
+                                            '(1 6 0 9 10 2 14 13 0 0 15 1 17 16
+                                              0 18 0 6 0 19 0 7 0 20 2 7 0 6 6
+                                              21 3 23 22 16 7 14 24 2 6 0 0 0
+                                              25 1 26 13 6 27 3 23 28 17 7 29
+                                              30 2 0 28 14 17 31)))))
            '|lookupComplete|)) 

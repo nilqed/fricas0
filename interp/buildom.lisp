@@ -1,22 +1,22 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; DEFPARAMETER($noCategoryDomains, '(Mode))
- 
+
 (DEFPARAMETER |$noCategoryDomains| '(|Mode|))
- 
+
 ; DEFPARAMETER($nonLisplibDomains,
 ;   APPEND($Primitives,$noCategoryDomains))
- 
+
 (DEFPARAMETER |$nonLisplibDomains| (APPEND |$Primitives| |$noCategoryDomains|))
- 
+
 ; isRecord type == type is ['Record,:.]
- 
+
 (DEFUN |isRecord| (|type|)
   (PROG () (RETURN (AND (CONSP |type|) (EQ (CAR |type|) '|Record|)))))
- 
+
 ; Record0 args ==
 ;     dom := GETREFV 11
 ;     -- JHD added an extra slot to cache EQUAL methods
@@ -41,7 +41,7 @@
 ;               else GETREFV n
 ;     dom.10 := [function RecordUnEqual, :dom]
 ;     dom
- 
+
 (DEFUN |Record0| (|args|)
   (PROG (|dom| |n|)
     (RETURN
@@ -92,7 +92,7 @@
                     (#1# (GETREFV |n|))))
       (SETF (ELT |dom| 10) (CONS #'|RecordUnEqual| |dom|))
       |dom|))))
- 
+
 ; RecordEqual(x,y,dom) ==
 ;   PAIRP x =>
 ;     b:=
@@ -107,7 +107,7 @@
 ;     and/[SPADCALL(x.i,y.i,equalfuns.i or (equalfuns.i:=findEqualFun(fdom)))
 ;          for i in 0.. for fdom in dom.5]
 ;   error '"Bug: Silly record representation"
- 
+
 (DEFUN |RecordEqual| (|x| |y| |dom|)
   (PROG (|b| |equalfuns|)
     (RETURN
@@ -149,22 +149,22 @@
             (SETQ |bfVar#5| (CDR |bfVar#5|))))
          T 0 (ELT |dom| 5) NIL)))
       (#1# (|error| "Bug: Silly record representation"))))))
- 
+
 ; RecordUnEqual(x,y,dom) == not(RecordEqual(x,y,dom))
- 
+
 (DEFUN |RecordUnEqual| (|x| |y| |dom|)
   (PROG () (RETURN (NULL (|RecordEqual| |x| |y| |dom|)))))
- 
+
 ; RecordPrint(x,dom) == coerceRe2E(x,dom.3)
- 
+
 (DEFUN |RecordPrint| (|x| |dom|)
   (PROG () (RETURN (|coerceRe2E| |x| (ELT |dom| 3)))))
- 
+
 ; coerceVal2E(x,m) ==
 ;    -- first catch "failed" etc.
 ;    STRINGP m and (x = m) => STRCONC('"_"", x, '"_"")
 ;    objValUnwrap coerceByFunction(objNewWrap(x, m), $OutputForm)
- 
+
 (DEFUN |coerceVal2E| (|x| |m|)
   (PROG ()
     (RETURN
@@ -172,13 +172,13 @@
            ('T
             (|objValUnwrap|
              (|coerceByFunction| (|objNewWrap| |x| |m|) |$OutputForm|)))))))
- 
+
 ; findEqualFun(dom) ==
 ;   compiledLookup('_=,[$Boolean,'$,'$],dom)
- 
+
 (DEFUN |findEqualFun| (|dom|)
   (PROG () (RETURN (|compiledLookup| '= (LIST |$Boolean| '$ '$) |dom|))))
- 
+
 ; coerceRe2E(x,source) ==
 ;   n := #rest(source)
 ;   n = 1 =>
@@ -193,7 +193,7 @@
 ;      :[['_=,tag,coerceVal2E(x.i, fdom)]
 ;        for i in 0.. for [.,tag,fdom] in rest source]]
 ;   error '"Bug: ridiculous record representation"
- 
+
 (DEFUN |coerceRe2E| (|x| |source|)
   (PROG (|n| |ISTMP#1| |tag| |ISTMP#2| |fdom|)
     (RETURN
@@ -239,7 +239,7 @@
                   (SETQ |bfVar#8| (CDR |bfVar#8|))))
                NIL 0 (CDR |source|) NIL)))
        (#1# (|error| "Bug: ridiculous record representation")))))))
- 
+
 ; Union(:args) ==
 ;     dom := GETREFV 10
 ;     dom.0 := ['Union, :[(if a is ['_:,tag,domval] then ['_:,tag,devaluate domval]
@@ -261,7 +261,7 @@
 ;     dom.8 := [function Undef, :dom]
 ;     dom.9 := [function UnionUnEqual, :dom]
 ;     dom
- 
+
 (DEFUN |Union| (&REST |args|)
   (PROG (|dom| |ISTMP#1| |tag| |ISTMP#2| |domval|)
     (RETURN
@@ -315,7 +315,7 @@
       (SETF (ELT |dom| 8) (CONS #'|Undef| |dom|))
       (SETF (ELT |dom| 9) (CONS #'|UnionUnEqual| |dom|))
       |dom|))))
- 
+
 ; UnionEqual(x, y, dom) ==
 ;   ['Union,:branches] := dom.0
 ;   predlist := mkPredList branches
@@ -335,7 +335,7 @@
 ;         STRINGP b => res := (x = y)
 ;         res := SPADCALL(x, y, findEqualFun(evalDomain b))
 ;   res
- 
+
 (DEFUN |UnionEqual| (|x| |y| |dom|)
   (PROG (|LETTMP#1| |branches| |predlist| |same| |res| |ISTMP#1| |ISTMP#2| |n|
          |typeFun|)
@@ -394,17 +394,17 @@
           (SETQ |bfVar#13| (CDR |bfVar#13|))))
        (|stripUnionTags| |branches|) NIL |predlist| NIL)
       |res|))))
- 
+
 ; UnionUnEqual(x, y, dom) == not(UnionEqual(x, y, dom))
- 
+
 (DEFUN |UnionUnEqual| (|x| |y| |dom|)
   (PROG () (RETURN (NULL (|UnionEqual| |x| |y| |dom|)))))
- 
+
 ; UnionPrint(x, dom) == coerceUn2E(x, dom.0)
- 
+
 (DEFUN |UnionPrint| (|x| |dom|)
   (PROG () (RETURN (|coerceUn2E| |x| (ELT |dom| 0)))))
- 
+
 ; coerceUn2E(x,source) ==
 ;   ['Union,:branches] := source
 ;   predlist := mkPredList branches
@@ -420,7 +420,7 @@
 ;   not(found) =>
 ;     error '"Union bug: Cannot find appropriate branch for coerce to E"
 ;   res
- 
+
 (DEFUN |coerceUn2E| (|x| |source|)
   (PROG (|branches| |predlist| |found| |ISTMP#1| |ISTMP#2| |n| |typeFun| |res|)
     (RETURN
@@ -468,10 +468,10 @@
        ((NULL |found|)
         (|error| "Union bug: Cannot find appropriate branch for coerce to E"))
        (#1# |res|))))))
- 
+
 ; mkPredList listOfEntries ==
 ;      [['EQCAR,"#1",i] for arg in listOfEntries for i in 0..]
- 
+
 (DEFUN |mkPredList| (|listOfEntries|)
   (PROG ()
     (RETURN
@@ -484,7 +484,7 @@
          (SETQ |bfVar#16| (CDR |bfVar#16|))
          (SETQ |i| (+ |i| 1))))
       NIL |listOfEntries| NIL 0))))
- 
+
 ; Mapping(:args) ==
 ;     dom := GETREFV 10
 ;     dom.0 := ['Mapping, :[devaluate a for a in args]]
@@ -504,7 +504,7 @@
 ;     dom.8 := [function Undef, :dom]
 ;     dom.9 := [function MappingUnEqual, :dom]
 ;     dom
- 
+
 (DEFUN |Mapping| (&REST |args|)
   (PROG (|dom|)
     (RETURN
@@ -539,26 +539,26 @@
       (SETF (ELT |dom| 8) (CONS #'|Undef| |dom|))
       (SETF (ELT |dom| 9) (CONS #'|MappingUnEqual| |dom|))
       |dom|))))
- 
+
 ; MappingEqual(x, y, dom) == EQ(x,y)
- 
+
 (DEFUN |MappingEqual| (|x| |y| |dom|) (PROG () (RETURN (EQ |x| |y|))))
- 
+
 ; MappingUnEqual(x, y, dom) == not(EQ(x,y))
- 
+
 (DEFUN |MappingUnEqual| (|x| |y| |dom|) (PROG () (RETURN (NULL (EQ |x| |y|)))))
- 
+
 ; MappingPrint(x, dom) == coerceMap2E(x)
- 
+
 (DEFUN |MappingPrint| (|x| |dom|) (PROG () (RETURN (|coerceMap2E| |x|))))
- 
+
 ; coerceMap2E(x) ==
 ;   -- nrlib domain
 ;   ARRAYP rest x => ['theMap, BPINAME first x,
 ;     if $testingSystem then 0 else REMAINDER(HASHEQ rest x, 1000)]
 ;   -- aldor
 ;   ['theMap, BPINAME first x]
- 
+
 (DEFUN |coerceMap2E| (|x|)
   (PROG ()
     (RETURN
@@ -568,7 +568,7 @@
              (COND (|$testingSystem| 0)
                    (#1='T (REMAINDER (HASHEQ (CDR |x|)) 1000)))))
       (#1# (LIST '|theMap| (BPINAME (CAR |x|))))))))
- 
+
 ; Enumeration0(:args) ==
 ;     dom := GETREFV 10
 ;     -- JHD added an extra slot to cache EQUAL methods
@@ -589,7 +589,7 @@
 ;     dom.8 := [function createEnum, :dom]
 ;     dom.9 := [function EnumUnEqual, :dom]
 ;     dom
- 
+
 (DEFUN |Enumeration0| (&REST |args|)
   (PROG (|dom|)
     (RETURN
@@ -613,20 +613,20 @@
       (SETF (ELT |dom| 8) (CONS #'|createEnum| |dom|))
       (SETF (ELT |dom| 9) (CONS #'|EnumUnEqual| |dom|))
       |dom|))))
- 
+
 ; EnumEqual(e1,e2,dom) == e1=e2
- 
+
 (DEFUN |EnumEqual| (|e1| |e2| |dom|) (PROG () (RETURN (EQUAL |e1| |e2|))))
- 
+
 ; EnumUnEqual(e1,e2,dom) == not(EnumEqual(e1,e2,dom))
- 
+
 (DEFUN |EnumUnEqual| (|e1| |e2| |dom|)
   (PROG () (RETURN (NULL (|EnumEqual| |e1| |e2| |dom|)))))
- 
+
 ; EnumPrint(enum, dom) == dom.5.enum
- 
+
 (DEFUN |EnumPrint| (|enum| |dom|) (PROG () (RETURN (ELT (ELT |dom| 5) |enum|))))
- 
+
 ; createEnum(sym, dom) ==
 ;   args := dom.5
 ;   val := -1
@@ -634,7 +634,7 @@
 ;      sym=v => return(val:=i)
 ;   val<0 => error ["Cannot coerce",sym,"to",["Enumeration",:args]]
 ;   val
- 
+
 (DEFUN |createEnum| (|sym| |dom|)
   (PROG (|args| |val|)
     (RETURN
@@ -656,33 +656,47 @@
         (|error|
          (LIST '|Cannot coerce| |sym| '|to| (CONS '|Enumeration| |args|))))
        (#1# |val|))))))
- 
+
+; get_oplist_maker(op) ==
+;     op = "Record" => "mkRecordFunList"
+;     op = "Union" => "mkUnionFunList"
+;     op = "Mapping" => "mkMappingFunList"
+;     op = "Enumeration" => "mkEnumerationFunList"
+;     false
+
+(DEFUN |get_oplist_maker| (|op|)
+  (PROG ()
+    (RETURN
+     (COND ((EQ |op| '|Record|) '|mkRecordFunList|)
+           ((EQ |op| '|Union|) '|mkUnionFunList|)
+           ((EQ |op| '|Mapping|) '|mkMappingFunList|)
+           ((EQ |op| '|Enumeration|) '|mkEnumerationFunList|) ('T NIL)))))
+
 ; RecordCategory(:x) == constructorCategory ['Record,:x]
- 
+
 (DEFUN |RecordCategory| (&REST |x|)
   (PROG () (RETURN (|constructorCategory| (CONS '|Record| |x|)))))
- 
+
 ; EnumerationCategory(:x) == constructorCategory ["Enumeration",:x]
- 
+
 (DEFUN |EnumerationCategory| (&REST |x|)
   (PROG () (RETURN (|constructorCategory| (CONS '|Enumeration| |x|)))))
- 
+
 ; UnionCategory(:x) == constructorCategory ["Union",:x]
- 
+
 (DEFUN |UnionCategory| (&REST |x|)
   (PROG () (RETURN (|constructorCategory| (CONS '|Union| |x|)))))
- 
+
 ; constructorCategory (title is [op,:.]) ==
-;   constructorFunction:= GET(op, "makeFunctionList") or
+;   constructorFunction := get_oplist_maker(op) or
 ;               systemErrorHere '"constructorCategory"
 ;   [funlist,.]:= FUNCALL(constructorFunction,"$",title,$CategoryFrame)
 ;   oplist:= [[[a,b],true,c] for [a,b,c] in funlist]
 ;   cat:=
-;     JoinInner([SetCategory(), mkCategory(oplist, nil, nil, nil)],
-;       $EmptyEnvironment)
+;       JoinInner([SetCategory(), mkCategory(oplist, nil, nil, nil)])
 ;   cat.(0):= title
 ;   cat
- 
+
 (DEFUN |constructorCategory| (|title|)
   (PROG (|op| |constructorFunction| |LETTMP#1| |funlist| |a| |ISTMP#1| |b|
          |ISTMP#2| |c| |oplist| |cat|)
@@ -690,7 +704,7 @@
      (PROGN
       (SETQ |op| (CAR |title|))
       (SETQ |constructorFunction|
-              (OR (GET |op| '|makeFunctionList|)
+              (OR (|get_oplist_maker| |op|)
                   (|systemErrorHere| "constructorCategory")))
       (SETQ |LETTMP#1|
               (FUNCALL |constructorFunction| '$ |title| |$CategoryFrame|))
@@ -720,11 +734,10 @@
                NIL |funlist| NIL))
       (SETQ |cat|
               (|JoinInner|
-               (LIST (|SetCategory|) (|mkCategory| |oplist| NIL NIL NIL))
-               |$EmptyEnvironment|))
+               (LIST (|SetCategory|) (|mkCategory| |oplist| NIL NIL NIL))))
       (SETF (ELT |cat| 0) |title|)
       |cat|))))
- 
+
 ; mkMappingFunList(nam,mapForm,e) ==
 ;   dc := GENSYM()
 ;   sigFunAlist:=
@@ -732,7 +745,7 @@
 ;      ['_~_=, [['Boolean], nam, nam], ['ELT, dc, 9]],
 ;        ['coerce, [$OutputForm, nam], ['ELT, dc, 7]]]
 ;   [substitute(nam,dc,substitute("$",'Rep,sigFunAlist)),e]
- 
+
 (DEFUN |mkMappingFunList| (|nam| |mapForm| |e|)
   (PROG (|dc| |sigFunAlist|)
     (RETURN
@@ -747,10 +760,10 @@
                (LIST '|coerce| (LIST |$OutputForm| |nam|) (LIST 'ELT |dc| 7))))
       (LIST (|substitute| |nam| |dc| (|substitute| '$ '|Rep| |sigFunAlist|))
             |e|)))))
- 
+
 ; mkRecordFunList(nam,['Record,:Alist],e) ==
 ;   len:= #Alist
-; 
+;
 ; --  for (.,a,.) in Alist do
 ; --    if getmode(a,e) then MOAN("Symbol: ",a,
 ; --        " must not be both a variable and literal")
@@ -759,7 +772,7 @@
 ;   sigFunAlist:=
 ;      --:((a,(A,nam),('XLAM,("$1","$2"),('RECORDELT,"$1",i,len)))
 ;      --       for i in 0..,(.,a,A) in Alist),
-; 
+;
 ;     [['construct,[nam,:[A for [.,a,A] in Alist]],'mkRecord],
 ;      ['_=, [['Boolean], nam, nam], ['ELT, dc, 6]],
 ;       ['_~_=, [['Boolean], nam, nam], ['ELT, dc, 10]],
@@ -772,7 +785,7 @@
 ;                 [['copy,[nam,nam],['XLAM,["$1"],['RECORDCOPY,
 ;                   "$1",len]]]]]
 ;   [substitute(nam,dc,substitute("$",'Rep,sigFunAlist)),e]
- 
+
 (DEFUN |mkRecordFunList| (|nam| |bfVar#33| |e|)
   (PROG (|Alist| |len| |dc| |ISTMP#1| |a| |ISTMP#2| A |sigFunAlist|)
     (RETURN
@@ -885,7 +898,7 @@
                                  (LIST 'RECORDCOPY '$1 |len|)))))))))))
       (LIST (|substitute| |nam| |dc| (|substitute| '$ '|Rep| |sigFunAlist|))
             |e|)))))
- 
+
 ; mkNewUnionFunList(name,form is ['Union,:listOfEntries],e) ==
 ;   dc := name
 ;   if name = 'Rep then name := '$
@@ -908,7 +921,7 @@
 ;                     ['XLAM,["#1"],['PROG2,['LET,gg,"#1"],['QCDR,gg],
 ;                       ['check_union2, ['QEQCAR, gg, i], type, form, gg]]]
 ;   [cList,e]
- 
+
 (DEFUN |mkNewUnionFunList| (|name| |form| |e|)
   (PROG (|listOfEntries| |dc| |ISTMP#1| |tag| |ISTMP#2| |type| |gg| |cList|)
     (RETURN
@@ -997,7 +1010,7 @@
                      (SETQ |i| (+ |i| 1))))
                   NIL |listOfEntries| NIL 0)))))
       (LIST |cList| |e|)))))
- 
+
 ; mkEnumerationFunList(nam,['Enumeration,:SL],e) ==
 ;   len:= #SL
 ;   dc := nam
@@ -1009,7 +1022,7 @@
 ;           ['coerce,[nam, ['Symbol]], ['ELT, dc, 8]],
 ;             ['coerce,[['OutputForm],nam],['ELT,dc, 9]]]
 ;   [substitute(nam, dc, cList),e]
- 
+
 (DEFUN |mkEnumerationFunList| (|nam| |bfVar#37| |e|)
   (PROG (SL |len| |dc| |cList|)
     (RETURN
@@ -1030,7 +1043,7 @@
                     (LIST '|coerce| (LIST (LIST '|OutputForm|) |nam|)
                           (LIST 'ELT |dc| 9))))
       (LIST (|substitute| |nam| |dc| |cList|) |e|)))))
- 
+
 ; mkUnionFunList(op,form is ['Union,:listOfEntries],e) ==
 ;   first listOfEntries is [":",.,.] => mkNewUnionFunList(op,form,e)
 ;   --1. create representations of subtypes
@@ -1073,7 +1086,7 @@
 ;     op
 ;   cList:= substitute(op,g,cList)
 ;   [cList,e]
- 
+
 (DEFUN |mkUnionFunList| (|op| |form| |e|)
   (PROG (|listOfEntries| |ISTMP#1| |ISTMP#2| |ISTMP#3| |predList| |g| |x| |n|
          |gg| |ref| |q| |cList|)

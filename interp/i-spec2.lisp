@@ -1,19 +1,19 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; DEFPARAMETER($specialOps, [ _
 ;   "ADEF", "AlgExtension", "and", "case", "COERCE", "COLLECT", "construct", "Declare", "DEF", "Dollar", _
 ;      "equation", "error", "free", "has", "IF", "is", "isnt", "iterate", "break", "LET", "local", "MDEF", "or", _
 ;        "pretend", "QUOTE", "REDUCE", "REPEAT", "return", "SEQ", "TARGET", "Tuple", "typeOf", "where" ])
- 
+
 (DEFPARAMETER |$specialOps|
   (LIST 'ADEF '|AlgExtension| '|and| '|case| 'COERCE 'COLLECT '|construct|
         '|Declare| 'DEF '|Dollar| '|equation| '|error| '|free| '|has| 'IF '|is|
         '|isnt| '|iterate| '|break| 'LET '|local| 'MDEF '|or| '|pretend| 'QUOTE
         'REDUCE 'REPEAT '|return| 'SEQ 'TARGET '|Tuple| '|typeOf| '|where|))
- 
+
 ; upDEF t ==
 ;   -- performs map definitions.  value is thrown away
 ;   t isnt [op,def,pred,.] => nil
@@ -28,7 +28,7 @@
 ;   put(mapOp,'value,v,$e)
 ;   putValue(op,objNew(voidValue(), $Void))
 ;   putModeSet(op,[$Void])
- 
+
 (DEFUN |upDEF| (|t|)
   (PROG (|op| |ISTMP#1| |def| |ISTMP#2| |pred| |ISTMP#3| |v| |mapOp|)
     (RETURN
@@ -68,7 +68,7 @@
            (|put| |mapOp| '|value| |v| |$e|)
            (|putValue| |op| (|objNew| (|voidValue|) |$Void|))
            (|putModeSet| |op| (LIST |$Void|)))))))))))
- 
+
 ; upDollar t ==
 ;   -- Puts "dollar" property in atree node, and calls bottom up
 ;   t isnt [op,D,form] => nil
@@ -93,11 +93,11 @@
 ;     else val := ['getConstantFromDomain,['LIST,MKQ f],MKQ t]
 ;     putValue(op,objNew(val,t))
 ;     putModeSet(op,[t])
-; 
+;
 ;   nargs := #rest form
-; 
+;
 ;   (ms := upDollarTuple(op, f, t, t2, rest form, nargs)) => ms
-; 
+;
 ;   f ~= 'construct and null isOpInDomain(f,t,nargs) =>
 ;     throwKeyedMsg("S2IS0023",[f,t])
 ;   if (sig := findCommonSigInDomain(f,t,nargs)) then
@@ -109,7 +109,7 @@
 ;     throwKeyedMsg("S2IS0021",[f,t])
 ;   putValue(op,getValue first form)
 ;   putModeSet(op,ms)
- 
+
 (DEFUN |upDollar| (|t|)
   (PROG (|op| |ISTMP#1| D |ISTMP#2| |form| |t2| |f| |u| |val| |nargs| |ms|
          |sig|)
@@ -221,7 +221,7 @@
                            (PROGN
                             (|putValue| |op| (|getValue| (CAR |form|)))
                             (|putModeSet| |op| |ms|))))))))))))))))))))))
- 
+
 ; upDollarTuple(op, f, t, t2, args, nargs) ==
 ;   -- this function tries to find a tuple function to use
 ;   nargs = 1 and getUnname first args = "Tuple" => NIL
@@ -241,7 +241,7 @@
 ;   ms := bottomUp form
 ;   putValue(op,getValue first form)
 ;   putModeSet(op,ms)
- 
+
 (DEFUN |upDollarTuple| (|op| |f| |t| |t2| |args| |nargs|)
   (PROG (|ms| |ISTMP#1| |ISTMP#2| |singles| |tuple| |arg| D |form| |newArg|)
     (RETURN
@@ -301,7 +301,7 @@
                              (SETQ |ms| (|bottomUp| |form|))
                              (|putValue| |op| (|getValue| (CAR |form|)))
                              (|putModeSet| |op| |ms|)))))))))))))
- 
+
 ; upLispCall(op,t) ==
 ;   -- process $Lisp calls
 ;   if atom t then code:=getUnname t else
@@ -317,7 +317,7 @@
 ;   rt := '(SExpression)
 ;   putValue(op,objNew(code,rt))
 ;   putModeSet(op,[rt])
- 
+
 (DEFUN |upLispCall| (|op| |t|)
   (PROG (|code| |lispOp| |argl| |rt|)
     (RETURN
@@ -364,7 +364,7 @@
       (SETQ |rt| '(|SExpression|))
       (|putValue| |op| (|objNew| |code| |rt|))
       (|putModeSet| |op| (LIST |rt|))))))
- 
+
 ; upequation tree ==
 ;   -- only handle this if there is a target of Boolean
 ;   -- this should speed things up a bit
@@ -374,7 +374,7 @@
 ;   -- change equation into '='
 ;   op.0 := "="
 ;   bottomUp tree
- 
+
 (DEFUN |upequation| (|tree|)
   (PROG (|op| |ISTMP#1| |lhs| |ISTMP#2| |rhs|)
     (RETURN
@@ -394,7 +394,7 @@
       ((NOT (EQUAL |$Boolean| (|getTarget| |op|))) NIL)
       ((NULL (VECP |op|)) NIL)
       (#1# (PROGN (SETF (ELT |op| 0) '=) (|bottomUp| |tree|)))))))
- 
+
 ; uperror t ==
 ;   -- when compiling a function, this merely inserts another argument
 ;   -- which is the name of the function.
@@ -404,7 +404,7 @@
 ;   msgMs isnt [=$String] => NIL
 ;   RPLACD(t,[mkAtree object2String $mapName,msg])
 ;   bottomUp t
- 
+
 (DEFUN |uperror| (|t|)
   (PROG (|op| |ISTMP#1| |msg| |msgMs|)
     (RETURN
@@ -430,45 +430,45 @@
                 (RPLACD |t|
                         (LIST (|mkAtree| (|object2String| |$mapName|)) |msg|))
                 (|bottomUp| |t|))))))))))
- 
+
 ; upfree t ==
 ;   putValue(t,objNew('(voidValue),$Void))
 ;   putModeSet(t,[$Void])
- 
+
 (DEFUN |upfree| (|t|)
   (PROG ()
     (RETURN
      (PROGN
       (|putValue| |t| (|objNew| '(|voidValue|) |$Void|))
       (|putModeSet| |t| (LIST |$Void|))))))
- 
+
 ; uplocal t ==
 ;   putValue(t,objNew('(voidValue),$Void))
 ;   putModeSet(t,[$Void])
- 
+
 (DEFUN |uplocal| (|t|)
   (PROG ()
     (RETURN
      (PROGN
       (|putValue| |t| (|objNew| '(|voidValue|) |$Void|))
       (|putModeSet| |t| (LIST |$Void|))))))
- 
+
 ; upfreeWithType(var,type) ==
 ;   sayKeyedMsg("S2IS0055",['"free",var])
 ;   var
- 
+
 (DEFUN |upfreeWithType| (|var| |type|)
   (PROG ()
     (RETURN (PROGN (|sayKeyedMsg| 'S2IS0055 (LIST "free" |var|)) |var|))))
- 
+
 ; uplocalWithType(var,type) ==
 ;   sayKeyedMsg("S2IS0055",['"local",var])
 ;   var
- 
+
 (DEFUN |uplocalWithType| (|var| |type|)
   (PROG ()
     (RETURN (PROGN (|sayKeyedMsg| 'S2IS0055 (LIST "local" |var|)) |var|))))
- 
+
 ; uphas t ==
 ;   t isnt [op,type,prop] => nil
 ;   -- handler for category and attribute queries
@@ -483,7 +483,7 @@
 ;   if $genValue then code := wrap timedEVALFUN code
 ;   putValue(op,objNew(code,$Boolean))
 ;   putModeSet(op,[$Boolean])
- 
+
 (DEFUN |uphas| (|t|)
   (PROG (|op| |ISTMP#1| |type| |ISTMP#2| |prop| |catCode| |code|)
     (RETURN
@@ -516,13 +516,13 @@
         (COND (|$genValue| (SETQ |code| (|wrap| (|timedEVALFUN| |code|)))))
         (|putValue| |op| (|objNew| |code| |$Boolean|))
         (|putModeSet| |op| (LIST |$Boolean|))))))))
- 
+
 ; upIF t ==
 ;   t isnt [op,cond,a,b] => nil
 ;   bottomUpPredicate(cond,'"if/when")
 ;   $genValue => interpIF(op,cond,a,b)
 ;   compileIF(op,cond,a,b,t)
- 
+
 (DEFUN |upIF| (|t|)
   (PROG (|op| |ISTMP#1| |cond| |ISTMP#2| |a| |ISTMP#3| |b|)
     (RETURN
@@ -548,7 +548,7 @@
         (|bottomUpPredicate| |cond| "if/when")
         (COND (|$genValue| (|interpIF| |op| |cond| |a| |b|))
               (#1# (|compileIF| |op| |cond| |a| |b| |t|)))))))))
- 
+
 ; compileIF(op,cond,a,b,t) ==
 ;   -- type analyzer for compiled case where types of both branches of
 ;   --  IF are resolved.
@@ -582,7 +582,7 @@
 ;     throwKeyedMsg("S2IS0026",[m2,m1])
 ;   evalIF(op,rest t,m)
 ;   putModeSet(op,[m])
- 
+
 (DEFUN |compileIF| (|op| |cond| |a| |b| |t|)
   (PROG (|ms1| |m1| |ms2| |m2| |r| |m|)
     (RETURN
@@ -630,7 +630,7 @@
                                   (LIST |m2| |m1|)))))))))
          (|evalIF| |op| (CDR |t|) |m|)
          (|putModeSet| |op| (LIST |m|)))))))))
- 
+
 ; evalIF(op,[cond,a,b],m) ==
 ;   -- generate code form compiled IF
 ;   elseCode:=
@@ -643,7 +643,7 @@
 ;     genIFvalCode(a,m)],:elseCode]
 ;   triple:= objNew(code,m)
 ;   putValue(op,triple)
- 
+
 (DEFUN |evalIF| (|op| |bfVar#10| |m|)
   (PROG (|cond| |a| |b| |elseCode| |code| |triple|)
     (RETURN
@@ -669,7 +669,7 @@
                      |elseCode|)))
       (SETQ |triple| (|objNew| |code| |m|))
       (|putValue| |op| |triple|)))))
- 
+
 ; genIFvalCode(t,m) ==
 ;   -- passes type information down braches of IF statement
 ;   --  So that coercions can be performed on data at branches of IF.
@@ -677,7 +677,7 @@
 ;   m1=m => getArgValue(t,m)
 ;   code:=objVal getValue t
 ;   IFcodeTran(code,m,m1)
- 
+
 (DEFUN |genIFvalCode| (|t| |m|)
   (PROG (|m1| |code|)
     (RETURN
@@ -688,7 +688,7 @@
              (PROGN
               (SETQ |code| (|objVal| (|getValue| |t|)))
               (|IFcodeTran| |code| |m| |m1|))))))))
- 
+
 ; IFcodeTran(code,m,m1) ==
 ;   -- coerces values at branches of IF
 ;   null code => code
@@ -702,7 +702,7 @@
 ;   a1:=IFcodeTran(a1,m,m1)
 ;   a2:=IFcodeTran(a2,m,m1)
 ;   ['COND,[p1,a1],[''T,a2]]
- 
+
 (DEFUN |IFcodeTran| (|code| |m| |m1|)
   (PROG (|ISTMP#1| |ISTMP#2| |p1| |ISTMP#3| |a1| |ISTMP#4| |ISTMP#5| |ISTMP#6|
          |a2| |code'|)
@@ -752,9 +752,9 @@
              (SETQ |a1| (|IFcodeTran| |a1| |m| |m1|))
              (SETQ |a2| (|IFcodeTran| |a2| |m| |m1|))
              (LIST 'COND (LIST |p1| |a1|) (LIST ''T |a2|))))))))
- 
+
 ; interpIF(op,cond,a,b) ==
-;   -- non-compiled version of IF type analyzer.  Doesn't resolve accross
+;   -- non-compiled version of IF type analyzer.  Doesn't resolve across
 ;   --  branches of the IF.
 ;   val:= getValue cond
 ;   val:= coerceInteractive(val,$Boolean) =>
@@ -764,7 +764,7 @@
 ;       putModeSet(op,[$Void])
 ;     upIFgenValue(op,b)
 ;   throwKeyedMsg("S2IS0031",NIL)
- 
+
 (DEFUN |interpIF| (|op| |cond| |a| |b|)
   (PROG (|val|)
     (RETURN
@@ -779,14 +779,14 @@
                 (|putModeSet| |op| (LIST |$Void|))))
               (#1='T (|upIFgenValue| |op| |b|))))
        (#1# (|throwKeyedMsg| 'S2IS0031 NIL)))))))
- 
+
 ; upIFgenValue(op,tree) ==
 ;   -- evaluates tree and transfers the results to op
 ;   ms:=bottomUp tree
 ;   val:= getValue tree
 ;   putValue(op,val)
 ;   putModeSet(op,ms)
- 
+
 (DEFUN |upIFgenValue| (|op| |tree|)
   (PROG (|ms| |val|)
     (RETURN
@@ -795,12 +795,12 @@
       (SETQ |val| (|getValue| |tree|))
       (|putValue| |op| |val|)
       (|putModeSet| |op| |ms|)))))
- 
+
 ; upis t ==
 ;   t isnt [op,a,pattern] => nil
 ;   $opIsIs : local := true
 ;   upisAndIsnt t
- 
+
 (DEFUN |upis| (|t|)
   (PROG (|$opIsIs| |pattern| |ISTMP#2| |a| |ISTMP#1| |op|)
     (DECLARE (SPECIAL |$opIsIs|))
@@ -819,12 +819,12 @@
                          (PROGN (SETQ |pattern| (CAR |ISTMP#2|)) #1='T)))))))
        NIL)
       (#1# (PROGN (SETQ |$opIsIs| T) (|upisAndIsnt| |t|)))))))
- 
+
 ; upisnt t ==
 ;   t isnt [op,a,pattern] => nil
 ;   $opIsIs : local := nil
 ;   upisAndIsnt t
- 
+
 (DEFUN |upisnt| (|t|)
   (PROG (|$opIsIs| |pattern| |ISTMP#2| |a| |ISTMP#1| |op|)
     (DECLARE (SPECIAL |$opIsIs|))
@@ -843,7 +843,7 @@
                          (PROGN (SETQ |pattern| (CAR |ISTMP#2|)) #1='T)))))))
        NIL)
       (#1# (PROGN (SETQ |$opIsIs| NIL) (|upisAndIsnt| |t|)))))))
- 
+
 ; upisAndIsnt(t:=[op,a,pattern]) ==
 ;   -- handler for "is" pattern matching
 ;   mS:= bottomUp a
@@ -852,7 +852,7 @@
 ;   putPvarModes(removeConstruct pattern,m)
 ;   evalis(op,rest t,m)
 ;   putModeSet(op,[$Boolean])
- 
+
 (DEFUN |upisAndIsnt| (|t|)
   (PROG (|op| |a| |pattern| |mS| |m|)
     (RETURN
@@ -872,7 +872,7 @@
          (|putPvarModes| (|removeConstruct| |pattern|) |m|)
          (|evalis| |op| (CDR |t|) |m|)
          (|putModeSet| |op| (LIST |$Boolean|)))))))))
- 
+
 ; putPvarModes(pattern,m) ==
 ;   -- Puts the modes for the pattern variables into $env
 ;   m isnt ['List,um] => throwKeyedMsg("S2IS0030",NIL)
@@ -881,7 +881,7 @@
 ;       pvar is ['_:, var] => put(var, 'mode, m, $env)
 ;       pvar is ['_=, var] => put(var, 'mode, um, $env)
 ;       putPvarModes(pvar, um)
- 
+
 (DEFUN |putPvarModes| (|pattern| |m|)
   (PROG (|ISTMP#1| |um| |var|)
     (RETURN
@@ -916,7 +916,7 @@
                    (#1# (|putPvarModes| |pvar| |um|)))))
            (SETQ |bfVar#11| (CDR |bfVar#11|))))
         |pattern| NIL))))))
- 
+
 ; evalis(op,[a,pattern],mode) ==
 ;   -- actually handles is and isnt
 ;   if $opIsIs
@@ -930,7 +930,7 @@
 ;     $genValue => objNewWrap(timedEVALFUN code,$Boolean)
 ;     objNew(code,$Boolean)
 ;   putValue(op,triple)
- 
+
 (DEFUN |evalis| (|op| |bfVar#12| |mode|)
   (PROG (|a| |pattern| |fun| |code| |triple|)
     (RETURN
@@ -950,14 +950,14 @@
                (|$genValue| (|objNewWrap| (|timedEVALFUN| |code|) |$Boolean|))
                (#1# (|objNew| |code| |$Boolean|))))
       (|putValue| |op| |triple|)))))
- 
+
 ; isLocalPred pattern ==
 ;   -- returns true if the is predicate is to be compiled
 ;   for pat in pattern repeat
 ;     IDENTP pat and isLocalVar(pat) => return true
 ;     pat is ['_:,var] and isLocalVar(var) => return true
 ;     pat is ['_=,var] and isLocalVar(var) => return true
- 
+
 (DEFUN |isLocalPred| (|pattern|)
   (PROG (|ISTMP#1| |var|)
     (RETURN
@@ -984,7 +984,7 @@
                   (RETURN T)))))
          (SETQ |bfVar#13| (CDR |bfVar#13|))))
       |pattern| NIL))))
- 
+
 ; compileIs(val,pattern) ==
 ;   -- produce code for compiled "is" predicate.  makes pattern variables
 ;   --  into local variables of the function
@@ -1000,7 +1000,7 @@
 ;   null $opIsIs =>
 ;     ['COND,[['EQ,predCode,MKQ 'failed],['SEQ,:assignCode,MKQ 'T]]]
 ;   ['COND,[['NOT,['EQ,predCode,MKQ 'failed]],['SEQ,:assignCode,MKQ 'T]]]
- 
+
 (DEFUN |compileIs| (|val| |pattern|)
   (PROG (|vars| |ISTMP#1| |var| |g| |predCode| |assignCode|)
     (RETURN
@@ -1056,7 +1056,7 @@
               (LIST (LIST 'NOT (LIST 'EQ |predCode| (MKQ '|failed|)))
                     (CONS 'SEQ
                           (APPEND |assignCode| (CONS (MKQ 'T) NIL)))))))))))
- 
+
 ; evalIsPredicate(value,pattern,mode) ==
 ;   --This function pattern matches value to pattern, and returns
 ;   --true if it matches, and false otherwise.  As a side effect
@@ -1068,7 +1068,7 @@
 ;       evalLETchangeValue(id,objNewWrap(value,get(id,'mode,$env)))
 ;     true
 ;   false
- 
+
 (DEFUN |evalIsPredicate| (|value| |pattern| |mode|)
   (PROG (|valueAlist| |id|)
     (RETURN
@@ -1097,16 +1097,13 @@
           |valueAlist| NIL)
          T))
        (#1# NIL))))))
- 
+
 ; evalIsntPredicate(value,pattern,mode) ==
-;   evalIsPredicate(value,pattern,mode) => NIL
-;   'TRUE
- 
+;     not(evalIsPredicate(value,pattern,mode))
+
 (DEFUN |evalIsntPredicate| (|value| |pattern| |mode|)
-  (PROG ()
-    (RETURN
-     (COND ((|evalIsPredicate| |value| |pattern| |mode|) NIL) ('T 'TRUE)))))
- 
+  (PROG () (RETURN (NULL (|evalIsPredicate| |value| |pattern| |mode|)))))
+
 ; removeConstruct pat ==
 ;   -- removes the "construct" from the beginning of patterns
 ;   if pat is ['construct,:p] then pat:=p
@@ -1115,7 +1112,7 @@
 ;   RPLACA(pat, removeConstruct first pat)
 ;   RPLACD(pat, removeConstruct rest pat)
 ;   pat
- 
+
 (DEFUN |removeConstruct| (|pat|)
   (PROG (|p| |ISTMP#1| |a| |ISTMP#2| |b|)
     (RETURN
@@ -1141,18 +1138,18 @@
               (RPLACA |pat| (|removeConstruct| (CAR |pat|)))
               (RPLACD |pat| (|removeConstruct| (CDR |pat|)))
               |pat|)))))))
- 
+
 ; isPatternMatch(l,pats) ==
 ;   -- perform the actual pattern match
 ;   $subs: local := NIL
 ;   isPatMatch(l,pats)
 ;   $subs
- 
+
 (DEFUN |isPatternMatch| (|l| |pats|)
   (PROG (|$subs|)
     (DECLARE (SPECIAL |$subs|))
     (RETURN (PROGN (SETQ |$subs| NIL) (|isPatMatch| |l| |pats|) |$subs|))))
- 
+
 ; isPatMatch(l,pats) ==
 ;   null pats =>
 ;     null l => $subs
@@ -1182,7 +1179,7 @@
 ;     isPatMatch(rest l,restPats)
 ;   keyedSystemError("S2GE0016",['"isPatMatch",
 ;      '"unknown form of is predicate"])
- 
+
 (DEFUN |isPatMatch| (|l| |pats|)
   (PROG (|ISTMP#1| |ISTMP#2| |var| |pat| |restPats| |p| |n| |m|)
     (RETURN
@@ -1259,7 +1256,7 @@
       (#1#
        (|keyedSystemError| 'S2GE0016
         (LIST "isPatMatch" "unknown form of is predicate")))))))
- 
+
 ; upiterate t ==
 ;   null $repeatBodyLabel => throwKeyedMsg("S2IS0029",['"iterate"])
 ;   $iterateCount := $iterateCount + 1
@@ -1267,7 +1264,7 @@
 ;   $genValue => THROW(eval $repeatBodyLabel,voidValue())
 ;   putValue(t,objNew(code,$Void))
 ;   putModeSet(t,[$Void])
- 
+
 (DEFUN |upiterate| (|t|)
   (PROG (|code|)
     (RETURN
@@ -1282,7 +1279,7 @@
                (PROGN
                 (|putValue| |t| (|objNew| |code| |$Void|))
                 (|putModeSet| |t| (LIST |$Void|)))))))))))
- 
+
 ; upbreak t ==
 ;   t isnt [op,.] => nil
 ;   null $repeatLabel => throwKeyedMsg("S2IS0029",['"break"])
@@ -1291,7 +1288,7 @@
 ;   $genValue => THROW(eval $repeatLabel,voidValue())
 ;   putValue(op,objNew(code,$Void))
 ;   putModeSet(op,[$Void])
- 
+
 (DEFUN |upbreak| (|t|)
   (PROG (|op| |ISTMP#1| |code|)
     (RETURN
@@ -1313,7 +1310,7 @@
                (PROGN
                 (|putValue| |op| (|objNew| |code| |$Void|))
                 (|putModeSet| |op| (LIST |$Void|)))))))))))
- 
+
 ; upLET t ==
 ;   -- analyzes and evaluates the righthand side, and does the variable
 ;   -- binding
@@ -1354,7 +1351,7 @@
 ;     putValue(op,val)
 ;     putModeSet(op,[objMode(val)])
 ;   throwKeyedMsg("S2IS0027",[var])
- 
+
 (DEFUN |upLET| (|t|)
   (PROG (|$declaredMode| |rhsMs| |val| |m| |var'| |obj| |var| |rhs| |ISTMP#2|
          |lhs| |ISTMP#1| |op|)
@@ -1433,7 +1430,7 @@
                       (|putValue| |op| |val|)
                       (|putModeSet| |op| (LIST (|objMode| |val|)))))))))))))
             (#1# (|throwKeyedMsg| 'S2IS0027 (LIST |var|)))))))))))))
- 
+
 ; isTupleForm f ==
 ;     -- have to do following since "Tuple" is an internal form name
 ;     getUnname f ~= "Tuple" => false
@@ -1443,7 +1440,7 @@
 ;         isType first args => false
 ;         true
 ;     false
- 
+
 (DEFUN |isTupleForm| (|f|)
   (PROG (|op| |args|)
     (RETURN
@@ -1455,7 +1452,7 @@
                   ((|isTupleForm| (CAR |args|)) T)
                   ((|isType| (CAR |args|)) NIL) (#1# T)))
            (#1# NIL)))))
- 
+
 ; evalLET(lhs,rhs) ==
 ;   -- lhs is a vector for a variable, and rhs is the evaluated atree
 ;   --  for the value which is coerced to the mode of lhs
@@ -1487,7 +1484,7 @@
 ;     t2 and objNew(($genValue => wrap timedEVALFUN v ; v),t2)
 ;   value => evalLETput(lhs,value)
 ;   throwKeyedMsgCannotCoerceWithValue(objVal v,t1,getMode lhs)
- 
+
 (DEFUN |evalLET| (|lhs| |rhs|)
   (PROG (|$useConvertForCoercions| |value| |v2| |t'| |t2'| |t2| |t1| |ISTMP#1|
          |v'| |v|)
@@ -1555,7 +1552,7 @@
                (#1#
                 (|throwKeyedMsgCannotCoerceWithValue| (|objVal| |v|) |t1|
                  (|getMode| |lhs|)))))))))))
- 
+
 ; evalLETput(lhs,value) ==
 ;   -- put value into the cell for lhs
 ;   name:= getUnname lhs
@@ -1584,7 +1581,7 @@
 ;     put(name,'automode,objMode(value),$env)
 ;   $genValue and evalLETchangeValue(name,value)
 ;   putValue(lhs,value)
- 
+
 (DEFUN |evalLETput| (|lhs| |value|)
   (PROG (|name| |om| |dm| |code|)
     (RETURN
@@ -1641,7 +1638,7 @@
          (#1# (|put| |name| '|automode| (|objMode| |value|) |$env|)))))
       (AND |$genValue| (|evalLETchangeValue| |name| |value|))
       (|putValue| |lhs| |value|)))))
- 
+
 ; upLETWithPatternOnLhs(t := [op,pattern,a]) ==
 ;   $opIsIs : local := true
 ;   [m] := bottomUp a
@@ -1660,7 +1657,7 @@
 ;       code := ['COND,[objVal object,objVal getValue a],[''T,failCode]]
 ;       putValue(op,objNew(code,m))
 ;   putModeSet(op,[m])
- 
+
 (DEFUN |upLETWithPatternOnLhs| (|t|)
   (PROG (|$opIsIs| |code| |failCode| |object| |m| |LETTMP#1| |a| |pattern|
          |op|)
@@ -1691,7 +1688,7 @@
                       (LIST ''T |failCode|)))
         (|putValue| |op| (|objNew| |code| |m|))))
       (|putModeSet| |op| (LIST |m|))))))
- 
+
 ; evalLETchangeValue(name,value) ==
 ;   -- write the value of name into the environment, clearing dependent
 ;   --  maps if its type changes from its last value
@@ -1702,12 +1699,12 @@
 ;       not ((localEnv and get(name,'mode,$env)) or get(name,'mode,$e))
 ;     objMode val ~= objMode(value)
 ;   if clearCompilationsFlag then
-;     clearDependencies(name,true)
+;     clearDependencies(name)
 ;   if localEnv and isLocalVar(name)
 ;     then $env:= putHist(name,'value,value,$env)
 ;     else putIntSymTab(name,'value,value,$e)
 ;   objVal value
- 
+
 (DEFUN |evalLETchangeValue| (|name| |value|)
   (PROG (|localEnv| |val| |clearCompilationsFlag|)
     (RETURN
@@ -1724,13 +1721,13 @@
                   (OR (AND |localEnv| (|get| |name| '|mode| |$env|))
                       (|get| |name| '|mode| |$e|))))
                 (#1='T (NOT (EQUAL (|objMode| |val|) (|objMode| |value|)))))))
-      (COND (|clearCompilationsFlag| (|clearDependencies| |name| T)))
+      (COND (|clearCompilationsFlag| (|clearDependencies| |name|)))
       (COND
        ((AND |localEnv| (|isLocalVar| |name|))
         (SETQ |$env| (|putHist| |name| '|value| |value| |$env|)))
        (#1# (|putIntSymTab| |name| '|value| |value| |$e|)))
       (|objVal| |value|)))))
- 
+
 ; upLETWithFormOnLhs(op,lhs,rhs) ==
 ;   -- bottomUp for assignment to forms (setelt, table or tuple)
 ;   lhs' := getUnnameIfCan lhs
@@ -1763,7 +1760,7 @@
 ;   rhs' = 'Tuple => throwKeyedMsg("S2IS0039",NIL)
 ;   tree:= seteltable(lhs,rhs) => upSetelt(op,lhs,tree)
 ;   throwKeyedMsg("S2IS0060", NIL)
- 
+
 (DEFUN |upLETWithFormOnLhs| (|op| |lhs| |rhs|)
   (PROG (|lhs'| |rhs'| |seq| |temps| |let| |t'| |m| |ms| |tree|)
     (RETURN
@@ -1845,20 +1842,20 @@
        ((SETQ |tree| (|seteltable| |lhs| |rhs|))
         (|upSetelt| |op| |lhs| |tree|))
        (#1# (|throwKeyedMsg| 'S2IS0060 NIL)))))))
- 
+
 ; get_opname_if_can(f) ==
 ;     VECP(f) => f.0
 ;     nil
- 
+
 (DEFUN |get_opname_if_can| (|f|)
   (PROG () (RETURN (COND ((VECP |f|) (ELT |f| 0)) ('T NIL)))))
- 
+
 ; seteltable(lhs is [f,:argl],rhs) ==
 ;   -- produces the setelt form for trees such as "l.2:= 3"
 ;   g := get_opname_if_can f
 ;   EQ(g,'elt) => altSeteltable [:argl, rhs]
 ;   altSeteltable [:lhs,rhs]
- 
+
 (DEFUN |seteltable| (|lhs| |rhs|)
   (PROG (|f| |argl| |g|)
     (RETURN
@@ -1869,23 +1866,23 @@
       (COND
        ((EQ |g| '|elt|) (|altSeteltable| (APPEND |argl| (CONS |rhs| NIL))))
        ('T (|altSeteltable| (APPEND |lhs| (CONS |rhs| NIL)))))))))
- 
+
 ; altSeteltable args ==
 ;     for x in args repeat bottomUp x
 ;     newOps := [mkAtreeNode "setelt!", mkAtreeNode "set!"]
 ;     form := NIL
-; 
+;
 ;     -- first look for exact matches for any of the possibilities
 ;     while not form for newOp in newOps  repeat
 ;         if selectMms(newOp, args, NIL) then form := [newOp, :args]
-; 
+;
 ;     -- now try retracting arguments after the first
 ;     while not form and ( "and"/[retractAtree(a) for a in rest args] ) repeat
 ;         while not form for newOp in newOps  repeat
 ;             if selectMms(newOp, args, NIL) then form := [newOp, :args]
-; 
+;
 ;     form
- 
+
 (DEFUN |altSeteltable| (|args|)
   (PROG (|newOps| |form|)
     (RETURN
@@ -1944,7 +1941,7 @@
                 (SETQ |bfVar#32| (CDR |bfVar#32|))))
              |newOps| NIL))))))
       |form|))))
- 
+
 ; upSetelt(op,lhs,tree) ==
 ;   -- type analyzes implicit setelt forms
 ;   var:=opOf lhs
@@ -1955,7 +1952,7 @@
 ;   ms := bottomUp tree
 ;   putValue(op,getValue tree)
 ;   putModeSet(op,ms)
- 
+
 (DEFUN |upSetelt| (|op| |lhs| |tree|)
   (PROG (|var| |m1| |v1| |ms|)
     (RETURN
@@ -1970,7 +1967,7 @@
       (SETQ |ms| (|bottomUp| |tree|))
       (|putValue| |op| (|getValue| |tree|))
       (|putModeSet| |op| |ms|)))))
- 
+
 ; upTableSetelt(op,lhs is [htOp,:args],rhs) ==
 ;   -- called only for undeclared, uninitialized table setelts
 ;   ("*" = (PNAME getUnname htOp).0) and (1 ~= # args) =>
@@ -1991,7 +1988,7 @@
 ;   t := getValue op
 ;   putValue(op,objNew(['PROGN,tableCode,objVal t],objMode t))
 ;   r
- 
+
 (DEFUN |upTableSetelt| (|op| |lhs| |rhs|)
   (PROG (|htOp| |args| |keyMode| |tableCode| |r| |t|)
     (RETURN
@@ -2040,7 +2037,7 @@
                   (|objNew| (LIST 'PROGN |tableCode| (|objVal| |t|))
                    (|objMode| |t|)))
                  |r|))))))))))
- 
+
 ; isType t ==
 ;   -- Returns the evaluated type if t is a tree representing a type,
 ;   -- and NIL otherwise
@@ -2061,7 +2058,7 @@
 ;      type and evaluateType type
 ;    d := isDomainValuedVariable op => d
 ;    NIL
- 
+
 (DEFUN |isType| (|t|)
   (PROG (|op| |argTypes| |d| |type|)
     (RETURN
@@ -2111,7 +2108,7 @@
                          (|unabbrev| (|unVectorize| |t|))))
                 (AND |type| (|evaluateType| |type|))))))
        ((SETQ |d| (|isDomainValuedVariable| |op|)) |d|) (#1# NIL))))))
- 
+
 ; upLETtype(op,lhs,type) ==
 ;   -- performs type assignment
 ;   opName:= getUnname lhs
@@ -2127,7 +2124,7 @@
 ;   putValue(op,val)
 ;   -- have to fix the following
 ;   putModeSet(op,[mode])
- 
+
 (DEFUN |upLETtype| (|op| |lhs| |type|)
   (PROG (|opName| |mode| |val|)
     (RETURN
@@ -2160,7 +2157,7 @@
                (#1# (|putHist| |opName| '|value| |val| |$e|)))
          (|putValue| |op| |val|)
          (|putModeSet| |op| (LIST |mode|)))))))))
- 
+
 ; assignSymbol(symbol, value, domain) ==
 ; -- Special function for binding an interpreter variable from within algebra
 ; -- code.  Does not do the assignment and returns nil, if the variable is
@@ -2169,7 +2166,7 @@
 ;   obj := objNew(wrap value, devaluate domain)
 ;   put(symbol, 'value, obj, $e)
 ;   true
- 
+
 (DEFUN |assignSymbol| (|symbol| |value| |domain|)
   (PROG (|val| |obj|)
     (RETURN
@@ -2179,13 +2176,13 @@
              (SETQ |obj| (|objNew| (|wrap| |value|) (|devaluate| |domain|)))
              (|put| |symbol| '|value| |obj| |$e|)
              T))))))
- 
+
 ; getInterpMacroNames() ==
 ;   names := [n for [n,:.] in $InterpreterMacroAlist]
 ;   if (e := CAAR $InteractiveFrame) and (m := assoc("--macros--",e)) then
 ;     names := append(names, [n for [n, :.] in rest m])
 ;   MSORT names
- 
+
 (DEFUN |getInterpMacroNames| ()
   (PROG (|m| |e| |names| |n|)
     (RETURN
@@ -2223,7 +2220,7 @@
                             (SETQ |bfVar#45| (CDR |bfVar#45|))))
                          NIL (CDR |m|) NIL)))))
       (MSORT |names|)))))
- 
+
 ; isInterpMacro name ==
 ;   -- look in local and then global environment for a macro
 ;   null IDENTP name => NIL
@@ -2234,7 +2231,7 @@
 ;   -- $InterpreterMacroAlist will probably be phased out soon
 ;   (sv := assoc(name, $InterpreterMacroAlist)) => CONS(NIL, rest sv)
 ;   NIL
- 
+
 (DEFUN |isInterpMacro| (|name|)
   (PROG (|m| |sv|)
     (RETURN
@@ -2245,7 +2242,7 @@
            ((SETQ |sv| (|assoc| |name| |$InterpreterMacroAlist|))
             (CONS NIL (CDR |sv|)))
            ('T NIL)))))
- 
+
 ; upQUOTE t ==
 ;   t isnt [op,expr] => NIL
 ;   ms:= list
@@ -2256,7 +2253,7 @@
 ;     $OutputForm
 ;   evalQUOTE(op,[expr],ms)
 ;   putModeSet(op,ms)
- 
+
 (DEFUN |upQUOTE| (|t|)
   (PROG (|op| |ISTMP#1| |expr| |m| |ms|)
     (RETURN
@@ -2278,13 +2275,13 @@
                        (#1# |$OutputForm|))))
         (|evalQUOTE| |op| (LIST |expr|) |ms|)
         (|putModeSet| |op| |ms|)))))))
- 
+
 ; evalQUOTE(op,[expr],[m]) ==
 ;   triple:=
 ;     $genValue => objNewWrap(expr,m)
 ;     objNew(['QUOTE,expr],m)
 ;   putValue(op,triple)
- 
+
 (DEFUN |evalQUOTE| (|op| |bfVar#47| |bfVar#48|)
   (PROG (|m| |expr| |triple|)
     (RETURN
@@ -2295,7 +2292,7 @@
               (COND (|$genValue| (|objNewWrap| |expr| |m|))
                     ('T (|objNew| (LIST 'QUOTE |expr|) |m|))))
       (|putValue| |op| |triple|)))))
- 
+
 ; uppretend t ==
 ;   t isnt [op,expr,type] => NIL
 ;   mode := evaluateType unabbrev type
@@ -2303,7 +2300,7 @@
 ;   bottomUp expr
 ;   putValue(op,objNew(objVal getValue expr,mode))
 ;   putModeSet(op,[mode])
- 
+
 (DEFUN |uppretend| (|t|)
   (PROG (|op| |ISTMP#1| |expr| |ISTMP#2| |type| |mode|)
     (RETURN
@@ -2331,7 +2328,7 @@
            (|bottomUp| |expr|)
            (|putValue| |op| (|objNew| (|objVal| (|getValue| |expr|)) |mode|))
            (|putModeSet| |op| (LIST |mode|)))))))))))
- 
+
 ; getReduceFunction(op,type,result, locale) ==
 ;   -- return the function cell for operation with the signature
 ;   --  (type,type) -> type, possible from locale
@@ -2359,7 +2356,7 @@
 ;   env:=
 ;     NRTcompiledLookup(op,sig,dcVector)
 ;   MKQ env
- 
+
 (DEFUN |getReduceFunction| (|op| |type| |result| |locale|)
   (PROG (|ISTMP#1| |var| |arg| |args| |vecOp| |mmS| |sig| |ISTMP#2| |fun|
          |ISTMP#3| |cond| |mm| |dc| |dcVector| |k| |env|)
@@ -2447,24 +2444,24 @@
                    (PROGN
                     (SETQ |env| (|NRTcompiledLookup| |op| |sig| |dcVector|))
                     (MKQ |env|))))))))))))))
- 
+
 ; isHomogeneous sig ==
 ;   --return true if sig describes a homogeneous binary operation
 ;   sig.0=sig.1 and sig.1=sig.2
- 
+
 (DEFUN |isHomogeneous| (|sig|)
   (PROG ()
     (RETURN
      (AND (EQUAL (ELT |sig| 0) (ELT |sig| 1))
           (EQUAL (ELT |sig| 1) (ELT |sig| 2))))))
- 
+
 ; isHomogeneousArgs sig ==
 ;   --return true if sig describes a homogeneous binary operation
 ;   sig.1=sig.2
- 
+
 (DEFUN |isHomogeneousArgs| (|sig|)
   (PROG () (RETURN (EQUAL (ELT |sig| 1) (ELT |sig| 2)))))
- 
+
 ; transformREPEAT [:itrl,body] ==
 ;   -- syntactic transformation of repeat iterators, called from mkAtree2
 ;   iterList:=[:iterTran1 for it in itrl] where iterTran1 ==
@@ -2492,7 +2489,7 @@
 ;     keyedSystemError("S2GE0016",
 ;       ['"transformREPEAT",'"Unknown type of iterator"])
 ;   [:iterList,bodyTree]
- 
+
 (DEFUN |transformREPEAT| (|bfVar#59|)
   (PROG (|LETTMP#1| |body| |itrl| |ISTMP#1| |index| |ISTMP#2| |lower| |ISTMP#3|
          |step| |upperList| |s| |b| |pred| |op| |iterList| |bodyTree|)
@@ -2673,7 +2670,7 @@
                          (SETQ |bfVar#57| (CDR |bfVar#57|))))
                       NIL |itrl| NIL)))
       (APPEND |iterList| (CONS |bodyTree| NIL))))))
- 
+
 ; upREPEAT t ==
 ;   -- REPEATS always return void() of Void
 ;   -- assures throw to interpret-code mode goes to outermost loop
@@ -2683,7 +2680,7 @@
 ;   $iterateCount    : local := 0
 ;   $compilingLoop => upREPEAT1 t
 ;   upREPEAT0 t
- 
+
 (DEFUN |upREPEAT| (|t|)
   (PROG (|$iterateCount| |$repeatBodyLabel| |$breakCount| |$repeatLabel|)
     (DECLARE
@@ -2695,14 +2692,14 @@
       (SETQ |$repeatBodyLabel| (MKQ (GENSYM)))
       (SETQ |$iterateCount| 0)
       (COND (|$compilingLoop| (|upREPEAT1| |t|)) ('T (|upREPEAT0| |t|)))))))
- 
+
 ; upREPEAT0 t ==
 ;   -- sets up catch point for interp-only mode
 ;   $compilingLoop: local := true
 ;   ms := CATCH('loopCompiler,upREPEAT1 t)
 ;   ms = 'tryInterpOnly => interpOnlyREPEAT t
 ;   ms
- 
+
 (DEFUN |upREPEAT0| (|t|)
   (PROG (|$compilingLoop| |ms|)
     (DECLARE (SPECIAL |$compilingLoop|))
@@ -2711,7 +2708,7 @@
       (SETQ |$compilingLoop| T)
       (SETQ |ms| (CATCH '|loopCompiler| (|upREPEAT1| |t|)))
       (COND ((EQ |ms| '|tryInterpOnly|) (|interpOnlyREPEAT| |t|)) ('T |ms|))))))
- 
+
 ; upREPEAT1 t ==
 ;   -- repeat loop handler with compiled body
 ;   -- see if it has the expected form
@@ -2722,23 +2719,23 @@
 ;   repeatMode :=
 ;     null(itrl) and ($breakCount=0) => $Void
 ;     $Void
-; 
+;
 ;   -- if interpreting, go do that
 ;   $interpOnly => interpREPEAT(op,itrl,body,repeatMode)
-; 
+;
 ;   -- analyze iterators and loop body
 ;   upLoopIters itrl
 ;   bottomUpCompile body
-; 
+;
 ;   -- now that the body is analyzed, we should know everything that
 ;   -- is in the UNTIL clause
 ;   for itr in itrl repeat
 ;     itr is ['UNTIL, pred] => bottomUpCompilePredicate(pred,'"until")
-; 
+;
 ;   -- now go do it
 ;   evalREPEAT(op,rest t,repeatMode)
 ;   putModeSet(op,[repeatMode])
- 
+
 (DEFUN |upREPEAT1| (|t|)
   (PROG (|op| |ISTMP#1| |ISTMP#2| |body| |itrl| |repeatMode| |pred|)
     (RETURN
@@ -2786,7 +2783,7 @@
                  |itrl| NIL)
                 (|evalREPEAT| |op| (CDR |t|) |repeatMode|)
                 (|putModeSet| |op| (LIST |repeatMode|)))))))))))
- 
+
 ; evalREPEAT(op,[:itrl,body],repeatMode) ==
 ;   -- generate code for loop
 ;   bodyMode := computedMode body
@@ -2803,7 +2800,7 @@
 ;       objNewWrap(voidValue(),repeatMode)
 ;     objNew(code,repeatMode)
 ;   putValue(op,val)
- 
+
 (DEFUN |evalREPEAT| (|op| |bfVar#63| |repeatMode|)
   (PROG (|LETTMP#1| |body| |itrl| |bodyMode| |bodyCode| |code| |val|)
     (RETURN
@@ -2845,19 +2842,19 @@
                  (|objNewWrap| (|voidValue|) |repeatMode|)))
                (#1# (|objNew| |code| |repeatMode|))))
       (|putValue| |op| |val|)))))
- 
+
 ; interpOnlyREPEAT t ==
 ;   -- interpret-code mode call to upREPEAT
 ;   $genValue: local := true
 ;   $interpOnly: local := true
 ;   upREPEAT1 t
- 
+
 (DEFUN |interpOnlyREPEAT| (|t|)
   (PROG (|$interpOnly| |$genValue|)
     (DECLARE (SPECIAL |$interpOnly| |$genValue|))
     (RETURN
      (PROGN (SETQ |$genValue| T) (SETQ |$interpOnly| T) (|upREPEAT1| |t|)))))
- 
+
 ; interpREPEAT(op,itrl,body,repeatMode) ==
 ;   -- performs interpret-code repeat
 ;   $indexVars: local := NIL
@@ -2871,7 +2868,7 @@
 ;   val:= objNewWrap(voidValue(),repeatMode)
 ;   putValue(op,val)
 ;   putModeSet(op,[repeatMode])
- 
+
 (DEFUN |interpREPEAT| (|op| |itrl| |body| |repeatMode|)
   (PROG (|$indexTypes| |$indexVars| |val| |code|)
     (DECLARE (SPECIAL |$indexTypes| |$indexVars|))
@@ -2902,18 +2899,18 @@
       (SETQ |val| (|objNewWrap| (|voidValue|) |repeatMode|))
       (|putValue| |op| |val|)
       (|putModeSet| |op| (LIST |repeatMode|))))))
- 
+
 ; interpLoop(expr,indexList,indexTypes,requiredType) ==
 ;   -- generates code for interp-only repeat body
 ;   ['interpLoopIter,MKQ expr,MKQ indexList,['LIST,:indexList],
 ;     MKQ indexTypes, MKQ requiredType]
- 
+
 (DEFUN |interpLoop| (|expr| |indexList| |indexTypes| |requiredType|)
   (PROG ()
     (RETURN
      (LIST '|interpLoopIter| (MKQ |expr|) (MKQ |indexList|)
            (CONS 'LIST |indexList|) (MKQ |indexTypes|) (MKQ |requiredType|)))))
- 
+
 ; interpLoopIter(exp,indexList,indexVals,indexTypes,requiredType) ==
 ;   -- call interpreter on exp with loop vars in indexList with given
 ;   --  values and types, requiredType is used from interpCOLLECT
@@ -2929,7 +2926,7 @@
 ;   null val =>
 ;     throwKeyedMsgCannotCoerceWithValue(objVal v,objMode v,requiredType)
 ;   objValUnwrap val
- 
+
 (DEFUN |interpLoopIter|
        (|exp| |indexList| |indexVals| |indexTypes| |requiredType|)
   (PROG (|v| |val|)
@@ -2958,7 +2955,7 @@
         (|throwKeyedMsgCannotCoerceWithValue| (|objVal| |v|) (|objMode| |v|)
          |requiredType|))
        (#1# (|objValUnwrap| |val|)))))))
- 
+
 ; upreturn t ==
 ;   -- make sure we are in a user function
 ;   t isnt [op,val] => NIL
@@ -2980,7 +2977,7 @@
 ;   $genValue => THROW(cn,objNewWrap(removeQuote val',m))
 ;   putValue(op,objNew(['THROW,MKQ cn,val'],m))
 ;   putModeSet(op,[$Exit])
- 
+
 (DEFUN |upreturn| (|t|)
   (PROG (|op| |ISTMP#1| |val| |val'| |m| |cn|)
     (RETURN
@@ -3013,7 +3010,7 @@
           (PROGN
            (|putValue| |op| (|objNew| (LIST 'THROW (MKQ |cn|) |val'|) |m|))
            (|putModeSet| |op| (LIST |$Exit|)))))))))))
- 
+
 ; upSEQ u ==
 ;   -- assumes that exits were translated into if-then-elses
 ;   -- handles flat SEQs and embedded returns
@@ -3025,7 +3022,7 @@
 ;       '"last line of SEQ has no mode"])
 ;   evalSEQ(op,args,m)
 ;   putModeSet(op,[m])
- 
+
 (DEFUN |upSEQ| (|u|)
   (PROG (|op| |args| |target| |m|)
     (RETURN
@@ -3055,7 +3052,7 @@
           (PROGN
            (|evalSEQ| |op| |args| |m|)
            (|putModeSet| |op| (LIST |m|)))))))))))
- 
+
 ; evalSEQ(op,args,m) ==
 ;   -- generate code for SEQ
 ;   [:argl,last] := args
@@ -3071,7 +3068,7 @@
 ;       ['PROGN,:reverse bodyCode]
 ;     objNew(code,m)
 ;   putValue(op,val)
- 
+
 (DEFUN |evalSEQ| (|op| |args| |m|)
   (PROG (|LETTMP#1| |last| |argl| |bodyCode| |m1| |av| |c| |code| |val|)
     (RETURN
@@ -3112,7 +3109,7 @@
                                (#1# (CONS 'PROGN (REVERSE |bodyCode|)))))
                       (|objNew| |code| |m|)))))
       (|putValue| |op| |val|)))))
- 
+
 ; upTuple t ==
 ;   --Computes the common mode set of the construct by resolving across
 ;   --the argument list, and evaluating
@@ -3136,7 +3133,7 @@
 ;   else mode := ['Tuple, resolveTypeListAny eltTypes]
 ;   if isPartialMode tar then tar:=resolveTM(mode,tar)
 ;   evalTuple(op,l,mode,tar)
- 
+
 (DEFUN |upTuple| (|t|)
   (PROG (|op| |l| |dol| |tar| |aggs| |ud| |vec| |argModeSetList| |eltTypes|
          |ISTMP#1| |mode|)
@@ -3233,7 +3230,7 @@
                  ((|isPartialMode| |tar|)
                   (SETQ |tar| (|resolveTM| |mode| |tar|))))
                 (|evalTuple| |op| |l| |mode| |tar|))))))))))
- 
+
 ; evalTuple(op,l,m,tar) ==
 ;   [agg,:.,underMode]:= m
 ;   code := asTupleNewCode(#l,
@@ -3242,13 +3239,13 @@
 ;     $genValue => objNewWrap(timedEVALFUN code,m)
 ;     objNew(code,m)
 ;   if tar then val1 := coerceInteractive(val,tar) else val1 := val
-; 
+;
 ;   val1 =>
 ;     putValue(op,val1)
 ;     putModeSet(op,[tar or m])
 ;   putValue(op,val)
 ;   putModeSet(op,[m])
- 
+
 (DEFUN |evalTuple| (|op| |l| |m| |tar|)
   (PROG (|agg| |LETTMP#1| |underMode| |code| |val| |val1|)
     (RETURN
@@ -3284,7 +3281,7 @@
          (|putValue| |op| |val1|)
          (|putModeSet| |op| (LIST (OR |tar| |m|)))))
        (#1# (PROGN (|putValue| |op| |val|) (|putModeSet| |op| (LIST |m|)))))))))
- 
+
 ; upNullTuple(op,l,tar) ==
 ;   -- handler for the empty tuple
 ;   defMode :=
@@ -3299,7 +3296,7 @@
 ;     putModeSet(op,[tar])
 ;   putValue(op,val)
 ;   putModeSet(op,[defMode])
- 
+
 (DEFUN |upNullTuple| (|op| |l| |tar|)
   (PROG (|a| |ISTMP#1| |b| |defMode| |val| |val'|)
     (RETURN
@@ -3328,7 +3325,7 @@
         (PROGN
          (|putValue| |op| |val|)
          (|putModeSet| |op| (LIST |defMode|)))))))))
- 
+
 ; uptypeOf form ==
 ;   form isnt [op, arg] => NIL
 ;   if VECP arg then transferPropsToNode(getUnname arg,arg)
@@ -3341,7 +3338,7 @@
 ;   t := typeOfType m
 ;   putValue(op, objNew(m,t))
 ;   putModeSet(op,[t])
- 
+
 (DEFUN |uptypeOf| (|form|)
   (PROG (|op| |ISTMP#1| |arg| |m| |LETTMP#1| |t|)
     (RETURN
@@ -3368,17 +3365,17 @@
         (SETQ |t| (|typeOfType| |m|))
         (|putValue| |op| (|objNew| |m| |t|))
         (|putModeSet| |op| (LIST |t|))))))))
- 
+
 ; typeOfType type ==
 ;   type in '((Mode) (Type)) => '(Category)
 ;   '(Type)
- 
+
 (DEFUN |typeOfType| (|type|)
   (PROG ()
     (RETURN
      (COND ((|member| |type| '((|Mode|) (|Type|))) '(|Category|))
            ('T '(|Type|))))))
- 
+
 ; upwhere t ==
 ;   -- upwhere does the puts in where into a local environment
 ;   t isnt [op,tree,clause] => NIL
@@ -3398,9 +3395,9 @@
 ;   putValue(op,val)
 ;   result := putModeSet(op,getModeSet tree)
 ;   wcl := [op for op in $whereCacheList]
-;   for op in wcl repeat clearDependencies(op,'T)
+;   for op in wcl repeat clearDependencies(op)
 ;   result
- 
+
 (DEFUN |upwhere| (|t|)
   (PROG (|$whereCacheList| |wcl| |result| |val| |x| |e| |env| |LETTMP#1|
          |clause| |ISTMP#2| |tree| |ISTMP#1| |op|)
@@ -3453,11 +3450,11 @@
             (COND
              ((OR (ATOM |bfVar#81|) (PROGN (SETQ |op| (CAR |bfVar#81|)) NIL))
               (RETURN NIL))
-             (#1# (|clearDependencies| |op| 'T)))
+             (#1# (|clearDependencies| |op|)))
             (SETQ |bfVar#81| (CDR |bfVar#81|))))
          |wcl| NIL)
         |result|))))))
- 
+
 ; upwhereClause(tree,env,e) ==
 ;   -- uses the variable bindings from env and e and returns an environment
 ;   -- of its own bindings
@@ -3465,7 +3462,7 @@
 ;   $e: local := copyHack e
 ;   bottomUp tree
 ;   [$env,:$e]
- 
+
 (DEFUN |upwhereClause| (|tree| |env| |e|)
   (PROG (|$e| |$env|)
     (DECLARE (SPECIAL |$e| |$env|))
@@ -3475,21 +3472,21 @@
       (SETQ |$e| (|copyHack| |e|))
       (|bottomUp| |tree|)
       (CONS |$env| |$e|)))))
- 
+
 ; upwhereMkAtree(tree,$env,$e) == mkAtree tree
- 
+
 (DEFUN |upwhereMkAtree| (|tree| |$env| |$e|)
   (DECLARE (SPECIAL |$env| |$e|))
   (PROG () (RETURN (|mkAtree| |tree|))))
- 
+
 ; upwhereMain(tree,$env,$e) ==
 ;   -- uses local copies of $env and $e while evaluating tree
 ;   bottomUp tree
- 
+
 (DEFUN |upwhereMain| (|tree| |$env| |$e|)
   (DECLARE (SPECIAL |$env| |$e|))
   (PROG () (RETURN (|bottomUp| |tree|))))
- 
+
 ; copyHack(env) ==
 ;   -- makes a copy of an environment with the exception of pairs
 ;   -- (localModemap . something)
@@ -3497,7 +3494,7 @@
 ;   d:= [fn p for p in c] where fn(p) ==
 ;     CONS(first p, [(EQCAR(q, 'localModemap) => q; copy q) for q in rest p])
 ;   [[d]]
- 
+
 (DEFUN |copyHack| (|env|)
   (PROG (|c| |d|)
     (RETURN
@@ -3532,14 +3529,14 @@
                           |bfVar#85|))))
                (SETQ |bfVar#84| (CDR |bfVar#84|))))
             NIL (CDR |p|) NIL)))))
- 
+
 ; for name in $specialOps repeat
 ;     (
-;       functionName:=INTERNL('up,name) ;
+;       functionName := INTERNL1('up, name) ;
 ;       MAKEPROP(name,'up,functionName) ;
 ;       functionName
 ;      )
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (PROG (|functionName|)
     (RETURN
@@ -3550,7 +3547,7 @@
            (RETURN NIL))
           ('T
            (PROGN
-            (SETQ |functionName| (INTERNL '|up| |name|))
+            (SETQ |functionName| (INTERNL1 '|up| |name|))
             (MAKEPROP |name| '|up| |functionName|)
             |functionName|)))
          (SETQ |bfVar#86| (CDR |bfVar#86|))))

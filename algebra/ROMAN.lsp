@@ -1,45 +1,44 @@
 
-(SDEFUN |ROMAN;roman;I$;1| ((|n| |Integer|) ($ $)) (SPADCALL |n| (QREFELT $ 6))) 
+(SDEFUN |ROMAN;roman;I$;1| ((|n| (|Integer|)) ($ ($)))
+        (SPADCALL |n| (QREFELT $ 6))) 
 
-(SDEFUN |ROMAN;roman;S$;2| ((|sy| |Symbol|) ($ $))
+(SDEFUN |ROMAN;roman;S$;2| ((|sy| (|Symbol|)) ($ ($)))
         (SPADCALL |sy| (QREFELT $ 9))) 
 
-(SDEFUN |ROMAN;convert;S$;3| ((|sy| |Symbol|) ($ $))
+(SDEFUN |ROMAN;convert;S$;3| ((|sy| (|Symbol|)) ($ ($)))
         (SPADCALL (SPADCALL (SPADCALL |sy| (QREFELT $ 12)) (QREFELT $ 15))
                   (QREFELT $ 6))) 
 
-(SDEFUN |ROMAN;coerce;$Of;4| ((|r| $) ($ |OutputForm|))
-        (SPROG ((#1=#:G724 NIL) (|n| (|Integer|)))
-               (SEQ
-                (LETT |n| (SPADCALL |r| (QREFELT $ 16))
-                      . #2=(|ROMAN;coerce;$Of;4|))
-                (EXIT
-                 (COND ((ZEROP |n|) (SPADCALL |n| (QREFELT $ 18)))
-                       ((MINUSP |n|)
-                        (SPADCALL
-                         (SPADCALL (SPADCALL |r| (QREFELT $ 19))
-                                   (QREFELT $ 20))
-                         (QREFELT $ 21)))
-                       ('T
-                        (SPADCALL
-                         (SPADCALL
-                          (SPADCALL
-                           (PROG1 (LETT #1# |n| . #2#)
-                             (|check_subtype2| (> #1# 0) '(|PositiveInteger|)
-                                               '(|Integer|) #1#))
-                           (QREFELT $ 22))
-                          (QREFELT $ 23))
-                         (QREFELT $ 24)))))))) 
+(SDEFUN |ROMAN;coerce;$Of;4| ((|r| ($)) ($ (|OutputForm|)))
+        (SPROG ((#1=#:G719 NIL) (|n| (|Integer|)))
+               (SEQ (LETT |n| (SPADCALL |r| (QREFELT $ 16)))
+                    (EXIT
+                     (COND ((ZEROP |n|) (SPADCALL |n| (QREFELT $ 18)))
+                           ((MINUSP |n|)
+                            (SPADCALL
+                             (SPADCALL (SPADCALL |r| (QREFELT $ 19))
+                                       (QREFELT $ 20))
+                             (QREFELT $ 21)))
+                           ('T
+                            (SPADCALL
+                             (SPADCALL
+                              (SPADCALL
+                               (PROG1 (LETT #1# |n|)
+                                 (|check_subtype2| (> #1# 0)
+                                                   '(|PositiveInteger|)
+                                                   '(|Integer|) #1#))
+                               (QREFELT $ 22))
+                              (QREFELT $ 23))
+                             (QREFELT $ 24)))))))) 
 
 (DECLAIM (NOTINLINE |RomanNumeral;|)) 
 
 (DEFUN |RomanNumeral| ()
   (SPROG NIL
-         (PROG (#1=#:G769)
+         (PROG (#1=#:G764)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|RomanNumeral|)
-                    . #2=(|RomanNumeral|))
+             ((LETT #1# (HGET |$ConstructorCache| '|RomanNumeral|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -47,17 +46,17 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|RomanNumeral|
                              (LIST (CONS NIL (CONS 1 (|RomanNumeral;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#) (HREM |$ConstructorCache| '|RomanNumeral|)))))))))) 
 
 (DEFUN |RomanNumeral;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|RomanNumeral|) . #1=(|RomanNumeral|))
-          (LETT $ (GETREFV 49) . #1#)
+          (LETT |dv$| '(|RomanNumeral|))
+          (LETT $ (GETREFV 49))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|RomanNumeral| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))
@@ -109,7 +108,7 @@
             (|makeByteWordVec2| 1
                                 '(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
                                   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-                                  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0))
+                                  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0))
             (CONS
              '#(|IntegerNumberSystem&| |EuclideanDomain&|
                 |UniqueFactorizationDomain&| NIL NIL |GcdDomain&| NIL
@@ -118,8 +117,8 @@
                 |NonAssociativeRing&| NIL NIL |NonAssociativeRng&| NIL NIL
                 |AbelianGroup&| NIL NIL NIL NIL |OrderedSet&| NIL
                 |MagmaWithUnit&| |NonAssociativeSemiRng&| |AbelianMonoid&| NIL
-                NIL NIL |Magma&| |AbelianSemiGroup&| NIL |SetCategory&| NIL NIL
-                NIL NIL NIL NIL NIL NIL NIL |RetractableTo&| NIL
+                NIL NIL |Magma&| |AbelianSemiGroup&| NIL |RetractableTo&| NIL
+                |SetCategory&| NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL
                 |PartialOrder&| NIL NIL NIL |BasicType&| NIL)
              (CONS
               '#((|IntegerNumberSystem|) (|EuclideanDomain|)
@@ -137,13 +136,14 @@
                  (|OrderedSet|) (|SemiGroup|) (|MagmaWithUnit|)
                  (|NonAssociativeSemiRng|) (|AbelianMonoid|) (|StepThrough|)
                  (|PatternMatchable| 5) (|Comparable|) (|Magma|)
-                 (|AbelianSemiGroup|) (|RealConstant|) (|SetCategory|)
-                 (|canonicalsClosed|) (|Canonical|) (|multiplicativeValuation|)
+                 (|AbelianSemiGroup|) (|RealConstant|) (|RetractableTo| 5)
+                 (|CommutativeStar|) (|SetCategory|) (|canonicalsClosed|)
+                 (|Canonical|) (|multiplicativeValuation|)
                  (|canonicalUnitNormal|) (|ConvertibleTo| 29)
                  (|ConvertibleTo| 30) (|CombinatorialFunctionCategory|)
-                 (|ConvertibleTo| 31) (|ConvertibleTo| 33) (|RetractableTo| 5)
+                 (|ConvertibleTo| 31) (|ConvertibleTo| 33) (|CoercibleFrom| 5)
                  (|ConvertibleTo| 5) (|PartialOrder|) (|noZeroDivisors|)
-                 (|CommutativeStar|) (|unitsKnown|) (|BasicType|)
+                 (|TwoSidedRecip|) (|unitsKnown|) (|BasicType|)
                  (|CoercibleTo| 17))
               (|makeByteWordVec2| 48
                                   '(1 0 0 5 6 1 8 11 0 12 1 14 13 11 15 1 0 5 0

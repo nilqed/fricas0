@@ -4,14 +4,13 @@
 (DEFPARAMETER |FieldOfPrimeCharacteristic;AL| 'NIL) 
 
 (DEFUN |FieldOfPrimeCharacteristic| ()
-  (LET (#:G692)
-    (COND (|FieldOfPrimeCharacteristic;AL|)
-          (T
-           (SETQ |FieldOfPrimeCharacteristic;AL|
-                   (|FieldOfPrimeCharacteristic;|)))))) 
+  (COND (|FieldOfPrimeCharacteristic;AL|)
+        (T
+         (SETQ |FieldOfPrimeCharacteristic;AL|
+                 (|FieldOfPrimeCharacteristic;|))))) 
 
 (DEFUN |FieldOfPrimeCharacteristic;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G689 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|Field|) (|CharacteristicNonZero|)
@@ -26,11 +25,7 @@
                               ((|primeFrobenius| ($ $)) T)
                               ((|primeFrobenius| ($ $ (|NonNegativeInteger|)))
                                T))
-                            NIL
-                            '((|NonNegativeInteger|)
-                              (|OnePointCompletion| (|PositiveInteger|)))
-                            NIL))
-                   |FieldOfPrimeCharacteristic|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|FieldOfPrimeCharacteristic|))))) 
 
 (MAKEPROP '|FieldOfPrimeCharacteristic| 'NILADIC T) 

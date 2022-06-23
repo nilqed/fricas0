@@ -1,36 +1,36 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; hashCode? x == INTEGERP x
- 
+
 (DEFUN |hashCode?| (|x|) (PROG () (RETURN (INTEGERP |x|))))
- 
+
 ; $domainTypeTokens := ['lazyOldAxiomDomain, 'oldAxiomDomain, 'oldAxiomPreCategory,
 ;            'oldAxiomCategory, 0]
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$domainTypeTokens|
           (LIST '|lazyOldAxiomDomain| '|oldAxiomDomain| '|oldAxiomPreCategory|
                 '|oldAxiomCategory| 0)))
- 
+
 ; DNameStringID := 0
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |DNameStringID| 0))
- 
+
 ; DNameApplyID  := 1
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |DNameApplyID| 1))
- 
+
 ; DNameTupleID  := 2
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |DNameTupleID| 2))
- 
+
 ; DNameOtherID  := 3
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |DNameOtherID| 3))
- 
+
 ; DNameToSExpr1 dname ==
 ;   NULL dname => error "unexpected domain name"
 ;   first dname = DNameStringID =>
@@ -49,7 +49,7 @@
 ;   name0 = 'Enumeration =>
 ;     CONS(name0, MAPCAR(function DNameFixEnum, rest first args))
 ;   CONS(name0, MAPCAR(function DNameToSExpr, args))
- 
+
 (DEFUN |DNameToSExpr1| (|dname|)
   (PROG (|name0| |args| |froms| |ret| |sxs|)
     (RETURN
@@ -75,14 +75,14 @@
               ((EQ |name0| '|Enumeration|)
                (CONS |name0| (MAPCAR #'|DNameFixEnum| (CDR (CAR |args|)))))
               (#1# (CONS |name0| (MAPCAR #'|DNameToSExpr| |args|))))))))))
- 
+
 ; DNameToSExpr dname ==
 ;   first dname = DNameOtherID  =>
 ;         rest dname
 ;   sx := DNameToSExpr1 dname
 ;   CONSP sx => sx
 ;   LIST sx
- 
+
 (DEFUN |DNameToSExpr| (|dname|)
   (PROG (|sx|)
     (RETURN
@@ -91,12 +91,12 @@
             (PROGN
              (SETQ |sx| (|DNameToSExpr1| |dname|))
              (COND ((CONSP |sx|) |sx|) (#1# (LIST |sx|)))))))))
- 
+
 ; DNameFixEnum arg == CompStrToString rest arg
- 
+
 (DEFUN |DNameFixEnum| (|arg|)
   (PROG () (RETURN (|CompStrToString| (CDR |arg|)))))
- 
+
 ; SExprToDName(sexpr, cosigVal) ==
 ;   -- is it a non-type valued object?
 ;   NOT cosigVal => [DNameOtherID, :sexpr]
@@ -114,7 +114,7 @@
 ;   newCosig := rest GETDATABASE(first sexpr, QUOTE COSIG)
 ;   [DNameApplyID, name0,
 ;     :MAPCAR(function SExprToDName, rest sexpr, newCosig)]
- 
+
 (DEFUN |SExprToDName| (|sexpr| |cosigVal|)
   (PROG (|args| |name0| |newCosig|)
     (RETURN
@@ -174,26 +174,26 @@
                          (CONS |name0|
                                (MAPCAR #'|SExprToDName| (CDR |sexpr|)
                                        |newCosig|)))))))))))))))
- 
+
 ; StringToCompStr(str) ==
 ;    CONCATENATE(QUOTE STRING, str, STRING (CODE_-CHAR 0))
- 
+
 (DEFUN |StringToCompStr| (|str|)
   (PROG () (RETURN (CONCATENATE 'STRING |str| (STRING (CODE-CHAR 0))))))
- 
+
 ; CompStrToString(str) ==
 ;    SUBSTRING(str, 0, (LENGTH str - 1))
- 
+
 (DEFUN |CompStrToString| (|str|)
   (PROG () (RETURN (SUBSTRING |str| 0 (- (LENGTH |str|) 1)))))
- 
+
 ; runOldAxiomFunctor(:allArgs) ==
 ;   [:args,env] := allArgs
 ;   GETDATABASE(env, 'CONSTRUCTORKIND) = 'category =>
 ;       [$oldAxiomPreCategoryDispatch,: [env, :args]]
 ;   dom:=APPLY(env, args)
 ;   makeOldAxiomDispatchDomain dom
- 
+
 (DEFUN |runOldAxiomFunctor| (&REST |allArgs|)
   (PROG (|LETTMP#1| |env| |args| |dom|)
     (RETURN
@@ -208,14 +208,14 @@
         (PROGN
          (SETQ |dom| (APPLY |env| |args|))
          (|makeOldAxiomDispatchDomain| |dom|))))))))
- 
+
 ; makeLazyOldAxiomDispatchDomain domform ==
 ;   GETDATABASE(opOf domform, 'CONSTRUCTORKIND) = 'category =>
 ;       [$oldAxiomPreCategoryDispatch,: domform]
 ;   dd := [$lazyOldAxiomDomainDispatch, hashTypeForm(domform,0), domform]
 ;   NCONC(dd,dd) -- installs back pointer to head of domain.
 ;   dd
- 
+
 (DEFUN |makeLazyOldAxiomDispatchDomain| (|domform|)
   (PROG (|dd|)
     (RETURN
@@ -229,11 +229,11 @@
                       (|hashTypeForm| |domform| 0) |domform|))
         (NCONC |dd| |dd|)
         |dd|))))))
- 
+
 ; makeOldAxiomDispatchDomain dom ==
 ;   PAIRP dom => dom
 ;   [$oldAxiomDomainDispatch,hashTypeForm(dom.0,0),:dom]
- 
+
 (DEFUN |makeOldAxiomDispatchDomain| (|dom|)
   (PROG ()
     (RETURN
@@ -241,17 +241,17 @@
            ('T
             (CONS |$oldAxiomDomainDispatch|
                   (CONS (|hashTypeForm| (ELT |dom| 0) 0) |dom|)))))))
- 
+
 ; closeOldAxiomFunctor(name) ==
 ;    [function runOldAxiomFunctor,:SYMBOL_-FUNCTION name]
- 
+
 (DEFUN |closeOldAxiomFunctor| (|name|)
   (PROG () (RETURN (CONS #'|runOldAxiomFunctor| (SYMBOL-FUNCTION |name|)))))
- 
+
 ; lazyOldAxiomDomainLookupExport(domenv, self, op, sig, box, skipdefaults, env) ==
 ;   dom := instantiate domenv
 ;   SPADCALL(rest dom, self, op, sig, box, skipdefaults, (first dom).3)
- 
+
 (DEFUN |lazyOldAxiomDomainLookupExport|
        (|domenv| |self| |op| |sig| |box| |skipdefaults| |env|)
   (PROG (|dom|)
@@ -260,29 +260,29 @@
       (SETQ |dom| (|instantiate| |domenv|))
       (SPADCALL (CDR |dom|) |self| |op| |sig| |box| |skipdefaults|
        (ELT (CAR |dom|) 3))))))
- 
+
 ; lazyOldAxiomDomainHashCode(domenv, env) == first domenv
- 
+
 (DEFUN |lazyOldAxiomDomainHashCode| (|domenv| |env|)
   (PROG () (RETURN (CAR |domenv|))))
- 
+
 ; lazyOldAxiomDomainDevaluate(domenv, env) ==
 ;   dom := instantiate domenv
 ;   SPADCALL(rest dom, (first dom).1)
- 
+
 (DEFUN |lazyOldAxiomDomainDevaluate| (|domenv| |env|)
   (PROG (|dom|)
     (RETURN
      (PROGN
       (SETQ |dom| (|instantiate| |domenv|))
       (SPADCALL (CDR |dom|) (ELT (CAR |dom|) 1))))))
- 
+
 ; lazyOldAxiomAddChild(domenv, kid, env) ==
 ;   CONS($lazyOldAxiomDomainDispatch,domenv)
- 
+
 (DEFUN |lazyOldAxiomAddChild| (|domenv| |kid| |env|)
   (PROG () (RETURN (CONS |$lazyOldAxiomDomainDispatch| |domenv|))))
- 
+
 ; $lazyOldAxiomDomainDispatch :=
 ;    VECTOR('lazyOldAxiomDomain,
 ;           [function lazyOldAxiomDomainDevaluate],
@@ -290,19 +290,19 @@
 ;           [function lazyOldAxiomDomainLookupExport],
 ;           [function lazyOldAxiomDomainHashCode],
 ;           [function lazyOldAxiomAddChild])
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$lazyOldAxiomDomainDispatch|
           (VECTOR '|lazyOldAxiomDomain| (LIST #'|lazyOldAxiomDomainDevaluate|)
                   (LIST NIL) (LIST #'|lazyOldAxiomDomainLookupExport|)
                   (LIST #'|lazyOldAxiomDomainHashCode|)
                   (LIST #'|lazyOldAxiomAddChild|))))
- 
+
 ; oldAxiomPreCategoryBuild(catform, dom, env) ==
 ;    pack := oldAxiomCategoryDefaultPackage(catform, dom)
 ;    CONS($oldAxiomCategoryDispatch,
 ;        [catform, hashTypeForm(catform,0), pack, oldAxiomPreCategoryParents(catform,dom), dom])
- 
+
 (DEFUN |oldAxiomPreCategoryBuild| (|catform| |dom| |env|)
   (PROG (|pack|)
     (RETURN
@@ -311,21 +311,21 @@
       (CONS |$oldAxiomCategoryDispatch|
             (LIST |catform| (|hashTypeForm| |catform| 0) |pack|
                   (|oldAxiomPreCategoryParents| |catform| |dom|) |dom|))))))
- 
+
 ; oldAxiomPreCategoryHashCode(catform, env) == hashTypeForm(catform,0)
- 
+
 (DEFUN |oldAxiomPreCategoryHashCode| (|catform| |env|)
   (PROG () (RETURN (|hashTypeForm| |catform| 0))))
- 
+
 ; oldAxiomCategoryDefaultPackage(catform, dom) ==
 ;     hasDefaultPackage opOf catform
- 
+
 (DEFUN |oldAxiomCategoryDefaultPackage| (|catform| |dom|)
   (PROG () (RETURN (|hasDefaultPackage| (|opOf| |catform|)))))
- 
+
 ; oldAxiomPreCategoryDevaluate([op,:args], env) ==
 ;    SExprToDName([op,:devaluateList args], T)
- 
+
 (DEFUN |oldAxiomPreCategoryDevaluate| (|bfVar#5| |env|)
   (PROG (|op| |args|)
     (RETURN
@@ -333,10 +333,10 @@
       (SETQ |op| (CAR |bfVar#5|))
       (SETQ |args| (CDR |bfVar#5|))
       (|SExprToDName| (CONS |op| (|devaluateList| |args|)) T$)))))
- 
+
 ; oldAxiomCategoryDevaluate([[op,:args],:.], env) ==
 ;   SExprToDName([op,:devaluateList args], T)
- 
+
 (DEFUN |oldAxiomCategoryDevaluate| (|bfVar#6| |env|)
   (PROG (|op| |args|)
     (RETURN
@@ -344,7 +344,7 @@
       (SETQ |op| (CAAR . #1=(|bfVar#6|)))
       (SETQ |args| (CDAR . #1#))
       (|SExprToDName| (CONS |op| (|devaluateList| |args|)) T$)))))
- 
+
 ; $oldAxiomPreCategoryDispatch :=
 ;    VECTOR('oldAxiomPreCategory,
 ;           [function oldAxiomPreCategoryDevaluate],
@@ -353,14 +353,14 @@
 ;           [function oldAxiomPreCategoryHashCode],
 ;           [function oldAxiomPreCategoryBuild],
 ;           [nil])
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$oldAxiomPreCategoryDispatch|
           (VECTOR '|oldAxiomPreCategory|
                   (LIST #'|oldAxiomPreCategoryDevaluate|) (LIST NIL) (LIST NIL)
                   (LIST #'|oldAxiomPreCategoryHashCode|)
                   (LIST #'|oldAxiomPreCategoryBuild|) (LIST NIL))))
- 
+
 ; oldAxiomPreCategoryParents(catform,dom) ==
 ;   vars := ["$",:rest GETDATABASE(opOf catform, 'CONSTRUCTORFORM)]
 ;   vals := [dom,:rest catform]
@@ -378,7 +378,7 @@
 ;         filteredParents=[[cat,:pred], :filteredParents]
 ;   PROGV(vars, vals,
 ;      LIST2VEC [EVAL quoteCatOp cat for [cat,:pred] in filteredParents | EVAL pred])
- 
+
 (DEFUN |oldAxiomPreCategoryParents| (|catform| |dom|)
   (PROG (|vars| |vals| |parents| |unconditionalParents| |filteredParents| |cat|
          |pred|)
@@ -450,17 +450,17 @@
                             (CONS (EVAL (|quoteCatOp| |cat|)) |bfVar#13|)))))
              (SETQ |bfVar#12| (CDR |bfVar#12|))))
           NIL |filteredParents| NIL)))))))
- 
+
 ; quoteCatOp cat ==
 ;    atom cat => MKQ cat
 ;    ['LIST, MKQ first cat, :rest cat]
- 
+
 (DEFUN |quoteCatOp| (|cat|)
   (PROG ()
     (RETURN
      (COND ((ATOM |cat|) (MKQ |cat|))
            ('T (CONS 'LIST (CONS (MKQ (CAR |cat|)) (CDR |cat|))))))))
- 
+
 ; oldAxiomCategoryLookupExport(catenv, self, op, sig, box, env) ==
 ;    [catform,hash, pack,:.] := catenv
 ;    opIsHasCat op => if EQL(sig, hash) then [self] else nil
@@ -470,7 +470,7 @@
 ;        RPLACA(CDDR catenv, pack)
 ;    fun := basicLookup(op, sig, pack, self) => [fun]
 ;    nil
- 
+
 (DEFUN |oldAxiomCategoryLookupExport| (|catenv| |self| |op| |sig| |box| |env|)
   (PROG (|catform| |hash| |pack| |fun|)
     (RETURN
@@ -491,20 +491,20 @@
          (COND
           ((SETQ |fun| (|basicLookup| |op| |sig| |pack| |self|)) (LIST |fun|))
           (#2# NIL)))))))))
- 
+
 ; oldAxiomCategoryParentCount([.,.,.,parents,.], env) == LENGTH parents
- 
+
 (DEFUN |oldAxiomCategoryParentCount| (|bfVar#14| |env|)
   (PROG (|parents|)
     (RETURN (PROGN (SETQ |parents| (CADDDR |bfVar#14|)) (LENGTH |parents|)))))
- 
+
 ; oldAxiomCategoryNthParent([.,.,.,parvec,dom], n, env) ==
 ;   catform := ELT(parvec, n-1)
 ;   VECTORP IFCAR catform => catform
 ;   newcat := oldAxiomPreCategoryBuild(catform,dom,nil)
 ;   SETELT(parvec, n-1, newcat)
 ;   newcat
- 
+
 (DEFUN |oldAxiomCategoryNthParent| (|bfVar#15| |n| |env|)
   (PROG (|parvec| |dom| |catform| |newcat|)
     (RETURN
@@ -518,22 +518,22 @@
               (SETQ |newcat| (|oldAxiomPreCategoryBuild| |catform| |dom| NIL))
               (SETELT |parvec| (- |n| 1) |newcat|)
               |newcat|)))))))
- 
+
 ; oldAxiomCategoryBuild([catform,:.], dom, env) ==
 ;   oldAxiomPreCategoryBuild(catform,dom, env)
- 
+
 (DEFUN |oldAxiomCategoryBuild| (|bfVar#16| |dom| |env|)
   (PROG (|catform|)
     (RETURN
      (PROGN
       (SETQ |catform| (CAR |bfVar#16|))
       (|oldAxiomPreCategoryBuild| |catform| |dom| |env|)))))
- 
+
 ; oldAxiomCategoryHashCode([.,hash,:.], env) == hash
- 
+
 (DEFUN |oldAxiomCategoryHashCode| (|bfVar#17| |env|)
   (PROG (|hash|) (RETURN (PROGN (SETQ |hash| (CADR |bfVar#17|)) |hash|))))
- 
+
 ; $oldAxiomCategoryDispatch :=
 ;    VECTOR('oldAxiomCategory,
 ;           [function oldAxiomCategoryDevaluate],
@@ -543,7 +543,7 @@
 ;           [function oldAxiomCategoryBuild], -- builder ??
 ;           [function oldAxiomCategoryParentCount],
 ;           [function oldAxiomCategoryNthParent]) -- 1 indexed
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$oldAxiomCategoryDispatch|
           (VECTOR '|oldAxiomCategory| (LIST #'|oldAxiomCategoryDevaluate|)
@@ -552,7 +552,7 @@
                   (LIST #'|oldAxiomCategoryBuild|)
                   (LIST #'|oldAxiomCategoryParentCount|)
                   (LIST #'|oldAxiomCategoryNthParent|))))
- 
+
 ; instantiate domenv ==
 ;    -- following is a patch for a bug in runtime.as
 ;    -- has a lazy dispatch vector with an instantiated domenv
@@ -571,7 +571,7 @@
 ;   RPLACA(oldDom, $oldAxiomDomainDispatch)
 ;   RPLACD(oldDom, [CADR oldDom,: domvec])
 ;   oldDom
- 
+
 (DEFUN |instantiate| (|domenv|)
   (PROG (|callForm| |oldDom| |functor| |args| |domvec|)
     (RETURN
@@ -586,10 +586,10 @@
              (RPLACA |oldDom| |$oldAxiomDomainDispatch|)
              (RPLACD |oldDom| (CONS (CADR |oldDom|) |domvec|))
              |oldDom|))))))
- 
+
 ; hashTypeForm([fn,: args], percentHash) ==
 ;    hashType([fn,:devaluateList args], percentHash)
- 
+
 (DEFUN |hashTypeForm| (|bfVar#18| |percentHash|)
   (PROG (|fn| |args|)
     (RETURN
@@ -597,7 +597,7 @@
       (SETQ |fn| (CAR |bfVar#18|))
       (SETQ |args| (CDR |bfVar#18|))
       (|hashType| (CONS |fn| (|devaluateList| |args|)) |percentHash|)))))
- 
+
 ; devaluate(d) ==
 ;   isDomain d =>
 ;       -- ?need a shortcut for old domains
@@ -611,7 +611,7 @@
 ;     isFunctor d' => d'
 ;     d
 ;   d
- 
+
 (DEFUN |devaluate| (|d|)
   (PROG (|ISTMP#1| |d'|)
     (RETURN
@@ -630,9 +630,9 @@
         (SETQ |d'| (QREFELT |d| 0))
         (COND ((|isFunctor| |d'|) |d'|) (#1='T |d|))))
       (#1# |d|)))))
- 
+
 ; devaluateList l == [devaluate d for d in l]
- 
+
 (DEFUN |devaluateList| (|l|)
   (PROG ()
     (RETURN
@@ -644,31 +644,31 @@
           ('T (SETQ |bfVar#20| (CONS (|devaluate| |d|) |bfVar#20|))))
          (SETQ |bfVar#19| (CDR |bfVar#19|))))
       NIL |l| NIL))))
- 
+
 ; $hashOp1 := hashString '"1"
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$hashOp1| (|hashString| "1")))
- 
+
 ; $hashOp0 := hashString '"0"
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$hashOp0| (|hashString| "0")))
- 
+
 ; $hashOpApply := hashString '"apply"
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$hashOpApply| (|hashString| "apply")))
- 
+
 ; $hashOpSet := hashString '"set!"
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$hashOpSet| (|hashString| "set!")))
- 
+
 ; $hashSeg := hashString '".."
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$hashSeg| (|hashString| "..")))
- 
+
 ; $hashPercent := hashString '"%"
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$hashPercent| (|hashString| "%")))
- 
+
 ; oldAxiomDomainLookupExport _
 ;   (domenv, self, op, sig, box, skipdefaults, env) ==
 ;      domainVec := rest domenv
@@ -690,7 +690,7 @@
 ;      if constant then val := SPADCALL val
 ;      RPLACA(box, val)
 ;      box
- 
+
 (DEFUN |oldAxiomDomainLookupExport|
        (|domenv| |self| |op| |sig| |box| |skipdefaults| |env|)
   (PROG (|domainVec| |constant| |val|)
@@ -719,23 +719,23 @@
               (COND (|constant| (SETQ |val| (SPADCALL |val|))))
               (RPLACA |box| |val|)
               |box|)))))))
- 
+
 ; oldAxiomDomainHashCode(domenv, env) == first domenv
- 
+
 (DEFUN |oldAxiomDomainHashCode| (|domenv| |env|)
   (PROG () (RETURN (CAR |domenv|))))
- 
+
 ; oldAxiomDomainDevaluate(domenv, env) ==
 ;    SExprToDName((rest domenv).0, 'T)
- 
+
 (DEFUN |oldAxiomDomainDevaluate| (|domenv| |env|)
   (PROG () (RETURN (|SExprToDName| (ELT (CDR |domenv|) 0) 'T))))
- 
+
 ; oldAxiomAddChild(domenv, child, env) == CONS($oldAxiomDomainDispatch, domenv)
- 
+
 (DEFUN |oldAxiomAddChild| (|domenv| |child| |env|)
   (PROG () (RETURN (CONS |$oldAxiomDomainDispatch| |domenv|))))
- 
+
 ; $oldAxiomDomainDispatch :=
 ;    VECTOR('oldAxiomDomain,
 ;           [function oldAxiomDomainDevaluate],
@@ -743,36 +743,31 @@
 ;           [function oldAxiomDomainLookupExport],
 ;           [function oldAxiomDomainHashCode],
 ;           [function oldAxiomAddChild])
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$oldAxiomDomainDispatch|
           (VECTOR '|oldAxiomDomain| (LIST #'|oldAxiomDomainDevaluate|)
                   (LIST NIL) (LIST #'|oldAxiomDomainLookupExport|)
                   (LIST #'|oldAxiomDomainHashCode|)
                   (LIST #'|oldAxiomAddChild|))))
- 
+
 ; isDomain a ==
 ;   PAIRP a and VECP(first a) and
 ;     member((first a).0, $domainTypeTokens)
- 
+
 (DEFUN |isDomain| (|a|)
   (PROG ()
     (RETURN
      (AND (CONSP |a|) (VECP (CAR |a|))
           (|member| (ELT (CAR |a|) 0) |$domainTypeTokens|)))))
- 
+
 ; NRTcompiledLookup(op,sig,dom) ==
 ;   if CONTAINED('_#,sig) then
 ;       sig := [NRTtypeHack t for t in sig]
-;   hashCode? sig =>   compiledLookupCheck(op,sig,dom)
-;   (fn := compiledLookup(op,sig,dom)) => fn
-;   percentHash :=
-;       VECP dom => hashType(dom.0, 0)
-;       getDomainHash dom
-;   compiledLookupCheck(op, hashType(['Mapping,:sig], percentHash), dom)
- 
+;   compiledLookupCheck(op,sig,dom)
+
 (DEFUN |NRTcompiledLookup| (|op| |sig| |dom|)
-  (PROG (|fn| |percentHash|)
+  (PROG ()
     (RETURN
      (PROGN
       (COND
@@ -784,24 +779,16 @@
                      ((OR (ATOM |bfVar#21|)
                           (PROGN (SETQ |t| (CAR |bfVar#21|)) NIL))
                       (RETURN (NREVERSE |bfVar#22|)))
-                     (#1='T
+                     ('T
                       (SETQ |bfVar#22| (CONS (|NRTtypeHack| |t|) |bfVar#22|))))
                     (SETQ |bfVar#21| (CDR |bfVar#21|))))
                  NIL |sig| NIL))))
-      (COND ((|hashCode?| |sig|) (|compiledLookupCheck| |op| |sig| |dom|))
-            ((SETQ |fn| (|compiledLookup| |op| |sig| |dom|)) |fn|)
-            (#1#
-             (PROGN
-              (SETQ |percentHash|
-                      (COND ((VECP |dom|) (|hashType| (ELT |dom| 0) 0))
-                            (#1# (|getDomainHash| |dom|))))
-              (|compiledLookupCheck| |op|
-               (|hashType| (CONS '|Mapping| |sig|) |percentHash|) |dom|))))))))
- 
+      (|compiledLookupCheck| |op| |sig| |dom|)))))
+
 ; compiledLookup(op, sig, dollar) ==
 ;   if not isDomain dollar then dollar := NRTevalDomain dollar
 ;   basicLookup(op, sig, dollar, dollar)
- 
+
 (DEFUN |compiledLookup| (|op| |sig| |dollar|)
   (PROG ()
     (RETURN
@@ -810,10 +797,10 @@
        ((NULL (|isDomain| |dollar|))
         (SETQ |dollar| (|NRTevalDomain| |dollar|))))
       (|basicLookup| |op| |sig| |dollar| |dollar|)))))
- 
+
 ; HasSignature(domain,[op,sig]) ==
 ;   compiledLookup(op,sig,domain)
- 
+
 (DEFUN |HasSignature| (|domain| |bfVar#23|)
   (PROG (|op| |sig|)
     (RETURN
@@ -821,8 +808,14 @@
       (SETQ |op| (CAR |bfVar#23|))
       (SETQ |sig| (CADR |bfVar#23|))
       (|compiledLookup| |op| |sig| |domain|)))))
- 
+
 ; basicLookup(op,sig,domain,dollar) ==
+;   -- FIXME: We should use consistent representation, not hacks
+;   -- like this one
+;   if op = 0 then op := 'Zero
+;   if op = ['Zero] then op := 'Zero
+;   if op = 1 then op := 'One
+;   if op = ['One] then op := 'One
 ;   -- Spad case
 ;   VECP domain =>
 ;      isNewWorldDomain domain => -- getting ops from yourself (or for defaults)
@@ -840,7 +833,7 @@
 ;            hashCode? sig => sig
 ;            opIsHasCat op => hashType(sig, hashPercent)
 ;            hashType(['Mapping,:sig], hashPercent)
-; 
+;
 ;        if SYMBOLP op then
 ;           op = 'Zero => op := $hashOp0
 ;           op = 'One => op := $hashOp1
@@ -868,80 +861,85 @@
 ;       SPADCALL first SPADCALL(rest dollar, dollar, op, '($), box,
 ;                               false, lookupFun)
 ;   first SPADCALL(rest dollar, dollar, op, sig, box, false, lookupFun)
- 
+
 (DEFUN |basicLookup| (|op| |sig| |domain| |dollar|)
   (PROG (|hashPercent| |box| |dispatch| |lookupFun| |hashSig| |val| |boxval|)
     (RETURN
-     (COND
-      ((VECP |domain|)
-       (COND
-        ((|isNewWorldDomain| |domain|)
-         (|oldCompLookup| |op| |sig| |domain| |dollar|))
-        (#1='T (|lookupInDomainVector| |op| |sig| |domain| |dollar|))))
-      (#1#
-       (PROGN
-        (SETQ |hashPercent|
-                (COND ((VECP |dollar|) (|hashType| (ELT |dollar| 0) 0))
-                      (#1# (|hashType| |dollar| 0))))
-        (SETQ |box| (LIST NIL))
+     (PROGN
+      (COND ((EQL |op| 0) (SETQ |op| '|Zero|)))
+      (COND ((EQUAL |op| (LIST '|Zero|)) (SETQ |op| '|Zero|)))
+      (COND ((EQL |op| 1) (SETQ |op| '|One|)))
+      (COND ((EQUAL |op| (LIST '|One|)) (SETQ |op| '|One|)))
+      (COND
+       ((VECP |domain|)
         (COND
-         ((NULL (VECP (SETQ |dispatch| (CAR |domain|))))
-          (|error| '|bad domain format|))
-         (#1#
-          (PROGN
-           (SETQ |lookupFun| (ELT |dispatch| 3))
-           (COND
-            ((EQL (ELT |dispatch| 0) 0)
-             (PROGN
-              (SETQ |hashSig|
-                      (COND ((|hashCode?| |sig|) |sig|)
-                            ((|opIsHasCat| |op|)
-                             (|hashType| |sig| |hashPercent|))
-                            (#1#
-                             (|hashType| (CONS '|Mapping| |sig|)
-                              |hashPercent|))))
-              (COND
-               ((SYMBOLP |op|)
-                (COND ((EQ |op| '|Zero|) (SETQ |op| |$hashOp0|))
-                      ((EQ |op| '|One|) (SETQ |op| |$hashOp1|))
-                      ((EQ |op| '|elt|) (SETQ |op| |$hashOpApply|))
-                      ((EQ |op| '|setelt!|) (SETQ |op| |$hashOpSet|))
-                      (#1# (SETQ |op| (|hashString| (SYMBOL-NAME |op|)))))))
-              (COND
-               ((SETQ |val|
-                        (CAR
-                         (SPADCALL (CDR |domain|) |dollar| |op| |hashSig| |box|
-                          NIL |lookupFun|)))
-                |val|)
-               ((|hashCode?| |sig|) NIL)
-               ((OR (< 1 (LENGTH |sig|)) (|opIsHasCat| |op|)) NIL)
-               ((SETQ |boxval|
-                        (SPADCALL (CDR |dollar|) |dollar| |op|
-                         (|hashType| (CAR |sig|) |hashPercent|) |box| NIL
-                         |lookupFun|))
-                (CONS #'IDENTITY (CAR |boxval|)))
-               (#1# NIL))))
-            ((|opIsHasCat| |op|) (|HasCategory| |domain| |sig|))
-            (#1#
-             (PROGN
-              (COND
-               ((|hashCode?| |op|)
-                (COND ((EQL |op| |$hashOp1|) (SETQ |op| '|One|))
-                      ((EQL |op| |$hashOp0|) (SETQ |op| '|Zero|))
-                      ((EQL |op| |$hashOpApply|) (SETQ |op| '|elt|))
-                      ((EQL |op| |$hashOpSet|) (SETQ |op| '|setelt!|))
-                      ((EQL |op| |$hashSeg|) (SETQ |op| 'SEGMENT)))))
-              (COND
-               ((AND (|hashCode?| |sig|) (EQL |sig| |hashPercent|))
-                (SPADCALL
+         ((|isNewWorldDomain| |domain|)
+          (|oldCompLookup| |op| |sig| |domain| |dollar|))
+         (#1='T (|lookupInDomainVector| |op| |sig| |domain| |dollar|))))
+       (#1#
+        (PROGN
+         (SETQ |hashPercent|
+                 (COND ((VECP |dollar|) (|hashType| (ELT |dollar| 0) 0))
+                       (#1# (|hashType| |dollar| 0))))
+         (SETQ |box| (LIST NIL))
+         (COND
+          ((NULL (VECP (SETQ |dispatch| (CAR |domain|))))
+           (|error| '|bad domain format|))
+          (#1#
+           (PROGN
+            (SETQ |lookupFun| (ELT |dispatch| 3))
+            (COND
+             ((EQL (ELT |dispatch| 0) 0)
+              (PROGN
+               (SETQ |hashSig|
+                       (COND ((|hashCode?| |sig|) |sig|)
+                             ((|opIsHasCat| |op|)
+                              (|hashType| |sig| |hashPercent|))
+                             (#1#
+                              (|hashType| (CONS '|Mapping| |sig|)
+                               |hashPercent|))))
+               (COND
+                ((SYMBOLP |op|)
+                 (COND ((EQ |op| '|Zero|) (SETQ |op| |$hashOp0|))
+                       ((EQ |op| '|One|) (SETQ |op| |$hashOp1|))
+                       ((EQ |op| '|elt|) (SETQ |op| |$hashOpApply|))
+                       ((EQ |op| '|setelt!|) (SETQ |op| |$hashOpSet|))
+                       (#1# (SETQ |op| (|hashString| (SYMBOL-NAME |op|)))))))
+               (COND
+                ((SETQ |val|
+                         (CAR
+                          (SPADCALL (CDR |domain|) |dollar| |op| |hashSig|
+                           |box| NIL |lookupFun|)))
+                 |val|)
+                ((|hashCode?| |sig|) NIL)
+                ((OR (< 1 (LENGTH |sig|)) (|opIsHasCat| |op|)) NIL)
+                ((SETQ |boxval|
+                         (SPADCALL (CDR |dollar|) |dollar| |op|
+                          (|hashType| (CAR |sig|) |hashPercent|) |box| NIL
+                          |lookupFun|))
+                 (CONS #'IDENTITY (CAR |boxval|)))
+                (#1# NIL))))
+             ((|opIsHasCat| |op|) (|HasCategory| |domain| |sig|))
+             (#1#
+              (PROGN
+               (COND
+                ((|hashCode?| |op|)
+                 (COND ((EQL |op| |$hashOp1|) (SETQ |op| '|One|))
+                       ((EQL |op| |$hashOp0|) (SETQ |op| '|Zero|))
+                       ((EQL |op| |$hashOpApply|) (SETQ |op| '|elt|))
+                       ((EQL |op| |$hashOpSet|) (SETQ |op| '|setelt!|))
+                       ((EQL |op| |$hashSeg|) (SETQ |op| 'SEGMENT)))))
+               (COND
+                ((AND (|hashCode?| |sig|) (EQL |sig| |hashPercent|))
+                 (SPADCALL
+                  (CAR
+                   (SPADCALL (CDR |dollar|) |dollar| |op| '($) |box| NIL
+                    |lookupFun|))))
+                (#1#
                  (CAR
-                  (SPADCALL (CDR |dollar|) |dollar| |op| '($) |box| NIL
-                   |lookupFun|))))
-               (#1#
-                (CAR
-                 (SPADCALL (CDR |dollar|) |dollar| |op| |sig| |box| NIL
-                  |lookupFun|))))))))))))))))
- 
+                  (SPADCALL (CDR |dollar|) |dollar| |op| |sig| |box| NIL
+                   |lookupFun|)))))))))))))))))
+
 ; basicLookupCheckDefaults(op,sig,domain,dollar) ==
 ;   box := [nil]
 ;   not VECP(dispatch := first dollar) => error "bad domain format"
@@ -950,17 +948,17 @@
 ;        hashPercent :=
 ;           VECP dollar => hashType(dollar.0,0)
 ;           hashType(dollar,0)
-; 
+;
 ;        hashSig :=
 ;          hashCode? sig => sig
 ;          hashType( ['Mapping,:sig], hashPercent)
-; 
+;
 ;        if SYMBOLP op then op := hashString SYMBOL_-NAME op
 ;        first SPADCALL(rest dollar, dollar, op, hashSig, box,
 ;                       not $lookupDefaults, lookupFun)
 ;   first SPADCALL(rest dollar, dollar, op, sig, box,
 ;                  not $lookupDefaults, lookupFun)
- 
+
 (DEFUN |basicLookupCheckDefaults| (|op| |sig| |domain| |dollar|)
   (PROG (|box| |dispatch| |lookupFun| |hashPercent| |hashSig|)
     (RETURN
@@ -992,27 +990,27 @@
            (CAR
             (SPADCALL (CDR |dollar|) |dollar| |op| |sig| |box|
              (NULL |$lookupDefaults|) |lookupFun|)))))))))))
- 
+
 ; $hasCatOpHash := hashString '"%%"
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$hasCatOpHash| (|hashString| "%%")))
- 
+
 ; opIsHasCat op ==
 ;   hashCode? op => EQL(op, $hasCatOpHash)
 ;   EQ(op, "%%")
- 
+
 (DEFUN |opIsHasCat| (|op|)
   (PROG ()
     (RETURN
      (COND ((|hashCode?| |op|) (EQL |op| |$hasCatOpHash|))
            ('T (EQ |op| '%%))))))
- 
+
 ; oldCompLookup(op, sig, domvec, dollar) ==
 ;   $lookupDefaults:local := nil
 ;   u := lookupInDomainVector(op,sig,domvec,dollar) => u
 ;   $lookupDefaults := true
 ;   lookupInDomainVector(op,sig,domvec,dollar)
- 
+
 (DEFUN |oldCompLookup| (|op| |sig| |domvec| |dollar|)
   (PROG (|$lookupDefaults| |u|)
     (DECLARE (SPECIAL |$lookupDefaults|))
@@ -1025,11 +1023,11 @@
         (PROGN
          (SETQ |$lookupDefaults| T)
          (|lookupInDomainVector| |op| |sig| |domvec| |dollar|))))))))
- 
+
 ; oldCompLookupNoDefaults(op, sig, domvec, dollar) ==
 ;   $lookupDefaults:local := nil
 ;   lookupInDomainVector(op,sig,domvec,dollar)
- 
+
 (DEFUN |oldCompLookupNoDefaults| (|op| |sig| |domvec| |dollar|)
   (PROG (|$lookupDefaults|)
     (DECLARE (SPECIAL |$lookupDefaults|))
@@ -1037,12 +1035,12 @@
      (PROGN
       (SETQ |$lookupDefaults| NIL)
       (|lookupInDomainVector| |op| |sig| |domvec| |dollar|)))))
- 
+
 ; lookupInDomainVector(op,sig,domain,dollar) ==
 ;   PAIRP domain => basicLookupCheckDefaults(op,sig,domain,domain)
 ;   slot1 := domain.1
 ;   SPADCALL(op,sig,dollar,slot1)
- 
+
 (DEFUN |lookupInDomainVector| (|op| |sig| |domain| |dollar|)
   (PROG (|slot1|)
     (RETURN
@@ -1053,11 +1051,11 @@
        (PROGN
         (SETQ |slot1| (ELT |domain| 1))
         (SPADCALL |op| |sig| |dollar| |slot1|)))))))
- 
+
 ; lookupComplete(op,sig,dollar,env) ==
 ;    hashCode? sig => hashNewLookupInTable(op,sig,dollar,env,nil)
 ;    newLookupInTable(op,sig,dollar,env,nil)
- 
+
 (DEFUN |lookupComplete| (|op| |sig| |dollar| |env|)
   (PROG ()
     (RETURN
@@ -1065,11 +1063,11 @@
       ((|hashCode?| |sig|)
        (|hashNewLookupInTable| |op| |sig| |dollar| |env| NIL))
       ('T (|newLookupInTable| |op| |sig| |dollar| |env| NIL))))))
- 
+
 ; lookupIncomplete(op,sig,dollar,env) ==
 ;    hashCode? sig => hashNewLookupInTable(op,sig,dollar,env,true)
 ;    newLookupInTable(op,sig,dollar,env,true)
- 
+
 (DEFUN |lookupIncomplete| (|op| |sig| |dollar| |env|)
   (PROG ()
     (RETURN
@@ -1077,7 +1075,7 @@
       ((|hashCode?| |sig|)
        (|hashNewLookupInTable| |op| |sig| |dollar| |env| T))
       ('T (|newLookupInTable| |op| |sig| |dollar| |env| T))))))
- 
+
 ; lazyMatchArg2(s,a,dollar,domain,typeFlag) ==
 ;   if s = '$ then
 ; --  a = 0 => return true  --needed only if extra call in newGoGet to basicLookup
@@ -1106,7 +1104,7 @@
 ;   op  = 'NRTEVAL => s = nrtEval(CADR a,domain)
 ;   op = 'QUOTE => s = CADR a
 ;   lazyMatch(s,a,dollar,domain)
- 
+
 (DEFUN |lazyMatchArg2| (|s| |a| |dollar| |domain| |typeFlag|)
   (PROG (|d| |domainArg| |dhash| |ISTMP#1| |y| |op|)
     (RETURN
@@ -1156,7 +1154,7 @@
          (COND ((EQ |op| 'NRTEVAL) (EQUAL |s| (|nrtEval| (CADR |a|) |domain|)))
                ((EQ |op| 'QUOTE) (EQUAL |s| (CADR |a|)))
                (#1# (|lazyMatch| |s| |a| |dollar| |domain|))))))))))
- 
+
 ; getOpCode(op,vec,max) ==
 ; --search Op vector for "op" returning code if found, nil otherwise
 ;   res := nil
@@ -1167,7 +1165,7 @@
 ;   for i in 0..max by 2 repeat
 ;     EQ(QVELT(vec, i), op) => return (res := inc_SI i)
 ;   res
- 
+
 (DEFUN |getOpCode| (|op| |vec| |max|)
   (PROG (|res|)
     (RETURN
@@ -1198,7 +1196,7 @@
              (SETQ |i| (+ |i| 2))))
           0)
          |res|)))))))
- 
+
 ; hashNewLookupInTable(op,sig,dollar,[domain,opvec],flag) ==
 ;   opIsHasCat op =>
 ;       HasCategory(domain, sig)
@@ -1232,7 +1230,6 @@
 ;     greater_SI(max, k) => opvec.(add_SI(k, 2))
 ;     maxIndex
 ;   if greater_SI(finish, maxIndex) then systemError '"limit too large"
-;   numArgs := if hashCode? sig then -1 else (#sig)-1
 ;   success := nil
 ;   $isDefaultingPackage: local :=
 ;     -- use special defaulting handler when dollar non-trivial
@@ -1264,10 +1261,6 @@
 ;       null atom slot =>
 ;         EQ(QCAR slot,FUNCTION newGoGet) => someMatch:=true
 ;                    --treat as if operation were not there
-;         --if EQ(QCAR slot, function newGoGet) then
-;         --  UNWIND_-PROTECT --break infinite recursion
-;         --    ((SETELT(domain,loc,'skip); slot := replaceGoGetSlot QCDR slot),
-;         --      if domain.loc = 'skip then domain.loc := slot)
 ;         return (success := slot)
 ;       slot = 'skip =>       --recursive call from above 'replaceGoGetSlot
 ;         return (success := newLookupInAddChain(op,sig,domain,dollar))
@@ -1283,12 +1276,12 @@
 ;   subsumptionSig and (u:= basicLookup(op,subsumptionSig,domain,dollar)) => u
 ;   flag or someMatch => newLookupInAddChain(op,sig,domain,dollar)
 ;   nil
- 
+
 (DEFUN |hashNewLookupInTable| (|op| |sig| |dollar| |bfVar#26| |flag|)
   (PROG (|$isDefaultingPackage| |u| |slot| |subsumptionSig| |loc| |exportSig|
-         |predIndex| |numTableArgs| |i| |numArgs| |finish| |start| |maxIndex|
-         |k| |max| |predvec| |numvec| |someMatch| |success| |hashPercent|
-         |opvec| |domain|)
+         |predIndex| |numTableArgs| |i| |finish| |start| |maxIndex| |k| |max|
+         |predvec| |numvec| |someMatch| |success| |hashPercent| |opvec|
+         |domain|)
     (DECLARE (SPECIAL |$isDefaultingPackage|))
     (RETURN
      (PROGN
@@ -1347,9 +1340,6 @@
                       (COND
                        ((|greater_SI| |finish| |maxIndex|)
                         (|systemError| "limit too large")))
-                      (SETQ |numArgs|
-                              (COND ((|hashCode?| |sig|) (- 1))
-                                    (#1# (- (LENGTH |sig|) 1))))
                       (SETQ |success| NIL)
                       (SETQ |$isDefaultingPackage|
                               (AND (NOT (EQUAL |dollar| |domain|))
@@ -1493,7 +1483,7 @@
                        ((OR |flag| |someMatch|)
                         (|newLookupInAddChain| |op| |sig| |domain| |dollar|))
                        (#1# NIL))))))))))))
- 
+
 ; replaceGoGetSlot env ==
 ;   [thisDomain,index,:op] := env
 ;   thisDomainForm := devaluate thisDomain
@@ -1525,7 +1515,7 @@
 ;   if $monitorNewWorld then
 ;     sayLooking1(concat('"<------", form2String(first slot)), rest slot)
 ;   slot
- 
+
 (DEFUN |replaceGoGetSlot| (|env|)
   (PROG (|thisDomain| |index| |op| |thisDomainForm| |bytevec| |numOfArgs|
          |goGetDomainSlotIndex| |goGetDomain| |sig| |thisSlot| |slot|)
@@ -1595,7 +1585,7 @@
            (|sayLooking1| (|concat| "<------" (|form2String| (CAR |slot|)))
             (CDR |slot|))))
          |slot|)))))))
- 
+
 ; newHasCategory(domain,catform) ==
 ;   catform = '(Type) => true
 ;   slot4 := domain.4
@@ -1605,7 +1595,7 @@
 ;   #catvec > 0 and INTEGERP IFCDR catvec.0 =>              --old style
 ;     BREAK()
 ;   lazyMatchAssocV(catform,auxvec,catvec,domain)         --new style
- 
+
 (DEFUN |newHasCategory| (|domain| |catform|)
   (PROG (|$isDefaultingPackage| |catvec| |auxvec| |slot4|)
     (DECLARE (SPECIAL |$isDefaultingPackage|))
@@ -1624,7 +1614,7 @@
                (BREAK))
               (#1#
                (|lazyMatchAssocV| |catform| |auxvec| |catvec| |domain|)))))))))
- 
+
 ; lazyMatchAssocV(x,auxvec,catvec,domain) ==      --new style slot4
 ;   -- Does not work (triggers type error due to initialization by NIL)
 ;   -- n : FIXNUM := MAXINDEX catvec
@@ -1641,7 +1631,7 @@
 ;     --xop = first (lazyt := QVELT(catvec,i)) and lazyMatch(x,lazyt,domain,domain)]
 ;     xop = first (lazyt := getCatForm(catvec, i, domain)) and
 ;              lazyMatch(x, lazyt, domain, domain)]
- 
+
 (DEFUN |lazyMatchAssocV| (|x| |auxvec| |catvec| |domain|)
   (PROG (|n| |percentHash| |xop| |lazyt|)
     (RETURN
@@ -1686,23 +1676,23 @@
                       (COND (|bfVar#29| (RETURN |bfVar#29|)))))))
              (SETQ |i| (+ |i| 1))))
           NIL 0))))))))
- 
+
 ; getCatForm(catvec, index, domain) ==
 ;    NUMBERP(form := QVELT(catvec,index)) => domain.form
 ;    form
- 
+
 (DEFUN |getCatForm| (|catvec| |index| |domain|)
   (PROG (|form|)
     (RETURN
      (COND
       ((NUMBERP (SETQ |form| (QVELT |catvec| |index|))) (ELT |domain| |form|))
       ('T |form|)))))
- 
+
 ; has(domain,catform') == HasCategory(domain,catform')
- 
+
 (DEFUN |has| (|domain| |catform'|)
   (PROG () (RETURN (|HasCategory| |domain| |catform'|))))
- 
+
 ; HasCategory(domain,catform') ==
 ;   catform' is ['SIGNATURE,:f] => HasSignature(domain,f)
 ;   catform' is ['ATTRIBUTE,f] =>
@@ -1714,13 +1704,14 @@
 ;      HasCategory(CDDR domain, catform')
 ;   catform:= devaluate catform'
 ;   isNewWorldDomain domain => newHasCategory(domain,catform)
+;   -- FIXME: handle strings, for example "failed"
 ;   domain0:=domain.0 -- handles old style domains, Record, Union etc.
 ;   slot4 := domain.4
 ;   catlist := slot4.1
 ;   member(catform,catlist) or
 ;    opOf(catform) = "Type" or  --temporary hack
 ;     or/[compareSigEqual(catform,cat,domain0,domain) for cat in catlist]
- 
+
 (DEFUN |HasCategory| (|domain| |catform'|)
   (PROG (|f| |ISTMP#1| |catform| |domain0| |slot4| |catlist|)
     (RETURN
@@ -1766,7 +1757,7 @@
                       (COND (|bfVar#31| (RETURN |bfVar#31|))))))
                    (SETQ |bfVar#30| (CDR |bfVar#30|))))
                 NIL |catlist| NIL)))))))))))
- 
+
 ; lazyDomainSet(form, thisDomain, slot) ==
 ;   slotDomain := evalSlotDomain(form,thisDomain)
 ;   if $monitorNewWorld then
@@ -1775,7 +1766,7 @@
 ; -- name := first form
 ; --getInfovec name
 ;   SETELT(thisDomain,slot,slotDomain)
- 
+
 (DEFUN |lazyDomainSet| (|form| |thisDomain| |slot|)
   (PROG (|slotDomain|)
     (RETURN
@@ -1788,7 +1779,7 @@
           " activating lazy slot " |slot| ": ")
          |slotDomain|)))
       (SETELT |thisDomain| |slot| |slotDomain|)))))
- 
+
 ; evalSlotDomain(u,dollar) ==
 ;   $returnNowhereFromGoGet: local := false
 ;   $ : fluid := dollar
@@ -1826,7 +1817,7 @@
 ;     slot
 ;   u is [op,:argl] => APPLY(op,[evalSlotDomain(x,dollar) for x in argl])
 ;   systemErrorHere '"evalSlotDomain"
- 
+
 (DEFUN |evalSlotDomain| (|u| |dollar|)
   (PROG (|$lookupDefaults| $ |$returnNowhereFromGoGet| |op| |env| |slot| |n|
          |d| |ISTMP#3| |dom| |ISTMP#2| |tag| |argl| |ISTMP#1| |v| |y|)
@@ -1976,13 +1967,13 @@
                         (SETQ |bfVar#38| (CDR |bfVar#38|))))
                      NIL |argl| NIL)))
             (#1# (|systemErrorHere| "evalSlotDomain")))))))
- 
+
 ; domainEqual(a,b) ==
 ;   devaluate(a) = devaluate(b)
- 
+
 (DEFUN |domainEqual| (|a| |b|)
   (PROG () (RETURN (EQUAL (|devaluate| |a|) (|devaluate| |b|)))))
- 
+
 ; getFunctionFromDomain1(op, dc, target, args) ==
 ;   -- finds the function op with argument types args in dc
 ;   -- complains, if no function or ambiguous
@@ -2000,7 +1991,7 @@
 ;       b := compiledLookup(op,nsig,domain)
 ;     b or  throwKeyedMsg("S2IS0023",[op,dc])
 ;   throwKeyedMsg("S2IF0004",[op,dc])
- 
+
 (DEFUN |getFunctionFromDomain1| (|op| |dc| |target| |args|)
   (PROG (|$reportBottomUpFlag| |b| |nsig| |osig| |domain| |p|)
     (DECLARE (SPECIAL |$reportBottomUpFlag|))
@@ -2033,18 +2024,18 @@
           (NREVERSE |p|) NIL NIL)
          (OR |b| (|throwKeyedMsg| 'S2IS0023 (LIST |op| |dc|)))))
        (#1# (|throwKeyedMsg| 'S2IF0004 (LIST |op| |dc|))))))))
- 
+
 ; getFunctionFromDomain(op, dc, args) ==
 ;     getFunctionFromDomain1(op, dc, NIL, args)
- 
+
 (DEFUN |getFunctionFromDomain| (|op| |dc| |args|)
   (PROG () (RETURN (|getFunctionFromDomain1| |op| |dc| NIL |args|))))
- 
+
 ; devaluateDeeply x ==
 ;     VECP x => devaluate x
 ;     atom x => x
 ;     [devaluateDeeply y for y in x]
- 
+
 (DEFUN |devaluateDeeply| (|x|)
   (PROG ()
     (RETURN
@@ -2060,14 +2051,14 @@
                   (SETQ |bfVar#43| (CONS (|devaluateDeeply| |y|) |bfVar#43|))))
                 (SETQ |bfVar#42| (CDR |bfVar#42|))))
              NIL |x| NIL))))))
- 
+
 ; lookupDisplay(op,sig,vectorOrForm,suffix) ==
 ;     null $NRTmonitorIfTrue => nil
 ;     prefix := (suffix = '"" => ">"; "<")
 ;     sayBrightly
 ;         concat(prefix,formatOpSignature(op,sig),
 ;             '" from ", prefix2String devaluateDeeply vectorOrForm,suffix)
- 
+
 (DEFUN |lookupDisplay| (|op| |sig| |vectorOrForm| |suffix|)
   (PROG (|prefix|)
     (RETURN
@@ -2079,11 +2070,11 @@
               (|concat| |prefix| (|formatOpSignature| |op| |sig|) " from "
                (|prefix2String| (|devaluateDeeply| |vectorOrForm|))
                |suffix|))))))))
- 
+
 ; isCategoryPackageName nam ==
 ;     p := PNAME opOf nam
 ;     p.(MAXINDEX p) = char '_&
- 
+
 (DEFUN |isCategoryPackageName| (|nam|)
   (PROG (|p|)
     (RETURN
