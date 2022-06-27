@@ -12,4 +12,6 @@ rename clisp lisp interp/*.clisp
 
 rm lisp/compile-algebra.lisp lisp/compile-interp.lisp
 for f in algebra/*.lsp; do echo "(compile-file \"$f\")" >> lisp/compile-algebra.lisp ; done
+sed -i 's|.*PATTERN.lsp.*|#-:ABCL(compile-file "algebra/PATTERN.lsp")|' lisp/compile-algebra.lisp
+sed -i 's|.*POLYVEC.lsp.*|#-:ABCL(compile-file "algebra/POLYVEC.lsp")|' lisp/compile-algebra.lisp
 for f in interp/*.lisp; do echo "(compile-file \"$f\")" >> lisp/compile-interp.lisp ; done
