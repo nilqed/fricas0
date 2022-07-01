@@ -10,6 +10,9 @@
 #+:ABCL
 (defvar |$lisp_bin_filetype| "abcl")  ;;; abcl ~ fasl/fas
 
+#+:SBCL
+(fricas-lisp::set-initial-parameters) ;; this is skipped in fricas-lisp.lisp, why?
+
 (defun gcmsg (x))
 
 ;;; init      
