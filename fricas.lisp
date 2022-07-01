@@ -15,6 +15,19 @@
 
 (defun gcmsg (x))
 
+(setq load-type "load-ondemand")
+
+(defun |load_quietly| (f)
+  (handler-bind ((warning #'muffle-warning))
+    (let ((lsp-file (CONCAT (string-right-trim |$lisp_bin_filetype| f) "lsp")))
+      (cond
+        ((and (boundp 'load-type) (equal load-type "load-ondemand"))
+         (load lsp-file))
+        ((and (boundp 'load-type) (equal load-type "compile-ondemand"))
+         (load (if (probe-file f) f (compile-file lsp-file))))
+        (t (load f))
+        ))))
+
 ;;; init      
 (|interpsysInitialization|)
 
