@@ -1,8 +1,8 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; $primitiveHtCommands := '(
 ;   ("\ContinueButton"     . 1)
 ;   ("\andexample"         . 1)
@@ -49,7 +49,7 @@
 ;   ("\table"              . 1)
 ;   ("\vspace" .      1)
 ;   ("\windowlink"         . 2))
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$primitiveHtCommands|
           '(("\\ContinueButton" . 1) ("\\andexample" . 1) ("\\autobutt" . 0)
@@ -69,12 +69,12 @@
             ("\\space" . 1) ("\\spadcommand" . 1) ("\\stringvalue" . 1)
             ("\\tab" . 1) ("\\table" . 1) ("\\vspace" . 1)
             ("\\windowlink" . 2))))
- 
+
 ; buildHtMacroTable() ==
-;   $htMacroTable := MAKE_-HASHTABLE 'UEQUAL
-;   fn := CONCAT(getEnv '"AXIOM", '"/share/hypertex/pages/util.ht")
+;   $htMacroTable := MAKE_HASHTABLE('UEQUAL)
+;   fn := CONCAT(getEnv '"FRICAS", '"/share/hypertex/pages/util.ht")
 ;   if PROBE_-FILE(fn) then
-;     instream := MAKE_-INSTREAM fn
+;     instream := MAKE_INSTREAM(fn)
 ;     while not EOFP instream repeat
 ;       line := read_line instream
 ;       getHtMacroItem line is [string,:numOfArgs] =>
@@ -84,19 +84,19 @@
 ;   else
 ;     sayBrightly '"Warning: HyperTeX macro table not found"
 ;   $htMacroTable
- 
-(DEFUN |buildHtMacroTable| #1=()
+
+(DEFUN |buildHtMacroTable| ()
   (PROG (|n| |s| |numOfArgs| |string| |ISTMP#1| |line| |instream| |fn|)
     (RETURN
      (PROGN
-      (SETQ |$htMacroTable| (MAKE-HASHTABLE 'UEQUAL))
-      (SETQ |fn| (CONCAT (|getEnv| "AXIOM") "/share/hypertex/pages/util.ht"))
+      (SETQ |$htMacroTable| (MAKE_HASHTABLE 'UEQUAL))
+      (SETQ |fn| (CONCAT (|getEnv| "FRICAS") "/share/hypertex/pages/util.ht"))
       (COND
-       ((PROBE-FILE |fn|) (SETQ |instream| (MAKE-INSTREAM |fn|))
-        ((LAMBDA #1#
+       ((PROBE-FILE |fn|) (SETQ |instream| (MAKE_INSTREAM |fn|))
+        ((LAMBDA ()
            (LOOP
             (COND ((EOFP |instream|) (RETURN NIL))
-                  (#2='T
+                  (#1='T
                    (PROGN
                     (SETQ |line| (|read_line| |instream|))
                     (COND
@@ -106,7 +106,7 @@
                             (PROGN
                              (SETQ |string| (CAR |ISTMP#1|))
                              (SETQ |numOfArgs| (CDR |ISTMP#1|))
-                             #2#)))
+                             #1#)))
                       (HPUT |$htMacroTable| |string| |numOfArgs|)))))))))
         ((LAMBDA (|bfVar#2| |bfVar#1|)
            (LOOP
@@ -114,19 +114,19 @@
              ((OR (ATOM |bfVar#2|)
                   (PROGN (SETQ |bfVar#1| (CAR |bfVar#2|)) NIL))
               (RETURN NIL))
-             (#2#
+             (#1#
               (AND (CONSP |bfVar#1|)
                    (PROGN
                     (SETQ |s| (CAR |bfVar#1|))
                     (SETQ |n| (CDR |bfVar#1|))
-                    #2#)
+                    #1#)
                    (HPUT |$htMacroTable| |s| |n|))))
             (SETQ |bfVar#2| (CDR |bfVar#2|))))
          |$primitiveHtCommands| NIL)
         (SHUT |instream|))
-       (#2# (|sayBrightly| "Warning: HyperTeX macro table not found")))
+       (#1# (|sayBrightly| "Warning: HyperTeX macro table not found")))
       |$htMacroTable|))))
- 
+
 ; getHtMacroItem line ==
 ;   null stringPrefix?('"\newcommand{",line) => nil
 ;   k := charPosition(char '_},line,11)
@@ -141,7 +141,7 @@
 ;       => PARSE_-INTEGER digitString
 ;     return nil
 ;   [command,:numOfArgs]
- 
+
 (DEFUN |getHtMacroItem| (|line|)
   (PROG (|k| |command| |m| |i| |j| |digitString| |numOfArgs|)
     (RETURN
@@ -179,7 +179,7 @@
                                 (PARSE-INTEGER |digitString|))
                                (#1# (RETURN NIL))))))))
              (CONS |command| |numOfArgs|)))))))
- 
+
 ; spadSysChoose(tree,form) ==     --tree is ((word . tree) ..)
 ;   null form => true
 ;   null tree => false
@@ -188,7 +188,7 @@
 ;     form
 ;   newTree := LASSOC(lookupOn,tree) => spadSysBranch(newTree,IFCAR IFCDR form)
 ;   false
- 
+
 (DEFUN |spadSysChoose| (|tree| |form|)
   (PROG (|key| |ISTMP#1| |arg| |lookupOn| |newTree|)
     (RETURN
@@ -209,7 +209,7 @@
               ((SETQ |newTree| (LASSOC |lookupOn| |tree|))
                (|spadSysBranch| |newTree| (IFCAR (IFCDR |form|))))
               (#1# NIL))))))))
- 
+
 ; spadSysBranch(tree,arg) ==  --tree is (msg kind TREEorSomethingElse ...)
 ;   null arg => true
 ;   kind := tree.2
@@ -218,7 +218,7 @@
 ;   kind = 'INTEGER  => INTEGERP arg
 ;   kind = 'FUNCTION => atom arg
 ;   systemError '"unknown tree branch"
- 
+
 (DEFUN |spadSysBranch| (|tree| |arg|)
   (PROG (|kind|)
     (RETURN
@@ -231,7 +231,7 @@
                    ((EQ |kind| 'INTEGER) (INTEGERP |arg|))
                    ((EQ |kind| 'FUNCTION) (ATOM |arg|))
                    (#1# (|systemError| "unknown tree branch")))))))))
- 
+
 ; buildHtMacroTable()
- 
+
 (EVAL-WHEN (EVAL LOAD) (PROG () (RETURN (|buildHtMacroTable|))))

@@ -1,10 +1,10 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
-; NRTaddDeltaCode() ==
-; --NOTES: This function is called from NRTbuildFunctor to initially
+
+; NRTaddDeltaCode(kvec) ==
+; --NOTES: This function is called from buildFunctor to initially
 ; --  fill slots in $template. The $template so created is stored in the
 ; --  NRLIB. On load, makeDomainTemplate is called on this $template to
 ; --  create a template which becomes slot 0 of the infovec for the constructor.
@@ -19,7 +19,6 @@
 ; --  (5) identifiers/strings, parts of signatures (now parts of signatures
 ; --      now must all have slot numbers, represented by (QUOTE <entry>)
 ; --  (6) constants, like 0 and 1, represented by (CONS .. ) form
-;   kvec := first $catvecList
 ;   for i in $NRTbase.. for item in REVERSE $NRTdeltaList
 ;     for compItem in REVERSE $NRTdeltaListComp
 ;       |null (s:=kvec.i) repeat
@@ -29,12 +28,11 @@
 ;       $NRTaddForm is ["@Tuple", :y] => NREVERSE y
 ;       NRTencode($NRTaddForm,$addForm)
 ;     nil
- 
-(DEFUN |NRTaddDeltaCode| ()
-  (PROG (|y| |s| |kvec|)
+
+(DEFUN |NRTaddDeltaCode| (|kvec|)
+  (PROG (|s| |y|)
     (RETURN
      (PROGN
-      (SETQ |kvec| (CAR |$catvecList|))
       ((LAMBDA (|i| |bfVar#1| |item| |bfVar#2| |compItem|)
          (LOOP
           (COND
@@ -59,7 +57,7 @@
                   (NREVERSE |y|))
                  (#1# (|NRTencode| |$NRTaddForm| |$addForm|))))
                (#1# NIL)))))))
- 
+
 ; deltaTran(item,compItem) ==
 ;   item is ['domain,lhs,:.] => NRTencode(lhs,compItem)
 ;   --NOTE: all items but signatures are wrapped with domain forms
@@ -74,7 +72,7 @@
 ;   kindFlag:= (kind = 'CONST => 'CONST; nil)
 ;   newSig := [NRTassocIndex x or x for x in formalSig]
 ;   [newSig,dcCode,op,:kindFlag]
- 
+
 (DEFUN |deltaTran| (|item| |compItem|)
   (PROG (|ISTMP#1| |lhs| |op| |modemap| |dcSig| |kind| |dc| |sig| |dcCode|
          |formalSig| |kindFlag| |newSig|)
@@ -117,17 +115,17 @@
                     (SETQ |bfVar#3| (CDR |bfVar#3|))))
                  NIL |formalSig| NIL))
         (CONS |newSig| (CONS |dcCode| (CONS |op| |kindFlag|)))))))))
- 
+
 ; NRTreplaceAllLocalReferences(form) ==
 ;   $devaluateList :local := []
 ;   NRTputInLocalReferences form
- 
+
 (DEFUN |NRTreplaceAllLocalReferences| (|form|)
   (PROG (|$devaluateList|)
     (DECLARE (SPECIAL |$devaluateList|))
     (RETURN
      (PROGN (SETQ |$devaluateList| NIL) (|NRTputInLocalReferences| |form|)))))
- 
+
 ; NRTencode(x,y) == encode(x,y,true, true) where
 ;   encode(x, compForm, firstTime, domain) ==
 ;       -- converts a domain form to a lazy domain form; everything other than
@@ -157,7 +155,7 @@
 ;       x = '$ => x
 ;       x = "$$" => x
 ;       ['QUOTE, x]
- 
+
 (DEFUN |NRTencode| (|x| |y|)
   (PROG () (RETURN (|NRTencode,encode| |x| |y| T T))))
 (DEFUN |NRTencode,encode| (|x| |compForm| |firstTime| |domain|)
@@ -283,32 +281,33 @@
                      (LIST (COND (|$QuickCode| 'QREFELT) (#1# 'ELT)) '$
                            |v|))))))
       ((EQ |x| '$) |x|) ((EQ |x| '$$) |x|) (#1# (LIST 'QUOTE |x|))))))
- 
-; listOfBoundVars form ==
+
+; listOfBoundVars(form, e) ==
 ; -- Only called from the function genDeltaEntry below
 ;   form = '$ => []
-;   IDENTP form and (u:=get(form,'value,$e)) =>
+;   IDENTP form and (u := get(form, 'value, e)) =>
 ;     u:=u.expr
-;     MEMQ(IFCAR u, '(Union Record)) => listOfBoundVars u
+;     MEMQ(IFCAR u, '(Union Record)) => listOfBoundVars(u, e)
 ;     [form]
 ;   atom form => []
 ;   first form = 'QUOTE => []
-;   EQ(first form, ":") => listOfBoundVars CADDR form
+;   EQ(first form, ":") => listOfBoundVars(CADDR form, e)
 ;   -- We don't want to pick up the tag, only the domain
-;   "union"/[listOfBoundVars x for x in rest form]
- 
-(DEFUN |listOfBoundVars| (|form|)
+;   "union"/[listOfBoundVars(x, e) for x in rest form]
+
+(DEFUN |listOfBoundVars| (|form| |e|)
   (PROG (|u|)
     (RETURN
      (COND ((EQ |form| '$) NIL)
-           ((AND (IDENTP |form|) (SETQ |u| (|get| |form| '|value| |$e|)))
+           ((AND (IDENTP |form|) (SETQ |u| (|get| |form| '|value| |e|)))
             (PROGN
              (SETQ |u| (CAR |u|))
              (COND
-              ((MEMQ (IFCAR |u|) '(|Union| |Record|)) (|listOfBoundVars| |u|))
+              ((MEMQ (IFCAR |u|) '(|Union| |Record|))
+               (|listOfBoundVars| |u| |e|))
               (#1='T (LIST |form|)))))
            ((ATOM |form|) NIL) ((EQ (CAR |form|) 'QUOTE) NIL)
-           ((EQ (CAR |form|) '|:|) (|listOfBoundVars| (CADDR |form|)))
+           ((EQ (CAR |form|) '|:|) (|listOfBoundVars| (CADDR |form|) |e|))
            (#1#
             ((LAMBDA (|bfVar#17| |bfVar#16| |x|)
                (LOOP
@@ -318,17 +317,17 @@
                   (RETURN |bfVar#17|))
                  (#1#
                   (SETQ |bfVar#17|
-                          (|union| |bfVar#17| (|listOfBoundVars| |x|)))))
+                          (|union| |bfVar#17| (|listOfBoundVars| |x| |e|)))))
                 (SETQ |bfVar#16| (CDR |bfVar#16|))))
              NIL (CDR |form|) NIL))))))
- 
-; optDeltaEntry(op,sig,dc,eltOrConst) ==
+
+; optDeltaEntry(op, sig, dc, eltOrConst, e) ==
 ;   $killOptimizeIfTrue = true => nil
 ;   $bootstrapDomains = true =>
 ;     nil
 ;   ndc :=
 ;     dc = '$ => $functorForm
-;     atom dc and (dcval := get(dc,'value,$e)) => dcval.expr
+;     atom dc and (dcval := get(dc, 'value, e)) => dcval.expr
 ;     dc
 ;   sig := substitute(ndc, dc, sig)
 ;   not MEMQ(IFCAR ndc, $optimizableConstructorNames) => nil
@@ -343,19 +342,36 @@
 ;   fn := compiledLookup(op,sig,dcval)
 ;   if null fn then
 ;     -- following code is to handle selectors like first, rest
-;      nsig := [quoteSelector tt for tt in sig] where
-;        quoteSelector(x) ==
+;      nsig := [quoteSelector(tt, e) for tt in sig] where
+;        quoteSelector(x, e) ==
 ;          not(IDENTP x) => x
-;          get(x,'value,$e) => x
+;          get(x, 'value, e) => x
 ;          x='$ => x
 ;          MKQ x
 ;      fn := compiledLookup(op,nsig,dcval)
 ;      if null fn then return nil
 ;   eltOrConst="CONST" => ['XLAM,'ignore,MKQ SPADCALL fn]
-;   GETL(compileTimeBindingOf first fn,'SPADreplace)
- 
-(DEFUN |optDeltaEntry| (|op| |sig| |dc| |eltOrConst|)
-  (PROG (|dcval| |ndc| |fn| |nsig|)
+;   spadreplace := GETL(compileTimeBindingOf first fn,'SPADreplace)
+;   if CONSP spadreplace and first spadreplace = 'XLAM then
+;       -- if the optimization is a XLAM form, make sure it's a "proper macro",
+;       -- i.e. doesn't ignore its argument or evaluate it more than once.
+;       lhs := CADR spadreplace
+;       rhs := CADDR spadreplace
+;       if # lhs = 1 and countXLAM(var := first lhs, rhs) = 0 then
+;           -- deal with cases like "minIndex l == 0", which translates to
+;           -- "(XLAM (|l|) 0)", prevents argument from evaluation.
+;           return ['XLAM, lhs, ['PROGN, var, rhs]]
+;       for var in lhs repeat
+;           -- ignore argument that is string, e.g. 'elt(x, "first")'
+;           if not STRINGP var and (n := countXLAM(var, rhs)) ~= 1 then
+;               -- in current code base there are no cases like "f(x, y) == x"
+;               -- so throw an error if such case emerges.
+;               stackAndThrow [op, " can not be properly inline optimized"]
+;               return nil
+;   spadreplace
+
+(DEFUN |optDeltaEntry| (|op| |sig| |dc| |eltOrConst| |e|)
+  (PROG (|dcval| |ndc| |fn| |nsig| |spadreplace| |lhs| |rhs| |var| |n|)
     (RETURN
      (COND ((EQUAL |$killOptimizeIfTrue| T) NIL)
            ((EQUAL |$bootstrapDomains| T) NIL)
@@ -364,7 +380,7 @@
              (SETQ |ndc|
                      (COND ((EQ |dc| '$) |$functorForm|)
                            ((AND (ATOM |dc|)
-                                 (SETQ |dcval| (|get| |dc| '|value| |$e|)))
+                                 (SETQ |dcval| (|get| |dc| '|value| |e|)))
                             (CAR |dcval|))
                            (#1# |dc|)))
              (SETQ |sig| (|substitute| |ndc| |dc| |sig|))
@@ -401,7 +417,8 @@
                                (#1#
                                 (SETQ |bfVar#21|
                                         (CONS
-                                         (|optDeltaEntry,quoteSelector| |tt|)
+                                         (|optDeltaEntry,quoteSelector| |tt|
+                                          |e|)
                                          |bfVar#21|))))
                               (SETQ |bfVar#20| (CDR |bfVar#20|))))
                            NIL |sig| NIL))
@@ -411,43 +428,84 @@
                  ((EQ |eltOrConst| 'CONST)
                   (LIST 'XLAM '|ignore| (MKQ (SPADCALL |fn|))))
                  (#1#
-                  (GETL (|compileTimeBindingOf| (CAR |fn|))
-                   '|SPADreplace|))))))))))))
-(DEFUN |optDeltaEntry,quoteSelector| (|x|)
+                  (PROGN
+                   (SETQ |spadreplace|
+                           (GETL (|compileTimeBindingOf| (CAR |fn|))
+                            '|SPADreplace|))
+                   (COND
+                    ((AND (CONSP |spadreplace|) (EQ (CAR |spadreplace|) 'XLAM))
+                     (SETQ |lhs| (CADR |spadreplace|))
+                     (SETQ |rhs| (CADDR |spadreplace|))
+                     (COND
+                      ((AND (EQL (LENGTH |lhs|) 1)
+                            (EQL (|countXLAM| (SETQ |var| (CAR |lhs|)) |rhs|)
+                                 0))
+                       (RETURN (LIST 'XLAM |lhs| (LIST 'PROGN |var| |rhs|)))))
+                     ((LAMBDA (|bfVar#22| |var|)
+                        (LOOP
+                         (COND
+                          ((OR (ATOM |bfVar#22|)
+                               (PROGN (SETQ |var| (CAR |bfVar#22|)) NIL))
+                           (RETURN NIL))
+                          (#1#
+                           (COND
+                            ((AND (NULL (STRINGP |var|))
+                                  (NOT
+                                   (EQL (SETQ |n| (|countXLAM| |var| |rhs|))
+                                        1)))
+                             (|stackAndThrow|
+                              (LIST |op|
+                                    '| can not be properly inline optimized|))
+                             (RETURN NIL)))))
+                         (SETQ |bfVar#22| (CDR |bfVar#22|))))
+                      |lhs| NIL)))
+                   |spadreplace|))))))))))))
+(DEFUN |optDeltaEntry,quoteSelector| (|x| |e|)
   (PROG ()
     (RETURN
-     (COND ((NULL (IDENTP |x|)) |x|) ((|get| |x| '|value| |$e|) |x|)
+     (COND ((NULL (IDENTP |x|)) |x|) ((|get| |x| '|value| |e|) |x|)
            ((EQ |x| '$) |x|) ('T (MKQ |x|))))))
- 
-; genDeltaEntry opMmPair ==
+
+; countXLAM(var, rhs) ==
+;     -- return how many times does var appear in rhs
+;     not CONSP rhs => if var = rhs then 1 else 0
+;     COUNT(var, rhs)
+
+(DEFUN |countXLAM| (|var| |rhs|)
+  (PROG ()
+    (RETURN
+     (COND ((NULL (CONSP |rhs|)) (COND ((EQUAL |var| |rhs|) 1) (#1='T 0)))
+           (#1# (COUNT |var| |rhs|))))))
+
+; genDeltaEntry(opMmPair, e) ==
 ; --called from compApplyModemap
 ; --$NRTdeltaLength=0.. always equals length of $NRTdeltaList
 ;   $compUniquelyIfTrue: local:= false
 ;   [op,[dc,:sig],[.,cform:=[eltOrConst,.,nsig]]] := opMmPair
-;   if $profileCompiler = true then profileRecord(dc,op,sig)
 ;   eltOrConst = 'XLAM => cform
 ;   if atom dc then
 ;     dc = "$" => nsig := sig
 ;     if NUMBERP nsig then nsig := substitute('$,dc,substitute("$$","$",sig))
 ;     -- following hack needed to invert Rep to $ substitution
 ; --  if odc = 'Rep and cform is [.,.,osig] then sig:=osig
-;   newimp := optDeltaEntry(op,nsig,dc,eltOrConst) => newimp
-;   setDifference(listOfBoundVars dc,$functorLocalParameters) ~= [] =>
+;   newimp := optDeltaEntry(op, nsig, dc, eltOrConst, e) => newimp
+;   setDifference(listOfBoundVars(dc, e), $functorLocalParameters) ~= [] =>
 ;     ['applyFun,['compiledLookupCheck,MKQ op,
-;          mkList consSig(nsig,dc),consDomainForm(dc,nil)]]
+;          mkList consSig(nsig, dc, e), consDomainForm(dc, nil, e)]]
 ;   odc := dc
 ;   if null atom dc then dc := substitute("$$",'$,dc)
 ;  --   sig := substitute('$,dc,sig)
 ;  --   cform := substitute('$,dc,cform)
 ;   opModemapPair :=
-;     [op,[dc,:[genDeltaSig x for x in nsig]],['T,cform]] -- force pred to T
+;     -- force pred to T
+;     [op, [dc, :[genDeltaSig(x, e) for x in nsig]], ['T,cform]]
 ;   if null NRTassocIndex dc and dc ~= $NRTaddForm and
 ;     (member(dc,$functorLocalParameters) or null atom dc) then
 ;     --create "domain" entry to $NRTdeltaList
-;       $NRTdeltaList:= [['domain,NRTaddInner dc,:dc],:$NRTdeltaList]
+;       $NRTdeltaList := [['domain, NRTaddInner(dc, e), :dc], :$NRTdeltaList]
 ;       saveNRTdeltaListComp:= $NRTdeltaListComp:=[nil,:$NRTdeltaListComp]
 ;       $NRTdeltaLength := $NRTdeltaLength+1
-;       compEntry := (compOrCroak(odc, $EmptyMode, $e)).expr
+;       compEntry := (compOrCroak(odc, $EmptyMode, e)).expr
 ;       RPLACA(saveNRTdeltaListComp,compEntry)
 ;   u :=
 ;     [eltOrConst,'$,$NRTbase+$NRTdeltaLength-index] where index ==
@@ -458,8 +516,8 @@
 ;       $NRTdeltaLength := $NRTdeltaLength+1
 ;       0
 ;   u
- 
-(DEFUN |genDeltaEntry| (|opMmPair|)
+
+(DEFUN |genDeltaEntry| (|opMmPair| |e|)
   (PROG (|$compUniquelyIfTrue| |u| |n| |compEntry| |saveNRTdeltaListComp|
          |opModemapPair| |odc| |newimp| |nsig| |eltOrConst| |cform| |sig| |dc|
          |op|)
@@ -473,7 +531,6 @@
       (SETQ |cform| (CAR . #2=((CDADDR . #1#))))
       (SETQ |eltOrConst| (CAAR . #2#))
       (SETQ |nsig| (CADDAR . #2#))
-      (COND ((EQUAL |$profileCompiler| T) (|profileRecord| |dc| |op| |sig|)))
       (COND ((EQ |eltOrConst| 'XLAM) |cform|)
             (#3='T
              (PROGN
@@ -487,14 +544,15 @@
                                  (|substitute| '$ |dc|
                                   (|substitute| '$$ '$ |sig|)))))))))
               (COND
-               ((SETQ |newimp| (|optDeltaEntry| |op| |nsig| |dc| |eltOrConst|))
+               ((SETQ |newimp|
+                        (|optDeltaEntry| |op| |nsig| |dc| |eltOrConst| |e|))
                 |newimp|)
-               ((SETDIFFERENCE (|listOfBoundVars| |dc|)
+               ((SETDIFFERENCE (|listOfBoundVars| |dc| |e|)
                                |$functorLocalParameters|)
                 (LIST '|applyFun|
                       (LIST '|compiledLookupCheck| (MKQ |op|)
-                            (|mkList| (|consSig| |nsig| |dc|))
-                            (|consDomainForm| |dc| NIL))))
+                            (|mkList| (|consSig| |nsig| |dc| |e|))
+                            (|consDomainForm| |dc| NIL |e|))))
                (#3#
                 (PROGN
                  (SETQ |odc| |dc|)
@@ -503,19 +561,20 @@
                  (SETQ |opModemapPair|
                          (LIST |op|
                                (CONS |dc|
-                                     ((LAMBDA (|bfVar#23| |bfVar#22| |x|)
+                                     ((LAMBDA (|bfVar#24| |bfVar#23| |x|)
                                         (LOOP
                                          (COND
-                                          ((OR (ATOM |bfVar#22|)
+                                          ((OR (ATOM |bfVar#23|)
                                                (PROGN
-                                                (SETQ |x| (CAR |bfVar#22|))
+                                                (SETQ |x| (CAR |bfVar#23|))
                                                 NIL))
-                                           (RETURN (NREVERSE |bfVar#23|)))
+                                           (RETURN (NREVERSE |bfVar#24|)))
                                           (#3#
-                                           (SETQ |bfVar#23|
-                                                   (CONS (|genDeltaSig| |x|)
-                                                         |bfVar#23|))))
-                                         (SETQ |bfVar#22| (CDR |bfVar#22|))))
+                                           (SETQ |bfVar#24|
+                                                   (CONS
+                                                    (|genDeltaSig| |x| |e|)
+                                                    |bfVar#24|))))
+                                         (SETQ |bfVar#23| (CDR |bfVar#23|))))
                                       NIL |nsig| NIL))
                                (LIST 'T |cform|)))
                  (COND
@@ -525,14 +584,15 @@
                             (NULL (ATOM |dc|))))
                    (SETQ |$NRTdeltaList|
                            (CONS
-                            (CONS '|domain| (CONS (|NRTaddInner| |dc|) |dc|))
+                            (CONS '|domain|
+                                  (CONS (|NRTaddInner| |dc| |e|) |dc|))
                             |$NRTdeltaList|))
                    (SETQ |saveNRTdeltaListComp|
                            (SETQ |$NRTdeltaListComp|
                                    (CONS NIL |$NRTdeltaListComp|)))
                    (SETQ |$NRTdeltaLength| (+ |$NRTdeltaLength| 1))
                    (SETQ |compEntry|
-                           (CAR (|compOrCroak| |odc| |$EmptyMode| |$e|)))
+                           (CAR (|compOrCroak| |odc| |$EmptyMode| |e|)))
                    (RPLACA |saveNRTdeltaListComp| |compEntry|)))
                  (SETQ |u|
                          (LIST |eltOrConst| '$
@@ -553,12 +613,12 @@
                                              (+ |$NRTdeltaLength| 1))
                                      0))))))
                  |u|))))))))))
- 
-; genDeltaSig x ==
-;   NRTgetLocalIndex x
- 
-(DEFUN |genDeltaSig| (|x|) (PROG () (RETURN (|NRTgetLocalIndex| |x|))))
- 
+
+; genDeltaSig(x, e) ==
+;   NRTgetLocalIndex(x, e)
+
+(DEFUN |genDeltaSig| (|x| |e|) (PROG () (RETURN (|NRTgetLocalIndex| |x| |e|))))
+
 ; NRTassocIndex x == --returns index of "domain" entry x in al
 ;   NULL x => x
 ;   x = $NRTaddForm => 5
@@ -566,30 +626,30 @@
 ;             | first(y) = 'domain and NTH(1, y) = x] =>
 ;     $NRTbase + $NRTdeltaLength - k
 ;   nil
- 
+
 (DEFUN |NRTassocIndex| (|x|)
   (PROG (|k|)
     (RETURN
      (COND ((NULL |x|) |x|) ((EQUAL |x| |$NRTaddForm|) 5)
            ((SETQ |k|
-                    ((LAMBDA (|bfVar#25| |i| |bfVar#24| |y|)
+                    ((LAMBDA (|bfVar#26| |i| |bfVar#25| |y|)
                        (LOOP
                         (COND
-                         ((OR (ATOM |bfVar#24|)
-                              (PROGN (SETQ |y| (CAR |bfVar#24|)) NIL))
-                          (RETURN |bfVar#25|))
+                         ((OR (ATOM |bfVar#25|)
+                              (PROGN (SETQ |y| (CAR |bfVar#25|)) NIL))
+                          (RETURN |bfVar#26|))
                          (#1='T
                           (AND (EQ (CAR |y|) '|domain|) (EQUAL (NTH 1 |y|) |x|)
                                (PROGN
-                                (SETQ |bfVar#25| |i|)
-                                (COND (|bfVar#25| (RETURN |bfVar#25|)))))))
+                                (SETQ |bfVar#26| |i|)
+                                (COND (|bfVar#26| (RETURN |bfVar#26|)))))))
                         (SETQ |i| (+ |i| 1))
-                        (SETQ |bfVar#24| (CDR |bfVar#24|))))
+                        (SETQ |bfVar#25| (CDR |bfVar#25|))))
                      NIL 1 |$NRTdeltaList| NIL))
             (- (+ |$NRTbase| |$NRTdeltaLength|) |k|))
            (#1# NIL)))))
- 
-; NRTgetLocalIndex(item) ==
+
+; NRTgetLocalIndex(item, e) ==
 ;   k := NRTassocIndex item => k
 ;   item = $NRTaddForm => 5
 ;   item = '$ => 0
@@ -599,19 +659,19 @@
 ;     nil
 ;   atom item and null MEMQ(item,'($ _$_$))
 ;    and null value =>  --give slots to atoms
-;     $NRTdeltaList:= [['domain,NRTaddInner item,:value],:$NRTdeltaList]
+;     $NRTdeltaList := [['domain, NRTaddInner(item, e), :value], :$NRTdeltaList]
 ;     $NRTdeltaListComp:=[item,:$NRTdeltaListComp]
 ;     $NRTdeltaLength := $NRTdeltaLength+1
 ;     $NRTbase + $NRTdeltaLength - 1
-;   $NRTdeltaList:= [['domain,NRTaddInner item,:value],:$NRTdeltaList]
+;   $NRTdeltaList := [['domain, NRTaddInner(item, e), :value], :$NRTdeltaList]
 ;   saveNRTdeltaListComp:= $NRTdeltaListComp:=[nil,:$NRTdeltaListComp]
 ;   saveIndex := $NRTbase + $NRTdeltaLength
 ;   $NRTdeltaLength := $NRTdeltaLength+1
-;   compEntry := comp_delta_entry(item)
+;   compEntry := comp_delta_entry(item, e)
 ;   RPLACA(saveNRTdeltaListComp,compEntry)
 ;   saveIndex
- 
-(DEFUN |NRTgetLocalIndex| (|item|)
+
+(DEFUN |NRTgetLocalIndex| (|item| |e|)
   (PROG (|k| |value| |saveNRTdeltaListComp| |saveIndex| |compEntry|)
     (RETURN
      (COND ((SETQ |k| (|NRTassocIndex| |item|)) |k|)
@@ -626,7 +686,8 @@
                (PROGN
                 (SETQ |$NRTdeltaList|
                         (CONS
-                         (CONS '|domain| (CONS (|NRTaddInner| |item|) |value|))
+                         (CONS '|domain|
+                               (CONS (|NRTaddInner| |item| |e|) |value|))
                          |$NRTdeltaList|))
                 (SETQ |$NRTdeltaListComp| (CONS |item| |$NRTdeltaListComp|))
                 (SETQ |$NRTdeltaLength| (+ |$NRTdeltaLength| 1))
@@ -635,31 +696,32 @@
                (PROGN
                 (SETQ |$NRTdeltaList|
                         (CONS
-                         (CONS '|domain| (CONS (|NRTaddInner| |item|) |value|))
+                         (CONS '|domain|
+                               (CONS (|NRTaddInner| |item| |e|) |value|))
                          |$NRTdeltaList|))
                 (SETQ |saveNRTdeltaListComp|
                         (SETQ |$NRTdeltaListComp|
                                 (CONS NIL |$NRTdeltaListComp|)))
                 (SETQ |saveIndex| (+ |$NRTbase| |$NRTdeltaLength|))
                 (SETQ |$NRTdeltaLength| (+ |$NRTdeltaLength| 1))
-                (SETQ |compEntry| (|comp_delta_entry| |item|))
+                (SETQ |compEntry| (|comp_delta_entry| |item| |e|))
                 (RPLACA |saveNRTdeltaListComp| |compEntry|)
                 |saveIndex|)))))))))
- 
+
 ; DEFVAR($generatingCall, nil)
- 
+
 (DEFVAR |$generatingCall| NIL)
- 
-; comp_delta_entry(item) ==
+
+; comp_delta_entry(item, e) ==
 ;     $generatingCall and cheap_comp_delta_entry(item) => item
-;     (compOrCroak(item, $EmptyMode, $e)).expr
- 
-(DEFUN |comp_delta_entry| (|item|)
+;     (compOrCroak(item, $EmptyMode, e)).expr
+
+(DEFUN |comp_delta_entry| (|item| |e|)
   (PROG ()
     (RETURN
      (COND ((AND |$generatingCall| (|cheap_comp_delta_entry| |item|)) |item|)
-           ('T (CAR (|compOrCroak| |item| |$EmptyMode| |$e|)))))))
- 
+           ('T (CAR (|compOrCroak| |item| |$EmptyMode| |e|)))))))
+
 ; cheap_comp_delta_entry(item) ==
 ;     item is [op, :args] =>
 ;         not(ATOM(op)) => false
@@ -673,7 +735,7 @@
 ;                 cheap_comp_delta_entry(arg)
 ;         ok
 ;     false
- 
+
 (DEFUN |cheap_comp_delta_entry| (|item|)
   (PROG (|op| |args| |cosig| |ok|)
     (RETURN
@@ -685,59 +747,61 @@
              (#1#
               (PROGN
                (SETQ |ok| T)
-               ((LAMBDA (|bfVar#26| |arg| |bfVar#27| |tp|)
+               ((LAMBDA (|bfVar#27| |arg| |bfVar#28| |tp|)
                   (LOOP
                    (COND
-                    ((OR (ATOM |bfVar#26|)
-                         (PROGN (SETQ |arg| (CAR |bfVar#26|)) NIL)
-                         (ATOM |bfVar#27|)
-                         (PROGN (SETQ |tp| (CAR |bfVar#27|)) NIL) (NOT |ok|))
+                    ((OR (ATOM |bfVar#27|)
+                         (PROGN (SETQ |arg| (CAR |bfVar#27|)) NIL)
+                         (ATOM |bfVar#28|)
+                         (PROGN (SETQ |tp| (CAR |bfVar#28|)) NIL) (NOT |ok|))
                      (RETURN NIL))
                     (#1#
                      (SETQ |ok|
                              (COND ((NULL |tp|) NIL) ((EQ |arg| '$) T)
                                    ((MEMBER |arg| |$functorLocalParameters|) T)
                                    (#1# (|cheap_comp_delta_entry| |arg|))))))
-                   (SETQ |bfVar#26| (CDR |bfVar#26|))
-                   (SETQ |bfVar#27| (CDR |bfVar#27|))))
+                   (SETQ |bfVar#27| (CDR |bfVar#27|))
+                   (SETQ |bfVar#28| (CDR |bfVar#28|))))
                 |args| NIL (CDR |cosig|) NIL)
                |ok|))))
       (#1# NIL)))))
- 
-; NRTassignCapsuleFunctionSlot(op,sig) ==
+
+; NRTassignCapsuleFunctionSlot(op, sig, base_shell, e) ==
 ; --called from compDefineCapsuleFunction
 ;   opSig := [op,sig]
-;   [.,.,implementation] := NRTisExported? opSig or return nil
+;   [., ., implementation] := NRTisExported?(opSig, base_shell) or return nil
 ;     --if opSig is not exported, it is local and need not be assigned
 ;   if $insideCategoryPackageIfTrue then
 ;       sig := substitute('$,CADR($functorForm),sig)
-;   sig := [genDeltaSig x for x in sig]
+;   sig := [genDeltaSig(x, e) for x in sig]
 ;   opModemapPair := [op,['_$,:sig],['T,implementation]]
 ;   POSN1(opModemapPair,$NRTdeltaList) => nil   --already there
 ;   $NRTdeltaList:= [opModemapPair,:$NRTdeltaList]
 ;   $NRTdeltaListComp := [nil,:$NRTdeltaListComp]
 ;   $NRTdeltaLength := $NRTdeltaLength+1
- 
-(DEFUN |NRTassignCapsuleFunctionSlot| (|op| |sig|)
+
+(DEFUN |NRTassignCapsuleFunctionSlot| (|op| |sig| |base_shell| |e|)
   (PROG (|opSig| |LETTMP#1| |implementation| |opModemapPair|)
     (RETURN
      (PROGN
       (SETQ |opSig| (LIST |op| |sig|))
-      (SETQ |LETTMP#1| (OR (|NRTisExported?| |opSig|) (RETURN NIL)))
+      (SETQ |LETTMP#1|
+              (OR (|NRTisExported?| |opSig| |base_shell|) (RETURN NIL)))
       (SETQ |implementation| (CADDR |LETTMP#1|))
       (COND
        (|$insideCategoryPackageIfTrue|
         (SETQ |sig| (|substitute| '$ (CADR |$functorForm|) |sig|))))
       (SETQ |sig|
-              ((LAMBDA (|bfVar#29| |bfVar#28| |x|)
+              ((LAMBDA (|bfVar#30| |bfVar#29| |x|)
                  (LOOP
                   (COND
-                   ((OR (ATOM |bfVar#28|)
-                        (PROGN (SETQ |x| (CAR |bfVar#28|)) NIL))
-                    (RETURN (NREVERSE |bfVar#29|)))
+                   ((OR (ATOM |bfVar#29|)
+                        (PROGN (SETQ |x| (CAR |bfVar#29|)) NIL))
+                    (RETURN (NREVERSE |bfVar#30|)))
                    (#1='T
-                    (SETQ |bfVar#29| (CONS (|genDeltaSig| |x|) |bfVar#29|))))
-                  (SETQ |bfVar#28| (CDR |bfVar#28|))))
+                    (SETQ |bfVar#30|
+                            (CONS (|genDeltaSig| |x| |e|) |bfVar#30|))))
+                  (SETQ |bfVar#29| (CDR |bfVar#29|))))
                NIL |sig| NIL))
       (SETQ |opModemapPair|
               (LIST |op| (CONS '$ |sig|) (LIST 'T |implementation|)))
@@ -747,81 +811,77 @@
               (SETQ |$NRTdeltaList| (CONS |opModemapPair| |$NRTdeltaList|))
               (SETQ |$NRTdeltaListComp| (CONS NIL |$NRTdeltaListComp|))
               (SETQ |$NRTdeltaLength| (+ |$NRTdeltaLength| 1)))))))))
- 
-; NRTisExported? opSig ==
-;   or/[u for u in $domainShell.1 | u.0 = opSig]
- 
-(DEFUN |NRTisExported?| (|opSig|)
+
+; NRTisExported?(opSig, base_shell) ==
+;   or/[u for u in base_shell.1 | u.0 = opSig]
+
+(DEFUN |NRTisExported?| (|opSig| |base_shell|)
   (PROG ()
     (RETURN
-     ((LAMBDA (|bfVar#31| |bfVar#30| |u|)
+     ((LAMBDA (|bfVar#32| |bfVar#31| |u|)
         (LOOP
          (COND
-          ((OR (ATOM |bfVar#30|) (PROGN (SETQ |u| (CAR |bfVar#30|)) NIL))
-           (RETURN |bfVar#31|))
+          ((OR (ATOM |bfVar#31|) (PROGN (SETQ |u| (CAR |bfVar#31|)) NIL))
+           (RETURN |bfVar#32|))
           ('T
            (AND (EQUAL (ELT |u| 0) |opSig|)
                 (PROGN
-                 (SETQ |bfVar#31| |u|)
-                 (COND (|bfVar#31| (RETURN |bfVar#31|)))))))
-         (SETQ |bfVar#30| (CDR |bfVar#30|))))
-      NIL (ELT |$domainShell| 1) NIL))))
- 
-; consOpSig(op,sig,dc) ==
-;   if null atom op then
-;     keyedSystemError("S2GE0016",['"consOpSig",'"bad operator in table"])
-;   mkList [MKQ op,mkList consSig(sig,dc)]
- 
-(DEFUN |consOpSig| (|op| |sig| |dc|)
+                 (SETQ |bfVar#32| |u|)
+                 (COND (|bfVar#32| (RETURN |bfVar#32|)))))))
+         (SETQ |bfVar#31| (CDR |bfVar#31|))))
+      NIL (ELT |base_shell| 1) NIL))))
+
+; consSig(sig, dc, e) == [consDomainName(sigpart, dc, e) for sigpart in sig]
+
+(DEFUN |consSig| (|sig| |dc| |e|)
   (PROG ()
     (RETURN
-     (PROGN
-      (COND
-       ((NULL (ATOM |op|))
-        (|keyedSystemError| 'S2GE0016
-         (LIST "consOpSig" "bad operator in table"))))
-      (|mkList| (LIST (MKQ |op|) (|mkList| (|consSig| |sig| |dc|))))))))
- 
-; consSig(sig,dc) == [consDomainName(sigpart,dc) for sigpart in sig]
- 
-(DEFUN |consSig| (|sig| |dc|)
-  (PROG ()
-    (RETURN
-     ((LAMBDA (|bfVar#33| |bfVar#32| |sigpart|)
+     ((LAMBDA (|bfVar#34| |bfVar#33| |sigpart|)
         (LOOP
          (COND
-          ((OR (ATOM |bfVar#32|) (PROGN (SETQ |sigpart| (CAR |bfVar#32|)) NIL))
-           (RETURN (NREVERSE |bfVar#33|)))
+          ((OR (ATOM |bfVar#33|) (PROGN (SETQ |sigpart| (CAR |bfVar#33|)) NIL))
+           (RETURN (NREVERSE |bfVar#34|)))
           ('T
-           (SETQ |bfVar#33|
-                   (CONS (|consDomainName| |sigpart| |dc|) |bfVar#33|))))
-         (SETQ |bfVar#32| (CDR |bfVar#32|))))
+           (SETQ |bfVar#34|
+                   (CONS (|consDomainName| |sigpart| |dc| |e|) |bfVar#34|))))
+         (SETQ |bfVar#33| (CDR |bfVar#33|))))
       NIL |sig| NIL))))
- 
-; consDomainName(x,dc) ==
+
+; maybe_cons_dn(y, dc, e, c) ==
+;     c => consDomainName(y, dc, e)
+;     y
+
+(DEFUN |maybe_cons_dn| (|y| |dc| |e| |c|)
+  (PROG () (RETURN (COND (|c| (|consDomainName| |y| |dc| |e|)) ('T |y|)))))
+
+; consDomainName(x, dc, e) ==
 ;   x = dc => ''$
 ;   x = '$ => ''$
 ;   x = "$$" => ['devaluate,'$]
 ;   x is [op,:argl] =>
 ;     (op = 'Record) or (op = 'Union and argl is [[":",:.],:.])  =>
 ;        mkList [MKQ op,
-;          :[['LIST,MKQ '_:,MKQ tag,consDomainName(dom,dc)]
+;          :[['LIST, MKQ '_:, MKQ tag, consDomainName(dom, dc, e)]
 ;                    for [.,tag,dom] in argl]]
 ;     isFunctor op or op = 'Mapping or constructor? op =>
 ;          -- call to constructor? needed if op was compiled in $bootStrapMode
-;         mkList [MKQ op,:[consDomainName(y,dc) for y in argl]]
+;         not(op = 'Mapping or op = 'Union) and
+;           (cosig := GETDATABASE(op, 'COSIG)) =>
+;             mkList([MKQ op, :[maybe_cons_dn(y, dc, e, c) for y in argl
+;                               for c in rest(cosig)]])
+;         mkList [MKQ op, :[consDomainName(y, dc, e) for y in argl]]
 ;     substitute('$,"$$",x)
 ;   x = [] => x
 ;   (y := LASSOC(x,$devaluateList)) => y
 ;   k:=NRTassocIndex x =>
 ;     ['devaluate,['ELT,'$,k]]
-;   get(x,'value,$e) =>
-;     isDomainForm(x,$e) => ['devaluate,x]
+;   get(x, 'value, e) =>
+;     isDomainForm(x, e) => ['devaluate, x]
 ;     x
 ;   MKQ x
- 
-(DEFUN |consDomainName| (|x| |dc|)
-  (PROG (|op| |argl| |ISTMP#1| |tag| |ISTMP#2| |dom| |y| |k|)
+
+(DEFUN |consDomainName| (|x| |dc| |e|)
+  (PROG (|op| |argl| |ISTMP#1| |tag| |ISTMP#2| |dom| |cosig| |y| |k|)
     (RETURN
      (COND ((EQUAL |x| |dc|) ''$) ((EQ |x| '$) ''$)
            ((EQ |x| '$$) (LIST '|devaluate| '$))
@@ -835,16 +895,16 @@
                         (AND (CONSP |ISTMP#1|) (EQ (CAR |ISTMP#1|) '|:|)))))
               (|mkList|
                (CONS (MKQ |op|)
-                     ((LAMBDA (|bfVar#36| |bfVar#35| |bfVar#34|)
+                     ((LAMBDA (|bfVar#37| |bfVar#36| |bfVar#35|)
                         (LOOP
                          (COND
-                          ((OR (ATOM |bfVar#35|)
-                               (PROGN (SETQ |bfVar#34| (CAR |bfVar#35|)) NIL))
-                           (RETURN (NREVERSE |bfVar#36|)))
+                          ((OR (ATOM |bfVar#36|)
+                               (PROGN (SETQ |bfVar#35| (CAR |bfVar#36|)) NIL))
+                           (RETURN (NREVERSE |bfVar#37|)))
                           (#1#
-                           (AND (CONSP |bfVar#34|)
+                           (AND (CONSP |bfVar#35|)
                                 (PROGN
-                                 (SETQ |ISTMP#1| (CDR |bfVar#34|))
+                                 (SETQ |ISTMP#1| (CDR |bfVar#35|))
                                  (AND (CONSP |ISTMP#1|)
                                       (PROGN
                                        (SETQ |tag| (CAR |ISTMP#1|))
@@ -854,50 +914,73 @@
                                             (PROGN
                                              (SETQ |dom| (CAR |ISTMP#2|))
                                              #1#)))))
-                                (SETQ |bfVar#36|
+                                (SETQ |bfVar#37|
                                         (CONS
                                          (LIST 'LIST (MKQ '|:|) (MKQ |tag|)
-                                               (|consDomainName| |dom| |dc|))
-                                         |bfVar#36|)))))
-                         (SETQ |bfVar#35| (CDR |bfVar#35|))))
+                                               (|consDomainName| |dom| |dc|
+                                                |e|))
+                                         |bfVar#37|)))))
+                         (SETQ |bfVar#36| (CDR |bfVar#36|))))
                       NIL |argl| NIL))))
              ((OR (|isFunctor| |op|) (EQ |op| '|Mapping|)
                   (|constructor?| |op|))
-              (|mkList|
-               (CONS (MKQ |op|)
-                     ((LAMBDA (|bfVar#38| |bfVar#37| |y|)
-                        (LOOP
-                         (COND
-                          ((OR (ATOM |bfVar#37|)
-                               (PROGN (SETQ |y| (CAR |bfVar#37|)) NIL))
-                           (RETURN (NREVERSE |bfVar#38|)))
-                          (#1#
-                           (SETQ |bfVar#38|
-                                   (CONS (|consDomainName| |y| |dc|)
-                                         |bfVar#38|))))
-                         (SETQ |bfVar#37| (CDR |bfVar#37|))))
-                      NIL |argl| NIL))))
+              (COND
+               ((AND (NULL (OR (EQ |op| '|Mapping|) (EQ |op| '|Union|)))
+                     (SETQ |cosig| (GETDATABASE |op| 'COSIG)))
+                (|mkList|
+                 (CONS (MKQ |op|)
+                       ((LAMBDA (|bfVar#40| |bfVar#38| |y| |bfVar#39| |c|)
+                          (LOOP
+                           (COND
+                            ((OR (ATOM |bfVar#38|)
+                                 (PROGN (SETQ |y| (CAR |bfVar#38|)) NIL)
+                                 (ATOM |bfVar#39|)
+                                 (PROGN (SETQ |c| (CAR |bfVar#39|)) NIL))
+                             (RETURN (NREVERSE |bfVar#40|)))
+                            (#1#
+                             (SETQ |bfVar#40|
+                                     (CONS (|maybe_cons_dn| |y| |dc| |e| |c|)
+                                           |bfVar#40|))))
+                           (SETQ |bfVar#38| (CDR |bfVar#38|))
+                           (SETQ |bfVar#39| (CDR |bfVar#39|))))
+                        NIL |argl| NIL (CDR |cosig|) NIL))))
+               (#1#
+                (|mkList|
+                 (CONS (MKQ |op|)
+                       ((LAMBDA (|bfVar#42| |bfVar#41| |y|)
+                          (LOOP
+                           (COND
+                            ((OR (ATOM |bfVar#41|)
+                                 (PROGN (SETQ |y| (CAR |bfVar#41|)) NIL))
+                             (RETURN (NREVERSE |bfVar#42|)))
+                            (#1#
+                             (SETQ |bfVar#42|
+                                     (CONS (|consDomainName| |y| |dc| |e|)
+                                           |bfVar#42|))))
+                           (SETQ |bfVar#41| (CDR |bfVar#41|))))
+                        NIL |argl| NIL))))))
              (#1# (|substitute| '$ '$$ |x|))))
            ((NULL |x|) |x|) ((SETQ |y| (LASSOC |x| |$devaluateList|)) |y|)
            ((SETQ |k| (|NRTassocIndex| |x|))
             (LIST '|devaluate| (LIST 'ELT '$ |k|)))
-           ((|get| |x| '|value| |$e|)
-            (COND ((|isDomainForm| |x| |$e|) (LIST '|devaluate| |x|))
+           ((|get| |x| '|value| |e|)
+            (COND ((|isDomainForm| |x| |e|) (LIST '|devaluate| |x|))
                   (#1# |x|)))
            (#1# (MKQ |x|))))))
- 
-; consDomainForm(x,dc) ==
+
+; consDomainForm(x, dc, e) ==
 ;   x = '$ => '$
 ;   x is [op,:argl] =>
-;      op = ":" and argl is [tag, value] => [op, tag, consDomainForm(value,dc)]
-;      [op,:[consDomainForm(y,dc) for y in argl]]
+;       op = ":" and argl is [tag, value] =>
+;           [op, tag, consDomainForm(value, dc, e)]
+;       [op, :[consDomainForm(y, dc, e) for y in argl]]
 ;   x = [] => x
 ;   (y := LASSOC(x,$devaluateList)) => y
 ;   k:=NRTassocIndex x => ['ELT,'$,k]
-;   get(x,'value,$e) or get(x,'mode,$e) => x
+;   get(x, 'value, e) or get(x, 'mode, e) => x
 ;   MKQ x
- 
-(DEFUN |consDomainForm| (|x| |dc|)
+
+(DEFUN |consDomainForm| (|x| |dc| |e|)
   (PROG (|op| |argl| |tag| |ISTMP#1| |value| |y| |k|)
     (RETURN
      (COND ((EQ |x| '$) '$)
@@ -910,26 +993,26 @@
                     (SETQ |ISTMP#1| (CDR |argl|))
                     (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
                          (PROGN (SETQ |value| (CAR |ISTMP#1|)) #1#))))
-              (LIST |op| |tag| (|consDomainForm| |value| |dc|)))
+              (LIST |op| |tag| (|consDomainForm| |value| |dc| |e|)))
              (#1#
               (CONS |op|
-                    ((LAMBDA (|bfVar#40| |bfVar#39| |y|)
+                    ((LAMBDA (|bfVar#44| |bfVar#43| |y|)
                        (LOOP
                         (COND
-                         ((OR (ATOM |bfVar#39|)
-                              (PROGN (SETQ |y| (CAR |bfVar#39|)) NIL))
-                          (RETURN (NREVERSE |bfVar#40|)))
+                         ((OR (ATOM |bfVar#43|)
+                              (PROGN (SETQ |y| (CAR |bfVar#43|)) NIL))
+                          (RETURN (NREVERSE |bfVar#44|)))
                          (#1#
-                          (SETQ |bfVar#40|
-                                  (CONS (|consDomainForm| |y| |dc|)
-                                        |bfVar#40|))))
-                        (SETQ |bfVar#39| (CDR |bfVar#39|))))
+                          (SETQ |bfVar#44|
+                                  (CONS (|consDomainForm| |y| |dc| |e|)
+                                        |bfVar#44|))))
+                        (SETQ |bfVar#43| (CDR |bfVar#43|))))
                      NIL |argl| NIL)))))
            ((NULL |x|) |x|) ((SETQ |y| (LASSOC |x| |$devaluateList|)) |y|)
            ((SETQ |k| (|NRTassocIndex| |x|)) (LIST 'ELT '$ |k|))
-           ((OR (|get| |x| '|value| |$e|) (|get| |x| '|mode| |$e|)) |x|)
+           ((OR (|get| |x| '|value| |e|) (|get| |x| '|mode| |e|)) |x|)
            (#1# (MKQ |x|))))))
- 
+
 ; get_self_preds2(p, acc) ==
 ;     p is [op, :l] =>
 ;         MEMQ(op, '(AND and OR or NOT not)) => get_self_preds1(l, acc)
@@ -938,7 +1021,7 @@
 ;             acc
 ;         acc
 ;     acc
- 
+
 (DEFUN |get_self_preds2| (|p| |acc|)
   (PROG (|op| |l|)
     (RETURN
@@ -952,31 +1035,31 @@
          (COND ((EQ (CAR |l|) '$) (CONS (CADR |l|) |acc|)) (#1# |acc|)))
         (#1# |acc|)))
       (#1# |acc|)))))
- 
+
 ; get_self_preds1(pl, acc) ==
 ;     for p in pl repeat
 ;         acc := get_self_preds2(p, acc)
 ;     acc
- 
+
 (DEFUN |get_self_preds1| (|pl| |acc|)
   (PROG ()
     (RETURN
      (PROGN
-      ((LAMBDA (|bfVar#41| |p|)
+      ((LAMBDA (|bfVar#45| |p|)
          (LOOP
           (COND
-           ((OR (ATOM |bfVar#41|) (PROGN (SETQ |p| (CAR |bfVar#41|)) NIL))
+           ((OR (ATOM |bfVar#45|) (PROGN (SETQ |p| (CAR |bfVar#45|)) NIL))
             (RETURN NIL))
            ('T (SETQ |acc| (|get_self_preds2| |p| |acc|))))
-          (SETQ |bfVar#41| (CDR |bfVar#41|))))
+          (SETQ |bfVar#45| (CDR |bfVar#45|))))
        |pl| NIL)
       |acc|))))
- 
+
 ; get_self_preds(pl) == REMDUP get_self_preds1(pl, nil)
- 
+
 (DEFUN |get_self_preds| (|pl|)
   (PROG () (RETURN (REMDUP (|get_self_preds1| |pl| NIL)))))
- 
+
 ; boolean_subst_and(l, sub_data) ==
 ;     res := []
 ;     for cond in l repeat
@@ -989,16 +1072,16 @@
 ;     res = [] => true
 ;     #res = 1 => first(res)
 ;     ["AND", :nreverse(res)]
- 
+
 (DEFUN |boolean_subst_and| (|l| |sub_data|)
   (PROG (|res| |nc|)
     (RETURN
      (PROGN
       (SETQ |res| NIL)
-      ((LAMBDA (|bfVar#42| |cond|)
+      ((LAMBDA (|bfVar#46| |cond|)
          (LOOP
           (COND
-           ((OR (ATOM |bfVar#42|) (PROGN (SETQ |cond| (CAR |bfVar#42|)) NIL))
+           ((OR (ATOM |bfVar#46|) (PROGN (SETQ |cond| (CAR |bfVar#46|)) NIL))
             (RETURN NIL))
            (#1='T
             (PROGN
@@ -1007,11 +1090,11 @@
                    ((NULL |nc|)
                     (PROGN (SETQ |res| (LIST |nc|)) (RETURN (CAR |res|))))
                    (#1# (SETQ |res| (CONS |nc| |res|)))))))
-          (SETQ |bfVar#42| (CDR |bfVar#42|))))
+          (SETQ |bfVar#46| (CDR |bfVar#46|))))
        |l| NIL)
       (COND ((NULL |res|) T) ((EQL (LENGTH |res|) 1) (CAR |res|))
             (#1# (CONS 'AND (NREVERSE |res|))))))))
- 
+
 ; boolean_subst_or(l, sub_data) ==
 ;     res := []
 ;     for cond in l repeat
@@ -1024,16 +1107,16 @@
 ;     res = [] => false
 ;     #res = 1 => first(res)
 ;     ["OR", :nreverse(res)]
- 
+
 (DEFUN |boolean_subst_or| (|l| |sub_data|)
   (PROG (|res| |nc|)
     (RETURN
      (PROGN
       (SETQ |res| NIL)
-      ((LAMBDA (|bfVar#43| |cond|)
+      ((LAMBDA (|bfVar#47| |cond|)
          (LOOP
           (COND
-           ((OR (ATOM |bfVar#43|) (PROGN (SETQ |cond| (CAR |bfVar#43|)) NIL))
+           ((OR (ATOM |bfVar#47|) (PROGN (SETQ |cond| (CAR |bfVar#47|)) NIL))
             (RETURN NIL))
            (#1='T
             (PROGN
@@ -1042,18 +1125,18 @@
               ((EQUAL |nc| T)
                (PROGN (SETQ |res| (LIST |nc|)) (RETURN (CAR |res|))))
               ((NULL |nc|) '|iterate|) (#1# (SETQ |res| (CONS |nc| |res|)))))))
-          (SETQ |bfVar#43| (CDR |bfVar#43|))))
+          (SETQ |bfVar#47| (CDR |bfVar#47|))))
        |l| NIL)
       (COND ((NULL |res|) NIL) ((EQL (LENGTH |res|) 1) (CAR |res|))
             (#1# (CONS 'OR (NREVERSE |res|))))))))
- 
+
 ; boolean_subst_not(cond, sub_data) ==
 ;    sub_data1 := rest(rest(sub_data))
 ;    nc := boolean_subst1(cond, [FUNCTION boolean_substitute1, nil, :sub_data1])
 ;    nc = true => false
 ;    not(nc) => true
 ;    ["NOT", nc]
- 
+
 (DEFUN |boolean_subst_not| (|cond| |sub_data|)
   (PROG (|sub_data1| |nc|)
     (RETURN
@@ -1063,18 +1146,18 @@
               (|boolean_subst1| |cond|
                (CONS #'|boolean_substitute1| (CONS NIL |sub_data1|))))
       (COND ((EQUAL |nc| T) NIL) ((NULL |nc|) T) ('T (LIST 'NOT |nc|)))))))
- 
+
 ; boolean_do_subst1(cond, sub_data) ==
 ;     fun := first(sub_data)
 ;     FUNCALL(fun, cond, rest(sub_data))
- 
+
 (DEFUN |boolean_do_subst1| (|cond| |sub_data|)
   (PROG (|fun|)
     (RETURN
      (PROGN
       (SETQ |fun| (CAR |sub_data|))
       (FUNCALL |fun| |cond| (CDR |sub_data|))))))
- 
+
 ; boolean_subst1(cond, sub_data) ==
 ;     cond = true => cond
 ;     cond is [op, :l] =>
@@ -1083,7 +1166,7 @@
 ;         MEMQ(op, '(NOT not)) => boolean_subst_not(first(l), sub_data)
 ;         boolean_do_subst1(cond, sub_data)
 ;     cond
- 
+
 (DEFUN |boolean_subst1| (|cond| |sub_data|)
   (PROG (|op| |l|)
     (RETURN
@@ -1100,7 +1183,7 @@
               (|boolean_subst_not| (CAR |l|) |sub_data|))
              (#1# (|boolean_do_subst1| |cond| |sub_data|))))
            (#1# |cond|)))))
- 
+
 ; boolean_substitute1(cond, sub_data) ==
 ;     sub_data := rest(sub_data)
 ;     good_preds := first(rest(sub_data))
@@ -1109,7 +1192,7 @@
 ;         RPLACA(sub_data, true)
 ;         first(nc)
 ;     cond
- 
+
 (DEFUN |boolean_substitute1| (|cond| |sub_data|)
   (PROG (|good_preds| |nc|)
     (RETURN
@@ -1118,55 +1201,56 @@
       (SETQ |good_preds| (CAR (CDR |sub_data|)))
       (SETQ |nc| (LASSOC |cond| |good_preds|))
       (COND (|nc| (PROGN (RPLACA |sub_data| T) (CAR |nc|))) ('T |cond|))))))
- 
+
 ; boolean_substitute_cond(cond, sub_data) ==
 ;     cond = first(sub_data) =>
 ;         RPLACA(rest(sub_data), true)
 ;         false
 ;     boolean_substitute1(cond, sub_data)
- 
+
 (DEFUN |boolean_substitute_cond| (|cond| |sub_data|)
   (PROG ()
     (RETURN
      (COND
       ((EQUAL |cond| (CAR |sub_data|)) (PROGN (RPLACA (CDR |sub_data|) T) NIL))
       ('T (|boolean_substitute1| |cond| |sub_data|))))))
- 
+
 ; mk_has_dollar_quote(cat) ==
 ;     ["HasCategory", "$", ["QUOTE", cat]]
- 
+
 (DEFUN |mk_has_dollar_quote| (|cat|)
   (PROG () (RETURN (LIST '|HasCategory| '$ (LIST 'QUOTE |cat|)))))
- 
+
 ; boolean_subst(condCats, cats, sub_data1) ==
 ;     [boolean_subst1(cond, [FUNCTION boolean_substitute_cond,
 ;                            mk_has_dollar_quote(cat), :sub_data1])
 ;           for cond in condCats for cat in cats]
- 
+
 (DEFUN |boolean_subst| (|condCats| |cats| |sub_data1|)
   (PROG ()
     (RETURN
-     ((LAMBDA (|bfVar#46| |bfVar#44| |cond| |bfVar#45| |cat|)
+     ((LAMBDA (|bfVar#50| |bfVar#48| |cond| |bfVar#49| |cat|)
         (LOOP
          (COND
-          ((OR (ATOM |bfVar#44|) (PROGN (SETQ |cond| (CAR |bfVar#44|)) NIL)
-               (ATOM |bfVar#45|) (PROGN (SETQ |cat| (CAR |bfVar#45|)) NIL))
-           (RETURN (NREVERSE |bfVar#46|)))
+          ((OR (ATOM |bfVar#48|) (PROGN (SETQ |cond| (CAR |bfVar#48|)) NIL)
+               (ATOM |bfVar#49|) (PROGN (SETQ |cat| (CAR |bfVar#49|)) NIL))
+           (RETURN (NREVERSE |bfVar#50|)))
           ('T
-           (SETQ |bfVar#46|
+           (SETQ |bfVar#50|
                    (CONS
                     (|boolean_subst1| |cond|
                      (CONS #'|boolean_substitute_cond|
                            (CONS (|mk_has_dollar_quote| |cat|) |sub_data1|)))
-                    |bfVar#46|))))
-         (SETQ |bfVar#44| (CDR |bfVar#44|))
-         (SETQ |bfVar#45| (CDR |bfVar#45|))))
+                    |bfVar#50|))))
+         (SETQ |bfVar#48| (CDR |bfVar#48|))
+         (SETQ |bfVar#49| (CDR |bfVar#49|))))
       NIL |condCats| NIL |cats| NIL))))
- 
+
 ; simplify_self_preds1(catvecListMaker, condCats) ==
 ;     self_preds := get_self_preds(condCats)
 ;     self_preds := [cat for p in self_preds | p is ["QUOTE", cat]]
 ;     self_preds = [] => [condCats, false]
+;     found_preds := []
 ;     false_preds := []
 ;     for c1 in self_preds repeat
 ;         op1 := opOf(c1)
@@ -1190,51 +1274,52 @@
 ;     if not(first(sub_data1)) then
 ;         userError(["simplify_self_preds1: cannot simplify", $op, self_preds])
 ;     [condCats, first(sub_data1)]
- 
+
 (DEFUN |simplify_self_preds1| (|catvecListMaker| |condCats|)
-  (PROG (|self_preds| |ISTMP#1| |cat| |false_preds| |op1| |hl| |found|
-         |found_preds| |cond| |good_preds| |sub_data1|)
+  (PROG (|self_preds| |ISTMP#1| |cat| |found_preds| |false_preds| |op1| |hl|
+         |found| |cond| |good_preds| |sub_data1|)
     (RETURN
      (PROGN
       (SETQ |self_preds| (|get_self_preds| |condCats|))
       (SETQ |self_preds|
-              ((LAMBDA (|bfVar#48| |bfVar#47| |p|)
+              ((LAMBDA (|bfVar#52| |bfVar#51| |p|)
                  (LOOP
                   (COND
-                   ((OR (ATOM |bfVar#47|)
-                        (PROGN (SETQ |p| (CAR |bfVar#47|)) NIL))
-                    (RETURN (NREVERSE |bfVar#48|)))
+                   ((OR (ATOM |bfVar#51|)
+                        (PROGN (SETQ |p| (CAR |bfVar#51|)) NIL))
+                    (RETURN (NREVERSE |bfVar#52|)))
                    (#1='T
                     (AND (CONSP |p|) (EQ (CAR |p|) 'QUOTE)
                          (PROGN
                           (SETQ |ISTMP#1| (CDR |p|))
                           (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
                                (PROGN (SETQ |cat| (CAR |ISTMP#1|)) #1#)))
-                         (SETQ |bfVar#48| (CONS |cat| |bfVar#48|)))))
-                  (SETQ |bfVar#47| (CDR |bfVar#47|))))
+                         (SETQ |bfVar#52| (CONS |cat| |bfVar#52|)))))
+                  (SETQ |bfVar#51| (CDR |bfVar#51|))))
                NIL |self_preds| NIL))
       (COND ((NULL |self_preds|) (LIST |condCats| NIL))
             (#1#
              (PROGN
+              (SETQ |found_preds| NIL)
               (SETQ |false_preds| NIL)
-              ((LAMBDA (|bfVar#49| |c1|)
+              ((LAMBDA (|bfVar#53| |c1|)
                  (LOOP
                   (COND
-                   ((OR (ATOM |bfVar#49|)
-                        (PROGN (SETQ |c1| (CAR |bfVar#49|)) NIL))
+                   ((OR (ATOM |bfVar#53|)
+                        (PROGN (SETQ |c1| (CAR |bfVar#53|)) NIL))
                     (RETURN NIL))
                    (#1#
                     (PROGN
                      (SETQ |op1| (|opOf| |c1|))
                      (SETQ |hl| NIL)
                      (SETQ |found| NIL)
-                     ((LAMBDA (|bfVar#50| |c2| |bfVar#51| |cond|)
+                     ((LAMBDA (|bfVar#54| |c2| |bfVar#55| |cond|)
                         (LOOP
                          (COND
-                          ((OR (ATOM |bfVar#50|)
-                               (PROGN (SETQ |c2| (CAR |bfVar#50|)) NIL)
-                               (ATOM |bfVar#51|)
-                               (PROGN (SETQ |cond| (CAR |bfVar#51|)) NIL))
+                          ((OR (ATOM |bfVar#54|)
+                               (PROGN (SETQ |c2| (CAR |bfVar#54|)) NIL)
+                               (ATOM |bfVar#55|)
+                               (PROGN (SETQ |cond| (CAR |bfVar#55|)) NIL))
                            (RETURN NIL))
                           (#1#
                            (COND
@@ -1247,21 +1332,21 @@
                              (COND
                               ((EQUAL |op1| (|opOf| |c2|))
                                (SETQ |hl| (CONS (LIST |c2| |cond|) |hl|))))))))
-                         (SETQ |bfVar#50| (CDR |bfVar#50|))
-                         (SETQ |bfVar#51| (CDR |bfVar#51|))))
+                         (SETQ |bfVar#54| (CDR |bfVar#54|))
+                         (SETQ |bfVar#55| (CDR |bfVar#55|))))
                       |catvecListMaker| NIL |condCats| NIL)
                      (COND
                       ((AND (NULL |found|) (NULL |hl|))
                        (SETQ |false_preds| (CONS |c1| |false_preds|)))))))
-                  (SETQ |bfVar#49| (CDR |bfVar#49|))))
+                  (SETQ |bfVar#53| (CDR |bfVar#53|))))
                |self_preds| NIL)
               (SETQ |good_preds|
-                      ((LAMBDA (|bfVar#53| |bfVar#52| |cc|)
+                      ((LAMBDA (|bfVar#57| |bfVar#56| |cc|)
                          (LOOP
                           (COND
-                           ((OR (ATOM |bfVar#52|)
-                                (PROGN (SETQ |cc| (CAR |bfVar#52|)) NIL))
-                            (RETURN (NREVERSE |bfVar#53|)))
+                           ((OR (ATOM |bfVar#56|)
+                                (PROGN (SETQ |cc| (CAR |bfVar#56|)) NIL))
+                            (RETURN (NREVERSE |bfVar#57|)))
                            (#1#
                             (AND (CONSP |cc|)
                                  (PROGN
@@ -1273,30 +1358,30 @@
                                         (SETQ |cond| (CAR |ISTMP#1|))
                                         #1#)))
                                  (NULL (|isHasDollarPred| |cond|))
-                                 (SETQ |bfVar#53| (CONS |cc| |bfVar#53|)))))
-                          (SETQ |bfVar#52| (CDR |bfVar#52|))))
+                                 (SETQ |bfVar#57| (CONS |cc| |bfVar#57|)))))
+                          (SETQ |bfVar#56| (CDR |bfVar#56|))))
                        NIL |found_preds| NIL))
               (SETQ |good_preds|
                       (APPEND
-                       ((LAMBDA (|bfVar#55| |bfVar#54| |cat|)
+                       ((LAMBDA (|bfVar#59| |bfVar#58| |cat|)
                           (LOOP
                            (COND
-                            ((OR (ATOM |bfVar#54|)
-                                 (PROGN (SETQ |cat| (CAR |bfVar#54|)) NIL))
-                             (RETURN (NREVERSE |bfVar#55|)))
+                            ((OR (ATOM |bfVar#58|)
+                                 (PROGN (SETQ |cat| (CAR |bfVar#58|)) NIL))
+                             (RETURN (NREVERSE |bfVar#59|)))
                             (#1#
-                             (SETQ |bfVar#55|
+                             (SETQ |bfVar#59|
                                      (CONS
                                       (LIST (|mk_has_dollar_quote| |cat|) NIL)
-                                      |bfVar#55|))))
-                           (SETQ |bfVar#54| (CDR |bfVar#54|))))
+                                      |bfVar#59|))))
+                           (SETQ |bfVar#58| (CDR |bfVar#58|))))
                         NIL |false_preds| NIL)
-                       ((LAMBDA (|bfVar#57| |bfVar#56| |cc|)
+                       ((LAMBDA (|bfVar#61| |bfVar#60| |cc|)
                           (LOOP
                            (COND
-                            ((OR (ATOM |bfVar#56|)
-                                 (PROGN (SETQ |cc| (CAR |bfVar#56|)) NIL))
-                             (RETURN (NREVERSE |bfVar#57|)))
+                            ((OR (ATOM |bfVar#60|)
+                                 (PROGN (SETQ |cc| (CAR |bfVar#60|)) NIL))
+                             (RETURN (NREVERSE |bfVar#61|)))
                             (#1#
                              (AND (CONSP |cc|)
                                   (PROGN
@@ -1307,12 +1392,12 @@
                                         (PROGN
                                          (SETQ |cond| (CAR |ISTMP#1|))
                                          #1#)))
-                                  (SETQ |bfVar#57|
+                                  (SETQ |bfVar#61|
                                           (CONS
                                            (LIST (|mk_has_dollar_quote| |cat|)
                                                  |cond|)
-                                           |bfVar#57|)))))
-                           (SETQ |bfVar#56| (CDR |bfVar#56|))))
+                                           |bfVar#61|)))))
+                           (SETQ |bfVar#60| (CDR |bfVar#60|))))
                         NIL |good_preds| NIL)))
               (SETQ |sub_data1| (LIST NIL |good_preds|))
               (SETQ |condCats|
@@ -1324,13 +1409,13 @@
                  (LIST '|simplify_self_preds1: cannot simplify| |$op|
                        |self_preds|))))
               (LIST |condCats| (CAR |sub_data1|)))))))))
- 
+
 ; simplify_self_preds(catvecListMaker, condCats) ==
 ;     progress := true
 ;     while progress repeat
 ;         [condCats, progress] := simplify_self_preds1(catvecListMaker, condCats)
 ;     condCats
- 
+
 (DEFUN |simplify_self_preds| (|catvecListMaker| |condCats|)
   (PROG (|progress| |LETTMP#1|)
     (RETURN
@@ -1348,8 +1433,9 @@
                   (SETQ |progress| (CADR |LETTMP#1|))
                   |LETTMP#1|))))))
       |condCats|))))
- 
-; buildFunctor($definition is [name,:args],sig,code,$locals,$e) ==
+
+; buildFunctor(definition is [name, :args], sig, code, $locals,
+;              base_shell, e) ==
 ; --PARAMETERS
 ; --  $definition: constructor form, e.g. (SquareMatrix 10 (RationalNumber))
 ; --  sig: signature of constructor form
@@ -1361,90 +1447,88 @@
 ; --  $locals: list of variables to go into slot 5, e.g. (R Rep R,1 R,2 R,3 R,4)
 ; --           same as $functorLocalParameters
 ; --           this list is not augmented by this function
-; --  $e: environment
 ; --GLOBAL VARIABLES REFERENCED:
-; --  $domainShell: passed in from compDefineFunctor1
 ; --  $QuickCode: compilation flag
-; 
-;   if code is ['add,.,newstuff] then code := newstuff
-; 
-;   changeDirectoryInSlot1()  --this extends $NRTslot1PredicateList
-; 
+;
+;   $definition : local := definition
+;
+;   changeDirectoryInSlot1(base_shell, e)  --this extends $NRTslot1PredicateList
+;
 ;   --pp '"=================="
 ;   --for item in $NRTdeltaList repeat pp item
-; 
+;
 ; --LOCAL BOUND FLUID VARIABLES:
 ;   $GENNO: local:= 0     --bound in compDefineFunctor1, then as parameter here
 ;   $catvecList: local    --list of vectors v1..vn for each view
-;   $hasCategoryAlist: local  --list of GENSYMs bound to (HasCategory ..) items
 ;   $SetFunctions: local  --copy of p view with preds telling when fnct defined
 ;   $MissingFunctionInfo: local --vector marking which functions are assigned
 ;   $ConstantAssignments: local --code for creation of constants
 ;   $epilogue: local := nil     --code to set slot 5, things to be done last
 ;   $extraParms:local  --Set in DomainSubstitutionFunction, used in setVector12
-;   $devaluateList: local --Bound to ((#1 . dv$1)..) where &1 := devaluate #1 later
-;   $devaluateList:= [[arg,:b] for arg in args for b in $ModeVariableList]
+;   $devaluateList : local := [[arg,:b] for arg in args
+;                                       for b in $ModeVariableList]
 ; ------------------------
 ;   oldtime := get_run_time()
 ;   [catsig, :argsig] := sig
 ;   catvecListMaker:=REMDUP
-;     [(comp(catsig, $EmptyMode, $e)).expr,
-;       :[compCategories first u for u in CADR $domainShell.4]]
-;   condCats:= InvestigateConditions [catsig, :rest catvecListMaker]
+;     [(comp(catsig, $EmptyMode, e)).expr,
+;       :[compCategories(first u, e) for u in CADR base_shell.4]]
+;   condCats := InvestigateConditions([catsig, :rest catvecListMaker],
+;                                     base_shell, e)
 ;   -- a list, one for each element of catvecListMaker
 ;   -- indicating under what conditions this
 ;   -- category should be present.  true => always
-;   makeCatvecCode:= first catvecListMaker
-;   emptyVector := VECTOR()
 ;   domainShell := GETREFV (6 + $NRTdeltaLength)
-;   for i in 0..4 repeat domainShell.i := $domainShell.i
-;     --we will clobber elements; copy since $domainShell may be a cached vector
+;   for i in 0..4 repeat domainShell.i := base_shell.i
 ;   $template := GETREFV (6 + $NRTdeltaLength)
-;   $catvecList:= [domainShell,:[emptyVector for u in CADR domainShell.4]]
 ;   $SetFunctions:= GETREFV SIZE domainShell
 ;   $MissingFunctionInfo:= GETREFV SIZE domainShell
 ;   catNames := ['$, :[GENVAR() for u in rest catvecListMaker]]
 ;   domname:='dv_$
-; 
+;
 ;   condCats := [simpBool(cc) for cc in condCats]
 ;   condCats := simplify_self_preds(catvecListMaker, condCats)
 ; -->  Do this now to create predicate vector; then DescendCode can refer
 ; -->  to predicate vector if it can
 ;   [$uncondAlist,:$condAlist] :=    --bound in compDefineFunctor1
-;       NRTsetVector4Part1(catNames, catvecListMaker, condCats)
+;       NRTsetVector4Part1(catNames, catvecListMaker, condCats, base_shell, e)
 ;   [$NRTslot1PredicateList,predBitVectorCode1,:predBitVectorCode2] :=
-;       makePredicateBitVector [:ASSOCRIGHT $condAlist,:$NRTslot1PredicateList]
-; 
-;   storeOperationCode := DescendCode(code, true, nil, first catNames)
-;   outsideFunctionCode:= NRTaddDeltaCode()
+;       makePredicateBitVector([:ASSOCRIGHT($condAlist),
+;                               :$NRTslot1PredicateList], e)
+;
+;   storeOperationCode := DescendCode(code, true, nil, first catNames,
+;                                     domainShell, e)
+;   NRTaddDeltaCode(domainShell)
 ;   storeOperationCode:= NRTputInLocalReferences storeOperationCode
 ;   NRTdescendCodeTran(storeOperationCode,nil) --side effects storeOperationCode
 ;   codePart2:=
 ;       argStuffCode :=
-;         [[$setelt,'$,i,v] for i in 6.. for v in $FormalMapVariableList
-;           for arg in rest $definition]
+;         [['QSETREFV, '$, i, v] for i in 6.. for v in $FormalMapVariableList
+;           for arg in rest definition]
 ;       if MEMQ($NRTaddForm,$locals) then
 ;          addargname := $FormalMapVariableList.(POSN1($NRTaddForm,$locals))
-;          argStuffCode := [[$setelt,'$,5,addargname],:argStuffCode]
+;          argStuffCode := [['QSETREFV, '$, 5, addargname], :argStuffCode]
 ;       [['stuffDomainSlots,'$],:argStuffCode,
 ;          :predBitVectorCode2, ['SETF, 'pv_$, ['QREFELT, '$, 3]],
 ;             storeOperationCode]
-; 
+;
 ;   $CheckVectorList := NRTcheckVector domainShell
 ; --CODE: part 1
-;   codePart1:= [:devaluateCode, createDomainCode,
+;   devaluate_code := [['LET,b, maybe_devaluate(a, c)]
+;                       for [a,:b] in $devaluateList for c in $functor_cosig1]
+;   codePart1:= [:devaluate_code, createDomainCode,
 ;                 createViewCode,setVector0Code, slot3Code,:slamCode] where
-;     devaluateCode:= [['LET,b,['devaluate,a]] for [a,:b] in $devaluateList]
+;     -- FIXME: should devaluate only domain arguments
 ;     createDomainCode:=
-;         ['LET, domname, ['LIST, MKQ first $definition,
+;         ['LET, domname, ['LIST, MKQ first definition,
 ;                          :ASSOCRIGHT $devaluateList]]
 ;     createViewCode:= ['LET,'$,['GETREFV, 6+$NRTdeltaLength]]
-;     setVector0Code:=[$setelt,'$,0,'dv_$]
+;     setVector0Code := ['QSETREFV, '$, 0, 'dv_$]
 ;     slot3Code := ['QSETREFV,'$,3,['LET,'pv_$,predBitVectorCode1]]
 ;     slamCode:=
-;       isCategoryPackageName opOf $definition => nil
-;       [NRTaddToSlam($definition,'$)]
-; 
+;         isCategoryPackageName(opOf(definition)) => nil
+;         [NRTaddToSlam(definition, '$)]
+;
 ; --CODE: part 3
 ;   $ConstantAssignments :=
 ;       [NRTputInLocalReferences code for code in $ConstantAssignments]
@@ -1456,139 +1540,117 @@
 ;   --sayBrightly '"------------------functor code: -------------------"
 ;   --pp ans
 ;   ans
- 
-(DEFUN |buildFunctor| (|$definition| |sig| |code| |$locals| |$e|)
-  (DECLARE (SPECIAL |$definition| |$locals| |$e|))
+
+(DEFUN |buildFunctor| (|definition| |sig| |code| |$locals| |base_shell| |e|)
+  (DECLARE (SPECIAL |$locals|))
   (PROG (|$devaluateList| |$extraParms| |$epilogue| |$ConstantAssignments|
-         |$MissingFunctionInfo| |$SetFunctions| |$hasCategoryAlist|
-         |$catvecList| $GENNO |ans| |codePart3| |codePart1| |slamCode|
-         |slot3Code| |setVector0Code| |createViewCode| |createDomainCode|
-         |devaluateCode| |b| |a| |codePart2| |addargname| |argStuffCode|
-         |outsideFunctionCode| |storeOperationCode| |predBitVectorCode2|
-         |predBitVectorCode1| |LETTMP#1| |domname| |catNames| |domainShell|
-         |emptyVector| |makeCatvecCode| |condCats| |catvecListMaker| |argsig|
-         |catsig| |oldtime| |newstuff| |ISTMP#2| |ISTMP#1| |args| |name|)
+         |$MissingFunctionInfo| |$SetFunctions| |$catvecList| $GENNO
+         |$definition| |ans| |codePart3| |codePart1| |slamCode| |slot3Code|
+         |setVector0Code| |createViewCode| |createDomainCode| |devaluate_code|
+         |b| |a| |codePart2| |addargname| |argStuffCode| |storeOperationCode|
+         |predBitVectorCode2| |predBitVectorCode1| |LETTMP#1| |domname|
+         |catNames| |domainShell| |condCats| |catvecListMaker| |argsig|
+         |catsig| |oldtime| |args| |name|)
     (DECLARE
      (SPECIAL |$devaluateList| |$extraParms| |$epilogue| |$ConstantAssignments|
-      |$MissingFunctionInfo| |$SetFunctions| |$hasCategoryAlist| |$catvecList|
-      $GENNO))
+      |$MissingFunctionInfo| |$SetFunctions| |$catvecList| $GENNO
+      |$definition|))
     (RETURN
      (PROGN
-      (SETQ |name| (CAR |$definition|))
-      (SETQ |args| (CDR |$definition|))
-      (COND
-       ((AND (CONSP |code|) (EQ (CAR |code|) '|add|)
-             (PROGN
-              (SETQ |ISTMP#1| (CDR |code|))
-              (AND (CONSP |ISTMP#1|)
-                   (PROGN
-                    (SETQ |ISTMP#2| (CDR |ISTMP#1|))
-                    (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
-                         (PROGN (SETQ |newstuff| (CAR |ISTMP#2|)) #1='T))))))
-        (SETQ |code| |newstuff|)))
-      (|changeDirectoryInSlot1|)
+      (SETQ |name| (CAR |definition|))
+      (SETQ |args| (CDR |definition|))
+      (SETQ |$definition| |definition|)
+      (|changeDirectoryInSlot1| |base_shell| |e|)
       (SETQ $GENNO 0)
       (SETQ |$catvecList| NIL)
-      (SETQ |$hasCategoryAlist| NIL)
       (SETQ |$SetFunctions| NIL)
       (SETQ |$MissingFunctionInfo| NIL)
       (SETQ |$ConstantAssignments| NIL)
       (SETQ |$epilogue| NIL)
       (SETQ |$extraParms| NIL)
-      (SETQ |$devaluateList| NIL)
       (SETQ |$devaluateList|
-              ((LAMBDA (|bfVar#60| |bfVar#58| |arg| |bfVar#59| |b|)
+              ((LAMBDA (|bfVar#64| |bfVar#62| |arg| |bfVar#63| |b|)
                  (LOOP
                   (COND
-                   ((OR (ATOM |bfVar#58|)
-                        (PROGN (SETQ |arg| (CAR |bfVar#58|)) NIL)
-                        (ATOM |bfVar#59|)
-                        (PROGN (SETQ |b| (CAR |bfVar#59|)) NIL))
-                    (RETURN (NREVERSE |bfVar#60|)))
-                   (#1# (SETQ |bfVar#60| (CONS (CONS |arg| |b|) |bfVar#60|))))
-                  (SETQ |bfVar#58| (CDR |bfVar#58|))
-                  (SETQ |bfVar#59| (CDR |bfVar#59|))))
+                   ((OR (ATOM |bfVar#62|)
+                        (PROGN (SETQ |arg| (CAR |bfVar#62|)) NIL)
+                        (ATOM |bfVar#63|)
+                        (PROGN (SETQ |b| (CAR |bfVar#63|)) NIL))
+                    (RETURN (NREVERSE |bfVar#64|)))
+                   (#1='T
+                    (SETQ |bfVar#64| (CONS (CONS |arg| |b|) |bfVar#64|))))
+                  (SETQ |bfVar#62| (CDR |bfVar#62|))
+                  (SETQ |bfVar#63| (CDR |bfVar#63|))))
                NIL |args| NIL |$ModeVariableList| NIL))
       (SETQ |oldtime| (|get_run_time|))
       (SETQ |catsig| (CAR |sig|))
       (SETQ |argsig| (CDR |sig|))
       (SETQ |catvecListMaker|
               (REMDUP
-               (CONS (CAR (|comp| |catsig| |$EmptyMode| |$e|))
-                     ((LAMBDA (|bfVar#62| |bfVar#61| |u|)
+               (CONS (CAR (|comp| |catsig| |$EmptyMode| |e|))
+                     ((LAMBDA (|bfVar#66| |bfVar#65| |u|)
                         (LOOP
                          (COND
-                          ((OR (ATOM |bfVar#61|)
-                               (PROGN (SETQ |u| (CAR |bfVar#61|)) NIL))
-                           (RETURN (NREVERSE |bfVar#62|)))
+                          ((OR (ATOM |bfVar#65|)
+                               (PROGN (SETQ |u| (CAR |bfVar#65|)) NIL))
+                           (RETURN (NREVERSE |bfVar#66|)))
                           (#1#
-                           (SETQ |bfVar#62|
-                                   (CONS (|compCategories| (CAR |u|))
-                                         |bfVar#62|))))
-                         (SETQ |bfVar#61| (CDR |bfVar#61|))))
-                      NIL (CADR (ELT |$domainShell| 4)) NIL))))
+                           (SETQ |bfVar#66|
+                                   (CONS (|compCategories| (CAR |u|) |e|)
+                                         |bfVar#66|))))
+                         (SETQ |bfVar#65| (CDR |bfVar#65|))))
+                      NIL (CADR (ELT |base_shell| 4)) NIL))))
       (SETQ |condCats|
-              (|InvestigateConditions|
-               (CONS |catsig| (CDR |catvecListMaker|))))
-      (SETQ |makeCatvecCode| (CAR |catvecListMaker|))
-      (SETQ |emptyVector| (VECTOR))
+              (|InvestigateConditions| (CONS |catsig| (CDR |catvecListMaker|))
+               |base_shell| |e|))
       (SETQ |domainShell| (GETREFV (+ 6 |$NRTdeltaLength|)))
       ((LAMBDA (|i|)
          (LOOP
           (COND ((> |i| 4) (RETURN NIL))
-                (#1# (SETF (ELT |domainShell| |i|) (ELT |$domainShell| |i|))))
+                (#1# (SETF (ELT |domainShell| |i|) (ELT |base_shell| |i|))))
           (SETQ |i| (+ |i| 1))))
        0)
       (SETQ |$template| (GETREFV (+ 6 |$NRTdeltaLength|)))
-      (SETQ |$catvecList|
-              (CONS |domainShell|
-                    ((LAMBDA (|bfVar#64| |bfVar#63| |u|)
-                       (LOOP
-                        (COND
-                         ((OR (ATOM |bfVar#63|)
-                              (PROGN (SETQ |u| (CAR |bfVar#63|)) NIL))
-                          (RETURN (NREVERSE |bfVar#64|)))
-                         (#1#
-                          (SETQ |bfVar#64| (CONS |emptyVector| |bfVar#64|))))
-                        (SETQ |bfVar#63| (CDR |bfVar#63|))))
-                     NIL (CADR (ELT |domainShell| 4)) NIL)))
       (SETQ |$SetFunctions| (GETREFV (SIZE |domainShell|)))
       (SETQ |$MissingFunctionInfo| (GETREFV (SIZE |domainShell|)))
       (SETQ |catNames|
               (CONS '$
-                    ((LAMBDA (|bfVar#66| |bfVar#65| |u|)
+                    ((LAMBDA (|bfVar#68| |bfVar#67| |u|)
                        (LOOP
                         (COND
-                         ((OR (ATOM |bfVar#65|)
-                              (PROGN (SETQ |u| (CAR |bfVar#65|)) NIL))
-                          (RETURN (NREVERSE |bfVar#66|)))
-                         (#1# (SETQ |bfVar#66| (CONS (GENVAR) |bfVar#66|))))
-                        (SETQ |bfVar#65| (CDR |bfVar#65|))))
+                         ((OR (ATOM |bfVar#67|)
+                              (PROGN (SETQ |u| (CAR |bfVar#67|)) NIL))
+                          (RETURN (NREVERSE |bfVar#68|)))
+                         (#1# (SETQ |bfVar#68| (CONS (GENVAR) |bfVar#68|))))
+                        (SETQ |bfVar#67| (CDR |bfVar#67|))))
                      NIL (CDR |catvecListMaker|) NIL)))
       (SETQ |domname| '|dv$|)
       (SETQ |condCats|
-              ((LAMBDA (|bfVar#68| |bfVar#67| |cc|)
+              ((LAMBDA (|bfVar#70| |bfVar#69| |cc|)
                  (LOOP
                   (COND
-                   ((OR (ATOM |bfVar#67|)
-                        (PROGN (SETQ |cc| (CAR |bfVar#67|)) NIL))
-                    (RETURN (NREVERSE |bfVar#68|)))
-                   (#1# (SETQ |bfVar#68| (CONS (|simpBool| |cc|) |bfVar#68|))))
-                  (SETQ |bfVar#67| (CDR |bfVar#67|))))
+                   ((OR (ATOM |bfVar#69|)
+                        (PROGN (SETQ |cc| (CAR |bfVar#69|)) NIL))
+                    (RETURN (NREVERSE |bfVar#70|)))
+                   (#1# (SETQ |bfVar#70| (CONS (|simpBool| |cc|) |bfVar#70|))))
+                  (SETQ |bfVar#69| (CDR |bfVar#69|))))
                NIL |condCats| NIL))
       (SETQ |condCats| (|simplify_self_preds| |catvecListMaker| |condCats|))
       (SETQ |LETTMP#1|
-              (|NRTsetVector4Part1| |catNames| |catvecListMaker| |condCats|))
+              (|NRTsetVector4Part1| |catNames| |catvecListMaker| |condCats|
+               |base_shell| |e|))
       (SETQ |$uncondAlist| (CAR |LETTMP#1|))
       (SETQ |$condAlist| (CDR |LETTMP#1|))
       (SETQ |LETTMP#1|
               (|makePredicateBitVector|
-               (APPEND (ASSOCRIGHT |$condAlist|) |$NRTslot1PredicateList|)))
+               (APPEND (ASSOCRIGHT |$condAlist|) |$NRTslot1PredicateList|)
+               |e|))
       (SETQ |$NRTslot1PredicateList| (CAR |LETTMP#1|))
       (SETQ |predBitVectorCode1| (CADR . #2=(|LETTMP#1|)))
       (SETQ |predBitVectorCode2| (CDDR . #2#))
-      (SETQ |storeOperationCode| (|DescendCode| |code| T NIL (CAR |catNames|)))
-      (SETQ |outsideFunctionCode| (|NRTaddDeltaCode|))
+      (SETQ |storeOperationCode|
+              (|DescendCode| |code| T NIL (CAR |catNames|) |domainShell| |e|))
+      (|NRTaddDeltaCode| |domainShell|)
       (SETQ |storeOperationCode|
               (|NRTputInLocalReferences| |storeOperationCode|))
       (|NRTdescendCodeTran| |storeOperationCode| NIL)
@@ -1596,22 +1658,22 @@
               (PROGN
                (SETQ |argStuffCode|
                        ((LAMBDA
-                            (|bfVar#71| |i| |bfVar#69| |v| |bfVar#70| |arg|)
+                            (|bfVar#73| |i| |bfVar#71| |v| |bfVar#72| |arg|)
                           (LOOP
                            (COND
-                            ((OR (ATOM |bfVar#69|)
-                                 (PROGN (SETQ |v| (CAR |bfVar#69|)) NIL)
-                                 (ATOM |bfVar#70|)
-                                 (PROGN (SETQ |arg| (CAR |bfVar#70|)) NIL))
-                             (RETURN (NREVERSE |bfVar#71|)))
+                            ((OR (ATOM |bfVar#71|)
+                                 (PROGN (SETQ |v| (CAR |bfVar#71|)) NIL)
+                                 (ATOM |bfVar#72|)
+                                 (PROGN (SETQ |arg| (CAR |bfVar#72|)) NIL))
+                             (RETURN (NREVERSE |bfVar#73|)))
                             (#1#
-                             (SETQ |bfVar#71|
-                                     (CONS (LIST |$setelt| '$ |i| |v|)
-                                           |bfVar#71|))))
+                             (SETQ |bfVar#73|
+                                     (CONS (LIST 'QSETREFV '$ |i| |v|)
+                                           |bfVar#73|))))
                            (SETQ |i| (+ |i| 1))
-                           (SETQ |bfVar#69| (CDR |bfVar#69|))
-                           (SETQ |bfVar#70| (CDR |bfVar#70|))))
-                        NIL 6 |$FormalMapVariableList| NIL (CDR |$definition|)
+                           (SETQ |bfVar#71| (CDR |bfVar#71|))
+                           (SETQ |bfVar#72| (CDR |bfVar#72|))))
+                        NIL 6 |$FormalMapVariableList| NIL (CDR |definition|)
                         NIL))
                (COND
                 ((MEMQ |$NRTaddForm| |$locals|)
@@ -1619,7 +1681,7 @@
                          (ELT |$FormalMapVariableList|
                               (POSN1 |$NRTaddForm| |$locals|)))
                  (SETQ |argStuffCode|
-                         (CONS (LIST |$setelt| '$ 5 |addargname|)
+                         (CONS (LIST 'QSETREFV '$ 5 |addargname|)
                                |argStuffCode|))))
                (CONS (LIST '|stuffDomainSlots| '$)
                      (APPEND |argStuffCode|
@@ -1628,55 +1690,59 @@
                                       (LIST 'SETF '|pv$| (LIST 'QREFELT '$ 3))
                                       (CONS |storeOperationCode| NIL)))))))
       (SETQ |$CheckVectorList| (|NRTcheckVector| |domainShell|))
-      (SETQ |devaluateCode|
-              ((LAMBDA (|bfVar#74| |bfVar#73| |bfVar#72|)
+      (SETQ |devaluate_code|
+              ((LAMBDA (|bfVar#77| |bfVar#75| |bfVar#74| |bfVar#76| |c|)
                  (LOOP
                   (COND
-                   ((OR (ATOM |bfVar#73|)
-                        (PROGN (SETQ |bfVar#72| (CAR |bfVar#73|)) NIL))
-                    (RETURN (NREVERSE |bfVar#74|)))
+                   ((OR (ATOM |bfVar#75|)
+                        (PROGN (SETQ |bfVar#74| (CAR |bfVar#75|)) NIL)
+                        (ATOM |bfVar#76|)
+                        (PROGN (SETQ |c| (CAR |bfVar#76|)) NIL))
+                    (RETURN (NREVERSE |bfVar#77|)))
                    (#1#
-                    (AND (CONSP |bfVar#72|)
+                    (AND (CONSP |bfVar#74|)
                          (PROGN
-                          (SETQ |a| (CAR |bfVar#72|))
-                          (SETQ |b| (CDR |bfVar#72|))
+                          (SETQ |a| (CAR |bfVar#74|))
+                          (SETQ |b| (CDR |bfVar#74|))
                           #1#)
-                         (SETQ |bfVar#74|
-                                 (CONS (LIST 'LET |b| (LIST '|devaluate| |a|))
-                                       |bfVar#74|)))))
-                  (SETQ |bfVar#73| (CDR |bfVar#73|))))
-               NIL |$devaluateList| NIL))
+                         (SETQ |bfVar#77|
+                                 (CONS
+                                  (LIST 'LET |b| (|maybe_devaluate| |a| |c|))
+                                  |bfVar#77|)))))
+                  (SETQ |bfVar#75| (CDR |bfVar#75|))
+                  (SETQ |bfVar#76| (CDR |bfVar#76|))))
+               NIL |$devaluateList| NIL |$functor_cosig1| NIL))
       (SETQ |createDomainCode|
               (LIST 'LET |domname|
                     (CONS 'LIST
-                          (CONS (MKQ (CAR |$definition|))
+                          (CONS (MKQ (CAR |definition|))
                                 (ASSOCRIGHT |$devaluateList|)))))
       (SETQ |createViewCode|
               (LIST 'LET '$ (LIST 'GETREFV (+ 6 |$NRTdeltaLength|))))
-      (SETQ |setVector0Code| (LIST |$setelt| '$ 0 '|dv$|))
+      (SETQ |setVector0Code| (LIST 'QSETREFV '$ 0 '|dv$|))
       (SETQ |slot3Code|
               (LIST 'QSETREFV '$ 3 (LIST 'LET '|pv$| |predBitVectorCode1|)))
       (SETQ |slamCode|
-              (COND ((|isCategoryPackageName| (|opOf| |$definition|)) NIL)
-                    (#1# (LIST (|NRTaddToSlam| |$definition| '$)))))
+              (COND ((|isCategoryPackageName| (|opOf| |definition|)) NIL)
+                    (#1# (LIST (|NRTaddToSlam| |definition| '$)))))
       (SETQ |codePart1|
-              (APPEND |devaluateCode|
+              (APPEND |devaluate_code|
                       (CONS |createDomainCode|
                             (CONS |createViewCode|
                                   (CONS |setVector0Code|
                                         (CONS |slot3Code| |slamCode|))))))
       (SETQ |$ConstantAssignments|
-              ((LAMBDA (|bfVar#76| |bfVar#75| |code|)
+              ((LAMBDA (|bfVar#79| |bfVar#78| |code|)
                  (LOOP
                   (COND
-                   ((OR (ATOM |bfVar#75|)
-                        (PROGN (SETQ |code| (CAR |bfVar#75|)) NIL))
-                    (RETURN (NREVERSE |bfVar#76|)))
+                   ((OR (ATOM |bfVar#78|)
+                        (PROGN (SETQ |code| (CAR |bfVar#78|)) NIL))
+                    (RETURN (NREVERSE |bfVar#79|)))
                    (#1#
-                    (SETQ |bfVar#76|
+                    (SETQ |bfVar#79|
                             (CONS (|NRTputInLocalReferences| |code|)
-                                  |bfVar#76|))))
-                  (SETQ |bfVar#75| (CDR |bfVar#75|))))
+                                  |bfVar#79|))))
+                  (SETQ |bfVar#78| (CDR |bfVar#78|))))
                NIL |$ConstantAssignments| NIL))
       (SETQ |codePart3| (APPEND |$ConstantAssignments| |$epilogue|))
       (SETQ |ans|
@@ -1689,7 +1755,7 @@
       (SAY
        (LIST "time taken in buildFunctor: " (- (|get_run_time|) |oldtime|)))
       |ans|))))
- 
+
 ; NRTcheckVector domainShell ==
 ; --RETURNS: an alist (((op,sig),:pred) ...) of missing functions
 ;   alist := nil
@@ -1708,15 +1774,15 @@
 ;     alist:=
 ;       [[first v,:$SetFunctions.i],:alist]
 ;   alist
- 
+
 (DEFUN |NRTcheckVector| (|domainShell|)
   (PROG (|alist| |v|)
     (RETURN
      (PROGN
       (SETQ |alist| NIL)
-      ((LAMBDA (|bfVar#77| |i|)
+      ((LAMBDA (|bfVar#80| |i|)
          (LOOP
-          (COND ((> |i| |bfVar#77|) (RETURN NIL))
+          (COND ((> |i| |bfVar#80|) (RETURN NIL))
                 (#1='T
                  (PROGN
                   (SETQ |v| (ELT |domainShell| |i|))
@@ -1732,75 +1798,75 @@
           (SETQ |i| (+ |i| 1))))
        (MAXINDEX |domainShell|) 6)
       |alist|))))
- 
-; NRTsetVector4Part1(sigs, forms, conds) ==
+
+; NRTsetVector4Part1(sigs, forms, conds, base_shell, e) ==
 ;     uncond_list := nil
 ;     cond_list := nil
 ;     for sig in reverse sigs for form in reverse forms
 ;            for cond in reverse conds repeat
 ;         sig = '$ =>
 ;             domainList :=
-;                 [optimize COPY IFCAR comp(d, $EmptyMode, $e) or
-;                    d for d in $domainShell.4.0]
+;                 [optimize COPY IFCAR comp(d, $EmptyMode, e) or
+;                    d for d in base_shell.4.0]
 ;             uncond_list := APPEND(domainList, uncond_list)
-;             if isCategoryForm(form, $e) then
+;             if isCategoryForm(form) then
 ;                 uncond_list := [form, :uncond_list]
-;         evalform := eval mkEvalableCategoryForm form
+;         evalform := eval mkEvalableCategoryForm(form, e)
 ;         cond = true =>
 ;             uncond_list := [form, :APPEND(evalform.4.0, uncond_list)]
 ;         cond_list := [[cond,[form, :evalform.4.0]], :cond_list]
-; 
+;
 ;     reducedUncondlist := REMDUP uncond_list
 ;     reducedConlist := [[x, :y] for [x,z] in cond_list |
 ;                          y := SETDIFFERENCE(z, reducedUncondlist)]
 ;     revCondlist := reverseCondlist reducedConlist
 ;     orCondlist := [[x, :MKPF(y, 'OR)] for [x, :y] in revCondlist]
 ;     [reducedUncondlist, :orCondlist]
- 
-(DEFUN |NRTsetVector4Part1| (|sigs| |forms| |conds|)
+
+(DEFUN |NRTsetVector4Part1| (|sigs| |forms| |conds| |base_shell| |e|)
   (PROG (|uncond_list| |cond_list| |domainList| |evalform| |reducedUncondlist|
          |x| |ISTMP#1| |z| |y| |reducedConlist| |revCondlist| |orCondlist|)
     (RETURN
      (PROGN
       (SETQ |uncond_list| NIL)
       (SETQ |cond_list| NIL)
-      ((LAMBDA (|bfVar#78| |sig| |bfVar#79| |form| |bfVar#80| |cond|)
+      ((LAMBDA (|bfVar#81| |sig| |bfVar#82| |form| |bfVar#83| |cond|)
          (LOOP
           (COND
-           ((OR (ATOM |bfVar#78|) (PROGN (SETQ |sig| (CAR |bfVar#78|)) NIL)
-                (ATOM |bfVar#79|) (PROGN (SETQ |form| (CAR |bfVar#79|)) NIL)
-                (ATOM |bfVar#80|) (PROGN (SETQ |cond| (CAR |bfVar#80|)) NIL))
+           ((OR (ATOM |bfVar#81|) (PROGN (SETQ |sig| (CAR |bfVar#81|)) NIL)
+                (ATOM |bfVar#82|) (PROGN (SETQ |form| (CAR |bfVar#82|)) NIL)
+                (ATOM |bfVar#83|) (PROGN (SETQ |cond| (CAR |bfVar#83|)) NIL))
             (RETURN NIL))
            (#1='T
             (COND
              ((EQ |sig| '$)
               (PROGN
                (SETQ |domainList|
-                       ((LAMBDA (|bfVar#82| |bfVar#81| |d|)
+                       ((LAMBDA (|bfVar#85| |bfVar#84| |d|)
                           (LOOP
                            (COND
-                            ((OR (ATOM |bfVar#81|)
-                                 (PROGN (SETQ |d| (CAR |bfVar#81|)) NIL))
-                             (RETURN (NREVERSE |bfVar#82|)))
+                            ((OR (ATOM |bfVar#84|)
+                                 (PROGN (SETQ |d| (CAR |bfVar#84|)) NIL))
+                             (RETURN (NREVERSE |bfVar#85|)))
                             (#1#
-                             (SETQ |bfVar#82|
+                             (SETQ |bfVar#85|
                                      (CONS
                                       (OR
                                        (|optimize|
                                         (COPY
                                          (IFCAR
-                                          (|comp| |d| |$EmptyMode| |$e|))))
+                                          (|comp| |d| |$EmptyMode| |e|))))
                                        |d|)
-                                      |bfVar#82|))))
-                           (SETQ |bfVar#81| (CDR |bfVar#81|))))
-                        NIL (ELT (ELT |$domainShell| 4) 0) NIL))
+                                      |bfVar#85|))))
+                           (SETQ |bfVar#84| (CDR |bfVar#84|))))
+                        NIL (ELT (ELT |base_shell| 4) 0) NIL))
                (SETQ |uncond_list| (APPEND |domainList| |uncond_list|))
                (COND
-                ((|isCategoryForm| |form| |$e|)
+                ((|isCategoryForm| |form|)
                  (SETQ |uncond_list| (CONS |form| |uncond_list|))))))
              (#1#
               (PROGN
-               (SETQ |evalform| (|eval| (|mkEvalableCategoryForm| |form|)))
+               (SETQ |evalform| (|eval| (|mkEvalableCategoryForm| |form| |e|)))
                (COND
                 ((EQUAL |cond| T)
                  (SETQ |uncond_list|
@@ -1813,31 +1879,12 @@
                           (LIST |cond|
                                 (CONS |form| (ELT (ELT |evalform| 4) 0)))
                           |cond_list|)))))))))
-          (SETQ |bfVar#78| (CDR |bfVar#78|))
-          (SETQ |bfVar#79| (CDR |bfVar#79|))
-          (SETQ |bfVar#80| (CDR |bfVar#80|))))
+          (SETQ |bfVar#81| (CDR |bfVar#81|))
+          (SETQ |bfVar#82| (CDR |bfVar#82|))
+          (SETQ |bfVar#83| (CDR |bfVar#83|))))
        (REVERSE |sigs|) NIL (REVERSE |forms|) NIL (REVERSE |conds|) NIL)
       (SETQ |reducedUncondlist| (REMDUP |uncond_list|))
       (SETQ |reducedConlist|
-              ((LAMBDA (|bfVar#85| |bfVar#84| |bfVar#83|)
-                 (LOOP
-                  (COND
-                   ((OR (ATOM |bfVar#84|)
-                        (PROGN (SETQ |bfVar#83| (CAR |bfVar#84|)) NIL))
-                    (RETURN (NREVERSE |bfVar#85|)))
-                   (#1#
-                    (AND (CONSP |bfVar#83|)
-                         (PROGN
-                          (SETQ |x| (CAR |bfVar#83|))
-                          (SETQ |ISTMP#1| (CDR |bfVar#83|))
-                          (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
-                               (PROGN (SETQ |z| (CAR |ISTMP#1|)) #1#)))
-                         (SETQ |y| (SETDIFFERENCE |z| |reducedUncondlist|))
-                         (SETQ |bfVar#85| (CONS (CONS |x| |y|) |bfVar#85|)))))
-                  (SETQ |bfVar#84| (CDR |bfVar#84|))))
-               NIL |cond_list| NIL))
-      (SETQ |revCondlist| (|reverseCondlist| |reducedConlist|))
-      (SETQ |orCondlist|
               ((LAMBDA (|bfVar#88| |bfVar#87| |bfVar#86|)
                  (LOOP
                   (COND
@@ -1848,15 +1895,34 @@
                     (AND (CONSP |bfVar#86|)
                          (PROGN
                           (SETQ |x| (CAR |bfVar#86|))
-                          (SETQ |y| (CDR |bfVar#86|))
-                          #1#)
-                         (SETQ |bfVar#88|
-                                 (CONS (CONS |x| (MKPF |y| 'OR))
-                                       |bfVar#88|)))))
+                          (SETQ |ISTMP#1| (CDR |bfVar#86|))
+                          (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
+                               (PROGN (SETQ |z| (CAR |ISTMP#1|)) #1#)))
+                         (SETQ |y| (SETDIFFERENCE |z| |reducedUncondlist|))
+                         (SETQ |bfVar#88| (CONS (CONS |x| |y|) |bfVar#88|)))))
                   (SETQ |bfVar#87| (CDR |bfVar#87|))))
+               NIL |cond_list| NIL))
+      (SETQ |revCondlist| (|reverseCondlist| |reducedConlist|))
+      (SETQ |orCondlist|
+              ((LAMBDA (|bfVar#91| |bfVar#90| |bfVar#89|)
+                 (LOOP
+                  (COND
+                   ((OR (ATOM |bfVar#90|)
+                        (PROGN (SETQ |bfVar#89| (CAR |bfVar#90|)) NIL))
+                    (RETURN (NREVERSE |bfVar#91|)))
+                   (#1#
+                    (AND (CONSP |bfVar#89|)
+                         (PROGN
+                          (SETQ |x| (CAR |bfVar#89|))
+                          (SETQ |y| (CDR |bfVar#89|))
+                          #1#)
+                         (SETQ |bfVar#91|
+                                 (CONS (CONS |x| (MKPF |y| 'OR))
+                                       |bfVar#91|)))))
+                  (SETQ |bfVar#90| (CDR |bfVar#90|))))
                NIL |revCondlist| NIL))
       (CONS |reducedUncondlist| |orCondlist|)))))
- 
+
 ; reverseCondlist cl ==
 ;   alist := nil
 ;   for [x,:y] in cl repeat
@@ -1866,29 +1932,29 @@
 ;       member(x, rest u) => nil
 ;       RPLACD(u, [x, :rest u])
 ;   alist
- 
+
 (DEFUN |reverseCondlist| (|cl|)
   (PROG (|alist| |x| |y| |u|)
     (RETURN
      (PROGN
       (SETQ |alist| NIL)
-      ((LAMBDA (|bfVar#90| |bfVar#89|)
+      ((LAMBDA (|bfVar#93| |bfVar#92|)
          (LOOP
           (COND
-           ((OR (ATOM |bfVar#90|)
-                (PROGN (SETQ |bfVar#89| (CAR |bfVar#90|)) NIL))
+           ((OR (ATOM |bfVar#93|)
+                (PROGN (SETQ |bfVar#92| (CAR |bfVar#93|)) NIL))
             (RETURN NIL))
            (#1='T
-            (AND (CONSP |bfVar#89|)
+            (AND (CONSP |bfVar#92|)
                  (PROGN
-                  (SETQ |x| (CAR |bfVar#89|))
-                  (SETQ |y| (CDR |bfVar#89|))
+                  (SETQ |x| (CAR |bfVar#92|))
+                  (SETQ |y| (CDR |bfVar#92|))
                   #1#)
-                 ((LAMBDA (|bfVar#91| |z|)
+                 ((LAMBDA (|bfVar#94| |z|)
                     (LOOP
                      (COND
-                      ((OR (ATOM |bfVar#91|)
-                           (PROGN (SETQ |z| (CAR |bfVar#91|)) NIL))
+                      ((OR (ATOM |bfVar#94|)
+                           (PROGN (SETQ |z| (CAR |bfVar#94|)) NIL))
                        (RETURN NIL))
                       (#1#
                        (PROGN
@@ -1898,168 +1964,135 @@
                           (SETQ |alist| (CONS (LIST |z| |x|) |alist|)))
                          ((|member| |x| (CDR |u|)) NIL)
                          (#1# (RPLACD |u| (CONS |x| (CDR |u|))))))))
-                     (SETQ |bfVar#91| (CDR |bfVar#91|))))
+                     (SETQ |bfVar#94| (CDR |bfVar#94|))))
                   |y| NIL))))
-          (SETQ |bfVar#90| (CDR |bfVar#90|))))
+          (SETQ |bfVar#93| (CDR |bfVar#93|))))
        |cl| NIL)
       |alist|))))
- 
-; NRTmakeSlot1Info() ==
+
+; NRTmakeSlot1Info(form, base_shell) ==
 ; -- 4 cases:
 ; -- a:T == b add c  --- slot1 directory has #s for entries defined in c
 ; -- a:T == b        --- slot1 has all slot #s = NIL (see compFunctorBody)
 ; -- a == b add c    --- not allowed (line 7 of getTargetFromRhs)
 ;   pairlis :=
 ;     $insideCategoryPackageIfTrue = true =>
-;       [:argl,dollarName] := rest $form
+;       [:argl, dollarName] := rest(form)
 ;       [[dollarName,:'_$],:mkSlot1sublis argl]
-;     mkSlot1sublis rest $form
-;   lisplibOpAlist := transformOperationAlist SUBLIS(pairlis, $domainShell.1)
+;     mkSlot1sublis(rest(form))
+;   lisplibOpAlist := transformOperationAlist(SUBLIS(pairlis, base_shell.1))
 ;   opList :=
 ;     $insideCategoryPackageIfTrue = true => slot1Filter lisplibOpAlist
 ;     lisplibOpAlist
 ;   addList := SUBLIS(pairlis,$NRTaddForm)
-;   [first $form,[addList,:opList]]
- 
-(DEFUN |NRTmakeSlot1Info| ()
-  (PROG (|addList| |opList| |lisplibOpAlist| |pairlis| |argl| |dollarName|
-         |LETTMP#2| |LETTMP#1|)
+;   [first(form), [addList, :opList]]
+
+(DEFUN |NRTmakeSlot1Info| (|form| |base_shell|)
+  (PROG (|LETTMP#1| |LETTMP#2| |dollarName| |argl| |pairlis| |lisplibOpAlist|
+         |opList| |addList|)
     (RETURN
      (PROGN
       (SETQ |pairlis|
               (COND
                ((EQUAL |$insideCategoryPackageIfTrue| T)
                 (PROGN
-                 (SETQ |LETTMP#1| (CDR |$form|))
+                 (SETQ |LETTMP#1| (CDR |form|))
                  (SETQ |LETTMP#2| (REVERSE |LETTMP#1|))
                  (SETQ |dollarName| (CAR |LETTMP#2|))
                  (SETQ |argl| (NREVERSE (CDR |LETTMP#2|)))
                  (CONS (CONS |dollarName| '$) (|mkSlot1sublis| |argl|))))
-               (#1='T (|mkSlot1sublis| (CDR |$form|)))))
+               (#1='T (|mkSlot1sublis| (CDR |form|)))))
       (SETQ |lisplibOpAlist|
               (|transformOperationAlist|
-               (SUBLIS |pairlis| (ELT |$domainShell| 1))))
+               (SUBLIS |pairlis| (ELT |base_shell| 1))))
       (SETQ |opList|
               (COND
                ((EQUAL |$insideCategoryPackageIfTrue| T)
                 (|slot1Filter| |lisplibOpAlist|))
                (#1# |lisplibOpAlist|)))
       (SETQ |addList| (SUBLIS |pairlis| |$NRTaddForm|))
-      (LIST (CAR |$form|) (CONS |addList| |opList|))))))
- 
+      (LIST (CAR |form|) (CONS |addList| |opList|))))))
+
 ; mkSlot1sublis argl ==
 ;   [[a,:b] for a in argl for b in $FormalMapVariableList]
- 
+
 (DEFUN |mkSlot1sublis| (|argl|)
   (PROG ()
     (RETURN
-     ((LAMBDA (|bfVar#94| |bfVar#92| |a| |bfVar#93| |b|)
+     ((LAMBDA (|bfVar#97| |bfVar#95| |a| |bfVar#96| |b|)
         (LOOP
          (COND
-          ((OR (ATOM |bfVar#92|) (PROGN (SETQ |a| (CAR |bfVar#92|)) NIL)
-               (ATOM |bfVar#93|) (PROGN (SETQ |b| (CAR |bfVar#93|)) NIL))
-           (RETURN (NREVERSE |bfVar#94|)))
-          ('T (SETQ |bfVar#94| (CONS (CONS |a| |b|) |bfVar#94|))))
-         (SETQ |bfVar#92| (CDR |bfVar#92|))
-         (SETQ |bfVar#93| (CDR |bfVar#93|))))
+          ((OR (ATOM |bfVar#95|) (PROGN (SETQ |a| (CAR |bfVar#95|)) NIL)
+               (ATOM |bfVar#96|) (PROGN (SETQ |b| (CAR |bfVar#96|)) NIL))
+           (RETURN (NREVERSE |bfVar#97|)))
+          ('T (SETQ |bfVar#97| (CONS (CONS |a| |b|) |bfVar#97|))))
+         (SETQ |bfVar#95| (CDR |bfVar#95|))
+         (SETQ |bfVar#96| (CDR |bfVar#96|))))
       NIL |argl| NIL |$FormalMapVariableList| NIL))))
- 
+
 ; slot1Filter opList ==
 ; --include only those ops which are defined within the capsule
 ;   [u for x in opList | u := fn x] where
 ;     fn [op,:l] ==
 ;       u := [entry for entry in l | INTEGERP CADR entry] => [op,:u]
 ;       nil
- 
+
 (DEFUN |slot1Filter| (|opList|)
   (PROG (|u|)
     (RETURN
-     ((LAMBDA (|bfVar#96| |bfVar#95| |x|)
+     ((LAMBDA (|bfVar#99| |bfVar#98| |x|)
         (LOOP
          (COND
-          ((OR (ATOM |bfVar#95|) (PROGN (SETQ |x| (CAR |bfVar#95|)) NIL))
-           (RETURN (NREVERSE |bfVar#96|)))
+          ((OR (ATOM |bfVar#98|) (PROGN (SETQ |x| (CAR |bfVar#98|)) NIL))
+           (RETURN (NREVERSE |bfVar#99|)))
           ('T
            (AND (SETQ |u| (|slot1Filter,fn| |x|))
-                (SETQ |bfVar#96| (CONS |u| |bfVar#96|)))))
-         (SETQ |bfVar#95| (CDR |bfVar#95|))))
+                (SETQ |bfVar#99| (CONS |u| |bfVar#99|)))))
+         (SETQ |bfVar#98| (CDR |bfVar#98|))))
       NIL |opList| NIL))))
-(DEFUN |slot1Filter,fn| (|bfVar#99|)
+(DEFUN |slot1Filter,fn| (|bfVar#102|)
   (PROG (|op| |l| |u|)
     (RETURN
      (PROGN
-      (SETQ |op| (CAR |bfVar#99|))
-      (SETQ |l| (CDR |bfVar#99|))
+      (SETQ |op| (CAR |bfVar#102|))
+      (SETQ |l| (CDR |bfVar#102|))
       (COND
        ((SETQ |u|
-                ((LAMBDA (|bfVar#98| |bfVar#97| |entry|)
+                ((LAMBDA (|bfVar#101| |bfVar#100| |entry|)
                    (LOOP
                     (COND
-                     ((OR (ATOM |bfVar#97|)
-                          (PROGN (SETQ |entry| (CAR |bfVar#97|)) NIL))
-                      (RETURN (NREVERSE |bfVar#98|)))
+                     ((OR (ATOM |bfVar#100|)
+                          (PROGN (SETQ |entry| (CAR |bfVar#100|)) NIL))
+                      (RETURN (NREVERSE |bfVar#101|)))
                      (#1='T
                       (AND (INTEGERP (CADR |entry|))
-                           (SETQ |bfVar#98| (CONS |entry| |bfVar#98|)))))
-                    (SETQ |bfVar#97| (CDR |bfVar#97|))))
+                           (SETQ |bfVar#101| (CONS |entry| |bfVar#101|)))))
+                    (SETQ |bfVar#100| (CDR |bfVar#100|))))
                  NIL |l| NIL))
         (CONS |op| |u|))
        (#1# NIL))))))
- 
-; NRToptimizeHas u ==
-; --u is a list ((pred cond)...) -- see optFunctorBody
-; --produces an alist: (((HasCategory a b) . GENSYM)...)
-;   u is [a,:b] =>
-;     a='HasCategory => LASSOC(u,$hasCategoryAlist) or
-;       $hasCategoryAlist := [[u,:(y:=GENSYM())],:$hasCategoryAlist]
-;       y
-;     a='has => NRToptimizeHas ['HasCategory,first b,MKQ first rest b]
-;     a = 'QUOTE => u
-;     [NRToptimizeHas a,:NRToptimizeHas b]
-;   u
- 
-(DEFUN |NRToptimizeHas| (|u|)
-  (PROG (|a| |b| |y|)
-    (RETURN
-     (COND
-      ((AND (CONSP |u|)
-            (PROGN (SETQ |a| (CAR |u|)) (SETQ |b| (CDR |u|)) #1='T))
-       (COND
-        ((EQ |a| '|HasCategory|)
-         (OR (LASSOC |u| |$hasCategoryAlist|)
-             (PROGN
-              (SETQ |$hasCategoryAlist|
-                      (CONS (CONS |u| (SETQ |y| (GENSYM)))
-                            |$hasCategoryAlist|))
-              |y|)))
-        ((EQ |a| '|has|)
-         (|NRToptimizeHas|
-          (LIST '|HasCategory| (CAR |b|) (MKQ (CAR (CDR |b|))))))
-        ((EQ |a| 'QUOTE) |u|)
-        (#1# (CONS (|NRToptimizeHas| |a|) (|NRToptimizeHas| |b|)))))
-      (#1# |u|)))))
- 
+
 ; NRTaddToSlam([name,:argnames],shell) ==
 ;   $mutableDomain => return nil
 ;   null argnames => addToConstructorCache(name,nil,shell)
 ;   args:= ['LIST,:ASSOCRIGHT $devaluateList]
 ;   addToConstructorCache(name,args,shell)
- 
-(DEFUN |NRTaddToSlam| (|bfVar#100| |shell|)
+
+(DEFUN |NRTaddToSlam| (|bfVar#103| |shell|)
   (PROG (|name| |argnames| |args|)
     (RETURN
      (PROGN
-      (SETQ |name| (CAR |bfVar#100|))
-      (SETQ |argnames| (CDR |bfVar#100|))
+      (SETQ |name| (CAR |bfVar#103|))
+      (SETQ |argnames| (CDR |bfVar#103|))
       (COND (|$mutableDomain| (RETURN NIL))
             ((NULL |argnames|) (|addToConstructorCache| |name| NIL |shell|))
             ('T
              (PROGN
               (SETQ |args| (CONS 'LIST (ASSOCRIGHT |$devaluateList|)))
               (|addToConstructorCache| |name| |args| |shell|))))))))
- 
-; genOperationAlist() ==
-;   $lisplibOperationAlist := [sigloc entry for entry in $domainShell.1] where
+
+; genOperationAlist(base_shell) ==
+;   $lisplibOperationAlist := [sigloc entry for entry in base_shell.1] where
 ;     sigloc [opsig,pred,fnsel] ==
 ;         if pred ~= 'T then
 ;           pred := simpBool pred
@@ -2069,29 +2102,29 @@
 ;               opsig := substitute('$,CADR($functorForm),opsig)
 ;           [opsig,pred,[op,a,vectorLocation(first opsig,CADR opsig)]]
 ;         [opsig,pred,fnsel]
- 
-(DEFUN |genOperationAlist| #1=()
-  (PROG #1#
+
+(DEFUN |genOperationAlist| (|base_shell|)
+  (PROG ()
     (RETURN
      (SETQ |$lisplibOperationAlist|
-             ((LAMBDA (|bfVar#102| |bfVar#101| |entry|)
+             ((LAMBDA (|bfVar#105| |bfVar#104| |entry|)
                 (LOOP
                  (COND
-                  ((OR (ATOM |bfVar#101|)
-                       (PROGN (SETQ |entry| (CAR |bfVar#101|)) NIL))
-                   (RETURN (NREVERSE |bfVar#102|)))
+                  ((OR (ATOM |bfVar#104|)
+                       (PROGN (SETQ |entry| (CAR |bfVar#104|)) NIL))
+                   (RETURN (NREVERSE |bfVar#105|)))
                   ('T
-                   (SETQ |bfVar#102|
+                   (SETQ |bfVar#105|
                            (CONS (|genOperationAlist,sigloc| |entry|)
-                                 |bfVar#102|))))
-                 (SETQ |bfVar#101| (CDR |bfVar#101|))))
-              NIL (ELT |$domainShell| 1) NIL)))))
-(DEFUN |genOperationAlist,sigloc| (|bfVar#103|)
+                                 |bfVar#105|))))
+                 (SETQ |bfVar#104| (CDR |bfVar#104|))))
+              NIL (ELT |base_shell| 1) NIL)))))
+(DEFUN |genOperationAlist,sigloc| (|bfVar#106|)
   (PROG (|opsig| |pred| |fnsel| |op| |ISTMP#1| |a|)
     (RETURN
      (PROGN
-      (SETQ |opsig| (CAR |bfVar#103|))
-      (SETQ |pred| (CADR . #1=(|bfVar#103|)))
+      (SETQ |opsig| (CAR |bfVar#106|))
+      (SETQ |pred| (CADR . #1=(|bfVar#106|)))
       (SETQ |fnsel| (CADDR . #1#))
       (COND
        ((NOT (EQ |pred| 'T)) (SETQ |pred| (|simpBool| |pred|))
@@ -2112,102 +2145,99 @@
                (LIST |op| |a|
                      (|vectorLocation| (CAR |opsig|) (CADR |opsig|))))))
        (#2# (LIST |opsig| |pred| |fnsel|)))))))
- 
-; changeDirectoryInSlot1() ==  --called by buildFunctor
-;   genOperationAlist()
+
+; changeDirectoryInSlot1(base_shell, e) ==  --called by buildFunctor
+;   genOperationAlist(base_shell)
 ;   sortedOplist := listSort(function GLESSEQP,
 ;                            COPY_-LIST $lisplibOperationAlist,function CADR)
 ;   $lastPred :local := nil
-;   $newEnv :local := $e
-;   $domainShell.1 := [fn entry for entry in sortedOplist] where
-;     fn [[op,sig],pred,fnsel] ==
+;   $newEnv : local := e
+;   base_shell.1 := [fn(entry, e) for entry in sortedOplist] where
+;     fn([[op, sig], pred, fnsel], e) ==
 ;        if $lastPred ~= pred then
-;             $newEnv := deepChaseInferences(pred,$e)
+;             $newEnv := deepChaseInferences(pred, e)
 ;             $lastPred := pred
 ;        [[op, genSlotSig(sig, $newEnv)], pred, fnsel]
- 
-(DEFUN |changeDirectoryInSlot1| ()
+
+(DEFUN |changeDirectoryInSlot1| (|base_shell| |e|)
   (PROG (|$newEnv| |$lastPred| |sortedOplist|)
     (DECLARE (SPECIAL |$newEnv| |$lastPred|))
     (RETURN
      (PROGN
-      (|genOperationAlist|)
+      (|genOperationAlist| |base_shell|)
       (SETQ |sortedOplist|
               (|listSort| #'GLESSEQP (COPY-LIST |$lisplibOperationAlist|)
                #'CADR))
       (SETQ |$lastPred| NIL)
-      (SETQ |$newEnv| |$e|)
-      (SETF (ELT |$domainShell| 1)
-              ((LAMBDA (|bfVar#105| |bfVar#104| |entry|)
+      (SETQ |$newEnv| |e|)
+      (SETF (ELT |base_shell| 1)
+              ((LAMBDA (|bfVar#108| |bfVar#107| |entry|)
                  (LOOP
                   (COND
-                   ((OR (ATOM |bfVar#104|)
-                        (PROGN (SETQ |entry| (CAR |bfVar#104|)) NIL))
-                    (RETURN (NREVERSE |bfVar#105|)))
+                   ((OR (ATOM |bfVar#107|)
+                        (PROGN (SETQ |entry| (CAR |bfVar#107|)) NIL))
+                    (RETURN (NREVERSE |bfVar#108|)))
                    ('T
-                    (SETQ |bfVar#105|
-                            (CONS (|changeDirectoryInSlot1,fn| |entry|)
-                                  |bfVar#105|))))
-                  (SETQ |bfVar#104| (CDR |bfVar#104|))))
+                    (SETQ |bfVar#108|
+                            (CONS (|changeDirectoryInSlot1,fn| |entry| |e|)
+                                  |bfVar#108|))))
+                  (SETQ |bfVar#107| (CDR |bfVar#107|))))
                NIL |sortedOplist| NIL))))))
-(DEFUN |changeDirectoryInSlot1,fn| (|bfVar#106|)
+(DEFUN |changeDirectoryInSlot1,fn| (|bfVar#109| |e|)
   (PROG (|op| |sig| |pred| |fnsel|)
     (RETURN
      (PROGN
-      (SETQ |op| (CAAR . #1=(|bfVar#106|)))
+      (SETQ |op| (CAAR . #1=(|bfVar#109|)))
       (SETQ |sig| (CADAR . #1#))
-      (SETQ |pred| (CADR . #2=(|bfVar#106|)))
+      (SETQ |pred| (CADR . #2=(|bfVar#109|)))
       (SETQ |fnsel| (CADDR . #2#))
       (COND
        ((NOT (EQUAL |$lastPred| |pred|))
-        (SETQ |$newEnv| (|deepChaseInferences| |pred| |$e|))
+        (SETQ |$newEnv| (|deepChaseInferences| |pred| |e|))
         (SETQ |$lastPred| |pred|)))
       (LIST (LIST |op| (|genSlotSig| |sig| |$newEnv|)) |pred| |fnsel|)))))
- 
-; genSlotSig(sig, $e) ==
-;    [genDeltaSig t for t in sig]
- 
-(DEFUN |genSlotSig| (|sig| |$e|)
-  (DECLARE (SPECIAL |$e|))
+
+; genSlotSig(sig, e) ==
+;    [genDeltaSig(t, e) for t in sig]
+
+(DEFUN |genSlotSig| (|sig| |e|)
   (PROG ()
     (RETURN
-     ((LAMBDA (|bfVar#108| |bfVar#107| |t|)
+     ((LAMBDA (|bfVar#111| |bfVar#110| |t|)
         (LOOP
          (COND
-          ((OR (ATOM |bfVar#107|) (PROGN (SETQ |t| (CAR |bfVar#107|)) NIL))
-           (RETURN (NREVERSE |bfVar#108|)))
-          ('T (SETQ |bfVar#108| (CONS (|genDeltaSig| |t|) |bfVar#108|))))
-         (SETQ |bfVar#107| (CDR |bfVar#107|))))
+          ((OR (ATOM |bfVar#110|) (PROGN (SETQ |t| (CAR |bfVar#110|)) NIL))
+           (RETURN (NREVERSE |bfVar#111|)))
+          ('T (SETQ |bfVar#111| (CONS (|genDeltaSig| |t| |e|) |bfVar#111|))))
+         (SETQ |bfVar#110| (CDR |bfVar#110|))))
       NIL |sig| NIL))))
- 
+
 ; DEFPARAMETER($infoHash, nil)
- 
+
 (DEFPARAMETER |$infoHash| NIL)
- 
-; deepChaseInferences(pred,$e) ==
-;     $infoHash : local := MAKE_-HASHTABLE 'EQUAL
-;     deepChaseInferences1(pred,$e)
- 
-(DEFUN |deepChaseInferences| (|pred| |$e|)
-  (DECLARE (SPECIAL |$e|))
+
+; deepChaseInferences(pred, e) ==
+;     $infoHash : local := MAKE_HASHTABLE('EQUAL)
+;     deepChaseInferences1(pred, e)
+
+(DEFUN |deepChaseInferences| (|pred| |e|)
   (PROG (|$infoHash|)
     (DECLARE (SPECIAL |$infoHash|))
     (RETURN
      (PROGN
-      (SETQ |$infoHash| (MAKE-HASHTABLE 'EQUAL))
-      (|deepChaseInferences1| |pred| |$e|)))))
- 
-; deepChaseInferences1(pred,$e) ==
+      (SETQ |$infoHash| (MAKE_HASHTABLE 'EQUAL))
+      (|deepChaseInferences1| |pred| |e|)))))
+
+; deepChaseInferences1(pred, e) ==
 ;     pred is ['AND,:preds] or pred is ['and,:preds] =>
-;         for p in preds repeat $e := deepChaseInferences1(p,$e)
-;         $e
-;     pred is ['OR,pred1,:.] or pred is ['or,pred1,:.] => $e
-;     --    deepChaseInferences1(pred1,$e)
-;     pred is 'T or pred is ['NOT,:.] or pred is ['not,:.] => $e
-;     chaseInferences(pred,$e)
- 
-(DEFUN |deepChaseInferences1| (|pred| |$e|)
-  (DECLARE (SPECIAL |$e|))
+;         for p in preds repeat e := deepChaseInferences1(p, e)
+;         e
+;     pred is ['OR, pred1, :.] or pred is ['or, pred1, :.] => e
+;     --    deepChaseInferences1(pred1, e)
+;     pred is 'T or pred is ['NOT, :.] or pred is ['not, :.] => e
+;     chaseInferences(pred, e)
+
+(DEFUN |deepChaseInferences1| (|pred| |e|)
   (PROG (|preds| |ISTMP#1| |pred1|)
     (RETURN
      (COND
@@ -2217,15 +2247,15 @@
         (AND (CONSP |pred|) (EQ (CAR |pred|) '|and|)
              (PROGN (SETQ |preds| (CDR |pred|)) #1#)))
        (PROGN
-        ((LAMBDA (|bfVar#109| |p|)
+        ((LAMBDA (|bfVar#112| |p|)
            (LOOP
             (COND
-             ((OR (ATOM |bfVar#109|) (PROGN (SETQ |p| (CAR |bfVar#109|)) NIL))
+             ((OR (ATOM |bfVar#112|) (PROGN (SETQ |p| (CAR |bfVar#112|)) NIL))
               (RETURN NIL))
-             (#1# (SETQ |$e| (|deepChaseInferences1| |p| |$e|))))
-            (SETQ |bfVar#109| (CDR |bfVar#109|))))
+             (#1# (SETQ |e| (|deepChaseInferences1| |p| |e|))))
+            (SETQ |bfVar#112| (CDR |bfVar#112|))))
          |preds| NIL)
-        |$e|))
+        |e|))
       ((OR
         (AND (CONSP |pred|) (EQ (CAR |pred|) 'OR)
              (PROGN
@@ -2237,29 +2267,29 @@
               (SETQ |ISTMP#1| (CDR |pred|))
               (AND (CONSP |ISTMP#1|)
                    (PROGN (SETQ |pred1| (CAR |ISTMP#1|)) #1#)))))
-       |$e|)
+       |e|)
       ((OR (EQ |pred| 'T) (AND (CONSP |pred|) (EQ (CAR |pred|) 'NOT))
            (AND (CONSP |pred|) (EQ (CAR |pred|) '|not|)))
-       |$e|)
-      (#1# (|chaseInferences| |pred| |$e|))))))
- 
+       |e|)
+      (#1# (|chaseInferences| |pred| |e|))))))
+
 ; vectorLocation(op,sig) ==
 ;   u := or/[i for i in 1.. for u in $NRTdeltaList
 ;         | u is [=op,[='$,: xsig],:.] and sig=NRTsubstDelta(xsig) ]
 ;   u => $NRTdeltaLength - u + 6
 ;   nil    -- this signals that calls should be forwarded
- 
+
 (DEFUN |vectorLocation| (|op| |sig|)
   (PROG (|ISTMP#1| |ISTMP#2| |xsig| |u|)
     (RETURN
      (PROGN
       (SETQ |u|
-              ((LAMBDA (|bfVar#111| |i| |bfVar#110| |u|)
+              ((LAMBDA (|bfVar#114| |i| |bfVar#113| |u|)
                  (LOOP
                   (COND
-                   ((OR (ATOM |bfVar#110|)
-                        (PROGN (SETQ |u| (CAR |bfVar#110|)) NIL))
-                    (RETURN |bfVar#111|))
+                   ((OR (ATOM |bfVar#113|)
+                        (PROGN (SETQ |u| (CAR |bfVar#113|)) NIL))
+                    (RETURN |bfVar#114|))
                    (#1='T
                     (AND (CONSP |u|) (EQUAL (CAR |u|) |op|)
                          (PROGN
@@ -2274,13 +2304,13 @@
                                       #1#)))))
                          (EQUAL |sig| (|NRTsubstDelta| |xsig|))
                          (PROGN
-                          (SETQ |bfVar#111| |i|)
-                          (COND (|bfVar#111| (RETURN |bfVar#111|)))))))
+                          (SETQ |bfVar#114| |i|)
+                          (COND (|bfVar#114| (RETURN |bfVar#114|)))))))
                   (SETQ |i| (+ |i| 1))
-                  (SETQ |bfVar#110| (CDR |bfVar#110|))))
+                  (SETQ |bfVar#113| (CDR |bfVar#113|))))
                NIL 1 |$NRTdeltaList| NIL))
       (COND (|u| (+ (- |$NRTdeltaLength| |u|) 6)) (#1# NIL))))))
- 
+
 ; NRTsubstDelta(initSig) ==
 ;   sig := [replaceSlotTypes s for s in initSig] where
 ;      replaceSlotTypes(t) ==
@@ -2295,22 +2325,22 @@
 ;         MEMQ(first t, '(Mapping Union Record _:)) =>
 ;            [first t, :[replaceSlotTypes(x) for x in rest t]]
 ;         t
- 
+
 (DEFUN |NRTsubstDelta| (|initSig|)
   (PROG (|sig|)
     (RETURN
      (SETQ |sig|
-             ((LAMBDA (|bfVar#113| |bfVar#112| |s|)
+             ((LAMBDA (|bfVar#116| |bfVar#115| |s|)
                 (LOOP
                  (COND
-                  ((OR (ATOM |bfVar#112|)
-                       (PROGN (SETQ |s| (CAR |bfVar#112|)) NIL))
-                   (RETURN (NREVERSE |bfVar#113|)))
+                  ((OR (ATOM |bfVar#115|)
+                       (PROGN (SETQ |s| (CAR |bfVar#115|)) NIL))
+                   (RETURN (NREVERSE |bfVar#116|)))
                   ('T
-                   (SETQ |bfVar#113|
+                   (SETQ |bfVar#116|
                            (CONS (|NRTsubstDelta,replaceSlotTypes| |s|)
-                                 |bfVar#113|))))
-                 (SETQ |bfVar#112| (CDR |bfVar#112|))))
+                                 |bfVar#116|))))
+                 (SETQ |bfVar#115| (CDR |bfVar#115|))))
               NIL |initSig| NIL)))))
 (DEFUN |NRTsubstDelta,replaceSlotTypes| (|t|)
   (PROG (|u|)
@@ -2326,24 +2356,24 @@
                      (#1# (|error| '|bad $NRTdeltaList entry|)))))))
       ((MEMQ (CAR |t|) '(|Mapping| |Union| |Record| |:|))
        (CONS (CAR |t|)
-             ((LAMBDA (|bfVar#115| |bfVar#114| |x|)
+             ((LAMBDA (|bfVar#118| |bfVar#117| |x|)
                 (LOOP
                  (COND
-                  ((OR (ATOM |bfVar#114|)
-                       (PROGN (SETQ |x| (CAR |bfVar#114|)) NIL))
-                   (RETURN (NREVERSE |bfVar#115|)))
+                  ((OR (ATOM |bfVar#117|)
+                       (PROGN (SETQ |x| (CAR |bfVar#117|)) NIL))
+                   (RETURN (NREVERSE |bfVar#118|)))
                   (#1#
-                   (SETQ |bfVar#115|
+                   (SETQ |bfVar#118|
                            (CONS (|NRTsubstDelta,replaceSlotTypes| |x|)
-                                 |bfVar#115|))))
-                 (SETQ |bfVar#114| (CDR |bfVar#114|))))
+                                 |bfVar#118|))))
+                 (SETQ |bfVar#117| (CDR |bfVar#117|))))
               NIL (CDR |t|) NIL)))
       (#1# |t|)))))
- 
+
 ; NRTputInLocalReferences bod ==
 ;   $elt: local := ($QuickCode => 'QREFELT; 'ELT)
 ;   NRTputInHead bod
- 
+
 (DEFUN |NRTputInLocalReferences| (|bod|)
   (PROG (|$elt|)
     (DECLARE (SPECIAL |$elt|))
@@ -2351,7 +2381,7 @@
      (PROGN
       (SETQ |$elt| (COND (|$QuickCode| 'QREFELT) ('T 'ELT)))
       (|NRTputInHead| |bod|)))))
- 
+
 ; NRTputInHead bod ==
 ;   atom bod => bod
 ;   bod is ['SPADCALL,:args,fn] =>
@@ -2367,19 +2397,11 @@
 ;     bod
 ;   bod is ["QUOTE",:.] => bod
 ;   bod is ["CLOSEDFN",:.] => bod
-;   bod is ["SPADCONST",dom,ind] =>
-;     BREAK()
-;     RPLACA(bod,$elt)
-;     dom = '_$ => nil
-;     k:= NRTassocIndex dom =>
-;       RPLACA(LASTNODE bod,[$elt,'_$,k])
-;       bod
-;     keyedSystemError("S2GE0016",['"NRTputInHead",
-;        '"unexpected SPADCONST form"])
+;   bod is ["SPADCONST", dom, ind] => BREAK()
 ;   NRTputInHead first bod
 ;   NRTputInTail rest bod
 ;   bod
- 
+
 (DEFUN |NRTputInHead| (|bod|)
   (PROG (|ISTMP#1| |ISTMP#2| |fn| |args| |elt| |dom| |ind| |k| |clauses|)
     (RETURN
@@ -2417,14 +2439,14 @@
            ((AND (CONSP |bod|) (EQ (CAR |bod|) 'COND)
                  (PROGN (SETQ |clauses| (CDR |bod|)) #1#))
             (PROGN
-             ((LAMBDA (|bfVar#116| |cc|)
+             ((LAMBDA (|bfVar#119| |cc|)
                 (LOOP
                  (COND
-                  ((OR (ATOM |bfVar#116|)
-                       (PROGN (SETQ |cc| (CAR |bfVar#116|)) NIL))
+                  ((OR (ATOM |bfVar#119|)
+                       (PROGN (SETQ |cc| (CAR |bfVar#119|)) NIL))
                    (RETURN NIL))
                   (#1# (|NRTputInTail| |cc|)))
-                 (SETQ |bfVar#116| (CDR |bfVar#116|))))
+                 (SETQ |bfVar#119| (CDR |bfVar#119|))))
               |clauses| NIL)
              |bod|))
            ((AND (CONSP |bod|) (EQ (CAR |bod|) 'QUOTE)) |bod|)
@@ -2438,23 +2460,13 @@
                         (SETQ |ISTMP#2| (CDR |ISTMP#1|))
                         (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
                              (PROGN (SETQ |ind| (CAR |ISTMP#2|)) #1#))))))
-            (PROGN
-             (BREAK)
-             (RPLACA |bod| |$elt|)
-             (COND ((EQ |dom| '$) NIL)
-                   ((SETQ |k| (|NRTassocIndex| |dom|))
-                    (PROGN
-                     (RPLACA (LASTNODE |bod|) (LIST |$elt| '$ |k|))
-                     |bod|))
-                   (#1#
-                    (|keyedSystemError| 'S2GE0016
-                     (LIST "NRTputInHead" "unexpected SPADCONST form"))))))
+            (BREAK))
            (#1#
             (PROGN
              (|NRTputInHead| (CAR |bod|))
              (|NRTputInTail| (CDR |bod|))
              |bod|))))))
- 
+
 ; NRTputInTail x ==
 ;   for y in tails x repeat
 ;     atom (u := first y) =>
@@ -2467,7 +2479,7 @@
 ;       nil
 ;     NRTputInHead u
 ;   x
- 
+
 (DEFUN |NRTputInTail| (|x|)
   (PROG (|u| |k|)
     (RETURN
@@ -2487,10 +2499,10 @@
           (SETQ |y| (CDR |y|))))
        |x|)
       |x|))))
- 
+
 ; NRTdescendCodeTran(u, condList) ==
-;     -- NRTbuildFunctor calls to fill $template slots with names of
-;     -- compiled functions
+;     -- buildFunctor calls NRTdescendCodeTran to fill $template slots
+;     -- with names of compiled functions
 ;     null u => nil
 ;     u is ['LIST] => nil
 ;     u is [op, ., i, a] and MEMQ(op, '(SETELT QSETREFV)) =>
@@ -2511,7 +2523,7 @@
 ;             NRTdescendCodeTran(first y, [pred, :condList])
 ;     u is ['PROGN, :c] => for x in c repeat NRTdescendCodeTran(x, condList)
 ;     nil
- 
+
 (DEFUN |NRTdescendCodeTran| (|u| |condList|)
   (PROG (|op| |ISTMP#1| |ISTMP#2| |i| |ISTMP#3| |a| |fn| |fn'| |ISTMP#4|
          |ISTMP#5| |na| |c| |pred| |y|)
@@ -2586,84 +2598,84 @@
              (#1# NIL)))
            ((AND (CONSP |u|) (EQ (CAR |u|) 'COND)
                  (PROGN (SETQ |c| (CDR |u|)) #1#))
-            ((LAMBDA (|bfVar#118| |bfVar#117|)
+            ((LAMBDA (|bfVar#121| |bfVar#120|)
                (LOOP
                 (COND
-                 ((OR (ATOM |bfVar#118|)
-                      (PROGN (SETQ |bfVar#117| (CAR |bfVar#118|)) NIL))
+                 ((OR (ATOM |bfVar#121|)
+                      (PROGN (SETQ |bfVar#120| (CAR |bfVar#121|)) NIL))
                   (RETURN NIL))
                  (#1#
-                  (AND (CONSP |bfVar#117|)
+                  (AND (CONSP |bfVar#120|)
                        (PROGN
-                        (SETQ |pred| (CAR |bfVar#117|))
-                        (SETQ |y| (CDR |bfVar#117|))
+                        (SETQ |pred| (CAR |bfVar#120|))
+                        (SETQ |y| (CDR |bfVar#120|))
                         #1#)
                        |y|
                        (|NRTdescendCodeTran| (CAR |y|)
                         (CONS |pred| |condList|)))))
-                (SETQ |bfVar#118| (CDR |bfVar#118|))))
+                (SETQ |bfVar#121| (CDR |bfVar#121|))))
              |c| NIL))
            ((AND (CONSP |u|) (EQ (CAR |u|) 'PROGN)
                  (PROGN (SETQ |c| (CDR |u|)) #1#))
-            ((LAMBDA (|bfVar#119| |x|)
+            ((LAMBDA (|bfVar#122| |x|)
                (LOOP
                 (COND
-                 ((OR (ATOM |bfVar#119|)
-                      (PROGN (SETQ |x| (CAR |bfVar#119|)) NIL))
+                 ((OR (ATOM |bfVar#122|)
+                      (PROGN (SETQ |x| (CAR |bfVar#122|)) NIL))
                   (RETURN NIL))
                  (#1# (|NRTdescendCodeTran| |x| |condList|)))
-                (SETQ |bfVar#119| (CDR |bfVar#119|))))
+                (SETQ |bfVar#122| (CDR |bfVar#122|))))
              |c| NIL))
            (#1# NIL)))))
- 
-; NRTaddInner x ==
+
+; NRTaddInner(x, e) ==
 ; --called by genDeltaEntry and others that affect $NRTdeltaList
 ;   PROGN
 ;     atom x => nil
 ;     x is ['Record, :l] =>
-;         for [., ., y] in l repeat NRTinnerGetLocalIndex y
+;         for [., ., y] in l repeat NRTinnerGetLocalIndex(y, e)
 ;     first x in '(Union Mapping) =>
 ;         for y in rest x repeat
-;             y is [":", ., z] => NRTinnerGetLocalIndex z
-;             NRTinnerGetLocalIndex y
-;     x is ['SubDomain, y, :.] => NRTinnerGetLocalIndex y
+;             y is [":", ., z] => NRTinnerGetLocalIndex(z, e)
+;             NRTinnerGetLocalIndex(y, e)
+;     x is ['SubDomain, y, :.] => NRTinnerGetLocalIndex(y, e)
 ;     getConstructorSignature x is [., :ml] =>
 ;         for y in rest x for m in ml | not (y = '$) repeat
-;             isCategoryForm(m, $CategoryFrame) => NRTinnerGetLocalIndex y
+;             isCategoryForm(m) => NRTinnerGetLocalIndex(y, e)
 ;     keyedSystemError("S2NR0003", [x])
 ;   x
- 
-(DEFUN |NRTaddInner| (|x|)
+
+(DEFUN |NRTaddInner| (|x| |e|)
   (PROG (|l| |ISTMP#1| |ISTMP#2| |y| |z| |ml|)
     (RETURN
      (PROGN
       (COND ((ATOM |x|) NIL)
             ((AND (CONSP |x|) (EQ (CAR |x|) '|Record|)
                   (PROGN (SETQ |l| (CDR |x|)) #1='T))
-             ((LAMBDA (|bfVar#121| |bfVar#120|)
+             ((LAMBDA (|bfVar#124| |bfVar#123|)
                 (LOOP
                  (COND
-                  ((OR (ATOM |bfVar#121|)
-                       (PROGN (SETQ |bfVar#120| (CAR |bfVar#121|)) NIL))
+                  ((OR (ATOM |bfVar#124|)
+                       (PROGN (SETQ |bfVar#123| (CAR |bfVar#124|)) NIL))
                    (RETURN NIL))
                   (#1#
-                   (AND (CONSP |bfVar#120|)
+                   (AND (CONSP |bfVar#123|)
                         (PROGN
-                         (SETQ |ISTMP#1| (CDR |bfVar#120|))
+                         (SETQ |ISTMP#1| (CDR |bfVar#123|))
                          (AND (CONSP |ISTMP#1|)
                               (PROGN
                                (SETQ |ISTMP#2| (CDR |ISTMP#1|))
                                (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
                                     (PROGN (SETQ |y| (CAR |ISTMP#2|)) #1#)))))
-                        (|NRTinnerGetLocalIndex| |y|))))
-                 (SETQ |bfVar#121| (CDR |bfVar#121|))))
+                        (|NRTinnerGetLocalIndex| |y| |e|))))
+                 (SETQ |bfVar#124| (CDR |bfVar#124|))))
               |l| NIL))
             ((|member| (CAR |x|) '(|Union| |Mapping|))
-             ((LAMBDA (|bfVar#122| |y|)
+             ((LAMBDA (|bfVar#125| |y|)
                 (LOOP
                  (COND
-                  ((OR (ATOM |bfVar#122|)
-                       (PROGN (SETQ |y| (CAR |bfVar#122|)) NIL))
+                  ((OR (ATOM |bfVar#125|)
+                       (PROGN (SETQ |y| (CAR |bfVar#125|)) NIL))
                    (RETURN NIL))
                   (#1#
                    (COND
@@ -2678,50 +2690,50 @@
                                       (PROGN
                                        (SETQ |z| (CAR |ISTMP#2|))
                                        #1#))))))
-                     (|NRTinnerGetLocalIndex| |z|))
-                    (#1# (|NRTinnerGetLocalIndex| |y|)))))
-                 (SETQ |bfVar#122| (CDR |bfVar#122|))))
+                     (|NRTinnerGetLocalIndex| |z| |e|))
+                    (#1# (|NRTinnerGetLocalIndex| |y| |e|)))))
+                 (SETQ |bfVar#125| (CDR |bfVar#125|))))
               (CDR |x|) NIL))
             ((AND (CONSP |x|) (EQ (CAR |x|) '|SubDomain|)
                   (PROGN
                    (SETQ |ISTMP#1| (CDR |x|))
                    (AND (CONSP |ISTMP#1|)
                         (PROGN (SETQ |y| (CAR |ISTMP#1|)) #1#))))
-             (|NRTinnerGetLocalIndex| |y|))
+             (|NRTinnerGetLocalIndex| |y| |e|))
             ((PROGN
               (SETQ |ISTMP#1| (|getConstructorSignature| |x|))
               (AND (CONSP |ISTMP#1|) (PROGN (SETQ |ml| (CDR |ISTMP#1|)) #1#)))
-             ((LAMBDA (|bfVar#123| |y| |bfVar#124| |m|)
+             ((LAMBDA (|bfVar#126| |y| |bfVar#127| |m|)
                 (LOOP
                  (COND
-                  ((OR (ATOM |bfVar#123|)
-                       (PROGN (SETQ |y| (CAR |bfVar#123|)) NIL)
-                       (ATOM |bfVar#124|)
-                       (PROGN (SETQ |m| (CAR |bfVar#124|)) NIL))
+                  ((OR (ATOM |bfVar#126|)
+                       (PROGN (SETQ |y| (CAR |bfVar#126|)) NIL)
+                       (ATOM |bfVar#127|)
+                       (PROGN (SETQ |m| (CAR |bfVar#127|)) NIL))
                    (RETURN NIL))
                   (#1#
                    (AND (NULL (EQ |y| '$))
                         (COND
-                         ((|isCategoryForm| |m| |$CategoryFrame|)
-                          (IDENTITY (|NRTinnerGetLocalIndex| |y|)))))))
-                 (SETQ |bfVar#123| (CDR |bfVar#123|))
-                 (SETQ |bfVar#124| (CDR |bfVar#124|))))
+                         ((|isCategoryForm| |m|)
+                          (IDENTITY (|NRTinnerGetLocalIndex| |y| |e|)))))))
+                 (SETQ |bfVar#126| (CDR |bfVar#126|))
+                 (SETQ |bfVar#127| (CDR |bfVar#127|))))
               (CDR |x|) NIL |ml| NIL))
             (#1# (|keyedSystemError| 'S2NR0003 (LIST |x|))))
       |x|))))
- 
-; NRTinnerGetLocalIndex x ==
+
+; NRTinnerGetLocalIndex(x, e) ==
 ;     atom x => x
 ;     -- following test should skip Unions, Records, Mapping
-;     MEMQ(opOf x, '(Union Record Mapping)) => NRTgetLocalIndex x
-;     constructor?(x) => NRTgetLocalIndex x
-;     NRTaddInner x
- 
-(DEFUN |NRTinnerGetLocalIndex| (|x|)
+;     MEMQ(opOf x, '(Union Record Mapping)) => NRTgetLocalIndex(x, e)
+;     constructor?(x) => NRTgetLocalIndex(x, e)
+;     NRTaddInner(x, e)
+
+(DEFUN |NRTinnerGetLocalIndex| (|x| |e|)
   (PROG ()
     (RETURN
      (COND ((ATOM |x|) |x|)
            ((MEMQ (|opOf| |x|) '(|Union| |Record| |Mapping|))
-            (|NRTgetLocalIndex| |x|))
-           ((|constructor?| |x|) (|NRTgetLocalIndex| |x|))
-           ('T (|NRTaddInner| |x|))))))
+            (|NRTgetLocalIndex| |x| |e|))
+           ((|constructor?| |x|) (|NRTgetLocalIndex| |x| |e|))
+           ('T (|NRTaddInner| |x| |e|))))))

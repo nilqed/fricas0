@@ -1,14 +1,14 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; NRTevalDomain form ==
 ;   form is ['SETELT,:.] =>
 ;       BREAK()
 ;       eval form
 ;   evalDomain form
- 
+
 (DEFUN |NRTevalDomain| (|form|)
   (PROG ()
     (RETURN
@@ -16,14 +16,14 @@
       ((AND (CONSP |form|) (EQ (CAR |form|) 'SETELT))
        (PROGN (BREAK) (|eval| |form|)))
       ('T (|evalDomain| |form|))))))
- 
+
 ; compiledLookupCheck(op,sig,dollar) ==
 ;   fn := compiledLookup(op,sig,dollar)
-; 
+;
 ;   fn = nil =>
 ;     keyedSystemError("S2NR0001",[op,formatSignature sig,dollar.0])
 ;   fn
- 
+
 (DEFUN |compiledLookupCheck| (|op| |sig| |dollar|)
   (PROG (|fn|)
     (RETURN
@@ -34,7 +34,7 @@
         (|keyedSystemError| 'S2NR0001
          (LIST |op| (|formatSignature| |sig|) (ELT |dollar| 0))))
        ('T |fn|))))))
- 
+
 ; NRTreplaceLocalTypes(t,dom) ==
 ;    atom t =>
 ;      not INTEGERP t => t
@@ -44,7 +44,7 @@
 ;    MEMQ(first t, '(Mapping Union Record _:)) =>
 ;       [first t, :[NRTreplaceLocalTypes(x, dom) for x in rest t]]
 ;    t
- 
+
 (DEFUN |NRTreplaceLocalTypes| (|t| |dom|)
   (PROG ()
     (RETURN
@@ -70,11 +70,11 @@
                  (SETQ |bfVar#1| (CDR |bfVar#1|))))
               NIL (CDR |t|) NIL)))
       (#1# |t|)))))
- 
+
 ; substDomainArgs(domain,object) ==
 ;     form := devaluate domain
 ;     SUBLISLIS([form,:rest form],["$$",:$FormalMapVariableList],object)
- 
+
 (DEFUN |substDomainArgs| (|domain| |object|)
   (PROG (|form|)
     (RETURN
@@ -82,10 +82,9 @@
       (SETQ |form| (|devaluate| |domain|))
       (SUBLISLIS (CONS |form| (CDR |form|)) (CONS '$$ |$FormalMapVariableList|)
        |object|)))))
- 
+
 ; lookupInTable(op,sig,dollar,[domain,table]) ==
 ;   success := false
-;   someMatch := false
 ;   while not success for [sig1, :code] in QLASSQ(op, table) repeat
 ;     success :=
 ;       null compareSig(sig,sig1,dollar.0,domain) => false
@@ -95,15 +94,14 @@
 ;       lookupDisplay(op,sig,domain,'" !! found in NEW table!!")
 ;       slot
 ;   success
- 
+
 (DEFUN |lookupInTable| (|op| |sig| |dollar| |bfVar#5|)
-  (PROG (|domain| |table| |success| |someMatch| |sig1| |code| |loc| |slot|)
+  (PROG (|domain| |table| |success| |sig1| |code| |loc| |slot|)
     (RETURN
      (PROGN
       (SETQ |domain| (CAR |bfVar#5|))
       (SETQ |table| (CADR |bfVar#5|))
       (SETQ |success| NIL)
-      (SETQ |someMatch| NIL)
       ((LAMBDA (|bfVar#4| |bfVar#3|)
          (LOOP
           (COND
@@ -135,14 +133,14 @@
           (SETQ |bfVar#4| (CDR |bfVar#4|))))
        (QLASSQ |op| |table|) NIL)
       |success|))))
- 
+
 ; compareSig(sig,tableSig,dollar,domain) ==
 ;   not (#sig = #tableSig) => false
 ;   null (target := first sig)
 ;    or lazyCompareSigEqual(target,first tableSig,dollar,domain) =>
 ;      and/[lazyCompareSigEqual(s,t,dollar,domain)
 ;               for s in rest sig for t in rest tableSig]
- 
+
 (DEFUN |compareSig| (|sig| |tableSig| |dollar| |domain|)
   (PROG (|target|)
     (RETURN
@@ -164,7 +162,7 @@
                 (SETQ |bfVar#6| (CDR |bfVar#6|))
                 (SETQ |bfVar#7| (CDR |bfVar#7|))))
              T (CDR |sig|) NIL (CDR |tableSig|) NIL))))))
- 
+
 ; lazyCompareSigEqual(s,tslot,dollar,domain) ==
 ;   tslot = '$ => s = tslot
 ;   INTEGERP tslot and PAIRP(lazyt:=domain.tslot) and PAIRP s =>
@@ -173,7 +171,7 @@
 ;           compareSigEqual(s,(NRTevalDomain lazyt).0,dollar,domain)
 ;       nil
 ;   compareSigEqual(s,NRTreplaceLocalTypes(tslot,domain),dollar,domain)
- 
+
 (DEFUN |lazyCompareSigEqual| (|s| |tslot| |dollar| |domain|)
   (PROG (|lazyt| |ISTMP#1| |ISTMP#2| |ISTMP#3| |ISTMP#4| |ISTMP#5| |item|
          |ISTMP#6| |functorName|)
@@ -222,7 +220,7 @@
            (#1#
             (|compareSigEqual| |s| (|NRTreplaceLocalTypes| |tslot| |domain|)
              |dollar| |domain|))))))
- 
+
 ; compareSigEqual(s,t,dollar,domain) ==
 ;   EQUAL(s,t) => true
 ;   ATOM t =>
@@ -243,7 +241,7 @@
 ;   for u in s for v in t repeat
 ;     not compareSigEqual(u,v,dollar,domain) => return(match:=false)
 ;   match
- 
+
 (DEFUN |compareSigEqual| (|s| |t| |dollar| |domain|)
   (PROG (|u| |match|)
     (RETURN
@@ -287,7 +285,7 @@
                  (SETQ |bfVar#10| (CDR |bfVar#10|))))
               |s| NIL |t| NIL)
              |match|))))))
- 
+
 ; NRT_opt_call(u, opName, sigTail,dcVector) ==
 ;     dc := devaluate(dcVector)
 ;     -- sayBrightly(["NRT_opt_call ", u, opName, sigTail, dc])
@@ -304,7 +302,7 @@
 ;         k >= 0 => ["ELT", dc, k]
 ;         nil
 ;     nil
- 
+
 (DEFUN |NRT_opt_call| (|u| |opName| |sigTail| |dcVector|)
   (PROG (|dc| |name| |fn| |n| |flag| |k|)
     (RETURN
@@ -328,14 +326,14 @@
                (- |n| 1) 0)
               (COND ((NOT (MINUSP |k|)) (LIST 'ELT |dc| |k|)) (#1# NIL))))
             (#1# NIL))))))
- 
+
 ; NRTcompileEvalForm(opName,sigTail,dcVector) ==
 ;   u := NRTcompiledLookup(opName,sigTail,dcVector)
 ;   not ($insideCompileBodyIfTrue = true) => MKQ u
 ;   res1 := NRT_opt_call(u, opName, sigTail, dcVector) => res1
 ;   k := NRTgetMinivectorIndex(u,opName,sigTail,dcVector)
 ;   ['ELT,"$$$",k]  --$$$ denotes minivector
- 
+
 (DEFUN |NRTcompileEvalForm| (|opName| |sigTail| |dcVector|)
   (PROG (|u| |res1| |k|)
     (RETURN
@@ -350,12 +348,12 @@
                       (|NRTgetMinivectorIndex| |u| |opName| |sigTail|
                        |dcVector|))
               (LIST 'ELT '$$$ |k|))))))))
- 
+
 ; NRTtypeHack t ==
 ;   ATOM t => t
 ;   first t = '_# => # CADR t
 ;   [first t, :[NRTtypeHack tt for tt in rest t]]
- 
+
 (DEFUN |NRTtypeHack| (|t|)
   (PROG ()
     (RETURN
@@ -373,18 +371,14 @@
                                 (CONS (|NRTtypeHack| |tt|) |bfVar#13|))))
                       (SETQ |bfVar#12| (CDR |bfVar#12|))))
                    NIL (CDR |t|) NIL)))))))
- 
+
 ; NRTgetMinivectorIndex(u,op,sig,domVector) ==
 ;   s := # $minivector
 ;   k := or/[k for k in 0..(s-1)
 ;         for x in $minivector | EQ(x,u)] => k
 ;   $minivector := [:$minivector,u]
-;   if $compilingInputFile then
-;     $minivectorCode := [:$minivectorCode,[op,sig,devaluate domVector]]
-; --  pp '"-- minivectorCode -->"
-; --  pp $minivectorCode
 ;   s
- 
+
 (DEFUN |NRTgetMinivectorIndex| (|u| |op| |sig| |domVector|)
   (PROG (|s| |k|)
     (RETURN
@@ -410,20 +404,14 @@
        (#1#
         (PROGN
          (SETQ |$minivector| (APPEND |$minivector| (CONS |u| NIL)))
-         (COND
-          (|$compilingInputFile|
-           (SETQ |$minivectorCode|
-                   (APPEND |$minivectorCode|
-                           (CONS (LIST |op| |sig| (|devaluate| |domVector|))
-                                 NIL)))))
          |s|)))))))
- 
+
 ; is_op_slot(slot, dom, k, minivector_name, int_vec, bool_vec) ==
 ;     dom = minivector_name => EQ(slot, $minivector.k)
 ;     dom = ["Integer"] => EQ(slot, int_vec.k)
 ;     dom = ["Boolean"] => EQ(slot, bool_vec.k)
 ;     nil
- 
+
 (DEFUN |is_op_slot| (|slot| |dom| |k| |minivector_name| |int_vec| |bool_vec|)
   (PROG ()
     (RETURN
@@ -432,14 +420,14 @@
       ((EQUAL |dom| (LIST '|Integer|)) (EQ |slot| (ELT |int_vec| |k|)))
       ((EQUAL |dom| (LIST '|Boolean|)) (EQ |slot| (ELT |bool_vec| |k|)))
       ('T NIL)))))
- 
+
 ; NRTisRecurrenceRelation(op,body,minivectorName) ==
 ;   -- returns [body p1 p2 ... pk] for a k-term recurrence relation
 ;   -- where the n-th term is computed using the (n-1)st,...,(n-k)th
 ;   -- whose values are initially computed using the expressions
 ;   -- p1,...,pk respectively; body has #2,#3,... in place of
 ;   -- f(k-1),f(k-2),...
-; 
+;
 ;   body isnt ['COND,:pcl] => false
 ;   -- body should have a conditional expression which
 ;   -- gives k boundary values, one general term plus possibly an
@@ -468,7 +456,7 @@
 ;   miscList isnt [[generalPred,generalTerm]] or sharpList isnt [sharpArg] =>
 ;       return false
 ;     --first general term starts at n
-; 
+;
 ;   --Must have at least one special value; insist that they be consecutive
 ;   null initList => false
 ;   specialValues:= MSORT ASSOCLEFT initList
@@ -478,7 +466,7 @@
 ;     sayKeyedMsg("S2IX0005",
 ;       ["append"/[['" ",sv]  for sv in specialValues]])
 ;     return nil
-; 
+;
 ;   --Determine the order k of the recurrence and index n of first general term
 ;   k:= #specialValues
 ;   n:= k+minIndex
@@ -506,7 +494,7 @@
 ;   INTEGERP predOk and predOk ~= n =>
 ;     sayKeyedMsg("S2IX0006",[n,m])
 ;     return nil
-; 
+;
 ;   --Check general term for references to just the k previous values
 ;   diffCell := compiledLookupCheck("-", '($ $ $), integer)
 ;   --Check general term for references to just the k previous values
@@ -521,7 +509,7 @@
 ;   result:= [body,sharpArg,n-1,:NREVERSE [LASSOC(i,initList) or
 ;       systemErrorHere('"NRTisRecurrenceRelation")
 ;         for i in minIndex..(n-1)]]
- 
+
 (DEFUN |NRTisRecurrenceRelation| (|op| |body| |minivectorName|)
   (PROG (|pcl| |mess| |integer| |iequalSlot| |lt_slot| |le_slot| |gt_slot|
          |ge_slot| |bf| |bf_vec| |notpSlot| |p| |ISTMP#1| |c| |sharpVar|
@@ -1033,7 +1021,7 @@
                                                                    (+ |i| 1))))
                                                         NIL (- |n| 1)
                                                         |minIndex|)))))))))))))))))))))))))))
- 
+
 ; mkDiffAssoc(op, body, k, sharpPosition, sharpArg, diffCell,
 ;             vecname, int_vec, bool_vec) ==
 ;   -- returns alist which should not have any entries = $failed
@@ -1054,7 +1042,7 @@
 ;     "union"/[mkDiffAssoc(op, x, k, sharpPosition, sharpArg, diffCell,
 ;                          vecname, int_vec, bool_vec) for x in argl]
 ;   systemErrorHere '"mkDiffAssoc"
- 
+
 (DEFUN |mkDiffAssoc|
        (|op| |body| |k| |sharpPosition| |sharpArg| |diffCell| |vecname|
         |int_vec| |bool_vec|)

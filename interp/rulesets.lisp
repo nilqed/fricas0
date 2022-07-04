@@ -1,8 +1,8 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; DEFPARAMETER($mpolyTTRules, '( _
 ;   ((Resolve (RN) (mpoly1 x t1)) . (mpoly1 x (Resolve (RN) t1))) _
 ;   ((Resolve (UP x t1) (mpoly1 y t2)) . _
@@ -21,7 +21,7 @@
 ;     (mpoly1 (SetInter x y) (Resolve _
 ;       (mpoly1 (SetDiff x y) t1) (mpoly1 (SetDiff y x) t2)))) _
 ;   ))
- 
+
 (DEFPARAMETER |$mpolyTTRules|
   '(((|Resolve| (RN) (|mpoly1| |x| |t1|)) |mpoly1| |x| (|Resolve| (RN) |t1|))
     ((|Resolve| (UP |x| |t1|) (|mpoly1| |y| |t2|)) |Resolve| |t1|
@@ -40,7 +40,7 @@
      (|SetInter| |x| |y|)
      (|Resolve| (|mpoly1| (|SetDiff| |x| |y|) |t1|)
       (|mpoly1| (|SetDiff| |y| |x|) |t2|)))))
- 
+
 ; DEFPARAMETER($generalTTRules, '( _
 ;   ((Resolve (L (L t1)) (M t2)) . (M (Resolve t1 t2))) _
 ;   ((Resolve (EQ t1) (B)) . (B)) _
@@ -106,7 +106,7 @@
 ;     (DMP (SetInter x y) (Resolve _
 ;       (DMP (SetDiff x y) t1) (NDMP (SetDiff y x) t2)))) _
 ;   ))
- 
+
 (DEFPARAMETER |$generalTTRules|
   '(((|Resolve| (L (L |t1|)) (M |t2|)) M (|Resolve| |t1| |t2|))
     ((|Resolve| (EQ |t1|) (B)) B)
@@ -161,7 +161,7 @@
     ((|Resolve| (DMP |x| |t1|) (NDMP |y| |t2|)) DMP (|SetInter| |x| |y|)
      (|Resolve| (DMP (|SetDiff| |x| |y|) |t1|)
       (NDMP (|SetDiff| |y| |x|) |t2|)))))
- 
+
 ; createResolveTTRules(nameList, abList) ==
 ;   -- expand multivariate polynomial rules
 ;   mps := '(MP DMP NDMP)
@@ -169,7 +169,7 @@
 ;   $Res := CONS('(t1 t2 x y),
 ;     EQSUBSTLIST(nameList, abList, append($generalTTRules, mpRules)))
 ;   true
- 
+
 (DEFUN |createResolveTTRules| (|nameList| |abList|)
   (PROG (|mps| |mpRules|)
     (RETURN
@@ -193,7 +193,7 @@
                     (EQSUBSTLIST |nameList| |abList|
                      (APPEND |$generalTTRules| |mpRules|))))
       T))))
- 
+
 ; DEFPARAMETER($mpolyTMRules, '( _
 ;   ((Resolve (mpoly1 x t1) (P t2)) . (Resolve t1 (P t2))) _
 ;   ((Resolve (mpoly1 (x) t1) (UP x t2)) . (UP x (Resolve t1 t2))) _
@@ -210,7 +210,7 @@
 ;   ((Resolve (mpoly1 x t1) (mpoly2 y t2)) . _
 ;     (Resolve (mpoly1 (SetDiff x y) t1) (mpoly2 y t2))) _
 ;  ))
- 
+
 (DEFPARAMETER |$mpolyTMRules|
   '(((|Resolve| (|mpoly1| |x| |t1|) (P |t2|)) |Resolve| |t1| (P |t2|))
     ((|Resolve| (|mpoly1| (|x|) |t1|) (UP |x| |t2|)) UP |x|
@@ -227,7 +227,7 @@
      (|Resolve| (|mpoly1| (|SetComp| |x| |y|) |t1|) |t2|))
     ((|Resolve| (|mpoly1| |x| |t1|) (|mpoly2| |y| |t2|)) |Resolve|
      (|mpoly1| (|SetDiff| |x| |y|) |t1|) (|mpoly2| |y| |t2|))))
- 
+
 ; DEFPARAMETER($generalTMRules, '( _
 ;   ((Resolve (VARIABLE x) (P t1)) . (P (Resolve (I) t1))) _
 ;   ((Resolve (VARIABLE x) (UP y t1)) . _
@@ -264,7 +264,7 @@
 ;   ((Resolve (FR t1) (FR t2)) . (FR (Resolve t1 t2))) _
 ;   ((Resolve (UP x t1) (P t2)) . (Resolve t1 (P t2))) _
 ;  ))
- 
+
 (DEFPARAMETER |$generalTMRules|
   '(((|Resolve| (VARIABLE |x|) (P |t1|)) P (|Resolve| (I) |t1|))
     ((|Resolve| (VARIABLE |x|) (UP |y| |t1|)) UP (|VarEqual| |x| |y|)
@@ -298,7 +298,7 @@
     ((|Resolve| (V |t1|) (L |t2|)) L (|Resolve| |t1| |t2|))
     ((|Resolve| (FR |t1|) (FR |t2|)) FR (|Resolve| |t1| |t2|))
     ((|Resolve| (UP |x| |t1|) (P |t2|)) |Resolve| |t1| (P |t2|))))
- 
+
 ; DEFPARAMETER($newResolveAbbreviations, '( _
 ;     (P .  Polynomial) _
 ;     (G .  Complex) _
@@ -322,7 +322,7 @@
 ;     (UPS . UnivariatePowerSeries) _
 ;     (VARIABLE . Variable) _
 ;  ))
- 
+
 (DEFPARAMETER |$newResolveAbbreviations|
   '((P . |Polynomial|) (G . |Complex|) (L . |List|) (M . |Matrix|)
     (EQ . |Equation|) (B . |Boolean|) (SY . |Symbol|) (I . |Integer|)
@@ -332,7 +332,7 @@
     (MP . |MultivariatePolynomial|)
     (HDMP . |HomogeneousDistributedMultivariatePolynomial|) (QF . |Fraction|)
     (UPS . |UnivariatePowerSeries|) (VARIABLE . |Variable|)))
- 
+
 ; createResolveTMRules(nameList, abList) ==
 ;   -- expand multivariate polynomial rules
 ;   mps := '(MP DMP NDMP)
@@ -341,7 +341,7 @@
 ;   $ResMode := CONS('(t1 t2 x y),
 ;     EQSUBSTLIST(nameList, abList, append(mpRules, $generalTMRules)))
 ;   true
- 
+
 (DEFUN |createResolveTMRules| (|nameList| |abList|)
   (PROG (|mps| |mpRules0| |mpRules|)
     (RETURN
@@ -378,7 +378,7 @@
                     (EQSUBSTLIST |nameList| |abList|
                      (APPEND |mpRules| |$generalTMRules|))))
       T))))
- 
+
 ; initializeRuleSets() ==
 ;   abList := ASSOCLEFT $newResolveAbbreviations
 ;   nameList := ASSOCRIGHT $newResolveAbbreviations
@@ -386,7 +386,7 @@
 ;   createResolveTMRules(nameList, abList)
 ;   $ruleSetsInitialized := true
 ;   true
- 
+
 (DEFUN |initializeRuleSets| ()
   (PROG (|nameList| |abList|)
     (RETURN

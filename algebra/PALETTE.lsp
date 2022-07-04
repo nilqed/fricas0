@@ -1,36 +1,36 @@
 
 (PUT '|PALETTE;dark;C$;1| '|SPADreplace| '(XLAM (|c|) (CONS 1 |c|))) 
 
-(SDEFUN |PALETTE;dark;C$;1| ((|c| |Color|) ($ $)) (CONS 1 |c|)) 
+(SDEFUN |PALETTE;dark;C$;1| ((|c| (|Color|)) ($ ($))) (CONS 1 |c|)) 
 
 (PUT '|PALETTE;dim;C$;2| '|SPADreplace| '(XLAM (|c|) (CONS 2 |c|))) 
 
-(SDEFUN |PALETTE;dim;C$;2| ((|c| |Color|) ($ $)) (CONS 2 |c|)) 
+(SDEFUN |PALETTE;dim;C$;2| ((|c| (|Color|)) ($ ($))) (CONS 2 |c|)) 
 
 (PUT '|PALETTE;bright;C$;3| '|SPADreplace| '(XLAM (|c|) (CONS 3 |c|))) 
 
-(SDEFUN |PALETTE;bright;C$;3| ((|c| |Color|) ($ $)) (CONS 3 |c|)) 
+(SDEFUN |PALETTE;bright;C$;3| ((|c| (|Color|)) ($ ($))) (CONS 3 |c|)) 
 
 (PUT '|PALETTE;pastel;C$;4| '|SPADreplace| '(XLAM (|c|) (CONS 4 |c|))) 
 
-(SDEFUN |PALETTE;pastel;C$;4| ((|c| |Color|) ($ $)) (CONS 4 |c|)) 
+(SDEFUN |PALETTE;pastel;C$;4| ((|c| (|Color|)) ($ ($))) (CONS 4 |c|)) 
 
 (PUT '|PALETTE;light;C$;5| '|SPADreplace| '(XLAM (|c|) (CONS 5 |c|))) 
 
-(SDEFUN |PALETTE;light;C$;5| ((|c| |Color|) ($ $)) (CONS 5 |c|)) 
+(SDEFUN |PALETTE;light;C$;5| ((|c| (|Color|)) ($ ($))) (CONS 5 |c|)) 
 
 (PUT '|PALETTE;hue;$C;6| '|SPADreplace| 'QCDR) 
 
-(SDEFUN |PALETTE;hue;$C;6| ((|p| $) ($ |Color|)) (QCDR |p|)) 
+(SDEFUN |PALETTE;hue;$C;6| ((|p| ($)) ($ (|Color|))) (QCDR |p|)) 
 
 (PUT '|PALETTE;shade;$I;7| '|SPADreplace| 'QCAR) 
 
-(SDEFUN |PALETTE;shade;$I;7| ((|p| $) ($ |Integer|)) (QCAR |p|)) 
+(SDEFUN |PALETTE;shade;$I;7| ((|p| ($)) ($ (|Integer|))) (QCAR |p|)) 
 
-(SDEFUN |PALETTE;coerce;C$;8| ((|c| |Color|) ($ $))
+(SDEFUN |PALETTE;coerce;C$;8| ((|c| (|Color|)) ($ ($)))
         (SPADCALL |c| (QREFELT $ 10))) 
 
-(SDEFUN |PALETTE;coerce;$Of;9| ((|p| $) ($ |OutputForm|))
+(SDEFUN |PALETTE;coerce;$Of;9| ((|p| ($)) ($ (|OutputForm|)))
         (SPADCALL
          (LIST (SPADCALL "[" (QREFELT $ 19))
                (SPADCALL (QCDR |p|) (QREFELT $ 20))
@@ -46,10 +46,10 @@
 
 (DEFUN |Palette| ()
   (SPROG NIL
-         (PROG (#1=#:G726)
+         (PROG (#1=#:G721)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|Palette|) . #2=(|Palette|))
+             ((LETT #1# (HGET |$ConstructorCache| '|Palette|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -57,16 +57,16 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|Palette|
                              (LIST (CONS NIL (CONS 1 (|Palette;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND ((NOT #1#) (HREM |$ConstructorCache| '|Palette|)))))))))) 
 
 (DEFUN |Palette;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|Palette|) . #1=(|Palette|))
-          (LETT $ (GETREFV 29) . #1#)
+          (LETT |dv$| '(|Palette|))
+          (LETT $ (GETREFV 29))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|Palette| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

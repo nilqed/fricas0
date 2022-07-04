@@ -1,34 +1,29 @@
 
 (SDEFUN |PMLSAGG;patternMatch;LP2Pmlr;1|
-        ((|l| L) (|p| |Pattern| S) (|r| |PatternMatchListResult| S R L)
-         ($ |PatternMatchListResult| S R L))
+        ((|l| (L)) (|p| (|Pattern| S)) (|r| (|PatternMatchListResult| S R L))
+         ($ (|PatternMatchListResult| S R L)))
         (SPROG ((|u| (|Union| (|List| (|Pattern| S)) "failed")))
-               (SEQ
-                (LETT |u| (SPADCALL |p| (QREFELT $ 11))
-                      |PMLSAGG;patternMatch;LP2Pmlr;1|)
-                (EXIT
-                 (COND ((QEQCAR |u| 1) (SPADCALL (QREFELT $ 13)))
-                       ('T (|PMLSAGG;match| |l| (QCDR |u|) |r| 'T $))))))) 
+               (SEQ (LETT |u| (SPADCALL |p| (QREFELT $ 11)))
+                    (EXIT
+                     (COND ((QEQCAR |u| 1) (SPADCALL (QREFELT $ 13)))
+                           ('T (|PMLSAGG;match| |l| (QCDR |u|) |r| 'T $))))))) 
 
 (SDEFUN |PMLSAGG;match|
-        ((|l| L) (|lp| |List| (|Pattern| S))
-         (|r| |PatternMatchListResult| S R L) (|new?| |Boolean|)
-         ($ |PatternMatchListResult| S R L))
+        ((|l| (L)) (|lp| (|List| (|Pattern| S)))
+         (|r| (|PatternMatchListResult| S R L)) (|new?| (|Boolean|))
+         ($ (|PatternMatchListResult| S R L)))
         (SPROG ((|p0| (|Pattern| S)))
                (SEQ
                 (COND
                  ((NULL |lp|)
                   (COND ((SPADCALL |l| (QREFELT $ 16)) |r|)
                         (#1='T (SPADCALL (QREFELT $ 13)))))
-                 ((SPADCALL
-                   (LETT |p0| (|SPADfirst| |lp|) . #2=(|PMLSAGG;match|))
-                   (QREFELT $ 17))
+                 ((SPADCALL (LETT |p0| (|SPADfirst| |lp|)) (QREFELT $ 17))
                   (COND
                    ((NULL (CDR |lp|))
                     (SEQ
                      (COND
-                      ((NULL |new?|)
-                       (LETT |l| (SPADCALL |l| (QREFELT $ 18)) . #2#)))
+                      ((NULL |new?|) (LETT |l| (SPADCALL |l| (QREFELT $ 18)))))
                      (EXIT
                       (SPADCALL (SPADCALL |r| (QREFELT $ 20))
                                 (SPADCALL |p0| |l|
@@ -48,8 +43,7 @@
                               (SPADCALL (SPADCALL |l| (QREFELT $ 27)) |p0|
                                         (SPADCALL |r| (QREFELT $ 20))
                                         (QREFELT $ 29))
-                              (SPADCALL |r| (QREFELT $ 22)) (QREFELT $ 25))
-                             . #2#)
+                              (SPADCALL |r| (QREFELT $ 22)) (QREFELT $ 25)))
                        (QREFELT $ 30)))
                   (SPADCALL (QREFELT $ 13)))
                  ('T
@@ -58,22 +52,21 @@
 
 (DECLAIM (NOTINLINE |PatternMatchListAggregate;|)) 
 
-(DEFUN |PatternMatchListAggregate| (&REST #1=#:G721)
+(DEFUN |PatternMatchListAggregate| (&REST #1=#:G716)
   (SPROG NIL
-         (PROG (#2=#:G722)
+         (PROG (#2=#:G717)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|PatternMatchListAggregate|)
-                                               '|domainEqualList|)
-                    . #3=(|PatternMatchListAggregate|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |PatternMatchListAggregate;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -82,13 +75,13 @@
 (DEFUN |PatternMatchListAggregate;| (|#1| |#2| |#3|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|PatternMatchListAggregate|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT DV$3 (|devaluate| |#3|) . #1#)
-          (LETT |dv$| (LIST '|PatternMatchListAggregate| DV$1 DV$2 DV$3) . #1#)
-          (LETT $ (GETREFV 32) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT DV$3 (|devaluate| |#3|))
+          (LETT |dv$| (LIST '|PatternMatchListAggregate| DV$1 DV$2 DV$3))
+          (LETT $ (GETREFV 32))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|PatternMatchListAggregate|
                       (LIST DV$1 DV$2 DV$3) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -110,16 +103,24 @@
               (52 . |reverse|) (57 . |first|) (|PatternMatchResult| 6 $)
               (62 . |patternMatch|) (69 . |failed?|) (74 . |rest|))
            '#(|patternMatch| 79) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 31
-                                                 '(1 10 9 0 11 0 12 0 13 1 8 15
-                                                   0 16 1 10 15 0 17 1 8 0 0 18
-                                                   1 12 19 0 20 1 12 21 0 22 0
-                                                   8 0 23 4 21 0 10 8 0 8 24 2
-                                                   12 0 19 21 25 1 8 0 0 26 1 8
-                                                   7 0 27 3 7 28 0 10 28 29 1
-                                                   12 15 0 30 1 8 0 0 31 3 0 12
-                                                   8 10 12 14)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|patternMatch|
+                                 ((|PatternMatchListResult| |#1| |#2| |#3|)
+                                  |#3| (|Pattern| |#1|)
+                                  (|PatternMatchListResult| |#1| |#2| |#3|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 31
+                                            '(1 10 9 0 11 0 12 0 13 1 8 15 0 16
+                                              1 10 15 0 17 1 8 0 0 18 1 12 19 0
+                                              20 1 12 21 0 22 0 8 0 23 4 21 0
+                                              10 8 0 8 24 2 12 0 19 21 25 1 8 0
+                                              0 26 1 8 7 0 27 3 7 28 0 10 28 29
+                                              1 12 15 0 30 1 8 0 0 31 3 0 12 8
+                                              10 12 14)))))
            '|lookupComplete|)) 

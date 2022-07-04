@@ -1,35 +1,33 @@
 
-(SDEFUN |LSMP;hasSolution?;MColB;1| ((A M) (|b| |Col|) ($ |Boolean|))
+(SDEFUN |LSMP;hasSolution?;MColB;1| ((A (M)) (|b| (|Col|)) ($ (|Boolean|)))
         (EQL (SPADCALL A (QREFELT $ 11))
              (SPADCALL (|LSMP;systemMatrix| A |b| $) (QREFELT $ 11)))) 
 
-(SDEFUN |LSMP;systemMatrix| ((|m| M) (|v| |Col|) ($ M))
+(SDEFUN |LSMP;systemMatrix| ((|m| (M)) (|v| (|Col|)) ($ (M)))
         (SPADCALL |m| (SPADCALL (SPADCALL |v| (QREFELT $ 14)) (QREFELT $ 15))
                   (QREFELT $ 16))) 
 
-(SDEFUN |LSMP;rank;MColNni;3| ((A M) (|b| |Col|) ($ |NonNegativeInteger|))
+(SDEFUN |LSMP;rank;MColNni;3|
+        ((A (M)) (|b| (|Col|)) ($ (|NonNegativeInteger|)))
         (SPADCALL (|LSMP;systemMatrix| A |b| $) (QREFELT $ 11))) 
 
 (SDEFUN |LSMP;particularSolution;MColU;4|
-        ((A M) (|b| |Col|) ($ |Union| |Col| "failed"))
+        ((A (M)) (|b| (|Col|)) ($ (|Union| |Col| "failed")))
         (|LSMP;aSolution|
          (SPADCALL (|LSMP;systemMatrix| A |b| $) (QREFELT $ 18)) $)) 
 
-(SDEFUN |LSMP;aSolution| ((|m| M) ($ |Union| |Col| "failed"))
+(SDEFUN |LSMP;aSolution| ((|m| (M)) ($ (|Union| |Col| "failed")))
         (SPROG
-         ((#1=#:G732 NIL) (|j| NIL) (#2=#:G731 NIL) (|i| NIL)
+         ((#1=#:G736 NIL) (|j| NIL) (#2=#:G735 NIL) (|i| NIL)
           (|v| (|PrimitiveArray| (|Integer|))) (|sol| (|Col|))
           (|ck| (|Integer|)) (|rk| (|Integer|)) (|nvar| (|NonNegativeInteger|))
-          (#3=#:G714 NIL))
+          (#3=#:G713 NIL))
          (SEQ
           (LETT |nvar|
-                (PROG1
-                    (LETT #3# (- (SPADCALL |m| (QREFELT $ 21)) 1)
-                          . #4=(|LSMP;aSolution|))
+                (PROG1 (LETT #3# (- (SPADCALL |m| (QREFELT $ 21)) 1))
                   (|check_subtype2| (>= #3# 0) '(|NonNegativeInteger|)
-                                    '(|Integer|) #3#))
-                . #4#)
-          (LETT |rk| (SPADCALL |m| (QREFELT $ 24)) . #4#)
+                                    '(|Integer|) #3#)))
+          (LETT |rk| (SPADCALL |m| (QREFELT $ 24)))
           (SEQ G190
                (COND
                 ((NULL
@@ -39,14 +37,14 @@
                               (QREFELT $ 29)))
                    ('T NIL)))
                  (GO G191)))
-               (SEQ (EXIT (LETT |rk| (- |rk| 1) . #4#))) NIL (GO G190) G191
+               (SEQ (EXIT (LETT |rk| (- |rk| 1)))) NIL (GO G190) G191
                (EXIT NIL))
           (EXIT
            (COND
             ((< |rk| (SPADCALL |m| (QREFELT $ 25)))
              (CONS 0 (SPADCALL |nvar| (|spadConstant| $ 30) (QREFELT $ 31))))
-            (#5='T
-             (SEQ (LETT |ck| (SPADCALL |m| (QREFELT $ 32)) . #4#)
+            (#4='T
+             (SEQ (LETT |ck| (SPADCALL |m| (QREFELT $ 32)))
                   (SEQ G190
                        (COND
                         ((NULL
@@ -56,27 +54,24 @@
                                       (QREFELT $ 26)))
                            ('T NIL)))
                          (GO G191)))
-                       (SEQ (EXIT (LETT |ck| (+ |ck| 1) . #4#))) NIL (GO G190)
-                       G191 (EXIT NIL))
+                       (SEQ (EXIT (LETT |ck| (+ |ck| 1)))) NIL (GO G190) G191
+                       (EXIT NIL))
                   (EXIT
                    (COND
                     ((EQL |ck| (SPADCALL |m| (QREFELT $ 33)))
                      (CONS 1 "failed"))
-                    (#5#
+                    (#4#
                      (SEQ
                       (LETT |sol|
                             (SPADCALL |nvar| (|spadConstant| $ 30)
-                                      (QREFELT $ 31))
-                            . #4#)
+                                      (QREFELT $ 31)))
                       (LETT |v|
                             (MAKEARR1 |nvar|
-                                      (- (SPADCALL |m| (QREFELT $ 25)) 1))
-                            . #4#)
-                      (SEQ (LETT |i| (SPADCALL |m| (QREFELT $ 25)) . #4#)
-                           (LETT #2# |rk| . #4#) G190
-                           (COND ((> |i| #2#) (GO G191)))
+                                      (- (SPADCALL |m| (QREFELT $ 25)) 1)))
+                      (SEQ (LETT |i| (SPADCALL |m| (QREFELT $ 25)))
+                           (LETT #2# |rk|) G190 (COND ((> |i| #2#) (GO G191)))
                            (SEQ
-                            (SEQ (LETT |j| 0 . #4#) G190
+                            (SEQ (LETT |j| 0) G190
                                  (COND
                                   ((NULL
                                     (SPADCALL
@@ -88,13 +83,12 @@
                                      (QREFELT $ 26)))
                                    (GO G191)))
                                  (SEQ (EXIT (|spadConstant| $ 30)))
-                                 (LETT |j| (|inc_SI| |j|) . #4#) (GO G190) G191
+                                 (LETT |j| (|inc_SI| |j|)) (GO G190) G191
                                  (EXIT NIL))
                             (EXIT (QSETAREF1 |v| |j| |i|)))
-                           (LETT |i| (+ |i| 1) . #4#) (GO G190) G191
-                           (EXIT NIL))
-                      (SEQ (LETT |j| 0 . #4#) (LETT #1# (- |nvar| 1) . #4#)
-                           G190 (COND ((|greater_SI| |j| #1#) (GO G191)))
+                           (LETT |i| (+ |i| 1)) (GO G190) G191 (EXIT NIL))
+                      (SEQ (LETT |j| 0) (LETT #1# (- |nvar| 1)) G190
+                           (COND ((|greater_SI| |j| #1#) (GO G191)))
                            (SEQ
                             (EXIT
                              (COND
@@ -110,14 +104,14 @@
                                                     (QREFELT $ 34))
                                           (QREFELT $ 36))
                                          (QREFELT $ 37))))))
-                           (LETT |j| (|inc_SI| |j|) . #4#) (GO G190) G191
-                           (EXIT NIL))
+                           (LETT |j| (|inc_SI| |j|)) (GO G190) G191 (EXIT NIL))
                       (EXIT (CONS 0 |sol|))))))))))))) 
 
 (SDEFUN |LSMP;solve;MColR;6|
-        ((A M) (|b| |Col|)
-         ($ |Record| (|:| |particular| (|Union| |Col| "failed"))
-          (|:| |basis| (|List| |Col|))))
+        ((A (M)) (|b| (|Col|))
+         ($
+          (|Record| (|:| |particular| (|Union| |Col| "failed"))
+                    (|:| |basis| (|List| |Col|)))))
         (SPROG ((|m| (M)))
                (SEQ
                 (COND
@@ -131,8 +125,7 @@
                   (SEQ
                    (LETT |m|
                          (SPADCALL (|LSMP;systemMatrix| A |b| $)
-                                   (QREFELT $ 18))
-                         |LSMP;solve;MColR;6|)
+                                   (QREFELT $ 18)))
                    (EXIT
                     (CONS (|LSMP;aSolution| |m| $)
                           (SPADCALL
@@ -144,12 +137,13 @@
                            (QREFELT $ 40)))))))))) 
 
 (SDEFUN |LSMP;solve;MLL;7|
-        ((A M) (|l| |List| |Col|)
-         ($ |List|
-          (|Record| (|:| |particular| (|Union| |Col| #1="failed"))
-                    (|:| |basis| #2=(|List| |Col|)))))
+        ((A (M)) (|l| (|List| |Col|))
+         ($
+          (|List|
+           (|Record| (|:| |particular| (|Union| |Col| #1="failed"))
+                     (|:| |basis| #2=(|List| |Col|))))))
         (SPROG
-         ((#3=#:G761 NIL) (|b| NIL) (#4=#:G760 NIL) (|nl| #2#)
+         ((#3=#:G762 NIL) (|b| NIL) (#4=#:G761 NIL) (|nl| #2#)
           (|sol0|
            (|Record| (|:| |particular| (|Union| |Col| #1#))
                      (|:| |basis| (|List| |Col|)))))
@@ -166,17 +160,15 @@
             (SEQ
              (LETT |nl|
                    (QCDR
-                    (LETT |sol0| (SPADCALL A (|SPADfirst| |l|) (QREFELT $ 43))
-                          . #5=(|LSMP;solve;MLL;7|)))
-                   . #5#)
+                    (LETT |sol0|
+                          (SPADCALL A (|SPADfirst| |l|) (QREFELT $ 43)))))
              (EXIT
               (CONS |sol0|
                     (PROGN
-                     (LETT #4# NIL . #5#)
-                     (SEQ (LETT |b| NIL . #5#) (LETT #3# (CDR |l|) . #5#) G190
+                     (LETT #4# NIL)
+                     (SEQ (LETT |b| NIL) (LETT #3# (CDR |l|)) G190
                           (COND
-                           ((OR (ATOM #3#)
-                                (PROGN (LETT |b| (CAR #3#) . #5#) NIL))
+                           ((OR (ATOM #3#) (PROGN (LETT |b| (CAR #3#)) NIL))
                             (GO G191)))
                           (SEQ
                            (EXIT
@@ -188,29 +180,27 @@
                                                (QREFELT $ 18))
                                      $)
                                     |nl|)
-                                   #4#)
-                                  . #5#)))
-                          (LETT #3# (CDR #3#) . #5#) (GO G190) G191
+                                   #4#))))
+                          (LETT #3# (CDR #3#)) (GO G190) G191
                           (EXIT (NREVERSE #4#)))))))))))) 
 
 (DECLAIM (NOTINLINE |LinearSystemMatrixPackage;|)) 
 
-(DEFUN |LinearSystemMatrixPackage| (&REST #1=#:G762)
+(DEFUN |LinearSystemMatrixPackage| (&REST #1=#:G763)
   (SPROG NIL
-         (PROG (#2=#:G763)
+         (PROG (#2=#:G764)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (|devaluateList| #1#)
                                                (HGET |$ConstructorCache|
                                                      '|LinearSystemMatrixPackage|)
-                                               '|domainEqualList|)
-                    . #3=(|LinearSystemMatrixPackage|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |LinearSystemMatrixPackage;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -221,14 +211,14 @@
    ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$4 NIL) (DV$3 NIL) (DV$2 NIL)
     (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #1=(|LinearSystemMatrixPackage|))
-    (LETT DV$2 (|devaluate| |#2|) . #1#)
-    (LETT DV$3 (|devaluate| |#3|) . #1#)
-    (LETT DV$4 (|devaluate| |#4|) . #1#)
-    (LETT |dv$| (LIST '|LinearSystemMatrixPackage| DV$1 DV$2 DV$3 DV$4) . #1#)
-    (LETT $ (GETREFV 46) . #1#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 (|devaluate| |#3|))
+    (LETT DV$4 (|devaluate| |#4|))
+    (LETT |dv$| (LIST '|LinearSystemMatrixPackage| DV$1 DV$2 DV$3 DV$4))
+    (LETT $ (GETREFV 46))
     (QSETREFV $ 0 |dv$|)
-    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
     (|haddProp| |$ConstructorCache| '|LinearSystemMatrixPackage|
                 (LIST DV$1 DV$2 DV$3 DV$4) (CONS 1 $))
     (|stuffDomainSlots| $)
@@ -245,7 +235,7 @@
               (|local| |#3|) (|local| |#4|) (|NonNegativeInteger|) (0 . |rank|)
               (|Boolean|) |LSMP;hasSolution?;MColB;1| (5 . |coerce|) (10 . -)
               (15 . |horizConcat|) |LSMP;rank;MColNni;3| (21 . |rowEchelon|)
-              (|Union| 8 '"failed") |LSMP;particularSolution;MColU;4|
+              (|Union| 8 '#1="failed") |LSMP;particularSolution;MColU;4|
               (26 . |ncols|) (31 . |One|) (|Integer|) (35 . |maxRowIndex|)
               (40 . |minRowIndex|) (45 . |zero?|) (50 . |row|) (|Mapping| 12 6)
               (56 . |every?|) (62 . |Zero|) (66 . |new|) (72 . |minColIndex|)
@@ -257,22 +247,42 @@
            '#(|solve| 126 |rank| 138 |particularSolution| 144 |hasSolution?|
               150)
            'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 45
-                                                 '(1 9 10 0 11 1 9 0 8 14 1 9 0
-                                                   0 15 2 9 0 0 0 16 1 9 0 0 18
-                                                   1 9 10 0 21 0 6 0 22 1 9 23
-                                                   0 24 1 9 23 0 25 1 6 12 0 26
-                                                   2 9 7 0 23 27 2 7 12 28 0 29
-                                                   0 6 0 30 2 8 0 10 6 31 1 9
-                                                   23 0 32 1 9 23 0 33 3 9 6 0
-                                                   23 23 34 1 8 23 0 35 1 6 0 0
-                                                   36 3 8 6 0 23 6 37 2 8 12 28
-                                                   0 38 1 9 39 0 40 5 9 0 0 23
-                                                   23 23 23 41 2 0 44 9 39 45 2
-                                                   0 42 9 8 43 2 0 10 9 8 17 2
-                                                   0 19 9 8 20 2 0 12 9 8
-                                                   13)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|solve|
+                                 ((|Record|
+                                   (|:| |particular| (|Union| |#3| #1#))
+                                   (|:| |basis| (|List| |#3|)))
+                                  |#4| |#3|))
+                                T)
+                              '((|solve|
+                                 ((|List|
+                                   (|Record|
+                                    (|:| |particular| (|Union| |#3| #1#))
+                                    (|:| |basis| (|List| |#3|))))
+                                  |#4| (|List| |#3|)))
+                                T)
+                              '((|particularSolution|
+                                 ((|Union| |#3| #1#) |#4| |#3|))
+                                T)
+                              '((|hasSolution?| ((|Boolean|) |#4| |#3|)) T)
+                              '((|rank| ((|NonNegativeInteger|) |#4| |#3|)) T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 45
+                                            '(1 9 10 0 11 1 9 0 8 14 1 9 0 0 15
+                                              2 9 0 0 0 16 1 9 0 0 18 1 9 10 0
+                                              21 0 6 0 22 1 9 23 0 24 1 9 23 0
+                                              25 1 6 12 0 26 2 9 7 0 23 27 2 7
+                                              12 28 0 29 0 6 0 30 2 8 0 10 6 31
+                                              1 9 23 0 32 1 9 23 0 33 3 9 6 0
+                                              23 23 34 1 8 23 0 35 1 6 0 0 36 3
+                                              8 6 0 23 6 37 2 8 12 28 0 38 1 9
+                                              39 0 40 5 9 0 0 23 23 23 23 41 2
+                                              0 44 9 39 45 2 0 42 9 8 43 2 0 10
+                                              9 8 17 2 0 19 9 8 20 2 0 12 9 8
+                                              13)))))
            '|lookupComplete|)) 

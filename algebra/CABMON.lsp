@@ -4,21 +4,18 @@
 (DEFPARAMETER |CancellationAbelianMonoid;AL| 'NIL) 
 
 (DEFUN |CancellationAbelianMonoid| ()
-  (LET (#:G692)
-    (COND (|CancellationAbelianMonoid;AL|)
-          (T
-           (SETQ |CancellationAbelianMonoid;AL|
-                   (|CancellationAbelianMonoid;|)))))) 
+  (COND (|CancellationAbelianMonoid;AL|)
+        (T
+         (SETQ |CancellationAbelianMonoid;AL| (|CancellationAbelianMonoid;|))))) 
 
 (DEFUN |CancellationAbelianMonoid;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G689 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|AbelianMonoid|)
                            (|mkCategory|
                             '(((|subtractIfCan| ((|Union| $ "failed") $ $)) T))
-                            NIL 'NIL NIL))
-                   |CancellationAbelianMonoid|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|CancellationAbelianMonoid|))))) 
 
 (MAKEPROP '|CancellationAbelianMonoid| 'NILADIC T) 

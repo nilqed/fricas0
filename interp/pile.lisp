@@ -1,13 +1,13 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; dqUnit s==(a:=[s];CONS(a,a))
- 
+
 (DEFUN |dqUnit| (|s|)
   (PROG (|a|) (RETURN (PROGN (SETQ |a| (LIST |s|)) (CONS |a| |a|)))))
- 
+
 ; dqAppend(x,y)==
 ;     if null x
 ;     then y
@@ -17,45 +17,45 @@
 ;               RPLACD(CDR x, first y)
 ;               RPLACD (x,    CDR y)
 ;               x
- 
+
 (DEFUN |dqAppend| (|x| |y|)
   (PROG ()
     (RETURN
      (COND ((NULL |x|) |y|) ((NULL |y|) |x|)
            ('T (RPLACD (CDR |x|) (CAR |y|)) (RPLACD |x| (CDR |y|)) |x|)))))
- 
+
 ; dqConcat ld==
 ;     if null ld
 ;     then nil
 ;     else if null rest ld
 ;          then first ld
 ;          else dqAppend(first ld,dqConcat rest ld)
- 
+
 (DEFUN |dqConcat| (|ld|)
   (PROG ()
     (RETURN
      (COND ((NULL |ld|) NIL) ((NULL (CDR |ld|)) (CAR |ld|))
            ('T (|dqAppend| (CAR |ld|) (|dqConcat| (CDR |ld|))))))))
- 
+
 ; dqToList s == if null s then nil else first s
- 
+
 (DEFUN |dqToList| (|s|)
   (PROG () (RETURN (COND ((NULL |s|) NIL) ('T (CAR |s|))))))
- 
+
 ; pileColumn t == rest tokPosn CAAR t
- 
+
 (DEFUN |pileColumn| (|t|) (PROG () (RETURN (CDR (|tokPosn| (CAAR |t|))))))
- 
+
 ; pileComment t== EQ(tokType CAAR t,"negcomment")
- 
+
 (DEFUN |pileComment| (|t|)
   (PROG () (RETURN (EQ (|tokType| (CAAR |t|)) '|negcomment|))))
- 
+
 ; pilePlusComment t== EQ(tokType CAAR t,"comment")
- 
+
 (DEFUN |pilePlusComment| (|t|)
   (PROG () (RETURN (EQ (|tokType| (CAAR |t|)) '|comment|))))
- 
+
 ; countParens(s, opar, cpar) ==
 ;    ress := 0
 ;    for stok in dqToList s repeat
@@ -65,7 +65,7 @@
 ;       if EQ(CAAR stok,"key") and EQ(t, cpar) then
 ;           ress := ress - 1
 ;    ress
- 
+
 (DEFUN |countParens| (|s| |opar| |cpar|)
   (PROG (|ress| |t|)
     (RETURN
@@ -88,7 +88,7 @@
           (SETQ |bfVar#1| (CDR |bfVar#1|))))
        (|dqToList| |s|) NIL)
       |ress|))))
- 
+
 ; nopile (s, opar, cpar) ==
 ;    -- SAY("nopile")
 ;    if npNull s
@@ -109,7 +109,7 @@
 ;       -- FIXME: we should return a pair [deque, stream], but
 ;       -- now we return nil instead of a stream
 ;       cons([[ress]], t)
- 
+
 (DEFUN |nopile| (|s| |opar| |cpar|)
   (PROG (|LETTMP#1| |h| |t| |ress| |balance|)
     (RETURN
@@ -132,21 +132,21 @@
                            (+ |balance|
                               (|countParens| |h| |opar| |cpar|)))))))))
             (CONS (LIST (LIST |ress|)) |t|))))))
- 
+
 ; DEFPARAMETER($nopiles, false)
- 
+
 (DEFPARAMETER |$nopiles| NIL)
- 
+
 ; setNopiles (t) ==
 ;     $nopiles := t
- 
+
 (DEFUN |setNopiles| (|t|) (PROG () (RETURN (SETQ |$nopiles| |t|))))
- 
+
 ; piles () ==
 ;     $nopiles := false
- 
-(DEFUN |piles| #1=() (PROG #1# (RETURN (SETQ |$nopiles| NIL))))
- 
+
+(DEFUN |piles| () (PROG () (RETURN (SETQ |$nopiles| NIL))))
+
 ; insertpile (s)==
 ;      $nopiles = "{" => nopile (s, "{", "}")
 ;      $nopiles = "(" => nopile (s, "(", ")")
@@ -163,7 +163,7 @@
 ;          stream:=CADAR s
 ;          a:=pileTree(-1,s)
 ;          cons([[a.2,stream]],a.3)
- 
+
 (DEFUN |insertpile| (|s|)
   (PROG (|LETTMP#1| |h| |t| |h1| |t1| |a| |stream|)
     (RETURN
@@ -186,7 +186,7 @@
                      (SETQ |a| (|pileTree| (- 1) |s|))
                      (CONS (LIST (LIST (ELT |a| 2) |stream|))
                            (ELT |a| 3)))))))))))
- 
+
 ; pilePlusComments s==
 ;       if npNull s
 ;       then [[],s]
@@ -197,7 +197,7 @@
 ;          [h1,t1]:=pilePlusComments t
 ;          [cons(h,h1),t1]
 ;        else [[],s]
- 
+
 (DEFUN |pilePlusComments| (|s|)
   (PROG (|LETTMP#1| |h| |t| |h1| |t1|)
     (RETURN
@@ -210,7 +210,7 @@
               (SETQ |h1| (CAR |LETTMP#1|)) (SETQ |t1| (CADR |LETTMP#1|))
               (LIST (CONS |h| |h1|) |t1|))
              (#1# (LIST NIL |s|))))))))
- 
+
 ; pileTree(n,s)==
 ;     if npNull s
 ;     then [false,n,[],s]
@@ -220,7 +220,7 @@
 ;         if hh > n
 ;         then pileForests(first h, hh, t)
 ;         else [false,n,[],s]
- 
+
 (DEFUN |pileTree| (|n| |s|)
   (PROG (|LETTMP#1| |h| |t| |hh|)
     (RETURN
@@ -230,7 +230,7 @@
             (SETQ |hh| (|pileColumn| (CAR |h|)))
             (COND ((< |n| |hh|) (|pileForests| (CAR |h|) |hh| |t|))
                   (#1# (LIST NIL |n| NIL |s|))))))))
- 
+
 ; eqpileTree(n,s)==
 ;     if npNull s
 ;     then [false,n,[],s]
@@ -240,7 +240,7 @@
 ;         if hh = n
 ;         then pileForests(first h, hh, t)
 ;         else [false,n,[],s]
- 
+
 (DEFUN |eqpileTree| (|n| |s|)
   (PROG (|LETTMP#1| |h| |t| |hh|)
     (RETURN
@@ -250,7 +250,7 @@
             (SETQ |hh| (|pileColumn| (CAR |h|)))
             (COND ((EQUAL |hh| |n|) (|pileForests| (CAR |h|) |hh| |t|))
                   (#1# (LIST NIL |n| NIL |s|))))))))
- 
+
 ; pileForest(n,s)==
 ;      [b,hh,h,t]:= pileTree(n,s)
 ;      if b
@@ -258,7 +258,7 @@
 ;        [h1,t1]:=pileForest1(hh,t)
 ;        [cons(h,h1),t1]
 ;      else [[],s]
- 
+
 (DEFUN |pileForest| (|n| |s|)
   (PROG (|LETTMP#1| |b| |hh| |h| |t| |h1| |t1|)
     (RETURN
@@ -273,7 +273,7 @@
         (SETQ |h1| (CAR |LETTMP#1|)) (SETQ |t1| (CADR |LETTMP#1|))
         (LIST (CONS |h| |h1|) |t1|))
        ('T (LIST NIL |s|)))))))
- 
+
 ; pileForest1(n,s)==
 ;      [b,n1,h,t]:= eqpileTree(n,s)
 ;      if b
@@ -281,7 +281,7 @@
 ;        [h1,t1]:=pileForest1(n,t)
 ;        [cons(h,h1),t1]
 ;      else [[],s]
- 
+
 (DEFUN |pileForest1| (|n| |s|)
   (PROG (|LETTMP#1| |b| |n1| |h| |t| |h1| |t1|)
     (RETURN
@@ -296,13 +296,13 @@
         (SETQ |h1| (CAR |LETTMP#1|)) (SETQ |t1| (CADR |LETTMP#1|))
         (LIST (CONS |h| |h1|) |t1|))
        ('T (LIST NIL |s|)))))))
- 
+
 ; pileForests(h,n,s)==
 ;       [h1,t1]:=pileForest(n,s)
 ;       if npNull h1
 ;       then [true,n,h,s]
 ;       else pileForests(pileCtree(h,h1),n,t1)
- 
+
 (DEFUN |pileForests| (|h| |n| |s|)
   (PROG (|LETTMP#1| |h1| |t1|)
     (RETURN
@@ -312,20 +312,20 @@
       (SETQ |t1| (CADR |LETTMP#1|))
       (COND ((|npNull| |h1|) (LIST T |n| |h| |s|))
             ('T (|pileForests| (|pileCtree| |h| |h1|) |n| |t1|)))))))
- 
+
 ; pileCtree(x,y)==dqAppend(x,pileCforest y)
- 
+
 (DEFUN |pileCtree| (|x| |y|)
   (PROG () (RETURN (|dqAppend| |x| (|pileCforest| |y|)))))
- 
+
 ; first_tok(t) == CAAR t
- 
+
 (DEFUN |first_tok| (|t|) (PROG () (RETURN (CAAR |t|))))
- 
+
 ; last_tok(t) == CADR t
- 
+
 (DEFUN |last_tok| (|t|) (PROG () (RETURN (CADR |t|))))
- 
+
 ; pileCforest x==
 ;    if null x
 ;    then []
@@ -336,7 +336,7 @@
 ;            then enPile f
 ;            else f
 ;         else enPile separatePiles x
- 
+
 (DEFUN |pileCforest| (|x|)
   (PROG (|f|)
     (RETURN
@@ -345,15 +345,15 @@
             (COND ((EQ (|tokPart| (|first_tok| |f|)) '|if|) (|enPile| |f|))
                   (#1='T |f|)))
            (#1# (|enPile| (|separatePiles| |x|)))))))
- 
+
 ; firstTokPosn t== tokPosn first_tok(t)
- 
+
 (DEFUN |firstTokPosn| (|t|) (PROG () (RETURN (|tokPosn| (|first_tok| |t|)))))
- 
+
 ; lastTokPosn  t== tokPosn last_tok(t)
- 
+
 (DEFUN |lastTokPosn| (|t|) (PROG () (RETURN (|tokPosn| (|last_tok| |t|)))))
- 
+
 ; separatePiles x==
 ;   if null x
 ;   then []
@@ -363,14 +363,14 @@
 ;          a:=car x
 ;          lta := tokPart(last_tok(a))
 ;          ftb := tokPart(first_tok(car(cdr x)))
-;          EQ(lta, "COLON") or EQ(lta, "SEMICOLON") or EQ(lta, "(") or
+;          EQ(lta, ":") or EQ(lta, ";") or EQ(lta, "(") or
 ;            EQ(lta, "[") or EQ(lta, "{") or EQ(ftb, "in") or
 ;              EQ(ftb, "then") or EQ(ftb, "else") or EQ(ftb, ")") or
 ;                EQ(ftb, "]") or EQ(ftb, "}") =>
 ;                    dqConcat [a, separatePiles cdr x]
 ;          semicolon:=dqUnit tokConstruct("key", "BACKSET",lastTokPosn a)
 ;          dqConcat [a,semicolon,separatePiles cdr x]
- 
+
 (DEFUN |separatePiles| (|x|)
   (PROG (|a| |lta| |ftb| |semicolon|)
     (RETURN
@@ -379,10 +379,10 @@
             (SETQ |lta| (|tokPart| (|last_tok| |a|)))
             (SETQ |ftb| (|tokPart| (|first_tok| (CAR (CDR |x|)))))
             (COND
-             ((OR (EQ |lta| 'COLON) (EQ |lta| 'SEMICOLON) (EQ |lta| '|(|)
-                  (EQ |lta| '[) (EQ |lta| '{) (EQ |ftb| '|in|)
-                  (EQ |ftb| '|then|) (EQ |ftb| '|else|) (EQ |ftb| '|)|)
-                  (EQ |ftb| ']) (EQ |ftb| '}))
+             ((OR (EQ |lta| '|:|) (EQ |lta| '|;|) (EQ |lta| '|(|) (EQ |lta| '[)
+                  (EQ |lta| '{) (EQ |ftb| '|in|) (EQ |ftb| '|then|)
+                  (EQ |ftb| '|else|) (EQ |ftb| '|)|) (EQ |ftb| '])
+                  (EQ |ftb| '}))
               (|dqConcat| (LIST |a| (|separatePiles| (CDR |x|)))))
              (#1#
               (PROGN
@@ -391,12 +391,12 @@
                         (|tokConstruct| '|key| 'BACKSET (|lastTokPosn| |a|))))
                (|dqConcat|
                 (LIST |a| |semicolon| (|separatePiles| (CDR |x|))))))))))))
- 
+
 ; enPile x==
 ;    dqConcat [dqUnit tokConstruct("key","SETTAB",firstTokPosn x),
 ;              x, _
 ;              dqUnit tokConstruct("key","BACKTAB",lastTokPosn  x)]
- 
+
 (DEFUN |enPile| (|x|)
   (PROG ()
     (RETURN

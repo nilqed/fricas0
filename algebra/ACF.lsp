@@ -4,14 +4,11 @@
 (DEFPARAMETER |AlgebraicallyClosedField;AL| 'NIL) 
 
 (DEFUN |AlgebraicallyClosedField| ()
-  (LET (#:G705)
-    (COND (|AlgebraicallyClosedField;AL|)
-          (T
-           (SETQ |AlgebraicallyClosedField;AL|
-                   (|AlgebraicallyClosedField;|)))))) 
+  (COND (|AlgebraicallyClosedField;AL|)
+        (T (SETQ |AlgebraicallyClosedField;AL| (|AlgebraicallyClosedField;|))))) 
 
 (DEFUN |AlgebraicallyClosedField;| ()
-  (SPROG ((#1=#:G703 NIL))
+  (SPROG ((#1=#:G702 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|Field|) (|RadicalCategory|)
@@ -46,11 +43,7 @@
                                 ((|List| $) (|SparseUnivariatePolynomial| $)
                                  (|Symbol|)))
                                T))
-                            NIL
-                            '((|List| $) (|SparseUnivariatePolynomial| $)
-                              (|Symbol|) (|Polynomial| $))
-                            NIL))
-                   |AlgebraicallyClosedField|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|AlgebraicallyClosedField|))))) 
 
 (MAKEPROP '|AlgebraicallyClosedField| 'NILADIC T) 

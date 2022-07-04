@@ -1,34 +1,33 @@
 
 (DECLAIM (NOTINLINE |IndexedVector;|)) 
 
-(DEFUN |IndexedVector| (&REST #1=#:G2024)
+(DEFUN |IndexedVector| (&REST #1=#:G1915)
   (SPROG NIL
-         (PROG (#2=#:G2025)
+         (PROG (#2=#:G1916)
            (RETURN
             (COND
              ((LETT #2#
-                    (|lassocShiftWithFunction| (|devaluateList| #1#)
+                    (|lassocShiftWithFunction| (|devaluate_sig| #1# '(T NIL))
                                                (HGET |$ConstructorCache|
                                                      '|IndexedVector|)
-                                               '|domainEqualList|)
-                    . #3=(|IndexedVector|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |IndexedVector;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|IndexedVector|)))))))))) 
 
 (DEFUN |IndexedVector;| (|#1| |#2|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G2021 NIL) (#2=#:G2022 NIL) (#3=#:G2023 NIL) ($ NIL)
+   ((|pv$| NIL) (#1=#:G1912 NIL) (#2=#:G1913 NIL) (#3=#:G1914 NIL) ($ NIL)
     (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #4=(|IndexedVector|))
-    (LETT DV$2 (|devaluate| |#2|) . #4#)
-    (LETT |dv$| (LIST '|IndexedVector| DV$1 DV$2) . #4#)
-    (LETT $ (GETREFV 29) . #4#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 |#2|)
+    (LETT |dv$| (LIST '|IndexedVector| DV$1 DV$2))
+    (LETT $ (GETREFV 29))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -43,15 +42,13 @@
                                         (|HasCategory| |#1| '(|BasicType|))
                                         (LETT #3#
                                               (|HasCategory| |#1|
-                                                             '(|Comparable|))
-                                              . #4#)
+                                                             '(|Comparable|)))
                                         (OR #3#
                                             (|HasCategory| |#1|
                                                            '(|OrderedSet|)))
                                         (LETT #2#
                                               (|HasCategory| |#1|
-                                                             '(|SetCategory|))
-                                              . #4#)
+                                                             '(|SetCategory|)))
                                         (AND
                                          (|HasCategory| |#1|
                                                         (LIST '|Evalable|
@@ -70,8 +67,7 @@
                                         (LETT #1#
                                               (|HasCategory| |#1|
                                                              '(|CoercibleTo|
-                                                               (|OutputForm|)))
-                                              . #4#)
+                                                               (|OutputForm|))))
                                         (OR #1# #3#
                                             (|HasCategory| |#1|
                                                            '(|OrderedSet|))
@@ -89,8 +85,7 @@
                                         (AND
                                          (|HasCategory| |#1|
                                                         '(|RadicalCategory|))
-                                         (|HasCategory| |#1| '(|Ring|)))))
-                    . #4#))
+                                         (|HasCategory| |#1| '(|Ring|)))))))
     (|haddProp| |$ConstructorCache| '|IndexedVector| (LIST DV$1 DV$2)
                 (CONS 1 $))
     (|stuffDomainSlots| $)
@@ -148,7 +143,7 @@
               (|local| |#1|) (|local| |#2|) (|Mapping| 11 6 6) (|Integer|)
               (|Mapping| 6 6 6) (|Boolean|) (|NonNegativeInteger|) (|List| 6)
               (|Equation| 6) (|List| 14) (|OutputForm|) (|SingleInteger|)
-              (|String|) (|HashState|) (|Mapping| 11 6) (|UniversalSegment| 9)
+              (|HashState|) (|String|) (|Mapping| 11 6) (|UniversalSegment| 9)
               (|Void|) (|Mapping| 6 6) (|InputForm|) (|Matrix| 6) (|List| $)
               (|Union| 6 '"failed") (|List| 9))
            '#() 'NIL

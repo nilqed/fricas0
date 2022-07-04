@@ -1,14 +1,14 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; canCoerceFrom(mr,m) ==
 ;   -- bind flag for recording/reporting instantiations
 ;   -- (see recordInstantiation)
 ;   $insideCanCoerceFrom: local := [mr,m]
 ;   canCoerceFrom0(mr,m)
- 
+
 (DEFUN |canCoerceFrom;| (|mr| |m|)
   (PROG (|$insideCanCoerceFrom|)
     (DECLARE (SPECIAL |$insideCanCoerceFrom|))
@@ -22,24 +22,24 @@
      (COND
       ((NOT
         (EQ
-         (SETF |bfVar#2| #1=(GETHASH |bfVar#1| |canCoerceFrom;AL| #2='#:G403))
+         (SETF |bfVar#2| #1=(GETHASH |bfVar#1| |canCoerceFrom;AL| #2='#:G115))
          #2#))
        |bfVar#2|)
       ('T (SETF #1# (APPLY #'|canCoerceFrom;| |bfVar#1|)))))))
 (EVAL-WHEN (EVAL LOAD)
   (SETF (GET '|canCoerceFrom| '|cacheInfo|)
           '(|canCoerceFrom| |canCoerceFrom;AL| |hash-table|
-            (SETQ |canCoerceFrom;AL| (MAKE-HASHTABLE 'UEQUAL))
+            (SETQ |canCoerceFrom;AL| (MAKE_HASHTABLE 'UEQUAL))
             (|hashCount| |canCoerceFrom;AL|))))
-(EVAL-WHEN (EVAL LOAD) (SETQ |canCoerceFrom;AL| (MAKE-HASHTABLE 'UEQUAL)))
- 
+(EVAL-WHEN (EVAL LOAD) (SETQ |canCoerceFrom;AL| (MAKE_HASHTABLE 'UEQUAL)))
+
 ; canCoerce(t1, t2) ==
 ;   val := canCoerce1(t1, t2) => val
 ;   t1 is ['Variable, :.] =>
 ;     newMode := getMinimalVarMode(t1, nil)
 ;     canCoerce1(t1, newMode) and canCoerce1(newMode, t2)
 ;   nil
- 
+
 (DEFUN |canCoerce;| (|t1| |t2|)
   (PROG (|val| |newMode|)
     (RETURN
@@ -55,17 +55,17 @@
     (RETURN
      (COND
       ((NOT
-        (EQ (SETF |bfVar#4| #1=(GETHASH |bfVar#3| |canCoerce;AL| #2='#:G404))
+        (EQ (SETF |bfVar#4| #1=(GETHASH |bfVar#3| |canCoerce;AL| #2='#:G116))
             #2#))
        |bfVar#4|)
       ('T (SETF #1# (APPLY #'|canCoerce;| |bfVar#3|)))))))
 (EVAL-WHEN (EVAL LOAD)
   (SETF (GET '|canCoerce| '|cacheInfo|)
           '(|canCoerce| |canCoerce;AL| |hash-table|
-            (SETQ |canCoerce;AL| (MAKE-HASHTABLE 'UEQUAL))
+            (SETQ |canCoerce;AL| (MAKE_HASHTABLE 'UEQUAL))
             (|hashCount| |canCoerce;AL|))))
-(EVAL-WHEN (EVAL LOAD) (SETQ |canCoerce;AL| (MAKE-HASHTABLE 'UEQUAL)))
- 
+(EVAL-WHEN (EVAL LOAD) (SETQ |canCoerce;AL| (MAKE_HASHTABLE 'UEQUAL)))
+
 ; isValidType form ==
 ;   -- returns true IFF form is a type whose arguments satisfy the
 ;   --  predicate of the type constructor
@@ -92,10 +92,10 @@
 ;     ((# args) = (# REMDUP args)) => true
 ;     sayKeyedMsg("S2IR0005",[form])
 ;     NIL
-; 
+;
 ;   badDoubles := CONS($QuotientField, '(Complex Polynomial Expression))
 ;   form is [T1, [T2, :.]] and T1 = T2 and member(T1, badDoubles) => NIL
-; 
+;
 ;   form is [=$QuotientField,D] and not isPartialMode(D) and
 ;     ofCategory(D,'(Field)) => NIL
 ;   form is ['UnivariatePolynomial, x, ['UnivariatePolynomial, y, .]] and x=y =>
@@ -118,7 +118,7 @@
 ;       categoryForm?(c) =>
 ;         evalCategory(x,MSUBSTQ(x,'_$,c)) and isValidType x
 ;       not (GETDATABASE(opOf x, 'CONSTRUCTORKIND) = 'domain)
- 
+
 (DEFUN |isValidType;| (|form|)
   (PROG (|selectors| |ISTMP#1| |type| |args| |mapargs| |badDoubles| T1
          |ISTMP#2| T2 D |x| |ISTMP#3| |ISTMP#4| |y| |ISTMP#5| |op| |argl|
@@ -344,20 +344,20 @@
      (COND
       ((NOT
         (EQ
-         (SETF |bfVar#21| #1=(GETHASH |bfVar#20| |isValidType;AL| #2='#:G405))
+         (SETF |bfVar#21| #1=(GETHASH |bfVar#20| |isValidType;AL| #2='#:G117))
          #2#))
        |bfVar#21|)
       ('T (SETF #1# (APPLY #'|isValidType;| |bfVar#20|)))))))
 (EVAL-WHEN (EVAL LOAD)
   (SETF (GET '|isValidType| '|cacheInfo|)
           '(|isValidType| |isValidType;AL| |hash-table|
-            (SETQ |isValidType;AL| (MAKE-HASHTABLE 'UEQUAL))
+            (SETQ |isValidType;AL| (MAKE_HASHTABLE 'UEQUAL))
             (|hashCount| |isValidType;AL|))))
-(EVAL-WHEN (EVAL LOAD) (SETQ |isValidType;AL| (MAKE-HASHTABLE 'UEQUAL)))
- 
+(EVAL-WHEN (EVAL LOAD) (SETQ |isValidType;AL| (MAKE_HASHTABLE 'UEQUAL)))
+
 ; selectMms1(op,tar,args1,args2,$Coerce) ==
 ;     selectMms2(op,tar,args1,args2,$Coerce)
- 
+
 (DEFUN |selectMms1;| (|op| |tar| |args1| |args2| |$Coerce|)
   (DECLARE (SPECIAL |$Coerce|))
   (PROG () (RETURN (|selectMms2| |op| |tar| |args1| |args2| |$Coerce|))))
@@ -367,17 +367,17 @@
      (COND
       ((NOT
         (EQ
-         (SETF |bfVar#23| #1=(GETHASH |bfVar#22| |selectMms1;AL| #2='#:G406))
+         (SETF |bfVar#23| #1=(GETHASH |bfVar#22| |selectMms1;AL| #2='#:G118))
          #2#))
        |bfVar#23|)
       ('T (SETF #1# (APPLY #'|selectMms1;| |bfVar#22|)))))))
 (EVAL-WHEN (EVAL LOAD)
   (SETF (GET '|selectMms1| '|cacheInfo|)
           '(|selectMms1| |selectMms1;AL| |hash-table|
-            (SETQ |selectMms1;AL| (MAKE-HASHTABLE 'UEQUAL))
+            (SETQ |selectMms1;AL| (MAKE_HASHTABLE 'UEQUAL))
             (|hashCount| |selectMms1;AL|))))
-(EVAL-WHEN (EVAL LOAD) (SETQ |selectMms1;AL| (MAKE-HASHTABLE 'UEQUAL)))
- 
+(EVAL-WHEN (EVAL LOAD) (SETQ |selectMms1;AL| (MAKE_HASHTABLE 'UEQUAL)))
+
 ; coerceConvertMmSelection(funName,m1,m2) ==
 ;   -- calls selectMms with $Coerce=NIL and tests for required
 ;   -- target type. funName is either 'coerce or 'convert.
@@ -388,7 +388,7 @@
 ;   mmS := [x for x in l | x is [sig,:.] and hasCorrectTarget(m2,sig) and
 ;            sig is [dc,targ,oarg] and isEqualOrSubDomain(m1,oarg)]
 ;   mmS and first mmS
- 
+
 (DEFUN |coerceConvertMmSelection;| (|funName| |m1| |m2|)
   (PROG (|$reportBottomUpFlag| |$declaredMode| |mmS| |oarg| |ISTMP#2| |targ|
          |ISTMP#1| |dc| |sig| |l|)
@@ -432,7 +432,7 @@
         (EQ
          (SETF |bfVar#27|
                  #1=(GETHASH |bfVar#26| |coerceConvertMmSelection;AL|
-                             #2='#:G407))
+                             #2='#:G119))
          #2#))
        |bfVar#27|)
       ('T (SETF #1# (APPLY #'|coerceConvertMmSelection;| |bfVar#26|)))))))
@@ -440,11 +440,11 @@
   (SETF (GET '|coerceConvertMmSelection| '|cacheInfo|)
           '(|coerceConvertMmSelection| |coerceConvertMmSelection;AL|
             |hash-table|
-            (SETQ |coerceConvertMmSelection;AL| (MAKE-HASHTABLE 'UEQUAL))
+            (SETQ |coerceConvertMmSelection;AL| (MAKE_HASHTABLE 'UEQUAL))
             (|hashCount| |coerceConvertMmSelection;AL|))))
 (EVAL-WHEN (EVAL LOAD)
-  (SETQ |coerceConvertMmSelection;AL| (MAKE-HASHTABLE 'UEQUAL)))
- 
+  (SETQ |coerceConvertMmSelection;AL| (MAKE_HASHTABLE 'UEQUAL)))
+
 ; resolveTT(t1,t2) ==
 ;   -- resolves two types
 ;   -- this symmetric resolve looks for a type t to which both t1 and t2
@@ -459,7 +459,7 @@
 ;     t
 ;   stopTimingProcess 'resolve
 ;   nil
- 
+
 (DEFUN |resolveTT;| (|t1| |t2|)
   (PROG (|t|)
     (RETURN
@@ -475,17 +475,17 @@
     (RETURN
      (COND
       ((NOT
-        (EQ (SETF |bfVar#29| #1=(GETHASH |bfVar#28| |resolveTT;AL| #2='#:G408))
+        (EQ (SETF |bfVar#29| #1=(GETHASH |bfVar#28| |resolveTT;AL| #2='#:G120))
             #2#))
        |bfVar#29|)
       ('T (SETF #1# (APPLY #'|resolveTT;| |bfVar#28|)))))))
 (EVAL-WHEN (EVAL LOAD)
   (SETF (GET '|resolveTT| '|cacheInfo|)
           '(|resolveTT| |resolveTT;AL| |hash-table|
-            (SETQ |resolveTT;AL| (MAKE-HASHTABLE 'UEQUAL))
+            (SETQ |resolveTT;AL| (MAKE_HASHTABLE 'UEQUAL))
             (|hashCount| |resolveTT;AL|))))
-(EVAL-WHEN (EVAL LOAD) (SETQ |resolveTT;AL| (MAKE-HASHTABLE 'UEQUAL)))
- 
+(EVAL-WHEN (EVAL LOAD) (SETQ |resolveTT;AL| (MAKE_HASHTABLE 'UEQUAL)))
+
 ; isLegitimateMode(t,hasPolyMode,polyVarList) ==
 ;   -- returns true IFF t is a valid type.  i.e. if t has no repeated
 ;   --  variables, or two levels of Polynomial
@@ -493,14 +493,14 @@
 ;   t = $EmptyMode => true
 ;   STRINGP t     => true
 ;   ATOM t => false
-; 
+;
 ;   badDoubles := CONS($QuotientField, '(Complex Polynomial Expression))
 ;   t is [T1, [T2, :.]] and T1 = T2 and member(T1, badDoubles) => NIL
-; 
+;
 ;   t is [=$QuotientField,D] and not isPartialMode(D) and
 ;     ofCategory(D,'(Field)) => NIL
 ;   t = '(Complex (AlgebraicNumber)) => NIL
-; 
+;
 ;   vl := isPolynomialMode t =>
 ;     if vl~='all then
 ;       var:= or/[(x in polyVarList => x;nil) for x in vl] => return false
@@ -510,7 +510,7 @@
 ;     con := first t
 ;     poly? := (con = 'Polynomial or con = 'Expression)
 ;     isLegitimateMode(underDomainOf t,poly?,polyVarList)
-; 
+;
 ;   constructor? first t =>
 ;     isLegitimateMode(underDomainOf t,hasPolyMode,polyVarList) => t
 ;   t is ['Mapping,:ml] =>
@@ -534,7 +534,7 @@
 ;     ((# r) = (# REMDUP r)) => true
 ;     false
 ;   false
- 
+
 (DEFUN |isLegitimateMode;| (|t| |hasPolyMode| |polyVarList|)
   (PROG (|badDoubles| T1 |ISTMP#1| |ISTMP#2| T2 D |vl| |var| |con| |poly?| |ml|
          |r|)
@@ -675,17 +675,17 @@
       ((NOT
         (EQ
          (SETF |bfVar#38|
-                 #1=(GETHASH |bfVar#37| |isLegitimateMode;AL| #2='#:G409))
+                 #1=(GETHASH |bfVar#37| |isLegitimateMode;AL| #2='#:G121))
          #2#))
        |bfVar#38|)
       ('T (SETF #1# (APPLY #'|isLegitimateMode;| |bfVar#37|)))))))
 (EVAL-WHEN (EVAL LOAD)
   (SETF (GET '|isLegitimateMode| '|cacheInfo|)
           '(|isLegitimateMode| |isLegitimateMode;AL| |hash-table|
-            (SETQ |isLegitimateMode;AL| (MAKE-HASHTABLE 'UEQUAL))
+            (SETQ |isLegitimateMode;AL| (MAKE_HASHTABLE 'UEQUAL))
             (|hashCount| |isLegitimateMode;AL|))))
-(EVAL-WHEN (EVAL LOAD) (SETQ |isLegitimateMode;AL| (MAKE-HASHTABLE 'UEQUAL)))
- 
+(EVAL-WHEN (EVAL LOAD) (SETQ |isLegitimateMode;AL| (MAKE_HASHTABLE 'UEQUAL)))
+
 ; underDomainOf t ==
 ;   t = $RationalNumber => $Integer
 ;   not PAIRP t => NIL
@@ -693,7 +693,7 @@
 ;   1 = #d => NIL
 ;   u := getUnderModeOf(t) => u
 ;   last d
- 
+
 (DEFUN |underDomainOf;| (|t|)
   (PROG (|d| |u|)
     (RETURN
@@ -711,19 +711,19 @@
       ((NOT
         (EQ
          (SETF |bfVar#40|
-                 #1=(GETHASH |bfVar#39| |underDomainOf;AL| #2='#:G410))
+                 #1=(GETHASH |bfVar#39| |underDomainOf;AL| #2='#:G122))
          #2#))
        |bfVar#40|)
       ('T (SETF #1# (APPLY #'|underDomainOf;| |bfVar#39|)))))))
 (EVAL-WHEN (EVAL LOAD)
   (SETF (GET '|underDomainOf| '|cacheInfo|)
           '(|underDomainOf| |underDomainOf;AL| |hash-table|
-            (SETQ |underDomainOf;AL| (MAKE-HASHTABLE 'UEQUAL))
+            (SETQ |underDomainOf;AL| (MAKE_HASHTABLE 'UEQUAL))
             (|hashCount| |underDomainOf;AL|))))
-(EVAL-WHEN (EVAL LOAD) (SETQ |underDomainOf;AL| (MAKE-HASHTABLE 'UEQUAL)))
- 
+(EVAL-WHEN (EVAL LOAD) (SETQ |underDomainOf;AL| (MAKE_HASHTABLE 'UEQUAL)))
+
 ; findRetractMms(st, tt) == findRetractMms1(st, tt)
- 
+
 (DEFUN |findRetractMms;| (|st| |tt|)
   (PROG () (RETURN (|findRetractMms1| |st| |tt|))))
 (DEFUN |findRetractMms| (&REST |bfVar#41|)
@@ -733,20 +733,20 @@
       ((NOT
         (EQ
          (SETF |bfVar#42|
-                 #1=(GETHASH |bfVar#41| |findRetractMms;AL| #2='#:G411))
+                 #1=(GETHASH |bfVar#41| |findRetractMms;AL| #2='#:G123))
          #2#))
        |bfVar#42|)
       ('T (SETF #1# (APPLY #'|findRetractMms;| |bfVar#41|)))))))
 (EVAL-WHEN (EVAL LOAD)
   (SETF (GET '|findRetractMms| '|cacheInfo|)
           '(|findRetractMms| |findRetractMms;AL| |hash-table|
-            (SETQ |findRetractMms;AL| (MAKE-HASHTABLE 'UEQUAL))
+            (SETQ |findRetractMms;AL| (MAKE_HASHTABLE 'UEQUAL))
             (|hashCount| |findRetractMms;AL|))))
-(EVAL-WHEN (EVAL LOAD) (SETQ |findRetractMms;AL| (MAKE-HASHTABLE 'UEQUAL)))
- 
+(EVAL-WHEN (EVAL LOAD) (SETQ |findRetractMms;AL| (MAKE_HASHTABLE 'UEQUAL)))
+
 ; getConstantFromDomain(form,domainForm) ==
 ;     getConstantFromDomain1(form,domainForm)
- 
+
 (DEFUN |getConstantFromDomain;| (|form| |domainForm|)
   (PROG () (RETURN (|getConstantFromDomain1| |form| |domainForm|))))
 (DEFUN |getConstantFromDomain| (&REST |bfVar#43|)
@@ -756,22 +756,22 @@
       ((NOT
         (EQ
          (SETF |bfVar#44|
-                 #1=(GETHASH |bfVar#43| |getConstantFromDomain;AL| #2='#:G412))
+                 #1=(GETHASH |bfVar#43| |getConstantFromDomain;AL| #2='#:G124))
          #2#))
        |bfVar#44|)
       ('T (SETF #1# (APPLY #'|getConstantFromDomain;| |bfVar#43|)))))))
 (EVAL-WHEN (EVAL LOAD)
   (SETF (GET '|getConstantFromDomain| '|cacheInfo|)
           '(|getConstantFromDomain| |getConstantFromDomain;AL| |hash-table|
-            (SETQ |getConstantFromDomain;AL| (MAKE-HASHTABLE 'UEQUAL))
+            (SETQ |getConstantFromDomain;AL| (MAKE_HASHTABLE 'UEQUAL))
             (|hashCount| |getConstantFromDomain;AL|))))
 (EVAL-WHEN (EVAL LOAD)
-  (SETQ |getConstantFromDomain;AL| (MAKE-HASHTABLE 'UEQUAL)))
- 
+  (SETQ |getConstantFromDomain;AL| (MAKE_HASHTABLE 'UEQUAL)))
+
 ; interpLookup(funName, sig, dc) ==
 ;     dcVector:= evalDomain dc
 ;     NRTcompiledLookup(funName, sig, dcVector)
- 
+
 (DEFUN |interpLookup;| (|funName| |sig| |dc|)
   (PROG (|dcVector|)
     (RETURN
@@ -784,13 +784,13 @@
      (COND
       ((NOT
         (EQ
-         (SETF |bfVar#46| #1=(GETHASH |bfVar#45| |interpLookup;AL| #2='#:G413))
+         (SETF |bfVar#46| #1=(GETHASH |bfVar#45| |interpLookup;AL| #2='#:G125))
          #2#))
        |bfVar#46|)
       ('T (SETF #1# (APPLY #'|interpLookup;| |bfVar#45|)))))))
 (EVAL-WHEN (EVAL LOAD)
   (SETF (GET '|interpLookup| '|cacheInfo|)
           '(|interpLookup| |interpLookup;AL| |hash-table|
-            (SETQ |interpLookup;AL| (MAKE-HASHTABLE 'UEQUAL))
+            (SETQ |interpLookup;AL| (MAKE_HASHTABLE 'UEQUAL))
             (|hashCount| |interpLookup;AL|))))
-(EVAL-WHEN (EVAL LOAD) (SETQ |interpLookup;AL| (MAKE-HASHTABLE 'UEQUAL)))
+(EVAL-WHEN (EVAL LOAD) (SETQ |interpLookup;AL| (MAKE_HASHTABLE 'UEQUAL)))

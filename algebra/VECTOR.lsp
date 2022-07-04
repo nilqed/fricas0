@@ -1,18 +1,20 @@
 
 (PUT '|VECTOR;qelt;$IR;1| '|SPADreplace| '(XLAM (|x| |i|) (QAREF1O |x| |i| 1))) 
 
-(SDEFUN |VECTOR;qelt;$IR;1| ((|x| $) (|i| |Integer|) ($ R)) (QAREF1O |x| |i| 1)) 
+(SDEFUN |VECTOR;qelt;$IR;1| ((|x| ($)) (|i| (|Integer|)) ($ (R)))
+        (QAREF1O |x| |i| 1)) 
 
 (PUT '|VECTOR;qsetelt!;$I2R;2| '|SPADreplace|
      '(XLAM (|x| |i| |s|) (QSETAREF1O |x| |i| |s| 1))) 
 
-(SDEFUN |VECTOR;qsetelt!;$I2R;2| ((|x| $) (|i| |Integer|) (|s| R) ($ R))
+(SDEFUN |VECTOR;qsetelt!;$I2R;2|
+        ((|x| ($)) (|i| (|Integer|)) (|s| (R)) ($ (R)))
         (QSETAREF1O |x| |i| |s| 1)) 
 
-(SDEFUN |VECTOR;vector;L$;3| ((|l| |List| R) ($ $))
+(SDEFUN |VECTOR;vector;L$;3| ((|l| (|List| R)) ($ ($)))
         (SPADCALL |l| (QREFELT $ 11))) 
 
-(SDEFUN |VECTOR;convert;$If;4| ((|x| $) ($ |InputForm|))
+(SDEFUN |VECTOR;convert;$If;4| ((|x| ($)) ($ (|InputForm|)))
         (SPADCALL
          (LIST (SPADCALL '|vector| (QREFELT $ 15))
                (SPADCALL (SPADCALL |x| (QREFELT $ 16)) (QREFELT $ 17)))
@@ -20,30 +22,29 @@
 
 (DECLAIM (NOTINLINE |Vector;|)) 
 
-(DEFUN |Vector| (#1=#:G2758)
+(DEFUN |Vector| (#1=#:G2948)
   (SPROG NIL
-         (PROG (#2=#:G2759)
+         (PROG (#2=#:G2949)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|Vector|)
-                                               '|domainEqualList|)
-                    . #3=(|Vector|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT (PROG1 (|Vector;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|Vector;| #1#) (LETT #2# T))
                 (COND ((NOT #2#) (HREM |$ConstructorCache| '|Vector|)))))))))) 
 
 (DEFUN |Vector;| (|#1|)
   (SPROG
-   ((|pv$| NIL) (#1=#:G2755 NIL) (#2=#:G2756 NIL) (#3=#:G2757 NIL) ($ NIL)
+   ((|pv$| NIL) (#1=#:G2945 NIL) (#2=#:G2946 NIL) (#3=#:G2947 NIL) ($ NIL)
     (|dv$| NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #4=(|Vector|))
-    (LETT |dv$| (LIST '|Vector| DV$1) . #4#)
-    (LETT $ (GETREFV 38) . #4#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT |dv$| (LIST '|Vector| DV$1))
+    (LETT $ (GETREFV 38))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -58,15 +59,13 @@
                                         (|HasCategory| |#1| '(|BasicType|))
                                         (LETT #3#
                                               (|HasCategory| |#1|
-                                                             '(|Comparable|))
-                                              . #4#)
+                                                             '(|Comparable|)))
                                         (OR #3#
                                             (|HasCategory| |#1|
                                                            '(|OrderedSet|)))
                                         (LETT #2#
                                               (|HasCategory| |#1|
-                                                             '(|SetCategory|))
-                                              . #4#)
+                                                             '(|SetCategory|)))
                                         (AND
                                          (|HasCategory| |#1|
                                                         (LIST '|Evalable|
@@ -85,8 +84,7 @@
                                         (LETT #1#
                                               (|HasCategory| |#1|
                                                              '(|CoercibleTo|
-                                                               (|OutputForm|)))
-                                              . #4#)
+                                                               (|OutputForm|))))
                                         (OR #1# #3#
                                             (|HasCategory| |#1|
                                                            '(|OrderedSet|))
@@ -104,8 +102,7 @@
                                         (AND
                                          (|HasCategory| |#1|
                                                         '(|RadicalCategory|))
-                                         (|HasCategory| |#1| '(|Ring|)))))
-                    . #4#))
+                                         (|HasCategory| |#1| '(|Ring|)))))))
     (|haddProp| |$ConstructorCache| '|Vector| (LIST DV$1) (CONS 1 $))
     (|stuffDomainSlots| $)
     (QSETREFV $ 6 |#1|)
@@ -165,8 +162,8 @@
               |VECTOR;vector;L$;3| (|Symbol|) (|InputForm|) (5 . |convert|)
               (10 . |parts|) (15 . |convert|) (|List| $) (20 . |convert|)
               (25 . |convert|) (|Mapping| 23 6 6) (|Mapping| 6 6 6) (|Boolean|)
-              (|NonNegativeInteger|) (|Equation| 6) (|List| 25) (|OutputForm|)
-              (|HashState|) (|SingleInteger|) (|String|) (|Mapping| 23 6)
+              (|NonNegativeInteger|) (|List| 26) (|Equation| 6) (|OutputForm|)
+              (|SingleInteger|) (|String|) (|HashState|) (|Mapping| 23 6)
               (|UniversalSegment| 7) (|Void|) (|Mapping| 6 6) (|Matrix| 6)
               (|Union| 6 '"failed") (|List| 7))
            '#(|vector| 30 |qsetelt!| 35 |qelt| 42 |parts| 48 |convert| 53

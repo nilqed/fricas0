@@ -13,6 +13,11 @@ Tested so far::
     ecl -load fricas
     sbcl --load fricas
     java -jar abcl.jar --load fricas
+
+Note: for SBCL, you can compile the ``interp`` directory before loading fricas.
+This can improve speed greatly.
+
+    sbcl --load lisp/load-lisp.lisp --load lisp/compile-interp.lisp --eval "(exit)"
     
 The first time - when the interpreter is loaded - you have to compile
 the *algebra*::

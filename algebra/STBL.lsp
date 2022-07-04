@@ -1,35 +1,33 @@
 
 (DECLAIM (NOTINLINE |SparseTable;|)) 
 
-(DEFUN |SparseTable| (&REST #1=#:G752)
+(DEFUN |SparseTable| (&REST #1=#:G757)
   (SPROG NIL
-         (PROG (#2=#:G753)
+         (PROG (#2=#:G758)
            (RETURN
             (COND
              ((LETT #2#
-                    (|lassocShiftWithFunction| (|devaluateList| #1#)
+                    (|lassocShiftWithFunction| (|devaluate_sig| #1# '(T T NIL))
                                                (HGET |$ConstructorCache|
                                                      '|SparseTable|)
-                                               '|domainEqualList|)
-                    . #3=(|SparseTable|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (APPLY (|function| |SparseTable;|) #1#)
-                    (LETT #2# T . #3#))
+                  (PROG1 (APPLY (|function| |SparseTable;|) #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|SparseTable|)))))))))) 
 
 (DEFUN |SparseTable;| (|#1| |#2| |#3|)
   (SPROG
-   ((#1=#:G751 NIL) (#2=#:G750 NIL) (|pv$| NIL) (#3=#:G748 NIL) (#4=#:G749 NIL)
+   ((#1=#:G756 NIL) (#2=#:G755 NIL) (|pv$| NIL) (#3=#:G753 NIL) (#4=#:G754 NIL)
     ($ NIL) (|dv$| NIL) (DV$3 NIL) (DV$2 NIL) (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #5=(|SparseTable|))
-    (LETT DV$2 (|devaluate| |#2|) . #5#)
-    (LETT DV$3 (|devaluate| |#3|) . #5#)
-    (LETT |dv$| (LIST '|SparseTable| DV$1 DV$2 DV$3) . #5#)
-    (LETT $ (GETREFV 33) . #5#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 |#3|)
+    (LETT |dv$| (LIST '|SparseTable| DV$1 DV$2 DV$3))
+    (LETT $ (GETREFV 35))
     (QSETREFV $ 0 |dv$|)
     (QSETREFV $ 3
               (LETT |pv$|
@@ -39,6 +37,10 @@
                                          (|Record| (|:| |key| |#1|)
                                                    (|:| |entry| |#2|))
                                          '(|ConvertibleTo| (|InputForm|)))
+                                        (|HasCategory|
+                                         (|Record| (|:| |key| |#1|)
+                                                   (|:| |entry| |#2|))
+                                         '(|OrderedSet|))
                                         (|HasCategory|
                                          (|Record| (|:| |key| |#1|)
                                                    (|:| |entry| |#2|))
@@ -55,8 +57,7 @@
                                         (|HasCategory| |#2| '(|BasicType|))
                                         (LETT #4#
                                               (|HasCategory| |#2|
-                                                             '(|SetCategory|))
-                                              . #5#)
+                                                             '(|SetCategory|)))
                                         (AND
                                          (|HasCategory| |#2|
                                                         (LIST '|Evalable|
@@ -67,8 +68,7 @@
                                               (|HasCategory|
                                                (|Record| (|:| |key| |#1|)
                                                          (|:| |entry| |#2|))
-                                               '(|SetCategory|))
-                                              . #5#)
+                                               '(|SetCategory|)))
                                         (AND
                                          (|HasCategory|
                                           (|Record| (|:| |key| |#1|)
@@ -91,34 +91,41 @@
                                           (|Record| (|:| |key| |#1|)
                                                     (|:| |entry| |#2|))
                                           '(|CoercibleTo| (|OutputForm|)))
-                                         #3#)))
-                    . #5#))
+                                         #3#)
+                                        (|HasCategory| |#2|
+                                                       '(|OrderedSet|))))))
     (|haddProp| |$ConstructorCache| '|SparseTable| (LIST DV$1 DV$2 DV$3)
                 (CONS 1 $))
     (|stuffDomainSlots| $)
     (QSETREFV $ 6 |#1|)
     (QSETREFV $ 7 |#2|)
     (QSETREFV $ 8 |#3|)
-    (AND (LETT #2# (|HasCategory| $ '(|finiteAggregate|)) . #5#)
-         (|augmentPredVector| $ 2048))
+    (AND (LETT #2# (|HasCategory| $ '(|finiteAggregate|)))
+         (|augmentPredVector| $ 8192))
+    (AND #2#
+         (|HasCategory| (|Record| (|:| |key| |#1|) (|:| |entry| |#2|))
+                        '(|OrderedSet|))
+         (|augmentPredVector| $ 16384))
     (AND #2#
          (|HasCategory| (|Record| (|:| |key| |#1|) (|:| |entry| |#2|))
                         '(|BasicType|))
-         (|augmentPredVector| $ 4096))
+         (|augmentPredVector| $ 32768))
     (AND
      (LETT #1#
            (AND (|HasCategory| |#2| '(|BasicType|))
-                (|HasCategory| $ '(|finiteAggregate|)))
-           . #5#)
-     (|augmentPredVector| $ 8192))
+                (|HasCategory| $ '(|finiteAggregate|))))
+     (|augmentPredVector| $ 65536))
     (AND
      (OR #1# #4#
          (AND #2#
               (|HasCategory| (|Record| (|:| |key| |#1|) (|:| |entry| |#2|))
                              '(|BasicType|)))
          #3#)
-     (|augmentPredVector| $ 16384))
-    (AND (|HasCategory| $ '(|shallowlyMutable|)) (|augmentPredVector| $ 32768))
+     (|augmentPredVector| $ 131072))
+    (AND (|HasCategory| |#2| '(|OrderedSet|)) #2#
+         (|augmentPredVector| $ 262144))
+    (AND (|HasCategory| $ '(|shallowlyMutable|))
+         (|augmentPredVector| $ 524288))
     (SETF |pv$| (QREFELT $ 3))
     $))) 
 
@@ -127,18 +134,19 @@
            '#(NIL NIL NIL NIL NIL
               (|GeneralSparseTable| 6 7 (|Table| 6 7) (NRTEVAL (QREFELT $ 8)))
               (|local| |#1|) (|local| |#2|) (|local| |#3|)
-              (|Record| (|:| |key| 6) (|:| |entry| 7)) (|List| 9) (|List| 12)
-              (|Equation| 9) (|Mapping| 9 9 9) (|Boolean|)
+              (|Record| (|:| |key| 6) (|:| |entry| 7)) (|List| 9)
+              (|Equation| 9) (|List| 11) (|Mapping| 9 9 9) (|Boolean|)
               (|NonNegativeInteger|) (|Equation| 7) (|List| 16) (|List| 7)
               (|OutputForm|) (|String|) (|SingleInteger|) (|HashState|)
-              (|InputForm|) (|Mapping| 14 7) (|Mapping| 14 9) (|Mapping| 7 7)
-              (|Void|) (|Mapping| 9 9) (|Mapping| 7 7 7) (|List| 6)
+              (|InputForm|) (|Mapping| 14 7) (|Mapping| 14 7 7)
+              (|Mapping| 14 9) (|Mapping| 14 9 9) (|Mapping| 7 7) (|Void|)
+              (|Mapping| 9 9) (|Mapping| 7 7 7) (|List| 6)
               (|Union| 7 '"failed") (|Union| 9 '"failed"))
            '#() 'NIL
            (CONS
-            (|makeByteWordVec2| 11
-                                '(0 0 0 0 0 0 0 0 0 0 0 9 7 10 0 0 0 9 1 7 10
-                                  11))
+            (|makeByteWordVec2| 12
+                                '(0 0 0 0 0 0 0 0 0 0 0 10 8 11 0 0 0 10 1 8 11
+                                  12))
             (CONS
              '#(|TableAggregate&| |KeyedDictionary&| |Dictionary&|
                 |DictionaryOperations&| |BagAggregate&| |Collection&|

@@ -1,5 +1,13 @@
 (in-package "BOOT")
 
+;;; Making constant doubles
+(defun |make_DF|(x e)
+    (let ((res (read-from-string (format nil "~D.0d~D" x e))))
+         res)
+)
+
+(defmacro |mk_DF|(x e) (|make_DF| x e))
+
 ;;; Fast array accessors
 
 (defmacro QAREF1(v i)
@@ -17,6 +25,12 @@
     `(setf (aref (the (simple-array T (*)) ,v)
                  (|sub_SI| ,i ,o))
            ,s))
+
+(defmacro QAREF2(m i j)
+    `(aref (the (simple-array T (* *)) ,m) ,i ,j))
+
+(defmacro QSETAREF2(m i j r)
+    `(setf (aref (the (simple-array T (* *)) ,m) ,i ,j) ,r))
 
 (defmacro QAREF2O(m i j oi oj)
     `(aref (the (simple-array T (* *)) ,m)
@@ -48,6 +62,11 @@
 
 (defmacro ANCOLS (v)
     `(array-dimension (the (simple-array T (* *)) ,v) 1))
+
+;;; general arrays
+(defun GENERAL_ARRAY? (v) (typep v '(array t)))
+
+(defun MAKE_TYPED_ARRAY (dims lt) (make-array dims :element-type lt))
 
 ;;; string accessors
 
@@ -100,7 +119,7 @@
                                   (format nil "~A" ,s))))
 
 #+:sbcl
-(defmacro sbcl_make_sized_vector(nb n)
+(defmacro sbcl_make_sized_vector(nb b_spec n)
     (let ((get-tag (find-symbol "%VECTOR-WIDETAG-AND-N-BITS" "SB-IMPL"))
           (length-sym nil))
         (if (null get-tag)
@@ -111,96 +130,122 @@
                 (setf length-sym (find-symbol "VECTOR-LENGTH-IN-WORDS"
                                               "SB-IMPL"))))
         (multiple-value-bind (typetag n-bits)
-            (FUNCALL get-tag `(unsigned-byte ,nb))
+            (FUNCALL get-tag `(,b_spec ,nb))
             (let ((length-form
                    (if length-sym
                        `(,length-sym ,n ,n-bits)
                        `(ceiling (* ,n ,n-bits) sb-vm:n-word-bits))))
                 `(SB-KERNEL:ALLOCATE-VECTOR ,typetag ,n ,length-form)))))
 
-(defmacro DEF_SIZED_UOPS(nb)
+(defmacro DEF_SIZED_OPS(nb nbn b_spec)
 
 `(progn
-(defmacro ,(suffixed_name ELT_U nb) (v i)
-    `(aref (the (simple-array (unsigned-byte ,',nb) (*)) ,v) ,i))
+(defmacro ,(suffixed_name ELT_ nbn) (v i)
+    `(aref (the (simple-array (,',b_spec ,',nb) (*)) ,v) ,i))
 
-(defmacro ,(suffixed_name SETELT_U nb)(v i s)
-    `(setf (aref (the (simple-array (unsigned-byte ,',nb) (*)) ,v) ,i)
+(defmacro ,(suffixed_name SETELT_ nbn)(v i s)
+    `(setf (aref (the (simple-array (,',b_spec ,',nb) (*)) ,v) ,i)
            ,s))
+
 #+:sbcl
-(defun ,(suffixed_name GETREFV_U nb) (n x)
-    (let ((vec (sbcl_make_sized_vector ,nb n)))
-        (fill vec x)
-        vec))
+(let ((get-tag (find-symbol "%VECTOR-WIDETAG-AND-N-BITS" "SB-IMPL"))
+          (length-sym nil) (get-tag2 nil))
+        (if (null get-tag)
+            (progn
+                (setf get-tag2
+                    (find-symbol "%VECTOR-WIDETAG-AND-N-BITS-SHIFT"
+                                 "SB-IMPL"))
+                (setf length-sym (find-symbol "VECTOR-LENGTH-IN-WORDS"
+                                              "SB-IMPL"))))
+        (cond
+           ((and (null get-tag) (or (null get-tag2) (null length-sym)))
+            (defun ,(suffixed_name GETREFV_ nbn)(n x)
+               (make-array n :initial-element x
+                          :element-type '(,b_spec ,nb))))
+           (t
+             (defun ,(suffixed_name GETREFV_ nbn)(n x)
+                    (let ((vec (sbcl_make_sized_vector ,nb ,b_spec n)))
+                         (fill vec x)
+                         vec)))))
 
 #-:sbcl
-(defun ,(suffixed_name GETREFV_U nb)(n x)
+(defun ,(suffixed_name GETREFV_ nbn)(n x)
     (make-array n :initial-element x
-               :element-type '(unsigned-byte ,nb)))
+               :element-type '(,b_spec ,nb)))
 
-(defmacro ,(suffixed_name QV_LEN_U nb)(v)
-    `(length (the (simple-array (unsigned-byte ,',nb) (*)) ,v)))
+(defmacro ,(suffixed_name QV_LEN_ nbn)(v)
+    `(length (the (simple-array (,',b_spec ,',nb) (*)) ,v)))
 
-(defmacro ,(suffixed_name MAKE_MATRIX_U nb) (n m)
-   `(make-array (list ,n ,m) :element-type '(unsigned-byte ,',nb)))
+(defmacro ,(suffixed_name MAKE_MATRIX_ nbn) (n m)
+   `(make-array (list ,n ,m) :element-type '(,',b_spec ,',nb)))
 
-(defmacro ,(suffixed_name MAKE_MATRIX1_U nb) (n m s)
-   `(make-array (list ,n ,m) :element-type '(unsigned-byte ,',nb)
+(defmacro ,(suffixed_name MAKE_MATRIX1_ nbn) (n m s)
+   `(make-array (list ,n ,m) :element-type '(,',b_spec ,',nb)
            :initial-element ,s))
 
-(defmacro ,(suffixed_name AREF2_U nb) (v i j)
-   `(aref (the (simple-array (unsigned-byte ,',nb) (* *)) ,v) ,i ,j))
+(defmacro ,(suffixed_name AREF2_ nbn) (v i j)
+   `(aref (the (simple-array (,',b_spec ,',nb) (* *)) ,v) ,i ,j))
 
-(defmacro ,(suffixed_name SETAREF2_U nb) (v i j s)
-   `(setf (aref (the (simple-array (unsigned-byte ,',nb) (* *)) ,v) ,i ,j)
+(defmacro ,(suffixed_name SETAREF2_ nbn) (v i j s)
+   `(setf (aref (the (simple-array (,',b_spec ,',nb) (* *)) ,v) ,i ,j)
           ,s))
 
-(defmacro ,(suffixed_name ANROWS_U nb) (v)
-    `(array-dimension (the (simple-array (unsigned-byte ,',nb) (* *)) ,v) 0))
+(defmacro ,(suffixed_name ANROWS_ nbn) (v)
+    `(array-dimension (the (simple-array (,',b_spec ,',nb) (* *)) ,v) 0))
 
-(defmacro ,(suffixed_name ANCOLS_U nb) (v)
-    `(array-dimension (the (simple-array (unsigned-byte ,',nb) (* *)) ,v) 1))
+(defmacro ,(suffixed_name ANCOLS_ nbn) (v)
+    `(array-dimension (the (simple-array (,',b_spec ,',nb) (* *)) ,v) 1))
 
 ))
+
+(defmacro DEF_SIZED_UOPS(nb)
+   `(DEF_SIZED_OPS ,nb ,(suffixed_name U nb) unsigned-byte))
+
+(defmacro DEF_SIZED_IOPS(nb)
+   `(DEF_SIZED_OPS ,nb ,(suffixed_name I nb) signed-byte))
 
 (DEF_SIZED_UOPS 32)
 (DEF_SIZED_UOPS 16)
 (DEF_SIZED_UOPS 8)
 
+(DEF_SIZED_IOPS 32)
+(DEF_SIZED_IOPS 16)
+(DEF_SIZED_IOPS 8)
+
 ;;; Modular arithmetic
 
-(deftype machine-int () '(unsigned-byte 64))
+(deftype machine_int () '(unsigned-byte 64))
 
 ;;; (x*y + z) using 32-bit x and y and 64-bit z and assuming that
 ;;; intermediate results fits into 64 bits
-(defmacro QSMULADD64-32 (x y z)
-    `(the machine-int
-         (+ (the machine-int
+(defmacro QSMULADD64_32 (x y z)
+    `(the machine_int
+         (+ (the machine_int
                (* (the (unsigned-byte 32) ,x)
                   (the (unsigned-byte 32) ,y)))
-            (the machine-int ,z))))
+            (the machine_int ,z))))
 
-(defmacro QSMUL64-32 (x y)
-    `(the machine-int
+(defmacro QSMUL64_32 (x y)
+    `(the machine_int
          (* (the (unsigned-byte 32) ,x)
             (the (unsigned-byte 32) ,y))))
 
 
-(defmacro QSMOD64-32 (x p)
+(defmacro QSMOD64_32 (x p)
     `(the (unsigned-byte 32)
-         (rem (the machine-int ,x) (the (unsigned-byte 32) ,p))))
+         (rem (the machine_int ,x) (the (unsigned-byte 32) ,p))))
 
-(defmacro QSMULADDMOD64-32 (x y z p)
-    `(QSMOD64-32 (QSMULADD64-32 ,x ,y ,z) ,p))
+(defmacro QSMULADDMOD64_32 (x y z p)
+    `(QSMOD64_32 (QSMULADD64_32 ,x ,y ,z) ,p))
 
-(defmacro QSDOT2-64-32 (a1 b1 a2 b2)
-    `(QSMULADD64-32 ,a1 ,b1 (QSMUL64-32 ,a2 ,b2)))
+(defmacro QSDOT2_64_32 (a1 b1 a2 b2)
+    `(QSMULADD64_32 ,a1 ,b1 (QSMUL64_32 ,a2 ,b2)))
 
-(defmacro QSDOT2MOD64-32 (a1 b1 a2 b2 p)
-    `(QSMOD64-32 (QSDOT2-64-32 ,a1 ,b1 ,a2 ,b2) , p))
+(defmacro QSDOT2MOD64_32 (a1 b1 a2 b2 p)
+    `(QSMOD64_32 (QSDOT2_64_32 ,a1 ,b1 ,a2 ,b2) , p))
 
 (defmacro QSMULMOD32 (x y p)
-    `(QSMOD64-32 (QSMUL64-32 ,x ,y) ,p))
+    `(QSMOD64_32 (QSMUL64_32 ,x ,y) ,p))
 
 ;;; Modular scalar product
 
@@ -212,12 +257,12 @@
            (i2 ,ind2)
            (k0 ,kk)
            (k 0))
-          (declare (type machine-int s)
+          (declare (type machine_int s)
                    (type fixnum i1 i2 k k0))
           (prog ()
              l1
-              (if (>= k k0) (return (QSMOD64-32 s ,p)))
-              (setf s (QSMULADD64-32 (,eltfun v1 (|add_SI| i1 k))
+              (if (>= k k0) (return (QSMOD64_32 s ,p)))
+              (setf s (QSMULADD64_32 (,eltfun v1 (|add_SI| i1 k))
                                      (,eltfun v2 (|add_SI| i2 k))
                                      s))
               (setf k (|inc_SI| k))
@@ -268,7 +313,7 @@
 (progn
 (defmacro |less_DF| (x y) `(< (the double-float ,x)
                                              (the double-float ,y)))
-(defmacro |eql_DF| (x y) `(EQL (the double-float ,x)
+(defmacro |eql_DF| (x y) `(= (the double-float ,x)
                                              (the double-float ,y)))
 (defmacro |expt_DF_I| (x y) `(EXPT (the double-float ,x)
                                  (the integer ,y)))
@@ -386,10 +431,10 @@
 
 ;;; Double precision arrays and matrices
 
-(defmacro MAKE-DOUBLE-VECTOR (n)
+(defmacro MAKE_DOUBLE_VECTOR (n)
    `(make-array (list ,n) :element-type 'double-float))
 
-(defmacro MAKE-DOUBLE-VECTOR1 (n s)
+(defmacro MAKE_DOUBLE_VECTOR1 (n s)
    `(make-array (list ,n) :element-type 'double-float :initial-element ,s))
 
 (defmacro DELT(v i)
@@ -402,10 +447,10 @@
 (defmacro DLEN(v)
     `(length (the (simple-array double-float (*)) ,v)))
 
-(defmacro MAKE-DOUBLE-MATRIX (n m)
+(defmacro MAKE_DOUBLE_MATRIX (n m)
    `(make-array (list ,n ,m) :element-type 'double-float))
 
-(defmacro MAKE-DOUBLE-MATRIX1 (n m s)
+(defmacro MAKE_DOUBLE_MATRIX1 (n m s)
    `(make-array (list ,n ,m) :element-type 'double-float
            :initial-element ,s))
 
@@ -426,7 +471,7 @@
 ;;; complex number occupies two positions in the real
 ;;; array.
 
-(defmacro MAKE-CDOUBLE-VECTOR (n)
+(defmacro MAKE_CDOUBLE_VECTOR (n)
    `(make-array (list (* 2 ,n)) :element-type 'double-float))
 
 (defmacro CDELT(ov oi)
@@ -454,7 +499,7 @@
 (defmacro CDLEN(v)
     `(truncate (length (the (simple-array double-float (*)) ,v)) 2))
 
-(defmacro MAKE-CDOUBLE-MATRIX (n m)
+(defmacro MAKE_CDOUBLE_MATRIX (n m)
    `(make-array (list ,n (* 2 ,m)) :element-type 'double-float))
 
 (defmacro CDAREF2(ov oi oj)
@@ -493,19 +538,19 @@
          (array-dimension (the (simple-array double-float (* *)) ,v) 1) 2))
 
 
-(defstruct (SPAD-KERNEL
+(defstruct (SPAD_KERNEL
           (:print-function
                (lambda (p s k)
                    (format s "#S~S" (list
-                        'SPAD-KERNEL
-                         :OP (SPAD-KERNEL-OP p)
-                         :ARG (SPAD-KERNEL-ARG p)
-                         :NEST (SPAD-KERNEL-NEST p))))))
+                        'SPAD_KERNEL
+                         :OP (SPAD_KERNEL-OP p)
+                         :ARG (SPAD_KERNEL-ARG p)
+                         :NEST (SPAD_KERNEL-NEST p))))))
            OP ARG NEST (POSIT 0))
 
-(defmacro SET-SPAD-KERNEL-POSIT(s p) `(setf (SPAD-KERNEL-POSIT ,s) ,p))
+(defmacro SET_SPAD_KERNEL_POSIT(s p) `(setf (SPAD_KERNEL-POSIT ,s) ,p))
 
-(defun |makeSpadKernel|(o a n) (MAKE-SPAD-KERNEL :OP o :ARG a :NEST n))
+(defun |makeSpadKernel|(o a n) (MAKE-SPAD_KERNEL :OP o :ARG a :NEST n))
 
 ; Hashtable accessors
 
@@ -593,44 +638,71 @@
 (defmacro SETELT_BVEC (bv i x)  `(setf (sbit ,bv ,i) ,x))
 (defmacro |size_BVEC| (bv)  `(size ,bv))
 
+(defun |is_BVEC| (bv) (simple-bit-vector-p bv))
+
 ; macros needed for Spad:
 
-(defun TranslateTypeSymbol (ts typeOrValue)
-  (let ((typDecl (assoc (car (cdr ts))
+(defparameter |empty_u8_vector| (GETREFV_U8 0 0))
+(defparameter |empty_u32_vector| (GETREFV_U32 0 0))
+(defparameter |empty_double_float_vector| (MAKE_DOUBLE_VECTOR 0))
+(defparameter |empty_double_float_matrix| (MAKE_DOUBLE_MATRIX 0 0))
+
+(defparameter |spad_to_lisp_type_assoc|
+    (append
           '(((|Void|) (null nil))
             ((|SingleInteger|) (fixnum 0))
+            ((|Integer|) (integer 0))
+            ((|NonNegativeInteger|) ((integer 0 *) 0))
+            ((|PositiveInteger|) ((integer 1 *) 1))
             ((|String|) (string ""))
             ((|Boolean|) (BOOLEAN nil))
-            ((|DoubleFloat|) (DOUBLE-FLOAT 0.0d0)))
+            ((|DoubleFloat|) (DOUBLE-FLOAT 0.0d0))
+            ((|U64Int|) (machine_int 0)))
+        (list
+            (list '(|U8Vector|) (list '(simple-array (unsigned-byte 8) (*))
+                                       |empty_u8_vector|))
+            (list '(|U32Vector|) (list '(simple-array (unsigned-byte 32) (*))
+                                       |empty_u32_vector|))
+            (list '(|DoubleFloatVector|) (list '(simple-array DOUBLE-FLOAT (*))
+                                          |empty_double_float_vector|))
+            (list '(|DoubleFloatMatrix|) (list '(simple-array DOUBLE-FLOAT
+                                                              (* *))
+                                          |empty_double_float_matrix|))
+        )
+    )
+)
+
+(defun |TranslateTypeSymbol| (ts typeOrValue)
+  (let ((typDecl (assoc (car (cdr ts)) |spad_to_lisp_type_assoc|
             :test #'equal
             )))
   (if typDecl (setf typDecl (car (cdr typDecl)))
-              (return-from TranslateTypeSymbol (list (car ts))))
+              (return-from |TranslateTypeSymbol| (list (car ts))))
   (cons (car ts) (if typeOrValue (cdr typDecl) (car typDecl)))))
 
-(defun GetLispType (ts)
-  (TranslateTypeSymbol ts nil))
+(defun |GetLispType| (ts)
+  (|TranslateTypeSymbol| ts nil))
 
-(defun GetLispValue (ts)
-  (TranslateTypeSymbol ts 't))
+(defun |GetLispValue| (ts)
+  (|TranslateTypeSymbol| ts 't))
 
-(defun MakeDeclarations (typSyms)
-  (let* ((tranTypSyms (mapcar #'GetLispType typSyms))
+(defun |MakeDeclarations| (typSyms)
+  (let* ((tranTypSyms (mapcar #'|GetLispType| typSyms))
          (lispTypSyms (remove-if-not #'cdr tranTypSyms)))
     (mapcar #'(lambda (ts) `(declare (type ,(cdr ts) ,(car ts)))) lispTypSyms)))
 
-(defun MakeInitialValues (typSyms)
-  (let ((initVals (mapcar #'GetLispValue typSyms)))
+(defun |MakeInitialValues| (typSyms)
+  (let ((initVals (mapcar #'|GetLispValue| typSyms)))
     (mapcar #'(lambda (v) (if (endp (cdr v)) (car v) v)) initVals)))
 
 (defmacro SDEFUN (name args body)
   (let ((vars (mapcar #'car args))
-        (decls (MakeDeclarations (butlast args))))
+        (decls (|MakeDeclarations| (butlast args))))
         `(defun ,name ,vars ,@decls ,body)))
 
 (defmacro SPROG (vars &rest statements)
-  (let ((names (MakeInitialValues vars))
-        (decls (MakeDeclarations vars)))
+  (let ((names (|MakeInitialValues| vars))
+        (decls (|MakeDeclarations| vars)))
     `(block nil (let ,names ,@decls ,@statements))))
 
 (defmacro EXIT (&rest value) `(return-from SEQ ,@value))
@@ -693,9 +765,9 @@
 
 (defmacro |SPADfirst| (l)
   (let ((tem (gensym)))
-    `(let ((,tem ,l)) (if ,tem (car ,tem) (first-error)))))
+    `(let ((,tem ,l)) (if ,tem (car ,tem) (first_error)))))
 
-(defun first-error () (error "Cannot take first of an empty list"))
+(defun first_error () (error "Cannot take first of an empty list"))
 
 (defmacro |dispatchFunction| (name) `(FUNCTION ,name))
 
@@ -719,19 +791,8 @@
 
 (defmacro |assert| (x y) `(IF (NULL ,x) (|error| ,y)))
 
-(defun coerce-failure-msg (val mode)
-   (STRCONC (MAKE-REASONABLE (STRINGIMAGE val))
-            " cannot be coerced to mode "
-            (STRINGIMAGE (|devaluate| mode))))
-
-(defmacro |check_subtype| (pred submode val)
-   `(|assert| ,pred (coerce-failure-msg ,val ,submode)))
-
 (defmacro |check_subtype2| (pred submode mode val)
    `(|assert| ,pred (|coerce_failure_msg| ,val ,submode ,mode)))
-
-(defmacro |check_union| (pred branch val)
-   `(|assert| ,pred (coerce-failure-msg ,val ,branch )))
 
 (defmacro |check_union2| (pred branch umode val)
    `(|assert| ,pred (|check_union_failure_msg| ,val ,branch ,umode)))
@@ -753,3 +814,6 @@
 ;;;           available for a new entry
 (defvar HASHTABLEVACANT  (gensym))
 (defvar HASHTABLEDELETED (gensym))
+
+;;; Support for re-seeding the lisp random number generator.
+(defun SEEDRANDOM () (setf *random-state* (make-random-state t)))

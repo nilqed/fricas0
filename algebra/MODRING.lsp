@@ -1,122 +1,114 @@
 
 (PUT '|MODRING;modulus;$Mod;1| '|SPADreplace| 'QCDR) 
 
-(SDEFUN |MODRING;modulus;$Mod;1| ((|x| $) ($ |Mod|)) (QCDR |x|)) 
+(SDEFUN |MODRING;modulus;$Mod;1| ((|x| ($)) ($ (|Mod|))) (QCDR |x|)) 
 
 (PUT '|MODRING;coerce;$R;2| '|SPADreplace| 'QCAR) 
 
-(SDEFUN |MODRING;coerce;$R;2| ((|x| $) ($ R)) (QCAR |x|)) 
+(SDEFUN |MODRING;coerce;$R;2| ((|x| ($)) ($ (R))) (QCAR |x|)) 
 
-(SDEFUN |MODRING;coerce;I$;3| ((|i| |Integer|) ($ $))
+(SDEFUN |MODRING;coerce;I$;3| ((|i| (|Integer|)) ($ ($)))
         (CONS (SPADCALL |i| (QREFELT $ 15)) (|spadConstant| $ 18))) 
 
-(SDEFUN |MODRING;*;I2$;4| ((|i| |Integer|) (|x| $) ($ $))
+(SDEFUN |MODRING;*;I2$;4| ((|i| (|Integer|)) (|x| ($)) ($ ($)))
         (SPADCALL (SPADCALL |i| (QREFELT $ 19)) |x| (QREFELT $ 20))) 
 
-(SDEFUN |MODRING;coerce;$Of;5| ((|x| $) ($ |OutputForm|))
+(SDEFUN |MODRING;coerce;$Of;5| ((|x| ($)) ($ (|OutputForm|)))
         (SPADCALL (QCAR |x|) (QREFELT $ 23))) 
 
-(SDEFUN |MODRING;reduce;RMod$;6| ((|a| R) (|m| |Mod|) ($ $))
+(SDEFUN |MODRING;reduce;RMod$;6| ((|a| (R)) (|m| (|Mod|)) ($ ($)))
         (CONS (SPADCALL |a| |m| (QREFELT $ 8)) |m|)) 
 
-(SDEFUN |MODRING;characteristic;Nni;7| (($ |NonNegativeInteger|))
+(SDEFUN |MODRING;characteristic;Nni;7| (($ (|NonNegativeInteger|)))
         (SPADCALL (QREFELT $ 27))) 
 
-(SDEFUN |MODRING;Zero;$;8| (($ $))
+(SDEFUN |MODRING;Zero;$;8| (($ ($)))
         (CONS (|spadConstant| $ 17) (|spadConstant| $ 18))) 
 
-(SDEFUN |MODRING;One;$;9| (($ $))
+(SDEFUN |MODRING;One;$;9| (($ ($)))
         (CONS (|spadConstant| $ 29) (|spadConstant| $ 18))) 
 
-(SDEFUN |MODRING;zero?;$B;10| ((|x| $) ($ |Boolean|))
+(SDEFUN |MODRING;zero?;$B;10| ((|x| ($)) ($ (|Boolean|)))
         (SPADCALL (QCAR |x|) (QREFELT $ 32))) 
 
-(SDEFUN |MODRING;one?;$B;11| ((|x| $) ($ |Boolean|))
+(SDEFUN |MODRING;one?;$B;11| ((|x| ($)) ($ (|Boolean|)))
         (SPADCALL (QCAR |x|) (|spadConstant| $ 29) (QREFELT $ 34))) 
 
-(SDEFUN |MODRING;newmodulo| ((|m1| |Mod|) (|m2| |Mod|) ($ |Mod|))
+(SDEFUN |MODRING;newmodulo| ((|m1| (|Mod|)) (|m2| (|Mod|)) ($ (|Mod|)))
         (SPROG ((|r| (|Union| |Mod| "failed")))
-               (SEQ
-                (LETT |r| (SPADCALL |m1| |m2| (QREFELT $ 9))
-                      |MODRING;newmodulo|)
-                (EXIT
-                 (COND ((QEQCAR |r| 1) (|error| "incompatible moduli"))
-                       ('T (QCDR |r|))))))) 
+               (SEQ (LETT |r| (SPADCALL |m1| |m2| (QREFELT $ 9)))
+                    (EXIT
+                     (COND ((QEQCAR |r| 1) (|error| "incompatible moduli"))
+                           ('T (QCDR |r|))))))) 
 
-(SDEFUN |MODRING;=;2$B;13| ((|x| $) (|y| $) ($ |Boolean|))
+(SDEFUN |MODRING;=;2$B;13| ((|x| ($)) (|y| ($)) ($ (|Boolean|)))
         (COND ((SPADCALL (QCAR |x|) (QCAR |y|) (QREFELT $ 34)) 'T)
               ((SPADCALL (QCDR |x|) (QCDR |y|) (QREFELT $ 36)) NIL)
               ('T
                (SPADCALL (QCAR (SPADCALL |x| |y| (QREFELT $ 37)))
                          (|spadConstant| $ 17) (QREFELT $ 34))))) 
 
-(SDEFUN |MODRING;+;3$;14| ((|x| $) (|y| $) ($ $))
+(SDEFUN |MODRING;+;3$;14| ((|x| ($)) (|y| ($)) ($ ($)))
         (SPADCALL (SPADCALL (QCAR |x|) (QCAR |y|) (QREFELT $ 39))
                   (|MODRING;newmodulo| (QCDR |x|) (QCDR |y|) $) (QREFELT $ 25))) 
 
-(SDEFUN |MODRING;-;3$;15| ((|x| $) (|y| $) ($ $))
+(SDEFUN |MODRING;-;3$;15| ((|x| ($)) (|y| ($)) ($ ($)))
         (SPADCALL (SPADCALL (QCAR |x|) (QCAR |y|) (QREFELT $ 41))
                   (|MODRING;newmodulo| (QCDR |x|) (QCDR |y|) $) (QREFELT $ 25))) 
 
-(SDEFUN |MODRING;-;2$;16| ((|x| $) ($ $))
+(SDEFUN |MODRING;-;2$;16| ((|x| ($)) ($ ($)))
         (SPADCALL (SPADCALL (QCAR |x|) (QREFELT $ 42)) (QCDR |x|)
                   (QREFELT $ 25))) 
 
-(SDEFUN |MODRING;*;3$;17| ((|x| $) (|y| $) ($ $))
+(SDEFUN |MODRING;*;3$;17| ((|x| ($)) (|y| ($)) ($ ($)))
         (SPADCALL (SPADCALL (QCAR |x|) (QCAR |y|) (QREFELT $ 44))
                   (|MODRING;newmodulo| (QCDR |x|) (QCDR |y|) $) (QREFELT $ 25))) 
 
-(SDEFUN |MODRING;exQuo;2$U;18| ((|x| $) (|y| $) ($ |Union| $ "failed"))
+(SDEFUN |MODRING;exQuo;2$U;18| ((|x| ($)) (|y| ($)) ($ (|Union| $ "failed")))
         (SPROG ((|r| (|Union| R "failed")) (|xm| (|Mod|)))
-               (SEQ (LETT |xm| (QCDR |x|) . #1=(|MODRING;exQuo;2$U;18|))
+               (SEQ (LETT |xm| (QCDR |x|))
                     (COND
                      ((SPADCALL |xm| (QCDR |y|) (QREFELT $ 45))
-                      (LETT |xm| (|MODRING;newmodulo| |xm| (QCDR |y|) $)
-                            . #1#)))
+                      (LETT |xm| (|MODRING;newmodulo| |xm| (QCDR |y|) $))))
                     (LETT |r|
-                          (SPADCALL (QCAR |x|) (QCAR |y|) |xm| (QREFELT $ 10))
-                          . #1#)
+                          (SPADCALL (QCAR |x|) (QCAR |y|) |xm| (QREFELT $ 10)))
                     (EXIT
                      (COND ((QEQCAR |r| 1) (CONS 1 "failed"))
                            ('T (CONS 0 (CONS (QCDR |r|) |xm|)))))))) 
 
-(SDEFUN |MODRING;recip;$U;19| ((|x| $) ($ |Union| $ "failed"))
+(SDEFUN |MODRING;recip;$U;19| ((|x| ($)) ($ (|Union| $ "failed")))
         (SPROG ((|r| (|Union| R "failed")))
                (SEQ
                 (LETT |r|
                       (SPADCALL (|spadConstant| $ 29) (QCAR |x|) (QCDR |x|)
-                                (QREFELT $ 10))
-                      |MODRING;recip;$U;19|)
+                                (QREFELT $ 10)))
                 (EXIT
                  (COND ((QEQCAR |r| 1) (CONS 1 "failed"))
                        ('T (CONS 0 (CONS (QCDR |r|) (QCDR |x|))))))))) 
 
-(SDEFUN |MODRING;inv;2$;20| ((|x| $) ($ $))
+(SDEFUN |MODRING;inv;2$;20| ((|x| ($)) ($ ($)))
         (SPROG ((|u| (|Union| $ "failed")))
-               (SEQ
-                (LETT |u| (SPADCALL |x| (QREFELT $ 48)) |MODRING;inv;2$;20|)
-                (EXIT
-                 (COND ((QEQCAR |u| 1) (|error| "not invertible"))
-                       ('T (QCDR |u|))))))) 
+               (SEQ (LETT |u| (SPADCALL |x| (QREFELT $ 48)))
+                    (EXIT
+                     (COND ((QEQCAR |u| 1) (|error| "not invertible"))
+                           ('T (QCDR |u|))))))) 
 
 (DECLAIM (NOTINLINE |ModularRing;|)) 
 
-(DEFUN |ModularRing| (&REST #1=#:G754)
+(DEFUN |ModularRing| (&REST #1=#:G753)
   (SPROG NIL
-         (PROG (#2=#:G755)
+         (PROG (#2=#:G754)
            (RETURN
             (COND
              ((LETT #2#
-                    (|lassocShiftWithFunction| (|devaluateList| #1#)
-                                               (HGET |$ConstructorCache|
-                                                     '|ModularRing|)
-                                               '|domainEqualList|)
-                    . #3=(|ModularRing|))
+                    (|lassocShiftWithFunction|
+                     (|devaluate_sig| #1# '(T T NIL NIL NIL))
+                     (HGET |$ConstructorCache| '|ModularRing|)
+                     '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (APPLY (|function| |ModularRing;|) #1#)
-                    (LETT #2# T . #3#))
+                  (PROG1 (APPLY (|function| |ModularRing;|) #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|ModularRing|)))))))))) 
 
@@ -125,15 +117,15 @@
    ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$5 NIL) (DV$4 NIL) (DV$3 NIL) (DV$2 NIL)
     (DV$1 NIL))
    (PROGN
-    (LETT DV$1 (|devaluate| |#1|) . #1=(|ModularRing|))
-    (LETT DV$2 (|devaluate| |#2|) . #1#)
-    (LETT DV$3 (|devaluate| |#3|) . #1#)
-    (LETT DV$4 (|devaluate| |#4|) . #1#)
-    (LETT DV$5 (|devaluate| |#5|) . #1#)
-    (LETT |dv$| (LIST '|ModularRing| DV$1 DV$2 DV$3 DV$4 DV$5) . #1#)
-    (LETT $ (GETREFV 54) . #1#)
+    (LETT DV$1 (|devaluate| |#1|))
+    (LETT DV$2 (|devaluate| |#2|))
+    (LETT DV$3 |#3|)
+    (LETT DV$4 |#4|)
+    (LETT DV$5 |#5|)
+    (LETT |dv$| (LIST '|ModularRing| DV$1 DV$2 DV$3 DV$4 DV$5))
+    (LETT $ (GETREFV 54))
     (QSETREFV $ 0 |dv$|)
-    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+    (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
     (|haddProp| |$ConstructorCache| '|ModularRing|
                 (LIST DV$1 DV$2 DV$3 DV$4 DV$5) (CONS 1 $))
     (|stuffDomainSlots| $)

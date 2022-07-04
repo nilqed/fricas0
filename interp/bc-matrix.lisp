@@ -1,12 +1,12 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; bcMatrix() ==  bcReadMatrix nil
- 
-(DEFUN |bcMatrix| #1=() (PROG #1# (RETURN (|bcReadMatrix| NIL))))
- 
+
+(DEFUN |bcMatrix| () (PROG () (RETURN (|bcReadMatrix| NIL))))
+
 ; bcReadMatrix exitFunctionOrNil ==
 ;   page := htInitPage('"Matrix Basic Command", nil)
 ;   htpSetProperty(page,'exitFunction,exitFunctionOrNil)
@@ -26,7 +26,7 @@
 ;     (bcLinks ("\menuitemstyle{By formula}" "" bcInputMatrixByFormula formula))
 ;     (text . "\endmenu"))
 ;   htShowPage()
- 
+
 (DEFUN |bcReadMatrix| (|exitFunctionOrNil|)
   (PROG (|page|)
     (RETURN
@@ -50,7 +50,7 @@
            |formula|))
          (|text| . "\\endmenu")))
       (|htShowPage|)))))
- 
+
 ; bcInputMatrixByFormula(htPage,junk) ==
 ;   page := htInitPage('"Basic Matrix Command", htpPropertyList htPage)
 ;   htMakePage '(
@@ -83,7 +83,7 @@
 ;   htpSetProperty(page, 'nrows, nrows)
 ;   htpSetProperty(page, 'ncols, ncols)
 ;   htShowPage()
- 
+
 (DEFUN |bcInputMatrixByFormula| (|htPage| |junk|)
   (PROG (|page| |nrows| |ncols|)
     (RETURN
@@ -119,7 +119,7 @@
       (|htpSetProperty| |page| '|nrows| |nrows|)
       (|htpSetProperty| |page| '|ncols| |ncols|)
       (|htShowPage|)))))
- 
+
 ; bcInputMatrixByFormulaGen htPage ==
 ;   fun :=  htpProperty(htPage,'exitFunction) => FUNCALL(fun, htPage)
 ;   formula := htpLabelInputString(htPage,'formula)
@@ -129,7 +129,7 @@
 ;   ncols := htpProperty(htPage,'ncols)
 ;   bcGen STRCONC('"matrix([[",formula,'" for ",colVar,'" in 1..",
 ;     STRINGIMAGE ncols,'"] for ",rowVar,'" in 1..",STRINGIMAGE nrows,'"])")
- 
+
 (DEFUN |bcInputMatrixByFormulaGen| (|htPage|)
   (PROG (|fun| |formula| |rowVar| |colVar| |nrows| |ncols|)
     (RETURN
@@ -147,7 +147,7 @@
          (STRCONC "matrix([[" |formula| " for " |colVar| " in 1.."
           (STRINGIMAGE |ncols|) "] for " |rowVar| " in 1.."
           (STRINGIMAGE |nrows|) "])"))))))))
- 
+
 ; bcInputExplicitMatrix(htPage,junk) ==
 ;   nrows :=
 ;     null $bcParseOnly => objValUnwrap htpLabelSpadValue(htPage,'rows)
@@ -177,7 +177,7 @@
 ;   htpSetProperty(page,'nrows,nrows)
 ;   htpSetProperty(page,'ncols,ncols)
 ;   htShowPage()
- 
+
 (DEFUN |bcInputExplicitMatrix| (|htPage| |junk|)
   (PROG (|nrows| |ncols| |cond| |k| |wrows| |wcols| |rowpart| |colpart|
          |prefix| |name| |labelList| |page|)
@@ -258,12 +258,12 @@
       (|htpSetProperty| |page| '|nrows| |nrows|)
       (|htpSetProperty| |page| '|ncols| |ncols|)
       (|htShowPage|)))))
- 
+
 ; bcGenExplicitMatrix htPage ==
 ;   htpSetProperty(htPage,'matrix,htpInputAreaAlist htPage)
 ;   fun :=  htpProperty(htPage,'exitFunction) => FUNCALL(fun, htPage)
 ;   bcGen bcMatrixGen htPage
- 
+
 (DEFUN |bcGenExplicitMatrix| (|htPage|)
   (PROG (|fun|)
     (RETURN
@@ -273,7 +273,7 @@
        ((SETQ |fun| (|htpProperty| |htPage| '|exitFunction|))
         (FUNCALL |fun| |htPage|))
        ('T (|bcGen| (|bcMatrixGen| |htPage|))))))))
- 
+
 ; bcMatrixGen htPage ==
 ;   nrows := htpProperty(htPage,'nrows)
 ;   ncols := htpProperty(htPage,'ncols)
@@ -292,7 +292,7 @@
 ;     matstring := bcwords2liststring [bcwords2liststring x for x in matform]
 ;     STRCONC('"matrix(",matstring,'")")
 ;   systemError nil
- 
+
 (DEFUN |bcMatrixGen| (|htPage|)
   (PROG (|nrows| |ncols| |mat| |formula| |rowVar| |colVar| |k| |matform|
          |matstring|)

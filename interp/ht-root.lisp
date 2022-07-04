@@ -1,68 +1,35 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; $historyDisplayWidth := 120
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$historyDisplayWidth| 120))
- 
+
 ; $newline := char 10
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$newline| (|char| 10)))
- 
+
 ; downlink page ==
-;   $saturn => downlinkSaturn page
 ;   htInitPage('"Bridge",nil)
-;   htSay('"\replacepage{", page, '"}")
+;   htSayList(['"\replacepage{", page, '"}"])
 ;   htShowPage()
- 
+
 (DEFUN |downlink| (|page|)
   (PROG ()
     (RETURN
-     (COND (|$saturn| (|downlinkSaturn| |page|))
-           ('T
-            (PROGN
-             (|htInitPage| "Bridge" NIL)
-             (|htSay| "\\replacepage{" |page| "}")
-             (|htShowPage|)))))))
- 
-; downlinkSaturn fn ==
-;   u := dbReadLines(fn)
-;   lines := '""
-;   while u is [line,:u] repeat
-;     n := MAXINDEX line
-;     n < 1 => nil
-;     line.0 = (char '_%) => nil
-;     lines := STRCONC(lines,line)
-;   issueHTSaturn lines
- 
-(DEFUN |downlinkSaturn| (|fn|)
-  (PROG (|u| |lines| |line| |n|)
-    (RETURN
      (PROGN
-      (SETQ |u| (|dbReadLines| |fn|))
-      (SETQ |lines| "")
-      ((LAMBDA ()
-         (LOOP
-          (COND
-           ((NOT
-             (AND (CONSP |u|)
-                  (PROGN (SETQ |line| (CAR |u|)) (SETQ |u| (CDR |u|)) #1='T)))
-            (RETURN NIL))
-           (#1#
-            (PROGN
-             (SETQ |n| (MAXINDEX |line|))
-             (COND ((< |n| 1) NIL) ((EQUAL (ELT |line| 0) (|char| '%)) NIL)
-                   (#1# (SETQ |lines| (STRCONC |lines| |line|))))))))))
-      (|issueHTSaturn| |lines|)))))
- 
+      (|htInitPage| "Bridge" NIL)
+      (|htSayList| (LIST "\\replacepage{" |page| "}"))
+      (|htShowPage|)))))
+
 ; dbNonEmptyPattern pattern ==
 ;   null pattern => '"*"
 ;   pattern := STRINGIMAGE pattern
 ;   #pattern > 0 => pattern
 ;   '"*"
- 
+
 (DEFUN |dbNonEmptyPattern| (|pattern|)
   (PROG ()
     (RETURN
@@ -71,7 +38,7 @@
             (PROGN
              (SETQ |pattern| (STRINGIMAGE |pattern|))
              (COND ((< 0 (LENGTH |pattern|)) |pattern|) (#1# "*"))))))))
- 
+
 ; htSystemVariables() == main where
 ;   main ==
 ;     not $fullScreenSysVars => htSetVars()
@@ -86,9 +53,9 @@
 ;     for [heading,name,message,.,key,variable,options,func] in table repeat
 ;       htSay('"\newline\item ")
 ;       if heading = lastHeading then htSay '"\tab{8}" else
-;         htSay(heading,'"\tab{8}")
+;         htSayList([heading, '"\tab{8}"])
 ;         lastHeading := heading
-;       htSay('"{\em ",name,"}\tab{22}",message)
+;       htSayList(['"{\em ", name, "}\tab{22}", message])
 ;       htSay('"\tab{80}")
 ;       key = 'FUNCTION =>
 ;          null options => htMakePage [['bcLinks,['"reset",'"",func,nil]]]
@@ -97,7 +64,7 @@
 ;          for option in rest options repeat
 ;            option is ['break,:.] => 'skip
 ;            [msg,class,var,valuesOrFunction,:.] := option
-;            htSay('"\newline\tab{22}", msg,'"\tab{80}")
+;            htSayList(['"\newline\tab{22}", msg,'"\tab{80}"])
 ;            functionTail(name,class,var,valuesOrFunction)
 ;       val := eval variable
 ;       displayOptions(name,key,variable,val,options)
@@ -116,10 +83,10 @@
 ;       htMakePage '((domainConditions (isDomain INT (Integer))))
 ;       htMakePage  [['bcStrings,[5,STRINGIMAGE val,name,'INT]]]
 ;     class = 'STRING =>
-;       htSay('"{\em ",val,'"}\space{1}")
+;       htSayList ['"{\em ", val, '"}\space{1}"]
 ;     for x in options repeat
 ;       val = x or val = true and x = 'on or null val and x = 'off =>
-;         htSay('"{\em ",x,'"}\space{1}")
+;         htSayList ['"{\em ", x, '"}\space{1}"]
 ;       htMakePage [['bcLispLinks,[x,'" ",'htSetSystemVariable,[variable,x]]]]
 ;   fn(t,al,firstTime) ==
 ;     atom t => al
@@ -132,8 +99,8 @@
 ;     key = 'TREE => fn(options,al,false)
 ;     key = 'FUNCTION => [[$heading,:t],:al]
 ;     systemError key
- 
-(DEFUN |htSystemVariables| #1=()
+
+(DEFUN |htSystemVariables| ()
   (PROG (|$heading| |$levels| |classlevel| |table| |lastHeading| |heading|
          |ISTMP#1| |name| |ISTMP#2| |message| |ISTMP#3| |ISTMP#4| |key|
          |ISTMP#5| |variable| |ISTMP#6| |options| |ISTMP#7| |func| |LETTMP#1|
@@ -141,15 +108,15 @@
     (DECLARE (SPECIAL |$heading| |$levels|))
     (RETURN
      (COND ((NULL |$fullScreenSysVars|) (|htSetVars|))
-           (#2='T
+           (#1='T
             (PROGN
              (SETQ |classlevel| |$UserLevel|)
              (SETQ |$levels| '(|compiler| |development| |interpreter|))
              (SETQ |$heading| NIL)
-             ((LAMBDA #1#
+             ((LAMBDA ()
                 (LOOP
                  (COND ((EQUAL |classlevel| (CAR |$levels|)) (RETURN NIL))
-                       (#2# (SETQ |$levels| (CDR |$levels|)))))))
+                       (#1# (SETQ |$levels| (CDR |$levels|)))))))
              (SETQ |table|
                      (NREVERSE (|htSystemVariables,fn| |$setOptions| NIL T)))
              (|htInitPage| "System Variables" NIL)
@@ -161,7 +128,7 @@
                   ((OR (ATOM |bfVar#2|)
                        (PROGN (SETQ |bfVar#1| (CAR |bfVar#2|)) NIL))
                    (RETURN NIL))
-                  (#2#
+                  (#1#
                    (AND (CONSP |bfVar#1|)
                         (PROGN
                          (SETQ |heading| (CAR |bfVar#1|))
@@ -205,15 +172,16 @@
                                                                (SETQ |func|
                                                                        (CAR
                                                                         |ISTMP#7|))
-                                                               #2#)))))))))))))))
+                                                               #1#)))))))))))))))
                         (PROGN
                          (|htSay| "\\newline\\item ")
                          (COND
                           ((EQUAL |heading| |lastHeading|)
                            (|htSay| "\\tab{8}"))
-                          (#2# (|htSay| |heading| "\\tab{8}")
+                          (#1# (|htSayList| (LIST |heading| "\\tab{8}"))
                            (SETQ |lastHeading| |heading|)))
-                         (|htSay| "{\\em " |name| '|}\\tab{22}| |message|)
+                         (|htSayList|
+                          (LIST "{\\em " |name| '|}\\tab{22}| |message|))
                          (|htSay| "\\tab{80}")
                          (COND
                           ((EQ |key| 'FUNCTION)
@@ -223,7 +191,7 @@
                               (LIST
                                (LIST '|bcLinks|
                                      (LIST "reset" "" |func| NIL)))))
-                            (#2#
+                            (#1#
                              (PROGN
                               (SETQ |LETTMP#1| (CAR |options|))
                               (SETQ |msg| (CAR |LETTMP#1|))
@@ -240,25 +208,26 @@
                                          (SETQ |option| (CAR |bfVar#3|))
                                          NIL))
                                     (RETURN NIL))
-                                   (#2#
+                                   (#1#
                                     (COND
                                      ((AND (CONSP |option|)
                                            (EQ (CAR |option|) '|break|))
                                       '|skip|)
-                                     (#2#
+                                     (#1#
                                       (PROGN
                                        (SETQ |msg| (CAR |option|))
                                        (SETQ |class| (CADR |option|))
                                        (SETQ |var| (CADDR |option|))
                                        (SETQ |valuesOrFunction|
                                                (CADDDR |option|))
-                                       (|htSay| "\\newline\\tab{22}" |msg|
-                                        "\\tab{80}")
+                                       (|htSayList|
+                                        (LIST "\\newline\\tab{22}" |msg|
+                                              "\\tab{80}"))
                                        (|htSystemVariables,functionTail| |name|
                                         |class| |var| |valuesOrFunction|))))))
                                   (SETQ |bfVar#3| (CDR |bfVar#3|))))
                                (CDR |options|) NIL)))))
-                          (#2#
+                          (#1#
                            (PROGN
                             (SETQ |val| (|eval| |variable|))
                             (|htSystemVariables,displayOptions| |name| |key|
@@ -308,7 +277,7 @@
         (|htMakePage| '((|domainConditions| (|isDomain| INT (|Integer|)))))
         (|htMakePage|
          (LIST (LIST '|bcStrings| (LIST 5 (STRINGIMAGE |val|) |name| 'INT))))))
-      ((EQ |class| 'STRING) (|htSay| "{\\em " |val| "}\\space{1}"))
+      ((EQ |class| 'STRING) (|htSayList| (LIST "{\\em " |val| "}\\space{1}")))
       (#1='T
        ((LAMBDA (|bfVar#4| |x|)
           (LOOP
@@ -319,7 +288,7 @@
              (COND
               ((OR (EQUAL |val| |x|) (AND (EQUAL |val| T) (EQ |x| '|on|))
                    (AND (NULL |val|) (EQ |x| '|off|)))
-               (|htSay| "{\\em " |x| "}\\space{1}"))
+               (|htSayList| (LIST "{\\em " |x| "}\\space{1}")))
               (#1#
                (|htMakePage|
                 (LIST
@@ -350,14 +319,14 @@
             ((EQ |key| 'TREE) (|htSystemVariables,fn| |options| |al| NIL))
             ((EQ |key| 'FUNCTION) (CONS (CONS |$heading| |t|) |al|))
             ('T (|systemError| |key|)))))))
- 
+
 ; htSetSystemVariableKind(htPage,[variable,name,fun]) ==
 ;   value := htpLabelInputString(htPage,name)
 ;   if STRINGP value and fun then value := FUNCALL(fun,value)
 ; --SCM::what to do???  if not FIXP value then userError ???
 ;   SET(variable,value)
 ;   htSystemVariables ()
- 
+
 (DEFUN |htSetSystemVariableKind| (|htPage| |bfVar#5|)
   (PROG (|variable| |name| |fun| |value|)
     (RETURN
@@ -370,7 +339,7 @@
        ((AND (STRINGP |value|) |fun|) (SETQ |value| (FUNCALL |fun| |value|))))
       (SET |variable| |value|)
       (|htSystemVariables|)))))
- 
+
 ; htSetSystemVariable(htPage,[name,value]) ==
 ;   value :=
 ;     value = 'on => true
@@ -378,7 +347,7 @@
 ;     value
 ;   SET(name,value)
 ;   htSystemVariables ()
- 
+
 (DEFUN |htSetSystemVariable| (|htPage| |bfVar#6|)
   (PROG (|name| |value|)
     (RETURN
@@ -390,13 +359,13 @@
                     ('T |value|)))
       (SET |name| |value|)
       (|htSystemVariables|)))))
- 
+
 ; htGloss(pattern) == htGlossPage(nil,dbNonEmptyPattern pattern or '"*",true)
- 
+
 (DEFUN |htGloss| (|pattern|)
   (PROG ()
     (RETURN (|htGlossPage| NIL (OR (|dbNonEmptyPattern| |pattern|) "*") T))))
- 
+
 ; htGlossPage(htPage,pattern,tryAgain?) ==
 ;   $wildCard: local := char '_*
 ;   pattern = '"*" => downlink 'GlossaryPage
@@ -404,13 +373,9 @@
 ;   grepForm := mkGrepPattern(filter,'none)
 ;   $key: local := 'none
 ;   results := applyGrep(grepForm,'gloss)
-;   --pathname := STRCONC('"/tmp/",PNAME resultFile,'".text.", getEnv '"SPADNUM")
-;   --instream := MAKE_-INSTREAM pathname
-;   defstream := MAKE_-INSTREAM STRCONC(getEnv '"AXIOM",'"/algebra/glossdef.text")
+;   defstream := MAKE_INSTREAM(STRCONC(getEnv '"FRICAS",
+;                                      '"/algebra/glossdef.text"))
 ;   lines := gatherGlossLines(results,defstream)
-;   -- OBEY STRCONC('"rm -f ", pathname)
-;   --PROBE_-FILE(pathname) and DELETE_-FILE(pathname)
-;   --SHUT instream
 ;   heading :=
 ;     pattern = '"" => '"Glossary"
 ;     null lines => ['"No glossary items match {\em ",pattern,'"}"]
@@ -427,14 +392,16 @@
 ;   htSay('"\beginscroll\beginmenu")
 ;   for line in lines repeat
 ;     tick := charPosition($tick,line,1)
-;     htSay('"\item{\em \menuitemstyle{}}\tab{0}{\em ",escapeString SUBSTRING(line,0,tick),'"} ",SUBSTRING(line,tick + 1,nil))
+;     htSayList(['"\item{\em \menuitemstyle{}}\tab{0}{\em ",
+;                escapeString SUBSTRING(line,0,tick),'"} ",
+;                SUBSTRING(line,tick + 1,nil)])
 ;   htSay '"\endmenu "
 ;   htSay '"\endscroll\newline "
 ;   htMakePage [['bcLinks,['"Search",'"",'htGlossSearch,nil]]]
 ;   htSay '" for glossary entry matching "
 ;   htMakePage [['bcStrings, [24,'"*",'filter,'EM]]]
 ;   htShowPageNoScroll()
- 
+
 (DEFUN |htGlossPage| (|htPage| |pattern| |tryAgain?|)
   (PROG (|$key| |$wildCard| |tick| |k| |heading| |lines| |defstream| |results|
          |grepForm| |filter|)
@@ -450,8 +417,8 @@
               (SETQ |$key| '|none|)
               (SETQ |results| (|applyGrep| |grepForm| '|gloss|))
               (SETQ |defstream|
-                      (MAKE-INSTREAM
-                       (STRCONC (|getEnv| "AXIOM") "/algebra/glossdef.text")))
+                      (MAKE_INSTREAM
+                       (STRCONC (|getEnv| "FRICAS") "/algebra/glossdef.text")))
               (SETQ |lines| (|gatherGlossLines| |results| |defstream|))
               (SETQ |heading|
                       (COND ((EQUAL |pattern| "") "Glossary")
@@ -494,9 +461,10 @@
                       (#1#
                        (PROGN
                         (SETQ |tick| (|charPosition| |$tick| |line| 1))
-                        (|htSay| "\\item{\\em \\menuitemstyle{}}\\tab{0}{\\em "
-                         (|escapeString| (SUBSTRING |line| 0 |tick|)) "} "
-                         (SUBSTRING |line| (+ |tick| 1) NIL)))))
+                        (|htSayList|
+                         (LIST "\\item{\\em \\menuitemstyle{}}\\tab{0}{\\em "
+                               (|escapeString| (SUBSTRING |line| 0 |tick|))
+                               "} " (SUBSTRING |line| (+ |tick| 1) NIL))))))
                      (SETQ |bfVar#7| (CDR |bfVar#7|))))
                   |lines| NIL)
                  (|htSay| "\\endmenu ")
@@ -508,11 +476,10 @@
                  (|htMakePage|
                   (LIST (LIST '|bcStrings| (LIST 24 "*" '|filter| 'EM))))
                  (|htShowPageNoScroll|)))))))))))
- 
+
 ; gatherGlossLines(results,defstream) ==
 ;   acc := nil
 ;   for keyline in results repeat
-;     --keyline := read_line instream
 ;     n := charPosition($tick,keyline,0)
 ;     keyAndTick := SUBSTRING(keyline,0,n + 1)
 ;     byteAddress := string2Integer SUBSTRING(keyline,n + 1,nil)
@@ -528,7 +495,7 @@
 ;           xtralines := [SUBSTRING(x,j + 1,nil),:xtralines]
 ;     acc := [STRCONC(keyAndTick,def, "STRCONC"/NREVERSE xtralines),:acc]
 ;   REVERSE acc
- 
+
 (DEFUN |gatherGlossLines| (|results| |defstream|)
   (PROG (|acc| |n| |keyAndTick| |byteAddress| |line| |k| |pointer| |def|
          |xtralines| |x| |j| |nextPointer|)
@@ -585,12 +552,12 @@
           (SETQ |bfVar#8| (CDR |bfVar#8|))))
        |results| NIL)
       (REVERSE |acc|)))))
- 
+
 ; htGlossSearch(htPage,junk) ==  htGloss htpLabelInputString(htPage,'filter)
- 
+
 (DEFUN |htGlossSearch| (|htPage| |junk|)
   (PROG () (RETURN (|htGloss| (|htpLabelInputString| |htPage| '|filter|)))))
- 
+
 ; htGreekSearch(filter) ==
 ;   ss := dbNonEmptyPattern filter
 ;   s := pmTransFilter ss
@@ -613,17 +580,19 @@
 ;     htShowPage()
 ;   htInitPage(['"Greek letters matching search string {\em ",ss,'"}"],nil)
 ;   if nonmatches
-;     then htSay('"The greek letters that {\em match} your search string {\em ",ss,'"}:")
+;     then htSayList([
+;        '"The greek letters that {\em match} your search string {\em ",
+;        ss, '"}:"])
 ;     else htSay('"Your search string {\em ",ss,"} matches all of the greek letters:")
 ;   htSay('"{\em \table{")
-;   for x in matches repeat htSay('"{",x,'"}")
+;   for x in matches repeat htSayList(['"{", x, '"}"])
 ;   htSay('"}}\vspace{1}")
 ;   if nonmatches then
 ;     htSay('"The greek letters that {\em do not match} your search string:{\em \table{")
-;     for x in nonmatches repeat htSay('"{",x,'"}")
+;     for x in nonmatches repeat htSayList(['"{", x, '"}"])
 ;     htSay('"}}")
 ;   htShowPage()
- 
+
 (DEFUN |htGreekSearch| (|filter|)
   (PROG (|ss| |s| |names| |matches| |nonmatches|)
     (RETURN
@@ -676,9 +645,10 @@
                   NIL)
                  (COND
                   (|nonmatches|
-                   (|htSay|
-                    "The greek letters that {\\em match} your search string {\\em "
-                    |ss| "}:"))
+                   (|htSayList|
+                    (LIST
+                     "The greek letters that {\\em match} your search string {\\em "
+                     |ss| "}:")))
                   (#1#
                    (|htSay| "Your search string {\\em " |ss|
                     '|} matches all of the greek letters:|)))
@@ -689,7 +659,7 @@
                       ((OR (ATOM |bfVar#13|)
                            (PROGN (SETQ |x| (CAR |bfVar#13|)) NIL))
                        (RETURN NIL))
-                      (#1# (|htSay| "{" |x| "}")))
+                      (#1# (|htSayList| (LIST "{" |x| "}"))))
                      (SETQ |bfVar#13| (CDR |bfVar#13|))))
                   |matches| NIL)
                  (|htSay| "}}\\vspace{1}")
@@ -703,12 +673,12 @@
                         ((OR (ATOM |bfVar#14|)
                              (PROGN (SETQ |x| (CAR |bfVar#14|)) NIL))
                          (RETURN NIL))
-                        (#1# (|htSay| "{" |x| "}")))
+                        (#1# (|htSayList| (LIST "{" |x| "}"))))
                        (SETQ |bfVar#14| (CDR |bfVar#14|))))
                     |nonmatches| NIL)
                    (|htSay| "}}")))
                  (|htShowPage|)))))))))))
- 
+
 ; htTextSearch(filter) ==
 ;   s := pmTransFilter dbNonEmptyPattern filter
 ;   s is ['error,:.] => bcErrorPage s
@@ -731,17 +701,19 @@
 ;     htShowPage()
 ;   htInitPage(['"Lines matching search string {\em ",s,'"}"],nil)
 ;   if nonmatches
-;     then htSay('"The lines that {\em match} your search string {\em ",s,'"}:")
+;     then htSayList([
+;            '"The lines that {\em match} your search string {\em ",
+;            s, '"}:"])
 ;     else htSay('"Your search string {\em ",s,"} matches both lines:")
 ;   htSay('"{\em \table{")
-;   for x in matches repeat htSay('"{",x,'"}")
+;   for x in matches repeat htSayList(['"{", x, '"}"])
 ;   htSay('"}}\vspace{1}")
 ;   if nonmatches then
 ;     htSay('"The line that {\em does not match} your search string:{\em \table{")
-;     for x in nonmatches repeat htSay('"{",x,'"}")
+;     for x in nonmatches repeat htSayList(['"{", x, '"}"])
 ;     htSay('"}}")
 ;   htShowPage()
- 
+
 (DEFUN |htTextSearch| (|filter|)
   (PROG (|s| |lines| |matches| |nonmatches|)
     (RETURN
@@ -792,9 +764,10 @@
                   (LIST "Lines matching search string {\\em " |s| "}") NIL)
                  (COND
                   (|nonmatches|
-                   (|htSay|
-                    "The lines that {\\em match} your search string {\\em " |s|
-                    "}:"))
+                   (|htSayList|
+                    (LIST
+                     "The lines that {\\em match} your search string {\\em "
+                     |s| "}:")))
                   (#1#
                    (|htSay| "Your search string {\\em " |s|
                     '|} matches both lines:|)))
@@ -805,7 +778,7 @@
                       ((OR (ATOM |bfVar#16|)
                            (PROGN (SETQ |x| (CAR |bfVar#16|)) NIL))
                        (RETURN NIL))
-                      (#1# (|htSay| "{" |x| "}")))
+                      (#1# (|htSayList| (LIST "{" |x| "}"))))
                      (SETQ |bfVar#16| (CDR |bfVar#16|))))
                   |matches| NIL)
                  (|htSay| "}}\\vspace{1}")
@@ -819,12 +792,12 @@
                         ((OR (ATOM |bfVar#17|)
                              (PROGN (SETQ |x| (CAR |bfVar#17|)) NIL))
                          (RETURN NIL))
-                        (#1# (|htSay| "{" |x| "}")))
+                        (#1# (|htSayList| (LIST "{" |x| "}"))))
                        (SETQ |bfVar#17| (CDR |bfVar#17|))))
                     |nonmatches| NIL)
                    (|htSay| "}}")))
                  (|htShowPage|)))))))))))
- 
+
 ; mkUnixPattern s ==
 ;   u := mkUpDownPattern s
 ;   starPositions := REVERSE [i for i in 1..(-1 + MAXINDEX u) | u.i = $wild]
@@ -835,7 +808,7 @@
 ;   if u.(k := MAXINDEX u) ~= $wild then u := STRCONC(u,'"[^a-zA-Z]")
 ;                                   else u := SUBSTRING(u,0,k)
 ;   u
- 
+
 (DEFUN |mkUnixPattern| (|s|)
   (PROG (|u| |starPositions| |k|)
     (RETURN

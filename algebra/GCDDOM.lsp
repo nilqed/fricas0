@@ -4,11 +4,10 @@
 (DEFPARAMETER |GcdDomain;AL| 'NIL) 
 
 (DEFUN |GcdDomain| ()
-  (LET (#:G698)
-    (COND (|GcdDomain;AL|) (T (SETQ |GcdDomain;AL| (|GcdDomain;|)))))) 
+  (COND (|GcdDomain;AL|) (T (SETQ |GcdDomain;AL| (|GcdDomain;|))))) 
 
 (DEFUN |GcdDomain;| ()
-  (SPROG ((#1=#:G696 NIL))
+  (SPROG ((#1=#:G695 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|IntegralDomain|) (|LeftOreRing|)
@@ -20,9 +19,7 @@
                                  (|SparseUnivariatePolynomial| $)
                                  (|SparseUnivariatePolynomial| $)))
                                T))
-                            NIL '((|SparseUnivariatePolynomial| $) (|List| $))
-                            NIL))
-                   |GcdDomain|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|GcdDomain|))))) 
 
 (MAKEPROP '|GcdDomain| 'NILADIC T) 

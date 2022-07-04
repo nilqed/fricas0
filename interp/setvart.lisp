@@ -1,8 +1,8 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; DEFPARAMETER($setOptions, '(
 ;   (breakmode
 ;    "execute break processing on error"
@@ -41,7 +41,7 @@
 ;           STRING
 ;           $asharpCmdlineFlags
 ;           chkDirectory
-;           "-O -Fasy -Fao -Flsp -laxiom -Mno-ALDOR__W__WillObsolete -DAxiom -Y $AXIOM/algebra -I $AXIOM/algebra"))
+;           "-O -Fasy -Fao -Flsp -lfricas -Mno-ALDOR__W__WillObsolete -DFriCAS -Y $FRICAS/algebra -I $FRICAS/algebra"))
 ;        NIL)
 ;     ))
 ;   (expose
@@ -162,48 +162,6 @@
 ;        $fortranArrayStartingIndex
 ;        (0 1)
 ;        1)
-;       (calling
-;       "options for external FORTRAN calls"
-;       interpreter
-;       TREE
-;       novar
-;       (
-;         (tempfile
-;          "set location of temporary data files"
-;          interpreter
-;          FUNCTION
-;          setFortTmpDir
-;          (("enter directory name for which you have write-permission"
-;            DIRECTORY
-;            $fortranTmpDir
-;            chkDirectory
-;            "/tmp/"))
-;          NIL)
-;         (directory
-;          "set location of generated FORTRAN files"
-;          interpreter
-;          FUNCTION
-;          setFortDir
-;          (("enter directory name for which you have write-permission"
-;            DIRECTORY
-;            $fortranDirectory
-;            chkDirectory
-;            "./"))
-;          NIL)
-;         (linker
-;          "linker arguments (e.g. libraries to search)"
-;          interpreter
-;          FUNCTION
-;          setLinkerArgs
-;          (("enter linker arguments "
-;            STRING
-;            $fortranLibraries
-;            chkDirectory
-;            "-lxlf"))
-;          NIL
-;          )
-;        )
-;       )
 ;   ))
 ;   (hyperdoc
 ;    "options in using HyperDoc"
@@ -479,23 +437,6 @@
 ;         chkOutputFileName
 ;         "console"))
 ;       NIL)
-;      (script
-;       "display output in SCRIPT formula format"
-;       interpreter
-;       FUNCTION
-;       setOutputFormula
-;       (("display output in SCRIPT format"
-;         LITERALS
-;         $formulaFormat
-;         (off on)
-;         off)
-;        (break $formulaFormat)
-;        ("where script output goes (enter {\em console} or a a pathname)"
-;         FILENAME
-;         $formulaOutputFile
-;         chkOutputFileName
-;         "console"))
-;       NIL)
 ;      (scripts
 ;       "show subscripts,... linearly"
 ;       interpreter
@@ -578,7 +519,23 @@
 ;         chkOutputFileName
 ;         "console"))
 ;       NIL)
-; 
+;      (formatted
+;       "create output in formatted style"
+;       interpreter
+;       FUNCTION
+;       setOutputFormatted
+;       (("create output via format engine"
+;         LITERALS
+;         $formattedFormat
+;         (off on)
+;         off)
+;        (break $formattedFormat)
+;        ("where formatted output goes (enter {\em console} or a pathname)"
+;         FILENAME
+;         $formattedOutputFile
+;         chkOutputFileName
+;         "console"))
+;       NIL)
 ;  ))
 ;   (quit
 ;    "protected or unprotected quit"
@@ -648,7 +605,7 @@
 ;    (interpreter compiler development)
 ;    development)
 ;  ))
- 
+
 (DEFPARAMETER |$setOptions|
   '((|breakmode| "execute break processing on error" |interpreter| LITERALS
      |$BreakMode| (|nobreak| |break| |query| |resume| |quit|) |nobreak|)
@@ -660,7 +617,7 @@
       (|args| "arguments for compiling FriCAS code" |interpreter| FUNCTION
        |setAsharpArgs|
        (("enter compiler options " STRING |$asharpCmdlineFlags| |chkDirectory|
-         "-O -Fasy -Fao -Flsp -laxiom -Mno-ALDOR_W_WillObsolete -DAxiom -Y $AXIOM/algebra -I $AXIOM/algebra"))
+         "-O -Fasy -Fao -Flsp -lfricas -Mno-ALDOR_W_WillObsolete -DFriCAS -Y $FRICAS/algebra -I $FRICAS/algebra"))
        NIL)))
     (|expose| "control interpreter constructor exposure" |interpreter| FUNCTION
      |setExpose| NIL |htSetExpose|)
@@ -695,24 +652,7 @@
       (|optlevel| "FORTRAN optimisation level" |interpreter| INTEGER
        |$fortranOptimizationLevel| (0 2) 0)
       (|startindex| "starting index for FORTRAN arrays" |interpreter| INTEGER
-       |$fortranArrayStartingIndex| (0 1) 1)
-      (|calling| "options for external FORTRAN calls" |interpreter| TREE
-       |novar|
-       ((|tempfile| "set location of temporary data files" |interpreter|
-         FUNCTION |setFortTmpDir|
-         (("enter directory name for which you have write-permission" DIRECTORY
-           |$fortranTmpDir| |chkDirectory| "/tmp/"))
-         NIL)
-        (|directory| "set location of generated FORTRAN files" |interpreter|
-         FUNCTION |setFortDir|
-         (("enter directory name for which you have write-permission" DIRECTORY
-           |$fortranDirectory| |chkDirectory| "./"))
-         NIL)
-        (|linker| "linker arguments (e.g. libraries to search)" |interpreter|
-         FUNCTION |setLinkerArgs|
-         (("enter linker arguments " STRING |$fortranLibraries| |chkDirectory|
-           "-lxlf"))
-         NIL)))))
+       |$fortranArrayStartingIndex| (0 1) 1)))
     (|hyperdoc| "options in using HyperDoc" |interpreter| TREE |novar|
      ((|fullscreen| "use full screen for this facility" |interpreter| LITERALS
        |$fullScreenSysVars| (|on| |off|) |off|)
@@ -798,14 +738,6 @@
         ("where TeX output goes (enter {\\em console} or a pathname)" FILENAME
          |$openMathOutputFile| |chkOutputFileName| "console"))
        NIL)
-      (|script| "display output in SCRIPT formula format" |interpreter|
-       FUNCTION |setOutputFormula|
-       (("display output in SCRIPT format" LITERALS |$formulaFormat|
-         (|off| |on|) |off|)
-        (|break| |$formulaFormat|)
-        ("where script output goes (enter {\\em console} or a a pathname)"
-         FILENAME |$formulaOutputFile| |chkOutputFileName| "console"))
-       NIL)
       (|scripts| "show subscripts,... linearly" |interpreter| LITERALS
        |$linearFormatScripts| (|yes| |no|) |no|)
       (|showeditor| "view output of )show in editor" |interpreter| LITERALS
@@ -840,6 +772,14 @@
         (|break| |$htmlFormat|)
         ("where HTML output goes (enter {\\em console} or a pathname)" FILENAME
          |$htmlOutputFile| |chkOutputFileName| "console"))
+       NIL)
+      (|formatted| "create output in formatted style" |interpreter| FUNCTION
+       |setOutputFormatted|
+       (("create output via format engine" LITERALS |$formattedFormat|
+         (|off| |on|) |off|)
+        (|break| |$formattedFormat|)
+        ("where formatted output goes (enter {\\em console} or a pathname)"
+         FILENAME |$formattedOutputFile| |chkOutputFileName| "console"))
        NIL)))
     (|quit| "protected or unprotected quit" |interpreter| LITERALS
      |$quitCommandType| (|protected| |unprotected|) |unprotected|)
@@ -862,9 +802,9 @@
        LITERALS $PRETTYPRINT (|on| |off|) |off|)))
     (|userlevel| "operation access level of system user" |interpreter| LITERALS
      |$UserLevel| (|interpreter| |compiler| |development|) |development|)))
- 
+
 ; DEFPARAMETER($setOptionNames, [x.0 for x in $setOptions])
- 
+
 (DEFPARAMETER |$setOptionNames|
   ((LAMBDA (|bfVar#2| |bfVar#1| |x|)
      (LOOP
@@ -874,8 +814,8 @@
        ('T (SETQ |bfVar#2| (CONS (ELT |x| 0) |bfVar#2|))))
       (SETQ |bfVar#1| (CDR |bfVar#1|))))
    NIL |$setOptions| NIL))
- 
+
 ; initializeSetVariables $setOptions
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (PROG () (RETURN (|initializeSetVariables| |$setOptions|))))

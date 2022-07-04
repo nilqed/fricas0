@@ -1,33 +1,33 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; initNewWorld() ==
 ;   $monitorNewWorld := false
- 
-(DEFUN |initNewWorld| #1=() (PROG #1# (RETURN (SETQ |$monitorNewWorld| NIL))))
- 
+
+(DEFUN |initNewWorld| () (PROG () (RETURN (SETQ |$monitorNewWorld| NIL))))
+
 ; isNewWorldDomain domain == INTEGERP domain.3    --see HasCategory/Attribute
- 
+
 (DEFUN |isNewWorldDomain| (|domain|)
   (PROG () (RETURN (INTEGERP (ELT |domain| 3)))))
- 
+
 ; getDomainByteVector dom == CDDR dom.4
- 
+
 (DEFUN |getDomainByteVector| (|dom|) (PROG () (RETURN (CDDR (ELT |dom| 4)))))
- 
+
 ; getDomainView(domain,catform) == domain
- 
+
 (DEFUN |getDomainView| (|domain| |catform|) (PROG () (RETURN |domain|)))
- 
+
 ; makeSpadConstant [fn, dollar, slot] ==
 ;     val := FUNCALL(fn, dollar)
 ;     u := dollar.slot
 ;     RPLACA(u, function IDENTITY)
 ;     RPLACD(u, val)
 ;     val
- 
+
 (DEFUN |makeSpadConstant| (|bfVar#1|)
   (PROG (|fn| |dollar| |slot| |val| |u|)
     (RETURN
@@ -40,12 +40,12 @@
       (RPLACA |u| #'IDENTITY)
       (RPLACD |u| |val|)
       |val|))))
- 
+
 ; newGoGet(:l) ==
 ;   [:arglist,env] := l
 ;   slot := replaceGoGetSlot env
 ;   APPLY(first slot,[:arglist,rest slot])  --SPADCALL it!
- 
+
 (DEFUN |newGoGet| (&REST |l|)
   (PROG (|LETTMP#1| |env| |arglist| |slot|)
     (RETURN
@@ -55,17 +55,17 @@
       (SETQ |arglist| (NREVERSE (CDR |LETTMP#1|)))
       (SETQ |slot| (|replaceGoGetSlot| |env|))
       (APPLY (CAR |slot|) (APPEND |arglist| (CONS (CDR |slot|) NIL)))))))
- 
+
 ; forceLazySlot(f) ==
 ;     not(EQ(first f, function newGoGet)) => f
 ;     replaceGoGetSlot(rest f)
- 
+
 (DEFUN |forceLazySlot| (|f|)
   (PROG ()
     (RETURN
      (COND ((NULL (EQ (CAR |f|) #'|newGoGet|)) |f|)
            ('T (|replaceGoGetSlot| (CDR |f|)))))))
- 
+
 ; newLookupInTable(op,sig,dollar,[domain,opvec],flag) ==
 ;   dollar = nil => systemError()
 ;   $lookupDefaults = true =>
@@ -138,7 +138,7 @@
 ;   subsumptionSig and (u:= basicLookup(op,subsumptionSig,domain,dollar)) => u
 ;   flag or someMatch => newLookupInAddChain(op,sig,domain,dollar)
 ;   nil
- 
+
 (DEFUN |newLookupInTable| (|op| |sig| |dollar| |bfVar#3| |flag|)
   (PROG (|$isDefaultingPackage| |u| |slot| |subsumptionSig| |loc| |predIndex|
          |numTableArgs| |i| |numArgs| |finish| |start| |maxIndex| |k| |max|
@@ -296,20 +296,20 @@
                ((OR |flag| |someMatch|)
                 (|newLookupInAddChain| |op| |sig| |domain| |dollar|))
                (#1# NIL)))))))))
- 
+
 ; AND_char := ELT('"&", 0)
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |AND_char| (ELT "&" 0)))
- 
+
 ; isDefaultPackageForm? x == x is [op,:.]
 ;   and IDENTP op and (s := PNAME op).(MAXINDEX s) = AND_char
- 
+
 (DEFUN |isDefaultPackageForm?| (|x|)
   (PROG (|op| |s|)
     (RETURN
      (AND (CONSP |x|) (PROGN (SETQ |op| (CAR |x|)) 'T) (IDENTP |op|)
           (EQUAL (ELT (SETQ |s| (PNAME |op|)) (MAXINDEX |s|)) |AND_char|)))))
- 
+
 ; newLookupInAddChain(op,sig,addFormDomain,dollar) ==
 ;   if $monitorNewWorld then sayLooking1('"looking up add-chain: ",addFormDomain)
 ;   addFunction:=newLookupInDomain(op,sig,addFormDomain,dollar,5)
@@ -319,7 +319,7 @@
 ;         form2String devaluate addFormDomain, '"<----"), rest addFunction)
 ;     addFunction
 ;   nil
- 
+
 (DEFUN |newLookupInAddChain| (|op| |sig| |addFormDomain| |dollar|)
   (PROG (|addFunction|)
     (RETURN
@@ -340,7 +340,7 @@
             (CDR |addFunction|))))
          |addFunction|))
        ('T NIL))))))
- 
+
 ; newLookupInDomain(op,sig,addFormDomain,dollar,index) ==
 ;   addFormCell := addFormDomain.index =>
 ;     INTEGERP IFCAR addFormCell =>
@@ -348,7 +348,7 @@
 ;     if null VECP addFormCell then lazyDomainSet(addFormCell,addFormDomain,index)
 ;     lookupInDomainVector(op,sig,addFormDomain.index,dollar)
 ;   nil
- 
+
 (DEFUN |newLookupInDomain| (|op| |sig| |addFormDomain| |dollar| |index|)
   (PROG (|addFormCell|)
     (RETURN
@@ -377,7 +377,7 @@
           (|lookupInDomainVector| |op| |sig| (ELT |addFormDomain| |index|)
            |dollar|)))))
       (#1# NIL)))))
- 
+
 ; newLookupInCategories(op, sig, dom, dollar, check_num) ==
 ;   slot4 := dom.4
 ;   catVec := CADR slot4
@@ -437,7 +437,7 @@
 ;     if $monitorNewWorld = true then
 ;       sayBrightly '"candidate fails -- continuing to search categories"
 ;     nil
- 
+
 (DEFUN |newLookupInCategories| (|op| |sig| |dom| |dollar| |check_num|)
   (PROG (|$lookupDefaults| |res| |success| |package| |endPos| |byteVector|
          |code| |max| |opvec| |infovec| |packageForm| |cat| |entry| |nsig|
@@ -594,13 +594,13 @@
                                           NIL))))))))))
                   (SETQ |i| (+ |i| 1))))
                (MAXINDEX |packageVec|) 0))))))))
- 
+
 ; nrunNumArgCheck(num,bytevec,start,finish) ==
 ;    args := bytevec.start
 ;    num = args => true
 ;    (start := start + args + 4) = finish => nil
 ;    nrunNumArgCheck(num,bytevec,start,finish)
- 
+
 (DEFUN |nrunNumArgCheck| (|num| |bytevec| |start| |finish|)
   (PROG (|args|)
     (RETURN
@@ -609,7 +609,7 @@
       (COND ((EQUAL |num| |args|) T)
             ((EQUAL (SETQ |start| (+ (+ |start| |args|) 4)) |finish|) NIL)
             ('T (|nrunNumArgCheck| |num| |bytevec| |start| |finish|)))))))
- 
+
 ; newCompareSig(sig, numvec, index, dollar, domain) ==
 ;   k := index
 ;   null (target := first sig)
@@ -618,7 +618,7 @@
 ;               for s in rest sig for i in (index+1)..] => numvec.(inc_SI k)
 ;      nil
 ;   nil
- 
+
 (DEFUN |newCompareSig| (|sig| |numvec| |index| |dollar| |domain|)
   (PROG (|k| |target|)
     (RETURN
@@ -645,12 +645,12 @@
           (ELT |numvec| (|inc_SI| |k|)))
          (#1# NIL)))
        (#1# NIL))))))
- 
+
 ; lazyMatchArg(s,a,dollar,domain) == lazyMatchArg2(s,a,dollar,domain,true)
- 
+
 (DEFUN |lazyMatchArg| (|s| |a| |dollar| |domain|)
   (PROG () (RETURN (|lazyMatchArg2| |s| |a| |dollar| |domain| T))))
- 
+
 ; lazyMatch(source,lazyt,dollar,domain) ==
 ;   lazyt is [op, :argl] and null atom source and op = first source
 ;     and #(sargl := rest source) = #argl =>
@@ -672,7 +672,7 @@
 ;   source is ['construct,:l] => l = lazyt
 ;   -- A hideous hack on the same lines as the previous four lines JHD/MCD
 ;   nil
- 
+
 (DEFUN |lazyMatch| (|source| |lazyt| |dollar| |domain|)
   (PROG (|op| |argl| |sargl| |ISTMP#1| |stag| |ISTMP#2| |s| |atag| |a| |coSig|
          |slotNum| |l|)
@@ -797,7 +797,7 @@
             (PROGN (SETQ |l| (CDR |source|)) #1#))
        (EQUAL |l| |lazyt|))
       (#1# NIL)))))
- 
+
 ; lazyMatchArgDollarCheck(s,d,dollarName,domainName) ==
 ;   #s ~= #d => nil
 ;   scoSig := GETDATABASE(opOf s,'COSIG) or return nil
@@ -813,7 +813,7 @@
 ;     xt and first x = first arg =>
 ;       lazyMatchArgDollarCheck(x,arg,dollarName,domainName)
 ;     false
- 
+
 (DEFUN |lazyMatchArgDollarCheck| (|s| |d| |dollarName| |domainName|)
   (PROG (|scoSig| |ISTMP#1| |someDomain| |ISTMP#2| |opname|)
     (RETURN
@@ -882,7 +882,7 @@
                  (SETQ |bfVar#24| (CDR |bfVar#24|))
                  (SETQ |bfVar#25| (CDR |bfVar#25|))))
               T (CDR |s|) NIL (CDR |d|) NIL (CDR |scoSig|) NIL)))))))
- 
+
 ; lookupInDomainByName(op,domain,arg) ==
 ;   atom arg => nil
 ;   opvec := domain . 1 . 2
@@ -903,17 +903,15 @@
 ;     predIndex := numvec.(i := inc_SI i)
 ;     predIndex ~= 0 and null testBitVector(predvec, predIndex) => nil
 ;     slotIndex := numvec.(i + 2 + numberOfArgs)
-;     newStart := add_SI(start, add_SI(numberOfArgs, 4))
 ;     slot := domain.slotIndex
 ;     null atom slot and EQ(first slot, first arg) and EQ(rest slot, rest arg) =>
 ;         return (success := true)
 ;     start := add_SI(start, add_SI(numberOfArgs, 4))
 ;   success
- 
+
 (DEFUN |lookupInDomainByName| (|op| |domain| |arg|)
   (PROG (|opvec| |numvec| |predvec| |max| |k| |maxIndex| |start| |finish|
-         |success| |i| |numberOfArgs| |predIndex| |slotIndex| |newStart|
-         |slot|)
+         |success| |i| |numberOfArgs| |predIndex| |slotIndex| |slot|)
     (RETURN
      (COND ((ATOM |arg|) NIL)
            (#1='T
@@ -951,9 +949,6 @@
                             (SETQ |slotIndex|
                                     (ELT |numvec|
                                          (+ (+ |i| 2) |numberOfArgs|)))
-                            (SETQ |newStart|
-                                    (|add_SI| |start|
-                                     (|add_SI| |numberOfArgs| 4)))
                             (SETQ |slot| (ELT |domain| |slotIndex|))
                             (COND
                              ((AND (NULL (ATOM |slot|))
@@ -965,23 +960,23 @@
                                       (|add_SI| |start|
                                        (|add_SI| |numberOfArgs| 4))))))))))))))
              |success|))))))
- 
+
 ; newExpandTypeSlot(slot, dollar, domain) ==
 ; --> returns domain form for dollar.slot
 ;    newExpandLocalType(sigDomainVal(dollar, domain, slot), dollar,domain)
- 
+
 (DEFUN |newExpandTypeSlot| (|slot| |dollar| |domain|)
   (PROG ()
     (RETURN
      (|newExpandLocalType| (|sigDomainVal| |dollar| |domain| |slot|) |dollar|
       |domain|))))
- 
+
 ; newExpandLocalType(lazyt, dollar, domain) ==
 ;     VECP lazyt => lazyt.0
 ;     isDomain lazyt => devaluate lazyt
 ;     ATOM lazyt => lazyt
 ;     newExpandLocalTypeForm(lazyt, dollar, domain)
- 
+
 (DEFUN |newExpandLocalType| (|lazyt| |dollar| |domain|)
   (PROG ()
     (RETURN
@@ -989,7 +984,7 @@
            ((|isDomain| |lazyt|) (|devaluate| |lazyt|))
            ((ATOM |lazyt|) |lazyt|)
            ('T (|newExpandLocalTypeForm| |lazyt| |dollar| |domain|))))))
- 
+
 ; newExpandLocalTypeForm([functorName,:argl],dollar,domain) ==
 ;   MEMQ(functorName, '(Record Union)) and first argl is [":",:.] =>
 ;     [functorName,:[['_:,tag,newExpandLocalTypeArgs(dom,dollar,domain,true)]
@@ -1001,7 +996,7 @@
 ;   NULL coSig => error ["bad functorName", functorName]
 ;   [functorName,:[newExpandLocalTypeArgs(a,dollar,domain,flag)
 ;         for a in argl for flag in rest coSig]]
- 
+
 (DEFUN |newExpandLocalTypeForm| (|bfVar#35| |dollar| |domain|)
   (PROG (|functorName| |argl| |ISTMP#1| |tag| |ISTMP#2| |dom| |coSig|)
     (RETURN
@@ -1080,7 +1075,7 @@
                      (SETQ |bfVar#32| (CDR |bfVar#32|))
                      (SETQ |bfVar#33| (CDR |bfVar#33|))))
                   NIL |argl| NIL (CDR |coSig|) NIL)))))))))))
- 
+
 ; newExpandLocalTypeArgs(u,dollar,domain,typeFlag) ==
 ;   u = '$ => u
 ;   INTEGERP u =>
@@ -1091,7 +1086,7 @@
 ;   u = "$$" => domain.0
 ;   atom u => u   --can be first, rest, etc.
 ;   newExpandLocalTypeForm(u,dollar,domain)
- 
+
 (DEFUN |newExpandLocalTypeArgs| (|u| |dollar| |domain| |typeFlag|)
   (PROG (|ISTMP#1| |y|)
     (RETURN
@@ -1113,40 +1108,40 @@
             |y|)
            ((EQ |u| '$$) (ELT |domain| 0)) ((ATOM |u|) |u|)
            (#1# (|newExpandLocalTypeForm| |u| |dollar| |domain|))))))
- 
+
 ; nrtEval(expr,dom) ==
 ;   $:fluid := dom
 ;   eval expr
- 
+
 (DEFUN |nrtEval| (|expr| |dom|)
   (PROG ($)
     (DECLARE (SPECIAL $))
     (RETURN (PROGN (SETQ $ |dom|) (|eval| |expr|)))))
- 
+
 ; domainVal(dollar,domain,index) ==
 ; --returns a domain or a lazy slot
 ;   index = 0 => dollar
 ;   index = 2 => domain
 ;   domain.index
- 
+
 (DEFUN |domainVal| (|dollar| |domain| |index|)
   (PROG ()
     (RETURN
      (COND ((EQL |index| 0) |dollar|) ((EQL |index| 2) |domain|)
            ('T (ELT |domain| |index|))))))
- 
+
 ; sigDomainVal(dollar,domain,index) ==
 ; --returns a domain or a lazy slot
 ;   index = 0 => "$"
 ;   index = 2 => domain
 ;   domain.index
- 
+
 (DEFUN |sigDomainVal| (|dollar| |domain| |index|)
   (PROG ()
     (RETURN
      (COND ((EQL |index| 0) '$) ((EQL |index| 2) |domain|)
            ('T (ELT |domain| |index|))))))
- 
+
 ; newHasTest(domform,catOrAtt) ==
 ;   NULL(domform) => systemError '"newHasTest expects domain form"
 ;   domform is [dom,:.] and dom in '(Union Record Mapping Enumeration) =>
@@ -1155,7 +1150,7 @@
 ;   GETDATABASE(opOf domform, 'ASHARP?) => fn(domform,catOrAtt) where
 ;   -- atom (infovec := getInfovec opOf domform) => fn(domform,catOrAtt) where
 ;     fn(a,b) ==
-;       categoryForm?(a) => assoc(b, ancestorsOf(a, nil))
+;       categoryForm?(a) => assoc(b, ancestors_of_cat(a, nil))
 ;       isPartialMode a => throwKeyedMsg("S2IS0025",NIL)
 ;       b is ["SIGNATURE",:opSig] =>
 ;         HasSignature(evalDomain a,opSig)
@@ -1176,7 +1171,8 @@
 ;       systemError '"strange Mapping type in newHasTest"
 ;   GETDATABASE(opOf domform,'CONSTRUCTORKIND) = 'category =>
 ;       domform = catOrAtt => 'T
-;       for [aCat,:cond] in ancestorsOf(domform,NIL) |  aCat = catOrAtt  repeat
+;       for [aCat, :cond] in ancestors_of_cat(domform, NIL)
+;            | aCat = catOrAtt  repeat
 ;          return evalCond cond where
 ;            evalCond x ==
 ;              ATOM x => x
@@ -1195,7 +1191,7 @@
 ;     domain := eval mkEvalable domform
 ;     newHasCategory(domain,catOrAtt)
 ;   systemError '"newHasTest expects category form"
- 
+
 (DEFUN |newHasTest| (|domform| |catOrAtt|)
   (PROG (|dom| |op| |isAtom| |ISTMP#1| |fun| |ISTMP#2| |ISTMP#3| |sig1| |sig2|
          |aCat| |cond| |domain|)
@@ -1266,7 +1262,7 @@
                                  (EQUAL |aCat| |catOrAtt|)
                                  (RETURN (|newHasTest,evalCond| |cond|)))))
                           (SETQ |bfVar#39| (CDR |bfVar#39|))))
-                       (|ancestorsOf| |domform| NIL) NIL))))
+                       (|ancestors_of_cat| |domform| NIL) NIL))))
               ((AND (NULL |isAtom|) (|constructor?| |op|))
                (PROGN
                 (SETQ |domain| (|eval| (|mkEvalable| |domform|)))
@@ -1343,7 +1339,7 @@
 (DEFUN |newHasTest,fn| (|a| |b|)
   (PROG (|opSig| |ISTMP#1| |attr|)
     (RETURN
-     (COND ((|categoryForm?| |a|) (|assoc| |b| (|ancestorsOf| |a| NIL)))
+     (COND ((|categoryForm?| |a|) (|assoc| |b| (|ancestors_of_cat| |a| NIL)))
            ((|isPartialMode| |a|) (|throwKeyedMsg| 'S2IS0025 NIL))
            ((AND (CONSP |b|) (EQ (CAR |b|) 'SIGNATURE)
                  (PROGN (SETQ |opSig| (CDR |b|)) #1='T))
@@ -1358,7 +1354,7 @@
             (PROGN
              (NOT (EQ (|hasCaty| |a| |b| NIL) '|failed|))
              (COND ((|HasCategory| (|evalDomain| |a|) |b|) T))))))))
- 
+
 ; sayLooking(prefix,op,sig,dom) ==
 ;   $monitorNewWorld := false
 ;   dollar := devaluate dom
@@ -1366,7 +1362,7 @@
 ;   sayBrightly
 ;     concat(prefix,formatOpSignature(op,sig),bright '"from ",form2String dollar)
 ;   $monitorNewWorld := true
- 
+
 (DEFUN |sayLooking| (|prefix| |op| |sig| |dom|)
   (PROG (|dollar|)
     (RETURN
@@ -1394,7 +1390,7 @@
           (|concat| |prefix| (|formatOpSignature| |op| |sig|)
            (|bright| "from ") (|form2String| |dollar|)))
          (SETQ |$monitorNewWorld| T))))))))
- 
+
 ; sayLooking1(prefix,dom) ==
 ;   $monitorNewWorld := false
 ;   dollar :=
@@ -1402,7 +1398,7 @@
 ;     devaluateList dom
 ;   sayBrightly concat(prefix,form2String dollar)
 ;   $monitorNewWorld := true
- 
+
 (DEFUN |sayLooking1| (|prefix| |dom|)
   (PROG (|dollar|)
     (RETURN
@@ -1413,10 +1409,10 @@
                     ('T (|devaluateList| |dom|))))
       (|sayBrightly| (|concat| |prefix| (|form2String| |dollar|)))
       (SETQ |$monitorNewWorld| T)))))
- 
+
 ; cc() == -- don't remove this function
 ;   clearConstructorCaches()
 ;   clearClams()
- 
-(DEFUN |cc| #1=()
-  (PROG #1# (RETURN (PROGN (|clearConstructorCaches|) (|clearClams|)))))
+
+(DEFUN |cc| ()
+  (PROG () (RETURN (PROGN (|clearConstructorCaches|) (|clearClams|)))))

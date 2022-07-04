@@ -4,15 +4,12 @@
 (DEFPARAMETER |CommutativeRing;AL| 'NIL) 
 
 (DEFUN |CommutativeRing| ()
-  (LET (#:G692)
-    (COND (|CommutativeRing;AL|)
-          (T (SETQ |CommutativeRing;AL| (|CommutativeRing;|)))))) 
+  (COND (|CommutativeRing;AL|)
+        (T (SETQ |CommutativeRing;AL| (|CommutativeRing;|))))) 
 
 (DEFUN |CommutativeRing;| ()
-  (SPROG ((#1=#:G690 NIL))
-         (PROG1
-             (LETT #1# (|Join| (|Ring|) (|Algebra| '$) (|CommutativeStar|))
-                   |CommutativeRing|)
+  (SPROG ((#1=#:G689 NIL))
+         (PROG1 (LETT #1# (|Join| (|Ring|) (|Algebra| '$) (|CommutativeStar|)))
            (SETELT #1# 0 '(|CommutativeRing|))))) 
 
 (MAKEPROP '|CommutativeRing| 'NILADIC T) 

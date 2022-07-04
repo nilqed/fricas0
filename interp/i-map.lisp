@@ -1,45 +1,39 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; DEFPARAMETER($mapTarget, nil)
- 
+
 (DEFPARAMETER |$mapTarget| NIL)
- 
+
 ; DEFPARAMETER($mapReturnTypes, nil)
- 
+
 (DEFPARAMETER |$mapReturnTypes| NIL)
- 
+
 ; DEFPARAMETER($mapName, 'noMapName)
- 
+
 (DEFPARAMETER |$mapName| '|noMapName|)
- 
+
 ; DEFPARAMETER($mapThrowCount, 0) -- times a "return" occurs in map
- 
+
 (DEFPARAMETER |$mapThrowCount| 0)
- 
+
 ; DEFPARAMETER($compilingMap, NIL)
- 
+
 (DEFPARAMETER |$compilingMap| NIL)
- 
+
 ; DEFPARAMETER($definingMap, NIL)
- 
+
 (DEFPARAMETER |$definingMap| NIL)
- 
-; DEFPARAMETER($specialMapNameSuffix, NIL)
- 
-(DEFPARAMETER |$specialMapNameSuffix| NIL)
- 
+
 ; makeInternalMapName(userName,numArgs,numMms,extraPart) ==
 ;   name := CONCAT('"*",STRINGIMAGE numArgs,'";",
 ;     object2String userName,'";",STRINGIMAGE numMms,'";",
 ;       object2String frameName first $interpreterFrameRing )
 ;   if extraPart then name := CONCAT(name,'";",extraPart)
-;   if $specialMapNameSuffix then
-;     name := CONCAT(name,'";",$specialMapNameSuffix)
 ;   INTERN name
- 
+
 (DEFUN |makeInternalMapName| (|userName| |numArgs| |numMms| |extraPart|)
   (PROG (|name|)
     (RETURN
@@ -51,11 +45,8 @@
                       (|object2String|
                        (|frameName| (CAR |$interpreterFrameRing|)))))
       (COND (|extraPart| (SETQ |name| (CONCAT |name| ";" |extraPart|))))
-      (COND
-       (|$specialMapNameSuffix|
-        (SETQ |name| (CONCAT |name| ";" |$specialMapNameSuffix|))))
       (INTERN |name|)))))
- 
+
 ; isInternalMapName name ==
 ;   -- this only returns true or false as a "best guess"
 ;   (not IDENTP(name)) or (name = "*") or (name = "**") => false
@@ -65,7 +56,7 @@
 ;   null STRPOS('"_;",name',1,NIL) => false
 ;   -- good enough
 ;   true
- 
+
 (DEFUN |isInternalMapName| (|name|)
   (PROG (|name'| |sz|)
     (RETURN
@@ -77,37 +68,37 @@
               ((OR (< |sz| 7) (NOT (EQUAL (|char| '*) (ELT |name'| 0)))) NIL)
               ((NULL (DIGITP (ELT |name'| 1))) NIL)
               ((NULL (STRPOS ";" |name'| 1 NIL)) NIL) (#1# T))))))))
- 
+
 ; makeInternalMapMinivectorName(name) ==
 ;   STRINGP name =>
 ;     INTERN STRCONC(name,'";MV")
 ;   INTERN STRCONC(PNAME name,'";MV")
- 
+
 (DEFUN |makeInternalMapMinivectorName| (|name|)
   (PROG ()
     (RETURN
      (COND ((STRINGP |name|) (INTERN (STRCONC |name| ";MV")))
            ('T (INTERN (STRCONC (PNAME |name|) ";MV")))))))
- 
-; mkCacheName(name) == INTERNL(STRINGIMAGE name,'";AL")
- 
+
+; mkCacheName(name) == INTERNL1(STRINGIMAGE(name), '";AL")
+
 (DEFUN |mkCacheName| (|name|)
-  (PROG () (RETURN (INTERNL (STRINGIMAGE |name|) ";AL"))))
- 
-; mkAuxiliaryName(name) == INTERNL(STRINGIMAGE name,'";AUX")
- 
+  (PROG () (RETURN (INTERNL1 (STRINGIMAGE |name|) ";AL"))))
+
+; mkAuxiliaryName(name) == INTERNL1(STRINGIMAGE(name), '";AUX")
+
 (DEFUN |mkAuxiliaryName| (|name|)
-  (PROG () (RETURN (INTERNL (STRINGIMAGE |name|) ";AUX"))))
- 
+  (PROG () (RETURN (INTERNL1 (STRINGIMAGE |name|) ";AUX"))))
+
 ; isMapExpr x == x is ['SPADMAP, :.]
- 
+
 (DEFUN |isMapExpr| (|x|)
   (PROG () (RETURN (AND (CONSP |x|) (EQ (CAR |x|) 'SPADMAP)))))
- 
+
 ; isMap x ==
 ;   y := get(x,'value,$InteractiveFrame) =>
 ;     objVal y is ['SPADMAP, :.] => x
- 
+
 (DEFUN |isMap| (|x|)
   (PROG (|y| |ISTMP#1|)
     (RETURN
@@ -119,11 +110,11 @@
            (SETQ |ISTMP#1| (|objVal| |y|))
            (AND (CONSP |ISTMP#1|) (EQ (CAR |ISTMP#1|) 'SPADMAP)))
           (IDENTITY |x|)))))))))
- 
+
 ; addDefMap(['DEF,lhs,mapsig,.,rhs],pred) ==
 ;   -- Create a new map, add to an existing one, or define a variable
 ;   --   compute the dependencies for a map
-; 
+;
 ;   -- next check is for bad forms on the lhs of the ==, such as
 ;   -- numbers, constants.
 ;   if not PAIRP lhs then
@@ -139,17 +130,17 @@
 ;       throwKeyedMsg("S2IM0001",[op,oldMode])
 ;     putHist(op,'isInterpreterRule,false,$e)
 ;     putHist(op,'isInterpreterFunction,true,$e)
-; 
+;
 ;   (NUMBERP(op) or op in '(true false nil % %%)) =>
 ;     throwKeyedMsg("S2IM0002",[lhs])
-; 
+;
 ;   -- verify a constructor abbreviation is not used on the lhs
 ;   op ~= (op' := unabbrev op) => throwKeyedMsg("S2IM0003",[op,op'])
-; 
+;
 ;   -- get the formal parameters. These should only be atomic symbols
 ;   -- that are not numbers.
 ;   parameters := [p for p in rest lhs | IDENTP(p)]
-; 
+;
 ;   -- see if a signature has been given. if anything in mapsig is NIL,
 ;   -- then declaration was omitted.
 ;   someDecs := nil
@@ -171,7 +162,7 @@
 ;     putHist(op,'mode,mapmode,$e)
 ;     sayKeyedMsg("S2IM0006",[formatOpSignature(op,rest mapmode)])
 ;   else if someDecs then throwKeyedMsg("S2IM0007",[op])
-; 
+;
 ;   -- if map is declared, check that signature arg count is the
 ;   -- same as what is given.
 ;   if get(op,'mode,$e) is ['Mapping,.,:mapargs] then
@@ -189,13 +180,13 @@
 ;   userVariables2 := setDifference(userVariables1,findLocalVars(op,rhs))
 ;   userVariables3 := setDifference(userVariables2, parameters)
 ;   userVariables4 := REMDUP setDifference (userVariables3, [op])
-; 
+;
 ;   --figure out the new dependencies for the new map (what it depends on)
 ;   newDependencies := makeNewDependencies (op, userVariables4)
 ;   putDependencies (op, newDependencies)
-;   clearDependencies(op,'T)
+;   clearDependencies(op)
 ;   addMap(lhs,rhs,pred)
- 
+
 (DEFUN |addDefMap| (|bfVar#5| |pred|)
   (PROG (|$localVars| |$freeVars| |$genValue| |$env| |newDependencies|
          |userVariables4| |userVariables3| |userVariables2| |userVariables1|
@@ -298,9 +289,9 @@
                  (REMDUP (SETDIFFERENCE |userVariables3| (LIST |op|))))
          (SETQ |newDependencies| (|makeNewDependencies| |op| |userVariables4|))
          (|putDependencies| |op| |newDependencies|)
-         (|clearDependencies| |op| 'T)
+         (|clearDependencies| |op|)
          (|addMap| |lhs| |rhs| |pred|))))))))
- 
+
 ; addMap(lhs,rhs,pred) ==
 ;   [op,:argl] := lhs
 ;   $sl: local:= nil
@@ -315,8 +306,9 @@
 ;   argPredList:= NREVERSE predList
 ;   finalPred :=
 ; -- handle g(a,T)==a+T confusion between pred=T and T variable
-;     MKPF((pred and (pred ~= 'T) => [:argPredList,SUBLISNQ($sl,pred)]; argPredList),"and")
-;   body:= SUBLISNQ($sl,rhs)
+;       MKPF((pred and (pred ~= 'T) =>
+;             [:argPredList, sublisNQ($sl, pred)]; argPredList), "and")
+;   body := sublisNQ($sl, rhs)
 ;   oldMap :=
 ;     (obj := get(op,'value,$InteractiveFrame)) => objVal obj
 ;     NIL
@@ -332,7 +324,7 @@
 ;     true
 ;   putHist(op,'recursive,recursive,$e)
 ;   objNew(newMap,type)
- 
+
 (DEFUN |addMap| (|lhs| |rhs| |pred|)
   (PROG (|$sl| |recursive| |type| |newMap| |oldMap| |obj| |body| |finalPred|
          |argPredList| |argList| |predList| |p| |ISTMP#2| |s| |ISTMP#1|
@@ -395,10 +387,10 @@
               (MKPF
                (COND
                 ((AND |pred| (NOT (EQ |pred| 'T)))
-                 (APPEND |argPredList| (CONS (SUBLISNQ |$sl| |pred|) NIL)))
+                 (APPEND |argPredList| (CONS (|sublisNQ| |$sl| |pred|) NIL)))
                 (#1# |argPredList|))
                '|and|))
-      (SETQ |body| (SUBLISNQ |$sl| |rhs|))
+      (SETQ |body| (|sublisNQ| |$sl| |rhs|))
       (SETQ |oldMap|
               (COND
                ((SETQ |obj| (|get| |op| '|value| |$InteractiveFrame|))
@@ -422,7 +414,7 @@
                        (#1# T)))
          (|putHist| |op| '|recursive| |recursive| |$e|)
          (|objNew| |newMap| |type|))))))))
- 
+
 ; augmentMap(op,args,pred,body,oldMap) ==
 ;   pattern:= makePattern(args,pred)
 ;   newMap:=deleteMap(op,pattern,oldMap)
@@ -435,7 +427,7 @@
 ;     newMap is ["SPADMAP", :tail] => ["SPADMAP", :tail, entry]
 ;     ["SPADMAP", entry]
 ;   resultMap
- 
+
 (DEFUN |augmentMap| (|op| |args| |pred| |body| |oldMap|)
   (PROG (|pattern| |newMap| |entry| |tail| |resultMap|)
     (RETURN
@@ -461,7 +453,7 @@
                    (CONS 'SPADMAP (APPEND |tail| (CONS |entry| NIL))))
                   (#1# (LIST 'SPADMAP |entry|))))
          |resultMap|)))))))
- 
+
 ; deleteMap(op,pattern,map) ==
 ;   map is ["SPADMAP", :tail] =>
 ;     newMap := ['SPADMAP, :[x for x in tail | w]] where w ==
@@ -470,7 +462,7 @@
 ;     null rest newMap => nil
 ;     newMap
 ;   NIL
- 
+
 (DEFUN |deleteMap| (|op| |pattern| |map|)
   (PROG (|tail| |replacement| |newMap|)
     (RETURN
@@ -498,7 +490,7 @@
                        NIL |tail| NIL)))
         (COND ((NULL (CDR |newMap|)) NIL) (#1# |newMap|))))
       (#1# NIL)))))
- 
+
 ; getUserIdentifiersIn body ==
 ;   null body => nil
 ;   IDENTP body =>
@@ -508,8 +500,8 @@
 ;   body is ["WRAPPED",:.] => nil
 ;   (body is ["COLLECT",:itl,body1]) or (body is ['REPEAT,:itl,body1]) =>
 ;     userIds :=
-;       S_+(getUserIdentifiersInIterators itl,getUserIdentifiersIn body1)
-;     S_-(userIds,getIteratorIds itl)
+;       set_sum(getUserIdentifiersInIterators itl, getUserIdentifiersIn body1)
+;     set_difference(userIds, getIteratorIds itl)
 ;   body is [op,:l] =>
 ;     argIdList:= "append"/[getUserIdentifiersIn y for y in l]
 ;     bodyIdList :=
@@ -517,7 +509,7 @@
 ;         NCONC(getUserIdentifiersIn op, argIdList)
 ;       argIdList
 ;     REMDUP bodyIdList
- 
+
 (DEFUN |getUserIdentifiersIn| (|body|)
   (PROG (|ISTMP#1| |ISTMP#2| |body1| |itl| |userIds| |op| |l| |argIdList|
          |bodyIdList|)
@@ -552,9 +544,9 @@
                         (PROGN (SETQ |itl| (NREVERSE |itl|)) #1#)))))
             (PROGN
              (SETQ |userIds|
-                     (S+ (|getUserIdentifiersInIterators| |itl|)
+                     (|set_sum| (|getUserIdentifiersInIterators| |itl|)
                       (|getUserIdentifiersIn| |body1|)))
-             (S- |userIds| (|getIteratorIds| |itl|))))
+             (|set_difference| |userIds| (|getIteratorIds| |itl|))))
            ((AND (CONSP |body|)
                  (PROGN (SETQ |op| (CAR |body|)) (SETQ |l| (CDR |body|)) #1#))
             (PROGN
@@ -579,7 +571,7 @@
                        (NCONC (|getUserIdentifiersIn| |op|) |argIdList|))
                       (#1# |argIdList|)))
              (REMDUP |bodyIdList|)))))))
- 
+
 ; getUserIdentifiersInIterators itl ==
 ;   for x in itl repeat
 ;     x is ["STEP",i,:l] =>
@@ -591,7 +583,7 @@
 ;     keyedSystemError("S2GE0016",['"getUserIdentifiersInIterators",
 ;       '"unknown iterator construct"])
 ;   REMDUP varList
- 
+
 (DEFUN |getUserIdentifiersInIterators| (|itl|)
   (PROG (|ISTMP#1| |i| |l| |varList| |ISTMP#2| |y| |op| |a|)
     (RETURN
@@ -659,7 +651,7 @@
           (SETQ |bfVar#15| (CDR |bfVar#15|))))
        |itl| NIL)
       (REMDUP |varList|)))))
- 
+
 ; getIteratorIds itl ==
 ;   for x in itl repeat
 ;     x is ["STEP",i,:.] => varList:= [i,:varList]
@@ -667,7 +659,7 @@
 ;     x is ["ON",y,:.]   => varList:= [y,:varList]
 ;     nil
 ;   varList
- 
+
 (DEFUN |getIteratorIds| (|itl|)
   (PROG (|ISTMP#1| |i| |varList| |y|)
     (RETURN
@@ -701,14 +693,14 @@
           (SETQ |bfVar#18| (CDR |bfVar#18|))))
        |itl| NIL)
       |varList|))))
- 
+
 ; makeArgumentIntoNumber x ==
 ;   x=$Zero => 0
 ;   x=$One => 1
 ;   atom x => x
 ;   x is ["-",n] and NUMBERP n => -n
 ;   [removeZeroOne first x,:removeZeroOne rest x]
- 
+
 (DEFUN |makeArgumentIntoNumber| (|x|)
   (PROG (|ISTMP#1| |n|)
     (RETURN
@@ -722,14 +714,14 @@
             (- |n|))
            (#1#
             (CONS (|removeZeroOne| (CAR |x|)) (|removeZeroOne| (CDR |x|))))))))
- 
+
 ; mkMapAlias(op,argl) ==
 ;   u:= mkAliasList argl
 ;   newAlias :=
 ;     alias:= get(op,"alias",$e) => [(y => y; x) for x in alias for y in u]
 ;     u
 ;   $e:= putHist(op,"alias",newAlias,$e)
- 
+
 (DEFUN |mkMapAlias| (|op| |argl|)
   (PROG (|u| |alias| |newAlias|)
     (RETURN
@@ -754,12 +746,12 @@
                  NIL |alias| NIL |u| NIL))
                (#1# |u|)))
       (SETQ |$e| (|putHist| |op| '|alias| |newAlias| |$e|))))))
- 
+
 ; mkAliasList l == fn(l,nil) where fn(l,acc) ==
 ;   null l => NREVERSE acc
 ;   not IDENTP first l or first l in acc => fn(rest l,[nil,:acc])
 ;   fn(rest l,[first l,:acc])
- 
+
 (DEFUN |mkAliasList| (|l|) (PROG () (RETURN (|mkAliasList,fn| |l| NIL))))
 (DEFUN |mkAliasList,fn| (|l| |acc|)
   (PROG ()
@@ -768,13 +760,13 @@
            ((OR (NULL (IDENTP (CAR |l|))) (|member| (CAR |l|) |acc|))
             (|mkAliasList,fn| (CDR |l|) (CONS NIL |acc|)))
            ('T (|mkAliasList,fn| (CDR |l|) (CONS (CAR |l|) |acc|)))))))
- 
+
 ; args2Tuple args ==
 ;   args is [first,:rest] =>
 ;     null rest => first
 ;     ["Tuple",:args]
 ;   nil
- 
+
 (DEFUN |args2Tuple| (|args|)
   (PROG (CAR CDR)
     (RETURN
@@ -783,7 +775,7 @@
             (PROGN (SETQ CAR (CAR |args|)) (SETQ CDR (CDR |args|)) #1='T))
        (COND ((NULL CDR) CAR) (#1# (CONS '|Tuple| |args|))))
       (#1# NIL)))))
- 
+
 ; makePattern(args,pred) ==
 ;   nargs:= #args
 ;   nargs = 1 =>
@@ -791,7 +783,7 @@
 ;     addPatternPred("#1",pred)
 ;   u:= canMakeTuple(nargs,pred) => u
 ;   addPatternPred(["Tuple",:TAKE(nargs,$FormalMapVariableList)],pred)
- 
+
 (DEFUN |makePattern| (|args| |pred|)
   (PROG (|nargs| |ISTMP#1| |ISTMP#2| |n| |u|)
     (RETURN
@@ -814,21 +806,21 @@
        (#1#
         (|addPatternPred|
          (CONS '|Tuple| (TAKE |nargs| |$FormalMapVariableList|)) |pred|)))))))
- 
+
 ; addPatternPred(arg,pred) ==
 ;   pred=true => arg
 ;   ["|",arg,pred]
- 
+
 (DEFUN |addPatternPred| (|arg| |pred|)
   (PROG ()
     (RETURN (COND ((EQUAL |pred| T) |arg|) ('T (LIST '|\|| |arg| |pred|))))))
- 
+
 ; canMakeTuple(nargs,pred) ==
 ;   pred is ["and",:l] and nargs=#l and
 ;     (u:= [(x is ["=",=y,a] => a; return nil)
 ;       for y in $FormalMapVariableList for x in orderList l]) =>
 ;         ["Tuple",:u]
- 
+
 (DEFUN |canMakeTuple| (|nargs| |pred|)
   (PROG (|l| |ISTMP#1| |ISTMP#2| |a| |u|)
     (RETURN
@@ -869,14 +861,14 @@
                         (SETQ |bfVar#23| (CDR |bfVar#23|))))
                      NIL |$FormalMapVariableList| NIL (|orderList| |l|) NIL)))
        (IDENTITY (CONS '|Tuple| |u|)))))))
- 
+
 ; sayRemoveFunctionOrValue x ==
 ;   (obj := getValue x) and (md := objMode obj) =>
 ;     md = $EmptyMode =>
 ;       sayMessage ['"  ",:bright x,'"now has no function parts."]
 ;     sayMessage ['"   value for",:bright x,'"has been removed."]
 ;   sayMessage ['"  ",:bright x,'"has no value so this does nothing."]
- 
+
 (DEFUN |sayRemoveFunctionOrValue| (|x|)
   (PROG (|obj| |md|)
     (RETURN
@@ -897,14 +889,14 @@
         (CONS "  "
               (APPEND (|bright| |x|)
                       (CONS "has no value so this does nothing." NIL)))))))))
- 
+
 ; sayDroppingFunctions(op,l) ==
 ;   sayKeyedMsg("S2IM0017",[#l,op])
 ;   if $displayDroppedMap then
 ;     for [pattern,:replacement] in l repeat
 ;       displaySingleRule(op,pattern,replacement)
 ;   nil
- 
+
 (DEFUN |sayDroppingFunctions| (|op| |l|)
   (PROG (|pattern| |replacement|)
     (RETURN
@@ -928,11 +920,11 @@
             (SETQ |bfVar#26| (CDR |bfVar#26|))))
          |l| NIL)))
       NIL))))
- 
+
 ; makeRuleForm(op,pattern)==
 ;   pattern is ["Tuple",:l] => [op,:l]
 ;   [op,:pattern]
- 
+
 (DEFUN |makeRuleForm| (|op| |pattern|)
   (PROG (|l|)
     (RETURN
@@ -941,7 +933,7 @@
             (PROGN (SETQ |l| (CDR |pattern|)) #1='T))
        (CONS |op| |l|))
       (#1# (CONS |op| |pattern|))))))
- 
+
 ; mkFormalArg(x,s) ==
 ;   isConstantArgument x => ["SUCHTHAT",s,["=",s,x]]
 ;   isPatternArgument x => ["SUCHTHAT",s,["is",s,x]]
@@ -950,7 +942,7 @@
 ;     $sl:= [[x,:s],:$sl]
 ;     s
 ;   ['SUCHTHAT,s,["=",s,x]]
- 
+
 (DEFUN |mkFormalArg| (|x| |s|)
   (PROG (|y|)
     (RETURN
@@ -963,11 +955,11 @@
               (LIST 'SUCHTHAT |s| (LIST '= |s| |y|)))
              (#1='T (PROGN (SETQ |$sl| (CONS (CONS |x| |s|) |$sl|)) |s|))))
            (#1# (LIST 'SUCHTHAT |s| (LIST '= |s| |x|)))))))
- 
+
 ; isConstantArgument x ==
 ;   NUMBERP x => x
 ;   x is ["QUOTE",.] => x
- 
+
 (DEFUN |isConstantArgument| (|x|)
   (PROG (|ISTMP#1|)
     (RETURN
@@ -977,18 +969,18 @@
                   (SETQ |ISTMP#1| (CDR |x|))
                   (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL))))
             |x|)))))
- 
+
 ; isPatternArgument x == x is ["construct",:.]
- 
+
 (DEFUN |isPatternArgument| (|x|)
   (PROG () (RETURN (AND (CONSP |x|) (EQ (CAR |x|) '|construct|)))))
- 
+
 ; makeNewDependencies (op, userVariables) ==
 ;   null userVariables => nil
 ;   --add the new dependencies
 ;   [[(first userVariables),op],
 ;     :makeNewDependencies (op, rest userVariables)]
- 
+
 (DEFUN |makeNewDependencies| (|op| |userVariables|)
   (PROG ()
     (RETURN
@@ -996,7 +988,7 @@
            ('T
             (CONS (LIST (CAR |userVariables|) |op|)
                   (|makeNewDependencies| |op| (CDR |userVariables|))))))))
- 
+
 ; putDependencies (op, dependencies) ==
 ;   oldDependencies := getFlag "$dependencies"
 ;   --remove the obsolete dependencies:  all those that applied to the
@@ -1015,7 +1007,7 @@
 ;   --defined, but includes those for all maps and variables that exist
 ;   newDependencies := union (dependencies, oldDependencies)
 ;   putFlag ("$dependencies", newDependencies)
- 
+
 (DEFUN |putDependencies| (|op| |dependencies|)
   (PROG (|oldDependencies| |newDependencies|)
     (RETURN
@@ -1036,19 +1028,14 @@
             (CONS (CAR |oldDep|)
                   (|putDependencies,removeObsoleteDependencies| |op|
                    (CDR |oldDep|))))))))
- 
-; clearDependencies(x,clearLocalModemapsIfTrue) ==
-;   $dependencies: local:= COPY getFlag "$dependencies"
-;   clearDep1(x,nil,nil,$dependencies)
- 
-(DEFUN |clearDependencies| (|x| |clearLocalModemapsIfTrue|)
-  (PROG (|$dependencies|)
-    (DECLARE (SPECIAL |$dependencies|))
-    (RETURN
-     (PROGN
-      (SETQ |$dependencies| (COPY (|getFlag| '|$dependencies|)))
-      (|clearDep1| |x| NIL NIL |$dependencies|)))))
- 
+
+; clearDependencies(x) ==
+;     clearDep1(x, [], [], COPY getFlag "$dependencies")
+
+(DEFUN |clearDependencies| (|x|)
+  (PROG ()
+    (RETURN (|clearDep1| |x| NIL NIL (COPY (|getFlag| '|$dependencies|))))))
+
 ; clearDep1(x,toDoList,doneList,depList) ==
 ;   x in doneList => nil
 ;   clearCache x
@@ -1061,7 +1048,7 @@
 ;         setDifference(rest a, doneList))
 ;   toDoList is [a,:res] => clearDep1(a,res,newDone,depList)
 ;   'done
- 
+
 (DEFUN |clearDep1| (|x| |toDoList| |doneList| |depList|)
   (PROG (|newDone| |a| |res|)
     (RETURN
@@ -1094,12 +1081,12 @@
                      #1#))
                (|clearDep1| |a| |res| |newDone| |depList|))
               (#1# '|done|))))))))
- 
+
 ; displayRule(op,rule) ==
 ;   null rule => nil
 ;   mathprint ["CONCAT", "Definition:   ", outputMapTran(op, rule)]
 ;   nil
- 
+
 (DEFUN |displayRule| (|op| |rule|)
   (PROG ()
     (RETURN
@@ -1109,7 +1096,7 @@
              (|mathprint|
               (LIST 'CONCAT '|Definition:   | (|outputMapTran| |op| |rule|)))
              NIL))))))
- 
+
 ; outputFormat(x,m) ==
 ;   -- this is largely junk and is being phased out
 ;   IDENTP m => x
@@ -1122,7 +1109,7 @@
 ;   T:= coerceInteractive(objNewWrap(x,maximalSuperType(m)),
 ;     $OutputForm) or return x
 ;   objValUnwrap T
- 
+
 (DEFUN |outputFormat| (|x| |m|)
   (PROG (T$)
     (RETURN
@@ -1143,16 +1130,16 @@
                        |$OutputForm|)
                       (RETURN |x|)))
              (|objValUnwrap| T$)))))))
- 
+
 ; displaySingleRule(op, pattern, replacement) ==
 ;   mathprint outputMapTran(op, ['SPADMAP, [pattern, :replacement]])
- 
+
 (DEFUN |displaySingleRule| (|op| |pattern| |replacement|)
   (PROG ()
     (RETURN
      (|mathprint|
       (|outputMapTran| |op| (LIST 'SPADMAP (CONS |pattern| |replacement|)))))))
- 
+
 ; simplifyMapPattern (x,alias) ==
 ;   for a in alias
 ;     for m in $FormalMapVariableList | a and not CONTAINED(a,x) repeat
@@ -1176,7 +1163,7 @@
 ;     [["PAREN",["|",y,pred]],:rhs]
 ;   lhs=true => ["true",:rhs]
 ;   x
- 
+
 (DEFUN |simplifyMapPattern| (|x| |alias|)
   (PROG (|lhs| |rhs| |ISTMP#1| |y| |ISTMP#2| |pred| |sl| |y'| |rhs'|)
     (RETURN
@@ -1254,7 +1241,7 @@
             (|member| |op| '(= |is|)))
        T)
       (#1# |x|)))))
- 
+
 ; simplifyMapConstructorRefs form ==
 ;   -- try to linear format constructor names
 ;   ATOM form => form
@@ -1275,7 +1262,7 @@
 ;       [op,obj, dom'']
 ;     form
 ;   form
- 
+
 (DEFUN |simplifyMapConstructorRefs| (|form|)
   (PROG (|op| |args| |obj| |ISTMP#1| |dom| |dom'| |dom''|)
     (RETURN
@@ -1332,7 +1319,7 @@
                   (LIST |op| |obj| |dom''|)))
                 (#1# |form|)))
               (#1# |form|))))))))
- 
+
 ; predTran x ==
 ;   x is ["IF",a,b,c] =>
 ;     c = "false" => MKPF([predTran a,predTran b],"and")
@@ -1340,7 +1327,7 @@
 ;     b = "false" and c = "true" => ["not",predTran a]
 ;     x
 ;   x
- 
+
 (DEFUN |predTran| (|x|)
   (PROG (|ISTMP#1| |a| |ISTMP#2| |b| |ISTMP#3| |c|)
     (RETURN
@@ -1367,7 +1354,7 @@
          (LIST '|not| (|predTran| |a|)))
         (#1# |x|)))
       (#1# |x|)))))
- 
+
 ; getEqualSublis pred == fn(pred,nil) where fn(x,sl) ==
 ;   (x:= SUBLIS(sl,x)) is [op,:l] and op in '(_and _or) =>
 ;     for y in l repeat sl:= fn(y,sl)
@@ -1378,7 +1365,7 @@
 ;     IDENTP b and not CONTAINED(b,a) => [[b,:a],:sl]
 ;     sl
 ;   sl
- 
+
 (DEFUN |getEqualSublis| (|pred|)
   (PROG () (RETURN (|getEqualSublis,fn| |pred| NIL))))
 (DEFUN |getEqualSublis,fn| (|x| |sl|)
@@ -1430,17 +1417,17 @@
          (CONS (CONS |b| |a|) |sl|))
         (#1# |sl|)))
       (#1# |sl|)))))
- 
+
 ; mapCatchName mapname ==
 ;    INTERN STRCONC('"$",STRINGIMAGE mapname,'"CatchMapIdentifier$")
- 
+
 (DEFUN |mapCatchName| (|mapname|)
   (PROG ()
     (RETURN
      (INTERN (STRCONC "$" (STRINGIMAGE |mapname|) "CatchMapIdentifier$")))))
- 
+
 ; analyzeMap(op,argTypes,mapDef, tar) ==
-;   -- Top level enty point for map type analysis.  Sets up catch point
+;   -- Top level entry point for map type analysis.  Sets up catch point
 ;   --  for interpret-code mode.
 ;   $compilingMap:local := true
 ;   $definingMap:local := true
@@ -1466,7 +1453,7 @@
 ;   PUSH(mapAndArgTypes,$analyzingMapList)
 ;   mapDef := mapDefsWithCorrectArgCount(#argTypes, mapDef)
 ;   null mapDef => (POP $analyzingMapList; nil)
-; 
+;
 ;   UNWIND_-PROTECT(x:=CATCH('mapCompiler,analyzeMap0(op,argTypes,mapDef)),
 ;     POP $analyzingMapList)
 ;   x='tryInterpOnly =>
@@ -1477,7 +1464,7 @@
 ;     $e:=putHist(opName,'localModemap,
 ;       [[['interpOnly,:sig],fun,NIL]],$e)
 ;   x
- 
+
 (DEFUN |analyzeMap| (|op| |argTypes| |mapDef| |tar|)
   (PROG (|$mapName| |$interpOnly| |$mapTarget| |$breakCount| |$repeatLabel|
          |$mapReturnTypes| |$mapThrowCount| |$minivector| |$definingMap|
@@ -1591,7 +1578,7 @@
   (PROG ()
     (RETURN
      (COND ((|isEqualOrSubDomain| |x| |$Integer|) |$Integer|) ('T |x|)))))
- 
+
 ; analyzeMap0(op,argTypes,mapDef) ==
 ;   -- Type analyze and compile a map.  Returns the target type of the map.
 ;   --  only called if there is no applicable compiled map
@@ -1601,7 +1588,7 @@
 ;     -- op has mapping property only if user has declared the signature
 ;     analyzeDeclaredMap(op,argTypes,sig,mapDef,$mapList)
 ;   analyzeUndeclaredMap(getUnname op,argTypes,mapDef,$mapList)
- 
+
 (DEFUN |analyzeMap0| (|op| |argTypes| |mapDef|)
   (PROG (|$MapArgumentTypeList| |sig| |ISTMP#1| |m|)
     (DECLARE (SPECIAL |$MapArgumentTypeList|))
@@ -1619,7 +1606,7 @@
             (#1#
              (|analyzeUndeclaredMap| (|getUnname| |op|) |argTypes| |mapDef|
               |$mapList|)))))))
- 
+
 ; compFailure msg ==
 ;   -- Called when compilation fails in such a way that interpret-code
 ;   --  mode might be of some use.
@@ -1629,7 +1616,7 @@
 ;     sayMSG '"   We will attempt to interpret the code."
 ;   null $compilingMap => THROW('loopCompiler,'tryInterpOnly)
 ;   THROW('mapCompiler,'tryInterpOnly)
- 
+
 (DEFUN |compFailure| (|msg|)
   (PROG ()
     (RETURN
@@ -1642,7 +1629,7 @@
              (COND
               ((NULL |$compilingMap|) (THROW '|loopCompiler| '|tryInterpOnly|))
               (#1# (THROW '|mapCompiler| '|tryInterpOnly|)))))))))
- 
+
 ; mkInterpFun(op,opName,argTypes) ==
 ;   -- creates a function form to put in fun slot of interp-only
 ;   -- local modemaps
@@ -1657,7 +1644,7 @@
 ;   putMapCode(opName,body,sig,funName,parms,false)
 ;   genMapCode(opName,body,sig,funName,parms,false)
 ;   funName
- 
+
 (DEFUN |mkInterpFun| (|op| |opName| |argTypes|)
   (PROG (|ISTMP#1| |sig| |parms| |arglCode| |funName| |body|)
     (RETURN
@@ -1712,7 +1699,7 @@
         (|putMapCode| |opName| |body| |sig| |funName| |parms| NIL)
         (|genMapCode| |opName| |body| |sig| |funName| |parms| NIL)
         |funName|))))))
- 
+
 ; rewriteMap(op,opName,argl) ==
 ;   -- interpret-code handler for maps.  Recursively calls the interpreter
 ;   --   on the body of the map.
@@ -1729,7 +1716,7 @@
 ;       first sig))
 ;     putModeSet(op, [first sig])
 ;   rewriteMap0(op,opName,argl)
- 
+
 (DEFUN |rewriteMap| (|op| |opName| |argl|)
   (PROG (|ISTMP#1| |sig| |atype| |arglCode|)
     (RETURN
@@ -1784,14 +1771,14 @@
             (CAR |sig|)))
           (|putModeSet| |op| (LIST (CAR |sig|)))))))
       (#1# (|rewriteMap0| |op| |opName| |argl|))))))
- 
+
 ; putBodyInEnv(opName, numArgs) ==
 ;   val := get(opName, 'value, $e)
 ;   val is [., 'SPADMAP, :bod] =>
 ;     $e := putHist(opName, 'mapBody, combineMapParts
 ;       mapDefsWithCorrectArgCount(numArgs, bod), $e)
 ;   'failed
- 
+
 (DEFUN |putBodyInEnv| (|opName| |numArgs|)
   (PROG (|val| |ISTMP#1| |bod|)
     (RETURN
@@ -1809,13 +1796,13 @@
                   (|mapDefsWithCorrectArgCount| |numArgs| |bod|))
                  |$e|)))
        (#1# '|failed|))))))
- 
+
 ; removeBodyFromEnv(opName) ==
 ;   $e := putHist(opName, 'mapBody, nil, $e)
- 
+
 (DEFUN |removeBodyFromEnv| (|opName|)
   (PROG () (RETURN (SETQ |$e| (|putHist| |opName| '|mapBody| NIL |$e|)))))
- 
+
 ; rewriteMap0(op,opName,argl) ==
 ;   -- $genValue case of map rewriting
 ;   putBodyInEnv(opName, #argl)
@@ -1845,7 +1832,7 @@
 ;   putValue(op,val)
 ;   removeBodyFromEnv(opName)
 ;   ms := putModeSet(op,[objMode val])
- 
+
 (DEFUN |rewriteMap0| (|op| |opName| |argl|)
   (PROG (|$env| |ms| |m| |val| |t| |ISTMP#2| |ISTMP#1| |argTypes| |tar| |s|)
     (DECLARE (SPECIAL |$env|))
@@ -1901,7 +1888,7 @@
          (|putValue| |op| |val|)
          (|removeBodyFromEnv| |opName|)
          (SETQ |ms| (|putModeSet| |op| (LIST (|objMode| |val|)))))))))))
- 
+
 ; rewriteMap1(opName,argl,sig) ==
 ;   -- compiled case of map rewriting
 ;   putBodyInEnv(opName, #argl)
@@ -1932,7 +1919,7 @@
 ;   val:= interpMap(opName,tar)
 ;   removeBodyFromEnv(opName)
 ;   objValUnwrap(val)
- 
+
 (DEFUN |rewriteMap1| (|opName| |argl| |sig|)
   (PROG (|$env| |m| |val| |t| |v| |evArgl| |argTypes| |tar|)
     (DECLARE (SPECIAL |$env|))
@@ -1987,7 +1974,7 @@
       (SETQ |val| (|interpMap| |opName| |tar|))
       (|removeBodyFromEnv| |opName|)
       (|objValUnwrap| |val|)))))
- 
+
 ; interpMap(opName,tar) ==
 ;   -- call the interpreter recursively on map body
 ;   $genValue : local:= true
@@ -2006,7 +1993,7 @@
 ;   while savedTimerStack ~= $timedNameStack repeat
 ;     stopTimingProcess peekTimedName()
 ;   c  -- better be a triple
- 
+
 (DEFUN |interpMap| (|opName| |tar|)
   (PROG (|$mapTarget| |$mapName| |$localVars| |$interpOnly| |$interpMapTag|
          |$genValue| |c| |catchName| |savedTimerStack| |body|)
@@ -2038,7 +2025,7 @@
           (COND ((EQUAL |savedTimerStack| |$timedNameStack|) (RETURN NIL))
                 (#1# (|stopTimingProcess| (|peekTimedName|)))))))
       |c|))))
- 
+
 ; analyzeDeclaredMap(op,argTypes,sig,mapDef,$mapList) ==
 ;   -- analyzes and compiles maps with declared signatures.  argTypes
 ;   -- is a list of types of the arguments, sig is the declared signature
@@ -2054,7 +2041,7 @@
 ;   argTypes ~= rest sig =>
 ;     analyzeDeclaredMap(op,argTypes,sig,mapDef,$mapList)
 ;   first sig
- 
+
 (DEFUN |analyzeDeclaredMap| (|op| |argTypes| |sig| |mapDef| |$mapList|)
   (DECLARE (SPECIAL |$mapList|))
   (PROG (|opName| |mmS| |ISTMP#1| |mmSig| |mm|)
@@ -2094,7 +2081,7 @@
           ((NOT (EQUAL |argTypes| (CDR |sig|)))
            (|analyzeDeclaredMap| |op| |argTypes| |sig| |mapDef| |$mapList|))
           (#1# (CAR |sig|))))))))))
- 
+
 ; compileDeclaredMap(op,sig,mapDef) ==
 ;   -- Type analyzes and compiles a map with a declared signature.
 ;   -- creates a local modemap and puts it into the environment
@@ -2113,7 +2100,7 @@
 ;   putMapCode(op,objVal val,sig,name,parms,isRecursive)
 ;   genMapCode(op,objVal val,sig,name,parms,isRecursive)
 ;   first sig
- 
+
 (DEFUN |compileDeclaredMap| (|op| |sig| |mapDef|)
   (PROG (|$env| |$freeVars| |$localVars| |isRecursive| |val| |name| |body|
          |parms|)
@@ -2169,7 +2156,7 @@
       (|putMapCode| |op| (|objVal| |val|) |sig| |name| |parms| |isRecursive|)
       (|genMapCode| |op| (|objVal| |val|) |sig| |name| |parms| |isRecursive|)
       (CAR |sig|)))))
- 
+
 ; putMapCode(op,code,sig,name,parms,isRecursive) ==
 ;   -- saves the generated code and some other information about the
 ;   -- function
@@ -2177,7 +2164,7 @@
 ;   allCode := [codeInfo,:get(op,'generatedCode,$e)]
 ;   $e := putHist(op,'generatedCode,allCode,$e)
 ;   op
- 
+
 (DEFUN |putMapCode| (|op| |code| |sig| |name| |parms| |isRecursive|)
   (PROG (|codeInfo| |allCode|)
     (RETURN
@@ -2186,7 +2173,7 @@
       (SETQ |allCode| (CONS |codeInfo| (|get| |op| '|generatedCode| |$e|)))
       (SETQ |$e| (|putHist| |op| '|generatedCode| |allCode| |$e|))
       |op|))))
- 
+
 ; makeLocalModemap(op,sig) ==
 ;   -- create a local modemap for op with sig, and put it into $e
 ;   if (currentMms := get(op,'localModemap,$e)) then
@@ -2196,7 +2183,7 @@
 ;   mms := [newMm,:currentMms]
 ;   $e := putHist(op,'localModemap,mms,$e)
 ;   newName
- 
+
 (DEFUN |makeLocalModemap| (|op| |sig|)
   (PROG (|currentMms| |newName| |newMm| |mms|)
     (RETURN
@@ -2211,7 +2198,7 @@
       (SETQ |mms| (CONS |newMm| |currentMms|))
       (SETQ |$e| (|putHist| |op| '|localModemap| |mms| |$e|))
       |newName|))))
- 
+
 ; genMapCode(op,body,sig,fnName,parms,isRecursive) ==
 ;   -- calls the lisp compiler on the body of a map
 ;   if lmm:= get(op,'localModemap,$InteractiveFrame) then
@@ -2225,21 +2212,21 @@
 ;                                    '"?")])
 ;   else sayKeyedMsg("S2IM0015",[op0,formatSignature sig])
 ;   $whereCacheList := [op,:$whereCacheList]
-; 
+;
 ;   -- RSS: 6-21-94
 ;   -- The following code ensures that local variables really are local
 ;   -- to a function. We will unnecessarily generate preliminary LETs for
 ;   -- loop variables and variables that do have LET expressions, but that
 ;   -- can be finessed later.
-; 
+;
 ;   locals := SETDIFFERENCE(COPY $localVars, parms)
 ;   if locals then
 ;     lets := [['LET, l, ''UNINITIALIZED__VARIABLE, op] for l in locals]
 ;     body := ['PROGN, :lets, body]
-; 
+;
 ;   reportFunctionCompilation(op,fnName,parms,
 ;     wrapMapBodyWithCatch flattenCOND body,isRecursive)
- 
+
 (DEFUN |genMapCode| (|op| |body| |sig| |fnName| |parms| |isRecursive|)
   (PROG (|lmm| |n| |op0| |locals| |lets|)
     (RETURN
@@ -2280,7 +2267,7 @@
         (SETQ |body| (CONS 'PROGN (APPEND |lets| (CONS |body| NIL))))))
       (|reportFunctionCompilation| |op| |fnName| |parms|
        (|wrapMapBodyWithCatch| (|flattenCOND| |body|)) |isRecursive|)))))
- 
+
 ; compileBody(body,target) ==
 ;   -- recursively calls the interpreter on the map body
 ;   --  returns a triple with the LISP code for body in the value cell
@@ -2288,7 +2275,7 @@
 ;   $genValue: local := false
 ;   $declaredMode:local := target
 ;   r := interpret1(body,target,nil)
- 
+
 (DEFUN |compileBody| (|body| |target|)
   (PROG (|$declaredMode| |$genValue| |$insideCompileBodyIfTrue| |r|)
     (DECLARE (SPECIAL |$declaredMode| |$genValue| |$insideCompileBodyIfTrue|))
@@ -2298,7 +2285,7 @@
       (SETQ |$genValue| NIL)
       (SETQ |$declaredMode| |target|)
       (SETQ |r| (|interpret1| |body| |target| NIL))))))
- 
+
 ; compileCoerceMap(op,argTypes,mm) ==
 ;   -- compiles call to user-declared map where the arguments need
 ;   --  to be coerced. mm is the modemap for the declared map.
@@ -2314,14 +2301,11 @@
 ;   parms:= [:parms,'envArg]
 ;   body := ['SPADCALL,:argCode,['LIST,['function,imp]]]
 ;   minivectorName := makeInternalMapMinivectorName(name)
-;   $minivectorNames := [[op,:minivectorName],:$minivectorNames]
 ;   body := SUBST(minivectorName,"$$$",body)
-;   if $compilingInputFile then
-;     $minivectorCode := [:$minivectorCode,minivectorName]
 ;   SET(minivectorName,LIST2REFVEC $minivector)
 ;   compileInteractive [name,['LAMBDA,parms,body]]
 ;   first sig
- 
+
 (DEFUN |compileCoerceMap| (|op| |argTypes| |mm|)
   (PROG (|$genValue| |$insideCompileBodyIfTrue| |minivectorName| |body|
          |argCode| |name| |parms| |imp| |sig|)
@@ -2379,24 +2363,18 @@
                     (APPEND |argCode|
                             (CONS (LIST 'LIST (LIST '|function| |imp|)) NIL))))
       (SETQ |minivectorName| (|makeInternalMapMinivectorName| |name|))
-      (SETQ |$minivectorNames|
-              (CONS (CONS |op| |minivectorName|) |$minivectorNames|))
       (SETQ |body| (SUBST |minivectorName| '$$$ |body|))
-      (COND
-       (|$compilingInputFile|
-        (SETQ |$minivectorCode|
-                (APPEND |$minivectorCode| (CONS |minivectorName| NIL)))))
       (SET |minivectorName| (LIST2REFVEC |$minivector|))
       (|compileInteractive| (LIST |name| (LIST 'LAMBDA |parms| |body|)))
       (CAR |sig|)))))
- 
+
 ; depthOfRecursion(opName,body) ==
 ;   -- returns the "depth" of recursive calls of opName in body
 ;   mapRecurDepth(opName, [nil], body)
- 
+
 (DEFUN |depthOfRecursion| (|opName| |body|)
   (PROG () (RETURN (|mapRecurDepth| |opName| (LIST NIL) |body|))))
- 
+
 ; mapRecurDepth(opName,opList,body) ==
 ;   -- walks over the map body counting depth of recursive calls
 ;   --  expanding the bodies of maps called in body
@@ -2415,7 +2393,7 @@
 ;     argc
 ;   keyedSystemError("S2GE0016",['"mapRecurDepth",
 ;     '"unknown function form"])
- 
+
 (DEFUN |mapRecurDepth| (|opName| |opList| |body|)
   (PROG (|op| |argl| |argc| |obj| |ISTMP#1| |mapDef|)
     (RETURN
@@ -2460,7 +2438,7 @@
            (#1#
             (|keyedSystemError| 'S2GE0016
              (LIST "mapRecurDepth" "unknown function form")))))))
- 
+
 ; analyzeUndeclaredMap(op,argTypes,mapDef,$mapList) ==
 ;   -- Computes the signature of the map named op, and compiles the body
 ;   $freeVars:local := NIL
@@ -2477,7 +2455,7 @@
 ;   (n:= depthOfRecursion(op,body)) = 0 =>
 ;     analyzeNonRecursiveMap(op,argTypes,body,parms)
 ;   analyzeRecursiveMap(op,argTypes,body,parms,n)
- 
+
 (DEFUN |analyzeUndeclaredMap| (|op| |argTypes| |mapDef| |$mapList|)
   (DECLARE (SPECIAL |$mapList|))
   (PROG (|$env| |$localVars| |$freeVars| |n| |body| |parms|)
@@ -2535,7 +2513,7 @@
        ((EQL (SETQ |n| (|depthOfRecursion| |op| |body|)) 0)
         (|analyzeNonRecursiveMap| |op| |argTypes| |body| |parms|))
        (#1# (|analyzeRecursiveMap| |op| |argTypes| |body| |parms| |n|)))))))
- 
+
 ; analyzeNonRecursiveMap(op,argTypes,body,parms) ==
 ;   -- analyze and compile a non-recursive map definition
 ;   T := compileBody(body,$mapTarget)
@@ -2551,7 +2529,7 @@
 ;   putMapCode(op,objVal T,sig,name,parms,false)
 ;   genMapCode(op,objVal T,sig,name,parms,false)
 ;   objMode(T)
- 
+
 (DEFUN |analyzeNonRecursiveMap| (|op| |argTypes| |body| |parms|)
   (PROG (T$ |t| |b| |sig| |name|)
     (RETURN
@@ -2583,7 +2561,7 @@
       (|putMapCode| |op| (|objVal| T$) |sig| |name| |parms| NIL)
       (|genMapCode| |op| (|objVal| T$) |sig| |name| |parms| NIL)
       (|objMode| T$)))))
- 
+
 ; analyzeRecursiveMap(op,argTypes,body,parms,n) ==
 ;   -- analyze and compile a non-recursive map definition
 ;   --  makes guess at signature by analyzing non-recursive part of body
@@ -2602,7 +2580,7 @@
 ;   putMapCode(op,objVal code,sig,name,parms,true)
 ;   genMapCode(op,objVal code,sig,name,parms,true)
 ;   tar
- 
+
 (DEFUN |analyzeRecursiveMap| (|op| |argTypes| |body| |parms| |n|)
   (PROG (|localMapInfo| |tar| |sigChanged| |sig| |name| |code|)
     (RETURN
@@ -2637,7 +2615,7 @@
               (|putMapCode| |op| (|objVal| |code|) |sig| |name| |parms| T)
               (|genMapCode| |op| (|objVal| |code|) |sig| |name| |parms| T)
               |tar|)))))))
- 
+
 ; saveDependentMapInfo(op,opList) ==
 ;   not (op in opList) =>
 ;     lmml := [[op, :get(op, 'localModemap, $e)]]
@@ -2648,7 +2626,7 @@
 ;       gcl := nconc(gcl', gcl)
 ;     [lmms, :gcl]
 ;   nil
- 
+
 (DEFUN |saveDependentMapInfo| (|op| |opList|)
   (PROG (|lmml| |gcl| |dep1| |ISTMP#1| |dep2| |LETTMP#1| |lmml'| |gcl'| |lmms|)
     (RETURN
@@ -2683,7 +2661,7 @@
          (|getFlag| '|$dependencies|) NIL)
         (CONS |lmms| |gcl|)))
       (#1# NIL)))))
- 
+
 ; restoreDependentMapInfo(op, opList, [lmml,:gcl]) ==
 ;   not (op in opList) =>
 ;     clearDependentMaps(op,opList)
@@ -2691,7 +2669,7 @@
 ;       $e := putHist(op,'localModemap,lmm,$e)
 ;     for [op, :gc] in gcl repeat
 ;       $e := putHist(op,'generatedCode,gc,$e)
- 
+
 (DEFUN |restoreDependentMapInfo| (|op| |opList| |bfVar#96|)
   (PROG (|lmml| |gcl| |lmm| |gc|)
     (RETURN
@@ -2733,7 +2711,7 @@
                      (SETQ |$e| (|putHist| |op| '|generatedCode| |gc| |$e|)))))
               (SETQ |bfVar#95| (CDR |bfVar#95|))))
            |gcl| NIL)))))))))
- 
+
 ; clearDependentMaps(op,opList) ==
 ;   -- clears the local modemaps of all the maps that depend on op
 ;   not (op in opList) =>
@@ -2741,7 +2719,7 @@
 ;     $e := putHist(op,'generatedCode,nil,$e)
 ;     for [dep1,dep2] in getFlag("$dependencies") | dep1=op repeat
 ;       clearDependentMaps(dep2,[op,:opList])
- 
+
 (DEFUN |clearDependentMaps| (|op| |opList|)
   (PROG (|dep1| |ISTMP#1| |dep2|)
     (RETURN
@@ -2768,13 +2746,13 @@
                     (|clearDependentMaps| |dep2| (CONS |op| |opList|)))))
              (SETQ |bfVar#98| (CDR |bfVar#98|))))
           (|getFlag| '|$dependencies|) NIL))))))))
- 
+
 ; analyzeNonRecur(op,body,$localVars) ==
 ;   -- type analyze the non-recursive part of a map body
 ;   nrp := nonRecursivePart(op,body)
 ;   for lvar in findLocalVars(op,nrp) repeat mkLocalVar($mapName,lvar)
 ;   objMode(compileBody(nrp,$mapTarget))
- 
+
 (DEFUN |analyzeNonRecur| (|op| |body| |$localVars|)
   (DECLARE (SPECIAL |$localVars|))
   (PROG (|nrp|)
@@ -2790,7 +2768,7 @@
           (SETQ |bfVar#99| (CDR |bfVar#99|))))
        (|findLocalVars| |op| |nrp|) NIL)
       (|objMode| (|compileBody| |nrp| |$mapTarget|))))))
- 
+
 ; nonRecursivePart(opName, funBody) ==
 ;   -- takes funBody, which is the parse tree of the definition of
 ;   --  a function, and returns a list of the parts
@@ -2798,7 +2776,7 @@
 ;   body:= expandRecursiveBody([opName], funBody)
 ;   ((nrp:=nonRecursivePart1(opName, body)) ~= 'noMapVal) => nrp
 ;   throwKeyedMsg("S2IM0012",[opName])
- 
+
 (DEFUN |nonRecursivePart| (|opName| |funBody|)
   (PROG (|body| |nrp|)
     (RETURN
@@ -2809,7 +2787,7 @@
          (EQ (SETQ |nrp| (|nonRecursivePart1| |opName| |body|)) '|noMapVal|))
         |nrp|)
        ('T (|throwKeyedMsg| 'S2IM0012 (LIST |opName|))))))))
- 
+
 ; expandRecursiveBody(alreadyExpanded, body) ==
 ;   -- replaces calls to other maps with their bodies
 ;   atom body =>
@@ -2827,7 +2805,7 @@
 ;     [op,:[expandRecursiveBody(alreadyExpanded,arg) for arg in argl]]
 ;   keyedSystemError("S2GE0016",['"expandRecursiveBody",
 ;     '"unknown form of function body"])
- 
+
 (DEFUN |expandRecursiveBody| (|alreadyExpanded| |body|)
   (PROG (|obj| |ISTMP#1| |mapDef| |op| |argl| |newBody|)
     (RETURN
@@ -2900,7 +2878,7 @@
       (#1#
        (|keyedSystemError| 'S2GE0016
         (LIST "expandRecursiveBody" "unknown form of function body")))))))
- 
+
 ; nonRecursivePart1(opName, funBody) ==
 ;   -- returns a function body which contains only the parts of funBody
 ;   --  which do not call the function opName
@@ -2921,7 +2899,7 @@
 ;     MEMQ('noMapVal,args) => 'noMapVal
 ;     [op,:args]
 ;   funBody
- 
+
 (DEFUN |nonRecursivePart1| (|opName| |funBody|)
   (PROG (|ISTMP#1| |a| |ISTMP#2| |b| |ISTMP#3| |c| |nra| |nrb| |nrc| |op|
          |argl| |args|)
@@ -2979,13 +2957,13 @@
                (COND ((MEMQ '|noMapVal| |args|) '|noMapVal|)
                      (#1# (CONS |op| |args|)))))))
       (#1# |funBody|)))))
- 
+
 ; containsOp(body,op) ==
 ;   -- true IFF body contains an op statement
 ;   body is [ =op,:.] => true
 ;   body is [.,:argl] => or/[containsOp(arg,op) for arg in argl]
 ;   false
- 
+
 (DEFUN |containsOp| (|body| |op|)
   (PROG (|argl|)
     (RETURN
@@ -3004,7 +2982,7 @@
                 (SETQ |bfVar#108| (CDR |bfVar#108|))))
              NIL |argl| NIL))
            (#1# NIL)))))
- 
+
 ; notCalled(opName,form) ==
 ;   -- returns true if opName is not called in the form
 ;   atom form => true
@@ -3013,7 +2991,7 @@
 ;     and/[notCalled(opName,x) for x in argl]
 ;   keyedSystemError("S2GE0016",['"notCalled",
 ;     '"unknown form of function body"])
- 
+
 (DEFUN |notCalled| (|opName| |form|)
   (PROG (|op| |argl|)
     (RETURN
@@ -3040,10 +3018,10 @@
            (#1#
             (|keyedSystemError| 'S2GE0016
              (LIST "notCalled" "unknown form of function body")))))))
- 
+
 ; mapDefsWithCorrectArgCount(n, mapDef) ==
 ;   [def for def in mapDef | (numArgs first def) = n]
- 
+
 (DEFUN |mapDefsWithCorrectArgCount| (|n| |mapDef|)
   (PROG ()
     (RETURN
@@ -3057,21 +3035,21 @@
                 (SETQ |bfVar#113| (CONS |def| |bfVar#113|)))))
          (SETQ |bfVar#112| (CDR |bfVar#112|))))
       NIL |mapDef| NIL))))
- 
+
 ; numMapArgs(mapDef is [[args,:.],:.]) ==
-;   -- returns the number of arguemnts to the map whose body is mapDef
+;   -- returns the number of arguments to the map whose body is mapDef
 ;   numArgs args
- 
+
 (DEFUN |numMapArgs| (|mapDef|)
   (PROG (|args|)
     (RETURN (PROGN (SETQ |args| (CAAR |mapDef|)) (|numArgs| |args|)))))
- 
+
 ; numArgs args ==
 ;   args is ['_|,a,:.] => numArgs a
 ;   args is ['Tuple,:argl] => #argl
 ;   null args => 0
 ;   1
- 
+
 (DEFUN |numArgs| (|args|)
   (PROG (|ISTMP#1| |a| |argl|)
     (RETURN
@@ -3085,7 +3063,7 @@
             (PROGN (SETQ |argl| (CDR |args|)) #1#))
        (LENGTH |argl|))
       ((NULL |args|) 0) (#1# 1)))))
- 
+
 ; combineMapParts(mapTail) ==
 ;   -- transforms a piece-wise function definition into an if-then-else
 ;   --  statement.  Uses noBranch to indicate undefined branch
@@ -3096,7 +3074,7 @@
 ;     ['IF,mkMapPred cond,part,combineMapParts restMap]
 ;   keyedSystemError("S2GE0016",['"combineMapParts",
 ;     '"unknown function form"])
- 
+
 (DEFUN |combineMapParts| (|mapTail|)
   (PROG (|ISTMP#1| |cond| |part| |restMap| |args|)
     (RETURN
@@ -3134,14 +3112,14 @@
            (#1#
             (|keyedSystemError| 'S2GE0016
              (LIST "combineMapParts" "unknown function form")))))))
- 
+
 ; mkMapPred cond ==
 ;   -- create the predicate on map arguments, derived from "when" clauses
 ;   cond is ['_|,args,pred] => mapPredTran pred
 ;   cond is ['Tuple,:vals] =>
 ;     mkValueCheck(vals,1)
 ;   mkValCheck(cond,1)
- 
+
 (DEFUN |mkMapPred| (|cond|)
   (PROG (|ISTMP#1| |args| |ISTMP#2| |pred| |vals|)
     (RETURN
@@ -3160,12 +3138,12 @@
             (PROGN (SETQ |vals| (CDR |cond|)) #1#))
        (|mkValueCheck| |vals| 1))
       (#1# (|mkValCheck| |cond| 1))))))
- 
+
 ; mkValueCheck(vals,i) ==
 ;   -- creates predicate for specific value check (i.e f 1 == 1)
 ;   vals is [val] => mkValCheck(val,i)
 ;   ['and,mkValCheck(first vals,i),mkValueCheck(rest vals,i+1)]
- 
+
 (DEFUN |mkValueCheck| (|vals| |i|)
   (PROG (|val|)
     (RETURN
@@ -3176,25 +3154,25 @@
       (#1#
        (LIST '|and| (|mkValCheck| (CAR |vals|) |i|)
              (|mkValueCheck| (CDR |vals|) (+ |i| 1))))))))
- 
+
 ; mkValCheck(val,i) ==
 ;   -- create equality check for map predicates
 ;   isSharpVarWithNum val => 'true
 ;   ['_=,mkSharpVar i,val]
- 
+
 (DEFUN |mkValCheck| (|val| |i|)
   (PROG ()
     (RETURN
      (COND ((|isSharpVarWithNum| |val|) '|true|)
            ('T (LIST '= (|mkSharpVar| |i|) |val|))))))
- 
+
 ; mkSharpVar i ==
 ;   -- create #i
 ;   INTERN CONCAT('"#",STRINGIMAGE i)
- 
+
 (DEFUN |mkSharpVar| (|i|)
   (PROG () (RETURN (INTERN (CONCAT "#" (STRINGIMAGE |i|))))))
- 
+
 ; mapPredTran pred ==
 ;   -- transforms "x in i..j" to "x>=i and x<=j"
 ;   pred is ["in", var, ['SEGMENT, lb]] => mkLessOrEqual(lb, var)
@@ -3202,7 +3180,7 @@
 ;     null ub => mkLessOrEqual(lb,var)
 ;     ['and,mkLessOrEqual(lb,var),mkLessOrEqual(var,ub)]
 ;   pred
- 
+
 (DEFUN |mapPredTran| (|pred|)
   (PROG (|ISTMP#1| |var| |ISTMP#2| |ISTMP#3| |ISTMP#4| |lb| |ISTMP#5| |ub|)
     (RETURN
@@ -3252,16 +3230,16 @@
               (LIST '|and| (|mkLessOrEqual| |lb| |var|)
                     (|mkLessOrEqual| |var| |ub|)))))
       (#1# |pred|)))))
- 
+
 ; findLocalVars(op,form) ==
 ;   -- analyzes form for local and free variables, and returns the list
 ;   --  of locals
 ;   findLocalVars1(op,form)
 ;   $localVars
- 
+
 (DEFUN |findLocalVars| (|op| |form|)
   (PROG () (RETURN (PROGN (|findLocalVars1| |op| |form|) |$localVars|))))
- 
+
 ; findLocalVars1(op,form) ==
 ;   -- sets the two lists $localVars and $freeVars
 ;   atom form =>
@@ -3297,7 +3275,7 @@
 ;     y is 'Record => nil
 ;     for x in argl repeat findLocalVars1(op,x)
 ;   keyedSystemError("S2IM0020",[op])
- 
+
 (DEFUN |findLocalVars1| (|op| |form|)
   (PROG (|vars| |ISTMP#1| |a| |ISTMP#2| |b| |vals| |pat| |l| |pattern| |oper|
          |body| |itrl| |y| |argl|)
@@ -3444,7 +3422,7 @@
                   (SETQ |bfVar#123| (CDR |bfVar#123|))))
                |argl| NIL))))
       (#1# (|keyedSystemError| 'S2IM0020 (LIST |op|)))))))
- 
+
 ; findLocalsInLoop(op,itrl,body) ==
 ;   for it in itrl repeat
 ;     it is ['STEP,index,lower,step,:upperList] =>
@@ -3461,7 +3439,7 @@
 ;   for it in itrl repeat
 ;     it is [op,b] and (op in '(UNTIL)) =>
 ;       findLocalVars1(op,b)
- 
+
 (DEFUN |findLocalsInLoop| (|op| |itrl| |body|)
   (PROG (|ISTMP#1| |index| |ISTMP#2| |lower| |ISTMP#3| |step| |upperList| |s|
          |b| |pred|)
@@ -3549,33 +3527,33 @@
               (IDENTITY (|findLocalVars1| |op| |b|))))))
           (SETQ |bfVar#126| (CDR |bfVar#126|))))
        |itrl| NIL)))))
- 
+
 ; isLocalVar(var) == member(var,$localVars)
- 
+
 (DEFUN |isLocalVar| (|var|) (PROG () (RETURN (|member| |var| |$localVars|))))
- 
+
 ; mkLocalVar(op,var) ==
 ;   -- add var to the local variable list
 ;   isFreeVar(var) => $localVars
 ;   $localVars:= insert(var,$localVars)
- 
+
 (DEFUN |mkLocalVar| (|op| |var|)
   (PROG ()
     (RETURN
      (COND ((|isFreeVar| |var|) |$localVars|)
            ('T (SETQ |$localVars| (|insert| |var| |$localVars|)))))))
- 
+
 ; isFreeVar(var) == member(var,$freeVars)
- 
+
 (DEFUN |isFreeVar| (|var|) (PROG () (RETURN (|member| |var| |$freeVars|))))
- 
+
 ; mkFreeVar(op,var) ==
 ;   -- op here for symmetry with mkLocalVar
 ;   $freeVars:= insert(var,$freeVars)
- 
+
 (DEFUN |mkFreeVar| (|op| |var|)
   (PROG () (RETURN (SETQ |$freeVars| (|insert| |var| |$freeVars|)))))
- 
+
 ; listOfVariables pat ==
 ;   -- return a list of the variables in pat, which is an "is" pattern
 ;   IDENTP pat => (pat='_. => nil ; [pat])
@@ -3583,7 +3561,7 @@
 ;     (var='_. => NIL ; [var])
 ;   PAIRP pat => REMDUP [:listOfVariables p for p in pat]
 ;   nil
- 
+
 (DEFUN |listOfVariables| (|pat|)
   (PROG (|ISTMP#1| |var|)
     (RETURN
@@ -3615,22 +3593,22 @@
                  (SETQ |bfVar#127| (CDR |bfVar#127|))))
               NIL |pat| NIL)))
            (#1# NIL)))))
- 
+
 ; getMapBody(op,mapDef) ==
 ;   -- looks in $e for a map body; if not found it computes then stores it
 ;   get(op,'mapBody,$e) or
 ;     combineMapParts mapDef
- 
+
 (DEFUN |getMapBody| (|op| |mapDef|)
   (PROG ()
     (RETURN (OR (|get| |op| '|mapBody| |$e|) (|combineMapParts| |mapDef|)))))
- 
+
 ; getLocalVars(op,body) ==
 ;   -- looks in $e for local vars; if not found, computes then stores them
 ;   get(op,'localVars,$e) or
 ;     $e:= putHist(op,'localVars,lv:=findLocalVars(op,body),$e)
 ;     lv
- 
+
 (DEFUN |getLocalVars| (|op| |body|)
   (PROG (|lv|)
     (RETURN

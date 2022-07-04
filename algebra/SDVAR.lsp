@@ -1,18 +1,18 @@
 
 (PUT '|SDVAR;makeVariable;SNni$;1| '|SPADreplace| 'CONS) 
 
-(SDEFUN |SDVAR;makeVariable;SNni$;1| ((|s| S) (|n| |NonNegativeInteger|) ($ $))
-        (CONS |s| |n|)) 
+(SDEFUN |SDVAR;makeVariable;SNni$;1|
+        ((|s| (S)) (|n| (|NonNegativeInteger|)) ($ ($))) (CONS |s| |n|)) 
 
 (PUT '|SDVAR;variable;$S;2| '|SPADreplace| 'QCAR) 
 
-(SDEFUN |SDVAR;variable;$S;2| ((|v| $) ($ S)) (QCAR |v|)) 
+(SDEFUN |SDVAR;variable;$S;2| ((|v| ($)) ($ (S))) (QCAR |v|)) 
 
 (PUT '|SDVAR;order;$Nni;3| '|SPADreplace| 'QCDR) 
 
-(SDEFUN |SDVAR;order;$Nni;3| ((|v| $) ($ |NonNegativeInteger|)) (QCDR |v|)) 
+(SDEFUN |SDVAR;order;$Nni;3| ((|v| ($)) ($ (|NonNegativeInteger|))) (QCDR |v|)) 
 
-(SDEFUN |SDVAR;<;2$B;4| ((|v| $) (|u| $) ($ |Boolean|))
+(SDEFUN |SDVAR;<;2$B;4| ((|v| ($)) (|u| ($)) ($ (|Boolean|)))
         (COND
          ((SPADCALL (SPADCALL |v| (QREFELT $ 10)) (SPADCALL |u| (QREFELT $ 10))
                     (QREFELT $ 13))
@@ -23,22 +23,20 @@
 
 (DECLAIM (NOTINLINE |SequentialDifferentialVariable;|)) 
 
-(DEFUN |SequentialDifferentialVariable| (#1=#:G708)
+(DEFUN |SequentialDifferentialVariable| (#1=#:G707)
   (SPROG NIL
-         (PROG (#2=#:G709)
+         (PROG (#2=#:G708)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|SequentialDifferentialVariable|)
-                                               '|domainEqualList|)
-                    . #3=(|SequentialDifferentialVariable|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (|SequentialDifferentialVariable;| #1#)
-                    (LETT #2# T . #3#))
+                  (PROG1 (|SequentialDifferentialVariable;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -47,12 +45,11 @@
 (DEFUN |SequentialDifferentialVariable;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|)
-                . #1=(|SequentialDifferentialVariable|))
-          (LETT |dv$| (LIST '|SequentialDifferentialVariable| DV$1) . #1#)
-          (LETT $ (GETREFV 21) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|SequentialDifferentialVariable| DV$1))
+          (LETT $ (GETREFV 21))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|SequentialDifferentialVariable|
                       (LIST DV$1) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -75,15 +72,16 @@
               |latex| 67 |hashUpdate!| 72 |hash| 78 |differentiate| 83 |coerce|
               94 >= 104 > 110 = 116 <= 122 < 128)
            'NIL
-           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0))
+           (CONS (|makeByteWordVec2| 1 '(0 0 0 0 0 0 0 0 0))
                  (CONS
                   '#(|DifferentialVariableCategory&| |OrderedSet&| NIL
-                     |SetCategory&| |BasicType&| |RetractableTo&|
+                     |SetCategory&| |RetractableTo&| |BasicType&| NIL
                      |PartialOrder&| NIL)
                   (CONS
                    '#((|DifferentialVariableCategory| 6) (|OrderedSet|)
-                      (|Comparable|) (|SetCategory|) (|BasicType|)
-                      (|RetractableTo| 6) (|PartialOrder|) (|CoercibleTo| 20))
+                      (|Comparable|) (|SetCategory|) (|RetractableTo| 6)
+                      (|BasicType|) (|CoercibleFrom| 6) (|PartialOrder|)
+                      (|CoercibleTo| 20))
                    (|makeByteWordVec2| 20
                                        '(2 6 12 0 0 13 2 6 12 0 0 14 2 0 12 0 0
                                          1 1 0 8 0 1 1 0 6 0 10 2 0 12 0 0 1 1

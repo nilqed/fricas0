@@ -1,14 +1,14 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; macroExpanded pf ==
 ;     $macActive: local := []
 ;     $posActive: local := []
-; 
+;
 ;     macExpand pf
- 
+
 (DEFUN |macroExpanded| (|pf|)
   (PROG (|$posActive| |$macActive|)
     (DECLARE (SPECIAL |$posActive| |$macActive|))
@@ -17,16 +17,16 @@
       (SETQ |$macActive| NIL)
       (SETQ |$posActive| NIL)
       (|macExpand| |pf|)))))
- 
+
 ; macExpand pf ==
 ;     pfWhere?       pf => macWhere   pf
 ;     pfLambda?      pf => macLambda  pf
 ;     pfMacro?       pf => macMacro pf
-; 
+;
 ;     pfId?          pf => macId pf
 ;     pfApplication? pf => macApplication pf
 ;     pfMapParts(function macExpand, pf)
- 
+
 (DEFUN |macExpand| (|pf|)
   (PROG ()
     (RETURN
@@ -36,28 +36,28 @@
            ((|pfId?| |pf|) (|macId| |pf|))
            ((|pfApplication?| |pf|) (|macApplication| |pf|))
            ('T (|pfMapParts| #'|macExpand| |pf|))))))
- 
+
 ; macWhere pf ==
 ;     mac(pf,$pfMacros) where
 ;         mac(pf,$pfMacros) ==
 ;             -- pfWhereContext is before pfWhereExpr
 ;             pfMapParts(function macExpand, pf)
- 
+
 (DEFUN |macWhere| (|pf|) (PROG () (RETURN (|macWhere,mac| |pf| |$pfMacros|))))
 (DEFUN |macWhere,mac| (|pf| |$pfMacros|)
   (DECLARE (SPECIAL |$pfMacros|))
   (PROG () (RETURN (|pfMapParts| #'|macExpand| |pf|))))
- 
+
 ; macLambda pf ==
 ;     mac(pf,$pfMacros) where
 ;         mac(pf,$pfMacros) ==
 ;             pfMapParts(function macExpand, pf)
- 
+
 (DEFUN |macLambda| (|pf|) (PROG () (RETURN (|macLambda,mac| |pf| |$pfMacros|))))
 (DEFUN |macLambda,mac| (|pf| |$pfMacros|)
   (DECLARE (SPECIAL |$pfMacros|))
   (PROG () (RETURN (|pfMapParts| #'|macExpand| |pf|))))
- 
+
 ; macLambdaParameterHandling( replist , pform )  ==
 ;     pfLeaf? pform => []
 ;     pfLambda? pform =>      -- remove ( identifier . replacement ) from assoclist
@@ -69,7 +69,7 @@
 ;         parlist := pf0MLambdaArgs pform  -- extract parameter list
 ;         [[pfIdSymbol par ,:pfLeaf( pfAbSynOp par,GENSYM(),pfLeafPosition par)] for par in parlist ]
 ;     for p in pfParts pform repeat macLambdaParameterHandling( replist , p )
- 
+
 (DEFUN |macLambdaParameterHandling| (|replist| |pform|)
   (PROG (|parlist|)
     (RETURN
@@ -135,14 +135,14 @@
                  (#1# (|macLambdaParameterHandling| |replist| |p|)))
                 (SETQ |bfVar#8| (CDR |bfVar#8|))))
              (|pfParts| |pform|) NIL))))))
- 
+
 ; macSubstituteId( replist , pform ) ==
 ;     ex := AlistAssocQ( pfIdSymbol pform , replist )
 ;     ex =>
 ;         RPLPAIR(pform, rest ex)
 ;         pform
 ;     pform
- 
+
 (DEFUN |macSubstituteId| (|replist| |pform|)
   (PROG (|ex|)
     (RETURN
@@ -150,16 +150,16 @@
       (SETQ |ex| (|AlistAssocQ| (|pfIdSymbol| |pform|) |replist|))
       (COND (|ex| (PROGN (RPLPAIR |pform| (CDR |ex|)) |pform|))
             ('T |pform|))))))
- 
+
 ; macSubstituteOuter( pform ) ==
 ;     mac0SubstituteOuter( macLambdaParameterHandling( [] , pform ) , pform )
- 
+
 (DEFUN |macSubstituteOuter| (|pform|)
   (PROG ()
     (RETURN
      (|mac0SubstituteOuter| (|macLambdaParameterHandling| NIL |pform|)
       |pform|))))
- 
+
 ; mac0SubstituteOuter( replist , pform ) ==
 ;     pfId? pform => macSubstituteId( replist , pform )
 ;     pfLeaf? pform => pform
@@ -169,7 +169,7 @@
 ;         pform
 ;     for p in pfParts pform repeat mac0SubstituteOuter( replist , p )
 ;     pform
- 
+
 (DEFUN |mac0SubstituteOuter| (|replist| |pform|)
   (PROG (|tmplist|)
     (RETURN
@@ -199,7 +199,7 @@
                  (SETQ |bfVar#10| (CDR |bfVar#10|))))
               (|pfParts| |pform|) NIL)
              |pform|))))))
- 
+
 ; macMacro pf ==
 ;     lhs := pfMacroLhs pf
 ;     rhs := pfMacroRhs pf
@@ -207,11 +207,11 @@
 ;         ncSoftError (pfSourcePosition lhs, 'S2CM0001, [%pform lhs] )
 ;         pf
 ;     sy := pfIdSymbol lhs
-; 
+;
 ;     mac0Define(sy, if pfMLambda? rhs then 'mlambda else 'mbody, macSubstituteOuter rhs)
-; 
+;
 ;     if pfNothing? rhs then pf else pfMacro(lhs, pfNothing())
- 
+
 (DEFUN |macMacro| (|pf|)
   (PROG (|lhs| |rhs| |sy|)
     (RETURN
@@ -232,19 +232,19 @@
           (|macSubstituteOuter| |rhs|))
          (COND ((|pfNothing?| |rhs|) |pf|)
                (#1# (|pfMacro| |lhs| (|pfNothing|)))))))))))
- 
+
 ; mac0Define(sy, state, body) ==
 ;     $pfMacros := cons([sy, state, body], $pfMacros)
- 
+
 (DEFUN |mac0Define| (|sy| |state| |body|)
   (PROG ()
     (RETURN (SETQ |$pfMacros| (CONS (LIST |sy| |state| |body|) |$pfMacros|)))))
- 
+
 ; mac0Get sy ==
 ;     IFCDR ASSOC(sy, $pfMacros)
- 
+
 (DEFUN |mac0Get| (|sy|) (PROG () (RETURN (IFCDR (ASSOC |sy| |$pfMacros|)))))
- 
+
 ; mac0GetName body ==
 ;     name := nil
 ;     for [sy,st,bd] in $pfMacros while not name repeat
@@ -252,7 +252,7 @@
 ;             bd := pfMLambdaBody bd
 ;         EQ(bd, body) => name := [sy,st]
 ;     name
- 
+
 (DEFUN |mac0GetName| (|body|)
   (PROG (|name| |sy| |ISTMP#1| |st| |ISTMP#2| |bd|)
     (RETURN
@@ -282,17 +282,17 @@
           (SETQ |bfVar#12| (CDR |bfVar#12|))))
        |$pfMacros| NIL)
       |name|))))
- 
+
 ; macId pf ==
 ;     sy := pfIdSymbol pf
 ;     not (got := mac0Get sy) => pf
 ;     [state, body] := got
-; 
+;
 ;     state = 'mparam     => body                                         -- expanded already
 ;     state = 'mlambda    => pfCopyWithPos( body , pfSourcePosition pf )  -- expanded later
-; 
+;
 ;     pfCopyWithPos( mac0ExpandBody(body, pf, $macActive, $posActive) , pfSourcePosition pf )
- 
+
 (DEFUN |macId| (|pf|)
   (PROG (|sy| |got| |state| |body|)
     (RETURN
@@ -310,16 +310,16 @@
                      (|pfCopyWithPos|
                       (|mac0ExpandBody| |body| |pf| |$macActive| |$posActive|)
                       (|pfSourcePosition| |pf|)))))))))))
- 
+
 ; macApplication pf ==
 ;     pf := pfMapParts(function macExpand, pf)
-; 
+;
 ;     op := pfApplicationOp pf
 ;     not pfMLambda? op => pf
-; 
+;
 ;     args := pf0ApplicationArgs pf
 ;     mac0MLambdaApply(op, args, pf, $pfMacros)
- 
+
 (DEFUN |macApplication| (|pf|)
   (PROG (|op| |args|)
     (RETURN
@@ -331,7 +331,7 @@
              (PROGN
               (SETQ |args| (|pf0ApplicationArgs| |pf|))
               (|mac0MLambdaApply| |op| |args| |pf| |$pfMacros|))))))))
- 
+
 ; mac0MLambdaApply(mlambda, args, opf, $pfMacros) ==
 ;     params := pf0MLambdaArgs mlambda
 ;     body   := pfMLambdaBody  mlambda
@@ -343,9 +343,9 @@
 ;             pos := pfSourcePosition opf
 ;             ncHardError(pos, 'S2CM0004, [%pform p])
 ;         mac0Define(pfIdSymbol p, 'mparam, a)
-; 
+;
 ;     mac0ExpandBody( body , opf, $macActive, $posActive)
- 
+
 (DEFUN |mac0MLambdaApply| (|mlambda| |args| |opf| |$pfMacros|)
   (DECLARE (SPECIAL |$pfMacros|))
   (PROG (|params| |body| |pos|)
@@ -378,7 +378,7 @@
              (SETQ |bfVar#14| (CDR |bfVar#14|))))
           |params| NIL |args| NIL)
          (|mac0ExpandBody| |body| |opf| |$macActive| |$posActive|))))))))
- 
+
 ; mac0ExpandBody(body, opf, $macActive, $posActive) ==
 ;     MEMQ(body,$macActive) =>
 ;         [.,pf] := $posActive
@@ -387,7 +387,7 @@
 ;     $macActive := [body, :$macActive]
 ;     $posActive := [opf,  :$posActive]
 ;     macExpand body
- 
+
 (DEFUN |mac0ExpandBody| (|body| |opf| |$macActive| |$posActive|)
   (DECLARE (SPECIAL |$macActive| |$posActive|))
   (PROG (|pf| |posn|)
@@ -403,7 +403,7 @@
         (SETQ |$macActive| (CONS |body| |$macActive|))
         (SETQ |$posActive| (CONS |opf| |$posActive|))
         (|macExpand| |body|)))))))
- 
+
 ; mac0InfiniteExpansion(posn, body, active) ==
 ;     blist := [body, :active]
 ;     [fname, :rnames] := [name b for b in blist] where
@@ -415,9 +415,9 @@
 ;             PNAME sy
 ;     ncSoftError (posn, 'S2CM0005, _
 ;        [ [:[n,'"==>"] for n in reverse rnames], fname, %pform body ]  )
-; 
+;
 ;     body
- 
+
 (DEFUN |mac0InfiniteExpansion| (|posn| |body| |active|)
   (PROG (|blist| |LETTMP#1| |fname| |rnames|)
     (RETURN

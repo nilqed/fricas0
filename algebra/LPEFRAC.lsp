@@ -1,7 +1,7 @@
 
 (SDEFUN |LPEFRAC;pullback|
-        ((|pF| |SparseUnivariatePolynomial| (|Fraction| R))
-         ($ . #1=(|Union| (|SparseUnivariatePolynomial| R) "failed")))
+        ((|pF| (|SparseUnivariatePolynomial| (|Fraction| R)))
+         ($ #1=(|Union| (|SparseUnivariatePolynomial| R) "failed")))
         (SPROG ((|r| #1#) (|c| (|Union| R "failed")))
                (SEQ
                 (COND
@@ -11,16 +11,14 @@
                   (SEQ
                    (LETT |c|
                          (SPADCALL (SPADCALL |pF| (QREFELT $ 15))
-                                   (QREFELT $ 17))
-                         . #3=(|LPEFRAC;pullback|))
+                                   (QREFELT $ 17)))
                    (EXIT
                     (COND ((QEQCAR |c| 1) (CONS 1 "failed"))
                           (#2#
                            (SEQ
                             (LETT |r|
                                   (|LPEFRAC;pullback|
-                                   (SPADCALL |pF| (QREFELT $ 18)) $)
-                                  . #3#)
+                                   (SPADCALL |pF| (QREFELT $ 18)) $))
                             (EXIT
                              (COND ((QEQCAR |r| 1) (CONS 1 "failed"))
                                    (#2#
@@ -34,93 +32,85 @@
                                            (QREFELT $ 22)))))))))))))))) 
 
 (SDEFUN |LPEFRAC;solveLinearPolynomialEquationByFractions;LSupU;2|
-        ((|lp| |List| (|SparseUnivariatePolynomial| R))
-         (|pp| |SparseUnivariatePolynomial| R)
-         ($ |Union| (|List| (|SparseUnivariatePolynomial| R)) "failed"))
+        ((|lp| (|List| (|SparseUnivariatePolynomial| R)))
+         (|pp| (|SparseUnivariatePolynomial| R))
+         ($ (|Union| (|List| (|SparseUnivariatePolynomial| R)) "failed")))
         (SPROG
-         ((#1=#:G726 NIL)
+         ((#1=#:G727 NIL)
           (|vv| (|Union| (|SparseUnivariatePolynomial| R) "failed"))
-          (#2=#:G730 NIL) (|v| NIL) (#3=#:G729 NIL)
+          (#2=#:G731 NIL) (|v| NIL) (#3=#:G730 NIL)
           (|ans|
            (|Union| (|List| (|SparseUnivariatePolynomial| (|Fraction| R)))
                     "failed"))
           (|pF| (|SparseUnivariatePolynomial| (|Fraction| R)))
           (|lpF| (|List| (|SparseUnivariatePolynomial| (|Fraction| R))))
-          (#4=#:G728 NIL) (|u| NIL) (#5=#:G727 NIL))
+          (#4=#:G729 NIL) (|u| NIL) (#5=#:G728 NIL))
          (SEQ
           (EXIT
            (SEQ
             (LETT |lpF|
                   (PROGN
-                   (LETT #5# NIL
-                         . #6=(|LPEFRAC;solveLinearPolynomialEquationByFractions;LSupU;2|))
-                   (SEQ (LETT |u| NIL . #6#) (LETT #4# |lp| . #6#) G190
+                   (LETT #5# NIL)
+                   (SEQ (LETT |u| NIL) (LETT #4# |lp|) G190
                         (COND
-                         ((OR (ATOM #4#)
-                              (PROGN (LETT |u| (CAR #4#) . #6#) NIL))
+                         ((OR (ATOM #4#) (PROGN (LETT |u| (CAR #4#)) NIL))
                           (GO G191)))
                         (SEQ
                          (EXIT
                           (LETT #5#
                                 (CONS (SPADCALL (ELT $ 23) |u| (QREFELT $ 26))
-                                      #5#)
-                                . #6#)))
-                        (LETT #4# (CDR #4#) . #6#) (GO G190) G191
-                        (EXIT (NREVERSE #5#))))
-                  . #6#)
-            (LETT |pF| (SPADCALL (ELT $ 23) |pp| (QREFELT $ 26)) . #6#)
-            (LETT |ans| (SPADCALL |lpF| |pF| (QREFELT $ 30)) . #6#)
+                                      #5#))))
+                        (LETT #4# (CDR #4#)) (GO G190) G191
+                        (EXIT (NREVERSE #5#)))))
+            (LETT |pF| (SPADCALL (ELT $ 23) |pp| (QREFELT $ 26)))
+            (LETT |ans| (SPADCALL |lpF| |pF| (QREFELT $ 30)))
             (EXIT
              (COND ((QEQCAR |ans| 1) (CONS 1 "failed"))
                    ('T
                     (CONS 0
                           (PROGN
-                           (LETT #3# NIL . #6#)
-                           (SEQ (LETT |v| NIL . #6#)
-                                (LETT #2# (QCDR |ans|) . #6#) G190
+                           (LETT #3# NIL)
+                           (SEQ (LETT |v| NIL) (LETT #2# (QCDR |ans|)) G190
                                 (COND
                                  ((OR (ATOM #2#)
-                                      (PROGN (LETT |v| (CAR #2#) . #6#) NIL))
+                                      (PROGN (LETT |v| (CAR #2#)) NIL))
                                   (GO G191)))
                                 (SEQ
                                  (EXIT
                                   (LETT #3#
                                         (CONS
                                          (SEQ
-                                          (LETT |vv| (|LPEFRAC;pullback| |v| $)
-                                                . #6#)
+                                          (LETT |vv|
+                                                (|LPEFRAC;pullback| |v| $))
                                           (EXIT
                                            (COND
                                             ((QEQCAR |vv| 1)
                                              (PROGN
-                                              (LETT #1# (CONS 1 "failed")
-                                                    . #6#)
-                                              (GO #7=#:G725)))
+                                              (LETT #1# (CONS 1 "failed"))
+                                              (GO #6=#:G726)))
                                             ('T (QCDR |vv|)))))
-                                         #3#)
-                                        . #6#)))
-                                (LETT #2# (CDR #2#) . #6#) (GO G190) G191
+                                         #3#))))
+                                (LETT #2# (CDR #2#)) (GO G190) G191
                                 (EXIT (NREVERSE #3#))))))))))
-          #7# (EXIT #1#)))) 
+          #6# (EXIT #1#)))) 
 
 (DECLAIM (NOTINLINE |LinearPolynomialEquationByFractions;|)) 
 
-(DEFUN |LinearPolynomialEquationByFractions| (#1=#:G731)
+(DEFUN |LinearPolynomialEquationByFractions| (#1=#:G732)
   (SPROG NIL
-         (PROG (#2=#:G732)
+         (PROG (#2=#:G733)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|LinearPolynomialEquationByFractions|)
-                                               '|domainEqualList|)
-                    . #3=(|LinearPolynomialEquationByFractions|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (|LinearPolynomialEquationByFractions;| #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -129,12 +119,11 @@
 (DEFUN |LinearPolynomialEquationByFractions;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|)
-                . #1=(|LinearPolynomialEquationByFractions|))
-          (LETT |dv$| (LIST '|LinearPolynomialEquationByFractions| DV$1) . #1#)
-          (LETT $ (GETREFV 34) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|LinearPolynomialEquationByFractions| DV$1))
+          (LETT $ (GETREFV 34))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache|
                       '|LinearPolynomialEquationByFractions| (LIST DV$1)
                       (CONS 1 $))
@@ -155,19 +144,29 @@
               (|UnivariatePolynomialCategoryFunctions2| 6 8 14 10) (55 . |map|)
               (|Union| 28 '"failed") (|List| 29)
               (|SparseUnivariatePolynomial| $)
-              (61 . |solveLinearPolynomialEquation|) (|Union| 32 '"failed")
+              (61 . |solveLinearPolynomialEquation|) (|Union| 32 '#1="failed")
               (|List| 8)
               |LPEFRAC;solveLinearPolynomialEquationByFractions;LSupU;2|)
            '#(|solveLinearPolynomialEquationByFractions| 67) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 33
-                                                 '(0 6 0 7 0 8 0 9 0 10 0 11 2
-                                                   10 12 0 0 13 1 10 14 0 15 1
-                                                   14 16 0 17 1 10 0 0 18 1 10
-                                                   19 0 20 2 8 0 6 19 21 2 8 0
-                                                   0 0 22 1 14 0 6 23 2 25 10
-                                                   24 8 26 2 14 27 28 29 30 2 0
-                                                   31 32 8 33)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|solveLinearPolynomialEquationByFractions|
+                                 ((|Union|
+                                   (|List| (|SparseUnivariatePolynomial| |#1|))
+                                   #1#)
+                                  (|List| (|SparseUnivariatePolynomial| |#1|))
+                                  (|SparseUnivariatePolynomial| |#1|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 33
+                                            '(0 6 0 7 0 8 0 9 0 10 0 11 2 10 12
+                                              0 0 13 1 10 14 0 15 1 14 16 0 17
+                                              1 10 0 0 18 1 10 19 0 20 2 8 0 6
+                                              19 21 2 8 0 0 0 22 1 14 0 6 23 2
+                                              25 10 24 8 26 2 14 27 28 29 30 2
+                                              0 31 32 8 33)))))
            '|lookupComplete|)) 

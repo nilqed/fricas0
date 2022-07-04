@@ -1,46 +1,47 @@
 
 (PUT '|STRING;ucodeToString;I$;1| '|SPADreplace| 'NUM2USTR) 
 
-(SDEFUN |STRING;ucodeToString;I$;1| ((|n| |Integer|) ($ $)) (NUM2USTR |n|)) 
+(SDEFUN |STRING;ucodeToString;I$;1| ((|n| (|Integer|)) ($ ($))) (NUM2USTR |n|)) 
 
 (PUT '|STRING;uentries;$L;2| '|SPADreplace| 'UENTRIES) 
 
-(SDEFUN |STRING;uentries;$L;2| ((|s| $) ($ |List| (|SingleInteger|)))
+(SDEFUN |STRING;uentries;$L;2| ((|s| ($)) ($ (|List| (|SingleInteger|))))
         (UENTRIES |s|)) 
 
 (PUT '|STRING;string;I$;3| '|SPADreplace| 'STRINGIMAGE) 
 
-(SDEFUN |STRING;string;I$;3| ((|n| |Integer|) ($ $)) (STRINGIMAGE |n|)) 
+(SDEFUN |STRING;string;I$;3| ((|n| (|Integer|)) ($ ($))) (STRINGIMAGE |n|)) 
 
 (SDEFUN |STRING;OMwrite;Omd$BV;4|
-        ((|dev| |OpenMathDevice|) (|x| $) (|wholeObj| |Boolean|) ($ |Void|))
+        ((|dev| (|OpenMathDevice|)) (|x| ($)) (|wholeObj| (|Boolean|))
+         ($ (|Void|)))
         (SEQ (COND (|wholeObj| (SPADCALL |dev| (QREFELT $ 13))))
              (SPADCALL |dev| |x| (QREFELT $ 15))
              (EXIT (COND (|wholeObj| (SPADCALL |dev| (QREFELT $ 16))))))) 
 
 (PUT '|STRING;convert;$If;5| '|SPADreplace| '(XLAM (|x|) |x|)) 
 
-(SDEFUN |STRING;convert;$If;5| ((|x| $) ($ |InputForm|)) |x|) 
+(SDEFUN |STRING;convert;$If;5| ((|x| ($)) ($ (|InputForm|))) |x|) 
 
 (PUT '|STRING;qelt;$IC;6| '|SPADreplace| 'STR_ELT1) 
 
-(SDEFUN |STRING;qelt;$IC;6| ((|s| $) (|i| |Integer|) ($ |Character|))
+(SDEFUN |STRING;qelt;$IC;6| ((|s| ($)) (|i| (|Integer|)) ($ (|Character|)))
         (STR_ELT1 |s| |i|)) 
 
 (PUT '|STRING;qsetelt!;$I2C;7| '|SPADreplace| 'STR_SETELT1) 
 
 (SDEFUN |STRING;qsetelt!;$I2C;7|
-        ((|s| $) (|i| |Integer|) (|c| . #1=(|Character|)) ($ . #1#))
+        ((|s| ($)) (|i| (|Integer|)) (|c| #1=(|Character|)) ($ #1#))
         (STR_SETELT1 |s| |i| |c|)) 
 
 (DECLAIM (NOTINLINE |String;|)) 
 
 (DEFUN |String| ()
   (SPROG NIL
-         (PROG (#1=#:G2565)
+         (PROG (#1=#:G2712)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|String|) . #2=(|String|))
+             ((LETT #1# (HGET |$ConstructorCache| '|String|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -48,14 +49,14 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|String|
                              (LIST (CONS NIL (CONS 1 (|String;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND ((NOT #1#) (HREM |$ConstructorCache| '|String|)))))))))) 
 
 (DEFUN |String;| ()
-  (SPROG ((|dv$| NIL) ($ NIL) (#1=#:G2563 NIL) (|pv$| NIL))
+  (SPROG ((|dv$| NIL) ($ NIL) (#1=#:G2710 NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|String|) . #2=(|String|))
-          (LETT $ (GETREFV 40) . #2#)
+          (LETT |dv$| '(|String|))
+          (LETT $ (GETREFV 40))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -79,12 +80,10 @@
                                               (LETT #1#
                                                     (|HasCategory|
                                                      (|Character|)
-                                                     '(|Comparable|))
-                                                    . #2#)
+                                                     '(|Comparable|)))
                                               (OR #1#
                                                   (|HasCategory| (|Character|)
-                                                                 '(|OrderedSet|)))))
-                          . #2#))
+                                                                 '(|OrderedSet|)))))))
           (|haddProp| |$ConstructorCache| '|String| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (AND (|HasCategory| $ '(|shallowlyMutable|))
@@ -121,7 +120,7 @@
               (11 . |OMputEndObject|) (|Boolean|) |STRING;OMwrite;Omd$BV;4|
               (|InputForm|) |STRING;convert;$If;5| (|Character|)
               |STRING;qelt;$IC;6| |STRING;qsetelt!;$I2C;7| (|List| 21)
-              (|Equation| 21) (|List| 25) (|Mapping| 21 21 21)
+              (|List| 26) (|Equation| 21) (|Mapping| 21 21 21)
               (|NonNegativeInteger|) (|Mapping| 17 21 21) (|Mapping| 17 21)
               (|UniversalSegment| 6) (|Mapping| 21 21) (|OutputForm|)
               (|HashState|) (|SingleInteger|) (|CharacterClass|) (|List| $)

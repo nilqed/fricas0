@@ -5,55 +5,53 @@
 
 (DEFPARAMETER |UnivariatePuiseuxSeriesConstructorCategory;AL| 'NIL) 
 
-(DEFUN |UnivariatePuiseuxSeriesConstructorCategory| (&REST #1=#:G691)
-  (LET (#2=#:G692)
+(DEFUN |UnivariatePuiseuxSeriesConstructorCategory| (|t#1| |t#2|)
+  (LET (#1=#:G690 (#2=#:G691 (LIST (|devaluate| |t#1|) (|devaluate| |t#2|))))
     (COND
-     ((SETQ #2#
-              (|assoc| #3=(|devaluateList| #1#)
-                       |UnivariatePuiseuxSeriesConstructorCategory;AL|))
-      (CDR #2#))
+     ((SETQ #1# (|assoc| #2# |UnivariatePuiseuxSeriesConstructorCategory;AL|))
+      (CDR #1#))
      (T
       (SETQ |UnivariatePuiseuxSeriesConstructorCategory;AL|
               (|cons5|
-               (CONS #3#
-                     (SETQ #2#
+               (CONS #2#
+                     (SETQ #1#
                              (APPLY
                               #'|UnivariatePuiseuxSeriesConstructorCategory;|
-                              #1#)))
+                              #2#)))
                |UnivariatePuiseuxSeriesConstructorCategory;AL|))
-      #2#)))) 
+      #1#)))) 
 
 (DEFUN |UnivariatePuiseuxSeriesConstructorCategory;| (|t#1| |t#2|)
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G689 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV|
-                    (PAIR '(|t#1| |t#2|)
-                          (LIST (|devaluate| |t#1|) (|devaluate| |t#2|)))
-                    (COND (|UnivariatePuiseuxSeriesConstructorCategory;CAT|)
-                          ('T
-                           (LETT
-                            |UnivariatePuiseuxSeriesConstructorCategory;CAT|
-                            (|Join| (|UnivariatePuiseuxSeriesCategory| '|t#1|)
-                                    (|RetractableTo| '|t#2|)
-                                    (|mkCategory|
-                                     '(((|puiseux|
-                                         ($ (|Fraction| (|Integer|)) |t#2|))
-                                        T)
-                                       ((|rationalPower|
-                                         ((|Fraction| (|Integer|)) $))
-                                        T)
-                                       ((|laurentRep| (|t#2| $)) T)
-                                       ((|degree| ((|Fraction| (|Integer|)) $))
-                                        T)
-                                       ((|coerce| ($ |t#2|)) T)
-                                       ((|laurent| (|t#2| $)) T)
-                                       ((|laurentIfCan|
-                                         ((|Union| |t#2| "failed") $))
-                                        T))
-                                     NIL '((|Fraction| (|Integer|))) NIL))
-                            . #2=(|UnivariatePuiseuxSeriesConstructorCategory|)))))
-                   . #2#)
+                   (|subst_in_cat| '(|t#1| |t#2|) (LIST |t#1| |t#2|)
+                                   (COND
+                                    (|UnivariatePuiseuxSeriesConstructorCategory;CAT|)
+                                    ('T
+                                     (LETT
+                                      |UnivariatePuiseuxSeriesConstructorCategory;CAT|
+                                      (|Join|
+                                       (|UnivariatePuiseuxSeriesCategory|
+                                        '|t#1|)
+                                       (|RetractableTo| '|t#2|)
+                                       (|mkCategory|
+                                        '(((|puiseux|
+                                            ($ (|Fraction| (|Integer|)) |t#2|))
+                                           T)
+                                          ((|rationalPower|
+                                            ((|Fraction| (|Integer|)) $))
+                                           T)
+                                          ((|laurentRep| (|t#2| $)) T)
+                                          ((|degree|
+                                            ((|Fraction| (|Integer|)) $))
+                                           T)
+                                          ((|coerce| ($ |t#2|)) T)
+                                          ((|laurent| (|t#2| $)) T)
+                                          ((|laurentIfCan|
+                                            ((|Union| |t#2| "failed") $))
+                                           T))
+                                        NIL NIL NIL)))))))
            (SETELT #1# 0
-                   (LIST '|UnivariatePuiseuxSeriesConstructorCategory|
-                         (|devaluate| |t#1|) (|devaluate| |t#2|)))))) 
+                   (LIST '|UnivariatePuiseuxSeriesConstructorCategory| |t#1|
+                         |t#2|))))) 

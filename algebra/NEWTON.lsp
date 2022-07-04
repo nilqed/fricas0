@@ -1,38 +1,37 @@
 
-(SDEFUN |NEWTON;differences| ((|yl| |List| F) ($ |List| F))
+(SDEFUN |NEWTON;differences| ((|yl| (|List| F)) ($ (|List| F)))
         (SPROG
-         ((#1=#:G705 NIL) (|y1| NIL) (#2=#:G706 NIL) (|y2| NIL)
-          (#3=#:G704 NIL))
+         ((#1=#:G701 NIL) (|y1| NIL) (#2=#:G702 NIL) (|y2| NIL)
+          (#3=#:G700 NIL))
          (SEQ
           (PROGN
-           (LETT #3# NIL . #4=(|NEWTON;differences|))
-           (SEQ (LETT |y2| NIL . #4#) (LETT #2# (CDR |yl|) . #4#)
-                (LETT |y1| NIL . #4#) (LETT #1# |yl| . #4#) G190
+           (LETT #3# NIL)
+           (SEQ (LETT |y2| NIL) (LETT #2# (CDR |yl|)) (LETT |y1| NIL)
+                (LETT #1# |yl|) G190
                 (COND
-                 ((OR (ATOM #1#) (PROGN (LETT |y1| (CAR #1#) . #4#) NIL)
-                      (ATOM #2#) (PROGN (LETT |y2| (CAR #2#) . #4#) NIL))
+                 ((OR (ATOM #1#) (PROGN (LETT |y1| (CAR #1#)) NIL) (ATOM #2#)
+                      (PROGN (LETT |y2| (CAR #2#)) NIL))
                   (GO G191)))
                 (SEQ
                  (EXIT
-                  (LETT #3# (CONS (SPADCALL |y2| |y1| (QREFELT $ 7)) #3#)
-                        . #4#)))
-                (LETT #1# (PROG1 (CDR #1#) (LETT #2# (CDR #2#) . #4#)) . #4#)
-                (GO G190) G191 (EXIT (NREVERSE #3#))))))) 
+                  (LETT #3# (CONS (SPADCALL |y2| |y1| (QREFELT $ 7)) #3#))))
+                (LETT #1# (PROG1 (CDR #1#) (LETT #2# (CDR #2#)))) (GO G190)
+                G191 (EXIT (NREVERSE #3#))))))) 
 
 (SDEFUN |NEWTON;newtonAux|
-        ((|k| F) (|fact| F) (|yl| |List| F) ($ |SparseUnivariatePolynomial| F))
-        (SPROG ((#1=#:G718 NIL))
+        ((|k| (F)) (|fact| (F)) (|yl| (|List| F))
+         ($ (|SparseUnivariatePolynomial| F)))
+        (SPROG ((#1=#:G714 NIL))
                (COND
                 ((NULL (CDR |yl|))
                  (SPADCALL
                   (PROG2
                       (LETT #1#
                             (SPADCALL (SPADCALL |yl| 1 (QREFELT $ 16)) |fact|
-                                      (QREFELT $ 18))
-                            . #2=(|NEWTON;newtonAux|))
+                                      (QREFELT $ 18)))
                       (QCDR #1#)
                     (|check_union2| (QEQCAR #1# 0) (QREFELT $ 6)
-                                    (|Union| (QREFELT $ 6) #3="failed") #1#))
+                                    (|Union| (QREFELT $ 6) #2="failed") #1#))
                   (QREFELT $ 19)))
                 ('T
                  (SPADCALL
@@ -40,11 +39,10 @@
                    (PROG2
                        (LETT #1#
                              (SPADCALL (SPADCALL |yl| 1 (QREFELT $ 16)) |fact|
-                                       (QREFELT $ 18))
-                             . #2#)
+                                       (QREFELT $ 18)))
                        (QCDR #1#)
                      (|check_union2| (QEQCAR #1# 0) (QREFELT $ 6)
-                                     (|Union| (QREFELT $ 6) #3#) #1#))
+                                     (|Union| (QREFELT $ 6) #2#) #1#))
                    (QREFELT $ 19))
                   (SPADCALL
                    (SPADCALL (QREFELT $ 13) (SPADCALL |k| (QREFELT $ 19))
@@ -57,26 +55,24 @@
                   (QREFELT $ 24)))))) 
 
 (SDEFUN |NEWTON;newton;LSup;3|
-        ((|yl| |List| F) ($ |SparseUnivariatePolynomial| F))
+        ((|yl| (|List| F)) ($ (|SparseUnivariatePolynomial| F)))
         (|NEWTON;newtonAux| (|spadConstant| $ 8) (|spadConstant| $ 8) |yl| $)) 
 
 (DECLAIM (NOTINLINE |NewtonInterpolation;|)) 
 
-(DEFUN |NewtonInterpolation| (#1=#:G727)
+(DEFUN |NewtonInterpolation| (#1=#:G723)
   (SPROG NIL
-         (PROG (#2=#:G728)
+         (PROG (#2=#:G724)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|NewtonInterpolation|)
-                                               '|domainEqualList|)
-                    . #3=(|NewtonInterpolation|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|NewtonInterpolation;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|NewtonInterpolation;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|NewtonInterpolation|)))))))))) 
@@ -84,11 +80,11 @@
 (DEFUN |NewtonInterpolation;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|NewtonInterpolation|))
-          (LETT |dv$| (LIST '|NewtonInterpolation| DV$1) . #1#)
-          (LETT $ (GETREFV 26) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|NewtonInterpolation| DV$1))
+          (LETT $ (GETREFV 26))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|NewtonInterpolation| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -106,14 +102,21 @@
               (32 . |coerce|) (37 . -) (43 . +) (49 . *) (55 . *) (61 . +)
               |NEWTON;newton;LSup;3|)
            '#(|newton| 67) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 25
-                                                 '(2 6 0 0 0 7 0 6 0 8 0 9 0 10
-                                                   2 9 0 6 11 12 2 15 6 0 14 16
-                                                   2 6 17 0 0 18 1 9 0 6 19 2 9
-                                                   0 0 0 20 2 6 0 0 0 21 2 6 0
-                                                   0 0 22 2 9 0 0 0 23 2 9 0 0
-                                                   0 24 1 0 9 15 25)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|newton|
+                                 ((|SparseUnivariatePolynomial| |#1|)
+                                  (|List| |#1|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 25
+                                            '(2 6 0 0 0 7 0 6 0 8 0 9 0 10 2 9
+                                              0 6 11 12 2 15 6 0 14 16 2 6 17 0
+                                              0 18 1 9 0 6 19 2 9 0 0 0 20 2 6
+                                              0 0 0 21 2 6 0 0 0 22 2 9 0 0 0
+                                              23 2 9 0 0 0 24 1 0 9 15 25)))))
            '|lookupComplete|)) 

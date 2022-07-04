@@ -1,72 +1,72 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; $compBugPrefix :=      '"Bug!"
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$compBugPrefix| "Bug!"))
- 
+
 ; $compErrorPrefix :=    '"Error"
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$compErrorPrefix| "Error"))
- 
+
 ; $nopos   := ['noposition]
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$nopos| (LIST '|noposition|)))
- 
+
 ; $showKeyNum   :=        NIL
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$showKeyNum| NIL))
- 
+
 ; $newcompErrorCount :=           0
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$newcompErrorCount| 0))
- 
+
 ; $preLength := 11
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$preLength| 11))
- 
+
 ; $LOGLENGTH := $LINELENGTH - 6
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ $LOGLENGTH (- $LINELENGTH 6)))
- 
+
 ; $specificMsgTags := []
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$specificMsgTags| NIL))
- 
+
 ; $imPrTagGuys := ['unimple, 'bug, 'debug, 'say, 'warn]
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$imPrTagGuys| (LIST '|unimple| '|bug| '|debug| '|say| '|warn|)))
- 
+
 ; $toWhereGuys := ['fileOnly, 'screenOnly ]
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$toWhereGuys| (LIST '|fileOnly| '|screenOnly|)))
- 
+
 ; $imPrGuys    := ['imPr]
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$imPrGuys| (LIST '|imPr|)))
- 
+
 ; $repGuys     := ['noRep, 'rep]
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$repGuys| (LIST '|noRep| '|rep|)))
- 
+
 ; $attrCats    := ['$imPrGuys, '$toWhereGuys, '$repGuys]
- 
+
 (EVAL-WHEN (EVAL LOAD)
   (SETQ |$attrCats| (LIST '|$imPrGuys| '|$toWhereGuys| '|$repGuys|)))
- 
+
 ; $ncMsgList := nil
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$ncMsgList| NIL))
- 
+
 ; ncSoftError(pos, erMsgKey, erArgL) ==
 ;   $newcompErrorCount := $newcompErrorCount + 1
 ;   desiredMsg erMsgKey =>
 ;     processKeyedError _
 ;        msgCreate ('error, pos, erMsgKey, erArgL, $compErrorPrefix)
- 
+
 (DEFUN |ncSoftError| (|pos| |erMsgKey| |erArgL|)
   (PROG ()
     (RETURN
@@ -77,50 +77,46 @@
         (|processKeyedError|
          (|msgCreate| '|error| |pos| |erMsgKey| |erArgL|
           |$compErrorPrefix|))))))))
- 
+
 ; ncHardError(pos, erMsgKey, erArgL) ==
 ;   $newcompErrorCount := $newcompErrorCount + 1
 ;   desiredMsg erMsgKey =>
-;     erMsg := processKeyedError _
-;        msgCreate('error,pos,erMsgKey, erArgL, $compErrorPrefix)
+;       processKeyedError(
+;           msgCreate('error, pos, erMsgKey, erArgL, $compErrorPrefix))
 ;   ncError()
- 
+
 (DEFUN |ncHardError| (|pos| |erMsgKey| |erArgL|)
-  (PROG (|erMsg|)
+  (PROG ()
     (RETURN
      (PROGN
       (SETQ |$newcompErrorCount| (+ |$newcompErrorCount| 1))
       (COND
        ((|desiredMsg| |erMsgKey|)
-        (SETQ |erMsg|
-                (|processKeyedError|
-                 (|msgCreate| '|error| |pos| |erMsgKey| |erArgL|
-                  |$compErrorPrefix|))))
+        (|processKeyedError|
+         (|msgCreate| '|error| |pos| |erMsgKey| |erArgL| |$compErrorPrefix|)))
        ('T (|ncError|)))))))
- 
+
 ; ncBug (erMsgKey, erArgL) ==
 ;   $newcompErrorCount := $newcompErrorCount + 1
-;   erMsg := processKeyedError _
-;         msgCreate('bug,$nopos, erMsgKey, erArgL,$compBugPrefix)
+;   processKeyedError (
+;         msgCreate('bug, $nopos, erMsgKey, erArgL, $compBugPrefix))
 ;   -- The next line is to try to deal with some reported cases of unwanted
 ;   -- backtraces appearing, MCD.
-;   ENABLE_-BACKTRACE(nil)
+;   ENABLE_BACKTRACE(nil)
 ;   BREAK()
 ;   ncAbort()
- 
+
 (DEFUN |ncBug| (|erMsgKey| |erArgL|)
-  (PROG (|erMsg|)
+  (PROG ()
     (RETURN
      (PROGN
       (SETQ |$newcompErrorCount| (+ |$newcompErrorCount| 1))
-      (SETQ |erMsg|
-              (|processKeyedError|
-               (|msgCreate| '|bug| |$nopos| |erMsgKey| |erArgL|
-                |$compBugPrefix|)))
-      (ENABLE-BACKTRACE NIL)
+      (|processKeyedError|
+       (|msgCreate| '|bug| |$nopos| |erMsgKey| |erArgL| |$compBugPrefix|))
+      (ENABLE_BACKTRACE NIL)
       (BREAK)
       (|ncAbort|)))))
- 
+
 ; msgCreate(tag,posWTag,key,argL,optPre) ==
 ;     if PAIRP key then tag := 'old
 ;     msg := [tag,posWTag,key,argL,optPre,NIL]
@@ -128,7 +124,7 @@
 ;     initImPr    msg
 ;     initToWhere msg
 ;     msg
- 
+
 (DEFUN |msgCreate| (|tag| |posWTag| |key| |argL| |optPre|)
   (PROG (|msg|)
     (RETURN
@@ -139,7 +135,7 @@
       (|initImPr| |msg|)
       (|initToWhere| |msg|)
       |msg|))))
- 
+
 ; processKeyedError msg ==
 ;     getMsgTag? msg = 'old  =>                                 --temp
 ;         erMsg := getMsgKey msg                                --temp
@@ -150,7 +146,7 @@
 ;     msgImPr? msg =>
 ;       msgOutputter msg
 ;     $ncMsgList := cons (msg, $ncMsgList)
- 
+
 (DEFUN |processKeyedError| (|msg|)
   (PROG (|erMsg| |pre|)
     (RETURN
@@ -165,12 +161,12 @@
          (CONS "old msg from " (CONS (|CallerName| 4) |erMsg|)))))
       ((|msgImPr?| |msg|) (|msgOutputter| |msg|))
       ('T (SETQ |$ncMsgList| (CONS |msg| |$ncMsgList|)))))))
- 
+
 ; putDatabaseStuff msg ==
 ;     [text,attributes] := getMsgInfoFromKey msg
 ;     if attributes then setMsgUnforcedAttrList(msg,aL)
 ;     setMsgText(msg,text)
- 
+
 (DEFUN |putDatabaseStuff| (|msg|)
   (PROG (|LETTMP#1| |text| |attributes|)
     (RETURN
@@ -180,7 +176,7 @@
       (SETQ |attributes| (CADR |LETTMP#1|))
       (COND (|attributes| (|setMsgUnforcedAttrList| |msg| |aL|)))
       (|setMsgText| |msg| |text|)))))
- 
+
 ; getMsgInfoFromKey msg ==
 ;     msgText :=
 ;         msgKey := getMsgKey? msg =>   --temp  oldmsgs use key tostoretext
@@ -190,7 +186,7 @@
 ;     [msgText,attributes] := removeAttributes msgText
 ;     msgText := substituteSegmentedMsg(msgText, getMsgArgL msg)
 ;     [msgText,attributes]
- 
+
 (DEFUN |getMsgInfoFromKey| (|msg|)
   (PROG (|msgKey| |msgText| |LETTMP#1| |attributes|)
     (RETURN
@@ -206,7 +202,7 @@
       (SETQ |msgText|
               (|substituteSegmentedMsg| |msgText| (|getMsgArgL| |msg|)))
       (LIST |msgText| |attributes|)))))
- 
+
 ; processChPosesForOneLine msgList ==
 ;     chPosList := posPointers msgList
 ;     for msg in msgList repeat
@@ -218,7 +214,7 @@
 ;                      make_full_CVEC($preLength - 4 - SIZE oldPre), posLetter))
 ;     leaderMsg := makeLeaderMsg chPosList
 ;     NCONC(msgList,LIST leaderMsg)  --a back cons
- 
+
 (DEFUN |processChPosesForOneLine| (|msgList|)
   (PROG (|chPosList| |posLetter| |oldPre| |leaderMsg|)
     (RETURN
@@ -244,7 +240,7 @@
        |msgList| NIL)
       (SETQ |leaderMsg| (|makeLeaderMsg| |chPosList|))
       (NCONC |msgList| (LIST |leaderMsg|))))))
- 
+
 ; posPointers msgList ==
 ; --gets all the char posns for msgs on one line
 ; --associates them with a uppercase letter
@@ -264,7 +260,7 @@
 ;         posLetterList := [[pos,:pointers.increment],:posLetterList]
 ;         increment := increment + 1
 ;     posLetterList
- 
+
 (DEFUN |posPointers| (|msgList|)
   (PROG (|pointers| |increment| |posList| |ftPosList| |pos| |posLetterList|)
     (RETURN
@@ -313,9 +309,9 @@
           (SETQ |bfVar#4| (CDR |bfVar#4|))))
        |posList| NIL)
       |posLetterList|))))
- 
+
 ; insertPos(newPos,posList) ==
-; --insersts a position in the proper place of a positon list
+; --inserts a position in the proper place of a position list
 ; --used for the 2nd pos of a fromto
 ;     done := false
 ;     bot  := [0,:posList]
@@ -336,7 +332,7 @@
 ;     for pp in top repeat
 ;         bot := [pp, :bot]
 ;     rest bot
- 
+
 (DEFUN |insertPos| (|newPos| |posList|)
   (PROG (|done| |bot| |top| |pos|)
     (RETURN
@@ -373,7 +369,7 @@
           (SETQ |bfVar#5| (CDR |bfVar#5|))))
        |top| NIL)
       (CDR |bot|)))))
- 
+
 ; putFTText (msg,chPosList) ==
 ;     tag := getMsgFTTag? msg
 ;     pos := poCharPosn getMsgPos msg
@@ -390,7 +386,7 @@
 ;        markingText := ['"(from ",charMarker,'" up to ",_
 ;            charMarker2,'") "]
 ;        setMsgText(msg,[:markingText,:getMsgText msg])
- 
+
 (DEFUN |putFTText| (|msg| |chPosList|)
   (PROG (|tag| |pos| |charMarker| |markingText| |pos2| |charMarker2|)
     (RETURN
@@ -414,27 +410,27 @@
          (SETQ |markingText|
                  (LIST "(from " |charMarker| " up to " |charMarker2| ") "))
          (|setMsgText| |msg| (APPEND |markingText| (|getMsgText| |msg|))))))))))
- 
+
 ; rep (c,n)  ==
 ;     n > 0 =>
-;       make_full_CVEC(n, c)
+;       make_full_CVEC2(n, c)
 ;     '""
- 
+
 (DEFUN |rep| (|c| |n|)
-  (PROG () (RETURN (COND ((< 0 |n|) (|make_full_CVEC| |n| |c|)) ('T "")))))
- 
+  (PROG () (RETURN (COND ((< 0 |n|) (|make_full_CVEC2| |n| |c|)) ('T "")))))
+
 ; From   pos == ['FROM,   pos]
- 
+
 (DEFUN |From| (|pos|) (PROG () (RETURN (LIST 'FROM |pos|))))
- 
+
 ; To     pos == ['TO,     pos]
- 
+
 (DEFUN |To| (|pos|) (PROG () (RETURN (LIST 'TO |pos|))))
- 
+
 ; FromTo (pos1,pos2) == ['FROMTO, pos1, pos2]
- 
+
 (DEFUN |FromTo| (|pos1| |pos2|) (PROG () (RETURN (LIST 'FROMTO |pos1| |pos2|))))
- 
+
 ; processMsgList (erMsgList,lineList) ==
 ;     $outputList :local := []--grows in queueUp errors
 ;     $noRepList :local := []--grows in queueUp errors
@@ -447,7 +443,7 @@
 ;              queueUpErrors(globalNumOfLine,erMsgList)
 ;     $outputList := append(erMsgList,$outputList)  --the nopos's
 ;     listOutputter reverse $outputList
- 
+
 (DEFUN |processMsgList| (|erMsgList| |lineList|)
   (PROG (|$noRepList| |$outputList| |globalNumOfLine| |msgLine|)
     (DECLARE (SPECIAL |$noRepList| |$outputList|))
@@ -473,13 +469,13 @@
        |lineList| NIL)
       (SETQ |$outputList| (APPEND |erMsgList| |$outputList|))
       (|listOutputter| (REVERSE |$outputList|))))))
- 
+
 ; erMsgSort erMsgList ==
 ;     [msgWPos,msgWOPos] := erMsgSep erMsgList
 ;     msgWPos  := listSort(function erMsgCompare, msgWPos)
 ;     msgWOPos := reverse msgWOPos
 ;     [:msgWPos,:msgWOPos]
- 
+
 (DEFUN |erMsgSort| (|erMsgList|)
   (PROG (|LETTMP#1| |msgWPos| |msgWOPos|)
     (RETURN
@@ -490,12 +486,12 @@
       (SETQ |msgWPos| (|listSort| #'|erMsgCompare| |msgWPos|))
       (SETQ |msgWOPos| (REVERSE |msgWOPos|))
       (APPEND |msgWPos| |msgWOPos|)))))
- 
+
 ; erMsgCompare(ob1,ob2)==
 ;     pos1 :=  getMsgPos ob1
 ;     pos2 :=  getMsgPos ob2
 ;     compareposns(pos2,pos1)
- 
+
 (DEFUN |erMsgCompare| (|ob1| |ob2|)
   (PROG (|pos1| |pos2|)
     (RETURN
@@ -503,7 +499,7 @@
       (SETQ |pos1| (|getMsgPos| |ob1|))
       (SETQ |pos2| (|getMsgPos| |ob2|))
       (|compareposns| |pos2| |pos1|)))))
- 
+
 ; erMsgSep erMsgList ==
 ;     msgWPos  := []
 ;     msgWOPos := []
@@ -513,7 +509,7 @@
 ;         else
 ;           msgWPos  := [msg,:msgWPos]
 ;     [msgWPos,msgWOPos]
- 
+
 (DEFUN |erMsgSep| (|erMsgList|)
   (PROG (|msgWPos| |msgWOPos|)
     (RETURN
@@ -533,18 +529,17 @@
           (SETQ |bfVar#7| (CDR |bfVar#7|))))
        |erMsgList| NIL)
       (LIST |msgWPos| |msgWOPos|)))))
- 
+
 ; getLinePos line  == first line
- 
+
 (DEFUN |getLinePos| (|line|) (PROG () (RETURN (CAR |line|))))
- 
+
 ; getLineText line == rest line
- 
+
 (DEFUN |getLineText| (|line|) (PROG () (RETURN (CDR |line|))))
- 
+
 ; queueUpErrors(globalNumOfLine,msgList)==
 ;     thisPosMsgs  := []
-;     notThisLineMsgs := []
 ;     for msg in msgList _
 ;       while thisPosIsLess(getMsgPos msg,globalNumOfLine) repeat
 ;     --these are msgs that refer to positions from earlier compilations
@@ -562,13 +557,12 @@
 ;     if notThisPosMsgs then
 ;         $outputList := NCONC(notThisPosMsgs,$outputList)
 ;     msgList
- 
+
 (DEFUN |queueUpErrors| (|globalNumOfLine| |msgList|)
-  (PROG (|thisPosMsgs| |notThisLineMsgs| |notThisPosMsgs|)
+  (PROG (|thisPosMsgs| |notThisPosMsgs|)
     (RETURN
      (PROGN
       (SETQ |thisPosMsgs| NIL)
-      (SETQ |notThisLineMsgs| NIL)
       ((LAMBDA (|bfVar#8| |msg|)
          (LOOP
           (COND
@@ -605,7 +599,7 @@
        (|notThisPosMsgs|
         (SETQ |$outputList| (NCONC |notThisPosMsgs| |$outputList|))))
       |msgList|))))
- 
+
 ; redundant(msg,thisPosMsgs) ==
 ;     found := NIL
 ;     if msgNoRep? msg then
@@ -613,7 +607,7 @@
 ;             sameMsg?(msg,item) => return (found := true)
 ;         $noRepList := [msg,$noRepList]
 ;     found or MEMBER(msg,thisPosMsgs)
- 
+
 (DEFUN |redundant| (|msg| |thisPosMsgs|)
   (PROG (|found|)
     (RETURN
@@ -634,41 +628,41 @@
          |$noRepList| NIL)
         (SETQ |$noRepList| (LIST |msg| |$noRepList|))))
       (OR |found| (MEMBER |msg| |thisPosMsgs|))))))
- 
+
 ; sameMsg? (msg1,msg2) ==
 ;     (getMsgKey   msg1 = getMsgKey  msg2) and _
 ;     (getMsgArgL  msg1 = getMsgArgL msg2)
- 
+
 (DEFUN |sameMsg?| (|msg1| |msg2|)
   (PROG ()
     (RETURN
      (AND (EQUAL (|getMsgKey| |msg1|) (|getMsgKey| |msg2|))
           (EQUAL (|getMsgArgL| |msg1|) (|getMsgArgL| |msg2|))))))
- 
+
 ; thisPosIsLess(pos,num) ==
 ;     poNopos? pos => NIL
 ;     poGlobalLinePosn pos < num
- 
+
 (DEFUN |thisPosIsLess| (|pos| |num|)
   (PROG ()
     (RETURN
      (COND ((|poNopos?| |pos|) NIL)
            ('T (< (|poGlobalLinePosn| |pos|) |num|))))))
- 
+
 ; thisPosIsEqual(pos,num) ==
 ;     poNopos? pos => NIL
 ;     poGlobalLinePosn pos = num
- 
+
 (DEFUN |thisPosIsEqual| (|pos| |num|)
   (PROG ()
     (RETURN
      (COND ((|poNopos?| |pos|) NIL)
            ('T (EQUAL (|poGlobalLinePosn| |pos|) |num|))))))
- 
+
 ; listOutputter outputList ==
 ;     for msg in outputList repeat
 ;         msgOutputter msg
- 
+
 (DEFUN |listOutputter| (|outputList|)
   (PROG ()
     (RETURN
@@ -680,7 +674,7 @@
           ('T (|msgOutputter| |msg|)))
          (SETQ |bfVar#11| (CDR |bfVar#11|))))
       |outputList| NIL))))
- 
+
 ; msgOutputter msg  ==
 ;     st := getStFromMsg msg
 ;     shouldFlow := not (leader? msg or line? msg)
@@ -692,7 +686,7 @@
 ;        if shouldFlow then
 ;           st := flowSegmentedMsg(st,$LOGLENGTH,0)
 ;        alreadyOpened := alreadyOpened? msg
- 
+
 (DEFUN |msgOutputter| (|msg|)
   (PROG (|st| |shouldFlow| |alreadyOpened|)
     (RETURN
@@ -709,23 +703,23 @@
         (COND
          (|shouldFlow| (SETQ |st| (|flowSegmentedMsg| |st| $LOGLENGTH 0))))
         (SETQ |alreadyOpened| (|alreadyOpened?| |msg|))))))))
- 
+
 ; toScreen? msg ==  getMsgToWhere msg ~= 'fileOnly
- 
+
 (DEFUN |toScreen?| (|msg|)
   (PROG () (RETURN (NOT (EQ (|getMsgToWhere| |msg|) '|fileOnly|)))))
- 
+
 ; toFile? msg   ==
 ;      getMsgToWhere msg ~= 'screenOnly
- 
+
 (DEFUN |toFile?| (|msg|)
   (PROG () (RETURN (NOT (EQ (|getMsgToWhere| |msg|) '|screenOnly|)))))
- 
+
 ; alreadyOpened? msg ==
 ;        not msgImPr? msg
- 
+
 (DEFUN |alreadyOpened?| (|msg|) (PROG () (RETURN (NULL (|msgImPr?| |msg|)))))
- 
+
 ; getStFromMsg msg ==
 ;     $optKeyBlanks : local := '""  --set in setOptKeyBlanks()
 ;     setOptKeyBlanks()
@@ -742,7 +736,7 @@
 ;     st :=[posStL,getMsgLitSym msg,_
 ;           optKey,:preStL,_
 ;           tabbing msg,:getMsgText msg]
- 
+
 (DEFUN |getStFromMsg| (|msg|)
   (PROG (|$optKeyBlanks| |st| |optKey| |msgKey| |posStL| |preStL|)
     (DECLARE (SPECIAL |$optKeyBlanks|))
@@ -773,14 +767,14 @@
                                            (CONS (|tabbing| |msg|)
                                                  (|getMsgText|
                                                   |msg|))))))))))))))
- 
+
 ; tabbing msg ==
 ;     chPos := 2
 ;     if getMsgPrefix? msg then
 ;       chPos := chPos + $preLength - 1
 ;     if $showKeyNum then chPos := chPos + 8
 ;     ["%t",:chPos]
- 
+
 (DEFUN |tabbing| (|msg|)
   (PROG (|chPos|)
     (RETURN
@@ -790,16 +784,16 @@
        ((|getMsgPrefix?| |msg|) (SETQ |chPos| (- (+ |chPos| |$preLength|) 1))))
       (COND (|$showKeyNum| (SETQ |chPos| (+ |chPos| 8))))
       (CONS '|%t| |chPos|)))))
- 
+
 ; setOptKeyBlanks() ==
 ;     $optKeyBlanks :=
 ;         $showKeyNum => '"%x8"
 ;         '""
- 
-(DEFUN |setOptKeyBlanks| #1=()
-  (PROG #1#
+
+(DEFUN |setOptKeyBlanks| ()
+  (PROG ()
     (RETURN (SETQ |$optKeyBlanks| (COND (|$showKeyNum| "%x8") ('T ""))))))
- 
+
 ; getPosStL msg ==
 ;     not showMsgPos? msg => '""
 ;     msgPos := getMsgPos msg
@@ -818,7 +812,7 @@
 ;     howMuch  = 'ALL  => [$optKeyBlanks,:printedFileName, '%l,_
 ;                          $optKeyBlanks,:printedLineNum,  '%l]
 ;     '""
- 
+
 (DEFUN |getPosStL| (|msg|)
   (PROG (|msgPos| |howMuch| |fullPrintedPos| |printedFileName| |printedLineNum|
          |printedOrigin|)
@@ -866,28 +860,28 @@
                                          (APPEND |printedLineNum|
                                                  (CONS '|%l| NIL)))))))
               (#1# ""))))))))
- 
+
 ; showMsgPos? msg ==
 ;     $erMsgToss or (not msgImPr? msg and not msgLeader? msg)
- 
+
 (DEFUN |showMsgPos?| (|msg|)
   (PROG ()
     (RETURN
      (OR |$erMsgToss|
          (AND (NULL (|msgImPr?| |msg|)) (NULL (|msgLeader?| |msg|)))))))
- 
+
 ; remFile positionList ==
 ;         IFCDR IFCDR positionList
- 
+
 (DEFUN |remFile| (|positionList|)
   (PROG () (RETURN (IFCDR (IFCDR |positionList|)))))
- 
+
 ; remLine positionList ==
 ;         [IFCAR positionList]
- 
+
 (DEFUN |remLine| (|positionList|)
   (PROG () (RETURN (LIST (IFCAR |positionList|)))))
- 
+
 ; decideHowMuch(pos,oldPos) ==
 ; --when printing a msg, we wish not to show pos info that was
 ; --shown for a previous msg with identical pos info.
@@ -899,7 +893,7 @@
 ;     poFileName oldPos ~= poFileName pos => 'ALL
 ;     poLinePosn oldPos ~= poLinePosn pos => 'LINE
 ;     'NONE
- 
+
 (DEFUN |decideHowMuch| (|pos| |oldPos|)
   (PROG ()
     (RETURN
@@ -912,7 +906,7 @@
       ((NOT (EQUAL (|poFileName| |oldPos|) (|poFileName| |pos|))) 'ALL)
       ((NOT (EQUAL (|poLinePosn| |oldPos|) (|poLinePosn| |pos|))) 'LINE)
       ('T 'NONE)))))
- 
+
 ; listDecideHowMuch(pos,oldPos) ==
 ;     ((poNopos? pos) and (poNopos? oldPos)) or _
 ;       ((poPosImmediate? pos) and (poPosImmediate? oldPos))  => 'NONE
@@ -923,7 +917,7 @@
 ;         'LINE
 ;     --(poNopos? pos) or (poPosImmediate? pos) => 'ORG
 ;     'NONE
- 
+
 (DEFUN |listDecideHowMuch| (|pos| |oldPos|)
   (PROG ()
     (RETURN
@@ -935,15 +929,15 @@
       ((< (|poGlobalLinePosn| |pos|) (|poGlobalLinePosn| |oldPos|))
        (COND ((|poPosImmediate?| |pos|) 'ORG) (#1='T 'LINE)))
       (#1# 'NONE)))))
- 
+
 ; getPreStL optPre ==
-;     null optPre => [make_full_CVEC 2]
+;     null optPre => [make_full_CVEC(2)]
 ;     spses :=
 ;       (extraPlaces := ($preLength - (SIZE optPre) - 3)) > 0 =>
-;         make_full_CVEC extraPlaces
+;         make_full_CVEC(extraPlaces)
 ;       '""
 ;     ['%b, optPre,spses,'":", '%d]
- 
+
 (DEFUN |getPreStL| (|optPre|)
   (PROG (|extraPlaces| |spses|)
     (RETURN
@@ -958,27 +952,27 @@
                        (|make_full_CVEC| |extraPlaces|))
                       (#1# "")))
              (LIST '|%b| |optPre| |spses| ":" '|%d|)))))))
- 
+
 ; desiredMsg (erMsgKey,:optCatFlag) ==
 ;     isKeyQualityP(erMsgKey,'show)   => true
 ;     isKeyQualityP(erMsgKey,'stifle) => false
 ;     not null optCatFlag  => first optCatFlag
 ;     true
- 
+
 (DEFUN |desiredMsg| (|erMsgKey| &REST |optCatFlag|)
   (PROG ()
     (RETURN
      (COND ((|isKeyQualityP| |erMsgKey| '|show|) T)
            ((|isKeyQualityP| |erMsgKey| '|stifle|) NIL)
            ((NULL (NULL |optCatFlag|)) (CAR |optCatFlag|)) ('T T)))))
- 
+
 ; isKeyQualityP (key,qual)  ==
 ;     --returns pair if found, else NIL
 ;     found := false
 ;     while not found and (qualPair := ASSOC(key,$specificMsgTags)) repeat
 ;         if rest qualPair = qual then found := true
 ;     qualPair
- 
+
 (DEFUN |isKeyQualityP| (|key| |qual|)
   (PROG (|found| |qualPair|)
     (RETURN
@@ -993,22 +987,22 @@
             (RETURN NIL))
            ('T (COND ((EQUAL (CDR |qualPair|) |qual|) (SETQ |found| T))))))))
       |qualPair|))))
- 
+
 ; initImPr msg  ==
 ;     $erMsgToss or MEMQ (getMsgTag msg,$imPrTagGuys) =>
 ;         setMsgUnforcedAttr (msg,'$imPrGuys,'imPr)
- 
+
 (DEFUN |initImPr| (|msg|)
   (PROG ()
     (RETURN
      (COND
       ((OR |$erMsgToss| (MEMQ (|getMsgTag| |msg|) |$imPrTagGuys|))
        (IDENTITY (|setMsgUnforcedAttr| |msg| '|$imPrGuys| '|imPr|)))))))
- 
+
 ; initToWhere msg  ==
 ;     MEMBER ('trace,getMsgCatAttr (msg,'catless)) =>
 ;           setMsgUnforcedAttr (msg,'$toWhereGuys,'screenOnly)
- 
+
 (DEFUN |initToWhere| (|msg|)
   (PROG ()
     (RETURN
@@ -1016,41 +1010,41 @@
       ((MEMBER '|trace| (|getMsgCatAttr| |msg| '|catless|))
        (IDENTITY
         (|setMsgUnforcedAttr| |msg| '|$toWhereGuys| '|screenOnly|)))))))
- 
+
 ; msgImPr? msg ==
 ;     (getMsgCatAttr (msg,'$imPrGuys) = 'imPr)
- 
+
 (DEFUN |msgImPr?| (|msg|)
   (PROG () (RETURN (EQ (|getMsgCatAttr| |msg| '|$imPrGuys|) '|imPr|))))
- 
+
 ; msgNoRep? msg ==
 ;     (getMsgCatAttr (msg,'$repGuys) = 'noRep)
- 
+
 (DEFUN |msgNoRep?| (|msg|)
   (PROG () (RETURN (EQ (|getMsgCatAttr| |msg| '|$repGuys|) '|noRep|))))
- 
+
 ; msgLeader? msg ==
 ;     getMsgTag msg = 'leader
- 
+
 (DEFUN |msgLeader?| (|msg|)
   (PROG () (RETURN (EQ (|getMsgTag| |msg|) '|leader|))))
- 
+
 ; getMsgToWhere msg ==
 ;     getMsgCatAttr (msg,'$toWhereGuys)
- 
+
 (DEFUN |getMsgToWhere| (|msg|)
   (PROG () (RETURN (|getMsgCatAttr| |msg| '|$toWhereGuys|))))
- 
+
 ; getMsgCatAttr  (msg,cat) ==
 ;     IFCDR ASSQ(cat, ncAlist msg)
- 
+
 (DEFUN |getMsgCatAttr| (|msg| |cat|)
   (PROG () (RETURN (IFCDR (ASSQ |cat| (|ncAlist| |msg|))))))
- 
+
 ; setMsgUnforcedAttrList (msg,aL) ==
 ;     for attr in aL repeat
 ;         setMsgUnforcedAttr(msg,whichCat attr,attr)
- 
+
 (DEFUN |setMsgUnforcedAttrList| (|msg| |aL|)
   (PROG ()
     (RETURN
@@ -1062,27 +1056,27 @@
           ('T (|setMsgUnforcedAttr| |msg| (|whichCat| |attr|) |attr|)))
          (SETQ |bfVar#12| (CDR |bfVar#12|))))
       |aL| NIL))))
- 
+
 ; setMsgUnforcedAttr(msg,cat,attr) ==
 ;     cat = 'catless => setMsgCatlessAttr(msg,attr)
 ;     not ASSQ(cat, ncAlist msg) => ncPutQ(msg,cat,attr)
- 
+
 (DEFUN |setMsgUnforcedAttr| (|msg| |cat| |attr|)
   (PROG ()
     (RETURN
      (COND ((EQ |cat| '|catless|) (|setMsgCatlessAttr| |msg| |attr|))
            ((NULL (ASSQ |cat| (|ncAlist| |msg|)))
             (|ncPutQ| |msg| |cat| |attr|))))))
- 
+
 ; setMsgCatlessAttr(msg,attr) ==
 ;     ncPutQ(msg,catless,CONS (attr, IFCDR ASSQ(catless, ncAlist msg)))
- 
+
 (DEFUN |setMsgCatlessAttr| (|msg| |attr|)
   (PROG ()
     (RETURN
      (|ncPutQ| |msg| |catless|
       (CONS |attr| (IFCDR (ASSQ |catless| (|ncAlist| |msg|))))))))
- 
+
 ; whichCat attr ==
 ;     found := 'catless
 ;     for cat in $attrCats repeat
@@ -1090,7 +1084,7 @@
 ;           found := cat
 ;           return found
 ;     found
- 
+
 (DEFUN |whichCat| (|attr|)
   (PROG (|found|)
     (RETURN
@@ -1108,7 +1102,7 @@
           (SETQ |bfVar#13| (CDR |bfVar#13|))))
        |$attrCats| NIL)
       |found|))))
- 
+
 ; makeLeaderMsg chPosList ==
 ;     st := make_full_CVEC($preLength - 3)
 ;     oldPos := -1
@@ -1117,7 +1111,7 @@
 ;             rep(char ".", (posNum - oldPos - 1)),posLetter)
 ;         oldPos := posNum
 ;     ['leader,$nopos,'nokey,NIL,NIL,[st]]
- 
+
 (DEFUN |makeLeaderMsg| (|chPosList|)
   (PROG (|st| |oldPos| |posNum| |posLetter|)
     (RETURN
@@ -1145,11 +1139,10 @@
           (SETQ |bfVar#15| (CDR |bfVar#15|))))
        (REVERSE |chPosList|) NIL)
       (LIST '|leader| |$nopos| '|nokey| NIL NIL (LIST |st|))))))
- 
+
 ; makeMsgFromLine line ==
 ;     posOfLine  := getLinePos line
 ;     textOfLine := getLineText line
-;     globalNumOfLine := poGlobalLinePosn posOfLine
 ;     localNumOfLine  :=
 ;         i := poLinePosn posOfLine
 ;         stNum := STRINGIMAGE i
@@ -1157,15 +1150,13 @@
 ;          stNum)
 ;     ['line,posOfLine,NIL,NIL, STRCONC('"Line", localNumOfLine),_
 ;         textOfLine]
- 
+
 (DEFUN |makeMsgFromLine| (|line|)
-  (PROG (|posOfLine| |textOfLine| |globalNumOfLine| |i| |stNum|
-         |localNumOfLine|)
+  (PROG (|posOfLine| |textOfLine| |i| |stNum| |localNumOfLine|)
     (RETURN
      (PROGN
       (SETQ |posOfLine| (|getLinePos| |line|))
       (SETQ |textOfLine| (|getLineText| |line|))
-      (SETQ |globalNumOfLine| (|poGlobalLinePosn| |posOfLine|))
       (SETQ |localNumOfLine|
               (PROGN
                (SETQ |i| (|poLinePosn| |posOfLine|))
@@ -1175,15 +1166,15 @@
                 |stNum|)))
       (LIST '|line| |posOfLine| NIL NIL (STRCONC "Line" |localNumOfLine|)
             |textOfLine|)))))
- 
+
 ; getMsgTag msg == ncTag msg
- 
+
 (DEFUN |getMsgTag| (|msg|) (PROG () (RETURN (|ncTag| |msg|))))
- 
+
 ; getMsgTag? msg ==
 ;    IFCAR MEMBER (getMsgTag msg,_
 ;        ['line,'old,'error,'warn,'bug,'unimple,'remark,'stat,'say,'debug])
- 
+
 (DEFUN |getMsgTag?| (|msg|)
   (PROG ()
     (RETURN
@@ -1191,91 +1182,91 @@
       (MEMBER (|getMsgTag| |msg|)
               (LIST '|line| '|old| '|error| '|warn| '|bug| '|unimple| '|remark|
                     '|stat| '|say| '|debug|))))))
- 
+
 ; leader? msg == getMsgTag msg = 'leader
- 
+
 (DEFUN |leader?| (|msg|) (PROG () (RETURN (EQ (|getMsgTag| |msg|) '|leader|))))
- 
+
 ; line?   msg == getMsgTag msg = 'line
- 
+
 (DEFUN |line?| (|msg|) (PROG () (RETURN (EQ (|getMsgTag| |msg|) '|line|))))
- 
+
 ; getMsgPosTagOb msg == msg.1
- 
+
 (DEFUN |getMsgPosTagOb| (|msg|) (PROG () (RETURN (ELT |msg| 1))))
- 
+
 ; getMsgPos msg ==
 ;     getMsgFTTag? msg => CADR getMsgPosTagOb msg
 ;     getMsgPosTagOb msg
- 
+
 (DEFUN |getMsgPos| (|msg|)
   (PROG ()
     (RETURN
      (COND ((|getMsgFTTag?| |msg|) (CADR (|getMsgPosTagOb| |msg|)))
            ('T (|getMsgPosTagOb| |msg|))))))
- 
+
 ; getMsgPos2 msg ==
 ;     getMsgFTTag? msg => CADDR getMsgPosTagOb msg
 ;     ncBug('"not a from to",[])
- 
+
 (DEFUN |getMsgPos2| (|msg|)
   (PROG ()
     (RETURN
      (COND ((|getMsgFTTag?| |msg|) (CADDR (|getMsgPosTagOb| |msg|)))
            ('T (|ncBug| "not a from to" NIL))))))
- 
+
 ; getMsgFTTag? msg == IFCAR MEMBER (IFCAR getMsgPosTagOb msg,_
 ;                       ['FROM,'TO,'FROMTO])
- 
+
 (DEFUN |getMsgFTTag?| (|msg|)
   (PROG ()
     (RETURN
      (IFCAR
       (MEMBER (IFCAR (|getMsgPosTagOb| |msg|)) (LIST 'FROM 'TO 'FROMTO))))))
- 
+
 ; getMsgKey msg == msg.2
- 
+
 (DEFUN |getMsgKey| (|msg|) (PROG () (RETURN (ELT |msg| 2))))
- 
+
 ; getMsgKey? msg == IDENTP (val := getMsgKey msg) => val
- 
+
 (DEFUN |getMsgKey?| (|msg|)
   (PROG (|val|)
     (RETURN
      (COND ((IDENTP (SETQ |val| (|getMsgKey| |msg|))) (IDENTITY |val|))))))
- 
+
 ; getMsgArgL msg == msg.3
- 
+
 (DEFUN |getMsgArgL| (|msg|) (PROG () (RETURN (ELT |msg| 3))))
- 
+
 ; getMsgPrefix? msg ==
 ;     (pre := msg.4) = 'noPre => NIL
 ;     pre
- 
+
 (DEFUN |getMsgPrefix?| (|msg|)
   (PROG (|pre|)
     (RETURN (COND ((EQ (SETQ |pre| (ELT |msg| 4)) '|noPre|) NIL) ('T |pre|)))))
- 
+
 ; getMsgPrefix  msg == msg.4
- 
+
 (DEFUN |getMsgPrefix| (|msg|) (PROG () (RETURN (ELT |msg| 4))))
- 
+
 ; getMsgLitSym msg ==
 ;     getMsgKey? msg => '" "
 ;     '"*"
- 
+
 (DEFUN |getMsgLitSym| (|msg|)
   (PROG () (RETURN (COND ((|getMsgKey?| |msg|) " ") ('T "*")))))
- 
+
 ; getMsgText msg == msg.5
- 
+
 (DEFUN |getMsgText| (|msg|) (PROG () (RETURN (ELT |msg| 5))))
- 
+
 ; setMsgPrefix (msg,val) == msg.4 := val
- 
+
 (DEFUN |setMsgPrefix| (|msg| |val|)
   (PROG () (RETURN (SETF (ELT |msg| 4) |val|))))
- 
+
 ; setMsgText (msg,val) == msg.5 := val
- 
+
 (DEFUN |setMsgText| (|msg| |val|) (PROG () (RETURN (SETF (ELT |msg| 5) |val|))))

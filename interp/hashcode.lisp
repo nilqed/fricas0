@@ -1,13 +1,13 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; getDomainHash dom == SPADCALL(CDR dom, (CAR dom).4)
- 
+
 (DEFUN |getDomainHash| (|dom|)
   (PROG () (RETURN (SPADCALL (CDR |dom|) (ELT (CAR |dom|) 4)))))
- 
+
 ; hashType(type, percentHash) ==
 ;         SYMBOLP type  =>
 ;            type = '$ => percentHash
@@ -37,7 +37,7 @@
 ;                 for arg in args repeat
 ;                         hash := hashCombine(hashType(arg, percentHash), hash)
 ;                 hash
-; 
+;
 ;         cmm :=   CDDAR getConstructorModemap(op)
 ;         cosig := rest GETDATABASE(op, 'COSIG)
 ;         for arg in args for c in cosig for ct in cmm repeat
@@ -48,10 +48,10 @@
 ; --           !!!   If/when asharp hashes values using their type, use instead
 ; --                      ctt := EQSUBSTLIST(args, $FormalMapVariableList, ct)
 ; --                      hash := hashCombine(hashType(ctt, percentHash), hash)
-; 
-; 
+;
+;
 ;         hash
- 
+
 (DEFUN |hashType| (|type| |percentHash|)
   (PROG (|ISTMP#1| |val| |dom| |ISTMP#2| |type2| |op| |args| |hash| |retType|
          |mapArgs| |retCode| |cmm| |cosig|)
@@ -158,11 +158,11 @@
                (SETQ |bfVar#6| (CDR |bfVar#6|))))
             |args| NIL |cosig| NIL |cmm| NIL)
            |hash|)))))))))
- 
+
 ; $hashModulus := 1073741789                      -- largest 30-bit prime
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$hashModulus| 1073741789))
- 
+
 ; hashString str ==
 ;         h := 0
 ;         for i in 0..#str-1 repeat
@@ -171,7 +171,7 @@
 ;                 h := h + j + 200041
 ;                 h := LOGAND(h, 1073741823)      -- 0x3FFFFFFF
 ;         REM(h, $hashModulus)
- 
+
 (DEFUN |hashString| (|str|)
   (PROG (|h| |j|)
     (RETURN
@@ -189,24 +189,24 @@
           (SETQ |i| (+ |i| 1))))
        (- (LENGTH |str|) 1) 0)
       (REM |h| |$hashModulus|)))))
- 
+
 ; $hashZ1 := 1100661313
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$hashZ1| 1100661313))
- 
+
 ; $hashZ2 := 1433925857
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$hashZ2| 1433925857))
- 
+
 ; $hashZZ := 4903203917250634599
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$hashZZ| 4903203917250634599))
- 
+
 ; hashCombine(hash1, hash2) ==
 ;          h1 := LOGAND(hash1, ASH(1, 32) - 1)
 ;          h2 := LOGAND(hash2, ASH(1, 32) - 1)
 ;          LOGAND(ASH((h1*$hashZ1 + h2*$hashZ2) * $hashZZ, -32), 1073741823)
- 
+
 (DEFUN |hashCombine| (|hash1| |hash2|)
   (PROG (|h1| |h2|)
     (RETURN
@@ -216,7 +216,7 @@
       (LOGAND
        (ASH (* (+ (* |h1| |$hashZ1|) (* |h2| |$hashZ2|)) |$hashZZ|) (- 32))
        1073741823)))))
- 
+
 ; $VoidHash := hashString '"Void"
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$VoidHash| (|hashString| "Void")))

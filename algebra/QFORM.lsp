@@ -1,5 +1,5 @@
 
-(SDEFUN |QFORM;quadraticForm;Sm$;1| ((|m| |SquareMatrix| |n| K) ($ $))
+(SDEFUN |QFORM;quadraticForm;Sm$;1| ((|m| (|SquareMatrix| |n| K)) ($ ($)))
         (COND
          ((NULL (SPADCALL |m| (QREFELT $ 10)))
           (|error| "quadraticForm requires a symmetric matrix"))
@@ -7,53 +7,50 @@
 
 (PUT '|QFORM;matrix;$Sm;2| '|SPADreplace| '(XLAM (|q|) |q|)) 
 
-(SDEFUN |QFORM;matrix;$Sm;2| ((|q| $) ($ |SquareMatrix| |n| K)) |q|) 
+(SDEFUN |QFORM;matrix;$Sm;2| ((|q| ($)) ($ (|SquareMatrix| |n| K))) |q|) 
 
-(SDEFUN |QFORM;elt;$DpK;3| ((|q| $) (|v| |DirectProduct| |n| K) ($ K))
+(SDEFUN |QFORM;elt;$DpK;3| ((|q| ($)) (|v| (|DirectProduct| |n| K)) ($ (K)))
         (SPADCALL |v|
                   (SPADCALL (SPADCALL |q| (QREFELT $ 12)) |v| (QREFELT $ 14))
                   (QREFELT $ 15))) 
 
-(SDEFUN |QFORM;convert;$If;4| ((|q| $) ($ |InputForm|))
+(SDEFUN |QFORM;convert;$If;4| ((|q| ($)) ($ (|InputForm|)))
         (SPROG ((|qf| (|InputForm|)) (|mif| (|InputForm|)))
                (SEQ
                 (LETT |mif|
-                      (SPADCALL (SPADCALL |q| (QREFELT $ 12)) (QREFELT $ 18))
-                      . #1=(|QFORM;convert;$If;4|))
+                      (SPADCALL (SPADCALL |q| (QREFELT $ 12)) (QREFELT $ 18)))
                 (LETT |qf|
                       (SPADCALL (SPADCALL '|quadraticForm| (QREFELT $ 21))
-                                (QREFELT $ 22))
-                      . #1#)
+                                (QREFELT $ 22)))
                 (EXIT (SPADCALL (LIST |qf| |mif|) (QREFELT $ 24)))))) 
 
 (DECLAIM (NOTINLINE |QuadraticForm;|)) 
 
-(DEFUN |QuadraticForm| (&REST #1=#:G717)
+(DEFUN |QuadraticForm| (&REST #1=#:G716)
   (SPROG NIL
-         (PROG (#2=#:G718)
+         (PROG (#2=#:G717)
            (RETURN
             (COND
              ((LETT #2#
-                    (|lassocShiftWithFunction| (|devaluateList| #1#)
+                    (|lassocShiftWithFunction| (|devaluate_sig| #1# '(NIL T))
                                                (HGET |$ConstructorCache|
                                                      '|QuadraticForm|)
-                                               '|domainEqualList|)
-                    . #3=(|QuadraticForm|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
                   (PROG1 (APPLY (|function| |QuadraticForm;|) #1#)
-                    (LETT #2# T . #3#))
+                    (LETT #2# T))
                 (COND
                  ((NOT #2#) (HREM |$ConstructorCache| '|QuadraticForm|)))))))))) 
 
 (DEFUN |QuadraticForm;| (|#1| |#2|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$2 NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|QuadraticForm|))
-          (LETT DV$2 (|devaluate| |#2|) . #1#)
-          (LETT |dv$| (LIST '|QuadraticForm| DV$1 DV$2) . #1#)
-          (LETT $ (GETREFV 34) . #1#)
+          (LETT DV$1 |#1|)
+          (LETT DV$2 (|devaluate| |#2|))
+          (LETT |dv$| (LIST '|QuadraticForm| DV$1 DV$2))
+          (LETT $ (GETREFV 34))
           (QSETREFV $ 0 |dv$|)
           (QSETREFV $ 3
                     (LETT |pv$|
@@ -62,8 +59,7 @@
                                               (|HasCategory|
                                                (|SquareMatrix| |#1| |#2|)
                                                '(|ConvertibleTo|
-                                                 (|InputForm|)))))
-                          . #1#))
+                                                 (|InputForm|)))))))
           (|haddProp| |$ConstructorCache| '|QuadraticForm| (LIST DV$1 DV$2)
                       (CONS 1 $))
           (|stuffDomainSlots| $)

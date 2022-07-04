@@ -1,8 +1,8 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; algCoerceInteractive(p,source,target) ==
 ;   -- now called in some groebner code
 ;   $useConvertForCoercions : local := true
@@ -11,7 +11,7 @@
 ;   u := coerceInteractive(objNewWrap(p,source),target)
 ;   u => objValUnwrap(u)
 ;   error ['"can't convert",p,'"of mode",source,'"to mode",target]
- 
+
 (DEFUN |algCoerceInteractive| (|p| |source| |target|)
   (PROG (|$useConvertForCoercions| |u|)
     (DECLARE (SPECIAL |$useConvertForCoercions|))
@@ -26,7 +26,7 @@
              (|error|
               (LIST "can't convert" |p| "of mode" |source| "to mode"
                     |target|))))))))
- 
+
 ; spad2BootCoerce(x,source,target) ==
 ;   -- x : source and we wish to coerce to target
 ;   -- used in spad code for Any
@@ -35,7 +35,7 @@
 ;   x' := coerceInteractive(objNewWrap(x,source),target) =>
 ;     objValUnwrap(x')
 ;   throwKeyedMsgCannotCoerceWithValue(wrap x,source,target)
- 
+
 (DEFUN |spad2BootCoerce| (|x| |source| |target|)
   (PROG (|x'|)
     (RETURN
@@ -49,7 +49,7 @@
       ('T
        (|throwKeyedMsgCannotCoerceWithValue| (|wrap| |x|) |source|
         |target|))))))
- 
+
 ; coerceOrFail(triple,t,mapName) ==
 ;   -- some code generated for this is in coerceInt0
 ;   t = $NoValueMode => triple
@@ -57,7 +57,7 @@
 ;   t' => objValUnwrap(t')
 ;   sayKeyedMsg("S2IC0004",[mapName,objMode triple,t])
 ;   '"failed"
- 
+
 (DEFUN |coerceOrFail| (|triple| |t| |mapName|)
   (PROG (|t'|)
     (RETURN
@@ -71,7 +71,7 @@
                      (|sayKeyedMsg| 'S2IC0004
                       (LIST |mapName| (|objMode| |triple|) |t|))
                      "failed")))))))))
- 
+
 ; coerceOrCroak(triple, t, mapName) ==
 ;   -- this does the coercion and returns the value or dies
 ;   t = $NoValueMode => triple
@@ -81,7 +81,7 @@
 ;     throwKeyedMsgCannotCoerceWithValue(objVal triple,objMode triple, t)
 ;   sayKeyedMsg("S2IC0005",[mapName])
 ;   throwKeyedMsgCannotCoerceWithValue(objVal triple,objMode triple, t)
- 
+
 (DEFUN |coerceOrCroak| (|triple| |t| |mapName|)
   (PROG (|t'|)
     (RETURN
@@ -98,12 +98,12 @@
                      (|sayKeyedMsg| 'S2IC0005 (LIST |mapName|))
                      (|throwKeyedMsgCannotCoerceWithValue| (|objVal| |triple|)
                       (|objMode| |triple|) |t|))))))))))
- 
+
 ; coerceOrThrowFailure(value, t1, t2) ==
 ;   (result := coerceOrRetract(objNewWrap(value, t1), t2)) or
 ;     coercionFailure()
 ;   objValUnwrap(result)
- 
+
 (DEFUN |coerceOrThrowFailure| (|value| |t1| |t2|)
   (PROG (|result|)
     (RETURN
@@ -111,7 +111,7 @@
       (OR (SETQ |result| (|coerceOrRetract| (|objNewWrap| |value| |t1|) |t2|))
           (|coercionFailure|))
       (|objValUnwrap| |result|)))))
- 
+
 ; retract object ==
 ;   type := objMode object
 ;   STRINGP type => 'failed
@@ -120,7 +120,7 @@
 ;   not isWrapped val and val isnt ['SPADMAP, :.] => 'failed
 ;   (ans := retract1 objNew(val, type)) = 'failed => ans
 ;   objNew(objVal ans, objMode ans)
- 
+
 (DEFUN |retract| (|object|)
   (PROG (|type| |val| |ans|)
     (RETURN
@@ -139,7 +139,7 @@
                     '|failed|)
                 |ans|)
                (#1# (|objNew| (|objVal| |ans|) (|objMode| |ans|)))))))))))
- 
+
 ; retract1 object ==
 ;   -- this function is the new version of the old "pullback"
 ;   -- it first tries to change the datatype of an object to that of
@@ -167,7 +167,7 @@
 ;   -- see if we have a special case here
 ;   (object' := retract2Specialization(object)) => object'
 ;   'failed
- 
+
 (DEFUN |retract1| (|object|)
   (PROG (|type| |val| |ISTMP#1| |object'| |underDomain|)
     (RETURN
@@ -215,7 +215,7 @@
                        ((SETQ |object'| (|retract2Specialization| |object|))
                         |object'|)
                        (#1# '|failed|))))))))))))
- 
+
 ; retractUnderDomain(object,type,underDomain) ==
 ;   null (ud := underDomainOf underDomain) => 'failed
 ;   [c,:args] := deconstructT type
@@ -224,7 +224,7 @@
 ;   type'' := constructT(c,[ud])
 ;   (object' := coerceInt(object,type'')) => object'
 ;   'failed
- 
+
 (DEFUN |retractUnderDomain| (|object| |type| |underDomain|)
   (PROG (|ud| |LETTMP#1| |c| |args| |type''| |object'|)
     (RETURN
@@ -243,13 +243,13 @@
                       ((SETQ |object'| (|coerceInt| |object| |type''|))
                        |object'|)
                       (#1# '|failed|)))))))))))
- 
+
 ; retract2Specialization object ==
 ;   -- handles some specialization retraction cases, like matrices
 ;   val := objVal object
 ;   val' := unwrap val
 ;   type := objMode object
-; 
+;
 ;   type = $Any =>
 ;     [dom,:obj] := val'
 ;     objNewWrap(obj,dom)
@@ -314,7 +314,7 @@
 ;       objNew(val,['List,['List,$Integer]])
 ;     D' is ['Variable,.] or D' is ['OrderedVariableList,.] =>
 ;         coerceInt(object,['List,['List,$Symbol]])
-; 
+;
 ;     n := # val'
 ;     m := # val'.0
 ;     null isRectangularList(val',n,m) => NIL
@@ -336,18 +336,18 @@
 ;         val' := retract val'
 ;     val' = 'failed => NIL
 ;     val'
-; 
+;
 ;   type is ['UnivariatePuiseuxSeries, coef, var, cen] =>
 ;     coerceInt(object, ['UnivariateLaurentSeries, coef, var, cen])
 ;   type is ['UnivariateLaurentSeries, coef, var, cen] =>
 ;     coerceInt(object, ['UnivariateTaylorSeries, coef, var, cen])
-; 
+;
 ;   type is ['FunctionCalled,name] =>
 ;     null (m := get(name,'mode,$e)) => NIL
 ;     isPartialMode m => NIL
 ;     objNew(val,m)
 ;   NIL
- 
+
 (DEFUN |retract2Specialization| (|object|)
   (PROG (|val| |val'| |type| |dom| |obj| |unionDoms| |ISTMP#1| |var| D |x| |vl|
          |n| |m| |ISTMP#2| |ISTMP#3| |agg| |bds| |D'| |tl| |bad| |e'| |vl'|
@@ -620,17 +620,17 @@
         (COND ((NULL (SETQ |m| (|get| |name| '|mode| |$e|))) NIL)
               ((|isPartialMode| |m|) NIL) (#1# (|objNew| |val| |m|))))
        (#1# NIL))))))
- 
+
 ; coerceOrConvertOrRetract(T,m) ==
 ;   $useConvertForCoercions : local := true
 ;   coerceOrRetract(T,m)
- 
+
 (DEFUN |coerceOrConvertOrRetract| (T$ |m|)
   (PROG (|$useConvertForCoercions|)
     (DECLARE (SPECIAL |$useConvertForCoercions|))
     (RETURN
      (PROGN (SETQ |$useConvertForCoercions| T) (|coerceOrRetract| T$ |m|)))))
- 
+
 ; coerceOrRetract(T,m) ==
 ;   (t' := coerceInteractive(T,m)) => t'
 ;   t := T
@@ -641,7 +641,7 @@
 ;     t = 'failed => return ans
 ;     ans := coerceInteractive(t,m)
 ;   ans
- 
+
 (DEFUN |coerceOrRetract| (T$ |m|)
   (PROG (|t'| |t| |ans|)
     (RETURN
@@ -664,7 +664,7 @@
                                                (|coerceInteractive| |t|
                                                 |m|))))))))))))
              |ans|))))))
- 
+
 ; coerceRetract(object,t2) ==
 ;   -- tries to handle cases such as P I -> I
 ;   (val := objValUnwrap(object)) = "$fromCoerceable$" => NIL
@@ -677,7 +677,7 @@
 ;   t1 = $OutputForm => NIL
 ;   (c := retractByFunction(object, t2)) => c
 ;   NIL
- 
+
 (DEFUN |coerceRetract| (|object| |t2|)
   (PROG (|val| |t1| |c|)
     (RETURN
@@ -694,7 +694,7 @@
               ((EQUAL |t1| |$OutputForm|) NIL)
               ((SETQ |c| (|retractByFunction| |object| |t2|)) |c|)
               (#1# NIL))))))))
- 
+
 ; findRetractMms1(st, tt) ==
 ;     target := ['Union, tt, '"failed"]
 ;     fn := 'retractIfCan
@@ -702,7 +702,7 @@
 ;                   findFunctionInDomain(fn, st, target, [st],[st], NIL, 'T))
 ;     mms => orderMms(fn, mms, [st], [st], target)
 ;     mms
- 
+
 (DEFUN |findRetractMms1| (|st| |tt|)
   (PROG (|target| |fn| |mms|)
     (RETURN
@@ -717,7 +717,7 @@
                 (LIST |st|) NIL 'T)))
       (COND (|mms| (|orderMms| |fn| |mms| (LIST |st|) (LIST |st|) |target|))
             ('T |mms|))))))
- 
+
 ; retractByFunction(object,u) ==
 ;   -- tries to retract by using function "retractIfCan"
 ;   -- if the type belongs to the correct category.
@@ -735,7 +735,7 @@
 ;   if $reportBottomUpFlag then
 ;     sayFunctionSelectionResult(funName,[t],mms)
 ;   null mms => NIL
-; 
+;
 ;   -- [[dc, :.], slot, .] := first mms
 ;   dc := CAAAR mms
 ;   slot := CADAR mms
@@ -748,7 +748,7 @@
 ;   u' := objMode object'
 ;   u = u' => object'
 ;   NIL
- 
+
 (DEFUN |retractByFunction| (|object| |u|)
   (PROG (|$reportBottomUpFlag| |u'| |object'| |fun| |slot| |dc| |mms| |funName|
          |target| |val| |t|)
@@ -782,7 +782,7 @@
                                (|objNewWrap| (SPADCALL |val| |fun|) |target|)))
                       (SETQ |u'| (|objMode| |object'|))
                       (COND ((EQUAL |u| |u'|) |object'|) (#1# NIL))))))))))))
- 
+
 ; constantInDomain?(form,domainForm) ==
 ;     opAlist := getOperationAlistFromLisplib first domainForm
 ;     key := opOf form
@@ -791,7 +791,7 @@
 ;     key = "One" => constantInDomain?(["1"], domainForm)
 ;     key = "Zero" => constantInDomain?(["0"], domainForm)
 ;     false
- 
+
 (DEFUN |constantInDomain?| (|form| |domainForm|)
   (PROG (|opAlist| |key| |entryList| |ISTMP#1| |ISTMP#2| |ISTMP#3| |ISTMP#4|
          |type|)
@@ -822,7 +822,7 @@
        ((EQ |key| '|One|) (|constantInDomain?| (LIST '|1|) |domainForm|))
        ((EQ |key| '|Zero|) (|constantInDomain?| (LIST '|0|) |domainForm|))
        (#1# NIL))))))
- 
+
 ; getConstantFromDomain1(form,domainForm) ==
 ;     isPartialMode domainForm => NIL
 ;     opAlist := getOperationAlistFromLisplib first domainForm
@@ -835,7 +835,7 @@
 ;     -- i.e., there should be exactly one item under this key of that form
 ;     domain := evalDomain domainForm
 ;     SPADCALL compiledLookupCheck(key,sig,domain)
- 
+
 (DEFUN |getConstantFromDomain1| (|form| |domainForm|)
   (PROG (|opAlist| |key| |entryList| |ISTMP#1| |sig| |ISTMP#2| |ISTMP#3|
          |ISTMP#4| |domain|)
@@ -874,39 +874,39 @@
                (PROGN
                 (SETQ |domain| (|evalDomain| |domainForm|))
                 (SPADCALL (|compiledLookupCheck| |key| |sig| |domain|)))))))))))
- 
+
 ; domainOne(domain) == getConstantFromDomain('(One),domain)
- 
+
 (DEFUN |domainOne| (|domain|)
   (PROG () (RETURN (|getConstantFromDomain| '(|One|) |domain|))))
- 
+
 ; domainZero(domain) == getConstantFromDomain('(Zero),domain)
- 
+
 (DEFUN |domainZero| (|domain|)
   (PROG () (RETURN (|getConstantFromDomain| '(|Zero|) |domain|))))
- 
+
 ; equalOne(object, domain) ==
 ;   -- tries using constant One and "=" from domain
 ;   -- object should not be wrapped
 ;   algEqual(object, getConstantFromDomain('(One),domain), domain)
- 
+
 (DEFUN |equalOne| (|object| |domain|)
   (PROG ()
     (RETURN
      (|algEqual| |object| (|getConstantFromDomain| '(|One|) |domain|)
       |domain|))))
- 
+
 ; equalZero(object, domain) ==
 ;   -- tries using constant Zero and "=" from domain
 ;   -- object should not be wrapped
 ;   algEqual(object, getConstantFromDomain('(Zero),domain), domain)
- 
+
 (DEFUN |equalZero| (|object| |domain|)
   (PROG ()
     (RETURN
      (|algEqual| |object| (|getConstantFromDomain| '(|Zero|) |domain|)
       |domain|))))
- 
+
 ; algEqual(object1, object2, domain) ==
 ;   -- sees if 2 objects of the same domain are equal by using the
 ;   -- "=" from the domain
@@ -914,7 +914,7 @@
 ; --  eqfunc := getFunctionFromDomain("=",domain,[domain,domain])
 ;   eqfunc := compiledLookupCheck("=",[$Boolean,'$,'$],evalDomain domain)
 ;   SPADCALL(object1,object2, eqfunc)
- 
+
 (DEFUN |algEqual| (|object1| |object2| |domain|)
   (PROG (|eqfunc|)
     (RETURN
@@ -923,7 +923,7 @@
               (|compiledLookupCheck| '= (LIST |$Boolean| '$ '$)
                (|evalDomain| |domain|)))
       (SPADCALL |object1| |object2| |eqfunc|)))))
- 
+
 ; canCoerce1(t1,t2) ==
 ;   -- general test for coercion
 ;   -- the result is NIL if it fails
@@ -945,25 +945,25 @@
 ;       NIL
 ;     atom t1 or atom t2 => NIL
 ;     null isValidType(t2) => NIL
-; 
+;
 ;     absolutelyCannotCoerce(t1,t2) => NIL
-; 
+;
 ;     nt1 := first t1
 ;     nt2 := first t2
-; 
+;
 ;     EQ(nt1,'Mapping) => EQ(nt2,'Any)
 ;     EQ(nt2,'Mapping) =>
 ;       EQ(nt1,'Variable) or EQ(nt1,'FunctionCalled) =>
 ;         canCoerceExplicit2Mapping(t1,t2)
 ;       NIL
 ;     EQ(nt1,'Union) or EQ(nt2,'Union) => canCoerceUnion(t1,t2)
-; 
+;
 ;     -- efficiency hack
 ;     t1 is ['Segment, s1] and t2 is ['UniversalSegment, s2] and
 ;         (isEqualOrSubDomain(s1, s2) or canCoerce(s1, s2)) => true
-; 
+;
 ;     t1 is ['Tuple,S] and t2 ~= '(OutputForm) => canCoerce(['List, S], t2)
-; 
+;
 ;     isRingT2 := ofCategory(t2,'(Ring))
 ;     isRingT2 and isEqualOrSubDomain(t1,$Integer) => true
 ;     (ans := canCoerceTopMatching(t1,t2,nt1,nt2)) ~= 'maybe => ans
@@ -975,7 +975,7 @@
 ;         canCoerce(t1,t) and canCoerceByFunction(t,t2) and 'T
 ;     ans or (t1 in '((PositiveInteger) (NonNegativeInteger))
 ;       and canCoerce($Integer,t2))
- 
+
 (DEFUN |canCoerce1| (|t1| |t2|)
   (PROG (|ISTMP#1| |v| |nt1| |nt2| |s1| |s2| S |isRingT2| |ans| |LETTMP#1|
          |arg| |t|)
@@ -1096,26 +1096,26 @@
                                       (|NonNegativeInteger|)))
                                    (|canCoerce| |$Integer|
                                     |t2|))))))))))))))))))
- 
+
 ; canCoerceFrom0(t1,t2) ==
 ; -- top level test for coercion, which transfers all RN, RF and RR into
 ; -- equivalent types
 ;   startTimingProcess 'querycoerce
 ;   q :=
 ;     isEqualOrSubDomain(t1,t2) or t1 = '(None) or t2 = '(Any) or
-; 
+;
 ;       -- make sure we are trying to coerce to a legal type
 ;       -- in particular, polynomials are repeated, etc.
 ;       null isValidType(t2) => NIL
 ;       null isLegitimateMode(t2,nil,nil) => NIL
-; 
+;
 ;       t1 = $RationalNumber =>
 ;         isEqualOrSubDomain(t2,$Integer) => NIL
 ;         canCoerce(t1, t2)
 ;       canCoerce(t1, t2)
 ;   stopTimingProcess 'querycoerce
 ;   q
- 
+
 (DEFUN |canCoerceFrom0| (|t1| |t2|)
   (PROG (|q|)
     (RETURN
@@ -1132,21 +1132,21 @@
                         (#1# (|canCoerce| |t1| |t2|)))))
       (|stopTimingProcess| '|querycoerce|)
       |q|))))
- 
+
 ; isSubTowerOf(t1,t2) ==
 ;   -- assumes RF and RN stuff has been expanded
 ;   -- tests whether t1 is somewhere inside t2
 ;   isEqualOrSubDomain(t1,t2) => true
 ;   null (u := underDomainOf t2) => nil
 ;   isSubTowerOf(t1,u)
- 
+
 (DEFUN |isSubTowerOf| (|t1| |t2|)
   (PROG (|u|)
     (RETURN
      (COND ((|isEqualOrSubDomain| |t1| |t2|) T)
            ((NULL (SETQ |u| (|underDomainOf| |t2|))) NIL)
            ('T (|isSubTowerOf| |t1| |u|))))))
- 
+
 ; canCoerceTopMatching(t1,t2,tt1,tt2) ==
 ;   -- returns true, nil or maybe
 ;   -- for example, if t1 = P[x] D1 and t2 = P[y] D2 and x = y then
@@ -1162,7 +1162,7 @@
 ;   1 = #u1 => NIL                             -- no under domain
 ;   first(u1) ~= first(u2) => 'maybe
 ;   canCoerce(underDomainOf t1, underDomainOf t2)
- 
+
 (DEFUN |canCoerceTopMatching| (|t1| |t2| |tt1| |tt2|)
   (PROG (|doms| |u2| |u1|)
     (RETURN
@@ -1190,7 +1190,7 @@
                                    (#1#
                                     (|canCoerce| (|underDomainOf| |t1|)
                                      (|underDomainOf| |t2|))))))))))))))))
- 
+
 ; canCoerceExplicit2Mapping(t1,t is ['Mapping,target,:argl]) ==
 ;   -- determines if there a mapping called var with the given args
 ;   -- and target
@@ -1215,7 +1215,7 @@
 ;       false
 ;     NIL
 ;   NIL
- 
+
 (DEFUN |canCoerceExplicit2Mapping| (|t1| |t|)
   (PROG (|$useCoerceOrCroak| |ISTMP#2| |funNode| |fun| |targ| |mm| |mms| |var|
          |ISTMP#1| |argl| |target|)
@@ -1293,11 +1293,11 @@
                (#2# NIL))))))
           (#2# NIL))))
        (#2# NIL))))))
- 
+
 ; canCoerceUnion(t1,t2) ==
 ;   -- sees if one can coerce to or from a Union Domain
 ;   -- assumes one of t1 and t2 is one
-; 
+;
 ;   -- get the domains in the union, checking for tagged unions
 ;   if (isUnion1 := t1 is ['Union,:uds1]) then
 ;     unionDoms1 :=
@@ -1307,7 +1307,7 @@
 ;     unionDoms2 :=
 ;       uds2 and first uds2 is [":",:.] => [t for [.,.,t] in uds2]
 ;       uds2
-; 
+;
 ;   isUnion2 =>
 ;     member(t1,unionDoms2) => true
 ;     isUnion1 =>
@@ -1320,7 +1320,7 @@
 ;     and/[canCoerce(ud,t2) for ud in unionDoms1]
 ;   keyedSystemError("S2GE0016",['"canCoerceUnion",
 ;      '"called with 2 non-Unions"])
- 
+
 (DEFUN |canCoerceUnion| (|t1| |t2|)
   (PROG (|uds1| |isUnion1| |ISTMP#1| |ISTMP#2| |t| |unionDoms1| |uds2|
          |isUnion2| |unionDoms2| |d1|)
@@ -1460,7 +1460,7 @@
        (#1#
         (|keyedSystemError| 'S2GE0016
          (LIST "canCoerceUnion" "called with 2 non-Unions"))))))))
- 
+
 ; canCoerceByMap(t1,t2) ==
 ;   -- idea is this: if t1 is D U1 and t2 is D U2, then look for
 ;   -- map: (U1 -> U2, D U1) -> D U2.  If it exists, then answer true
@@ -1473,19 +1473,19 @@
 ;   top := CAAR u1
 ;   u1 := underDomainOf t1
 ;   u2 := underDomainOf t2
-; 
+;
 ;   absolutelyCannotCoerce(u1,u2) => NIL
-; 
+;
 ;   -- save some time for those we know about
 ;   know := '(List Vector Segment Stream UniversalSegment Array
 ;     Polynomial UnivariatePolynomial SquareMatrix Matrix)
 ;   top in know => canCoerce(u1,u2)
-; 
+;
 ;   null selectMms1('map,t2,[['Mapping,u2,u1],t1],
 ;     [['Mapping,u2,u1],u1],NIL) => NIL
 ;   -- don't bother checking for Undef, so avoid instantiation
 ;   canCoerce(u1,u2)
- 
+
 (DEFUN |canCoerceByMap| (|t1| |t2|)
   (PROG (|u2| |u1| |top| |know|)
     (RETURN
@@ -1519,7 +1519,7 @@
                                   (LIST (LIST '|Mapping| |u2| |u1|) |u1|) NIL))
                                 NIL)
                                (#1# (|canCoerce| |u1| |u2|))))))))))))))))
- 
+
 ; canCoerceTower(t1,t2) ==
 ; -- tries to find a coercion between top level t2 and somewhere inside t1
 ; -- builds new bubbled type, for which coercion is called recursively
@@ -1543,7 +1543,7 @@
 ;           s:= bubbleConstructor [c,arg,c1,arg1]
 ;           newCanCoerceCommute(t1,s) and canCoerceLocal(s,t2)
 ;       x
- 
+
 (DEFUN |canCoerceTower| (|t1| |t2|)
   (PROG (|LETTMP#1| |c1| |arg1| TL |arg| |t| |c| |s| |c2| |arg2| |s1| |x|)
     (RETURN
@@ -1607,7 +1607,7 @@
                     (SETQ |bfVar#20| (OR |x| (NULL |arg|)))))
                  NIL)
                 |x|)))))))
- 
+
 ; canCoerceLocal(t1,t2) ==
 ;   -- test for coercion on top level
 ;   p := ASSQ(first t1, $CoerceTable)
@@ -1618,7 +1618,7 @@
 ;        (v:=CATCH('coerceFailure,FUNCALL(fun,'_$fromCoerceable_$,t1,t2)))
 ;          and v ~= $coerceFailure)  or  canCoerceByFunction(t1,t2)
 ;   canCoerceByFunction(t1,t2)
- 
+
 (DEFUN |canCoerceLocal| (|t1| |t2|)
   (PROG (|p| |ISTMP#1| |ISTMP#2| |tag| |ISTMP#3| |fun| |v|)
     (RETURN
@@ -1649,14 +1649,14 @@
                      (NOT (EQUAL |v| |$coerceFailure|)))
                 (|canCoerceByFunction| |t1| |t2|)))))
        (#1# (|canCoerceByFunction| |t1| |t2|)))))))
- 
+
 ; canCoerceCommute(t1,t2) ==
 ; -- THIS IS OUT-MODED AND WILL GO AWAY SOON  RSS 2-87
 ; -- t1 is t2 with the two top level constructors commuted
 ; -- looks for the existence of a commuting function
 ;   p := ASSQ(first t1, $CommuteTable)
 ;   p and ASSQ(first t2, rest p) is [., :['commute, .]]
- 
+
 (DEFUN |canCoerceCommute| (|t1| |t2|)
   (PROG (|p| |ISTMP#1| |ISTMP#2| |ISTMP#3|)
     (RETURN
@@ -1673,14 +1673,14 @@
                         (SETQ |ISTMP#3| (CDR |ISTMP#2|))
                         (AND (CONSP |ISTMP#3|)
                              (EQ (CDR |ISTMP#3|) NIL))))))))))))
- 
+
 ; newCanCoerceCommute(t1,t2) ==
 ;   coerceIntCommute(objNewWrap("$fromCoerceable$",t1),t2)
- 
+
 (DEFUN |newCanCoerceCommute| (|t1| |t2|)
   (PROG ()
     (RETURN (|coerceIntCommute| (|objNewWrap| '|$fromCoerceable$| |t1|) |t2|))))
- 
+
 ; canCoercePermute(t1,t2) ==
 ;   -- try to generate a sequence of transpositions that will convert
 ;   -- t1 into t2
@@ -1689,7 +1689,7 @@
 ;   -- at this point, first towers = t1 and last towers should be similar
 ;   -- to t2 in the sense that the components of t1 are in the same order
 ;   -- as in t2. If length towers = 2 and t2 = last towers, we quit to
-;   -- avoid an infinte loop.
+;   -- avoid an infinite loop.
 ;   NULL towers or NULL rest towers => NIL
 ;   NULL CDDR towers and t2 = CADR towers => NIL
 ;   -- do the coercions successively, quitting if any fail
@@ -1698,7 +1698,7 @@
 ;     ok := canCoerce(t1,t)
 ;     if ok then t1 := t
 ;   ok
- 
+
 (DEFUN |canCoercePermute| (|t1| |t2|)
   (PROG (|towers| |ok|)
     (RETURN
@@ -1726,22 +1726,22 @@
                          (SETQ |bfVar#21| (CDR |bfVar#21|))))
                       (CDR |towers|) NIL)
                      |ok|)))))))))
- 
+
 ; canConvertByFunction(m1,m2) ==
 ;   null $useConvertForCoercions => NIL
 ;   canCoerceByFunction1(m1,m2,'convert)
- 
+
 (DEFUN |canConvertByFunction| (|m1| |m2|)
   (PROG ()
     (RETURN
      (COND ((NULL |$useConvertForCoercions|) NIL)
            ('T (|canCoerceByFunction1| |m1| |m2| '|convert|))))))
- 
+
 ; canCoerceByFunction(m1,m2) == canCoerceByFunction1(m1,m2,'coerce)
- 
+
 (DEFUN |canCoerceByFunction| (|m1| |m2|)
   (PROG () (RETURN (|canCoerceByFunction1| |m1| |m2| '|coerce|))))
- 
+
 ; canCoerceByFunction1(m1,m2,fun) ==
 ;   -- calls selectMms with $Coerce=NIL and tests for required target=m2
 ;   $declaredMode:local:= NIL
@@ -1749,7 +1749,7 @@
 ;   l := selectMms1(fun, m2, [m1], [m1], NIL)
 ;   [x for x in l | x is [sig,:.] and CADR sig = m2 and
 ;       CADDR sig = m1] and true
- 
+
 (DEFUN |canCoerceByFunction1| (|m1| |m2| |fun|)
   (PROG (|$reportBottomUpFlag| |$declaredMode| |sig| |l|)
     (DECLARE (SPECIAL |$reportBottomUpFlag| |$declaredMode|))
@@ -1771,7 +1771,7 @@
            (SETQ |bfVar#22| (CDR |bfVar#22|))))
         NIL |l| NIL)
        T)))))
- 
+
 ; absolutelyCanCoerceByCheating(t1,t2) ==
 ;   -- this typically involves subdomains and towers where the only
 ;   -- difference is a subdomain
@@ -1786,7 +1786,7 @@
 ;   tl1 ~= tl2 => false
 ;   #u1 ~= #u2 => false
 ;   "and"/[absolutelyCanCoerceByCheating(x1,x2) for x1 in u1 for x2 in u2]
- 
+
 (DEFUN |absolutelyCanCoerceByCheating| (|t1| |t2|)
   (PROG (|LETTMP#1| |tl1| |u1| |tl2| |u2|)
     (RETURN
@@ -1841,7 +1841,7 @@
                    (SETQ |bfVar#27| (CDR |bfVar#27|))
                    (SETQ |bfVar#28| (CDR |bfVar#28|))))
                 T |u1| NIL |u2| NIL)))))))))
- 
+
 ; absolutelyCannotCoerce(t1,t2) ==
 ;   -- response of true means "definitely cannot coerce"
 ;   -- this is largely an efficiency hack
@@ -1852,19 +1852,19 @@
 ;   QFI  := [$QuotientField, $Integer]
 ;   int2 := isEqualOrSubDomain(t2,$Integer)
 ;   scalars := '(Float DoubleFloat)
-; 
+;
 ;   MEMQ(n1,scalars) and int2 => true
 ;   (t1 = QFI) and int2       => true
-; 
+;
 ;   num2 := int2 or MEMQ(n2,scalars) or (t2 = QFI)
 ;   isVar1 := MEMQ(n1,'(Variable Symbol))
-; 
+;
 ;   num2 and isVar1 => true
 ;   num2 and MEMQ(n1,$univariateDomains) => true
 ;   num2 and MEMQ(n1,$multivariateDomains) => true
 ;   miscpols :=  '(Polynomial SimpleAlgebraicExtension)
 ;   num2 and MEMQ(n1,miscpols) => true
-; 
+;
 ;   aggs :=  '(
 ;     Matrix List Vector Stream Array RectangularMatrix FiniteSet
 ;        )
@@ -1872,7 +1872,7 @@
 ;   u2 := underDomainOf t2
 ;   MEMQ(n1,aggs) and (u1 = t2) => true
 ;   MEMQ(n2,aggs) and (u2 = t1) => true
-; 
+;
 ;   algs :=  '(
 ;     SquareMatrix RectangularMatrix Quaternion
 ;        )
@@ -1880,17 +1880,17 @@
 ;   num2 and MEMQ(n1,nonpols) => true
 ;   isVar1 and MEMQ(n2,nonpols) and
 ;     absolutelyCannotCoerce(t1,u2) => true
-; 
+;
 ;   (MEMQ(n1,scalars) or (t1 = QFI)) and (t2 = '(Polynomial (Integer))) =>
 ;     true
-; 
+;
 ;   v2 := deconstructT t2
 ;   1 = #v2 => NIL
 ;   v1 := deconstructT t1
 ;   1 = #v1 => NIL
 ;   first(v1) ~= first(v2) => NIL
 ;   absolutelyCannotCoerce(u1,u2)
- 
+
 (DEFUN |absolutelyCannotCoerce| (|t1| |t2|)
   (PROG (|n1| |n2| QFI |int2| |scalars| |num2| |isVar1| |miscpols| |aggs| |u1|
          |u2| |algs| |nonpols| |v2| |v1|)
@@ -1974,22 +1974,22 @@
                                                      (|absolutelyCannotCoerce|
                                                       |u1|
                                                       |u2|)))))))))))))))))))))))))))
- 
+
 ; typeIsASmallInteger x == (x = $SingleInteger)
- 
+
 (DEFUN |typeIsASmallInteger| (|x|)
   (PROG () (RETURN (EQUAL |x| |$SingleInteger|))))
- 
+
 ; typeToInputForm(t) == typeToForm(t, '(InputForm))
- 
+
 (DEFUN |typeToInputForm| (|t|)
   (PROG () (RETURN (|typeToForm| |t| '(|InputForm|)))))
- 
+
 ; typeToOutputForm(t) == typeToForm(t, $OutputForm)
- 
+
 (DEFUN |typeToOutputForm| (|t|)
   (PROG () (RETURN (|typeToForm| |t| |$OutputForm|))))
- 
+
 ; typeToForm(t, toForm) ==
 ;     t0 := devaluate(t)
 ;     [op,:argl] := t0
@@ -2002,7 +2002,7 @@
 ;             c => typeToForm(x, toForm)
 ;             algCoerceInteractive(x, t1, toForm)
 ;     [op, :nl]
- 
+
 (DEFUN |typeToForm| (|t| |toForm|)
   (PROG (|t0| |op| |argl| |coSig| |sig| |ml| |nl|)
     (RETURN
@@ -2039,7 +2039,7 @@
     (RETURN
      (COND (|c| (|typeToForm| |x| |toForm|))
            ('T (|algCoerceInteractive| |x| |t1| |toForm|))))))
- 
+
 ; coerceInteractive(triple,t2) ==
 ;   -- bind flag for recording/reporting instantiations
 ;   -- (see recordInstantiation)
@@ -2068,7 +2068,7 @@
 ;   if expr2 then stopTimingProcess 'print
 ;   else stopTimingProcess 'coercion
 ;   result
- 
+
 (DEFUN |coerceInteractive| (|triple| |t2|)
   (PROG (|$insideCoerceInteractive| |result| |var| |expr2| |ISTMP#2| |x|
          |ISTMP#1| |val| |t1|)
@@ -2127,13 +2127,13 @@
                  (COND (|expr2| (|stopTimingProcess| '|print|))
                        (#1# (|stopTimingProcess| '|coercion|)))
                  |result|))))))))))
- 
+
 ; coerceInt0(triple,t2) ==
 ;   -- top level interactive coercion, which transfers all RN, RF and RR
 ;   -- into equivalent types
 ;   val := objVal triple
 ;   t1  := objMode triple
-; 
+;
 ;   val='_$fromCoerceable_$ => canCoerceFrom(t1,t2)
 ;   t1 = t2 => triple
 ;   -- t1 is ['Mapping,:.] and t2 ~= '(Any) => NIL
@@ -2147,7 +2147,7 @@
 ;     (ans := coerceInt0(objNewWrap(val',t1'),t2)) => ans
 ;   x := coerceInt(triple, t2) => x
 ;   NIL
- 
+
 (DEFUN |coerceInt0| (|triple| |t2|)
   (PROG (|val| |t1| |LETTMP#1| |t1'| |val'| |ans| |x|)
     (RETURN
@@ -2170,7 +2170,7 @@
                   (SETQ |ans| (|coerceInt0| (|objNewWrap| |val'| |t1'|) |t2|)))
              |ans|)
             ((SETQ |x| (|coerceInt| |triple| |t2|)) |x|) ('T NIL))))))
- 
+
 ; coerceInt(triple, t2) ==
 ;   val := coerceInt1(triple, t2) => val
 ;   t1 := objMode triple
@@ -2179,7 +2179,7 @@
 ;     newVal := coerceInt(triple, newMode)
 ;     coerceInt(newVal, t2)
 ;   nil
- 
+
 (DEFUN |coerceInt| (|triple| |t2|)
   (PROG (|val| |t1| |newMode| |newVal|)
     (RETURN
@@ -2196,7 +2196,7 @@
                 (SETQ |newVal| (|coerceInt| |triple| |newMode|))
                 (|coerceInt| |newVal| |t2|)))
               (#1# NIL))))))))
- 
+
 ; coerceInt1(triple,t2) ==
 ;   -- general interactive coercion
 ;   -- the result is a new triple with type m2 or NIL (= failed)
@@ -2207,27 +2207,27 @@
 ;   val := objVal triple
 ;   absolutelyCanCoerceByCheating(t1,t2) => objNew(val,t2)
 ;   isSubDomain(t2, t1) => coerceSubDomain(val, t1, t2)
-; 
+;
 ;   if typeIsASmallInteger(t1) then
 ;     (t2 = $Integer) or typeIsASmallInteger(t2) => return objNew(val,t2)
 ;     sintp := SINTP val
 ;     sintp and (t2 = $PositiveInteger) and val > 0 => return objNew(val,t2)
 ;     sintp and (t2 = $NonNegativeInteger) and val >= 0 => return objNew(val,t2)
-; 
+;
 ;   typeIsASmallInteger(t2) and isEqualOrSubDomain(t1, $Integer)_
 ;       and INTEGERP val =>
 ;     SINTP val => objNew(val,t2)
 ;     NIL
-; 
+;
 ;   t2 = $Void => objNew(voidValue(),$Void)
 ;   t2 = $Any => objNewWrap([t1,:unwrap val],'(Any))
-; 
+;
 ;   t1 = $Any and t2 ~= $OutputForm and ([t1',:val'] := unwrap val) and
 ;     (ans := coerceInt(objNewWrap(val',t1'),t2)) => ans
-; 
+;
 ;   -- next is for tagged union selectors for the time being
 ;   t1 is ['Variable,=t2] or t2 is ['Variable,=t1] => objNew(val,t2)
-; 
+;
 ;   STRINGP t2 =>
 ;     t1 is ['Variable,v] and (t2 = PNAME(v)) => objNewWrap(t2,t2)
 ;     val' := unwrap val
@@ -2246,7 +2246,7 @@
 ;     t2 = $OutputForm => objNew(STRCONC('"_"", t1, '"_""), $OutputForm)
 ;     NIL
 ;   atom t1 => NIL
-; 
+;
 ;   if t1 = $AnonymousFunction and (t2 is ['Mapping,target,:margl]) then
 ;     $useCoerceOrCroak := nil
 ;     [.,vars,:body] := unwrap val
@@ -2258,7 +2258,7 @@
 ;     tree := mkAtree ['ADEF,vars,[target,:margl],[NIL for x in rest t2],:body]
 ;     CATCH('coerceOrCroaker, bottomUp tree) = 'croaked => nil
 ;     return getValue tree
-; 
+;
 ;   (t1 = $Symbol) and (t2 is ['Mapping,target,:margl]) =>
 ;     null (mms := selectMms1(unwrap val,nil,margl,margl,target)) => NIL
 ;     [dc,targ,:argl] := CAAR mms
@@ -2296,12 +2296,12 @@
 ;       (triple' := coerceInt(triple,t3)) => coerceInt(triple',t2)
 ;       NIL
 ;     NIL
-; 
+;
 ;   EQ(first(t1), 'Variable) and PAIRP(t2) and
 ;     (isEqualOrSubDomain(t2,$Integer) or
 ;       (t2 = [$QuotientField, $Integer]) or MEMQ(first(t2),
 ;         '(Float DoubleFloat))) => NIL
-; 
+;
 ;   ans := coerceRetract(triple,t2) or coerceIntTower(triple,t2) or
 ;     [.,:arg]:= deconstructT t2
 ;     arg and
@@ -2311,7 +2311,7 @@
 ;     coerceInt(objNew(val,$Integer),t2)) or
 ;       coerceIntAlgebraicConstant(triple,t2) or
 ;         coerceIntX(val,t1,t2)
- 
+
 (DEFUN |coerceInt1| (|triple| |t2|)
   (PROG (|$useCoerceOrCroak| |t| |arg| |triple'| |t3| |intName| |oldName|
          |ISTMP#2| |ml1| |ml| |symNode| |freeFun| |sym| |fun| |argl| |targ|
@@ -2746,7 +2746,7 @@
                                    (|coerceIntAlgebraicConstant| |triple| |t2|)
                                    (|coerceIntX| |val| |t1|
                                     |t2|)))))))))))))))))))))
- 
+
 ; coerceSubDomain(val, tSuper, tSub) ==
 ;   -- Try to coerce from a sub domain to a super domain
 ;   val = '_$fromCoerceable_$ => nil
@@ -2757,7 +2757,7 @@
 ;   coerceSubDomain(val, tSuper, superDomain) =>
 ;     coerceImmediateSubDomain(val, superDomain, tSub, CADR super)
 ;   nil
- 
+
 (DEFUN |coerceSubDomain| (|val| |tSuper| |tSub|)
   (PROG (|super| |superDomain|)
     (RETURN
@@ -2774,19 +2774,19 @@
                (|coerceImmediateSubDomain| |val| |superDomain| |tSub|
                 (CADR |super|)))
               (#1# NIL))))))))
- 
+
 ; coerceImmediateSubDomain(val, tSuper, tSub, pred) ==
 ;   predfn := getSubDomainPredicate(tSuper, tSub, pred)
 ;   FUNCALL(predfn, val, nil) => objNew(val, tSub)
 ;   nil
- 
+
 (DEFUN |coerceImmediateSubDomain| (|val| |tSuper| |tSub| |pred|)
   (PROG (|predfn|)
     (RETURN
      (PROGN
       (SETQ |predfn| (|getSubDomainPredicate| |tSuper| |tSub| |pred|))
       (COND ((FUNCALL |predfn| |val| NIL) (|objNew| |val| |tSub|)) ('T NIL))))))
- 
+
 ; getSubDomainPredicate(tSuper, tSub, pred) ==
 ;   $env: local := $InteractiveFrame
 ;   predfn := HGET($superHash, CONS(tSuper, tSub)) => predfn
@@ -2802,7 +2802,7 @@
 ;   predfn := CADAR selectLocalMms(op, name, [tSuper],$Boolean)
 ;   HPUT($superHash, CONS(tSuper, tSub), predfn)
 ;   predfn
- 
+
 (DEFUN |getSubDomainPredicate| (|tSuper| |tSub| |pred|)
   (PROG (|$env| |op| |defn| |pred'| |arg| |decl| |name| |predfn|)
     (DECLARE (SPECIAL |$env|))
@@ -2829,7 +2829,7 @@
                   (|selectLocalMms| |op| |name| (LIST |tSuper|) |$Boolean|)))
          (HPUT |$superHash| (CONS |tSuper| |tSub|) |predfn|)
          |predfn|)))))))
- 
+
 ; coerceIntX(val,t1, t2) ==
 ;   -- some experimental things
 ;   t1 = '(List (None)) =>
@@ -2840,7 +2840,7 @@
 ;       coerceInt(objNewWrap(val,['List,t0]),t2)
 ;     NIL
 ;   NIL
- 
+
 (DEFUN |coerceIntX| (|val| |t1| |t2|)
   (PROG (|t0|)
     (RETURN
@@ -2853,14 +2853,14 @@
                 (|coerceInt| (|objNewWrap| |val| (LIST '|List| |t0|)) |t2|))))
         (#1# NIL)))
       (#1# NIL)))))
- 
+
 ; compareTypeLists(tl1,tl2) ==
 ;   -- returns true if every type in tl1 is = or is a subdomain of
 ;   -- the corresponding type in tl2
 ;   for t1 in tl1 for t2 in tl2 repeat
 ;     null isEqualOrSubDomain(t1,t2) => return NIL
 ;   true
- 
+
 (DEFUN |compareTypeLists| (|tl1| |tl2|)
   (PROG ()
     (RETURN
@@ -2879,7 +2879,7 @@
           (SETQ |bfVar#39| (CDR |bfVar#39|))))
        |tl1| NIL |tl2| NIL)
       T))))
- 
+
 ; coerceIntAlgebraicConstant(object,t2) ==
 ;   -- should use = from domain, but have to check on defaults code
 ;   t1 := objMode object
@@ -2891,7 +2891,7 @@
 ;     val = getConstantFromDomain('(Zero),t1) =>
 ;       objNewWrap(getConstantFromDomain('(Zero),t2),t2)
 ;   NIL
- 
+
 (DEFUN |coerceIntAlgebraicConstant| (|object| |t2|)
   (PROG (|t1| |val|)
     (RETURN
@@ -2907,10 +2907,10 @@
              (EQUAL |val| (|getConstantFromDomain| '(|Zero|) |t1|)))
         (|objNewWrap| (|getConstantFromDomain| '(|Zero|) |t2|) |t2|))
        ('T NIL))))))
- 
+
 ; stripUnionTags doms ==
 ;   [if dom is [":",.,dom'] then dom' else dom for dom in doms]
- 
+
 (DEFUN |stripUnionTags| (|doms|)
   (PROG (|ISTMP#1| |ISTMP#2| |dom'|)
     (RETURN
@@ -2939,10 +2939,10 @@
                     |bfVar#41|))))
          (SETQ |bfVar#40| (CDR |bfVar#40|))))
       NIL |doms| NIL))))
- 
+
 ; isTaggedUnion u ==
 ;   u is ['Union,:tl] and tl and first tl is [":",.,.] and true
- 
+
 (DEFUN |isTaggedUnion| (|u|)
   (PROG (|tl| |ISTMP#1| |ISTMP#2| |ISTMP#3|)
     (RETURN
@@ -2958,14 +2958,14 @@
                        (SETQ |ISTMP#3| (CDR |ISTMP#2|))
                        (AND (CONSP |ISTMP#3|) (EQ (CDR |ISTMP#3|) NIL)))))))
           T))))
- 
+
 ; getUnionOrRecordTags u ==
 ;   tags := nil
 ;   if u is ['Union, :tl] or u is ['Record, :tl] then
 ;       for t in tl repeat
 ;          if t is [":",tag,.] then tags := cons(tag, tags)
 ;   tags
- 
+
 (DEFUN |getUnionOrRecordTags| (|u|)
   (PROG (|tags| |tl| |ISTMP#1| |tag| |ISTMP#2|)
     (RETURN
@@ -2997,7 +2997,7 @@
             (SETQ |bfVar#42| (CDR |bfVar#42|))))
          |tl| NIL)))
       |tags|))))
- 
+
 ; coerceUnion2Branch(object) ==
 ;   [.,:unionDoms] := objMode object
 ;   doms := unionDoms
@@ -3015,7 +3015,7 @@
 ;   null targetType => keyedSystemError("S2IC0013",NIL)
 ;   predicate is ['EQCAR, ., p] => objNewWrap(rest val', targetType)
 ;   objNew(objVal object,targetType)
- 
+
 (DEFUN |coerceUnion2Branch| (|object|)
   (PROG (|LETTMP#1| |unionDoms| |doms| |predList| |val'| |predicate|
          |targetType| |ISTMP#1| |ISTMP#2| |i| |p|)
@@ -3064,7 +3064,7 @@
                               (PROGN (SETQ |p| (CAR |ISTMP#2|)) #1#))))))
              (|objNewWrap| (CDR |val'|) |targetType|))
             (#1# (|objNew| (|objVal| |object|) |targetType|)))))))
- 
+
 ; coerceBranch2Union(object,union) ==
 ;   -- assumes type is a member of unionDoms
 ;   doms := rest union
@@ -3076,7 +3076,7 @@
 ;   predList.p is ['EQCAR,.,tag] =>
 ;     objNewWrap([removeQuote tag,:unwrap val],union)
 ;   objNew(val,union)
- 
+
 (DEFUN |coerceBranch2Union| (|object| |union|)
   (PROG (|doms| |predList| |p| |val| |ISTMP#1| |ISTMP#2| |ISTMP#3| |tag|)
     (RETURN
@@ -3105,7 +3105,7 @@
            (|objNewWrap| (CONS (|removeQuote| |tag|) (|unwrap| |val|))
             |union|))
           (#1# (|objNew| |val| |union|))))))))))
- 
+
 ; coerceInt2Union(object,union) ==
 ;   -- coerces to a Union type, adding numeric tags
 ;   -- first cut
@@ -3122,7 +3122,7 @@
 ;     (val' := coerceInt(object,d)) => noCoerce := nil
 ;   val' => coerceBranch2Union(val',union)
 ;   NIL
- 
+
 (DEFUN |coerceInt2Union| (|object| |union|)
   (PROG (|unionDoms| |t1| |val| |val'| |noCoerce|)
     (RETURN
@@ -3156,14 +3156,14 @@
              |unionDoms| NIL)
             (COND (|val'| (|coerceBranch2Union| |val'| |union|))
                   (#1# NIL))))))))))))
- 
+
 ; coerceIntFromUnion(object,t2) ==
 ;   -- coerces from a Union type to something else
 ;   coerceInt(coerceUnion2Branch object,t2)
- 
+
 (DEFUN |coerceIntFromUnion| (|object| |t2|)
   (PROG () (RETURN (|coerceInt| (|coerceUnion2Branch| |object|) |t2|))))
- 
+
 ; coerceIntByMap(triple,t2) ==
 ;   -- idea is this: if t1 is D U1 and t2 is D U2, then look for
 ;   -- map: (U1 -> U2, D U1) -> D U2.  If it exists, then create a
@@ -3181,11 +3181,11 @@
 ;   top := CAAR u1
 ;   u1 := underDomainOf t1
 ;   u2 := underDomainOf t2
-; 
+;
 ;   -- handle a couple of special cases for subdomains of Integer
 ;   top in '(List Vector Segment Stream UniversalSegment Array)
 ;     and isSubDomain(u1,u2) => objNew(objVal triple, t2)
-; 
+;
 ;   args := [['Mapping,u2,u1],t1]
 ;   if $reportBottomUpFlag then
 ;     sayFunctionSelection('map,args,t2,NIL,
@@ -3194,7 +3194,7 @@
 ;   if $reportBottomUpFlag then
 ;     sayFunctionSelectionResult('map,args,mms)
 ;   null mms => NIL
-; 
+;
 ;   [[dc, :sig], slot, .] := first mms
 ;   fun := compiledLookup('map,sig,evalDomain(dc))
 ;   NULL fun => NIL
@@ -3207,7 +3207,7 @@
 ;   val := CATCH('coerceFailure,timedEvaluate code)
 ;   (val = $coerceFailure) => NIL
 ;   objNewWrap(val,t2)
- 
+
 (DEFUN |coerceIntByMap| (|triple| |t2|)
   (PROG (|t1| |u2| |u1| |top| |args| |mms| |LETTMP#1| |dc| |sig| |slot| |fun|
          |fn| |d| |code| |val|)
@@ -3298,9 +3298,9 @@
                                                      (#1#
                                                       (|objNewWrap| |val|
                                                        |t2|))))))))))))))))))))))))))))
- 
+
 ; coerceIntByMapInner(arg,[u1,:u2]) == coerceOrThrowFailure(arg,u1,u2)
- 
+
 (DEFUN |coerceIntByMapInner| (|arg| |bfVar#46|)
   (PROG (|u1| |u2|)
     (RETURN
@@ -3308,7 +3308,7 @@
       (SETQ |u1| (CAR |bfVar#46|))
       (SETQ |u2| (CDR |bfVar#46|))
       (|coerceOrThrowFailure| |arg| |u1| |u2|)))))
- 
+
 ; valueArgsEqual?(t1, t2) ==
 ;   -- returns true if the object-valued arguments to t1 and t2 are the same
 ;   -- under coercion
@@ -3328,7 +3328,7 @@
 ;             not algEqual(a2, objValUnwrap newVal, m2) =>
 ;               (done := true; value := false)
 ;   value
- 
+
 (DEFUN |valueArgsEqual?| (|t1| |t2|)
   (PROG (|coSig| |constrSig| |tl1| |tl2| |done| |value| |trip| |newVal|)
     (RETURN
@@ -3378,7 +3378,7 @@
                   (SETQ |bfVar#51| (CDR |bfVar#51|))))
                (CDR |t1|) NIL (CDR |t2|) NIL |coSig| NIL |tl1| NIL |tl2| NIL)
               |value|)))))))
- 
+
 ; coerceIntTower(triple,t2) ==
 ;   -- tries to find a coercion from top level t2 to somewhere inside t1
 ;   -- builds new argument type, for which coercion is called recursively
@@ -3414,7 +3414,7 @@
 ;           x:= (coerceIntByMap(x,t2) or
 ;             coerceIntTableOrFunction(x,t2))
 ;     x
- 
+
 (DEFUN |coerceIntTower| (|triple| |t2|)
   (PROG (|x| |t1| |LETTMP#1| |c1| |arg1| TL |arg| |t| |c| |s| |c2| |arg2|)
     (RETURN
@@ -3499,14 +3499,14 @@
                        (SETQ |bfVar#52| (OR |x| (NULL |arg|)))))
                     NIL)
                    |x|))))))))
- 
+
 ; coerceIntSpecial(triple,t2) ==
 ;   t1 := objMode triple
 ;   t2 is ['SimpleAlgebraicExtension,R,U,.] and t1 = R =>
 ;     null (x := coerceInt(triple,U)) => NIL
 ;     coerceInt(x,t2)
 ;   NIL
- 
+
 (DEFUN |coerceIntSpecial| (|triple| |t2|)
   (PROG (|t1| |ISTMP#1| R |ISTMP#2| U |ISTMP#3| |x|)
     (RETURN
@@ -3529,7 +3529,7 @@
         (COND ((NULL (SETQ |x| (|coerceInt| |triple| U))) NIL)
               (#1='T (|coerceInt| |x| |t2|))))
        (#1# NIL))))))
- 
+
 ; coerceIntTableOrFunction(triple,t2) ==
 ;   -- this function does the actual coercion to t2, but not to an
 ;   -- argument type of t2
@@ -3544,7 +3544,7 @@
 ;       coerceByTable(fun,val,t1,t2,'T) or coerceByFunction(triple,t2)
 ;     coerceByTable(fun,val,t1,t2,NIL) or coerceByFunction(triple,t2)
 ;   coerceByFunction(triple,t2)
- 
+
 (DEFUN |coerceIntTableOrFunction| (|triple| |t2|)
   (PROG (|t1| |p| |ISTMP#1| |ISTMP#2| |tag| |ISTMP#3| |fun| |val|)
     (RETURN
@@ -3580,23 +3580,23 @@
                        (OR (|coerceByTable| |fun| |val| |t1| |t2| NIL)
                            (|coerceByFunction| |triple| |t2|))))))
               (#1# (|coerceByFunction| |triple| |t2|)))))))))
- 
+
 ; coerceCommuteTest(t1,t2) ==
 ;   null isLegitimateMode(t2,NIL,NIL) => NIL
-; 
+;
 ;   -- sees whether t1 = D1 D2 R and t2 = D2 D1 S
 ;   null (u1 := underDomainOf t1) => NIL
 ;   null (u2 := underDomainOf t2) => NIL
-; 
+;
 ;   -- must have underdomains (ie, R and S must be there)
-; 
+;
 ;   null (v1 := underDomainOf u1) => NIL
 ;   null (v2 := underDomainOf u2) => NIL
-; 
+;
 ;   -- now check that cross of constructors is correct
 ;   (first(deconstructT t1) = first(deconstructT u2)) and
 ;     (first(deconstructT t2) = first(deconstructT u1))
- 
+
 (DEFUN |coerceCommuteTest| (|t1| |t2|)
   (PROG (|u1| |u2| |v1| |v2|)
     (RETURN
@@ -3610,7 +3610,7 @@
              (EQUAL (CAR (|deconstructT| |t1|)) (CAR (|deconstructT| |u2|)))
              (EQUAL (CAR (|deconstructT| |t2|))
                     (CAR (|deconstructT| |u1|)))))))))
- 
+
 ; coerceIntCommute(obj,target) ==
 ;   -- note that the value in obj may be $fromCoerceable$, for canCoerce
 ;   source := objMode obj
@@ -3618,7 +3618,7 @@
 ;   S := underDomainOf source
 ;   T := underDomainOf target
 ;   source = T => NIL      -- handle in other ways
-; 
+;
 ;   source is [D,:.] =>
 ;     fun := GETL(D,'coerceCommute) or
 ;            INTERN STRCONC('"commute",STRINGIMAGE D)
@@ -3631,7 +3631,7 @@
 ;       objNewWrap(c,target)
 ;     NIL
 ;   NIL
- 
+
 (DEFUN |coerceIntCommute| (|obj| |target|)
   (PROG (|source| S T$ D |fun| |u| |c|)
     (RETURN
@@ -3662,7 +3662,7 @@
                                (#1# (|objNewWrap| |c| |target|)))))
                        (#1# NIL))))
                     (#1# NIL)))))))))
- 
+
 ; coerceIntPermute(object,t2) ==
 ;   t2 in '((Integer) (OutputForm)) => NIL
 ;   t1 := objMode object
@@ -3670,7 +3670,7 @@
 ;   -- at this point, first towers = t1 and last towers should be similar
 ;   -- to t2 in the sense that the components of t1 are in the same order
 ;   -- as in t2. If length towers = 2 and t2 = last towers, we quit to
-;   -- avoid an infinte loop.
+;   -- avoid an infinite loop.
 ;   NULL towers or NULL rest towers => NIL
 ;   NULL CDDR towers and t2 = CADR towers => NIL
 ;   -- do the coercions successively, quitting if any fail
@@ -3679,7 +3679,7 @@
 ;     null (object := coerceInt(object,t)) => ok := NIL
 ;   ok => object
 ;   NIL
- 
+
 (DEFUN |coerceIntPermute| (|object| |t2|)
   (PROG (|t1| |towers| |ok|)
     (RETURN
@@ -3708,7 +3708,7 @@
                          (SETQ |bfVar#53| (CDR |bfVar#53|))))
                       (CDR |towers|) NIL)
                      (COND (|ok| |object|) (#1# NIL)))))))))))
- 
+
 ; computeTTTranspositions(t1,t2) ==
 ;   -- decompose t1 into its tower parts
 ;   tl1 := decomposeTypeIntoTower t1
@@ -3745,7 +3745,7 @@
 ;   towers := [reassembleTowerIntoType tower for tower in towers]
 ;   if first(towers) ~= t2 then towers := cons(t2, towers)
 ;   NREVERSE towers
- 
+
 (DEFUN |computeTTTranspositions| (|t1| |t2|)
   (PROG (|tl1| |tl2| |p2| |p2'| |n1| |perms| |towers| |tower| |t|)
     (RETURN
@@ -3847,14 +3847,14 @@
                  (SETQ |bfVar#56| (CDR |bfVar#56|))))
               NIL |l| NIL)
              |start| |len|))))))
- 
+
 ; decomposeTypeIntoTower t ==
 ;   ATOM t => [t]
 ;   d := deconstructT t
 ;   NULL rest d => [t]
 ;   rd := REVERSE t
 ;   [reverse QCDR rd,:decomposeTypeIntoTower QCAR rd]
- 
+
 (DEFUN |decomposeTypeIntoTower| (|t|)
   (PROG (|d| |rd|)
     (RETURN
@@ -3868,13 +3868,13 @@
                      (SETQ |rd| (REVERSE |t|))
                      (CONS (REVERSE (QCDR |rd|))
                            (|decomposeTypeIntoTower| (QCAR |rd|))))))))))))
- 
+
 ; reassembleTowerIntoType tower ==
 ;   ATOM tower => tower
 ;   NULL rest tower => first tower
 ;   [:top,t,s] := tower
 ;   reassembleTowerIntoType [:top,[:t,s]]
- 
+
 (DEFUN |reassembleTowerIntoType| (|tower|)
   (PROG (|LETTMP#1| |s| |t| |top|)
     (RETURN
@@ -3887,7 +3887,7 @@
              (SETQ |top| (NREVERSE (CDDR . #1#)))
              (|reassembleTowerIntoType|
               (APPEND |top| (CONS (APPEND |t| (CONS |s| NIL)) NIL)))))))))
- 
+
 ; permuteToOrder(p,n,start) ==
 ;   -- p is a vector of the numbers 0..n. This function returns a list
 ;   -- of swaps of adjacent elements so that p will be in order. We only
@@ -3911,7 +3911,7 @@
 ;     p.x := t
 ;     stpos := x
 ;   APPEND(NREVERSE perms,permuteToOrder(p,n,start+1))
- 
+
 (DEFUN |permuteToOrder| (|p| |n| |start|)
   (PROG (|r| |stpos| |perms| |x| |t|)
     (RETURN
@@ -3948,7 +3948,7 @@
                           (SETQ |stpos| |x|)))))))
               (APPEND (NREVERSE |perms|)
                       (|permuteToOrder| |p| |n| (+ |start| 1))))))))))
- 
+
 ; coerceIntTest(t1,t2) ==
 ;   -- looks whether there exists a table entry or a coercion function
 ;   -- thus the type can be bubbled before coerceIntTableOrFunction is called
@@ -3959,7 +3959,7 @@
 ;     b or coerceConvertMmSelection('coerce,t1,t2) or
 ;       ($useConvertForCoercions and
 ;         coerceConvertMmSelection('convert,t1,t2))
- 
+
 (DEFUN |coerceIntTest| (|t1| |t2|)
   (PROG (|p| |b|)
     (RETURN
@@ -3972,7 +3972,7 @@
           (OR |b| (|coerceConvertMmSelection| '|coerce| |t1| |t2|)
               (AND |$useConvertForCoercions|
                    (|coerceConvertMmSelection| '|convert| |t1| |t2|))))))))
- 
+
 ; coerceByTable(fn,x,t1,t2,isTotalCoerce) ==
 ;   -- catch point for 'failure in boot coercions
 ;   t2 = $OutputForm => NIL
@@ -3983,7 +3983,7 @@
 ;     objNewWrap(c,t2)
 ;   isTotalCoerce => objNew([fn,x,MKQ t1,MKQ t2],t2)
 ;   objNew(['catchCoerceFailure,MKQ fn,x,MKQ t1,MKQ t2],t2)
- 
+
 (DEFUN |coerceByTable| (|fn| |x| |t1| |t2| |isTotalCoerce|)
   (PROG (|c|)
     (RETURN
@@ -4000,14 +4000,14 @@
             (|objNew|
              (LIST '|catchCoerceFailure| (MKQ |fn|) |x| (MKQ |t1|) (MKQ |t2|))
              |t2|))))))
- 
+
 ; catchCoerceFailure(fn,x,t1,t2) ==
 ;   -- compiles a catchpoint for compiling boot coercions
 ;   c:= CATCH('coerceFailure,FUNCALL(fn,x,t1,t2))
 ;   c = $coerceFailure =>
 ;     throwKeyedMsgCannotCoerceWithValue(wrap unwrap x,t1,t2)
 ;   c
- 
+
 (DEFUN |catchCoerceFailure| (|fn| |x| |t1| |t2|)
   (PROG (|c|)
     (RETURN
@@ -4018,14 +4018,14 @@
         (|throwKeyedMsgCannotCoerceWithValue| (|wrap| (|unwrap| |x|)) |t1|
          |t2|))
        ('T |c|))))))
- 
+
 ; coercionFailure() ==
 ;   -- does the throw on coercion failure
 ;   THROW('coerceFailure,$coerceFailure)
- 
-(DEFUN |coercionFailure| #1=()
-  (PROG #1# (RETURN (THROW '|coerceFailure| |$coerceFailure|))))
- 
+
+(DEFUN |coercionFailure| ()
+  (PROG () (RETURN (THROW '|coerceFailure| |$coerceFailure|))))
+
 ; coerceByFunction(T,m2) ==
 ;   -- using the new modemap selection without coercions
 ;   -- should not be called by canCoerceFrom
@@ -4064,7 +4064,7 @@
 ; --  tar is ['Union,:.] => objNew(['failCheck,code],m2)
 ;     objNew(code,m2)
 ;   NIL
- 
+
 (DEFUN |coerceByFunction| (T$ |m2|)
   (PROG (|x| |m1| |ISTMP#1| |ud| |dcVector| |fun| |fn| |d| |code| |funName|
          |mm| |dc| |tar| |args| |slot| |val| |env|)
@@ -4142,7 +4142,7 @@
                             (SETQ |code| (LIST 'SPADCALL |x| |env|))
                             (|objNew| |code| |m2|))))))
                   (#1# NIL))))))))))))
- 
+
 ; hasCorrectTarget(m,sig is [dc,tar,:.]) ==
 ;   -- tests whether the target of signature sig is either m or a union
 ;   -- containing m. It also discards TEQ as it is not meant to be
@@ -4151,7 +4151,7 @@
 ;   m=tar => 'T
 ;   tar is ['Union,t,'failed] => t=m
 ;   tar is ['Union,'failed,t] and t=m
- 
+
 (DEFUN |hasCorrectTarget| (|m| |sig|)
   (PROG (|dc| |tar| |ISTMP#1| |t| |ISTMP#2|)
     (RETURN
@@ -4180,3 +4180,223 @@
                          (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
                               (PROGN (SETQ |t| (CAR |ISTMP#2|)) #1#)))))
                   (EQUAL |t| |m|))))))))
+
+; intCodeGenCOERCE(triple,t2) ==
+;   -- NOTE: returns a triple
+;   t1 := objMode triple
+;   t1 = $EmptyMode => NIL
+;   t1 = t2 => triple
+;   val := objVal triple
+;
+;   val is ['THROW,label,code] =>
+;     if label is ['QUOTE, l] then label := l
+;     null($compilingMap) or (label ~= mapCatchName($mapName)) =>
+;       objNew(['THROW,label,wrapped2Quote objVal
+;         intCodeGenCOERCE(objNew(code,t1),t2)],t2)
+;     -- we have a return statement. just send it back as is
+;     objNew(val,t2)
+;
+;   val is ['PROGN,:code,lastCode] =>
+;     objNew(['PROGN,:code,wrapped2Quote objVal
+;       intCodeGenCOERCE(objNew(lastCode,t1),t2)],t2)
+;
+;   val is ['COND,:conds] =>
+;     objNew(['COND,
+;       :[[p,wrapped2Quote objVal intCodeGenCOERCE(objNew(v,t1),t2)]
+;         for [p,v] in conds]],t2)
+;
+;   -- specially handle subdomain
+;   absolutelyCanCoerceByCheating(t1,t2) => objNew(val,t2)
+;
+;   -- specially handle coerce to Any
+;   t2 = '(Any) => objNew(['CONS,MKQ t1,val],t2)
+;
+;   -- optimize coerces from Any
+;   (t1 = '(Any)) and (val is [ ='CONS,t1',val']) =>
+;     intCodeGenCOERCE(objNew(val',removeQuote t1'),t2)
+;
+;   -- specially handle coerce from Equation to Boolean
+;   (t1 is ['Equation,:.]) and (t2 = $Boolean) =>
+;     coerceByFunction(triple,t2)
+;
+;   -- next is hack for if-then-elses
+;   (t1 = '$NoValueMode) and (val is ['COND,pred]) =>
+;     code :=
+;       ['COND,pred,
+;         [MKQ true,['throwKeyedMsg,MKQ "S2IM0016",MKQ $mapName]]]
+;     objNew(code,t2)
+;
+;   -- optimize coerces to OutputForm
+;   t2 = $OutputForm =>
+;     coerceByFunction(triple,t2)
+;
+;   isSubDomain(t1, $Integer) =>
+;     intCodeGenCOERCE(objNew(val, $Integer), t2)
+;
+;   -- generate code
+;   -- 1. See if the coercion will go through (absolutely)
+;   --    Must be careful about variables or else things like
+;   --    P I --> P[x] P I might not have the x in the original polynomial
+;   --    put in the correct place
+;
+;   (not containsVariables(t2)) and canCoerceByFunction(t1,t2) =>
+;     -- try coerceByFunction
+;     (not canCoerceByMap(t1,t2)) and
+;       (code := coerceByFunction(triple,t2)) => code
+;     intCodeGenCoerce1(val,t1,t2)
+;
+;   -- 2. Set up a failure point otherwise
+;
+;   intCodeGenCoerce1(val,t1,t2)
+
+(DEFUN |intCodeGenCOERCE| (|triple| |t2|)
+  (PROG (|t1| |val| |ISTMP#1| |label| |ISTMP#2| |code| |l| |lastCode| |conds|
+         |p| |v| |t1'| |val'| |pred|)
+    (RETURN
+     (PROGN
+      (SETQ |t1| (|objMode| |triple|))
+      (COND ((EQUAL |t1| |$EmptyMode|) NIL) ((EQUAL |t1| |t2|) |triple|)
+            (#1='T
+             (PROGN
+              (SETQ |val| (|objVal| |triple|))
+              (COND
+               ((AND (CONSP |val|) (EQ (CAR |val|) 'THROW)
+                     (PROGN
+                      (SETQ |ISTMP#1| (CDR |val|))
+                      (AND (CONSP |ISTMP#1|)
+                           (PROGN
+                            (SETQ |label| (CAR |ISTMP#1|))
+                            (SETQ |ISTMP#2| (CDR |ISTMP#1|))
+                            (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
+                                 (PROGN (SETQ |code| (CAR |ISTMP#2|)) #1#))))))
+                (PROGN
+                 (COND
+                  ((AND (CONSP |label|) (EQ (CAR |label|) 'QUOTE)
+                        (PROGN
+                         (SETQ |ISTMP#1| (CDR |label|))
+                         (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
+                              (PROGN (SETQ |l| (CAR |ISTMP#1|)) #1#))))
+                   (SETQ |label| |l|)))
+                 (COND
+                  ((OR (NULL |$compilingMap|)
+                       (NOT (EQUAL |label| (|mapCatchName| |$mapName|))))
+                   (|objNew|
+                    (LIST 'THROW |label|
+                          (|wrapped2Quote|
+                           (|objVal|
+                            (|intCodeGenCOERCE| (|objNew| |code| |t1|) |t2|))))
+                    |t2|))
+                  (#1# (|objNew| |val| |t2|)))))
+               ((AND (CONSP |val|) (EQ (CAR |val|) 'PROGN)
+                     (PROGN
+                      (SETQ |ISTMP#1| (CDR |val|))
+                      (AND (CONSP |ISTMP#1|)
+                           (PROGN (SETQ |ISTMP#2| (REVERSE |ISTMP#1|)) #1#)
+                           (CONSP |ISTMP#2|)
+                           (PROGN
+                            (SETQ |lastCode| (CAR |ISTMP#2|))
+                            (SETQ |code| (CDR |ISTMP#2|))
+                            #1#)
+                           (PROGN (SETQ |code| (NREVERSE |code|)) #1#))))
+                (|objNew|
+                 (CONS 'PROGN
+                       (APPEND |code|
+                               (CONS
+                                (|wrapped2Quote|
+                                 (|objVal|
+                                  (|intCodeGenCOERCE|
+                                   (|objNew| |lastCode| |t1|) |t2|)))
+                                NIL)))
+                 |t2|))
+               ((AND (CONSP |val|) (EQ (CAR |val|) 'COND)
+                     (PROGN (SETQ |conds| (CDR |val|)) #1#))
+                (|objNew|
+                 (CONS 'COND
+                       ((LAMBDA (|bfVar#63| |bfVar#62| |bfVar#61|)
+                          (LOOP
+                           (COND
+                            ((OR (ATOM |bfVar#62|)
+                                 (PROGN
+                                  (SETQ |bfVar#61| (CAR |bfVar#62|))
+                                  NIL))
+                             (RETURN (NREVERSE |bfVar#63|)))
+                            (#1#
+                             (AND (CONSP |bfVar#61|)
+                                  (PROGN
+                                   (SETQ |p| (CAR |bfVar#61|))
+                                   (SETQ |ISTMP#1| (CDR |bfVar#61|))
+                                   (AND (CONSP |ISTMP#1|)
+                                        (EQ (CDR |ISTMP#1|) NIL)
+                                        (PROGN
+                                         (SETQ |v| (CAR |ISTMP#1|))
+                                         #1#)))
+                                  (SETQ |bfVar#63|
+                                          (CONS
+                                           (LIST |p|
+                                                 (|wrapped2Quote|
+                                                  (|objVal|
+                                                   (|intCodeGenCOERCE|
+                                                    (|objNew| |v| |t1|)
+                                                    |t2|))))
+                                           |bfVar#63|)))))
+                           (SETQ |bfVar#62| (CDR |bfVar#62|))))
+                        NIL |conds| NIL))
+                 |t2|))
+               ((|absolutelyCanCoerceByCheating| |t1| |t2|)
+                (|objNew| |val| |t2|))
+               ((EQUAL |t2| '(|Any|))
+                (|objNew| (LIST 'CONS (MKQ |t1|) |val|) |t2|))
+               ((AND (EQUAL |t1| '(|Any|)) (CONSP |val|)
+                     (EQUAL (CAR |val|) 'CONS)
+                     (PROGN
+                      (SETQ |ISTMP#1| (CDR |val|))
+                      (AND (CONSP |ISTMP#1|)
+                           (PROGN
+                            (SETQ |t1'| (CAR |ISTMP#1|))
+                            (SETQ |ISTMP#2| (CDR |ISTMP#1|))
+                            (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
+                                 (PROGN (SETQ |val'| (CAR |ISTMP#2|)) #1#))))))
+                (|intCodeGenCOERCE| (|objNew| |val'| (|removeQuote| |t1'|))
+                 |t2|))
+               ((AND (CONSP |t1|) (EQ (CAR |t1|) '|Equation|)
+                     (EQUAL |t2| |$Boolean|))
+                (|coerceByFunction| |triple| |t2|))
+               ((AND (EQ |t1| '|$NoValueMode|) (CONSP |val|)
+                     (EQ (CAR |val|) 'COND)
+                     (PROGN
+                      (SETQ |ISTMP#1| (CDR |val|))
+                      (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
+                           (PROGN (SETQ |pred| (CAR |ISTMP#1|)) #1#))))
+                (PROGN
+                 (SETQ |code|
+                         (LIST 'COND |pred|
+                               (LIST (MKQ T)
+                                     (LIST '|throwKeyedMsg| (MKQ 'S2IM0016)
+                                           (MKQ |$mapName|)))))
+                 (|objNew| |code| |t2|)))
+               ((EQUAL |t2| |$OutputForm|) (|coerceByFunction| |triple| |t2|))
+               ((|isSubDomain| |t1| |$Integer|)
+                (|intCodeGenCOERCE| (|objNew| |val| |$Integer|) |t2|))
+               ((AND (NULL (|containsVariables| |t2|))
+                     (|canCoerceByFunction| |t1| |t2|))
+                (COND
+                 ((AND (NULL (|canCoerceByMap| |t1| |t2|))
+                       (SETQ |code| (|coerceByFunction| |triple| |t2|)))
+                  |code|)
+                 (#1# (|intCodeGenCoerce1| |val| |t1| |t2|))))
+               (#1# (|intCodeGenCoerce1| |val| |t1| |t2|))))))))))
+
+; intCodeGenCoerce1(val,t1,t2) ==
+;   -- Internal function to previous one
+;   -- designed to ensure that we don't use coerceOrCroak on mappings
+; --(t2 is ['Mapping,:.]) => THROW('coerceOrCroaker, 'croaked)
+;   objNew(['coerceOrCroak,mkObjCode(['wrap,val],t1),
+;         MKQ t2, MKQ $mapName],t2)
+
+(DEFUN |intCodeGenCoerce1| (|val| |t1| |t2|)
+  (PROG ()
+    (RETURN
+     (|objNew|
+      (LIST '|coerceOrCroak| (|mkObjCode| (LIST '|wrap| |val|) |t1|) (MKQ |t2|)
+            (MKQ |$mapName|))
+      |t2|))))

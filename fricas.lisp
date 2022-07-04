@@ -1,4 +1,4 @@
-;;; FriCAS0, Fri Nov 3 16:25:22 CET 2017
+(load "lisp/load-lisp.lisp")
 (load "lisp/interp.lisp")
 (in-package :boot)
 (defvar $spadroot ".")
@@ -10,7 +10,23 @@
 #+:ABCL
 (defvar |$lisp_bin_filetype| "abcl")  ;;; abcl ~ fasl/fas
 
+#+:SBCL
+(fricas-lisp::set-initial-parameters) ;; this is skipped in fricas-lisp.lisp, why?
+
 (defun gcmsg (x))
+
+(setq load-type "load-ondemand")
+
+(defun |load_quietly| (f)
+  (handler-bind ((warning #'muffle-warning))
+    (let ((lsp-file (CONCAT (string-right-trim |$lisp_bin_filetype| f) "lsp")))
+      (cond
+        ((and (boundp 'load-type) (equal load-type "load-ondemand"))
+         (load lsp-file))
+        ((and (boundp 'load-type) (equal load-type "compile-ondemand"))
+         (load (if (probe-file f) f (compile-file lsp-file))))
+        (t (load f))
+        ))))
 
 ;;; init      
 (|interpsysInitialization|)

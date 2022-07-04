@@ -1,19 +1,19 @@
 
-(SDEFUN |NONE;coerce;$Of;1| ((|none| $) ($ |OutputForm|))
+(SDEFUN |NONE;coerce;$Of;1| ((|none| ($)) ($ (|OutputForm|)))
         (SPADCALL "NONE" (QREFELT $ 8))) 
 
 (PUT '|NONE;=;2$B;2| '|SPADreplace| 'EQ) 
 
-(SDEFUN |NONE;=;2$B;2| ((|x| $) (|y| $) ($ |Boolean|)) (EQ |x| |y|)) 
+(SDEFUN |NONE;=;2$B;2| ((|x| ($)) (|y| ($)) ($ (|Boolean|))) (EQ |x| |y|)) 
 
 (DECLAIM (NOTINLINE |None;|)) 
 
 (DEFUN |None| ()
   (SPROG NIL
-         (PROG (#1=#:G695)
+         (PROG (#1=#:G694)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|None|) . #2=(|None|))
+             ((LETT #1# (HGET |$ConstructorCache| '|None|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -21,16 +21,16 @@
                       (CDDAR
                        (HPUT |$ConstructorCache| '|None|
                              (LIST (CONS NIL (CONS 1 (|None;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND ((NOT #1#) (HREM |$ConstructorCache| '|None|)))))))))) 
 
 (DEFUN |None;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|None|) . #1=(|None|))
-          (LETT $ (GETREFV 14) . #1#)
+          (LETT |dv$| '(|None|))
+          (LETT $ (GETREFV 14))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|None| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))

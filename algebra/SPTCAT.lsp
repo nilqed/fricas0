@@ -4,12 +4,11 @@
 (DEFPARAMETER |SPointCategory;AL| 'NIL) 
 
 (DEFUN |SPointCategory| ()
-  (LET (#:G692)
-    (COND (|SPointCategory;AL|)
-          (T (SETQ |SPointCategory;AL| (|SPointCategory;|)))))) 
+  (COND (|SPointCategory;AL|)
+        (T (SETQ |SPointCategory;AL| (|SPointCategory;|))))) 
 
 (DEFUN |SPointCategory;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G689 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|SetCategory|)
@@ -53,12 +52,7 @@
                               ((|extendedCoords| ((|List| (|DoubleFloat|)) $))
                                T)
                               ((|coerce| ((|OutputForm|) $)) T))
-                            NIL
-                            '((|OutputForm|) (|List| (|DoubleFloat|))
-                              (|DoubleFloat|) (|Boolean|) (|PositiveInteger|)
-                              (|Integer|))
-                            NIL))
-                   |SPointCategory|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|SPointCategory|))))) 
 
 (MAKEPROP '|SPointCategory| 'NILADIC T) 

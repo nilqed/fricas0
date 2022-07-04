@@ -1,30 +1,30 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; DEFPARAMETER($QuietCommand, NIL)
- 
+
 (DEFPARAMETER |$QuietCommand| NIL)
- 
+
 ; DEFPARAMETER($ProcessInteractiveValue, NIL)
- 
+
 (DEFPARAMETER |$ProcessInteractiveValue| NIL)
- 
-; DEFPARAMETER($HTCompanionWindowID, NIL)
- 
-(DEFPARAMETER |$HTCompanionWindowID| NIL)
- 
+
+; DEFPARAMETER($QuietCommand_tmp, nil)
+
+(DEFPARAMETER |$QuietCommand_tmp| NIL)
+
 ; intSetQuiet() ==
-;   $QuietCommand := true
- 
-(DEFUN |intSetQuiet| #1=() (PROG #1# (RETURN (SETQ |$QuietCommand| T))))
- 
+;   $QuietCommand_tmp := true
+
+(DEFUN |intSetQuiet| () (PROG () (RETURN (SETQ |$QuietCommand_tmp| T))))
+
 ; intUnsetQuiet() ==
-;   $QuietCommand := nil
- 
-(DEFUN |intUnsetQuiet| #1=() (PROG #1# (RETURN (SETQ |$QuietCommand| NIL))))
- 
+;   $QuietCommand_tmp := nil
+
+(DEFUN |intUnsetQuiet| () (PROG () (RETURN (SETQ |$QuietCommand_tmp| NIL))))
+
 ; interpsysInitialization() ==
 ;   -- The function  start  begins the interpreter process, reading in
 ;   -- the profile and printing start-up messages.
@@ -53,8 +53,8 @@
 ;   if $displayStartMsgs then sayKeyedMsg("S2IZ0053",['"history"])
 ;   initHist()
 ;   if $displayStartMsgs then spadStartUpMsgs()
-;   $superHash := MAKE_-HASHTABLE('UEQUAL)
- 
+;   $superHash := MAKE_HASHTABLE('UEQUAL)
+
 (DEFUN |interpsysInitialization| ()
   (PROG (|$PrintCompilerMessageIfTrue|)
     (DECLARE (SPECIAL |$PrintCompilerMessageIfTrue|))
@@ -88,8 +88,8 @@
       (COND (|$displayStartMsgs| (|sayKeyedMsg| 'S2IZ0053 (LIST "history"))))
       (|initHist|)
       (COND (|$displayStartMsgs| (|spadStartUpMsgs|)))
-      (SETQ |$superHash| (MAKE-HASHTABLE 'UEQUAL))))))
- 
+      (SETQ |$superHash| (MAKE_HASHTABLE 'UEQUAL))))))
+
 ; interpsys_restart() ==
 ;   $IOindex := 1
 ;   $InteractiveFrame := makeInitialModemapFrame()
@@ -97,7 +97,7 @@
 ;   statisticsInitialization()
 ;   initHist()
 ;   initializeInterpreterFrameRing()
-; 
+;
 ;   if $displayStartMsgs then spadStartUpMsgs()
 ;   $currentLine := nil
 ;   compressOpen() -- set up the compression tables
@@ -107,9 +107,9 @@
 ;   browseOpen()
 ;   makeConstructorsAutoLoad()
 ;   createInitializers2()
- 
-(DEFUN |interpsys_restart| #1=()
-  (PROG #1#
+
+(DEFUN |interpsys_restart| ()
+  (PROG ()
     (RETURN
      (PROGN
       (SETQ |$IOindex| 1)
@@ -127,7 +127,7 @@
       (|browseOpen|)
       (|makeConstructorsAutoLoad|)
       (|createInitializers2|)))))
- 
+
 ; readSpadProfileIfThere() ==
 ;   -- reads SPADPROF INPUT if it exists
 ;   file := getEnv('"FRICAS_INITFILE")
@@ -143,7 +143,7 @@
 ;     $edit_file := efile
 ;     read_or_compile(true, false)
 ;   NIL
- 
+
 (DEFUN |readSpadProfileIfThere| ()
   (PROG (|efile| |file|)
     (RETURN
@@ -168,18 +168,18 @@
                (|efile|
                 (PROGN (SETQ |$edit_file| |efile|) (|read_or_compile| T NIL)))
                (#1# NIL)))))))))
- 
+
 ; DEFPARAMETER($inRetract, nil)
- 
+
 (DEFPARAMETER |$inRetract| NIL)
- 
+
 ; processInteractive(form, posnForm) ==
 ;   --  Top-level dispatcher for the interpreter.  It sets local variables
 ;   --  and then calls processInteractive1 to do most of the work.
 ;   --  This function receives the output from the parser.
-; 
+;
 ;   initializeTimedNames($interpreterTimedNames,$interpreterTimedClasses)
-; 
+;
 ;   $op: local:= (form is [op,:.] => op; form) --name of operator
 ;   $Coerce: local := NIL
 ;   $compErrorMessageStack:local := nil
@@ -198,8 +198,6 @@
 ;   $instantCanCoerceCount: local := 0
 ;   $instantMmCondCount: local := 0
 ;   $minivector: local := NIL
-;   $minivectorCode: local := NIL
-;   $minivectorNames: local := NIL
 ;   $domPvar: local := NIL
 ;   $inRetract: local := NIL
 ;   object := processInteractive1(form, posnForm)
@@ -210,21 +208,19 @@
 ;     writeHistModesAndValues()
 ;     updateHist()
 ;   object
- 
+
 (DEFUN |processInteractive| (|form| |posnForm|)
-  (PROG (|$inRetract| |$domPvar| |$minivectorNames| |$minivectorCode|
-         |$minivector| |$instantMmCondCount| |$instantCanCoerceCount|
-         |$instantCoerceCount| |$analyzingMapList| |$localVars| |$declaredMode|
-         |$timeGlobalName| |$whereCacheList| |$interpOnly| |$compilingLoop|
-         |$compilingMap| |$mapList| |$freeVars| |$compErrorMessageStack|
-         |$Coerce| |$op| |object| |op|)
+  (PROG (|$inRetract| |$domPvar| |$minivector| |$instantMmCondCount|
+         |$instantCanCoerceCount| |$instantCoerceCount| |$analyzingMapList|
+         |$localVars| |$declaredMode| |$timeGlobalName| |$whereCacheList|
+         |$interpOnly| |$compilingLoop| |$compilingMap| |$mapList| |$freeVars|
+         |$compErrorMessageStack| |$Coerce| |$op| |object| |op|)
     (DECLARE
-     (SPECIAL |$inRetract| |$domPvar| |$minivectorNames| |$minivectorCode|
-      |$minivector| |$instantMmCondCount| |$instantCanCoerceCount|
-      |$instantCoerceCount| |$analyzingMapList| |$localVars| |$declaredMode|
-      |$timeGlobalName| |$whereCacheList| |$interpOnly| |$compilingLoop|
-      |$compilingMap| |$mapList| |$freeVars| |$compErrorMessageStack| |$Coerce|
-      |$op|))
+     (SPECIAL |$inRetract| |$domPvar| |$minivector| |$instantMmCondCount|
+      |$instantCanCoerceCount| |$instantCoerceCount| |$analyzingMapList|
+      |$localVars| |$declaredMode| |$timeGlobalName| |$whereCacheList|
+      |$interpOnly| |$compilingLoop| |$compilingMap| |$mapList| |$freeVars|
+      |$compErrorMessageStack| |$Coerce| |$op|))
     (RETURN
      (PROGN
       (|initializeTimedNames| |$interpreterTimedNames|
@@ -250,8 +246,6 @@
       (SETQ |$instantCanCoerceCount| 0)
       (SETQ |$instantMmCondCount| 0)
       (SETQ |$minivector| NIL)
-      (SETQ |$minivectorCode| NIL)
-      (SETQ |$minivectorNames| NIL)
       (SETQ |$domPvar| NIL)
       (SETQ |$inRetract| NIL)
       (SETQ |object| (|processInteractive1| |form| |posnForm|))
@@ -262,26 +256,24 @@
           (CLRHASH |$instantRecord|)))
         (|writeHistModesAndValues|) (|updateHist|)))
       |object|))))
- 
+
 ; processInteractive1(form, posnForm) ==
 ;   -- calls the analysis and output printing routines
 ;   $e : local := $InteractiveFrame
 ;   recordFrame 'system
-; 
+;
 ;   startTimingProcess 'analysis
 ;   object   := interpretTopLevel(form, posnForm)
 ;   stopTimingProcess 'analysis
-; 
+;
 ;   startTimingProcess 'print
 ;   if not($ProcessInteractiveValue) then
 ;     recordAndPrint(objValUnwrap object,objMode object)
 ;   recordFrame 'normal
 ;   stopTimingProcess 'print
-; 
-; --spadtestValueHook(objValUnwrap object, objMode object)
-; 
+;
 ;   object
- 
+
 (DEFUN |processInteractive1| (|form| |posnForm|)
   (PROG (|$e| |object|)
     (DECLARE (SPECIAL |$e|))
@@ -299,15 +291,13 @@
       (|recordFrame| '|normal|)
       (|stopTimingProcess| '|print|)
       |object|))))
- 
+
 ; ncParseAndInterpretString s ==
-;    processInteractive(packageTran(parseFromString(s)), nil)
- 
+;    processInteractive(parseFromString(s), nil)
+
 (DEFUN |ncParseAndInterpretString| (|s|)
-  (PROG ()
-    (RETURN
-     (|processInteractive| (|packageTran| (|parseFromString| |s|)) NIL))))
- 
+  (PROG () (RETURN (|processInteractive| (|parseFromString| |s|) NIL))))
+
 ; recordAndPrint(x,md) ==
 ;   --  Prints out the value x which is of type m, and records the changes
 ;   --  in environment $e into $InteractiveFrame
@@ -320,20 +310,15 @@
 ;     md' := md
 ;   mode:= (md=$EmptyMode => quadSch(); md)
 ;   if (md ~= $Void) or $printVoidIfTrue then
-;     if null $collectOutput then TERPRI $algebraOutputStream
+;     if null $collectOutput then TERPRI(get_algebra_stream())
 ;     if $QuietCommand = false then
 ;       output(x',md')
 ;   putHist('%,'value,objNewWrap(x,md),$e)
 ;   if $printTimeIfTrue or $printTypeIfTrue then printTypeAndTime(x',md')
 ;   if $printStorageIfTrue then printStorage()
 ;   if $printStatisticsSummaryIfTrue then printStatisticsSummary()
-;   if FIXP $HTCompanionWindowID then mkCompanionPage md
-;   $mkTestFlag = true => recordAndPrintTest md
-;   $runTestFlag =>
-;     $mkTestOutputType := md
-;     'done
 ;   'done
- 
+
 (DEFUN |recordAndPrint| (|x| |md|)
   (PROG (|md'| |x'| |mode|)
     (RETURN
@@ -345,7 +330,7 @@
       (SETQ |mode| (COND ((EQUAL |md| |$EmptyMode|) (|quadSch|)) (#1# |md|)))
       (COND
        ((OR (NOT (EQUAL |md| |$Void|)) |$printVoidIfTrue|)
-        (COND ((NULL |$collectOutput|) (TERPRI |$algebraOutputStream|)))
+        (COND ((NULL |$collectOutput|) (TERPRI (|get_algebra_stream|))))
         (COND ((NULL |$QuietCommand|) (|output| |x'| |md'|)))))
       (|putHist| '% '|value| (|objNewWrap| |x| |md|) |$e|)
       (COND
@@ -353,21 +338,14 @@
         (|printTypeAndTime| |x'| |md'|)))
       (COND (|$printStorageIfTrue| (|printStorage|)))
       (COND (|$printStatisticsSummaryIfTrue| (|printStatisticsSummary|)))
-      (COND ((FIXP |$HTCompanionWindowID|) (|mkCompanionPage| |md|)))
-      (COND ((EQUAL |$mkTestFlag| T) (|recordAndPrintTest| |md|))
-            (|$runTestFlag| (PROGN (SETQ |$mkTestOutputType| |md|) '|done|))
-            (#1# '|done|))))))
- 
+      '|done|))))
+
 ; printTypeAndTime(x,m) ==  --m is the mode/type of the result
-;   $saturn => printTypeAndTimeSaturn(x, m)
 ;   printTypeAndTimeNormal(x, m)
- 
+
 (DEFUN |printTypeAndTime| (|x| |m|)
-  (PROG ()
-    (RETURN
-     (COND (|$saturn| (|printTypeAndTimeSaturn| |x| |m|))
-           ('T (|printTypeAndTimeNormal| |x| |m|))))))
- 
+  (PROG () (RETURN (|printTypeAndTimeNormal| |x| |m|))))
+
 ; printTypeAndTimeNormal(x,m) ==
 ;   -- called only if either type or time is to be displayed
 ;   if m is ['Union, :argl] then
@@ -391,7 +369,7 @@
 ;         $outputLines :=
 ;             [justifyMyType msgText("S2GL0012", [type_string]), :$outputLines]
 ;     sayKeyedMsg("S2GL0012", [type_string])
- 
+
 (DEFUN |printTypeAndTimeNormal| (|x| |m|)
   (PROG (|argl| |x'| |m'| |timeString| |type_string|)
     (RETURN
@@ -443,61 +421,11 @@
                    (|justifyMyType| (|msgText| 'S2GL0012 (LIST |type_string|)))
                    |$outputLines|)))
          (#1# (|sayKeyedMsg| 'S2GL0012 (LIST |type_string|))))))))))
- 
-; printTypeAndTimeSaturn(x, m) ==
-;   -- header
-;   if $printTimeIfTrue then
-;     timeString := makeLongTimeString($interpreterTimedNames,
-;       $interpreterTimedClasses)
-;   else
-;     timeString := '""
-;   if $printTypeIfTrue then
-;     typeString := form2StringAsTeX devaluate m
-;   else
-;     typeString := '""
-;   if $printTypeIfTrue then
-;     printAsTeX('"\axPrintType{")
-;     if CONSP typeString then
-;       MAPC(FUNCTION printAsTeX, typeString)
-;     else
-;       printAsTeX(typeString)
-;     printAsTeX('"}")
-;   if $printTimeIfTrue then
-;     printAsTeX('"\axPrintTime{")
-;     printAsTeX(timeString)
-;     printAsTeX('"}")
- 
-(DEFUN |printTypeAndTimeSaturn| (|x| |m|)
-  (PROG (|timeString| |typeString|)
-    (RETURN
-     (PROGN
-      (COND
-       (|$printTimeIfTrue|
-        (SETQ |timeString|
-                (|makeLongTimeString| |$interpreterTimedNames|
-                 |$interpreterTimedClasses|)))
-       (#1='T (SETQ |timeString| "")))
-      (COND
-       (|$printTypeIfTrue|
-        (SETQ |typeString| (|form2StringAsTeX| (|devaluate| |m|))))
-       (#1# (SETQ |typeString| "")))
-      (COND
-       (|$printTypeIfTrue| (|printAsTeX| "\\axPrintType{")
-        (COND ((CONSP |typeString|) (MAPC #'|printAsTeX| |typeString|))
-              (#1# (|printAsTeX| |typeString|)))
-        (|printAsTeX| "}")))
-      (COND
-       (|$printTimeIfTrue| (|printAsTeX| "\\axPrintTime{")
-        (|printAsTeX| |timeString|) (|printAsTeX| "}")))))))
- 
-; printAsTeX(x) == PRINC(x, $texOutputStream)
- 
-(DEFUN |printAsTeX| (|x|) (PROG () (RETURN (PRINC |x| |$texOutputStream|))))
- 
+
 ; sameUnionBranch(uArg, m) ==
 ;   uArg is [":", ., t] => t = m
 ;   uArg = m
- 
+
 (DEFUN |sameUnionBranch| (|uArg| |m|)
   (PROG (|ISTMP#1| |ISTMP#2| |t|)
     (RETURN
@@ -512,13 +440,13 @@
                         (PROGN (SETQ |t| (CAR |ISTMP#2|)) #1='T))))))
        (EQUAL |t| |m|))
       (#1# (EQUAL |uArg| |m|))))))
- 
+
 ; msgText(key, args) ==
 ;   msg := segmentKeyedMsg getKeyedMsg key
 ;   msg := substituteSegmentedMsg(msg,args)
 ;   msg := flowSegmentedMsg(msg,$LINELENGTH,$MARGIN)
 ;   concatenateStringList([STRINGIMAGE x for x in CDAR msg])
- 
+
 (DEFUN |msgText| (|key| |args|)
   (PROG (|msg|)
     (RETURN
@@ -535,12 +463,12 @@
             ('T (SETQ |bfVar#4| (CONS (STRINGIMAGE |x|) |bfVar#4|))))
            (SETQ |bfVar#3| (CDR |bfVar#3|))))
         NIL (CDAR |msg|) NIL))))))
- 
+
 ; justifyMyType(t) ==
 ;   len := #t
 ;   len > $LINELENGTH => t
 ;   CONCAT(fillerSpaces($LINELENGTH-len, '" "), t)
- 
+
 (DEFUN |justifyMyType| (|t|)
   (PROG (|len|)
     (RETURN
@@ -548,22 +476,22 @@
       (SETQ |len| (LENGTH |t|))
       (COND ((< $LINELENGTH |len|) |t|)
             ('T (CONCAT (|fillerSpaces| (- $LINELENGTH |len|) " ") |t|)))))))
- 
+
 ; typeTimePrin x ==
 ;   $highlightDelta: local:= 0
 ;   maprinSpecial(x,0,79)
- 
+
 (DEFUN |typeTimePrin| (|x|)
   (PROG (|$highlightDelta|)
     (DECLARE (SPECIAL |$highlightDelta|))
     (RETURN (PROGN (SETQ |$highlightDelta| 0) (|maprinSpecial| |x| 0 79)))))
- 
+
 ; printStorage() ==
 ;   $collectOutput => nil
 ;   storeString :=
 ;     makeLongSpaceString($interpreterTimedNames, $interpreterTimedClasses)
 ;   sayKeyedMsg("S2GL0016",[storeString])
- 
+
 (DEFUN |printStorage| ()
   (PROG (|storeString|)
     (RETURN
@@ -574,12 +502,12 @@
                      (|makeLongSpaceString| |$interpreterTimedNames|
                       |$interpreterTimedClasses|))
              (|sayKeyedMsg| 'S2GL0016 (LIST |storeString|))))))))
- 
+
 ; printStatisticsSummary() ==
 ;   $collectOutput => nil
 ;   summary := statisticsSummary()
 ;   sayKeyedMsg("S2GL0017",[summary])
- 
+
 (DEFUN |printStatisticsSummary| ()
   (PROG (|summary|)
     (RETURN
@@ -588,7 +516,7 @@
             (PROGN
              (SETQ |summary| (|statisticsSummary|))
              (|sayKeyedMsg| 'S2GL0017 (LIST |summary|))))))))
- 
+
 ; interpretTopLevel(x, posnForm) ==
 ;   --  Top level entry point from processInteractive1.  Sets up catch
 ;   --  for a thrown result
@@ -598,7 +526,7 @@
 ;     stopTimingProcess peekTimedName()
 ;   c = 'tryAgain => interpretTopLevel(x, posnForm)
 ;   c
- 
+
 (DEFUN |interpretTopLevel| (|x| |posnForm|)
   (PROG (|savedTimerStack| |c|)
     (RETURN
@@ -611,42 +539,45 @@
                 (#1='T (|stopTimingProcess| (|peekTimedName|)))))))
       (COND ((EQ |c| '|tryAgain|) (|interpretTopLevel| |x| |posnForm|))
             (#1# |c|))))))
- 
+
 ; interpret(x, posnForm) ==
 ;   --type analyzes and evaluates expression x, returns object
 ;   $env:local := [[NIL]]
 ;   $genValue:local := true       --evaluate all generated code
+;   -- counter used to limit recursion depth during resolve
+;   $resolve_level : local := 0
 ;   interpret1(x,nil,posnForm)
- 
+
 (DEFUN |interpret| (|x| |posnForm|)
-  (PROG (|$genValue| |$env|)
-    (DECLARE (SPECIAL |$genValue| |$env|))
+  (PROG (|$resolve_level| |$genValue| |$env|)
+    (DECLARE (SPECIAL |$resolve_level| |$genValue| |$env|))
     (RETURN
      (PROGN
       (SETQ |$env| (LIST (LIST NIL)))
       (SETQ |$genValue| T)
+      (SETQ |$resolve_level| 0)
       (|interpret1| |x| NIL |posnForm|)))))
- 
+
 ; interpret1(x,rootMode,posnForm) ==
 ;   -- dispatcher for the type analysis routines.  type analyzes and
 ;   -- evaluates the expression x in the rootMode (if non-nil)
 ;   -- which may be $EmptyMode.  returns an object if evaluating, and a
 ;   -- modeset otherwise
-; 
+;
 ;   -- create the attributed tree
-; 
+;
 ;   node := mkAtreeWithSrcPos(x, posnForm)
 ;   if rootMode then putTarget(node,rootMode)
-; 
+;
 ;   -- do type analysis and evaluation of expression.  The real guts
-; 
+;
 ;   modeSet:= bottomUp node
 ;   newRootMode := (null rootMode => first modeSet ; rootMode)
 ;   argVal := getArgValue(node, newRootMode)
 ;   argVal and not $genValue => objNew(argVal, newRootMode)
 ;   argVal and (val:=getValue node) => interpret2(val,newRootMode,posnForm)
 ;   keyedSystemError("S2IS0053",[x])
- 
+
 (DEFUN |interpret1| (|x| |rootMode| |posnForm|)
   (PROG (|node| |modeSet| |newRootMode| |argVal| |val|)
     (RETURN
@@ -662,10 +593,8 @@
        ((AND |argVal| (SETQ |val| (|getValue| |node|)))
         (|interpret2| |val| |newRootMode| |posnForm|))
        (#1# (|keyedSystemError| 'S2IS0053 (LIST |x|))))))))
- 
+
 ; interpret2(object,m1,posnForm) ==
-;   -- this is the late interpretCoerce. I removed the call to
-;   -- coerceInteractive, so it only does the JENKS cases    ALBI
 ;   x := objVal object
 ;   m := objMode object
 ;   m=$EmptyMode =>
@@ -676,7 +605,7 @@
 ;     if (ans := coerceInteractive(object,m1)) then ans
 ;     else throwKeyedMsgCannotCoerceWithValue(x,m,m1)
 ;   object
- 
+
 (DEFUN |interpret2| (|object| |m1| |posnForm|)
   (PROG (|x| |m| |op| |ans|)
     (RETURN

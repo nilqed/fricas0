@@ -1,8 +1,8 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; flattenSemi(tree) ==
 ;     not(CONSP(tree)) => tree
 ;     tree is [";", t1, t2] =>
@@ -17,7 +17,7 @@
 ;         [";", :t1, :t2]
 ;     tree is [";", :.] => BREAK()
 ;     [flattenSemi(el) for el in tree]
- 
+
 (DEFUN |flattenSemi| (|tree|)
   (PROG (|ISTMP#1| |t1| |ISTMP#2| |t2| CDR)
     (RETURN
@@ -57,7 +57,7 @@
                  (#1# (SETQ |bfVar#2| (CONS (|flattenSemi| |el|) |bfVar#2|))))
                 (SETQ |bfVar#1| (CDR |bfVar#1|))))
              NIL |tree| NIL))))))
- 
+
 ; expandMacros(tree) ==
 ;     ATOM tree =>
 ;         mdef := HGET($MacroTable, tree)
@@ -84,7 +84,7 @@
 ;             userError("invalid macro call, #args ~= #margs")
 ;         [op, :[expandMacros(x) for x in args]]
 ;     [expandMacros(x) for x in tree]
- 
+
 (DEFUN |expandMacros| (|tree|)
   (PROG (|mdef| |repval| |op| |args| |margs| |ISTMP#1| |args1|)
     (RETURN
@@ -171,7 +171,7 @@
                      (SETQ |bfVar#8| (CONS (|expandMacros| |x|) |bfVar#8|))))
                    (SETQ |bfVar#7| (CDR |bfVar#7|))))
                 NIL |tree| NIL)))))))))
- 
+
 ; replaceArgDef1(args, edef) ==
 ;     SYMBOLP args =>
 ;         edef is [":", args, .] => edef
@@ -180,7 +180,7 @@
 ;         EQ(args2, NTH(1, edef)) => [",", args1, edef]
 ;         [",", replaceArgDef1(args1, edef), args2]
 ;     BREAK()
- 
+
 (DEFUN |replaceArgDef1| (|args| |edef|)
   (PROG (|ISTMP#1| |ISTMP#2| |args1| |args2|)
     (RETURN
@@ -209,11 +209,11 @@
        (COND ((EQ |args2| (NTH 1 |edef|)) (LIST '|,| |args1| |edef|))
              (#1# (LIST '|,| (|replaceArgDef1| |args1| |edef|) |args2|))))
       (#1# (BREAK))))))
- 
+
 ; replaceArgDef(h1, edef) ==
 ;    h1 is [name, args] => [name, replaceArgDef1(args, edef)]
 ;    BREAK()
- 
+
 (DEFUN |replaceArgDef| (|h1| |edef|)
   (PROG (|name| |ISTMP#1| |args|)
     (RETURN
@@ -226,12 +226,12 @@
                   (PROGN (SETQ |args| (CAR |ISTMP#1|)) #1='T))))
        (LIST |name| (|replaceArgDef1| |args| |edef|)))
       (#1# (BREAK))))))
- 
+
 ; replaceArgDefs1(h1, edefs) ==
 ;     for edef in edefs repeat
 ;         h1 := replaceArgDef(h1, edef)
 ;     h1
- 
+
 (DEFUN |replaceArgDefs1| (|h1| |edefs|)
   (PROG ()
     (RETURN
@@ -245,11 +245,11 @@
           (SETQ |bfVar#9| (CDR |bfVar#9|))))
        |edefs| NIL)
       |h1|))))
- 
+
 ; replaceArgDefs(header, edefs) ==
 ;     header is [":", h1, type] => [":", replaceArgDefs1(h1, edefs), type]
 ;     replaceArgDefs1(header, edefs)
- 
+
 (DEFUN |replaceArgDefs| (|header| |edefs|)
   (PROG (|ISTMP#1| |h1| |ISTMP#2| |type|)
     (RETURN
@@ -265,11 +265,11 @@
                         (PROGN (SETQ |type| (CAR |ISTMP#2|)) #1='T))))))
        (LIST '|:| (|replaceArgDefs1| |h1| |edefs|) |type|))
       (#1# (|replaceArgDefs1| |header| |edefs|))))))
- 
+
 ; DEFPARAMETER($restore_list, nil)
- 
+
 (DEFPARAMETER |$restore_list| NIL)
- 
+
 ; define_macro(name, def) ==
 ;     if SYMBOLP(name) then
 ;         def := [def]
@@ -285,7 +285,7 @@
 ;     prev_def := HGET($MacroTable, name)
 ;     PUSH([name, :prev_def], $restore_list)
 ;     HPUT($MacroTable, name, def)
- 
+
 (DEFUN |define_macro| (|name| |def|)
   (PROG (|op| |args| |ISTMP#1| |args1| |prev_def|)
     (RETURN
@@ -312,7 +312,7 @@
       (SETQ |prev_def| (HGET |$MacroTable| |name|))
       (PUSH (CONS |name| |prev_def|) |$restore_list|)
       (HPUT |$MacroTable| |name| |def|)))))
- 
+
 ; do_walk_where_list(tree) ==
 ;     lastIteration := false
 ;     ress := nil
@@ -344,7 +344,7 @@
 ;         FORMAT(true, '"strange where item: ~S~&", el)
 ;         BREAK()
 ;     ress
- 
+
 (DEFUN |do_walk_where_list| (|tree|)
   (PROG (|lastIteration| |ress| |ISTMP#1| |tree1| |ISTMP#2| |el| |name| |def|
          |pel| |item| |sym| |type| |sl| |pel1|)
@@ -352,10 +352,10 @@
      (PROGN
       (SETQ |lastIteration| NIL)
       (SETQ |ress| NIL)
-      ((LAMBDA #1=()
+      ((LAMBDA ()
          (LOOP
           (COND (|lastIteration| (RETURN NIL))
-                (#2='T
+                (#1='T
                  (PROGN
                   (COND
                    ((AND (CONSP |tree|) (EQ (CAR |tree|) '|;|)
@@ -368,9 +368,9 @@
                                 (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
                                      (PROGN
                                       (SETQ |el| (CAR |ISTMP#2|))
-                                      #2#))))))
+                                      #1#))))))
                     (SETQ |tree| |tree1|))
-                   (#2# (SETQ |el| |tree|) (SETQ |lastIteration| T)))
+                   (#1# (SETQ |el| |tree|) (SETQ |lastIteration| T)))
                   (COND
                    ((AND (CONSP |el|) (EQ (CAR |el|) '==>)
                          (PROGN
@@ -382,7 +382,7 @@
                                 (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
                                      (PROGN
                                       (SETQ |def| (CAR |ISTMP#2|))
-                                      #2#))))))
+                                      #1#))))))
                     (|define_macro| |name| |def|))
                    ((AND (CONSP |el|) (EQ (CAR |el|) '==)
                          (PROGN
@@ -394,7 +394,7 @@
                                 (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
                                      (PROGN
                                       (SETQ |def| (CAR |ISTMP#2|))
-                                      #2#))))))
+                                      #1#))))))
                     (|define_macro| |name| |def|))
                    ((AND (CONSP |el|) (EQ (CAR |el|) '|:|)
                          (PROGN
@@ -415,7 +415,7 @@
                                 (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
                                      (PROGN
                                       (SETQ |item| (CAR |ISTMP#2|))
-                                      #2#))))))
+                                      #1#))))))
                     (COND
                      ((AND (CONSP |item|) (EQ (CAR |item|) '|:|)
                            (PROGN
@@ -428,10 +428,10 @@
                                        (EQ (CDR |ISTMP#2|) NIL)
                                        (PROGN
                                         (SETQ |type| (CAR |ISTMP#2|))
-                                        #2#))))))
+                                        #1#))))))
                       (PROGN
                        (SETQ |sl| (LIST |sym|))
-                       ((LAMBDA #1#
+                       ((LAMBDA ()
                           (LOOP
                            (COND
                             ((NOT
@@ -446,9 +446,9 @@
                                                (EQ (CDR |ISTMP#2|) NIL)
                                                (PROGN
                                                 (SETQ |sym| (CAR |ISTMP#2|))
-                                                #2#)))))))
+                                                #1#)))))))
                              (RETURN NIL))
-                            (#2#
+                            (#1#
                              (PROGN
                               (SETQ |sl| (CONS |sym| |sl|))
                               (SETQ |pel| |pel1|)))))))
@@ -462,19 +462,19 @@
                             ((OR (ATOM |bfVar#10|)
                                  (PROGN (SETQ |sym| (CAR |bfVar#10|)) NIL))
                              (RETURN NIL))
-                            (#2#
+                            (#1#
                              (SETQ |ress|
                                      (CONS (LIST '|:| |sym| |type|) |ress|))))
                            (SETQ |bfVar#10| (CDR |bfVar#10|))))
                         |sl| NIL)))
-                     (#2#
+                     (#1#
                       (PROGN (FORMAT T "strange where |,| item1") (BREAK)))))
-                   (#2#
+                   (#1#
                     (PROGN
                      (FORMAT T "strange where item: ~S~&" |el|)
                      (BREAK))))))))))
       |ress|))))
- 
+
 ; walkWhereList(name, def, env) ==
 ;     $restore_list : local := nil
 ;     edefs := do_walk_where_list env
@@ -483,7 +483,7 @@
 ;         [op, :def] := it
 ;         HPUT($MacroTable, op, def)
 ;     ress
- 
+
 (DEFUN |walkWhereList| (|name| |def| |env|)
   (PROG (|$restore_list| |op| |ress| |edefs|)
     (DECLARE (SPECIAL |$restore_list|))
@@ -507,7 +507,7 @@
           (SETQ |bfVar#11| (CDR |bfVar#11|))))
        |$restore_list| NIL)
       |ress|))))
- 
+
 ; walkForm(tree) ==
 ;     tree is ["==>", name, def] =>
 ;         define_macro(name, def)
@@ -517,7 +517,7 @@
 ;         walkWhereList(name, def, env)
 ;     userError("Parsing error: illegal toplevel form")
 ;     nil
- 
+
 (DEFUN |walkForm| (|tree|)
   (PROG (|ISTMP#1| |name| |ISTMP#2| |def| |head| |ISTMP#3| |ISTMP#4| |ISTMP#5|
          |env|)
@@ -567,11 +567,11 @@
        (|walkWhereList| |name| |def| |env|))
       (#1#
        (PROGN (|userError| '|Parsing error: illegal toplevel form|) NIL))))))
- 
+
 ; isNiladic(head1) ==
 ;     SYMBOLP head1 => true
 ;     head1 is [., ["@Tuple"]]
- 
+
 (DEFUN |isNiladic| (|head1|)
   (PROG (|ISTMP#1| |ISTMP#2|)
     (RETURN
@@ -585,14 +585,14 @@
                         (SETQ |ISTMP#2| (CAR |ISTMP#1|))
                         (AND (CONSP |ISTMP#2|) (EQ (CDR |ISTMP#2|) NIL)
                              (EQ (CAR |ISTMP#2|) '|@Tuple|)))))))))))
- 
+
 ; getCon(head1) ==
 ;     SYMBOLP head1 => head1
 ;     first head1
- 
+
 (DEFUN |getCon| (|head1|)
   (PROG () (RETURN (COND ((SYMBOLP |head1|) |head1|) ('T (CAR |head1|))))))
- 
+
 ; processGlobals1() ==
 ;     for form in $globalDefs repeat
 ;         [., head, :.] := form
@@ -607,7 +607,7 @@
 ;         else
 ;             SETDATABASE(con, 'CONSTRUCTORKIND, "domain")
 ;         SETDATABASE(con, 'NILADIC, isNiladic head1)
- 
+
 (DEFUN |processGlobals1| ()
   (PROG (|con| |head1| |ISTMP#2| |a| |ISTMP#1| |head|)
     (RETURN
@@ -647,7 +647,7 @@
             (SETDATABASE |con| 'NILADIC (|isNiladic| |head1|)))))
          (SETQ |bfVar#12| (CDR |bfVar#12|))))
       |$globalDefs| NIL))))
- 
+
 ; processGlobals () ==
 ;     $InteractiveMode : local := nil
 ;     $globalDefs := REVERSE $globalDefs
@@ -655,26 +655,25 @@
 ;     $globalDefs := [parseTransform postTransform x for x in $globalDefs]
 ;     untypedDefs := []
 ;     for def in $globalDefs repeat
-;         ["DEF", form, sig, sc, body] := def
+;         ["DEF", form, sig, body] := def
 ;         cosig := CONS(nil, [categoryForm? ty for ty in rest(sig)])
 ;         SETDATABASE(first form, 'COSIG, cosig)
 ;         if null first(sig) then
 ;             untypedDefs := [def, :untypedDefs]
 ;         else
 ;             handleKind(def)
-; 
+;
 ;     for def in untypedDefs repeat
-;         ["DEF", form, sig, sc, body] := def
+;         ["DEF", form, sig, body] := def
 ;         nt := computeTargetMode(form, body)
 ;         if nt then
-;             handleKind(["DEF", form, [nt, :rest sig], sc, body])
+;             handleKind(["DEF", form, [nt, :rest sig], body])
 ;         else
 ;             SAY(["unhandled target", form])
 ;     boo_comp_cats()
- 
+
 (DEFUN |processGlobals| ()
-  (PROG (|$InteractiveMode| |untypedDefs| |form| |sig| |sc| |body| |cosig|
-         |nt|)
+  (PROG (|$InteractiveMode| |untypedDefs| |form| |sig| |body| |cosig| |nt|)
     (DECLARE (SPECIAL |$InteractiveMode|))
     (RETURN
      (PROGN
@@ -704,8 +703,7 @@
             (PROGN
              (SETQ |form| (CADR . #2=(|def|)))
              (SETQ |sig| (CADDR . #2#))
-             (SETQ |sc| (CADDDR . #2#))
-             (SETQ |body| (CAR (CDDDDR . #2#)))
+             (SETQ |body| (CADDDR . #2#))
              (SETQ |cosig|
                      (CONS NIL
                            ((LAMBDA (|bfVar#17| |bfVar#16| |ty|)
@@ -736,21 +734,20 @@
             (PROGN
              (SETQ |form| (CADR . #3=(|def|)))
              (SETQ |sig| (CADDR . #3#))
-             (SETQ |sc| (CADDDR . #3#))
-             (SETQ |body| (CAR (CDDDDR . #3#)))
+             (SETQ |body| (CADDDR . #3#))
              (SETQ |nt| (|computeTargetMode| |form| |body|))
              (COND
               (|nt|
                (|handleKind|
-                (LIST 'DEF |form| (CONS |nt| (CDR |sig|)) |sc| |body|)))
+                (LIST 'DEF |form| (CONS |nt| (CDR |sig|)) |body|)))
               (#1# (SAY (LIST '|unhandled target| |form|)))))))
           (SETQ |bfVar#18| (CDR |bfVar#18|))))
        |untypedDefs| NIL)
       (|boo_comp_cats|)))))
- 
-; handleKind(df is ['DEF,form,sig,sc,body]) ==
-;     [op,:argl] := form
-; 
+
+; handleKind(df is ['DEF, form, sig, body]) ==
+;     [op, :argl] := form
+;
 ;     null first(sig) => nil
 ;     if sig is [["Category"], :.] then
 ;         if body is ['add,cat,capsule] then
@@ -765,25 +762,23 @@
 ;         constructorCategory := formalBody
 ;     else
 ;         signature' := sig
-; 
+;
 ;     pairlis:= [[a,:v] for a in argl for v in $FormalMapVariableList]
 ;     parSignature:= SUBLIS(pairlis,signature')
 ;     parForm:= SUBLIS(pairlis,form)
 ;     constructorModemap := removeZeroOne [[parForm,:parSignature],[true,op]]
 ;     SETDATABASE(op, 'CONSTRUCTORMODEMAP, constructorModemap)
 ;     SETDATABASE(op, 'CONSTRUCTORCATEGORY, constructorCategory)
- 
+
 (DEFUN |handleKind| (|df|)
-  (PROG (|form| |sig| |sc| |body| |op| |argl| |ISTMP#1| |cat| |ISTMP#2|
-         |capsule| |sargl| |aList| |formalBody| |signature'|
-         |constructorCategory| |pairlis| |parSignature| |parForm|
-         |constructorModemap|)
+  (PROG (|form| |sig| |body| |op| |argl| |ISTMP#1| |cat| |ISTMP#2| |capsule|
+         |sargl| |aList| |formalBody| |signature'| |constructorCategory|
+         |pairlis| |parSignature| |parForm| |constructorModemap|)
     (RETURN
      (PROGN
       (SETQ |form| (CADR . #1=(|df|)))
       (SETQ |sig| (CADDR . #1#))
-      (SETQ |sc| (CADDDR . #1#))
-      (SETQ |body| (CAR (CDDDDR . #1#)))
+      (SETQ |body| (CADDDR . #1#))
       (SETQ |op| (CAR |form|))
       (SETQ |argl| (CDR |form|))
       (COND ((NULL (CAR |sig|)) NIL)
@@ -855,23 +850,23 @@
               (SETDATABASE |op| 'CONSTRUCTORMODEMAP |constructorModemap|)
               (SETDATABASE |op| 'CONSTRUCTORCATEGORY
                |constructorCategory|))))))))
- 
+
 ; boo_comp_cats() ==
 ;     $compiler_output_stream := MAKE_-BROADCAST_-STREAM()
 ;     $bootStrapMode : local := true
 ;     SAY(["boo_comp_cats"])
 ;     hcats := []
 ;     for def in $globalDefs repeat
-;         ["DEF", form, sig, sc, body] := def
+;         ["DEF", form, sig, body] := def
 ;         if sig is [["Category"], :.] then
 ;             SAY(["doing", form, sig])
 ;             not("and"/[categoryForm? ty for ty in rest(sig)]) =>
 ;                 hcats := cons(def, hcats)
 ;             boo_comp1(def)
 ;     for def in hcats repeat boo_comp1(def)
- 
+
 (DEFUN |boo_comp_cats| ()
-  (PROG (|$bootStrapMode| |hcats| |form| |sig| |sc| |body| |ISTMP#1|)
+  (PROG (|$bootStrapMode| |hcats| |form| |sig| |body| |ISTMP#1|)
     (DECLARE (SPECIAL |$bootStrapMode|))
     (RETURN
      (PROGN
@@ -888,8 +883,7 @@
             (PROGN
              (SETQ |form| (CADR . #2=(|def|)))
              (SETQ |sig| (CADDR . #2#))
-             (SETQ |sc| (CADDDR . #2#))
-             (SETQ |body| (CAR (CDDDDR . #2#)))
+             (SETQ |body| (CADDDR . #2#))
              (COND
               ((AND (CONSP |sig|)
                     (PROGN
@@ -923,7 +917,7 @@
            (#1# (|boo_comp1| |def|)))
           (SETQ |bfVar#28| (CDR |bfVar#28|))))
        |hcats| NIL)))))
- 
+
 ; boo_comp1(x) ==
 ;     $Index : local := 0
 ;     $MACROASSOC : local := []
@@ -936,33 +930,33 @@
 ;     $exitModeStack : local := []
 ;     $returnMode : local := $EmptyMode
 ;     $leaveLevelStack : local := []
+;     $iterate_tag : local := []
+;     $iterate_count : local := 0
 ;     $CategoryFrame : local := [[[]]]
 ;     $insideFunctorIfTrue : local := false
-;     $insideExpressionIfTrue : local := false
 ;     $insideWhereIfTrue : local := false
 ;     $insideCategoryIfTrue : local := false
 ;     $insideCapsuleFunctionIfTrue : local := false
-;     $form : local := nil
 ;     $e : local := $EmptyEnvironment
 ;     $genSDVar : local :=  0
 ;     $previousTime : local := get_run_time()
 ;     compTopLevel(x, $EmptyMode,  [[[]]])
 ;     if $semanticErrorStack then displaySemanticErrors()
- 
+
 (DEFUN |boo_comp1| (|x|)
-  (PROG (|$previousTime| |$genSDVar| |$e| |$form|
-         |$insideCapsuleFunctionIfTrue| |$insideCategoryIfTrue|
-         |$insideWhereIfTrue| |$insideExpressionIfTrue| |$insideFunctorIfTrue|
-         |$CategoryFrame| |$leaveLevelStack| |$returnMode| |$exitModeStack|
-         |$exitMode| |$warningStack| |$semanticErrorStack| |$topOp|
-         |$postStack| |$compUniquelyIfTrue| $MACROASSOC |$Index|)
+  (PROG (|$previousTime| |$genSDVar| |$e| |$insideCapsuleFunctionIfTrue|
+         |$insideCategoryIfTrue| |$insideWhereIfTrue| |$insideFunctorIfTrue|
+         |$CategoryFrame| |$iterate_count| |$iterate_tag| |$leaveLevelStack|
+         |$returnMode| |$exitModeStack| |$exitMode| |$warningStack|
+         |$semanticErrorStack| |$topOp| |$postStack| |$compUniquelyIfTrue|
+         $MACROASSOC |$Index|)
     (DECLARE
-     (SPECIAL |$previousTime| |$genSDVar| |$e| |$form|
-      |$insideCapsuleFunctionIfTrue| |$insideCategoryIfTrue|
-      |$insideWhereIfTrue| |$insideExpressionIfTrue| |$insideFunctorIfTrue|
-      |$CategoryFrame| |$leaveLevelStack| |$returnMode| |$exitModeStack|
-      |$exitMode| |$warningStack| |$semanticErrorStack| |$topOp| |$postStack|
-      |$compUniquelyIfTrue| $MACROASSOC |$Index|))
+     (SPECIAL |$previousTime| |$genSDVar| |$e| |$insideCapsuleFunctionIfTrue|
+      |$insideCategoryIfTrue| |$insideWhereIfTrue| |$insideFunctorIfTrue|
+      |$CategoryFrame| |$iterate_count| |$iterate_tag| |$leaveLevelStack|
+      |$returnMode| |$exitModeStack| |$exitMode| |$warningStack|
+      |$semanticErrorStack| |$topOp| |$postStack| |$compUniquelyIfTrue|
+      $MACROASSOC |$Index|))
     (RETURN
      (PROGN
       (SETQ |$Index| 0)
@@ -976,19 +970,19 @@
       (SETQ |$exitModeStack| NIL)
       (SETQ |$returnMode| |$EmptyMode|)
       (SETQ |$leaveLevelStack| NIL)
+      (SETQ |$iterate_tag| NIL)
+      (SETQ |$iterate_count| 0)
       (SETQ |$CategoryFrame| (LIST (LIST NIL)))
       (SETQ |$insideFunctorIfTrue| NIL)
-      (SETQ |$insideExpressionIfTrue| NIL)
       (SETQ |$insideWhereIfTrue| NIL)
       (SETQ |$insideCategoryIfTrue| NIL)
       (SETQ |$insideCapsuleFunctionIfTrue| NIL)
-      (SETQ |$form| NIL)
       (SETQ |$e| |$EmptyEnvironment|)
       (SETQ |$genSDVar| 0)
       (SETQ |$previousTime| (|get_run_time|))
       (|compTopLevel| |x| |$EmptyMode| (LIST (LIST NIL)))
       (COND (|$semanticErrorStack| (|displaySemanticErrors|)))))))
- 
+
 ; computeTargetMode(lhs, rhs) ==
 ;     PRETTYPRINT(["computeTargetMode", lhs])
 ;     rhs is ['CAPSULE,:.] => MOAN(['"target category of ", lhs,_
@@ -999,18 +993,18 @@
 ;     rhs is ['Union,:l] => ['UnionCategory,:l]
 ;     rhs is ['List,:l] => ['ListCategory,:l]
 ;     rhs is ['Vector,:l] => ['VectorCategory,:l]
-; 
+;
 ;     rhs is [op, :argl] =>
 ;         modemap := GETDATABASE(op, 'CONSTRUCTORMODEMAP)
 ;         modemap is [[form, sig, :.], [=true,.]] =>
 ;             pairlis:= [[v,:a] for a in argl for v in $FormalMapVariableList]
-;             -- substitue
+;             -- substitute
 ;             SUBLIS(pairlis, sig)
 ;         PRETTYPRINT("strange untyped def")
 ;         PRETTYPRINT([lhs, rhs, modemap])
 ;         nil
 ;     BREAK()
- 
+
 (DEFUN |computeTargetMode| (|lhs| |rhs|)
   (PROG (|ISTMP#1| D |ISTMP#2| |ISTMP#3| |l| |op| |argl| |modemap| |form| |sig|
          |ISTMP#4| |ISTMP#5| |pairlis|)
@@ -1099,43 +1093,43 @@
             (PRETTYPRINT (LIST |lhs| |rhs| |modemap|))
             NIL)))))
        (#1# (BREAK)))))))
- 
+
 ; DEFVAR($PrintOnly, false)
- 
+
 (DEFVAR |$PrintOnly| NIL)
- 
+
 ; DEFVAR($RawParseOnly, false)
- 
+
 (DEFVAR |$RawParseOnly| NIL)
- 
+
 ; DEFVAR($PostTranOnly, false)
- 
+
 (DEFVAR |$PostTranOnly| NIL)
- 
+
 ; DEFVAR($FlatParseOnly, false)
- 
+
 (DEFVAR |$FlatParseOnly| NIL)
- 
+
 ; DEFVAR($TranslateOnly, false)
- 
+
 (DEFVAR |$TranslateOnly| NIL)
- 
+
 ; DEFVAR($noEarlyMacroexpand, false)
- 
+
 (DEFVAR |$noEarlyMacroexpand| NIL)
- 
+
 ; DEFVAR($SaveParseOnly, false)
- 
+
 (DEFVAR |$SaveParseOnly| NIL)
- 
+
 ; DEFVAR($globalDefs, nil)
- 
+
 (DEFVAR |$globalDefs| NIL)
- 
+
 ; DEFVAR($MacroTable)
- 
+
 (DEFVAR |$MacroTable|)
- 
+
 ; S_process(x) ==
 ;     $Index : local := 0
 ;     $MACROASSOC : local := nil
@@ -1145,16 +1139,16 @@
 ;     $semanticErrorStack : local := nil
 ;     $warningStack : local := nil
 ;     $exitMode : local := $EmptyMode
-;     $exitModeStack : local := nil
+;     $exitModeStack : local := []
 ;     $returnMode : local := $EmptyMode
-;     $leaveLevelStack : local := nil
+;     $leaveLevelStack : local := []
+;     $iterate_tag : local := []
+;     $iterate_count : local := 0
 ;     $CategoryFrame : local := [[[]]]
 ;     $insideFunctorIfTrue : local := false
-;     $insideExpressionIfTrue : local := false
 ;     $insideWhereIfTrue : local := false
 ;     $insideCategoryIfTrue : local := false
 ;     $insideCapsuleFunctionIfTrue : local := false
-;     $form : local := nil
 ;     $e : local := $EmptyEnvironment
 ;     $genSDVar : local := 0
 ;     $previousTime : local := get_run_time()
@@ -1184,21 +1178,22 @@
 ;     if u then $InteractiveFrame := THIRD(u)
 ;     if $semanticErrorStack then displaySemanticErrors()
 ;     TERPRI()
- 
+
 (DEFUN |S_process| (|x|)
-  (PROG (|$m| |$x| |$s| |$previousTime| |$genSDVar| |$e| |$form|
+  (PROG (|$m| |$x| |$s| |$previousTime| |$genSDVar| |$e|
          |$insideCapsuleFunctionIfTrue| |$insideCategoryIfTrue|
-         |$insideWhereIfTrue| |$insideExpressionIfTrue| |$insideFunctorIfTrue|
-         |$CategoryFrame| |$leaveLevelStack| |$returnMode| |$exitModeStack|
-         |$exitMode| |$warningStack| |$semanticErrorStack| |$topOp|
-         |$postStack| |$compUniquelyIfTrue| $MACROASSOC |$Index| |u| |nform|)
+         |$insideWhereIfTrue| |$insideFunctorIfTrue| |$CategoryFrame|
+         |$iterate_count| |$iterate_tag| |$leaveLevelStack| |$returnMode|
+         |$exitModeStack| |$exitMode| |$warningStack| |$semanticErrorStack|
+         |$topOp| |$postStack| |$compUniquelyIfTrue| $MACROASSOC |$Index| |u|
+         |nform|)
     (DECLARE
-     (SPECIAL |$m| |$x| |$s| |$previousTime| |$genSDVar| |$e| |$form|
+     (SPECIAL |$m| |$x| |$s| |$previousTime| |$genSDVar| |$e|
       |$insideCapsuleFunctionIfTrue| |$insideCategoryIfTrue|
-      |$insideWhereIfTrue| |$insideExpressionIfTrue| |$insideFunctorIfTrue|
-      |$CategoryFrame| |$leaveLevelStack| |$returnMode| |$exitModeStack|
-      |$exitMode| |$warningStack| |$semanticErrorStack| |$topOp| |$postStack|
-      |$compUniquelyIfTrue| $MACROASSOC |$Index|))
+      |$insideWhereIfTrue| |$insideFunctorIfTrue| |$CategoryFrame|
+      |$iterate_count| |$iterate_tag| |$leaveLevelStack| |$returnMode|
+      |$exitModeStack| |$exitMode| |$warningStack| |$semanticErrorStack|
+      |$topOp| |$postStack| |$compUniquelyIfTrue| $MACROASSOC |$Index|))
     (RETURN
      (PROGN
       (SETQ |$Index| 0)
@@ -1212,13 +1207,13 @@
       (SETQ |$exitModeStack| NIL)
       (SETQ |$returnMode| |$EmptyMode|)
       (SETQ |$leaveLevelStack| NIL)
+      (SETQ |$iterate_tag| NIL)
+      (SETQ |$iterate_count| 0)
       (SETQ |$CategoryFrame| (LIST (LIST NIL)))
       (SETQ |$insideFunctorIfTrue| NIL)
-      (SETQ |$insideExpressionIfTrue| NIL)
       (SETQ |$insideWhereIfTrue| NIL)
       (SETQ |$insideCategoryIfTrue| NIL)
       (SETQ |$insideCapsuleFunctionIfTrue| NIL)
-      (SETQ |$form| NIL)
       (SETQ |$e| |$EmptyEnvironment|)
       (SETQ |$genSDVar| 0)
       (SETQ |$previousTime| (|get_run_time|))

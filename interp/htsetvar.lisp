@@ -1,23 +1,22 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; htsv() ==
 ;   startHTPage(50)
 ;   htSetVars()
- 
-(DEFUN |htsv| #1=()
-  (PROG #1# (RETURN (PROGN (|startHTPage| 50) (|htSetVars|)))))
- 
+
+(DEFUN |htsv| () (PROG () (RETURN (PROGN (|startHTPage| 50) (|htSetVars|)))))
+
 ; htSetVars() ==
 ;   $path := nil
 ;   $lastTree := nil
 ;   if 0 ~= LASTATOM $setOptions then htMarkTree($setOptions,0)
 ;   htShowSetTree($setOptions)
- 
-(DEFUN |htSetVars| #1=()
-  (PROG #1#
+
+(DEFUN |htSetVars| ()
+  (PROG ()
     (RETURN
      (PROGN
       (SETQ |$path| NIL)
@@ -25,7 +24,7 @@
       (COND
        ((NOT (EQL 0 (LASTATOM |$setOptions|))) (|htMarkTree| |$setOptions| 0)))
       (|htShowSetTree| |$setOptions|)))))
- 
+
 ; htShowSetTree(setTree) ==
 ;   $path := TAKE(- LASTATOM setTree,$path)
 ;   page := htInitPage(mkSetTitle(),nil)
@@ -41,10 +40,10 @@
 ;   maxWidth2 := MAX(41,maxWidth2)
 ;   tabset1 := STRINGIMAGE (maxWidth1)
 ;   tabset2 := STRINGIMAGE (maxWidth2 + maxWidth1 - 1)
-;   htSay('"\tab{2}\newline Variable\tab{",
+;   htSayList(['"\tab{2}\newline Variable\tab{",
 ;     STRINGIMAGE (maxWidth1 + QUOTIENT(maxWidth2, 3)),
 ;      '"}Description\tab{",STRINGIMAGE(maxWidth2 + maxWidth1 + 2),
-;       '"}Value\newline\beginitems ")
+;       '"}Value\newline\beginitems "])
 ;   for setData in REVERSE okList repeat
 ;       htSay '"\item"
 ;       label := STRCONC('"\menuitemstyle{",setData.setName,'"}")
@@ -53,7 +52,7 @@
 ;       htMakePage [['bcLispLinks, links,'options,'(indent . 0)]]
 ;   htSay '"\enditems"
 ;   htShowPage()
- 
+
 (DEFUN |htShowSetTree| (|setTree|)
   (PROG (|page| |links| |maxWidth2| |maxWidth1| |okList| |tabset1| |tabset2|
          |label|)
@@ -86,10 +85,12 @@
       (SETQ |maxWidth2| (MAX 41 |maxWidth2|))
       (SETQ |tabset1| (STRINGIMAGE |maxWidth1|))
       (SETQ |tabset2| (STRINGIMAGE (- (+ |maxWidth2| |maxWidth1|) 1)))
-      (|htSay| "\\tab{2}\\newline Variable\\tab{"
-       (STRINGIMAGE (+ |maxWidth1| (QUOTIENT |maxWidth2| 3)))
-       "}Description\\tab{" (STRINGIMAGE (+ (+ |maxWidth2| |maxWidth1|) 2))
-       "}Value\\newline\\beginitems ")
+      (|htSayList|
+       (LIST "\\tab{2}\\newline Variable\\tab{"
+             (STRINGIMAGE (+ |maxWidth1| (QUOTIENT |maxWidth2| 3)))
+             "}Description\\tab{"
+             (STRINGIMAGE (+ (+ |maxWidth2| |maxWidth1|) 2))
+             "}Value\\newline\\beginitems "))
       ((LAMBDA (|bfVar#2| |setData|)
          (LOOP
           (COND
@@ -114,7 +115,7 @@
        (REVERSE |okList|) NIL)
       (|htSay| "\\enditems")
       (|htShowPage|)))))
- 
+
 ; htShowCount s == --# discounting {\em .. }
 ;   m := #s
 ;   m < 8 => m - 1
@@ -126,7 +127,7 @@
 ;     i := i + 1
 ;     count := count + 1
 ;   count + (m - i)
- 
+
 (DEFUN |htShowCount| (|s|)
   (PROG (|m| |i| |count|)
     (RETURN
@@ -152,7 +153,7 @@
                             (SETQ |i| (+ |i| 1))
                             (SETQ |count| (+ |count| 1))))))))))
               (+ |count| (- |m| |i|)))))))))
- 
+
 ; htShowSetTreeValue(setData) ==
 ;   st := setData.setType
 ;   st = 'FUNCTION => object2String FUNCALL(setData.setVar,"%display%")
@@ -162,7 +163,7 @@
 ;     object2String translateTrueFalse2YesNo eval setData.setVar
 ;   st = 'TREE     => '"..."
 ;   systemError()
- 
+
 (DEFUN |htShowSetTreeValue| (|setData|)
   (PROG (|st|)
     (RETURN
@@ -177,18 +178,18 @@
         (|object2String|
          (|translateTrueFalse2YesNo| (|eval| (ELT |setData| 4)))))
        ((EQ |st| 'TREE) "...") ('T (|systemError|)))))))
- 
+
 ; mkSetTitle() == STRCONC('"Command {\em )set ",listOfStrings2String $path,'"}")
- 
-(DEFUN |mkSetTitle| #1=()
-  (PROG #1#
+
+(DEFUN |mkSetTitle| ()
+  (PROG ()
     (RETURN
      (STRCONC "Command {\\em )set " (|listOfStrings2String| |$path|) "}"))))
- 
+
 ; listOfStrings2String u ==
 ;   null u => '""
 ;   STRCONC(listOfStrings2String rest u,'" ",stringize first u)
- 
+
 (DEFUN |listOfStrings2String| (|u|)
   (PROG ()
     (RETURN
@@ -196,7 +197,7 @@
            ('T
             (STRCONC (|listOfStrings2String| (CDR |u|)) " "
              (|stringize| (CAR |u|))))))))
- 
+
 ; htShowSetPage(htPage, branch) ==
 ;   setTree := htpProperty(htPage, 'setTree)
 ;   $path := [branch,:TAKE(- LASTATOM setTree,$path)]
@@ -208,12 +209,12 @@
 ;   st = 'INTEGER  =>  htShowIntegerPage(htPage,setData)
 ;   st = 'LITERALS => htShowLiteralsPage(htPage, setData)
 ;   st = 'TREE     => htShowSetTree(setData.setLeaf)
-; 
+;
 ;   st = 'STRING   =>  -- have to add this
 ;      htSetNotAvailable(htPage,'")set compiler")
-; 
+;
 ;   systemError '"Unknown data type"
- 
+
 (DEFUN |htShowSetPage| (|htPage| |branch|)
   (PROG (|setTree| |setData| |st|)
     (RETURN
@@ -233,17 +234,17 @@
                ((EQ |st| 'STRING)
                 (|htSetNotAvailable| |htPage| ")set compiler"))
                (#1# (|systemError| "Unknown data type"))))))))))
- 
+
 ; htShowLiteralsPage(htPage, setData) ==
 ;   htSetLiterals(htPage,setData.setName,setData.setLabel,
 ;                 setData.setVar,setData.setLeaf,'htSetLiteral)
- 
+
 (DEFUN |htShowLiteralsPage| (|htPage| |setData|)
   (PROG ()
     (RETURN
      (|htSetLiterals| |htPage| (ELT |setData| 0) (ELT |setData| 1)
       (ELT |setData| 4) (ELT |setData| 5) '|htSetLiteral|))))
- 
+
 ; htSetLiterals(htPage,name,message,variable,values,functionToCall) ==
 ;   page := htInitPage('"Set Command", htpPropertyList htPage)
 ;   htpSetProperty(page, 'variable, variable)
@@ -255,7 +256,7 @@
 ;   bcHt ["\indent{0}\newline\vspace{1} The current setting is: {\em ",
 ;         translateTrueFalse2YesNo EVAL variable, '"} "]
 ;   htShowPage()
- 
+
 (DEFUN |htSetLiterals|
        (|htPage| |name| |message| |variable| |values| |functionToCall|)
   (PROG (|page| |links|)
@@ -286,12 +287,12 @@
        (LIST '|\\indent{0}\\newline\\vspace{1} The current setting is: {\\em |
              (|translateTrueFalse2YesNo| (EVAL |variable|)) "} "))
       (|htShowPage|)))))
- 
+
 ; htSetLiteral(htPage, val) ==
 ;   htInitPage('"Set Command", nil)
 ;   SET(htpProperty(htPage, 'variable), translateYesNo2TrueFalse val)
 ;   htKill(htPage,val)
- 
+
 (DEFUN |htSetLiteral| (|htPage| |val|)
   (PROG ()
     (RETURN
@@ -300,7 +301,7 @@
       (SET (|htpProperty| |htPage| '|variable|)
            (|translateYesNo2TrueFalse| |val|))
       (|htKill| |htPage| |val|)))))
- 
+
 ; htShowIntegerPage(htPage, setData) ==
 ;   page := htInitPage(mkSetTitle(), htpPropertyList htPage)
 ;   htpSetProperty(page, 'variable, setData.setVar)
@@ -330,7 +331,7 @@
 ;       ['bcStrings,[5,eval setData.setVar,'value,'S]]]
 ;   htSetvarDoneButton('"Select to Set Value",'htSetInteger)
 ;   htShowPage()
- 
+
 (DEFUN |htShowIntegerPage| (|htPage| |setData|)
   (PROG (|page| |message| |LETTMP#1|)
     (RETURN
@@ -358,7 +359,7 @@
                    (LIST 5 (|eval| (ELT |setData| 4)) '|value| 'S))))
       (|htSetvarDoneButton| "Select to Set Value" '|htSetInteger|)
       (|htShowPage|)))))
- 
+
 ; htSetInteger(htPage) ==
 ;   htInitPage(mkSetTitle(), nil)
 ;   val := chkRange htpLabelInputString(htPage,'value)
@@ -366,7 +367,7 @@
 ;     errorPage(htPage,['"Value Error",nil,'"\vspace{3}\centerline{{\em ",val,'"}}\vspace{2}\newline\centerline{Click on \UpBitmap{} to re-enter value}"])
 ;   SET(htpProperty(htPage, 'variable), val)
 ;   htKill(htPage,val)
- 
+
 (DEFUN |htSetInteger| (|htPage|)
   (PROG (|val|)
     (RETURN
@@ -382,13 +383,13 @@
         (PROGN
          (SET (|htpProperty| |htPage| '|variable|) |val|)
          (|htKill| |htPage| |val|))))))))
- 
+
 ; htShowFunctionPage(htPage,setData) ==
 ;   fn := setData.setDef => FUNCALL(fn,htPage)
 ;   htpSetProperty(htPage,'setData,setData)
 ;   htpSetProperty(htPage,'parts, setData.setLeaf)
 ;   htShowFunctionPageContinued(htPage)
- 
+
 (DEFUN |htShowFunctionPage| (|htPage| |setData|)
   (PROG (|fn|)
     (RETURN
@@ -398,7 +399,7 @@
              (|htpSetProperty| |htPage| '|setData| |setData|)
              (|htpSetProperty| |htPage| '|parts| (ELT |setData| 5))
              (|htShowFunctionPageContinued| |htPage|)))))))
- 
+
 ; htShowFunctionPageContinued(htPage) ==
 ;   parts := htpProperty(htPage,'parts)
 ;   setData := htpProperty(htPage,'setData)
@@ -419,7 +420,7 @@
 ;           [ '"", '"", 60, currentValue, 'value, 'S]]]
 ;   htSetvarDoneButton('"Select To Set Value",'htSetFunCommand)
 ;   htShowPage()
- 
+
 (DEFUN |htShowFunctionPageContinued| (|htPage|)
   (PROG (|parts| |setData| |phrase| |kind| |variable| |checker| |initValue|
          |restParts| |page| |currentValue|)
@@ -457,17 +458,17 @@
                       (LIST "" "" 60 |currentValue| '|value| 'S))))
          (|htSetvarDoneButton| "Select To Set Value" '|htSetFunCommand|)
          (|htShowPage|))))))))
- 
+
 ; htSetvarDoneButton(message, func) ==
 ;   bcHt '"\newline\vspace{1}\centerline{"
-; 
+;
 ;   if message = '"Select to Set Value" or message = '"Select to Set Values"  then
 ;     bchtMakeButton('"\lisplink",'"\ControlBitmap{ClickToSet}", func)
 ;   else
 ;     bchtMakeButton('"\lisplink",CONCAT('"\fbox{", message, '"}"), func)
-; 
+;
 ;   bcHt '"} "
- 
+
 (DEFUN |htSetvarDoneButton| (|message| |func|)
   (PROG ()
     (RETURN
@@ -481,12 +482,12 @@
         (|bchtMakeButton| "\\lisplink" (CONCAT "\\fbox{" |message| "}")
          |func|)))
       (|bcHt| "} ")))))
- 
+
 ; htFunctionSetLiteral(htPage, val) ==
 ;   htInitPage('"Set Command", nil)
 ;   SET(htpProperty(htPage, 'variable), translateYesNo2TrueFalse val)
 ;   htSetFunCommandContinue(htPage,val)
- 
+
 (DEFUN |htFunctionSetLiteral| (|htPage| |val|)
   (PROG ()
     (RETURN
@@ -495,14 +496,14 @@
       (SET (|htpProperty| |htPage| '|variable|)
            (|translateYesNo2TrueFalse| |val|))
       (|htSetFunCommandContinue| |htPage| |val|)))))
- 
+
 ; htSetFunCommand(htPage) ==
 ;   variable := htpProperty(htPage,'variable)
 ;   checker := htpProperty(htPage,'checker)
 ;   value := htCheck(checker,htpLabelInputString(htPage,'value))
 ;   SET(variable,value) --kill this later
 ;   htSetFunCommandContinue(htPage,value)
- 
+
 (DEFUN |htSetFunCommand| (|htPage|)
   (PROG (|variable| |checker| |value|)
     (RETURN
@@ -513,7 +514,7 @@
               (|htCheck| |checker| (|htpLabelInputString| |htPage| '|value|)))
       (SET |variable| |value|)
       (|htSetFunCommandContinue| |htPage| |value|)))))
- 
+
 ; htSetFunCommandContinue(htPage,value) ==
 ;   parts := htpProperty(htPage,'parts)
 ;   continue :=
@@ -524,7 +525,7 @@
 ;     htpSetProperty(htPage,'parts,restParts)
 ;     htShowFunctionPageContinued(htPage)
 ;   htKill(htPage,value)
- 
+
 (DEFUN |htSetFunCommandContinue| (|htPage| |value|)
   (PROG (|parts| |ISTMP#1| |ISTMP#2| |predicate| |restParts| |continue|)
     (RETURN
@@ -552,7 +553,7 @@
          (|htpSetProperty| |htPage| '|parts| |restParts|)
          (|htShowFunctionPageContinued| |htPage|)))
        (#1# (|htKill| |htPage| |value|)))))))
- 
+
 ; htKill(htPage,value) ==
 ;   htInitPage('"System Command", nil)
 ;   string := STRCONC('"{\em )set ",listOfStrings2String [value,:$path],'"}")
@@ -566,7 +567,7 @@
 ;   htSay '"\newline{Select \  \ExitButton{QuitPage} \  to remove this window.}"
 ;   htProcessDoitButton ['"Press to Remove Page",'"",'htDoNothing]
 ;   htShowPage()
- 
+
 (DEFUN |htKill| (|htPage| |value|)
   (PROG (|string|)
     (RETURN
@@ -586,20 +587,20 @@
        "\\newline{Select \\  \\ExitButton{QuitPage} \\  to remove this window.}")
       (|htProcessDoitButton| (LIST "Press to Remove Page" "" '|htDoNothing|))
       (|htShowPage|)))))
- 
+
 ; htSetNotAvailable(htPage,whatToType) ==
 ;   page := htInitPage('"Unavailable Set Command", htpPropertyList htPage)
 ;   htInitPage('"Unavailable System Command", nil)
 ;   string := STRCONC('"{\em ",whatToType,'"}")
 ;   htMakePage [
 ;      '(text "\vspace{1}\newline"
-;         "{Sorry, but this system command is not available through HyperDoc. Please directly issue this command in an FriCAS window for more information:}"
+;         "{Sorry, but this system command is not available through HyperDoc. Please directly issue this command in a FriCAS window for more information:}"
 ;             "\vspace{2}\newline\centerline{\tt"),
 ;       ['text,:string]]
 ;   htMakePage '((text . "}\vspace{1}\newline"))
 ;   htProcessDoitButton ['"Press to Remove Page",'"",'htDoNothing]
 ;   htShowPage()
- 
+
 (DEFUN |htSetNotAvailable| (|htPage| |whatToType|)
   (PROG (|page| |string|)
     (RETURN
@@ -612,33 +613,33 @@
       (|htMakePage|
        (LIST
         '(|text| "\\vspace{1}\\newline"
-          "{Sorry, but this system command is not available through HyperDoc. Please directly issue this command in an FriCAS window for more information:}"
+          "{Sorry, but this system command is not available through HyperDoc. Please directly issue this command in a FriCAS window for more information:}"
           "\\vspace{2}\\newline\\centerline{\\tt")
         (CONS '|text| |string|)))
       (|htMakePage| '((|text| . "}\\vspace{1}\\newline")))
       (|htProcessDoitButton| (LIST "Press to Remove Page" "" '|htDoNothing|))
       (|htShowPage|)))))
- 
+
 ; htDoNothing(htPage,command) == nil
- 
+
 (DEFUN |htDoNothing| (|htPage| |command|) (PROG () (RETURN NIL)))
- 
+
 ; htCheck(checker,value) ==
 ;   PAIRP checker => htCheckList(checker,parseWord value)
 ;   FUNCALL(checker,value)
- 
+
 (DEFUN |htCheck| (|checker| |value|)
   (PROG ()
     (RETURN
      (COND ((CONSP |checker|) (|htCheckList| |checker| (|parseWord| |value|)))
            ('T (FUNCALL |checker| |value|))))))
- 
+
 ; parseWord x ==
 ;   STRINGP x =>
 ;     and/[DIGITP x.i for i in 0..MAXINDEX x] => PARSE_-INTEGER x
 ;     INTERN x
 ;   x
- 
+
 (DEFUN |parseWord| (|x|)
   (PROG ()
     (RETURN
@@ -657,7 +658,7 @@
          (PARSE-INTEGER |x|))
         (#1# (INTERN |x|))))
       (#1# |x|)))))
- 
+
 ; htCheckList(checker,value) ==
 ;   if value in '(y ye yes Y YE YES) then value := 'yes
 ;   if value in '(n no N NO) then value := 'no
@@ -673,7 +674,7 @@
 ;       n
 ;   value in checker => value
 ;   first checker
- 
+
 (DEFUN |htCheckList| (|checker| |value|)
   (PROG (|n| |ISTMP#1| |m|)
     (RETURN
@@ -702,21 +703,21 @@
             |value|)
            (#1# |n|)))))
        ((|member| |value| |checker|) |value|) (#1# (CAR |checker|)))))))
- 
+
 ; translateYesNoToTrueFalse x ==
 ;   x = 'yes => true
 ;   x = 'no => false
 ;   x
- 
+
 (DEFUN |translateYesNoToTrueFalse| (|x|)
   (PROG () (RETURN (COND ((EQ |x| '|yes|) T) ((EQ |x| '|no|) NIL) ('T |x|)))))
- 
+
 ; chkNameList x ==
 ;   u := bcString2ListWords x
 ;   parsedNames := [ncParseFromString x for x in u]
 ;   and/[IDENTP x for x in parsedNames] => parsedNames
 ;   '"Please enter a list of identifiers separated by blanks"
- 
+
 (DEFUN |chkNameList| (|x|)
   (PROG (|u| |parsedNames|)
     (RETURN
@@ -748,36 +749,36 @@
          T |parsedNames| NIL)
         |parsedNames|)
        (#1# "Please enter a list of identifiers separated by blanks"))))))
- 
+
 ; chkPosInteger s ==
 ;   (u := parseOnly s) and INTEGERP u and u > 0 => u
 ;   '"Please enter a positive integer"
- 
+
 (DEFUN |chkPosInteger| (|s|)
   (PROG (|u|)
     (RETURN
      (COND ((AND (SETQ |u| (|parseOnly| |s|)) (INTEGERP |u|) (< 0 |u|)) |u|)
            ('T "Please enter a positive integer")))))
- 
+
 ; chkOutputFileName s ==
 ;   bcString2WordList s in '(CONSOLE console) => 'console
 ;   chkDirectory s
- 
+
 (DEFUN |chkOutputFileName| (|s|)
   (PROG ()
     (RETURN
      (COND
       ((|member| (|bcString2WordList| |s|) '(CONSOLE |console|)) '|console|)
       ('T (|chkDirectory| |s|))))))
- 
+
 ; chkDirectory s == s
- 
+
 (DEFUN |chkDirectory| (|s|) (PROG () (RETURN |s|)))
- 
+
 ; chkNonNegativeInteger s ==
 ;   (u := ncParseFromString s) and INTEGERP u and u >= 0 => u
 ;   '"Please enter a non-negative integer"
- 
+
 (DEFUN |chkNonNegativeInteger| (|s|)
   (PROG (|u|)
     (RETURN
@@ -786,7 +787,7 @@
             (NOT (MINUSP |u|)))
        |u|)
       ('T "Please enter a non-negative integer")))))
- 
+
 ; chkRange s ==
 ;   (u := ncParseFromString s) and INTEGERP u
 ;     and u >= $htInitial and (NULL $htFinal or u <= $htFinal)
@@ -795,7 +796,7 @@
 ;     STRCONC('"Please enter an integer greater than ",stringize ($htInitial - 1))
 ;   STRCONC('"Please enter an integer between ",stringize $htInitial,'" and ",
 ;             stringize $htFinal)
- 
+
 (DEFUN |chkRange| (|s|)
   (PROG (|u|)
     (RETURN
@@ -810,12 +811,12 @@
       ('T
        (STRCONC "Please enter an integer between " (|stringize| |$htInitial|)
         " and " (|stringize| |$htFinal|)))))))
- 
+
 ; chkAllNonNegativeInteger s ==
 ;   (u := ncParseFromString s) and u in '(a al all A AL ALL) and 'ALL
 ;     or chkNonNegativeInteger s
 ;        or '"Please enter {\em all} or a non-negative integer"
- 
+
 (DEFUN |chkAllNonNegativeInteger| (|s|)
   (PROG (|u|)
     (RETURN
@@ -824,14 +825,14 @@
            (|member| |u| '(|a| |al| |all| A AL ALL)) 'ALL)
       (|chkNonNegativeInteger| |s|)
       "Please enter {\\em all} or a non-negative integer"))))
- 
+
 ; htMakePathKey path ==
 ;   null path => systemError '"path is not set"
 ;   INTERN fn(PNAME first path,rest path) where
 ;     fn(a,b) ==
 ;       null b => a
 ;       fn(STRCONC(a,'".",PNAME first b),rest b)
- 
+
 (DEFUN |htMakePathKey| (|path|)
   (PROG ()
     (RETURN
@@ -845,12 +846,12 @@
            ('T
             (|htMakePathKey,fn| (STRCONC |a| "." (PNAME (CAR |b|)))
              (CDR |b|)))))))
- 
+
 ; htMarkTree(tree,n) ==
 ;   RPLACD(LASTTAIL tree,n)
 ;   for branch in tree repeat
 ;     branch.3 = 'TREE => htMarkTree(branch.5,n + 1)
- 
+
 (DEFUN |htMarkTree| (|tree| |n|)
   (PROG ()
     (RETURN
@@ -867,12 +868,12 @@
               (IDENTITY (|htMarkTree| (ELT |branch| 5) (+ |n| 1)))))))
           (SETQ |bfVar#11| (CDR |bfVar#11|))))
        |tree| NIL)))))
- 
+
 ; htSetHistory htPage ==
 ;   msg := "when the history facility is on (yes), results of computations are saved in memory"
 ;   data := ['history,msg,'history,'LITERALS,'$HiFiAccess,'(on off yes no)]
 ;   htShowLiteralsPage(htPage,data)
- 
+
 (DEFUN |htSetHistory| (|htPage|)
   (PROG (|msg| |data|)
     (RETURN
@@ -883,50 +884,50 @@
               (LIST '|history| |msg| '|history| 'LITERALS '|$HiFiAccess|
                     '(|on| |off| |yes| |no|)))
       (|htShowLiteralsPage| |htPage| |data|)))))
- 
+
 ; htSetOutputLibrary htPage ==
 ;   htSetNotAvailable(htPage,'")set compiler output")
- 
+
 (DEFUN |htSetOutputLibrary| (|htPage|)
   (PROG () (RETURN (|htSetNotAvailable| |htPage| ")set compiler output"))))
- 
+
 ; htSetInputLibrary htPage ==
 ;   htSetNotAvailable(htPage,'")set compiler input")
- 
+
 (DEFUN |htSetInputLibrary| (|htPage|)
   (PROG () (RETURN (|htSetNotAvailable| |htPage| ")set compiler input"))))
- 
+
 ; htSetExpose htPage ==
 ;   htSetNotAvailable(htPage,'")set expose")
- 
+
 (DEFUN |htSetExpose| (|htPage|)
   (PROG () (RETURN (|htSetNotAvailable| |htPage| ")set expose"))))
- 
+
 ; htSetKernelProtect htPage ==
 ;  htSetNotAvailable(htPage,'")set kernel protect")
- 
+
 (DEFUN |htSetKernelProtect| (|htPage|)
   (PROG () (RETURN (|htSetNotAvailable| |htPage| ")set kernel protect"))))
- 
+
 ; htSetKernelWarn htPage ==
 ;  htSetNotAvailable(htPage,'")set kernel warn")
- 
+
 (DEFUN |htSetKernelWarn| (|htPage|)
   (PROG () (RETURN (|htSetNotAvailable| |htPage| ")set kernel warn"))))
- 
+
 ; htSetOutputCharacters htPage ==
 ;   htSetNotAvailable(htPage,'")set output characters")
- 
+
 (DEFUN |htSetOutputCharacters| (|htPage|)
   (PROG () (RETURN (|htSetNotAvailable| |htPage| ")set output characters"))))
- 
+
 ; htSetLinkerArgs htPage ==
 ;   htSetNotAvailable(htPage,'")set fortran calling linker")
- 
+
 (DEFUN |htSetLinkerArgs| (|htPage|)
   (PROG ()
     (RETURN (|htSetNotAvailable| |htPage| ")set fortran calling linker"))))
- 
+
 ; htSetCache(htPage,:options) ==
 ;   $path := '(functions cache)
 ;   htPage := htInitPage(mkSetTitle(),nil)
@@ -953,7 +954,7 @@
 ;    (inputStrings ("" "" 60 "all" names S))
 ;    (doneButton "Push to enter names" htCacheAddChoice))
 ;   htShowPage()
- 
+
 (DEFUN |htSetCache| (|htPage| &REST |options|)
   (PROG ()
     (RETURN
@@ -981,7 +982,7 @@
          (|inputStrings| ("" "" 60 "all" |names| S))
          (|doneButton| "Push to enter names" |htCacheAddChoice|)))
       (|htShowPage|)))))
- 
+
 ; htCacheAddChoice htPage ==
 ;   names := bcString2WordList htpLabelInputString(htPage,'names)
 ;   $valueList := [listOfStrings2String names,:$valueList]
@@ -1006,7 +1007,7 @@
 ;           '"values",5,10,htMakeLabel('"c",i),'ALLPI]]]
 ;   htSetvarDoneButton('"Select to Set Values",'htCacheSet)
 ;   htShowPage()
- 
+
 (DEFUN |htCacheAddChoice| (|htPage|)
   (PROG (|names| |page|)
     (RETURN
@@ -1048,12 +1049,12 @@
                1 |names| NIL)
               (|htSetvarDoneButton| "Select to Set Values" '|htCacheSet|)
               (|htShowPage|))))))))
- 
+
 ; htMakeLabel(prefix,i) == INTERN STRCONC(prefix,stringize i)
- 
+
 (DEFUN |htMakeLabel| (|prefix| |i|)
   (PROG () (RETURN (INTERN (STRCONC |prefix| (|stringize| |i|))))))
- 
+
 ; htCacheSet htPage ==
 ;   names := htpProperty(htPage,'names)
 ;   for i in 1.. for name in names repeat
@@ -1081,7 +1082,7 @@
 ;       bcHt '"} values"
 ;   htProcessDoitButton ['"Press to Remove Page",'"",'htDoNothing]
 ;   htShowPage()
- 
+
 (DEFUN |htCacheSet| (|htPage|)
   (PROG (|names| |num| |n| |name| |val|)
     (RETURN
@@ -1141,19 +1142,19 @@
          |$cacheAlist| NIL)))
       (|htProcessDoitButton| (LIST "Press to Remove Page" "" '|htDoNothing|))
       (|htShowPage|)))))
- 
+
 ; htAllOrNum val == bcHt
 ;   val = 'all => '"{\em all"
 ;   val = 0 => '"{\em no"
 ;   STRCONC('"the last {\em ",stringize val)
- 
+
 (DEFUN |htAllOrNum| (|val|)
   (PROG ()
     (RETURN
      (|bcHt|
       (COND ((EQ |val| '|all|) "{\\em all") ((EQL |val| 0) "{\\em no")
             ('T (STRCONC "the last {\\em " (|stringize| |val|))))))))
- 
+
 ; htCacheOne names ==
 ;   page := htInitPage(mkSetTitle(),nil)
 ;   htpSetProperty(page,'names,names)
@@ -1170,7 +1171,7 @@
 ;        "" 5 10 c1 ALLPI)))
 ;   htSetvarDoneButton('"Select to Set Value",'htCacheSet)
 ;   htShowPage()
- 
+
 (DEFUN |htCacheOne| (|names|)
   (PROG (|page|)
     (RETURN

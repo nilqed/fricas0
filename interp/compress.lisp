@@ -1,10 +1,10 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; minimalise x ==
-;   $hash:local:=MAKE_-HASHTABLE 'UEQUAL
+;   $hash : local := MAKE_HASHTABLE('UEQUAL)
 ;   min x where
 ;     min x ==
 ;       y:=HGET($hash,x)
@@ -31,13 +31,13 @@
 ;       HPUT($hash,x,x)
 ;       x
 ;   x
- 
+
 (DEFUN |minimalise| (|x|)
   (PROG (|$hash|)
     (DECLARE (SPECIAL |$hash|))
     (RETURN
      (PROGN
-      (SETQ |$hash| (MAKE-HASHTABLE 'UEQUAL))
+      (SETQ |$hash| (MAKE_HASHTABLE 'UEQUAL))
       (|minimalise,min| |x|)
       |x|))))
 (DEFUN |minimalise,min| (|x|)

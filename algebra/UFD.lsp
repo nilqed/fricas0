@@ -4,14 +4,12 @@
 (DEFPARAMETER |UniqueFactorizationDomain;AL| 'NIL) 
 
 (DEFUN |UniqueFactorizationDomain| ()
-  (LET (#:G692)
-    (COND (|UniqueFactorizationDomain;AL|)
-          (T
-           (SETQ |UniqueFactorizationDomain;AL|
-                   (|UniqueFactorizationDomain;|)))))) 
+  (COND (|UniqueFactorizationDomain;AL|)
+        (T
+         (SETQ |UniqueFactorizationDomain;AL| (|UniqueFactorizationDomain;|))))) 
 
 (DEFUN |UniqueFactorizationDomain;| ()
-  (SPROG ((#1=#:G690 NIL))
+  (SPROG ((#1=#:G689 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|GcdDomain|)
@@ -20,8 +18,7 @@
                               ((|squareFree| ((|Factored| $) $)) T)
                               ((|squareFreePart| ($ $)) T)
                               ((|factor| ((|Factored| $) $)) T))
-                            NIL '((|Factored| $) (|Boolean|)) NIL))
-                   |UniqueFactorizationDomain|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|UniqueFactorizationDomain|))))) 
 
 (MAKEPROP '|UniqueFactorizationDomain| 'NILADIC T) 

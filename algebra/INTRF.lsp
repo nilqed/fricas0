@@ -1,7 +1,7 @@
 
 (SDEFUN |INTRF;infieldIntegrate;FSU;1|
-        ((|f| |Fraction| (|Polynomial| F)) (|x| |Symbol|)
-         ($ |Union| (|Fraction| (|Polynomial| F)) "failed"))
+        ((|f| (|Fraction| (|Polynomial| F))) (|x| (|Symbol|))
+         ($ (|Union| (|Fraction| (|Polynomial| F)) "failed")))
         (SPROG NIL
                (SPADCALL
                 (CONS #'|INTRF;infieldIntegrate;FSU;1!0| (VECTOR $ |x|))
@@ -10,13 +10,13 @@
 
 (SDEFUN |INTRF;infieldIntegrate;FSU;1!0| ((|x1| NIL) ($$ NIL))
         (PROG (|x| $)
-          (LETT |x| (QREFELT $$ 1) . #1=(|INTRF;infieldIntegrate;FSU;1|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |x| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL |x1| |x| (QREFELT $ 11)))))) 
 
 (SDEFUN |INTRF;internalIntegrate;FSIr;2|
-        ((|f| |Fraction| (|Polynomial| F)) (|x| |Symbol|)
-         ($ |IntegrationResult| (|Fraction| (|Polynomial| F))))
+        ((|f| (|Fraction| (|Polynomial| F))) (|x| (|Symbol|))
+         ($ (|IntegrationResult| (|Fraction| (|Polynomial| F)))))
         (SPROG NIL
                (SPADCALL
                 (CONS #'|INTRF;internalIntegrate;FSIr;2!0| (VECTOR $ |x|))
@@ -25,28 +25,26 @@
 
 (SDEFUN |INTRF;internalIntegrate;FSIr;2!0| ((|x1| NIL) ($$ NIL))
         (PROG (|x| $)
-          (LETT |x| (QREFELT $$ 1) . #1=(|INTRF;internalIntegrate;FSIr;2|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |x| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN (PROGN (SPADCALL |x1| |x| (QREFELT $ 11)))))) 
 
 (DECLAIM (NOTINLINE |RationalFunctionIntegration;|)) 
 
-(DEFUN |RationalFunctionIntegration| (#1=#:G708)
+(DEFUN |RationalFunctionIntegration| (#1=#:G707)
   (SPROG NIL
-         (PROG (#2=#:G709)
+         (PROG (#2=#:G708)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|RationalFunctionIntegration|)
-                                               '|domainEqualList|)
-                    . #3=(|RationalFunctionIntegration|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
               (UNWIND-PROTECT
-                  (PROG1 (|RationalFunctionIntegration;| #1#)
-                    (LETT #2# T . #3#))
+                  (PROG1 (|RationalFunctionIntegration;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache|
@@ -55,11 +53,11 @@
 (DEFUN |RationalFunctionIntegration;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|RationalFunctionIntegration|))
-          (LETT |dv$| (LIST '|RationalFunctionIntegration| DV$1) . #1#)
-          (LETT $ (GETREFV 26) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|RationalFunctionIntegration| DV$1))
+          (LETT $ (GETREFV 26))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|RationalFunctionIntegration|
                       (LIST DV$1) (CONS 1 $))
           (|stuffDomainSlots| $)
@@ -82,13 +80,26 @@
               (23 . |integrate|) (|IntegrationResult| 7) (28 . |map|)
               |INTRF;internalIntegrate;FSIr;2|)
            '#(|internalIntegrate| 34 |infieldIntegrate| 40) 'NIL
-           (CONS (|makeByteWordVec2| 1 'NIL)
-                 (CONS '#()
-                       (CONS '#()
-                             (|makeByteWordVec2| 25
-                                                 '(2 10 7 8 9 11 2 10 8 7 9 12
-                                                   1 14 13 8 15 2 18 16 17 13
-                                                   19 1 14 21 8 22 2 18 23 17
-                                                   21 24 2 0 23 7 9 25 2 0 16 7
-                                                   9 20)))))
+           (CONS (|makeByteWordVec2| 1 '(0))
+                 (CONS '#(NIL)
+                       (CONS
+                        '#((|Join|
+                            (|mkCategory|
+                             (LIST
+                              '((|internalIntegrate|
+                                 ((|IntegrationResult|
+                                   (|Fraction| (|Polynomial| |#1|)))
+                                  (|Fraction| (|Polynomial| |#1|)) (|Symbol|)))
+                                T)
+                              '((|infieldIntegrate|
+                                 ((|Union| (|Fraction| (|Polynomial| |#1|))
+                                           "failed")
+                                  (|Fraction| (|Polynomial| |#1|)) (|Symbol|)))
+                                T))
+                             (LIST) NIL NIL)))
+                        (|makeByteWordVec2| 25
+                                            '(2 10 7 8 9 11 2 10 8 7 9 12 1 14
+                                              13 8 15 2 18 16 17 13 19 1 14 21
+                                              8 22 2 18 23 17 21 24 2 0 23 7 9
+                                              25 2 0 16 7 9 20)))))
            '|lookupComplete|)) 

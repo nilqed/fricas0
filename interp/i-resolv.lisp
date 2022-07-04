@@ -1,11 +1,11 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
 ; resolveTypeList u ==
 ;   u is [a,:tail] =>
-; 
+;
 ;     -- if the list consists entirely of variables then keep it explicit
 ;     allVars :=
 ;       a is ['Variable,v] => [v]
@@ -17,13 +17,13 @@
 ;     allVars =>
 ;         null rest allVars => ['Variable, first allVars]
 ;         ['OrderedVariableList,nreverse allVars]
-; 
+;
 ;     for md in tail repeat
 ;       a := resolveTT(md,a)
 ;       null a => return nil
 ;     a
 ;   throwKeyedMsg("S2IR0002",NIL)
- 
+
 (DEFUN |resolveTypeList| (|u|)
   (PROG (|a| |tail| |ISTMP#1| |v| |allVars|)
     (RETURN
@@ -77,27 +77,27 @@
             |tail| NIL)
            |a|)))))
       (#1# (|throwKeyedMsg| 'S2IR0002 NIL))))))
- 
+
 ; resolveTypeListAny tl ==
 ;   rt := resolveTypeList tl
 ;   null rt => $Any
 ;   rt
- 
+
 (DEFUN |resolveTypeListAny| (|tl|)
   (PROG (|rt|)
     (RETURN
      (PROGN
       (SETQ |rt| (|resolveTypeList| |tl|))
       (COND ((NULL |rt|) |$Any|) ('T |rt|))))))
- 
+
 ; resolveTTAny(t1,t2) ==
 ;   (t3 := resolveTT(t1, t2)) => t3
 ;   $Any
- 
+
 (DEFUN |resolveTTAny| (|t1| |t2|)
   (PROG (|t3|)
     (RETURN (COND ((SETQ |t3| (|resolveTT| |t1| |t2|)) |t3|) ('T |$Any|)))))
- 
+
 ; resolveTT1(t1,t2) ==
 ;   -- this is the main symmetric resolve
 ;   -- first it looks for equal constructors on both sides
@@ -117,7 +117,6 @@
 ;   STRINGP(t2) =>
 ;     t1 = $String => t1
 ;     NIL
-;   null acceptableTypesToResolve(t1,t2) => NIL
 ;   if compareTT(t1,t2) then
 ;      t := t1
 ;      t1 := t2
@@ -136,7 +135,7 @@
 ;       t := resolveTT1(last arg1,last arg2)
 ;       t and ( resolveTT2(c1,c2,arg1,arg2,t) or
 ;         resolveTT2(c2,c1,arg2,arg1,t) )
- 
+
 (DEFUN |resolveTT1| (|t1| |t2|)
   (PROG (|t| |LETTMP#1| |c1| |arg1| |c2| |arg2|)
     (RETURN
@@ -151,7 +150,6 @@
             (|resolveTTUnion| |t2| |t1|))
            ((STRINGP |t1|) (COND ((EQUAL |t2| |$String|) |t2|) (#1='T NIL)))
            ((STRINGP |t2|) (COND ((EQUAL |t1| |$String|) |t1|) (#1# NIL)))
-           ((NULL (|acceptableTypesToResolve| |t1| |t2|)) NIL)
            (#1#
             (PROGN
              (COND
@@ -191,47 +189,14 @@
                                  (OR (|resolveTT2| |c1| |c2| |arg1| |arg2| |t|)
                                      (|resolveTT2| |c2| |c1| |arg2| |arg1|
                                       |t|))))))))))))))))
- 
-; acceptableTypesToResolve(t1,t2) ==
-;   -- this is temporary. It ensures that two types that have coerces
-;   -- that really should be converts don't automatically resolve.
-;   -- when the coerces go away, so will this.
-;   acceptableTypesToResolve1(t1,t2) and
-;     acceptableTypesToResolve1(t2,t1)
- 
-(DEFUN |acceptableTypesToResolve| (|t1| |t2|)
-  (PROG ()
-    (RETURN
-     (AND (|acceptableTypesToResolve1| |t1| |t2|)
-          (|acceptableTypesToResolve1| |t2| |t1|)))))
- 
-; acceptableTypesToResolve1(t1,t2) ==
-;   t1 = $Integer =>
-;     t2 = $String => NIL
-;     true
-;   t1 = $DoubleFloat or t1 = $Float =>
-;     t2 = $String => NIL
-;     t2 = [$QuotientField, $Integer] => NIL
-;     true
-;   true
- 
-(DEFUN |acceptableTypesToResolve1| (|t1| |t2|)
-  (PROG ()
-    (RETURN
-     (COND
-      ((EQUAL |t1| |$Integer|) (COND ((EQUAL |t2| |$String|) NIL) (#1='T T)))
-      ((OR (EQUAL |t1| |$DoubleFloat|) (EQUAL |t1| |$Float|))
-       (COND ((EQUAL |t2| |$String|) NIL)
-             ((EQUAL |t2| (LIST |$QuotientField| |$Integer|)) NIL) (#1# T)))
-      (#1# T)))))
- 
+
 ; resolveTT2(c1,c2,arg1,arg2,t) ==
 ;   -- builds a tower and tests for all the necessary coercions
 ;   t0 := constructM(c2,replaceLast(arg2,t))
 ;   canCoerceFrom(t,t0) and
 ;     t1 := constructM(c1,replaceLast(arg1,t0))
 ;     canCoerceFrom(t0,t1) and t1
- 
+
 (DEFUN |resolveTT2| (|c1| |c2| |arg1| |arg2| |t|)
   (PROG (|t0| |t1|)
     (RETURN
@@ -241,7 +206,7 @@
            (PROGN
             (SETQ |t1| (|constructM| |c1| (|replaceLast| |arg1| |t0|)))
             (AND (|canCoerceFrom| |t0| |t1|) |t1|)))))))
- 
+
 ; resolveTTUnion(t1 is ['Union,:doms],t2) ==
 ;   unionDoms1 :=
 ;     doms and first doms is [":",:.] =>
@@ -268,7 +233,7 @@
 ;     ud := append(ud, rest d')
 ;   bad => NIL
 ;   ['Union,:REMDUP ud]
- 
+
 (DEFUN |resolveTTUnion| (|t1| |t2|)
   (PROG (|doms| |ISTMP#1| |tagged| |ISTMP#2| |t| |unionDoms1| |doms2| |ud|
          |bad| |d'|)
@@ -347,27 +312,27 @@
                   (SETQ |bfVar#7| (CDR |bfVar#7|))))
                |doms2| NIL)
               (COND (|bad| NIL) (#1# (CONS '|Union| (REMDUP |ud|)))))))))))
- 
+
 ; resolveTTSpecial(t1,t2) ==
 ;   -- tries to resolve things that would otherwise get mangled in the
 ;   -- rest of the resolve world. I'll leave it for Albi to fix those
 ;   -- things. (RSS 1/-86)
-; 
+;
 ;   -- following is just an efficiency hack
 ;   (t1 = '(Symbol) or t1 is ['OrderedVariableList,.]) and PAIRP(t2) and
 ;       first(t2) = 'Polynomial => t2
-; 
+;
 ;   (t1 = '(Symbol)) and ofCategory(t2, '(IntegerNumberSystem)) =>
 ;     resolveTT1(['Polynomial, t2], t2)
-; 
+;
 ;   t1 = '(AlgebraicNumber) and (t2 = $Float or t2 = $DoubleFloat) =>
 ;     ['Expression, t2]
 ;   t1 = '(AlgebraicNumber) and (t2 = ['Complex, $Float] or t2 = ['Complex, $DoubleFloat]) =>
 ;     ['Expression, CADR t2]
-; 
+;
 ;   t1 = '(AlgebraicNumber) and t2 is ['Complex,.] =>
 ;     resolveTT1('(Expression (Integer)), t2)
-; 
+;
 ;   t1 is ['SimpleAlgebraicExtension,F,Rep,poly] =>
 ;     t2 = Rep => t1
 ;     t2 is ['UnivariatePolynomial,x,R] and (t3 := resolveTT(t1, R)) =>
@@ -458,7 +423,7 @@
 ;                nil
 ;           nil
 ;   nil
- 
+
 (DEFUN |resolveTTSpecial| (|t1| |t2|)
   (PROG (|ISTMP#1| F |ISTMP#2| |Rep| |ISTMP#3| |poly| |x| R |t3| |R'| |vl| |y|
          S |f| |g| |mf| |mg| T$ U |d| |u1| |u2| |dom'| |dom| |op1| |op2| S1
@@ -764,7 +729,7 @@
                        (#1# NIL))))
                     (#1# NIL)))))))
          (#1# NIL))))))))
- 
+
 ; resolveTTCC(t1,t2) ==
 ;   -- tries to use canCoerceFrom information to see if types can be
 ;   -- coerced to one another
@@ -776,7 +741,7 @@
 ;   c21 and not c12 => t1
 ;   -- both are coerceable to each other
 ;   if gt21 then t1 else t2
- 
+
 (DEFUN |resolveTTCC| (|t1| |t2|)
   (PROG (|gt21| |c12| |c21|)
     (RETURN
@@ -790,7 +755,7 @@
                     ((AND |c12| (NULL |c21|)) |t2|)
                     ((AND |c21| (NULL |c12|)) |t1|)
                     (#1# (COND (|gt21| |t1|) (#1# |t2|)))))))))))
- 
+
 ; resolveTTEq(t1,t2) ==
 ;   -- tries to find the constructor of t1 somewhere in t2 (or vice versa)
 ;   -- and move the other guy to the top
@@ -799,7 +764,7 @@
 ;   t := resolveTTEq1(c1,arg1,[c2,arg2]) => t
 ;   t := ( arg1 and resolveTTEq2(c2,arg2,[c1,arg1]) ) => t
 ;   arg2 and resolveTTEq2(c1,arg1,[c2,arg2])
- 
+
 (DEFUN |resolveTTEq| (|t1| |t2|)
   (PROG (|LETTMP#1| |c1| |arg1| |c2| |arg2| |t|)
     (RETURN
@@ -817,7 +782,7 @@
              |t|)
             ('T
              (AND |arg2| (|resolveTTEq2| |c1| |arg1| (LIST |c2| |arg2|)))))))))
- 
+
 ; resolveTTEq1(c1,arg1,TL is [c2,arg2,:.]) ==
 ;   -- takes care of basic types and of types with the same constructor
 ;   -- calls resolveTT1 on the arguments in the second case
@@ -834,7 +799,7 @@
 ;     t and null arg1 and null arg2 and
 ;       t0 := constructM(c1,nreverse arg)
 ;       constructTowerT(t0,TL)
- 
+
 (DEFUN |resolveTTEq1| (|c1| |arg1| TL)
   (PROG (|c2| |arg2| |LETTMP#1| |t| |arg| |t0|)
     (RETURN
@@ -872,7 +837,7 @@
                    (PROGN
                     (SETQ |t0| (|constructM| |c1| (NREVERSE |arg|)))
                     (|constructTowerT| |t0| TL)))))))))))
- 
+
 ; resolveTTEq2(c1,arg1,TL is [c,arg,:.]) ==
 ;   -- tries to resolveTTEq the type [c1,arg1] with the last argument
 ;   -- of the type represented by TL
@@ -880,7 +845,7 @@
 ;   TL := [c2,arg2,:TL]
 ;   t := resolveTTEq1(c1,arg1,TL) => t
 ;   arg2 and resolveTTEq2(c1,arg1,TL)
- 
+
 (DEFUN |resolveTTEq2| (|c1| |arg1| TL)
   (PROG (|c| |arg| |LETTMP#1| |c2| |arg2| |t|)
     (RETURN
@@ -893,7 +858,7 @@
       (SETQ TL (CONS |c2| (CONS |arg2| TL)))
       (COND ((SETQ |t| (|resolveTTEq1| |c1| |arg1| TL)) |t|)
             ('T (AND |arg2| (|resolveTTEq2| |c1| |arg1| TL))))))))
- 
+
 ; resolveTTRed(t1,t2) ==
 ;   -- the same function as resolveTTEq, but instead of testing for
 ;   -- constructor equality, it looks whether a rewrite rule can be applied
@@ -902,7 +867,7 @@
 ;   t := arg1 and resolveTTRed2(t2,last arg1,[c1,arg1]) => t
 ;   [c2,:arg2] := deconstructT t2
 ;   arg2 and resolveTTRed2(t1,last arg2,[c2,arg2])
- 
+
 (DEFUN |resolveTTRed| (|t1| |t2|)
   (PROG (|t| |LETTMP#1| |c1| |arg1| |c2| |arg2|)
     (RETURN
@@ -926,7 +891,7 @@
                 (AND |arg2|
                      (|resolveTTRed2| |t1| (|last| |arg2|)
                       (LIST |c2| |arg2|))))))))))))
- 
+
 ; resolveTTRed1(t1,t2,TL) ==
 ;   -- tries to apply a reduction rule on (Resolve t1 t2)
 ;   -- then it creates a type using the result and TL
@@ -941,7 +906,7 @@
 ;   l := term1RWall(['Resolve,t2,t1],$Res)
 ;   for t0 in l until t repeat t := resolveTTRed3 t0
 ;   l and t and constructTowerT(t,TL)
- 
+
 (DEFUN |resolveTTRed1| (|t1| |t2| TL)
   (PROG (|t| |LETTMP#1| |c2| |arg2| |l|)
     (RETURN
@@ -985,13 +950,13 @@
                     (SETQ |bfVar#12| |t|)))
                  |l| NIL NIL)
                 (AND |l| |t| (|constructTowerT| |t| TL)))))))))))
- 
+
 ; resolveTTRed2(t1,t2,TL) ==
 ;   -- tries to resolveTTRed t1 and t2 and build a type using TL
 ;   t := resolveTTRed1(t1,t2,TL) => t
 ;   [c2,:arg2] := deconstructT t2
 ;   arg2 and resolveTTRed2(t1,last arg2,[c2,arg2,:TL])
- 
+
 (DEFUN |resolveTTRed2| (|t1| |t2| TL)
   (PROG (|t| |LETTMP#1| |c2| |arg2|)
     (RETURN
@@ -1004,7 +969,7 @@
              (AND |arg2|
                   (|resolveTTRed2| |t1| (|last| |arg2|)
                    (CONS |c2| (CONS |arg2| TL))))))))))
- 
+
 ; resolveTTRed3(t) ==
 ;   -- recursive resolveTTRed which handles all subterms of the form
 ;   -- (Resolve t1 t2) or subterms which have to be interpreted
@@ -1024,7 +989,7 @@
 ;   [( atom x and x ) or ((not cs and x and not interpOp? x and x)
 ;     or resolveTTRed3 x) or return NIL
 ;       for x in t for cs in GETDATABASE(first t, 'COSIG)]
- 
+
 (DEFUN |resolveTTRed3| (|t|)
   (PROG (|ISTMP#1| |a| |ISTMP#2| |b| |t1| |t2|)
     (RETURN
@@ -1167,11 +1132,11 @@
                 (SETQ |bfVar#19| (CDR |bfVar#19|))
                 (SETQ |bfVar#20| (CDR |bfVar#20|))))
              NIL |t| NIL (GETDATABASE (CAR |t|) 'COSIG) NIL))))))
- 
+
 ; interpOp?(op) ==
 ;   PAIRP(op) and
 ;     first(op) in '(Incl SetDiff SetComp SetInter SetUnion VarEqual SetEqual)
- 
+
 (DEFUN |interpOp?| (|op|)
   (PROG ()
     (RETURN
@@ -1179,31 +1144,28 @@
           (|member| (CAR |op|)
            '(|Incl| |SetDiff| |SetComp| |SetInter| |SetUnion| |VarEqual|
              |SetEqual|))))))
- 
+
 ; resolveTCat(t,c) ==
 ;   -- this function attempts to find a type tc of category c such that
 ;   -- t can be coerced to tc. NIL returned for failure.
 ;   -- Example:  t = Integer, c = Field ==> tc = Fraction(Integer)
-; 
+;
 ;   -- first check whether t already belongs to c
 ;   ofCategory(t,c) => t
-; 
+;
 ;   -- if t is built by a parametrized constructor and there is a
 ;   -- condition on the parameter that matches the category, try to
 ;   -- recurse. An example of this is (G I, Field) -> G RN
-; 
+;
 ;   rest(t) and (tc := resolveTCat1(t,c)) => tc
-; 
+;
 ;   -- now check some specific niladic categories
 ;   c in '((Field) (EuclideanDomain)) and ofCategory(t,'(IntegralDomain))=>
 ;       [$QuotientField, t]
-; 
-;   c = '(Field) and t = $Symbol =>
-;       [$QuotientField, ['Fraction, $Integer]]
-; 
+;
 ;   (t is [t0]) and (sd := getImmediateSuperDomain(t0)) and sd ~= t0 =>
 ;     resolveTCat(sd,c)
-; 
+;
 ;   SIZE(td := deconstructT t) ~= 2=> NIL
 ;   SIZE(tc := deconstructT c) ~= 2 => NIL
 ;   ut := underDomainOf t
@@ -1212,7 +1174,7 @@
 ;   nt := constructT(first td,[uc])
 ;   ofCategory(nt,c) => nt
 ;   NIL
- 
+
 (DEFUN |resolveTCat| (|t| |c|)
   (PROG (|tc| |t0| |sd| |td| |ut| |uc| |nt|)
     (RETURN
@@ -1221,8 +1183,6 @@
            ((AND (|member| |c| '((|Field|) (|EuclideanDomain|)))
                  (|ofCategory| |t| '(|IntegralDomain|)))
             (LIST |$QuotientField| |t|))
-           ((AND (EQUAL |c| '(|Field|)) (EQUAL |t| |$Symbol|))
-            (LIST |$QuotientField| (LIST '|Fraction| |$Integer|)))
            ((AND (CONSP |t|) (EQ (CDR |t|) NIL)
                  (PROGN (SETQ |t0| (CAR |t|)) #1='T)
                  (SETQ |sd| (|getImmediateSuperDomain| |t0|))
@@ -1239,7 +1199,7 @@
                     (PROGN
                      (SETQ |nt| (|constructT| (CAR |td|) (LIST |uc|)))
                      (COND ((|ofCategory| |nt| |c|) |nt|) (#1# NIL)))))))))))
- 
+
 ; resolveTCat1(t,c) ==
 ;   -- does the hard work of looking at conditions on under domains
 ;   -- if null (ut := getUnderModeOf(t)) then ut := last dt
@@ -1248,22 +1208,22 @@
 ;   cond := first conds
 ;   cond isnt [.,['has, pat, c1],:.] => NIL
 ;   rest(c1) => NIL      -- make it simple
-; 
+;
 ;   argN := 0
 ;   t1 := nil
-; 
+;
 ;   for ut in rest t for i in 1.. while (argN = 0) repeat
-;     sharp := INTERNL('"#",STRINGIMAGE i)
+;     sharp := INTERNL1('"#", STRINGIMAGE(i))
 ;     sharp = pat =>
 ;       argN := i
 ;       t1 := ut
-; 
+;
 ;   null t1 => NIL
 ;   null (t1' := resolveTCat(t1,c1)) => NIL
 ;   t' := copy t
 ;   t'.argN := t1'
 ;   t'
- 
+
 (DEFUN |resolveTCat1| (|t| |c|)
   (PROG (|conds| |cond| |ISTMP#1| |ISTMP#2| |ISTMP#3| |pat| |ISTMP#4| |c1|
          |argN| |t1| |sharp| |t1'| |t'|)
@@ -1307,7 +1267,7 @@
                  (RETURN NIL))
                 (#1#
                  (PROGN
-                  (SETQ |sharp| (INTERNL "#" (STRINGIMAGE |i|)))
+                  (SETQ |sharp| (INTERNL1 "#" (STRINGIMAGE |i|)))
                   (COND
                    ((EQUAL |sharp| |pat|)
                     (PROGN (SETQ |argN| |i|) (SETQ |t1| |ut|)))))))
@@ -1321,21 +1281,21 @@
                    (SETQ |t'| (COPY |t|))
                    (SETF (ELT |t'| |argN|) |t1'|)
                    |t'|))))))))))))
- 
+
 ; getConditionsForCategoryOnType(t,cat) ==
 ;   getConditionalCategoryOfType(t,[NIL],['ATTRIBUTE,cat])
- 
+
 (DEFUN |getConditionsForCategoryOnType| (|t| |cat|)
   (PROG ()
     (RETURN
      (|getConditionalCategoryOfType| |t| (LIST NIL) (LIST 'ATTRIBUTE |cat|)))))
- 
+
 ; getConditionalCategoryOfType(t,conditions,match) ==
 ;   if PAIRP t then t := first t
 ;   t in '(Union Mapping Record) => NIL
 ;   conCat := GETDATABASE(t,'CONSTRUCTORCATEGORY)
 ;   REMDUP rest getConditionalCategoryOfType1(conCat, conditions, match, [[]])
- 
+
 (DEFUN |getConditionalCategoryOfType| (|t| |conditions| |match|)
   (PROG (|conCat|)
     (RETURN
@@ -1349,7 +1309,7 @@
                (CDR
                 (|getConditionalCategoryOfType1| |conCat| |conditions| |match|
                  (LIST NIL)))))))))))
- 
+
 ; getConditionalCategoryOfType1(cat,conditions,match,seen) ==
 ;   cat is ['Join,:cs] or cat is ['CATEGORY,:cs] =>
 ;     null cs => conditions
@@ -1370,7 +1330,7 @@
 ;       subCat := SUBST(v,vv,subCat)
 ;     getConditionalCategoryOfType1(subCat,conditions,match,seen)
 ;   conditions
- 
+
 (DEFUN |getConditionalCategoryOfType1| (|cat| |conditions| |match| |seen|)
   (PROG (|cs| |ISTMP#1| |ISTMP#2| |cond| |ISTMP#3| |catName| |subCat|)
     (RETURN
@@ -1425,7 +1385,7 @@
                (|getConditionalCategoryOfType1| |subCat| |conditions| |match|
                 |seen|)))))
       (#1# |conditions|)))))
- 
+
 ; matchUpToPatternVars(pat,form,patAlist) ==
 ;   -- tries to match pattern variables (of the # form) in pat
 ;   -- against expressions in form. If one is found, it is checked
@@ -1442,7 +1402,7 @@
 ;     matchUpToPatternVars(first pat, first form, patAlist) and
 ;       matchUpToPatternVars(rest pat, rest form, patAlist)
 ;   NIL
- 
+
 (DEFUN |matchUpToPatternVars| (|pat| |form| |patAlist|)
   (PROG (|p|)
     (RETURN
@@ -1463,26 +1423,30 @@
                     (|matchUpToPatternVars| (CDR |pat|) (CDR |form|)
                      |patAlist|)))))
            (#1# NIL)))))
- 
+
 ; resolveTMOrCroak(t,m) ==
 ;   resolveTM(t,m) or throwKeyedMsg("S2IR0004",[t,m])
- 
+
 (DEFUN |resolveTMOrCroak| (|t| |m|)
   (PROG ()
     (RETURN
      (OR (|resolveTM| |t| |m|) (|throwKeyedMsg| 'S2IR0004 (LIST |t| |m|))))))
- 
+
 ; resolveTM(t,m) ==
 ;   -- resolves a type with a mode which may be partially specified
 ;   startTimingProcess 'resolve
 ;   $Subst : local := NIL
 ;   $Coerce : local := 'T
 ;   m := SUBSTQ("**",$EmptyMode,m)
+;   -- arbitrary limit
+;   $resolve_level > 15 => nil
+;   $resolve_level := $resolve_level + 1
 ;   tt := resolveTM1(t,m)
+;   $resolve_level := $resolve_level - 1
 ;   result := tt and isValidType tt and tt
 ;   stopTimingProcess 'resolve
 ;   result
- 
+
 (DEFUN |resolveTM| (|t| |m|)
   (PROG (|$Coerce| |$Subst| |result| |tt|)
     (DECLARE (SPECIAL |$Coerce| |$Subst|))
@@ -1492,11 +1456,16 @@
       (SETQ |$Subst| NIL)
       (SETQ |$Coerce| 'T)
       (SETQ |m| (SUBSTQ '** |$EmptyMode| |m|))
-      (SETQ |tt| (|resolveTM1| |t| |m|))
-      (SETQ |result| (AND |tt| (|isValidType| |tt|) |tt|))
-      (|stopTimingProcess| '|resolve|)
-      |result|))))
- 
+      (COND ((< 15 |$resolve_level|) NIL)
+            ('T
+             (PROGN
+              (SETQ |$resolve_level| (+ |$resolve_level| 1))
+              (SETQ |tt| (|resolveTM1| |t| |m|))
+              (SETQ |$resolve_level| (- |$resolve_level| 1))
+              (SETQ |result| (AND |tt| (|isValidType| |tt|) |tt|))
+              (|stopTimingProcess| '|resolve|)
+              |result|)))))))
+
 ; resolveTM1(t,m) ==
 ;   -- general resolveTM, which looks for a term variable
 ;   -- otherwise it looks whether the type has the same top level
@@ -1529,7 +1498,7 @@
 ;       tt := resolveTMRed(t,m) => tt
 ;       resolveTM2(t,m)
 ;   $Coerce and canCoerceFrom(t,m) and m
- 
+
 (DEFUN |resolveTM1| (|t| |m|)
   (PROG (|p| |tt| |tr| |mr| |ISTMP#1|)
     (RETURN
@@ -1583,7 +1552,7 @@
                            (COND ((SETQ |tt| (|resolveTMRed| |t| |m|)) |tt|)
                                  (#1# (|resolveTM2| |t| |m|))))))))))
            (#1# (AND |$Coerce| (|canCoerceFrom| |t| |m|) |m|))))))
- 
+
 ; resolveTMRecord(tr,mr) ==
 ;   #tr ~= #mr => NIL
 ;   ok := true
@@ -1596,7 +1565,7 @@
 ;     tt := CONS([first ta, CADR ta, ra], tt)
 ;   null ok => NIL
 ;   ['Record,nreverse tt]
- 
+
 (DEFUN |resolveTMRecord| (|tr| |mr|)
   (PROG (|ok| |tt| |ra|)
     (RETURN
@@ -1629,7 +1598,7 @@
               |tr| NIL |mr| NIL)
              (COND ((NULL |ok|) NIL)
                    (#1# (LIST '|Record| (NREVERSE |tt|))))))))))
- 
+
 ; resolveTMUnion(t, m is ['Union,:ums]) ==
 ;   isTaggedUnion m => resolveTMTaggedUnion(t,m)
 ;   -- resolves t with a Union type
@@ -1660,7 +1629,7 @@
 ;     bad := true
 ;   bad => NIL
 ;   ['Union,:REMDUP doms]
- 
+
 (DEFUN |resolveTMUnion| (|t| |m|)
   (PROG (|ums| |uts| |ums'| |success| |um'| |m'| |bad| |doms|)
     (RETURN
@@ -1719,20 +1688,20 @@
                   (SETQ |bfVar#28| (CDR |bfVar#28|))))
                |uts| NIL)
               (COND (|bad| NIL) (#1# (CONS '|Union| (REMDUP |doms|)))))))))))
- 
+
 ; resolveTMTaggedUnion(t, m is ['Union,:ums]) ==
 ;   NIL
- 
+
 (DEFUN |resolveTMTaggedUnion| (|t| |m|)
   (PROG (|ums|) (RETURN (PROGN (SETQ |ums| (CDR |m|)) NIL))))
- 
+
 ; spliceTypeListForEmptyMode(tl,ml) ==
 ;   -- splice in tl for occurrence of ** in ml
 ;   null ml => nil
 ;   ml is [m,:ml'] =>
 ;     m = "**" => append(tl,spliceTypeListForEmptyMode(tl,ml'))
 ;     [m,:spliceTypeListForEmptyMode(tl,ml')]
- 
+
 (DEFUN |spliceTypeListForEmptyMode| (|tl| |ml|)
   (PROG (|m| |ml'|)
     (RETURN
@@ -1743,7 +1712,7 @@
              ((EQ |m| '**)
               (APPEND |tl| (|spliceTypeListForEmptyMode| |tl| |ml'|)))
              (#1# (CONS |m| (|spliceTypeListForEmptyMode| |tl| |ml'|)))))))))
- 
+
 ; resolveTM2(t,m) ==
 ;   -- resolves t with the last argument of m and builds up a tower
 ;   [cm,:argm] := deconstructT m
@@ -1752,7 +1721,7 @@
 ;     tt and
 ;       ttt := constructM(cm,replaceLast(argm,tt))
 ;       ttt and canCoerceFrom(tt,ttt) and ttt
- 
+
 (DEFUN |resolveTM2| (|t| |m|)
   (PROG (|LETTMP#1| |cm| |argm| |tt| |ttt|)
     (RETURN
@@ -1767,7 +1736,7 @@
                  (PROGN
                   (SETQ |ttt| (|constructM| |cm| (|replaceLast| |argm| |tt|)))
                   (AND |ttt| (|canCoerceFrom| |tt| |ttt|) |ttt|)))))))))
- 
+
 ; resolveTMEq(t,m) ==
 ;   -- tests whether t and m have the same top level constructor, which,
 ;   -- in the case of t, could be bubbled up
@@ -1789,7 +1758,7 @@
 ;     t := resolveTMEq2(cm,argm,[ct,argt,:TL])
 ;     if t then for p in SL repeat $Subst := augmentSub(first p, rest p, $Subst)
 ;     t
- 
+
 (DEFUN |resolveTMEq| (|t| |m|)
   (PROG (|res| |LETTMP#1| |cm| |argm| |c| TL |ct| |argt| SL |b|)
     (RETURN
@@ -1843,7 +1812,7 @@
                          (SETQ |bfVar#30| (CDR |bfVar#30|))))
                       SL NIL)))
                    |t|))))))))
- 
+
 ; resolveTMSpecial(t,m) ==
 ;   -- a few special cases
 ;   t = $AnonymousFunction and m is ['Mapping,:.] => m
@@ -1865,7 +1834,7 @@
 ;   t is ['Segment,u] and m is ['UniversalSegment,.] =>
 ;     resolveTM1(['UniversalSegment, u], m)
 ;   NIL
- 
+
 (DEFUN |resolveTMSpecial| (|t| |m|)
   (PROG (|ISTMP#1| |x| |le| |ISTMP#2| |ISTMP#3| |t1| |m1| |ISTMP#4| |ISTMP#5|
          |lt| |lm| |l| |ok| |u|)
@@ -1966,7 +1935,7 @@
              (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL))))
        (|resolveTM1| (LIST '|UniversalSegment| |u|) |m|))
       (#1# NIL)))))
- 
+
 ; resolveTMEq1(ct,cm) ==
 ;   -- ct and cm are type constructors
 ;   -- tests for a match from cm to ct
@@ -1993,7 +1962,7 @@
 ;         SL := augmentSub(xm,xt,SL)
 ;   b => SL
 ;   'failed
- 
+
 (DEFUN |resolveTMEq1| (|ct| |cm|)
   (PROG (SL |b| |xt| |xm| |p|)
     (RETURN
@@ -2032,7 +2001,7 @@
                                                        (|augmentSub| |xm| |xt|
                                                         SL))))))))))))))
              (COND (|b| SL) (#1# '|failed|))))))))
- 
+
 ; resolveTMEq2(cm,argm,TL) ==
 ;   -- [cm,argm] is a deconstructed mode,
 ;   -- TL is a deconstructed type t
@@ -2053,7 +2022,7 @@
 ;         arg := CONS(tt,arg)
 ;     tt and arg = argt0 => constructT(ct, argt0)
 ;     null argt and null argm and tt and constructM(ct,nreverse arg)
- 
+
 (DEFUN |resolveTMEq2| (|cm| |argm| TL)
   (PROG (|LETTMP#1| |ct| |argt| |argt0| |arg| |x1| |x2| |tt|)
     (RETURN
@@ -2090,7 +2059,7 @@
                     (#1#
                      (AND (NULL |argt|) (NULL |argm|) |tt|
                           (|constructM| |ct| (NREVERSE |arg|)))))))))))))
- 
+
 ; resolveTMRed(t,m) ==
 ;   -- looks for an applicable rewrite rule at any level of t and tries
 ;   --   to bubble this constructor up to the top to t
@@ -2107,7 +2076,7 @@
 ;       TL := [ct,argt,:TL]
 ;       t := argt and last argt
 ;   b and t
- 
+
 (DEFUN |resolveTMRed| (|t| |m|)
   (PROG (TL |LETTMP#1| |ct| |argt| |c0| |arg0| TL0 |l| |b|)
     (RETURN
@@ -2163,7 +2132,7 @@
           (SETQ |bfVar#34| (OR |b| (NULL |t|)))))
        NIL)
       (AND |b| |t|)))))
- 
+
 ; resolveTMRed1(t) ==
 ;   -- recursive resolveTMRed which handles all subterms of the form
 ;   -- (Resolve a b)
@@ -2182,7 +2151,7 @@
 ;   t is ['SimpleAlgebraicExtension,a,b,p] =>  -- this is a hack. RSS
 ;     ['SimpleAlgebraicExtension, resolveTMRed1 a, resolveTMRed1 b,p]
 ;   [( atom x and x ) or resolveTMRed1 x or return NIL for x in t]
- 
+
 (DEFUN |resolveTMRed1| (|t|)
   (PROG (|ISTMP#1| |a| |ISTMP#2| |b| |ISTMP#3| |p|)
     (RETURN
@@ -2318,12 +2287,12 @@
                            |bfVar#42|))))
                 (SETQ |bfVar#41| (CDR |bfVar#41|))))
              NIL |t| NIL))))))
- 
+
 ; getUnderModeOf d ==
 ;   not PAIRP d => NIL
 ;   for a in rest d for m in rest destructT d repeat
 ;     if m then return a
- 
+
 (DEFUN |getUnderModeOf| (|d|)
   (PROG ()
     (RETURN
@@ -2340,7 +2309,7 @@
                 (SETQ |bfVar#43| (CDR |bfVar#43|))
                 (SETQ |bfVar#44| (CDR |bfVar#44|))))
              (CDR |d|) NIL (CDR (|destructT| |d|)) NIL))))))
- 
+
 ; deconstructT(t) ==
 ;   -- M is a type, which may contain type variables
 ;   -- results in a pair (type constructor . mode arguments)
@@ -2350,7 +2319,7 @@
 ;     c := [ x for d in dt for y in t | ( x := not d and y ) ]
 ;     CONS(c,args)
 ;   CONS(t,NIL)
- 
+
 (DEFUN |deconstructT| (|t|)
   (PROG (|dt| |x| |args| |c|)
     (RETURN
@@ -2390,12 +2359,12 @@
                  NIL |dt| NIL |t| NIL))
         (CONS |c| |args|)))
       (#1# (CONS |t| NIL))))))
- 
+
 ; constructT(c,A) ==
 ;   -- c is a type constructor, A a list of argument types
 ;   A => [if d then POP A else POP c for d in destructT first c]
 ;   c
- 
+
 (DEFUN |constructT| (|c| A)
   (PROG ()
     (RETURN
@@ -2412,7 +2381,7 @@
            (SETQ |bfVar#51| (CDR |bfVar#51|))))
         NIL (|destructT| (CAR |c|)) NIL))
       (#1# |c|)))))
- 
+
 ; constructM(c,A) ==
 ;   -- replaces top level RE's or QF's by equivalent types, if possible
 ;   #c > 1 and nontrivialCosig(first(c)) => nil
@@ -2420,7 +2389,7 @@
 ;   -- collapses illegal FE's
 ;   first(c) = $FunctionalExpression => defaultTargetFE first A
 ;   constructT(c,A)
- 
+
 (DEFUN |constructM| (|c| A)
   (PROG ()
     (RETURN
@@ -2429,19 +2398,19 @@
            ((EQUAL (CAR |c|) |$FunctionalExpression|)
             (|defaultTargetFE| (CAR A)))
            ('T (|constructT| |c| A))))))
- 
+
 ; replaceLast(A,t) ==
 ;   -- replaces the last element of the nonempty list A by t (constructively
 ;   nreverse RPLACA(reverse A,t)
- 
+
 (DEFUN |replaceLast| (A |t|)
   (PROG () (RETURN (NREVERSE (RPLACA (REVERSE A) |t|)))))
- 
+
 ; nontrivialCosig(x) ==
 ;    cs := GETDATABASE(x, "COSIG")
 ;    sig := getConstructorSignature x
 ;    not("and"/[c or freeOfSharpVars s for c in rest cs for s in rest sig])
- 
+
 (DEFUN |nontrivialCosig| (|x|)
   (PROG (|cs| |sig|)
     (RETURN
@@ -2462,15 +2431,15 @@
            (SETQ |bfVar#53| (CDR |bfVar#53|))
            (SETQ |bfVar#54| (CDR |bfVar#54|))))
         T (CDR |cs|) NIL (CDR |sig|) NIL))))))
- 
+
 ; destructT(functor)==
 ;   -- provides a list of booleans, which indicate whether the arguments
 ;   -- to the functor are category forms or not
 ;   GETDATABASE(opOf functor,'COSIG)
- 
+
 (DEFUN |destructT| (|functor|)
   (PROG () (RETURN (GETDATABASE (|opOf| |functor|) 'COSIG))))
- 
+
 ; constructTowerT(t,TL) ==
 ;   -- t is a type, TL a list of constructors and argument lists
 ;   -- t is embedded into TL
@@ -2479,7 +2448,7 @@
 ;     t0 := constructM(c,replaceLast(arg,t))
 ;     t := canCoerceFrom(t,t0) and t0
 ;   t
- 
+
 (DEFUN |constructTowerT| (|t| TL)
   (PROG (|LETTMP#1| |c| |arg| |t0|)
     (RETURN
@@ -2496,7 +2465,7 @@
                   (SETQ |t0| (|constructM| |c| (|replaceLast| |arg| |t|)))
                   (SETQ |t| (AND (|canCoerceFrom| |t| |t0|) |t0|))))))))
       |t|))))
- 
+
 ; bubbleType(TL) ==
 ;   -- tries to move the last constructor in TL upwards
 ;   -- uses canCoerceFrom to test whether two constructors can be bubbled
@@ -2509,7 +2478,7 @@
 ;   newCanCoerceCommute(c2,c1) or canCoerceCommute(c2, c1) =>
 ;     bubbleType [c1,arg1,:T2]
 ;   TL
- 
+
 (DEFUN |bubbleType| (TL)
   (PROG (|c1| |arg1| T1 |c2| |arg2| T2 |t| |t2|)
     (RETURN
@@ -2531,7 +2500,7 @@
                     (|canCoerceCommute| |c2| |c1|))
                 (|bubbleType| (CONS |c1| (CONS |arg1| T2))))
                (#2# TL)))))))))
- 
+
 ; bubbleConstructor(TL) ==
 ;   -- TL is a nonempty list of type constructors and nonempty argument
 ;   -- lists representing a deconstructed type
@@ -2543,7 +2512,7 @@
 ;     arg1 := replaceLast(arg1,t)
 ;     t := constructT(c1,arg1)
 ;   constructT(c,replaceLast(arg,t))
- 
+
 (DEFUN |bubbleConstructor| (TL)
   (PROG (|c| |arg| T1 |t| |LETTMP#1| |c1| |arg1|)
     (RETURN
@@ -2566,14 +2535,14 @@
           (SETQ |bfVar#56| (NULL T1))))
        NIL)
       (|constructT| |c| (|replaceLast| |arg| |t|))))))
- 
+
 ; compareTT(t1,t2) ==
 ;   -- 'T if type t1 is more nested than t2
 ;   -- otherwise 'T if t1 is lexicographically greater than t2
 ;   EQCAR(t1,$QuotientField) or
 ;     MEMQ(opOf t2,[$QuotientField, 'SimpleAlgebraicExtension]) => NIL
 ;     CGREATERP(PRIN2CVEC opOf t1,PRIN2CVEC opOf t2)
- 
+
 (DEFUN |compareTT| (|t1| |t2|)
   (PROG ()
     (RETURN

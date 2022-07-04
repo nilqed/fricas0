@@ -5,27 +5,25 @@
 
 (DEFPARAMETER |FramedNonAssociativeAlgebra;AL| 'NIL) 
 
-(DEFUN |FramedNonAssociativeAlgebra| (#1=#:G696)
-  (LET (#2=#:G697)
-    (COND
-     ((SETQ #2#
-              (|assoc| #3=(|devaluate| #1#) |FramedNonAssociativeAlgebra;AL|))
-      (CDR #2#))
-     (T
-      (SETQ |FramedNonAssociativeAlgebra;AL|
-              (|cons5|
-               (CONS #3# (SETQ #2# (|FramedNonAssociativeAlgebra;| #1#)))
-               |FramedNonAssociativeAlgebra;AL|))
-      #2#)))) 
+(DEFUN |FramedNonAssociativeAlgebra| (|t#1|)
+  (LET (#1=#:G695 (#2=#:G696 (|devaluate| |t#1|)))
+    (COND ((SETQ #1# (|assoc| #2# |FramedNonAssociativeAlgebra;AL|)) (CDR #1#))
+          (T
+           (SETQ |FramedNonAssociativeAlgebra;AL|
+                   (|cons5|
+                    (CONS #2# (SETQ #1# (|FramedNonAssociativeAlgebra;| #2#)))
+                    |FramedNonAssociativeAlgebra;AL|))
+           #1#)))) 
 
 (DEFUN |FramedNonAssociativeAlgebra;| (|t#1|)
-  (SPROG ((#1=#:G695 NIL))
+  (SPROG ((#1=#:G694 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
-                              (COND (|FramedNonAssociativeAlgebra;CAT|)
-                                    ('T
-                                     (LETT |FramedNonAssociativeAlgebra;CAT|
+                   (|subst_in_cat| '(|t#1|) (LIST |t#1|)
+                                   (COND (|FramedNonAssociativeAlgebra;CAT|)
+                                         ('T
+                                          (LETT
+                                           |FramedNonAssociativeAlgebra;CAT|
                                            (|Join|
                                             (|FiniteRankNonAssociativeAlgebra|
                                              '|t#1|)
@@ -66,15 +64,5 @@
                                                ((|apply|
                                                  ($ (|Matrix| |t#1|) $))
                                                 T))
-                                             NIL
-                                             '((|Matrix| |t#1|)
-                                               (|SparseUnivariatePolynomial|
-                                                (|Polynomial| |t#1|))
-                                               (|List| (|Polynomial| |t#1|))
-                                               (|Vector| (|Matrix| |t#1|))
-                                               (|Integer|))
-                                             NIL))
-                                           . #2=(|FramedNonAssociativeAlgebra|)))))
-                   . #2#)
-           (SETELT #1# 0
-                   (LIST '|FramedNonAssociativeAlgebra| (|devaluate| |t#1|)))))) 
+                                             NIL NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|FramedNonAssociativeAlgebra| |t#1|))))) 

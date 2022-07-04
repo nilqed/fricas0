@@ -5,50 +5,47 @@
 
 (DEFPARAMETER |LinearOrdinaryDifferentialOperatorCategory;AL| 'NIL) 
 
-(DEFUN |LinearOrdinaryDifferentialOperatorCategory| (#1=#:G692)
-  (LET (#2=#:G693)
+(DEFUN |LinearOrdinaryDifferentialOperatorCategory| (|t#1|)
+  (LET (#1=#:G691 (#2=#:G692 (|devaluate| |t#1|)))
     (COND
-     ((SETQ #2#
-              (|assoc| #3=(|devaluate| #1#)
-                       |LinearOrdinaryDifferentialOperatorCategory;AL|))
-      (CDR #2#))
+     ((SETQ #1# (|assoc| #2# |LinearOrdinaryDifferentialOperatorCategory;AL|))
+      (CDR #1#))
      (T
       (SETQ |LinearOrdinaryDifferentialOperatorCategory;AL|
               (|cons5|
-               (CONS #3#
-                     (SETQ #2#
+               (CONS #2#
+                     (SETQ #1#
                              (|LinearOrdinaryDifferentialOperatorCategory;|
-                              #1#)))
+                              #2#)))
                |LinearOrdinaryDifferentialOperatorCategory;AL|))
-      #2#)))) 
+      #1#)))) 
 
 (DEFUN |LinearOrdinaryDifferentialOperatorCategory;| (|t#1|)
-  (SPROG ((#1=#:G691 NIL))
+  (SPROG ((#1=#:G690 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
-                              (COND
-                               (|LinearOrdinaryDifferentialOperatorCategory;CAT|)
-                               ('T
-                                (LETT
-                                 |LinearOrdinaryDifferentialOperatorCategory;CAT|
-                                 (|Join|
-                                  (|UnivariateSkewPolynomialCategory| '|t#1|)
-                                  (|Eltable| '|t#1| '|t#1|)
-                                  (|mkCategory|
-                                   '(((D ($)) T) ((|adjoint| ($ $)) T)
-                                     ((|symmetricProduct| ($ $ $))
-                                      (|has| |t#1| (|Field|)))
-                                     ((|symmetricPower|
-                                       ($ $ (|NonNegativeInteger|)))
-                                      (|has| |t#1| (|Field|)))
-                                     ((|symmetricSquare| ($ $))
-                                      (|has| |t#1| (|Field|)))
-                                     ((|directSum| ($ $ $))
-                                      (|has| |t#1| (|Field|))))
-                                   NIL '((|NonNegativeInteger|)) NIL))
-                                 . #2=(|LinearOrdinaryDifferentialOperatorCategory|)))))
-                   . #2#)
+                   (|subst_in_cat| '(|t#1|) (LIST |t#1|)
+                                   (COND
+                                    (|LinearOrdinaryDifferentialOperatorCategory;CAT|)
+                                    ('T
+                                     (LETT
+                                      |LinearOrdinaryDifferentialOperatorCategory;CAT|
+                                      (|Join|
+                                       (|UnivariateSkewPolynomialCategory|
+                                        '|t#1|)
+                                       (|Eltable| '|t#1| '|t#1|)
+                                       (|mkCategory|
+                                        '(((D ($)) T) ((|adjoint| ($ $)) T)
+                                          ((|symmetricProduct| ($ $ $))
+                                           (|has| |t#1| (|Field|)))
+                                          ((|symmetricPower|
+                                            ($ $ (|NonNegativeInteger|)))
+                                           (|has| |t#1| (|Field|)))
+                                          ((|symmetricSquare| ($ $))
+                                           (|has| |t#1| (|Field|)))
+                                          ((|directSum| ($ $ $))
+                                           (|has| |t#1| (|Field|))))
+                                        NIL NIL NIL)))))))
            (SETELT #1# 0
                    (LIST '|LinearOrdinaryDifferentialOperatorCategory|
-                         (|devaluate| |t#1|)))))) 
+                         |t#1|))))) 

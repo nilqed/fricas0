@@ -5,27 +5,26 @@
 
 (DEFPARAMETER |DifferentialVariableCategory;AL| 'NIL) 
 
-(DEFUN |DifferentialVariableCategory| (#1=#:G696)
-  (LET (#2=#:G697)
+(DEFUN |DifferentialVariableCategory| (|t#1|)
+  (LET (#1=#:G695 (#2=#:G696 (|devaluate| |t#1|)))
     (COND
-     ((SETQ #2#
-              (|assoc| #3=(|devaluate| #1#) |DifferentialVariableCategory;AL|))
-      (CDR #2#))
+     ((SETQ #1# (|assoc| #2# |DifferentialVariableCategory;AL|)) (CDR #1#))
      (T
       (SETQ |DifferentialVariableCategory;AL|
               (|cons5|
-               (CONS #3# (SETQ #2# (|DifferentialVariableCategory;| #1#)))
+               (CONS #2# (SETQ #1# (|DifferentialVariableCategory;| #2#)))
                |DifferentialVariableCategory;AL|))
-      #2#)))) 
+      #1#)))) 
 
 (DEFUN |DifferentialVariableCategory;| (|t#1|)
-  (SPROG ((#1=#:G695 NIL))
+  (SPROG ((#1=#:G694 NIL))
          (PROG1
              (LETT #1#
-                   (|sublisV| (PAIR '(|t#1|) (LIST (|devaluate| |t#1|)))
-                              (COND (|DifferentialVariableCategory;CAT|)
-                                    ('T
-                                     (LETT |DifferentialVariableCategory;CAT|
+                   (|subst_in_cat| '(|t#1|) (LIST |t#1|)
+                                   (COND (|DifferentialVariableCategory;CAT|)
+                                         ('T
+                                          (LETT
+                                           |DifferentialVariableCategory;CAT|
                                            (|Join| (|OrderedSet|)
                                                    (|RetractableTo| '|t#1|)
                                                    (|mkCategory|
@@ -50,11 +49,5 @@
                                                          (|NonNegativeInteger|)))
                                                        T)
                                                       ((|coerce| ($ |t#1|)) T))
-                                                    NIL
-                                                    '((|NonNegativeInteger|))
-                                                    NIL))
-                                           . #2=(|DifferentialVariableCategory|)))))
-                   . #2#)
-           (SETELT #1# 0
-                   (LIST '|DifferentialVariableCategory|
-                         (|devaluate| |t#1|)))))) 
+                                                    NIL NIL NIL)))))))
+           (SETELT #1# 0 (LIST '|DifferentialVariableCategory| |t#1|))))) 

@@ -1,8 +1,12 @@
- 
+
 ; )package "BOOT"
- 
+
 (IN-PACKAGE "BOOT")
- 
+
+; $genValue := false
+
+(EVAL-WHEN (EVAL LOAD) (SETQ |$genValue| NIL))
+
 ; quoteNontypeArgs(t) ==
 ;     t is [.] => t
 ;     op := opOf t
@@ -12,7 +16,7 @@
 ;     nargs := [if c then quoteNontypeArgs(a) else ["QUOTE", a]
 ;                 for a in args for c in cs]
 ;     [op, :nargs]
- 
+
 (DEFUN |quoteNontypeArgs| (|t|)
   (PROG (|op| |args| |cs| |nargs|)
     (RETURN
@@ -42,19 +46,19 @@
                          (SETQ |bfVar#2| (CDR |bfVar#2|))))
                       NIL |args| NIL |cs| NIL))
              (CONS |op| |nargs|)))))))
- 
+
 ; evalType(t) == EVAL(quoteNontypeArgs(t))
- 
+
 (DEFUN |evalType| (|t|) (PROG () (RETURN (EVAL (|quoteNontypeArgs| |t|)))))
- 
+
 ; $noEvalTypeMsg := nil
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$noEvalTypeMsg| NIL))
- 
+
 ; $evalDomain := nil
- 
+
 (EVAL-WHEN (EVAL LOAD) (SETQ |$evalDomain| NIL))
- 
+
 ; evalDomain form ==
 ;   if $evalDomain then
 ;     sayMSG concat('"   instantiating","%b",prefix2String form,"%d")
@@ -62,7 +66,7 @@
 ;   result := eval mkEvalable form
 ;   stopTimingProcess 'instantiation
 ;   result
- 
+
 (DEFUN |evalDomain| (|form|)
   (PROG (|result|)
     (RETURN
@@ -75,7 +79,7 @@
       (SETQ |result| (|eval| (|mkEvalable| |form|)))
       (|stopTimingProcess| '|instantiation|)
       |result|))))
- 
+
 ; mkEvalable form ==
 ;   form is [op,:argl] =>
 ;     op="QUOTE" => form
@@ -91,7 +95,6 @@
 ;         typeFlag =>
 ;           kind = 'category => MKQ x
 ;           VECP x => MKQ x
-;           loadIfNecessary x
 ;           mkEvalable x
 ;         x is ['QUOTE,:.] => x
 ;         x is ['_#,y] => ['SIZE,MKQ y]
@@ -101,7 +104,7 @@
 ;   IDENTP form and constructor?(form) => [form]
 ;   FBPIP form => BREAK()
 ;   form
- 
+
 (DEFUN |mkEvalable| (|form|)
   (PROG (|op| |argl| |kind| |cosig| |ISTMP#1| |y|)
     (RETURN
@@ -137,10 +140,7 @@
                                         (COND
                                          ((EQ |kind| '|category|) (MKQ |x|))
                                          ((VECP |x|) (MKQ |x|))
-                                         (#1#
-                                          (PROGN
-                                           (|loadIfNecessary| |x|)
-                                           (|mkEvalable| |x|)))))
+                                         (#1# (|mkEvalable| |x|))))
                                        ((AND (CONSP |x|) (EQ (CAR |x|) 'QUOTE))
                                         |x|)
                                        ((AND (CONSP |x|) (EQ (CAR |x|) '|#|)
@@ -173,10 +173,10 @@
       ((EQUAL |form| |$EmptyMode|) |$Integer|)
       ((AND (IDENTP |form|) (|constructor?| |form|)) (LIST |form|))
       ((FBPIP |form|) (BREAK)) (#1# |form|)))))
- 
+
 ; mkEvalableMapping form ==
 ;   [first form,:[mkEvalable d for d in rest form]]
- 
+
 (DEFUN |mkEvalableMapping| (|form|)
   (PROG ()
     (RETURN
@@ -189,10 +189,10 @@
                 ('T (SETQ |bfVar#10| (CONS (|mkEvalable| |d|) |bfVar#10|))))
                (SETQ |bfVar#9| (CDR |bfVar#9|))))
             NIL (CDR |form|) NIL)))))
- 
+
 ; mkEvalableRecord form ==
 ;   [first form,:[[":",n,mkEvalable d] for [":",n,d] in rest form]]
- 
+
 (DEFUN |mkEvalableRecord| (|form|)
   (PROG (|ISTMP#1| |n| |ISTMP#2| |d|)
     (RETURN
@@ -218,12 +218,12 @@
                                     |bfVar#13|)))))
                (SETQ |bfVar#12| (CDR |bfVar#12|))))
             NIL (CDR |form|) NIL)))))
- 
+
 ; mkEvalableUnion form ==
 ;   isTaggedUnion form =>
 ;     [first form,:[[":",n,mkEvalable d] for [":",n,d] in rest form]]
 ;   [first form,:[mkEvalable d for d in rest form]]
- 
+
 (DEFUN |mkEvalableUnion| (|form|)
   (PROG (|ISTMP#1| |n| |ISTMP#2| |d|)
     (RETURN
@@ -262,11 +262,11 @@
                   (#1# (SETQ |bfVar#18| (CONS (|mkEvalable| |d|) |bfVar#18|))))
                  (SETQ |bfVar#17| (CDR |bfVar#17|))))
               NIL (CDR |form|) NIL)))))))
- 
+
 ; evaluateType form ==
 ;   -- Takes a parsed, unabbreviated type and evaluates it, replacing
 ;   --  type valued variables with their values, and calling bottomUp
-;   --  on non-type valued arguemnts to the constructor
+;   --  on non-type valued arguments to the constructor
 ;   --  and finally checking to see whether the type satisfies the
 ;   --  conditions of its modemap
 ;   domain:= isDomainValuedVariable form => domain
@@ -296,7 +296,7 @@
 ;     ATOM form => evaluateType [form]
 ;     throwEvalTypeMsg("S2IE0003",[form,form])
 ;   throwEvalTypeMsg("S2IE0004", [form])
- 
+
 (DEFUN |evaluateType| (|form|)
   (PROG (|domain| |ISTMP#1| |form'| |op| |argl| |x| |sigs| |ISTMP#2| |ISTMP#3|
          |sel| |type|)
@@ -442,15 +442,15 @@
             (COND ((ATOM |form|) (|evaluateType| (LIST |form|)))
                   (#1# (|throwEvalTypeMsg| 'S2IE0003 (LIST |form| |form|)))))
            (#1# (|throwEvalTypeMsg| 'S2IE0004 (LIST |form|)))))))
- 
+
 ; evaluateFormAsType form ==
 ;   form is [op,:args] and constructor? op => evaluateType1 form
 ;   t := mkAtree form
 ;   -- ??? Maybe we should be more careful about generalized types.
-;   bottomUp t is [m] and (m = ["Mode"] or isCategoryForm(m,$e)) =>
+;   bottomUp t is [m] and (m = ["Mode"] or isCategoryForm(m)) =>
 ;     objVal getValue t
 ;   throwEvalTypeMsg("S2IE0004",[form])
- 
+
 (DEFUN |evaluateFormAsType| (|form|)
   (PROG (|op| |args| |t| |ISTMP#1| |m|)
     (RETURN
@@ -468,10 +468,10 @@
             (SETQ |ISTMP#1| (|bottomUp| |t|))
             (AND (CONSP |ISTMP#1|) (EQ (CDR |ISTMP#1|) NIL)
                  (PROGN (SETQ |m| (CAR |ISTMP#1|)) #1#)))
-           (OR (EQUAL |m| (LIST '|Mode|)) (|isCategoryForm| |m| |$e|)))
+           (OR (EQUAL |m| (LIST '|Mode|)) (|isCategoryForm| |m|)))
           (|objVal| (|getValue| |t|)))
          (#1# (|throwEvalTypeMsg| 'S2IE0004 (LIST |form|))))))))))
- 
+
 ; evaluateType1 form ==
 ;   --evaluates the arguments passed to a constructor
 ;   [op,:argl]:= form
@@ -496,7 +496,7 @@
 ;         throwEvalTypeMsg("S2IE0006",[makeOrdinal argnum,m,form])
 ;     [op,:NREVERSE typeList]
 ;   throwEvalTypeMsg("S2IE0007",[op])
- 
+
 (DEFUN |evaluateType1| (|form|)
   (PROG (|op| |argl| |sig| |ml| |x'| |tree| |ISTMP#1| |m1| |z1| |zt| |zv| |v1|
          |typeList|)
@@ -581,12 +581,12 @@
                |argl| NIL |ml| NIL 1)
               (CONS |op| (NREVERSE |typeList|)))))))))
        (#1# (|throwEvalTypeMsg| 'S2IE0007 (LIST |op|))))))))
- 
+
 ; throwEvalTypeMsg(msg, args) ==
 ;   $justUnparseType : local := true
 ;   $noEvalTypeMsg => spadThrow()
 ;   throwKeyedMsg(msg, args)
- 
+
 (DEFUN |throwEvalTypeMsg| (|msg| |args|)
   (PROG (|$justUnparseType|)
     (DECLARE (SPECIAL |$justUnparseType|))
@@ -595,10 +595,10 @@
       (SETQ |$justUnparseType| T)
       (COND (|$noEvalTypeMsg| (|spadThrow|))
             ('T (|throwKeyedMsg| |msg| |args|)))))))
- 
+
 ; makeOrdinal i ==
 ;   ('(first second third fourth fifth sixth seventh eighth ninth tenth)).(i-1)
- 
+
 (DEFUN |makeOrdinal| (|i|)
   (PROG ()
     (RETURN
@@ -606,14 +606,14 @@
       '(|first| |second| |third| |fourth| |fifth| |sixth| |seventh| |eighth|
         |ninth| |tenth|)
       (- |i| 1)))))
- 
+
 ; evaluateSignature sig ==
 ;   -- calls evaluateType on a signature
 ;   sig is [ ='SIGNATURE,fun,sigl] =>
 ;     ['SIGNATURE,fun,
 ;       [(t = '_$ => t; evaluateType(t)) for t in sigl]]
 ;   sig
- 
+
 (DEFUN |evaluateSignature| (|sig|)
   (PROG (|ISTMP#1| |fun| |ISTMP#2| |sigl|)
     (RETURN
@@ -642,12 +642,12 @@
                  (SETQ |bfVar#33| (CDR |bfVar#33|))))
               NIL |sigl| NIL)))
       (#1# |sig|)))))
- 
+
 ; splitIntoBlocksOf200 a ==
 ;   null a => nil
 ;   [[first (r:=x) for x in tails a for i in 1..200],
 ;     :splitIntoBlocksOf200 rest r]
- 
+
 (DEFUN |splitIntoBlocksOf200| (|a|)
   (PROG (|r|)
     (RETURN
@@ -664,10 +664,10 @@
                  (SETQ |i| (+ |i| 1))))
               NIL |a| 1)
              (|splitIntoBlocksOf200| (CDR |r|))))))))
- 
+
 ; evalForm(op,opName,argl,mmS) ==
 ;   -- applies the first applicable function
-; 
+;
 ;   for mm in mmS until form repeat
 ;     [sig,fun,cond]:= mm
 ;     (CAR sig) = 'interpOnly => form := CAR sig
@@ -715,7 +715,7 @@
 ;   targetType := CADR sig
 ;   if CONTAINED('_#,targetType) then targetType := NRTtypeHack targetType
 ;   evalFormMkValue(op,form,targetType)
- 
+
 (DEFUN |evalForm| (|op| |opName| |argl| |mmS|)
   (PROG ($ |targetType| |domain| |bpi| |fun0| |dcVector| |ISTMP#5| |len|
          |ISTMP#4| |ind| |ISTMP#3| |ISTMP#2| |rec| |xbody| |xargs| |ISTMP#1|
@@ -1010,13 +1010,13 @@
                ((CONTAINED '|#| |targetType|)
                 (SETQ |targetType| (|NRTtypeHack| |targetType|))))
               (|evalFormMkValue| |op| |form| |targetType|))))))))
- 
+
 ; sideEffectedArg?(t,sig,opName) ==
 ;   opString := SYMBOL_-NAME opName
 ;   (opName ~= "setelt!") and (ELT(opString, #opString-1) ~= char '_!) => nil
 ;   dc := first sig
 ;   t = dc
- 
+
 (DEFUN |sideEffectedArg?| (|t| |sig| |opName|)
   (PROG (|opString| |dc|)
     (RETURN
@@ -1028,7 +1028,7 @@
               (EQUAL (ELT |opString| (- (LENGTH |opString|) 1)) (|char| '!))))
         NIL)
        ('T (PROGN (SETQ |dc| (CAR |sig|)) (EQUAL |t| |dc|))))))))
- 
+
 ; getArgValue(a, t) ==
 ;   atom a and not VECP a =>
 ;     t' := coerceOrRetract(getBasicObject a,t)
@@ -1039,7 +1039,7 @@
 ;     t' := coerceOrRetract(t',t)
 ;     t' and wrapped2Quote objVal t'
 ;   nil
- 
+
 (DEFUN |getArgValue| (|a| |t|)
   (PROG (|t'| |v| |alt|)
     (RETURN
@@ -1055,7 +1055,7 @@
         (SETQ |t'| (|coerceOrRetract| |t'| |t|))
         (AND |t'| (|wrapped2Quote| (|objVal| |t'|)))))
       ('T NIL)))))
- 
+
 ; getArgValue1(a,t) ==
 ;   -- creates a value for a, coercing to t
 ;   t' := getValue(a) =>
@@ -1065,7 +1065,7 @@
 ;     t' := coerceOrRetract(t',t)
 ;     t' and wrapped2Quote objVal t'
 ;   systemErrorHere '"getArgValue"
- 
+
 (DEFUN |getArgValue1| (|a| |t|)
   (PROG (|t'| |m| |ml| |ISTMP#1|)
     (RETURN
@@ -1083,12 +1083,12 @@
           (SETQ |t'| (|coerceOrRetract| |t'| |t|))
           (AND |t'| (|wrapped2Quote| (|objVal| |t'|)))))))
       (#1# (|systemErrorHere| "getArgValue"))))))
- 
+
 ; getArgValue2(a,t,se?,opName) ==
 ;   se? and (objMode(getValue a) ~= t) =>
 ;     throwKeyedMsg("S2IE0013", [opName, objMode(getValue a), t])
 ;   getArgValue(a,t)
- 
+
 (DEFUN |getArgValue2| (|a| |t| |se?| |opName|)
   (PROG ()
     (RETURN
@@ -1097,16 +1097,16 @@
        (|throwKeyedMsg| 'S2IE0013
         (LIST |opName| (|objMode| (|getValue| |a|)) |t|)))
       ('T (|getArgValue| |a| |t|))))))
- 
+
 ; getArgValueOrThrow(x, type) ==
 ;   getArgValue(x,type) or throwKeyedMsg("S2IC0007",[type])
- 
+
 (DEFUN |getArgValueOrThrow| (|x| |type|)
   (PROG ()
     (RETURN
      (OR (|getArgValue| |x| |type|)
          (|throwKeyedMsg| 'S2IC0007 (LIST |type|))))))
- 
+
 ; getMappingArgValue(a,t,m is ['Mapping,:ml]) ==
 ;   (una := getUnname a) in $localVars =>
 ;     $genValue =>
@@ -1123,7 +1123,7 @@
 ;     (mm is [[., :ml1],oldName,:.] and ml=ml1)] =>
 ;         MKQ [COERCE(oldName, 'FUNCTION)]
 ;   NIL
- 
+
 (DEFUN |getMappingArgValue| (|a| |t| |m|)
   (PROG (|ml| |una| |name| |mmS| |ISTMP#1| |ml1| |ISTMP#2| |oldName|)
     (RETURN
@@ -1191,12 +1191,12 @@
             NIL |mmS| NIL)
            (MKQ (LIST (COERCE |oldName| 'FUNCTION))))
           (#1# NIL)))))))))
- 
+
 ; getArgValueComp2(arg, type, cond, se?, opName) ==
 ;   se? and (objMode(getValue arg) ~= type) =>
 ;     throwKeyedMsg("S2IE0013", [opName, objMode(getValue arg), type])
 ;   getArgValueComp(arg, type, cond)
- 
+
 (DEFUN |getArgValueComp2| (|arg| |type| |cond| |se?| |opName|)
   (PROG ()
     (RETURN
@@ -1205,7 +1205,7 @@
        (|throwKeyedMsg| 'S2IE0013
         (LIST |opName| (|objMode| (|getValue| |arg|)) |type|)))
       ('T (|getArgValueComp| |arg| |type| |cond|))))))
- 
+
 ; getArgValueComp(arg,type,cond) ==
 ;   -- getArgValue for compiled case.  if there is a condition then
 ;   --  v must be data to verify that coerceInteractive succeeds.
@@ -1219,7 +1219,7 @@
 ;     alias := get($mapName,'alias,$e)
 ;     n := alias.(num - 1)
 ;   keyedMsgCompFailure("S2IE0010",[n])
- 
+
 (DEFUN |getArgValueComp| (|arg| |type| |cond|)
   (PROG (|v| |n| |num| |alias|)
     (RETURN
@@ -1239,7 +1239,7 @@
                         (SETQ |alias| (|get| |$mapName| '|alias| |$e|))
                         (SETQ |n| (ELT |alias| (- |num| 1))))))))
               (|keyedMsgCompFailure| 'S2IE0010 (LIST |n|)))))))))
- 
+
 ; evalFormMkValue(op,form,tm) ==
 ;   val:=
 ;     u:=
@@ -1252,7 +1252,7 @@
 ;     pp unwrap u
 ;   putValue(op,val)
 ;   [tm]
- 
+
 (DEFUN |evalFormMkValue| (|op| |form| |tm|)
   (PROG (|u| |val|)
     (RETURN

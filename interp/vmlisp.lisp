@@ -34,7 +34,6 @@
 ;      Lars Ericson, Barry Trager, Martial Schor, tim daly, LVMCL, et al
 ;      IBM Thomas J. Watson Research Center
 ;      Summer, 1986
-;  see /spad/daly.changes
 
 ; This emulation package version is written for Symbolics Common Lisp.
 ; Emulation commentary refers to LISP/VM, IBM Program Number 5798-DQZ,
@@ -80,14 +79,6 @@
     (digit-char-p x)))
 
 (defun LOG2 (x) (LOG x 2.0))
-
-; 9.13 Streams
-
-#+GCL
-(defun IS-CONSOLE (stream)
-  (and (streamp stream) (output-stream-p stream)
-       (eq (system:fp-output-stream stream)
-           (system:fp-output-stream *terminal-io*))))
 
 ; 11.0 Operations on Identifiers
 
@@ -299,7 +290,7 @@
 
 ; 16.1 Creation
 
-(defun MAKE-VEC (n) (make-array n :initial-element nil))
+(defun MAKE_VEC (n) (make-array n :initial-element nil))
 
 (defun GETREFV (n) (make-array n :initial-element nil))
 
@@ -464,14 +455,16 @@
 
 (define-function 'strconc #'concat)
 
-(defun |make_full_CVEC|(sint &optional (char #\space))
+(defun |make_full_CVEC2|(sint char)
   (make-string sint :initial-element (if (integerp char)
                                        (code-char char)
                                        (character char))))
 
+(defun |make_full_CVEC|(sint) (|make_full_CVEC2| sint #\space))
+
 ; 17.2 Accessing
 
-(defun string2id-n (cvec sint)
+(defun STRING2ID_N (cvec sint)
   (if (< sint 1)
       nil
       (let ((start (position-if-not #'(lambda (x) (char= x #\Space)) cvec)))
@@ -479,7 +472,7 @@
             (let ((end (or (position #\Space cvec :start start) (length cvec))))
               (if (= sint 1)
                   (intern (subseq cvec start end))
-                  (string2id-n (subseq cvec end) (1- sint))))
+                  (STRING2ID_N (subseq cvec end) (1- sint))))
             0))))
 
 (defun substring (cvec start length)
@@ -610,35 +603,37 @@
 
 ; 27.1 Creation
 
-(defun MAKE-INSTREAM (filespec)
-   (cond ((numberp filespec) (make-synonym-stream '*standard-input*))
+(defun |get_console_input| () *standard-input*)
+
+(defun MAKE_INSTREAM (filespec)
+   (cond
          ((null filespec) (error "not handled yet"))
          (t (open (|make_input_filename| filespec)
                   :direction :input :if-does-not-exist nil))))
 
-(defun MAKE-OUTSTREAM (filespec)
-   (cond ((numberp filespec) (make-synonym-stream '*standard-output*))
+(defun MAKE_OUTSTREAM (filespec)
+   (cond
          ((null filespec) (error "not handled yet"))
          (t (open (|make_filename| filespec) :direction :output
                #+(or :cmucl :openmcl :sbcl) :if-exists
                #+(or :cmucl :sbcl) :supersede
                #+:openmcl :ignored))))
 
-(defun MAKE-APPENDSTREAM (filespec)
+(defun |make_out_stream| (filespec) (CONS T (MAKE_OUTSTREAM filespec)))
+
+(defun MAKE_APPENDSTREAM (filespec)
  "fortran support"
  (cond
-  ((numberp filespec) (make-synonym-stream '*standard-output*))
-  ((null filespec) (error "make-appendstream: not handled yet"))
+  ((null filespec) (error "MAKE_APPENDSTREAM: not handled yet"))
   ('else (open (|make_filename| filespec) :direction :output
           :if-exists :append :if-does-not-exist :create))))
 
-(defun |mkOutputConsoleStream| ()
-     (make-synonym-stream '*standard-output*))
+(defun |make_append_stream| (filespec)
+    (CONS T (MAKE_APPENDSTREAM filespec)))
 
-(defun SHUT (st) (if #+:GCL(is-console st)
-                     #-:GCL(typep st 'synonym-stream)
-                     st
-                   (if (streamp st) (close st) -1)))
+(defun |mkOutputConsoleStream| () (CONS NIL *standard-output*))
+
+(defun SHUT (st) (if (streamp st) (close st) -1))
 
 (defun EOFP (stream) (null (peek-char nil stream nil nil)))
 
@@ -649,10 +644,6 @@
     (format nil "~2,'0D/~2,'0D/~2,'0D~2,'0D:~2,'0D:~2,'0D"
             month day (rem year 100) hour min sec)))
 
-; 97.0 Stuff In The Manual But Wierdly Documented
-
-(defun EBCDIC (x) (int-char x))
-
 ; 99.0 Ancient Stuff We Decided To Keep
 
 (defvar *read-place-holder* (make-symbol "%.EOF")
@@ -660,10 +651,8 @@
 
 (defun PLACEP (item) (eq item *read-place-holder*))
 (defun get_read_placeholder() *read-place-holder*)
-(defun VMREAD (st &optional (eofval *read-place-holder*))
-  (read st nil eofval))
-(defun |read_line| (st &optional (eofval *read-place-holder*))
-  (read-line st nil eofval))
+(defun VMREAD (st) (read st nil *read-place-holder*))
+(defun |read_line| (st) (read-line st nil nil))
 
 #+(OR IBCL KCL)
 (defun gcmsg (x)
@@ -757,9 +746,8 @@
              (sb-ext::run-program "/bin/sh"
                     (list "-c" S) :input t :output t :error t))
    #+:win32 (sb-ext::process-exit-code
-             (sb-ext::run-program (make-absolute-filename "/lib/obey.bat")
-                    (list S) :input t :output t :error t))
-)
+             (sb-ext::run-program "sh"
+                    (list "-c" S) :input t :output t :error t :search t)))
 
 #+:openmcl
 (defun OBEY (S)
@@ -788,14 +776,14 @@
 
 ;17.1 Creation
 
-(defun MAKE-HASHTABLE (id1)
+(defun MAKE_HASHTABLE (id1)
    (let ((test (case id1
                      ((EQ ID) #'eq)
                      (CVEC #'equal)
                      (EQL #'eql)
                      #+Lucid ((UEQUAL EQUALP) #'EQUALP)
                      #-Lucid ((UEQUAL EQUAL) #'equal)
-                     (otherwise (error "bad arg to make-hashtable")))))
+                     (otherwise (error "bad arg to MAKE_HASHTABLE")))))
       (make-hash-table :test test)))
 
 ;17.2 Accessing
@@ -806,7 +794,7 @@
         #'(lambda (key val) (declare (ignore val)) (push key keys)) table)
         keys))
 
-(define-function 'HASHTABLE-CLASS #'hash-table-test)
+(define-function 'HASHTABLE_CLASS #'hash-table-test)
 
 (define-function 'HCOUNT #'hash-table-count)
 
@@ -840,7 +828,7 @@
     (/ (cos a) (sin a))
     (/ 1.0 (tan a))))
 
-;;; moved from unlisp.lisp.pamphlet
+;;; moved from unlisp.lisp
 (defun |AlistAssocQ| (key l)
   (assoc key l :test #'eq) )
 

@@ -1,89 +1,80 @@
 
 (SDEFUN |MEVAL1;degree;PSNni;1|
-        ((|p| |Polynomial| (|Integer|)) (|s| |Symbol|)
-         ($ |NonNegativeInteger|))
+        ((|p| (|Polynomial| (|Integer|))) (|s| (|Symbol|))
+         ($ (|NonNegativeInteger|)))
         (SPADCALL |p| |s| (QREFELT $ 9))) 
 
 (SDEFUN |MEVAL1;ldegree;PSNni;2|
-        ((|p| |Polynomial| (|Integer|)) (|s| |Symbol|)
-         ($ |NonNegativeInteger|))
+        ((|p| (|Polynomial| (|Integer|))) (|s| (|Symbol|))
+         ($ (|NonNegativeInteger|)))
         (SPADCALL |p| |s| (QREFELT $ 9))) 
 
-(SDEFUN |MEVAL1;eval1a;PIRI;3|
-        ((|p| |Polynomial| (|Integer|)) (|pt| . #1=(|Integer|))
-         (|s| |Record| (|:| |prime| #1#) (|:| |eval1coeffbuf| (|U32Vector|))
-          (|:| |eval1expbuf| (|SortedExponentVector|)))
-         ($ . #1#))
-        (SPADCALL |p| |pt| |s| (QREFELT $ 15))) 
+(SDEFUN |MEVAL1;eval1;PSIRU;3|
+        ((|p| #1=(|Polynomial| (|Integer|))) (|v| (|Symbol|))
+         (|pt| #2=(|Integer|))
+         (|s|
+          (|Record| (|:| |prime| #2#) (|:| |eval1coeffbuf| (|U32Vector|))
+                    (|:| |eval1expbuf| (|SortedExponentVector|))))
+         ($ (|Union| #1# "failed")))
+        (CONS 0 (SPADCALL |p| |v| |pt| |s| (QREFELT $ 15)))) 
 
-(SDEFUN |MEVAL1;eval1;PSIRP;4|
-        ((|p| . #1=(|Polynomial| (|Integer|))) (|v| |Symbol|)
-         (|pt| . #2=(|Integer|))
-         (|s| |Record| (|:| |prime| #2#) (|:| |eval1coeffbuf| (|U32Vector|))
-          (|:| |eval1expbuf| (|SortedExponentVector|)))
-         ($ . #1#))
-        (SPADCALL |p| |v| |pt| |s| (QREFELT $ 17))) 
+(SDEFUN |MEVAL1;modpreduction;PIU;4|
+        ((|p| #1=(|Polynomial| (|Integer|))) (|q| (|Integer|))
+         ($ (|Union| #1# "failed")))
+        (CONS 0 (SPADCALL |p| |q| (QREFELT $ 18)))) 
 
-(SDEFUN |MEVAL1;modpreduction;PIP;5|
-        ((|p| . #1=(|Polynomial| (|Integer|))) (|q| |Integer|) ($ . #1#))
-        (SPADCALL |p| |q| (QREFELT $ 19))) 
-
-(SDEFUN |MEVAL1;subst_vars;P2LP;6|
-        ((|p| |Polynomial| (|Integer|)) (|ls1| . #1=(|List| (|Symbol|)))
-         (|ls2| . #1#) ($ |Polynomial| (|Integer|)))
+(SDEFUN |MEVAL1;subst_vars;P2LP;5|
+        ((|p| (|Polynomial| (|Integer|))) (|ls1| #1=(|List| (|Symbol|)))
+         (|ls2| #1#) ($ (|Polynomial| (|Integer|))))
         (SPROG
-         ((|lm| (|List| (|Polynomial| (|Integer|)))) (#2=#:G712 NIL) (|v| NIL)
-          (#3=#:G711 NIL))
+         ((|lm| (|List| (|Polynomial| (|Integer|)))) (#2=#:G719 NIL) (|v| NIL)
+          (#3=#:G718 NIL))
          (SEQ
           (LETT |lm|
                 (PROGN
-                 (LETT #3# NIL . #4=(|MEVAL1;subst_vars;P2LP;6|))
-                 (SEQ (LETT |v| NIL . #4#) (LETT #2# |ls2| . #4#) G190
+                 (LETT #3# NIL)
+                 (SEQ (LETT |v| NIL) (LETT #2# |ls2|) G190
                       (COND
-                       ((OR (ATOM #2#) (PROGN (LETT |v| (CAR #2#) . #4#) NIL))
+                       ((OR (ATOM #2#) (PROGN (LETT |v| (CAR #2#)) NIL))
                         (GO G191)))
                       (SEQ
                        (EXIT
                         (LETT #3#
                               (CONS
-                               (SPADCALL (|spadConstant| $ 21) |v| 1
-                                         (QREFELT $ 22))
-                               #3#)
-                              . #4#)))
-                      (LETT #2# (CDR #2#) . #4#) (GO G190) G191
-                      (EXIT (NREVERSE #3#))))
-                . #4#)
-          (EXIT (SPADCALL |p| |ls1| |lm| (QREFELT $ 25)))))) 
+                               (SPADCALL (|spadConstant| $ 20) |v| 1
+                                         (QREFELT $ 21))
+                               #3#))))
+                      (LETT #2# (CDR #2#)) (GO G190) G191
+                      (EXIT (NREVERSE #3#)))))
+          (EXIT (SPADCALL |p| |ls1| |lm| (QREFELT $ 24)))))) 
 
-(SDEFUN |MEVAL1;trial_division;2PLSLB;7|
-        ((|p| . #1=(|Polynomial| (|Integer|))) (|g| |Polynomial| (|Integer|))
-         (|lm| |List| #1#) (|v| . #2=(|Symbol|)) (|ls| |List| #2#)
-         ($ |Boolean|))
-        (SPROG ((#3=#:G719 NIL) (|m| NIL) (#4=#:G718 NIL))
+(SDEFUN |MEVAL1;trial_division;2PLSLB;6|
+        ((|p| #1=(|Polynomial| (|Integer|))) (|g| (|Polynomial| (|Integer|)))
+         (|lm| (|List| #1#)) (|v| #2=(|Symbol|)) (|ls| (|List| #2#))
+         ($ (|Boolean|)))
+        (SPROG ((#3=#:G727 NIL) (|m| NIL) (#4=#:G726 NIL))
                (SEQ
                 (SPADCALL |p| |g|
                           (PROGN
-                           (LETT #4# NIL
-                                 . #5=(|MEVAL1;trial_division;2PLSLB;7|))
-                           (SEQ (LETT |m| NIL . #5#) (LETT #3# |lm| . #5#) G190
+                           (LETT #4# NIL)
+                           (SEQ (LETT |m| NIL) (LETT #3# |lm|) G190
                                 (COND
                                  ((OR (ATOM #3#)
-                                      (PROGN (LETT |m| (CAR #3#) . #5#) NIL))
+                                      (PROGN (LETT |m| (CAR #3#)) NIL))
                                   (GO G191)))
-                                (SEQ (EXIT (LETT #4# (CONS |m| #4#) . #5#)))
-                                (LETT #3# (CDR #3#) . #5#) (GO G190) G191
+                                (SEQ (EXIT (LETT #4# (CONS |m| #4#))))
+                                (LETT #3# (CDR #3#)) (GO G190) G191
                                 (EXIT (NREVERSE #4#))))
-                          (LIST |v|) |ls| (QREFELT $ 31))))) 
+                          (LIST |v|) |ls| (QREFELT $ 30))))) 
 
 (DECLAIM (NOTINLINE |ModularEvaluation1;|)) 
 
 (DEFUN |ModularEvaluation1| ()
   (SPROG NIL
-         (PROG (#1=#:G721)
+         (PROG (#1=#:G729)
            (RETURN
             (COND
-             ((LETT #1# (HGET |$ConstructorCache| '|ModularEvaluation1|)
-                    . #2=(|ModularEvaluation1|))
+             ((LETT #1# (HGET |$ConstructorCache| '|ModularEvaluation1|))
               (|CDRwithIncrement| (CDAR #1#)))
              ('T
               (UNWIND-PROTECT
@@ -92,7 +83,7 @@
                        (HPUT |$ConstructorCache| '|ModularEvaluation1|
                              (LIST
                               (CONS NIL (CONS 1 (|ModularEvaluation1;|))))))
-                    (LETT #1# T . #2#))
+                    (LETT #1# T))
                 (COND
                  ((NOT #1#)
                   (HREM |$ConstructorCache| '|ModularEvaluation1|)))))))))) 
@@ -100,10 +91,10 @@
 (DEFUN |ModularEvaluation1;| ()
   (SPROG ((|dv$| NIL) ($ NIL) (|pv$| NIL))
          (PROGN
-          (LETT |dv$| '(|ModularEvaluation1|) . #1=(|ModularEvaluation1|))
-          (LETT $ (GETREFV 34) . #1#)
+          (LETT |dv$| '(|ModularEvaluation1|))
+          (LETT $ (GETREFV 33))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|ModularEvaluation1| NIL (CONS 1 $))
           (|stuffDomainSlots| $)
           (SETF |pv$| (QREFELT $ 3))
@@ -116,30 +107,29 @@
               |MEVAL1;ldegree;PSNni;2| (|Integer|)
               (|Record| (|:| |prime| 12) (|:| |eval1coeffbuf| (|U32Vector|))
                         (|:| |eval1expbuf| (|SortedExponentVector|)))
-              (|PolynomialEvaluationUtilities|) (6 . |eval1a|)
-              |MEVAL1;eval1a;PIRI;3| (13 . |eval1|) |MEVAL1;eval1;PSIRP;4|
-              (21 . |modpreduction|) |MEVAL1;modpreduction;PIP;5| (27 . |One|)
-              (31 . |monomial|) (|List| 7) (|List| $) (38 . |eval|)
-              |MEVAL1;subst_vars;P2LP;6| (|Boolean|)
-              (|SparseMultivariatePolynomial| 12 7) (|List| 28) (|PrimGCD|)
-              (45 . |alg_trial_division|) (|List| 8)
-              |MEVAL1;trial_division;2PLSLB;7|)
-           '#(|trial_division| 54 |subst_vars| 63 |modpreduction| 70 |ldegree|
-              76 |eval1a| 82 |eval1| 89 |degree| 97)
+              (|PolynomialEvaluationUtilities|) (6 . |eval1|)
+              (|Union| 8 '"failed") |MEVAL1;eval1;PSIRU;3|
+              (14 . |modpreduction|) |MEVAL1;modpreduction;PIU;4| (20 . |One|)
+              (24 . |monomial|) (|List| 7) (|List| $) (31 . |eval|)
+              |MEVAL1;subst_vars;P2LP;5| (|Boolean|)
+              (|SparseMultivariatePolynomial| 12 7) (|List| 27) (|PrimGCD|)
+              (38 . |alg_trial_division|) (|List| 8)
+              |MEVAL1;trial_division;2PLSLB;6|)
+           '#(|trial_division| 47 |subst_vars| 56 |modpreduction| 63 |ldegree|
+              69 |eval1| 75 |degree| 83)
            'NIL
            (CONS (|makeByteWordVec2| 1 '(0))
                  (CONS '#(NIL)
                        (CONS '#((|ModularEvaluationCategory| 8 8))
-                             (|makeByteWordVec2| 33
-                                                 '(2 8 6 0 7 9 3 14 12 8 12 13
-                                                   15 4 14 8 8 7 12 13 17 2 14
-                                                   8 8 12 19 0 8 0 21 3 8 0 0 7
-                                                   6 22 3 8 0 0 23 24 25 5 30
-                                                   27 28 28 29 23 23 31 5 0 27
-                                                   8 8 32 7 23 33 3 0 8 8 23 23
-                                                   26 2 0 8 8 12 20 2 0 6 8 7
-                                                   11 3 0 12 8 12 13 16 4 0 8 8
-                                                   7 12 13 18 2 0 6 8 7 10)))))
+                             (|makeByteWordVec2| 32
+                                                 '(2 8 6 0 7 9 4 14 8 8 7 12 13
+                                                   15 2 14 8 8 12 18 0 8 0 20 3
+                                                   8 0 0 7 6 21 3 8 0 0 22 23
+                                                   24 5 29 26 27 27 28 22 22 30
+                                                   5 0 26 8 8 31 7 22 32 3 0 8
+                                                   8 22 22 25 2 0 16 8 12 19 2
+                                                   0 6 8 7 11 4 0 16 8 7 12 13
+                                                   17 2 0 6 8 7 10)))))
            '|lookupComplete|)) 
 
 (MAKEPROP '|ModularEvaluation1| 'NILADIC T) 

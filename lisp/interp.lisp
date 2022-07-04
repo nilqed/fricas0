@@ -1,13 +1,4 @@
-;;; Load interpreter,Fri Nov 3 16:07:26 CET 2017
-(load "lisp/fricas-package")
-
-#-:ABCL
-(load "lisp/fricas-lisp")
-
-#+:ABCL
-(load "lisp/fricas-abcl")
-
-(load "lisp/primitives")
+(load "interp/vmlisp")
 ;;;
 (load "interp/hashcode")
 (load "interp/as")
@@ -16,7 +7,6 @@
 (load "interp/util")
 (load "interp/interp-proclaims.lisp")
 ;;;
-(load "interp/vmlisp")
 (load "interp/macros")
 (load "interp/setq")
 (load "interp/buildom")
@@ -37,7 +27,6 @@
 (load "interp/g-util")
 (load "interp/hypertex")
 (load "interp/i-analy")
-(load "interp/i-code")
 (load "interp/i-coerce")
 (load "interp/i-coerfn")
 (load "interp/i-eval")
@@ -67,9 +56,7 @@
 (load "interp/pf2sex")
 (load "interp/pile")
 (load "interp/posit")
-(load "interp/property")
 (load "interp/ptrees")
-(load "interp/record")
 (load "interp/rulesets")
 (load "interp/scan")
 (load "interp/serror")
@@ -82,7 +69,6 @@
 (load "interp/termrw")
 (load "interp/trace")
 (load "interp/daase")
-(load "interp/fortcall")
 (load "interp/ncomp")
 (load "interp/parsing")
 (load "interp/parse")
@@ -108,13 +94,11 @@
 (load "interp/br-op2")
 (load "interp/br-search")
 (load "interp/br-util")
-(load "interp/br-prof")
 (load "interp/br-saturn")
 ;;;
 (load "interp/apply")
 (load "interp/c-doc")
 (load "interp/c-util")
-(load "interp/profile")
 (load "interp/category")
 (load "interp/compiler")
 (load "interp/define")

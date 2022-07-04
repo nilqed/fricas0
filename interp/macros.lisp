@@ -60,7 +60,7 @@
 (def-boot-val |$quadSymbol| $boxString "displays an APL quad")
 (def-boot-val $escapeString  (string (code-char 27))
    "string for single escape character")
-(def-boot-val |$boldString| (concatenate 'string $escapeString "[12m")
+(def-boot-val |$boldString| (concatenate 'string $escapeString "[1m")
   "switch into bold font")
 (def-boot-val |$normalString| (concatenate 'string $escapeString "[0;10m")
   "switch back into normal font")
@@ -79,7 +79,6 @@
 
 (def-boot-var |$insideCapsuleFunctionIfTrue|        "???")
 (def-boot-var |$insideCategoryIfTrue|               "???")
-(def-boot-var |$insideExpressionIfTrue|             "???")
 (def-boot-var |$insideFunctorIfTrue|                "???")
 (def-boot-var |$insideWhereIfTrue|                  "???")
 
@@ -304,26 +303,8 @@
 
 (defun LEXLESSEQP (X Y) (NOT (LEXGREATERP X Y)))
 
-; 7 CONTROL STRUCTURE
-
-; 7.1 Constants and Variables
-
-; 7.1.1 Reference
-
-(DEFUN MKQ (X)
-  "Evaluates an object and returns it with QUOTE wrapped around it."
-  (if (NUMBERP X) X (LIST 'QUOTE X)))
-
-(defvar $TRACELETFLAG NIL "Also referred to in Comp.Lisp")
 
 ; 10.3 Creating Symbols
-
-(defun INTERNL(a &rest b)
-    (INTERN (APPLY #'concat (CONS a b))))
-
-(defvar $GENNO 0)
-
-(DEFUN GENVAR () (INTERNL "$" (STRINGIMAGE (SETQ $GENNO (1+ $GENNO)))))
 
 (DEFUN IS_GENVAR (X)
   (AND (IDENTP X)
@@ -342,16 +323,6 @@
 ; 15 LISTS
 
 ; 15.2 Lists
-
-(defun ELEMN (X N DEFAULT)
-  (COND ((NULL X) DEFAULT)
-        ((EQL N 1) (CAR X))
-        ((ELEMN (CDR X) (- N 1) DEFAULT))))
-
-(defun LISTOFATOMS (X)
-  (COND ((NULL X) NIL)
-        ((ATOM X) (LIST X))
-        ((NCONC (LISTOFATOMS (CAR X)) (LISTOFATOMS (CDR X))))))
 
 (DEFUN LASTATOM (L) (if (ATOM L) L (LASTATOM (CDR L))))
 
@@ -387,51 +358,19 @@
         (SETQ FORM (CDR FORM))
         (GO LP)))
 
-(DEFUN SUBLISNQ (KEY E) (if (NULL KEY) E (SUBANQ KEY E)))
-
-(DEFUN SUBANQ (KEY E)
-  (COND ((ATOM E) (SUBB KEY E))
-        ((EQCAR E (QUOTE QUOTE)) E)
-        ((MAPCAR #'(LAMBDA (J) (SUBANQ KEY J)) E))))
-
-(DEFUN SUBB (X E)
-  (COND ((ATOM X) E)
-        ((EQ (CAAR X) E) (CDAR X))
-        ((SUBB (CDR X) E))))
-
 (defun SUBLISLIS (newl oldl form)
    (sublis (mapcar #'cons oldl newl) form))
 
 ; 15.5 Using Lists as Sets
 
-;;; The [[CONTAINED]] predicate is used to walk internal structures
-;;; such as modemaps to see if the $X$ object occurs within $Y$. One
-;;; particular use is in a function called [[isPartialMode]] (see
-;;; i-funsel.boot) to decide
-;;; if a modemap is only partially complete. If this is true then the
-;;; modemap will contain the constant [[$EmptyMode]]. So the call
-;;; ends up being [[CONTAINED |$EmptyMode| Y]].
-(DEFUN CONTAINED (X Y)
-  (if (symbolp x)
-      (contained\,eq X Y)
-      (contained\,equal X Y)))
-
-(defun contained\,eq (x y)
-       (if (atom y) (eq x y)
-           (or (contained\,eq x (car y)) (contained\,eq x (cdr y)))))
-
-(defun contained\,equal (x y)
-   (cond ((atom y) (equal x y))
-         ((equal x y) 't)
-         ('t (or (contained\,equal x (car y)) (contained\,equal x (cdr y))))))
-
-(DEFUN S+ (X Y)
+(DEFUN |set_sum| (X Y)
   (COND ((ATOM Y) X)
         ((ATOM X) Y)
-        ((MEMBER (CAR X) Y :test #'equal) (S+ (CDR X) Y))
-        ((S+ (CDR X) (CONS (CAR X) Y)))))
+        ((MEMBER (CAR X) Y :test #'equal) (|set_sum| (CDR X) Y))
+        ((|set_sum| (CDR X) (CONS (CAR X) Y)))))
 
-(defun S- (l1 l2) (set-difference l1 l2 :test #'equal))
+(defun |set_difference| (l1 l2) (set-difference l1 l2 :test #'equal))
+
 
 (DEFUN PREDECESSOR (TL L)
   "Returns the sublist of L whose CDR is EQ to TL."
@@ -456,7 +395,7 @@
         ((CONS (CAR L) (ADDASSOC X Y (CDR L))))))
 
 (DEFUN DELLASOS (U V)
-  "Remove any assocation pair (U . X) from list V."
+  "Remove any association pair (U . X) from list V."
   (COND ((ATOM V) NIL)
         ((EQUAL U (CAAR V)) (CDR V))
         ((CONS (CAR V) (DELLASOS U (CDR V))))))
@@ -488,11 +427,11 @@
 ; (defun QLASSQ (p a-list) (let ((y (assoc p a-list :test #'eq))) (if y (cdr y))))
 (defun QLASSQ (p a-list) (cdr (assq p a-list)))
 
-(defun pair (x y) (mapcar #'cons x y))
+(defun MAKE_PAIRS (x y) (mapcar #'cons x y))
 
 ;;; Operations on Association Sets (AS)
 
-(defun AS-INSERT (A B L)
+(defun AS_INSERT (A B L)
     (let ((pp (assoc A L :test #'equal)))
         (if pp
             (progn
@@ -515,37 +454,11 @@
 
 (defvar |$sayBrightlyStream| nil "if not nil, gives stream for sayBrightly output")
 
-(defun |sayBrightly| (x) (|sayBrightly2| x *standard-output*))
+(defun |get_lisp_std_out| () *standard-output*)
 
-(defun |sayBrightly2| (x out-stream)
-  (COND ((NULL X) NIL)
-        (|$sayBrightlyStream| (|sayBrightly1| X |$sayBrightlyStream|))
-        (t (|sayBrightly1| X out-stream))))
-
-(defun |sayBrightlyI| (x)
- (let ((S *error-output*))
-    "Prints at console or output stream."
-  (if (NULL X) NIL (|sayBrightly1| X S))))
-
-(defun |sayBrightlyNT| (x) (|sayBrightlyNT2| x *standard-output*))
-
-(defun |sayBrightlyNT2| (x S)
-  (COND ((NULL X) NIL)
-        (|$sayBrightlyStream| (|sayBrightlyNT1| X |$sayBrightlyStream|))
-        (t (|sayBrightlyNT1| X S))))
-
-(defparameter |$fricasOutput| (make-synonym-stream '*standard-output*))
-
-(defun |sayMSG2File| (msg)
-  (PROG (file str)
-        (SETQ file (|makePathname| '|spadmsg| '|listing|))
-        (SETQ str (MAKE-OUTSTREAM file))
-        (|sayBrightly1| msg str)
-        (SHUT str) ) )
+(defun |get_lisp_error_out| () *error-output*)
 
 (defvar |$fortranOutputStream|)
-
-(defvar |$formulaOutputStream|)
 
 (defvar |$highlightAllowed| nil "Used in BRIGHTPRINT and is a )set variable.")
 
@@ -587,7 +500,7 @@
 
 ; 25 MISCELLANEOUS FEATURES
 
-(defun MAKE-REASONABLE (Z)
+(defun MAKE_REASONABLE (Z)
    (if (> (length Z) 30) (CONCAT "expression beginning " (subseq Z 0 20)) Z))
 
 (defun DROPTRAILINGBLANKS  (LINE)
@@ -660,13 +573,6 @@
 (DEFUN |rightBindingPowerOf| (X IND &AUX (Y (GET X IND)))
    (IF Y (ELEMN Y 4 105) 105))
 
-(defun |make_BF| (MT EP) (LIST |$BFtag| MT EP))
-
-(defun |make_float| (int frac fraclen exp)
-    (if (= frac 0)
-          (|make_BF| int exp)
-          (|make_BF| (+ (* int (expt 10 fraclen)) frac) (- exp fraclen)) ))
-
 (defun |print_full2| (expr stream)
    (let ((*print-circle* t) (*print-array* t) *print-level* *print-length*)
      (print expr stream)
@@ -676,57 +582,45 @@
 
 ;; moved here from preparse.lisp
 
-(defun NEXT-TAB-LOC (i) (* (1+ (truncate i 8)) 8))
+(defvar tab-size-in-spaces 8
+  "How many spaces do we consider a #\Tab character?")
 
-(defun INDENT-POS (STR)
-  (do ((i 0 (1+ i))
-       (pos 0))
-      ((>= i (length str)) nil)
-      (case (char str i)
-            (#\space (incf pos))
-            (#\tab (setq pos (next-tab-loc pos)))
-            (otherwise (return pos)))))
+(defun NEXT-TAB-LOC (i)
+  "Given a character position I, on what position would a #\Tab land
+us?"
+  (* tab-size-in-spaces (1+ (truncate i tab-size-in-spaces))))
 
-;;(defun expand-tabs (str)
-;;  (let ((bpos (nonblankloc str))
-;;      (tpos (indent-pos str)))
-;;    (if (eql bpos tpos) str
-;;      (concatenate 'string (make-string tpos :initial-element #\space)
-;;                 (subseq str bpos)))))
-(defun expand-tabs (str)
-   (if (and (stringp str) (> (length str) 0))
-      (let ((bpos (nonblankloc str))
-            (tpos (indent-pos str)))
-        (setq str
-              (if (eql bpos tpos)
-                  str
-                  (concatenate 'string
-                               (make-string tpos :initial-element #\space)
-                               (subseq str bpos))))
-        (loop
-            (let ((tloc (tabloc str)))
-                (if (null tloc) (return))
-                (let ((rloc (NEXT-TAB-LOC tloc)))
-                    (if (eql tloc rloc)
-                        (setf (aref str tloc) #\Space)
-                        (setf str
-                            (concatenate 'string
-                                (subseq str 0 tloc)
-                                (make-string (+ 1 (- rloc tloc))
-                                    :initial-element #\space)
-                                (subseq str (+ 1 tloc))))))))
-         ;; remove dos CR
-        (let ((lpos (maxindex str)))
-          (if (eq (char str lpos) #\Return) (subseq str 0 lpos) str)))
-    str))
+(defun EXPAND_TABS (str)
+  "Given a string STR, expand all #\Tab characters to spaces, minding
+the correct column each #\Tab would carry us to.
 
-(defun blankp (char) (or (eq char #\Space) (eq char #\tab)))
-
-(defun nonblankloc (str) (position-if-not #'blankp str))
-
-(defun tabp (c) (equal c #\tab))
-
-(defun tabloc (str) (position-if #'tabp str))
+This function respects intermediate #\Newline characters and drops
+#\Return characters."
+  (cond
+    ((stringp str)
+     (with-output-to-string (s)
+       (loop :with column := 0
+             :for c :across str
+             :do (case c
+                   (#\Tab
+                    ;; How many spaces does our tab carry us forward
+                    ;; by?
+                    (let ((num-spaces (- (next-tab-loc column) column)))
+                      (incf column num-spaces)
+                      ;; This format string just writes something N
+                      ;; times without consing up garbage.
+                      (format s "~v@{~C~:*~}" num-spaces #\Space)))
+                   (#\Newline
+                    (setf column 0)
+                    (write-char #\Newline s))
+                   (#\Return
+                    ;; Drop this character completely.
+                    nil)
+                   (t
+                    (incf column)
+                    (write-char c s))))))
+    (t
+     str)))
 
 ;; stream handling for paste-in generation
 
@@ -736,7 +630,7 @@
   (let* ((*standard-output* (make-string-output-stream))
          (curoutstream *standard-output*)
          (*error-output* *standard-output*)
-         (|$algebraOutputStream| *standard-output*)
+         (|$algebraOutputStream| (CONS NIL *standard-output*))
         val)
     (declare (special curoutstream
                       |$algebraOutputStream|))
@@ -802,7 +696,7 @@
 ; NAME:    Debugging Package
 ; PURPOSE: Debugging hooks for Boot code
 
-(defun enable-backtrace (&rest arg))
+(defun ENABLE_BACKTRACE (&rest arg))
 
 (defun |adjoin_equal|(x y) (ADJOIN x y :test #'equal))
 

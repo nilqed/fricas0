@@ -1,21 +1,22 @@
 
 (PUT '|MKCHSET;position;$Nni;1| '|SPADreplace| 'QCDR) 
 
-(SDEFUN |MKCHSET;position;$Nni;1| ((|x| $) ($ |NonNegativeInteger|)) (QCDR |x|)) 
+(SDEFUN |MKCHSET;position;$Nni;1| ((|x| ($)) ($ (|NonNegativeInteger|)))
+        (QCDR |x|)) 
 
 (SDEFUN |MKCHSET;setPosition;$NniV;2|
-        ((|x| $) (|n| |NonNegativeInteger|) ($ |Void|))
+        ((|x| ($)) (|n| (|NonNegativeInteger|)) ($ (|Void|)))
         (SEQ (PROGN (RPLACD |x| |n|) (QCDR |x|))
              (EXIT (SPADCALL (QREFELT $ 13))))) 
 
 (PUT '|MKCHSET;coerce;$S;3| '|SPADreplace| 'QCAR) 
 
-(SDEFUN |MKCHSET;coerce;$S;3| ((|x| $) ($ S)) (QCAR |x|)) 
+(SDEFUN |MKCHSET;coerce;$S;3| ((|x| ($)) ($ (S))) (QCAR |x|)) 
 
-(SDEFUN |MKCHSET;coerce;$Of;4| ((|x| $) ($ |OutputForm|))
+(SDEFUN |MKCHSET;coerce;$Of;4| ((|x| ($)) ($ (|OutputForm|)))
         (SPADCALL (SPADCALL |x| (QREFELT $ 15)) (QREFELT $ 17))) 
 
-(SDEFUN |MKCHSET;coerce;S$;5| ((|s| S) ($ $))
+(SDEFUN |MKCHSET;coerce;S$;5| ((|s| (S)) ($ ($)))
         (SPROG NIL
                (SPADCALL (CONS |s| 0)
                          (CONS #'|MKCHSET;coerce;S$;5!0| (VECTOR $ |s|))
@@ -23,31 +24,35 @@
 
 (SDEFUN |MKCHSET;coerce;S$;5!0| ((|x1| NIL) ($$ NIL))
         (PROG (|s| $)
-          (LETT |s| (QREFELT $$ 1) . #1=(|MKCHSET;coerce;S$;5|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |s| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL |s| (SPADCALL |x1| (QREFELT $ 15)) (QREFELT $ 20)))))) 
 
-(SDEFUN |MKCHSET;=;2$B;6| ((|x| $) (|y| $) ($ |Boolean|))
+(SDEFUN |MKCHSET;=;2$B;6| ((|x| ($)) (|y| ($)) ($ (|Boolean|)))
         (SPROG NIL
                (SEQ
                 (COND
                  ((EQL (SPADCALL |x| (QREFELT $ 12)) 0)
-                  (SPADCALL |x| (CONS #'|MKCHSET;=;2$B;6!0| (VECTOR $ |x|))
-                            (QREFELT $ 22))))
+                  (LETT |x|
+                        (SPADCALL |x|
+                                  (CONS #'|MKCHSET;=;2$B;6!0| (VECTOR $ |x|))
+                                  (QREFELT $ 22)))))
                 (COND
                  ((EQL (SPADCALL |y| (QREFELT $ 12)) 0)
-                  (SPADCALL |y| (CONS #'|MKCHSET;=;2$B;6!1| (VECTOR $ |y|))
-                            (QREFELT $ 22))))
+                  (LETT |y|
+                        (SPADCALL |y|
+                                  (CONS #'|MKCHSET;=;2$B;6!1| (VECTOR $ |y|))
+                                  (QREFELT $ 22)))))
                 (EXIT
                  (EQL (SPADCALL |x| (QREFELT $ 12))
                       (SPADCALL |y| (QREFELT $ 12))))))) 
 
 (SDEFUN |MKCHSET;=;2$B;6!1| ((|x1| NIL) ($$ NIL))
         (PROG (|y| $)
-          (LETT |y| (QREFELT $$ 1) . #1=(|MKCHSET;=;2$B;6|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |y| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL (SPADCALL |y| (QREFELT $ 15))
@@ -55,8 +60,8 @@
 
 (SDEFUN |MKCHSET;=;2$B;6!0| ((|x1| NIL) ($$ NIL))
         (PROG (|x| $)
-          (LETT |x| (QREFELT $$ 1) . #1=(|MKCHSET;=;2$B;6|))
-          (LETT $ (QREFELT $$ 0) . #1#)
+          (LETT |x| (QREFELT $$ 1))
+          (LETT $ (QREFELT $$ 0))
           (RETURN
            (PROGN
             (SPADCALL (SPADCALL |x| (QREFELT $ 15))
@@ -64,21 +69,19 @@
 
 (DECLAIM (NOTINLINE |MakeCachableSet;|)) 
 
-(DEFUN |MakeCachableSet| (#1=#:G717)
+(DEFUN |MakeCachableSet| (#1=#:G716)
   (SPROG NIL
-         (PROG (#2=#:G718)
+         (PROG (#2=#:G717)
            (RETURN
             (COND
              ((LETT #2#
                     (|lassocShiftWithFunction| (LIST (|devaluate| #1#))
                                                (HGET |$ConstructorCache|
                                                      '|MakeCachableSet|)
-                                               '|domainEqualList|)
-                    . #3=(|MakeCachableSet|))
+                                               '|domainEqualList|))
               (|CDRwithIncrement| #2#))
              ('T
-              (UNWIND-PROTECT
-                  (PROG1 (|MakeCachableSet;| #1#) (LETT #2# T . #3#))
+              (UNWIND-PROTECT (PROG1 (|MakeCachableSet;| #1#) (LETT #2# T))
                 (COND
                  ((NOT #2#)
                   (HREM |$ConstructorCache| '|MakeCachableSet|)))))))))) 
@@ -86,11 +89,11 @@
 (DEFUN |MakeCachableSet;| (|#1|)
   (SPROG ((|pv$| NIL) ($ NIL) (|dv$| NIL) (DV$1 NIL))
          (PROGN
-          (LETT DV$1 (|devaluate| |#1|) . #1=(|MakeCachableSet|))
-          (LETT |dv$| (LIST '|MakeCachableSet| DV$1) . #1#)
-          (LETT $ (GETREFV 28) . #1#)
+          (LETT DV$1 (|devaluate| |#1|))
+          (LETT |dv$| (LIST '|MakeCachableSet| DV$1))
+          (LETT $ (GETREFV 28))
           (QSETREFV $ 0 |dv$|)
-          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL) . #1#))
+          (QSETREFV $ 3 (LETT |pv$| (|buildPredVector| 0 0 NIL)))
           (|haddProp| |$ConstructorCache| '|MakeCachableSet| (LIST DV$1)
                       (CONS 1 $))
           (|stuffDomainSlots| $)

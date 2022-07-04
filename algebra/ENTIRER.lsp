@@ -4,11 +4,10 @@
 (DEFPARAMETER |EntireRing;AL| 'NIL) 
 
 (DEFUN |EntireRing| ()
-  (LET (#:G699)
-    (COND (|EntireRing;AL|) (T (SETQ |EntireRing;AL| (|EntireRing;|)))))) 
+  (COND (|EntireRing;AL|) (T (SETQ |EntireRing;AL| (|EntireRing;|))))) 
 
 (DEFUN |EntireRing;| ()
-  (SPROG ((#1=#:G697 NIL))
+  (SPROG ((#1=#:G696 NIL))
          (PROG1
              (LETT #1#
                    (|Join| (|Ring|) (|noZeroDivisors|)
@@ -22,8 +21,7 @@
                               ((|unitCanonical| ($ $)) T)
                               ((|associates?| ((|Boolean|) $ $)) T)
                               ((|unit?| ((|Boolean|) $)) T))
-                            NIL '((|Boolean|)) NIL))
-                   |EntireRing|)
+                            NIL NIL NIL)))
            (SETELT #1# 0 '(|EntireRing|))))) 
 
 (MAKEPROP '|EntireRing| 'NILADIC T) 
