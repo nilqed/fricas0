@@ -462,7 +462,7 @@
          (rl (if (< xl yl) xl yl))
          (xlb (words_to_bytes xl))
          (ylb (words_to_bytes yl))
-         (rlb (+ xlb ylb))
+         (rlb (if (< xlb ylb) xlb ylb))
         )
         (declare (type fixnum xl yl rl xlb ylb rlb))
         ;;; XXX Does not work
@@ -646,14 +646,27 @@
     (setf (symbol-function 'orig-isqrt)
           (symbol-function 'common-lisp:isqrt)))
 
+(defmacro negate_bignum(x)
+    (let ((sym2
+          (find-symbol "NEGATE-BIGNUM-NOT-FULLY-NORMALIZED" "SB-BIGNUM")))
+        (if sym2
+            `(,sym2 ,x)
+            ;;; 'read-from-string' looks silly, but here we want error
+            ;;;  if NEGATE-BIGNUM is absent from SB-BIGNUM
+            (let ((sym1 (read-from-string "SB-BIGNUM::NEGATE-BIGNUM")))
+                 `(,sym1 ,x nil))
+        )
+    )
+)
+
 (defun gmp-multiply-bignums0 (a b)
   ;;; (declare (type bignum-type a b))
   (let* ((a-plusp (sb-bignum::%bignum-0-or-plusp a
                   (sb-bignum::%bignum-length a)))
          (b-plusp (sb-bignum::%bignum-0-or-plusp b
                   (sb-bignum::%bignum-length b)))
-         (a (if a-plusp a (sb-bignum::negate-bignum a)))
-         (b (if b-plusp b (sb-bignum::negate-bignum b)))
+         (a (if a-plusp a (negate_bignum a)))
+         (b (if b-plusp b (negate_bignum b)))
          (len-a (sb-bignum::%bignum-length a))
          (len-b (sb-bignum::%bignum-length b))
          (len-res (+ len-a len-b))
@@ -697,10 +710,10 @@
   (let* (
     (nx (if (sb-bignum::%bignum-0-or-plusp x (sb-bignum::%bignum-length x))
             (sb-bignum::copy-bignum x)
-            (sb-bignum::negate-bignum x nil)))
+            (negate_bignum x)))
     (ny (if (sb-bignum::%bignum-0-or-plusp y (sb-bignum::%bignum-length y))
             (sb-bignum::copy-bignum y)
-            (sb-bignum::negate-bignum y nil)))
+            (negate_bignum y)))
     (xl (sb-bignum::%bignum-length nx))
     (yl (sb-bignum::%bignum-length ny))
     (rl (if (< xl yl) xl yl))
@@ -735,9 +748,9 @@
     (x-plusp (sb-bignum::%bignum-0-or-plusp x (sb-bignum::%bignum-length x)))
     (y-plusp (sb-bignum::%bignum-0-or-plusp y (sb-bignum::%bignum-length y)))
     (nx (if x-plusp x
-           (sb-bignum::negate-bignum x nil)))
+           (negate_bignum x)))
     (ny (if y-plusp y
-           (sb-bignum::negate-bignum y nil)))
+           (negate_bignum y)))
     (len-x (sb-bignum::%bignum-length nx))
     (len-y (sb-bignum::%bignum-length ny))
     (q nil)
@@ -824,12 +837,22 @@
           (symbol-function 'orig-isqrt))
     (sb-ext:lock-package "COMMON-LISP")))
 
+(defun load-gmp-lib ()
+  (let ((system-gmp-name #+:WIN32 "libgmp-10.dll"
+                         #-:WIN32 "libgmp.so")
+        (bundled-gmp-name #+:WIN32 "/lib/libgmp-10.dll"
+                          #+:DARWIN "/lib/libgmp.10.dylib"
+                          #-(or :WIN32 :DARWIN) nil))
+    (if (ignore-errors (|quiet_load_alien| system-gmp-name) t)
+        t
+        (and bundled-gmp-name
+             (ignore-errors (|quiet_load_alien|
+                 (BOOT::make-absolute-filename bundled-gmp-name)) t))))
+)
+
 (defun init-gmp(wrapper-lib)
     (if (not *gmp-multiplication-initialized*)
-        (if (ignore-errors (|quiet_load_alien|
-                            #-:WIN32 "libgmp.so"
-                            #+:WIN32 "libgmp-10.dll"
-                            ) t)
+        (if (load-gmp-lib)
             (if (ignore-errors
                     (|quiet_load_alien| wrapper-lib) t)
                 (progn

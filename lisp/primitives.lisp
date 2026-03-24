@@ -112,7 +112,7 @@
         (STR_ELT s 0)
         `(|STR_to_CHAR_fun| ,s)))
 
-;;; Vectors and matrices of of small integer 32-bit numbers
+;;; Vectors and matrices of small integer (8-bit, 16-bit and 32-bit numbers)
 
 (defmacro suffixed_name(name s)
     `(intern (concatenate 'string (symbol-name ',name)
@@ -290,7 +290,7 @@
 
 ;;; Floating point macros
 
-;; Before version 1.8 Closure CL had buggy floating point optimizer, so
+;; Before version 1.8 Clozure CL had buggy floating point optimizer, so
 ;; for it we need to omit type declarations to disable optimization
 #-(and :openmcl (not :CCL-1.8))
 (defmacro DEF_DF_BINOP (name op)
@@ -564,6 +564,13 @@
 
 (defmacro HREM (table key) `(remhash ,key ,table))
 
+(defun MAKE_HASHTABLE (tst)
+     (cond
+         ((MEMQ tst '(EQ EQL EQUAL))
+             (make-hash-table :test tst))
+         (t (error "bad arg to MAKE_HASHTABLE")))
+)
+
 ; Misc operations
 
 (defmacro |qset_first|(l x) `(SETF (CAR (the cons ,l)) ,x))
@@ -600,8 +607,8 @@
           (t (BREAK))))
 
 (defmacro qcsize (x)
- `(the fixnum (length (the #-(or :ecl :gcl)simple-string
-                           #+(or :ecl :gcl)string ,x))))
+  `(the fixnum (length (the #-ecl simple-string
+                            #+ecl string ,x))))
 
 (defmacro qrefelt (vec ind) `(svref ,vec ,ind))
 
@@ -636,7 +643,28 @@
 
 (defmacro ELT_BVEC (bv i)    `(sbit ,bv ,i))
 (defmacro SETELT_BVEC (bv i x)  `(setf (sbit ,bv ,i) ,x))
-(defmacro |size_BVEC| (bv)  `(size ,bv))
+(defmacro |size_BVEC| (bv)  `(length (the simple-bit-vector ,bv)))
+
+(defun |make_BVEC| (n x)
+    (make-array (list n) :element-type 'bit :initial-element x))
+(defun |equal_BVEC| (bv1 bv2) (equal (the simple-bit-vector bv1)
+                                     (the simple-bit-vector bv2)))
+(defun |copy_BVEC| (bv)  (copy-seq (the simple-bit-vector bv)))
+(defun |greater_BVEC| (bv1 bv2)
+  (let ((pos (mismatch (the simple-bit-vector bv1)
+                       (the simple-bit-vector bv2))))
+    (cond ((or (null pos) (>= pos (length bv1))) nil)
+          ((< pos (length bv2)) (> (bit bv1 pos) (bit bv2 pos)))
+          ((find 1 bv1 :start pos) t)
+          (t nil))))
+
+(defun |not_BVEC| (bv) (bit-not (the simple-bit-vector bv)))
+(defun |or_BVEC| (bv1 bv2) (bit-ior  (the simple-bit-vector bv1)
+                                     (the simple-bit-vector bv2)))
+(defun |xor_BVEC| (bv1 bv2) (bit-xor (the simple-bit-vector bv1)
+                                     (the simple-bit-vector bv2)))
+(defun |and_BVEC| (bv1 bv2) (bit-and (the simple-bit-vector bv1)
+                                     (the simple-bit-vector bv2)))
 
 (defun |is_BVEC| (bv) (simple-bit-vector-p bv))
 
@@ -817,3 +845,14 @@
 
 ;;; Support for re-seeding the lisp random number generator.
 (defun SEEDRANDOM () (setf *random-state* (make-random-state t)))
+
+; "failed" union branch, independet of type of union
+(defvar |$spad_failure| (cons 1 "failed"))
+
+(defmacro |trappedSpadEval| (form)
+    `(|trappedSpadEvalUnion| (cons 0 ,form)))
+
+(defmacro |trappedSpadEvalUnion| (form)
+  `(let ((|$BreakMode| '|trapSpadErrors|))
+        (declare (special |$BreakMode|))
+        (CATCH '|trapSpadErrors| ,form)))

@@ -34,13 +34,19 @@
 #+gcl
 (shadow "QUIT")
 
-(do-symbols (x "FRICAS-LISP") (export (list x)))
+;;; We use uninterned symbols because at this point we do not
+;;; want to add symbols to FRICAS-LISP
+(let ((#1=#:ls nil))
+    (do-symbols (#2=#:el "FRICAS-LISP") (setf #1# (cons #2# #1#)))
+    (mapcar (lambda (#3=#:x) (export (list #3#))) #1#)
+)
 
-(export '(quit chdir |getEnv| |getCLArgs| |load_quietly| get-current-directory
-          trim-directory-name pad-directory-name
-          file-kind makedir fricas_compile_file fricas_compile_fasl
-          |fricas_probe_file|
-          DEFCONST exit-with-status MEMQ |quiet_load_alien|
+(export '(QUIT CHDIR |getEnv| |getCLArgs| |load_quietly|
+          |get_current_directory|
+          |trim_directory_name| |append_directory_name| |pad_directory_name|
+          |file_kind| |makedir| |fricas_compile_file| |fricas_compile_fasl|
+          |fricas_probe_file| |run_program| |run_shell_command|
+          DEFCONST |exit_with_status| MEMQ |quiet_load_alien|
           |handle_input_file| |handle_output_file| |maybe_delete_file|
           |remove_directory| |writeablep| |openServer| |sockGetInt|
           |sockSendInt| |sockSendString| |sockGetFloat| |sockSendFloat|
@@ -48,8 +54,8 @@
 
 #+:GCL
 (progn
-    (import '(LISP::LAMBDA-CLOSURE))
-    (export '(LISP::LAMBDA-CLOSURE))
+    (import '(SI::LAMBDA-CLOSURE))
+    (export '(SI::LAMBDA-CLOSURE))
 )
 #+:ecl
 (progn
@@ -59,6 +65,8 @@
 )
 #+:openmcl
 (eval-when (:execute :compile-toplevel :load-toplevel)
+      ;;; For Clozure CL assume :win32, when :windows
+      #+:windows (push :win32 *features*)
       (setf *features* (delete :CCL *features*)))
 
 ;;; Package containing Shoe to Lisp translator
@@ -76,7 +84,8 @@
 
 (in-package "BOOTTRAN")
 
-(import '(BOOT::QSETVELT BOOT::SETELT_BVEC BOOT::STR_ELT))
+(import '(BOOT::MAKE_HASHTABLE BOOT::QSETVELT BOOT::SETELT_BVEC
+          BOOT::STR_ELT))
 
 ;;; Package containing support routines for code generated
 ;;; by Aldor compiler.

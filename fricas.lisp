@@ -1,10 +1,11 @@
 (load "lisp/load-lisp.lisp")
 (load "lisp/interp.lisp")
 (in-package :boot)
-(defvar $spadroot ".")
+(setq |$spadroot| ".")
 (defvar |$defaultMsgDatabaseName| "msgs/s2-us.msgs")
-(defvar |$build_version| "Common Lisp")
-(defvar |$build_date| "Fri Nov 3 16:25:22 CET 2017")
+(defvar |$build_version| "Common Lisp - 1.3.12")
+(defvar |$build_date| "Wed Jun 4 2025")
+(defvar |$lisp_id_string| (concatenate 'string (lisp-implementation-type) " " (lisp-implementation-version)))
 
 
 #+:ABCL
@@ -22,29 +23,28 @@
     (let ((lsp-file (CONCAT (string-right-trim |$lisp_bin_filetype| f) "lsp")))
       (cond
         ((and (boundp 'load-type) (equal load-type "load-ondemand"))
-         (load lsp-file))
+         (load (if (probe-file f) f lsp-file)))
         ((and (boundp 'load-type) (equal load-type "compile-ondemand"))
          (load (if (probe-file f) f (compile-file lsp-file))))
         (t (load f))
         ))))
 
-;;; init      
-(|interpsysInitialization|)
+;;; init
+(|interpsysInitialization| t)
 
 (setq |$has_category_hash| (make-hash-table :test #'equal))
 (setq |$operation_hash| (make-hash-table))
 
 
- (|compressOpen|)
- (|interpOpen|)
- (|categoryOpen|)
- (|operationOpen|)
- (|browseOpen|)
+ (|open_interp_db| t)
+ (|open_category_db| t)
+ (|open_operation_db| t)
+ (|open_browse_db| t)
 
 
 (let ((*debugger-hook*
             (lambda (condition previous-handler)
-                (spad-system-error-handler condition))
+                (|spad_system_error_handler| condition))
        ))
-     (handler-bind ((error #'spad-system-error-handler))
+     (handler-bind ((error #'|spad_system_error_handler|))
        (|spad|)))
