@@ -8,8 +8,7 @@ FriCAS0 -- a pure Common Lisp build
 `FriCAS0` is maintained by `oldk1331`: https://github.com/oldk1331/fricas0
 
 
-
-![abcl](abcl.png)
+.. image:: abcl.png
 
 
 Build
