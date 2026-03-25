@@ -2,6 +2,16 @@
 FriCAS0 -- a pure Common Lisp build
 ===================================
 
+:warning: This repo may be deprecated (synced infrequently).
+
+
+`FriCAS0` is maintained by `oldk1331`: https://github.com/oldk1331/fricas0
+
+
+
+![abcl](abcl.png)
+
+
 Build
 -----
 
